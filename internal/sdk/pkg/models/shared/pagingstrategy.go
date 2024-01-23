@@ -26,6 +26,7 @@ type PagingStrategy struct {
 
 func CreatePagingStrategyCursorURI(cursorURI CursorURIPagingStrategy) PagingStrategy {
 	typ := PagingStrategyTypeCursorURI
+
 	typStr := CursorURIPagingStrategyType(typ)
 	cursorURI.Type = &typStr
 
@@ -37,6 +38,7 @@ func CreatePagingStrategyCursorURI(cursorURI CursorURIPagingStrategy) PagingStra
 
 func CreatePagingStrategyOffset(offset OffsetPagingStrategy) PagingStrategy {
 	typ := PagingStrategyTypeOffset
+
 	typStr := OffsetPagingStrategyType(typ)
 	offset.Type = &typStr
 

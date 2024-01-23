@@ -325,6 +325,7 @@ type PipelineUpdateUpdateScheduleTypes struct {
 
 func CreatePipelineUpdateUpdateScheduleTypesInterval(interval IntervalUpdateScheduleMode) PipelineUpdateUpdateScheduleTypes {
 	typ := PipelineUpdateUpdateScheduleTypesTypeInterval
+
 	typStr := UpdateScheduleTypesMode(typ)
 	interval.Mode = typStr
 
@@ -336,6 +337,7 @@ func CreatePipelineUpdateUpdateScheduleTypesInterval(interval IntervalUpdateSche
 
 func CreatePipelineUpdateUpdateScheduleTypesHourly(hourly HourlyUpdateScheduleMode) PipelineUpdateUpdateScheduleTypes {
 	typ := PipelineUpdateUpdateScheduleTypesTypeHourly
+
 	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesMode(typ)
 	hourly.Mode = typStr
 
@@ -347,6 +349,7 @@ func CreatePipelineUpdateUpdateScheduleTypesHourly(hourly HourlyUpdateScheduleMo
 
 func CreatePipelineUpdateUpdateScheduleTypesDaily(daily DailyUpdateScheduleMode) PipelineUpdateUpdateScheduleTypes {
 	typ := PipelineUpdateUpdateScheduleTypesTypeDaily
+
 	typStr := UpdateScheduleModeDailyUpdateScheduleTypesMode(typ)
 	daily.Mode = typStr
 
@@ -358,6 +361,7 @@ func CreatePipelineUpdateUpdateScheduleTypesDaily(daily DailyUpdateScheduleMode)
 
 func CreatePipelineUpdateUpdateScheduleTypesWeekly(weekly WeeklyUpdateScheduleMode) PipelineUpdateUpdateScheduleTypes {
 	typ := PipelineUpdateUpdateScheduleTypesTypeWeekly
+
 	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesMode(typ)
 	weekly.Mode = typStr
 
@@ -369,6 +373,7 @@ func CreatePipelineUpdateUpdateScheduleTypesWeekly(weekly WeeklyUpdateScheduleMo
 
 func CreatePipelineUpdateUpdateScheduleTypesMonthly(monthly MonthlyUpdateScheduleMode) PipelineUpdateUpdateScheduleTypes {
 	typ := PipelineUpdateUpdateScheduleTypesTypeMonthly
+
 	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesMode(typ)
 	monthly.Mode = typStr
 
@@ -709,6 +714,7 @@ type ScheduleTypes struct {
 
 func CreateScheduleTypesNever(never NeverScheduleMode) ScheduleTypes {
 	typ := ScheduleTypesTypeNever
+
 	typStr := ScheduleTypesMode(typ)
 	never.Mode = typStr
 
@@ -720,6 +726,7 @@ func CreateScheduleTypesNever(never NeverScheduleMode) ScheduleTypes {
 
 func CreateScheduleTypesHourly(hourly HourlyScheduleMode) ScheduleTypes {
 	typ := ScheduleTypesTypeHourly
+
 	typStr := RefreshScheduleModeHourlyScheduleTypesMode(typ)
 	hourly.Mode = typStr
 
@@ -731,6 +738,7 @@ func CreateScheduleTypesHourly(hourly HourlyScheduleMode) ScheduleTypes {
 
 func CreateScheduleTypesDaily(daily DailyScheduleMode) ScheduleTypes {
 	typ := ScheduleTypesTypeDaily
+
 	typStr := RefreshScheduleModeDailyScheduleTypesMode(typ)
 	daily.Mode = typStr
 
@@ -742,6 +750,7 @@ func CreateScheduleTypesDaily(daily DailyScheduleMode) ScheduleTypes {
 
 func CreateScheduleTypesWeekly(weekly WeeklyScheduleMode) ScheduleTypes {
 	typ := ScheduleTypesTypeWeekly
+
 	typStr := RefreshScheduleModeWeeklyScheduleTypesMode(typ)
 	weekly.Mode = typStr
 
@@ -753,6 +762,7 @@ func CreateScheduleTypesWeekly(weekly WeeklyScheduleMode) ScheduleTypes {
 
 func CreateScheduleTypesMonthly(monthly MonthlyScheduleMode) ScheduleTypes {
 	typ := ScheduleTypesTypeMonthly
+
 	typStr := RefreshScheduleModeMonthlyScheduleTypesMode(typ)
 	monthly.Mode = typStr
 

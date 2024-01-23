@@ -31,6 +31,7 @@ type TransformTypes struct {
 
 func CreateTransformTypesAddFilePath(addFilePath TransformAddFilePath) TransformTypes {
 	typ := TransformTypesTypeAddFilePath
+
 	typStr := TransformAddFilePathType(typ)
 	addFilePath.Type = typStr
 
@@ -42,6 +43,7 @@ func CreateTransformTypesAddFilePath(addFilePath TransformAddFilePath) Transform
 
 func CreateTransformTypesFlattenJSONObject(flattenJSONObject TransformExtractJSONFields) TransformTypes {
 	typ := TransformTypesTypeFlattenJSONObject
+
 	typStr := TransformExtractJSONFieldsType(typ)
 	flattenJSONObject.Type = typStr
 
@@ -53,6 +55,7 @@ func CreateTransformTypesFlattenJSONObject(flattenJSONObject TransformExtractJSO
 
 func CreateTransformTypesParquetToRows(parquetToRows TransformParquetToRows) TransformTypes {
 	typ := TransformTypesTypeParquetToRows
+
 	typStr := TransformParquetToRowsType(typ)
 	parquetToRows.Type = typStr
 
@@ -64,6 +67,7 @@ func CreateTransformTypesParquetToRows(parquetToRows TransformParquetToRows) Tra
 
 func CreateTransformTypesParseByRegex(parseByRegex TransformParseByRegex) TransformTypes {
 	typ := TransformTypesTypeParseByRegex
+
 	typStr := TransformParseByRegexType(typ)
 	parseByRegex.Type = typStr
 
@@ -75,6 +79,7 @@ func CreateTransformTypesParseByRegex(parseByRegex TransformParseByRegex) Transf
 
 func CreateTransformTypesRenameColumns(renameColumns TransformRenameColumns) TransformTypes {
 	typ := TransformTypesTypeRenameColumns
+
 	typStr := TransformRenameColumnsType(typ)
 	renameColumns.Type = typStr
 

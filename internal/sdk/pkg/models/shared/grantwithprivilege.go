@@ -26,6 +26,7 @@ type GrantWithPrivilege struct {
 
 func CreateGrantWithPrivilegeUser(user GrantWithPrivilegeUser) GrantWithPrivilege {
 	typ := GrantWithPrivilegeTypeUser
+
 	typStr := GrantWithPrivilegeUserType(typ)
 	user.Type = typStr
 
@@ -37,6 +38,7 @@ func CreateGrantWithPrivilegeUser(user GrantWithPrivilegeUser) GrantWithPrivileg
 
 func CreateGrantWithPrivilegeTeam(team GrantWithPrivilegeTeam) GrantWithPrivilege {
 	typ := GrantWithPrivilegeTypeTeam
+
 	typStr := GrantWithPrivilegeTeamType(typ)
 	team.Type = typStr
 

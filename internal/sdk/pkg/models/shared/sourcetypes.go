@@ -185,6 +185,7 @@ type SourceTypes struct {
 
 func CreateSourceTypesActiveCampaign(activeCampaign SourceActiveCampaign) SourceTypes {
 	typ := SourceTypesTypeActiveCampaign
+
 	typStr := SourceActiveCampaignType(typ)
 	activeCampaign.Type = typStr
 
@@ -196,6 +197,7 @@ func CreateSourceTypesActiveCampaign(activeCampaign SourceActiveCampaign) Source
 
 func CreateSourceTypesBigquery(bigquery SourceBigQuery) SourceTypes {
 	typ := SourceTypesTypeBigquery
+
 	typStr := SourceBigQueryType(typ)
 	bigquery.Type = typStr
 
@@ -207,6 +209,7 @@ func CreateSourceTypesBigquery(bigquery SourceBigQuery) SourceTypes {
 
 func CreateSourceTypesBingAds(bingAds SourceBingAds) SourceTypes {
 	typ := SourceTypesTypeBingAds
+
 	typStr := SourceBingAdsType(typ)
 	bingAds.Type = typStr
 
@@ -218,6 +221,7 @@ func CreateSourceTypesBingAds(bingAds SourceBingAds) SourceTypes {
 
 func CreateSourceTypesBlackline(blackline SourceBlackline) SourceTypes {
 	typ := SourceTypesTypeBlackline
+
 	typStr := SourceBlacklineType(typ)
 	blackline.Type = typStr
 
@@ -229,6 +233,7 @@ func CreateSourceTypesBlackline(blackline SourceBlackline) SourceTypes {
 
 func CreateSourceTypesCriteo(criteo SourceCriteo) SourceTypes {
 	typ := SourceTypesTypeCriteo
+
 	typStr := SourceCriteoType(typ)
 	criteo.Type = typStr
 
@@ -240,6 +245,7 @@ func CreateSourceTypesCriteo(criteo SourceCriteo) SourceTypes {
 
 func CreateSourceTypesDb2(db2 SourceDb2) SourceTypes {
 	typ := SourceTypesTypeDb2
+
 	typStr := SourceDb2Type(typ)
 	db2.Type = typStr
 
@@ -251,6 +257,7 @@ func CreateSourceTypesDb2(db2 SourceDb2) SourceTypes {
 
 func CreateSourceTypesDb2Sharded(db2Sharded SourceDb2Sharded) SourceTypes {
 	typ := SourceTypesTypeDb2Sharded
+
 	typStr := SourceDb2ShardedType(typ)
 	db2Sharded.Type = typStr
 
@@ -262,6 +269,7 @@ func CreateSourceTypesDb2Sharded(db2Sharded SourceDb2Sharded) SourceTypes {
 
 func CreateSourceTypesDeltaLake(deltaLake SourceDeltaLake) SourceTypes {
 	typ := SourceTypesTypeDeltaLake
+
 	typStr := SourceDeltaLakeType(typ)
 	deltaLake.Type = typStr
 
@@ -273,6 +281,7 @@ func CreateSourceTypesDeltaLake(deltaLake SourceDeltaLake) SourceTypes {
 
 func CreateSourceTypesElasticsearch(elasticsearch SourceElasticSearch) SourceTypes {
 	typ := SourceTypesTypeElasticsearch
+
 	typStr := SourceElasticSearchType(typ)
 	elasticsearch.Type = typStr
 
@@ -284,6 +293,7 @@ func CreateSourceTypesElasticsearch(elasticsearch SourceElasticSearch) SourceTyp
 
 func CreateSourceTypesElluminate(elluminate SourceElluminate) SourceTypes {
 	typ := SourceTypesTypeElluminate
+
 	typStr := SourceElluminateType(typ)
 	elluminate.Type = typStr
 
@@ -295,6 +305,7 @@ func CreateSourceTypesElluminate(elluminate SourceElluminate) SourceTypes {
 
 func CreateSourceTypesEloqua(eloqua SourceEloqua) SourceTypes {
 	typ := SourceTypesTypeEloqua
+
 	typStr := SourceEloquaType(typ)
 	eloqua.Type = typStr
 
@@ -306,6 +317,7 @@ func CreateSourceTypesEloqua(eloqua SourceEloqua) SourceTypes {
 
 func CreateSourceTypesFacebookAds(facebookAds SourceFacebookAds) SourceTypes {
 	typ := SourceTypesTypeFacebookAds
+
 	typStr := SourceFacebookAdsType(typ)
 	facebookAds.Type = typStr
 
@@ -317,6 +329,7 @@ func CreateSourceTypesFacebookAds(facebookAds SourceFacebookAds) SourceTypes {
 
 func CreateSourceTypesFifteenFive(fifteenFive SourceFifteenFive) SourceTypes {
 	typ := SourceTypesTypeFifteenFive
+
 	typStr := SourceFifteenFiveType(typ)
 	fifteenFive.Type = typStr
 
@@ -328,6 +341,7 @@ func CreateSourceTypesFifteenFive(fifteenFive SourceFifteenFive) SourceTypes {
 
 func CreateSourceTypesFreshworks(freshworks SourceFreshworks) SourceTypes {
 	typ := SourceTypesTypeFreshworks
+
 	typStr := SourceFreshworksType(typ)
 	freshworks.Type = typStr
 
@@ -339,6 +353,7 @@ func CreateSourceTypesFreshworks(freshworks SourceFreshworks) SourceTypes {
 
 func CreateSourceTypesFtp(ftp SourceFtp) SourceTypes {
 	typ := SourceTypesTypeFtp
+
 	typStr := SourceFtpType(typ)
 	ftp.Type = typStr
 
@@ -350,6 +365,7 @@ func CreateSourceTypesFtp(ftp SourceFtp) SourceTypes {
 
 func CreateSourceTypesGong(gong SourceGong) SourceTypes {
 	typ := SourceTypesTypeGong
+
 	typStr := SourceGongType(typ)
 	gong.Type = typStr
 
@@ -361,6 +377,7 @@ func CreateSourceTypesGong(gong SourceGong) SourceTypes {
 
 func CreateSourceTypesGoogleAnalytics(googleAnalytics SourceGoogleAnalytics) SourceTypes {
 	typ := SourceTypesTypeGoogleAnalytics
+
 	typStr := SourceGoogleAnalyticsType(typ)
 	googleAnalytics.Type = typStr
 
@@ -372,6 +389,7 @@ func CreateSourceTypesGoogleAnalytics(googleAnalytics SourceGoogleAnalytics) Sou
 
 func CreateSourceTypesGoogleAnalyticsGa4(googleAnalyticsGa4 SourceGoogleAnalyticsGa4) SourceTypes {
 	typ := SourceTypesTypeGoogleAnalyticsGa4
+
 	typStr := SourceGoogleAnalyticsGa4Type(typ)
 	googleAnalyticsGa4.Type = typStr
 
@@ -383,6 +401,7 @@ func CreateSourceTypesGoogleAnalyticsGa4(googleAnalyticsGa4 SourceGoogleAnalytic
 
 func CreateSourceTypesGoogleCloudStorage(googleCloudStorage SourceGoogleCloudStorage) SourceTypes {
 	typ := SourceTypesTypeGoogleCloudStorage
+
 	typStr := SourceGoogleCloudStorageType(typ)
 	googleCloudStorage.Type = typStr
 
@@ -394,6 +413,7 @@ func CreateSourceTypesGoogleCloudStorage(googleCloudStorage SourceGoogleCloudSto
 
 func CreateSourceTypesGoogleAds(googleAds SourceGoogleAds) SourceTypes {
 	typ := SourceTypesTypeGoogleAds
+
 	typStr := SourceGoogleAdsType(typ)
 	googleAds.Type = typStr
 
@@ -405,6 +425,7 @@ func CreateSourceTypesGoogleAds(googleAds SourceGoogleAds) SourceTypes {
 
 func CreateSourceTypesGoogleSheets(googleSheets SourceGoogleSheets) SourceTypes {
 	typ := SourceTypesTypeGoogleSheets
+
 	typStr := SourceGoogleSheetsType(typ)
 	googleSheets.Type = typStr
 
@@ -416,6 +437,7 @@ func CreateSourceTypesGoogleSheets(googleSheets SourceGoogleSheets) SourceTypes 
 
 func CreateSourceTypesHubspot(hubspot SourceHubspot) SourceTypes {
 	typ := SourceTypesTypeHubspot
+
 	typStr := SourceHubspotType(typ)
 	hubspot.Type = typStr
 
@@ -427,6 +449,7 @@ func CreateSourceTypesHubspot(hubspot SourceHubspot) SourceTypes {
 
 func CreateSourceTypesIntercom(intercom SourceIntercom) SourceTypes {
 	typ := SourceTypesTypeIntercom
+
 	typStr := SourceIntercomType(typ)
 	intercom.Type = typStr
 
@@ -438,6 +461,7 @@ func CreateSourceTypesIntercom(intercom SourceIntercom) SourceTypes {
 
 func CreateSourceTypesImpactRadius(impactRadius SourceImpactRadius) SourceTypes {
 	typ := SourceTypesTypeImpactRadius
+
 	typStr := SourceImpactRadiusType(typ)
 	impactRadius.Type = typStr
 
@@ -449,6 +473,7 @@ func CreateSourceTypesImpactRadius(impactRadius SourceImpactRadius) SourceTypes 
 
 func CreateSourceTypesJira(jira SourceJira) SourceTypes {
 	typ := SourceTypesTypeJira
+
 	typStr := SourceJiraType(typ)
 	jira.Type = typStr
 
@@ -460,6 +485,7 @@ func CreateSourceTypesJira(jira SourceJira) SourceTypes {
 
 func CreateSourceTypesJiraAlign(jiraAlign SourceJiraAlign) SourceTypes {
 	typ := SourceTypesTypeJiraAlign
+
 	typStr := SourceJiraAlignType(typ)
 	jiraAlign.Type = typStr
 
@@ -471,6 +497,7 @@ func CreateSourceTypesJiraAlign(jiraAlign SourceJiraAlign) SourceTypes {
 
 func CreateSourceTypesKafka(kafka SourceKafka) SourceTypes {
 	typ := SourceTypesTypeKafka
+
 	typStr := SourceKafkaType(typ)
 	kafka.Type = typStr
 
@@ -482,6 +509,7 @@ func CreateSourceTypesKafka(kafka SourceKafka) SourceTypes {
 
 func CreateSourceTypesKustomer(kustomer SourceKustomer) SourceTypes {
 	typ := SourceTypesTypeKustomer
+
 	typStr := SourceKustomerType(typ)
 	kustomer.Type = typStr
 
@@ -493,6 +521,7 @@ func CreateSourceTypesKustomer(kustomer SourceKustomer) SourceTypes {
 
 func CreateSourceTypesLdap(ldap SourceLdap) SourceTypes {
 	typ := SourceTypesTypeLdap
+
 	typStr := SourceLdapType(typ)
 	ldap.Type = typStr
 
@@ -504,6 +533,7 @@ func CreateSourceTypesLdap(ldap SourceLdap) SourceTypes {
 
 func CreateSourceTypesLdapVirtualListView(ldapVirtualListView SourceLdapVirtualListView) SourceTypes {
 	typ := SourceTypesTypeLdapVirtualListView
+
 	typStr := SourceLdapVirtualListViewType(typ)
 	ldapVirtualListView.Type = typStr
 
@@ -515,6 +545,7 @@ func CreateSourceTypesLdapVirtualListView(ldapVirtualListView SourceLdapVirtualL
 
 func CreateSourceTypesLinkedInAds(linkedInAds SourceLinkedInAds) SourceTypes {
 	typ := SourceTypesTypeLinkedInAds
+
 	typStr := SourceLinkedInAdsType(typ)
 	linkedInAds.Type = typStr
 
@@ -526,6 +557,7 @@ func CreateSourceTypesLinkedInAds(linkedInAds SourceLinkedInAds) SourceTypes {
 
 func CreateSourceTypesMarketo(marketo SourceMarketo) SourceTypes {
 	typ := SourceTypesTypeMarketo
+
 	typStr := SourceMarketoType(typ)
 	marketo.Type = typStr
 
@@ -537,6 +569,7 @@ func CreateSourceTypesMarketo(marketo SourceMarketo) SourceTypes {
 
 func CreateSourceTypesMixpanel(mixpanel SourceMixpanel) SourceTypes {
 	typ := SourceTypesTypeMixpanel
+
 	typStr := SourceMixpanelType(typ)
 	mixpanel.Type = typStr
 
@@ -548,6 +581,7 @@ func CreateSourceTypesMixpanel(mixpanel SourceMixpanel) SourceTypes {
 
 func CreateSourceTypesMongodb(mongodb SourceMongodb) SourceTypes {
 	typ := SourceTypesTypeMongodb
+
 	typStr := SourceMongodbType(typ)
 	mongodb.Type = typStr
 
@@ -559,6 +593,7 @@ func CreateSourceTypesMongodb(mongodb SourceMongodb) SourceTypes {
 
 func CreateSourceTypesMysqlSharded(mysqlSharded SourceMysqlSharded) SourceTypes {
 	typ := SourceTypesTypeMysqlSharded
+
 	typStr := SourceMysqlShardedType(typ)
 	mysqlSharded.Type = typStr
 
@@ -570,6 +605,7 @@ func CreateSourceTypesMysqlSharded(mysqlSharded SourceMysqlSharded) SourceTypes 
 
 func CreateSourceTypesMysql(mysql SourceMysql) SourceTypes {
 	typ := SourceTypesTypeMysql
+
 	typStr := SourceMysqlType(typ)
 	mysql.Type = typStr
 
@@ -581,6 +617,7 @@ func CreateSourceTypesMysql(mysql SourceMysql) SourceTypes {
 
 func CreateSourceTypesNetsuite(netsuite SourceNetsuite) SourceTypes {
 	typ := SourceTypesTypeNetsuite
+
 	typStr := SourceNetsuiteType(typ)
 	netsuite.Type = typStr
 
@@ -592,6 +629,7 @@ func CreateSourceTypesNetsuite(netsuite SourceNetsuite) SourceTypes {
 
 func CreateSourceTypesNetsuiteV2(netsuiteV2 SourceNetsuiteV2) SourceTypes {
 	typ := SourceTypesTypeNetsuiteV2
+
 	typStr := SourceNetsuiteV2Type(typ)
 	netsuiteV2.Type = typStr
 
@@ -603,6 +641,7 @@ func CreateSourceTypesNetsuiteV2(netsuiteV2 SourceNetsuiteV2) SourceTypes {
 
 func CreateSourceTypesOracle(oracle SourceOracle) SourceTypes {
 	typ := SourceTypesTypeOracle
+
 	typStr := SourceOracleType(typ)
 	oracle.Type = typStr
 
@@ -614,6 +653,7 @@ func CreateSourceTypesOracle(oracle SourceOracle) SourceTypes {
 
 func CreateSourceTypesOracleSharded(oracleSharded SourceOracleSharded) SourceTypes {
 	typ := SourceTypesTypeOracleSharded
+
 	typStr := SourceOracleShardedType(typ)
 	oracleSharded.Type = typStr
 
@@ -625,6 +665,7 @@ func CreateSourceTypesOracleSharded(oracleSharded SourceOracleSharded) SourceTyp
 
 func CreateSourceTypesOutreach(outreach SourceOutreach) SourceTypes {
 	typ := SourceTypesTypeOutreach
+
 	typStr := SourceOutreachType(typ)
 	outreach.Type = typStr
 
@@ -636,6 +677,7 @@ func CreateSourceTypesOutreach(outreach SourceOutreach) SourceTypes {
 
 func CreateSourceTypesOutlook(outlook SourceOutlook) SourceTypes {
 	typ := SourceTypesTypeOutlook
+
 	typStr := SourceOutlookType(typ)
 	outlook.Type = typStr
 
@@ -647,6 +689,7 @@ func CreateSourceTypesOutlook(outlook SourceOutlook) SourceTypes {
 
 func CreateSourceTypesPinterestAds(pinterestAds SourcePinterestAds) SourceTypes {
 	typ := SourceTypesTypePinterestAds
+
 	typStr := SourcePinterestAdsType(typ)
 	pinterestAds.Type = typStr
 
@@ -658,6 +701,7 @@ func CreateSourceTypesPinterestAds(pinterestAds SourcePinterestAds) SourceTypes 
 
 func CreateSourceTypesPostgres(postgres SourcePostgres) SourceTypes {
 	typ := SourceTypesTypePostgres
+
 	typStr := SourcePostgresType(typ)
 	postgres.Type = typStr
 
@@ -669,6 +713,7 @@ func CreateSourceTypesPostgres(postgres SourcePostgres) SourceTypes {
 
 func CreateSourceTypesPostgresSharded(postgresSharded SourcePostgresSharded) SourceTypes {
 	typ := SourceTypesTypePostgresSharded
+
 	typStr := SourcePostgresShardedType(typ)
 	postgresSharded.Type = typStr
 
@@ -680,6 +725,7 @@ func CreateSourceTypesPostgresSharded(postgresSharded SourcePostgresSharded) Sou
 
 func CreateSourceTypesQuoraAds(quoraAds SourceQuoraAds) SourceTypes {
 	typ := SourceTypesTypeQuoraAds
+
 	typStr := SourceQuoraAdsType(typ)
 	quoraAds.Type = typStr
 
@@ -691,6 +737,7 @@ func CreateSourceTypesQuoraAds(quoraAds SourceQuoraAds) SourceTypes {
 
 func CreateSourceTypesRaveMedidata(raveMedidata SourceRaveMedidata) SourceTypes {
 	typ := SourceTypesTypeRaveMedidata
+
 	typStr := SourceRaveMedidataType(typ)
 	raveMedidata.Type = typStr
 
@@ -702,6 +749,7 @@ func CreateSourceTypesRaveMedidata(raveMedidata SourceRaveMedidata) SourceTypes 
 
 func CreateSourceTypesRecurly(recurly SourceRecurly) SourceTypes {
 	typ := SourceTypesTypeRecurly
+
 	typStr := SourceRecurlyType(typ)
 	recurly.Type = typStr
 
@@ -713,6 +761,7 @@ func CreateSourceTypesRecurly(recurly SourceRecurly) SourceTypes {
 
 func CreateSourceTypesRedshift(redshift SourceRedshift) SourceTypes {
 	typ := SourceTypesTypeRedshift
+
 	typStr := SourceRedshiftType(typ)
 	redshift.Type = typStr
 
@@ -724,6 +773,7 @@ func CreateSourceTypesRedshift(redshift SourceRedshift) SourceTypes {
 
 func CreateSourceTypesRedshiftSharded(redshiftSharded SourceRedshiftSharded) SourceTypes {
 	typ := SourceTypesTypeRedshiftSharded
+
 	typStr := SourceRedshiftShardedType(typ)
 	redshiftSharded.Type = typStr
 
@@ -735,6 +785,7 @@ func CreateSourceTypesRedshiftSharded(redshiftSharded SourceRedshiftSharded) Sou
 
 func CreateSourceTypesS3Legacy(s3Legacy SourceS3Legacy) SourceTypes {
 	typ := SourceTypesTypeS3Legacy
+
 	typStr := SourceS3LegacyType(typ)
 	s3Legacy.Type = typStr
 
@@ -746,6 +797,7 @@ func CreateSourceTypesS3Legacy(s3Legacy SourceS3Legacy) SourceTypes {
 
 func CreateSourceTypesS3Input(s3Input SourceS3Input) SourceTypes {
 	typ := SourceTypesTypeS3Input
+
 	typStr := SourceS3InputType(typ)
 	s3Input.Type = typStr
 
@@ -757,6 +809,7 @@ func CreateSourceTypesS3Input(s3Input SourceS3Input) SourceTypes {
 
 func CreateSourceTypesSalesforceMarketingCloud(salesforceMarketingCloud SourceSalesforceMarketingCloud) SourceTypes {
 	typ := SourceTypesTypeSalesforceMarketingCloud
+
 	typStr := SourceSalesforceMarketingCloudType(typ)
 	salesforceMarketingCloud.Type = typStr
 
@@ -768,6 +821,7 @@ func CreateSourceTypesSalesforceMarketingCloud(salesforceMarketingCloud SourceSa
 
 func CreateSourceTypesSapHana(sapHana SourceSapHana) SourceTypes {
 	typ := SourceTypesTypeSapHana
+
 	typStr := SourceSapHanaType(typ)
 	sapHana.Type = typStr
 
@@ -779,6 +833,7 @@ func CreateSourceTypesSapHana(sapHana SourceSapHana) SourceTypes {
 
 func CreateSourceTypesSapHanaSharded(sapHanaSharded SourceSapHanaSharded) SourceTypes {
 	typ := SourceTypesTypeSapHanaSharded
+
 	typStr := SourceSapHanaShardedType(typ)
 	sapHanaSharded.Type = typStr
 
@@ -790,6 +845,7 @@ func CreateSourceTypesSapHanaSharded(sapHanaSharded SourceSapHanaSharded) Source
 
 func CreateSourceTypesSeismic(seismic SourceSeismic) SourceTypes {
 	typ := SourceTypesTypeSeismic
+
 	typStr := SourceSeismicType(typ)
 	seismic.Type = typStr
 
@@ -801,6 +857,7 @@ func CreateSourceTypesSeismic(seismic SourceSeismic) SourceTypes {
 
 func CreateSourceTypesShopify(shopify SourceShopify) SourceTypes {
 	typ := SourceTypesTypeShopify
+
 	typStr := SourceShopifyType(typ)
 	shopify.Type = typStr
 
@@ -812,6 +869,7 @@ func CreateSourceTypesShopify(shopify SourceShopify) SourceTypes {
 
 func CreateSourceTypesSkyward(skyward SourceSkyward) SourceTypes {
 	typ := SourceTypesTypeSkyward
+
 	typStr := SourceSkywardType(typ)
 	skyward.Type = typStr
 
@@ -823,6 +881,7 @@ func CreateSourceTypesSkyward(skyward SourceSkyward) SourceTypes {
 
 func CreateSourceTypesSalesforce(salesforce SourceSalesforce) SourceTypes {
 	typ := SourceTypesTypeSalesforce
+
 	typStr := SourceSalesforceType(typ)
 	salesforce.Type = typStr
 
@@ -834,6 +893,7 @@ func CreateSourceTypesSalesforce(salesforce SourceSalesforce) SourceTypes {
 
 func CreateSourceTypesSftp(sftp SourceSftp) SourceTypes {
 	typ := SourceTypesTypeSftp
+
 	typStr := SourceSftpType(typ)
 	sftp.Type = typStr
 
@@ -845,6 +905,7 @@ func CreateSourceTypesSftp(sftp SourceSftp) SourceTypes {
 
 func CreateSourceTypesSQLServer(sqlServer SourceSQLServer) SourceTypes {
 	typ := SourceTypesTypeSQLServer
+
 	typStr := SourceSQLServerType(typ)
 	sqlServer.Type = typStr
 
@@ -856,6 +917,7 @@ func CreateSourceTypesSQLServer(sqlServer SourceSQLServer) SourceTypes {
 
 func CreateSourceTypesSQLServerSharded(sqlServerSharded SourceSQLServerSharded) SourceTypes {
 	typ := SourceTypesTypeSQLServerSharded
+
 	typStr := SourceSQLServerShardedType(typ)
 	sqlServerSharded.Type = typStr
 
@@ -867,6 +929,7 @@ func CreateSourceTypesSQLServerSharded(sqlServerSharded SourceSQLServerSharded) 
 
 func CreateSourceTypesStreaming(streaming SourceStreaming) SourceTypes {
 	typ := SourceTypesTypeStreaming
+
 	typStr := SourceStreamingType(typ)
 	streaming.Type = typStr
 
@@ -878,6 +941,7 @@ func CreateSourceTypesStreaming(streaming SourceStreaming) SourceTypes {
 
 func CreateSourceTypesSnowflake(snowflake SourceSnowflake) SourceTypes {
 	typ := SourceTypesTypeSnowflake
+
 	typStr := SourceSnowflakeType(typ)
 	snowflake.Type = typStr
 
@@ -889,6 +953,7 @@ func CreateSourceTypesSnowflake(snowflake SourceSnowflake) SourceTypes {
 
 func CreateSourceTypesSnowflakeSharded(snowflakeSharded SourceSnowflakeSharded) SourceTypes {
 	typ := SourceTypesTypeSnowflakeSharded
+
 	typStr := SourceSnowflakeShardedType(typ)
 	snowflakeSharded.Type = typStr
 
@@ -900,6 +965,7 @@ func CreateSourceTypesSnowflakeSharded(snowflakeSharded SourceSnowflakeSharded) 
 
 func CreateSourceTypesSquare(square SourceSquare) SourceTypes {
 	typ := SourceTypesTypeSquare
+
 	typStr := SourceSquareType(typ)
 	square.Type = typStr
 
@@ -911,6 +977,7 @@ func CreateSourceTypesSquare(square SourceSquare) SourceTypes {
 
 func CreateSourceTypesSnapchatAds(snapchatAds SourceSnapchatAds) SourceTypes {
 	typ := SourceTypesTypeSnapchatAds
+
 	typStr := SourceSnapchatAdsType(typ)
 	snapchatAds.Type = typStr
 
@@ -922,6 +989,7 @@ func CreateSourceTypesSnapchatAds(snapchatAds SourceSnapchatAds) SourceTypes {
 
 func CreateSourceTypesStripe(stripe SourceStripe) SourceTypes {
 	typ := SourceTypesTypeStripe
+
 	typStr := SourceStripeType(typ)
 	stripe.Type = typStr
 
@@ -933,6 +1001,7 @@ func CreateSourceTypesStripe(stripe SourceStripe) SourceTypes {
 
 func CreateSourceTypesSumtotal(sumtotal SourceSumTotal) SourceTypes {
 	typ := SourceTypesTypeSumtotal
+
 	typStr := SourceSumTotalType(typ)
 	sumtotal.Type = typStr
 
@@ -944,6 +1013,7 @@ func CreateSourceTypesSumtotal(sumtotal SourceSumTotal) SourceTypes {
 
 func CreateSourceTypesTheTradeDesk(theTradeDesk SourceTheTradeDesk) SourceTypes {
 	typ := SourceTypesTypeTheTradeDesk
+
 	typStr := SourceTheTradeDeskType(typ)
 	theTradeDesk.Type = typStr
 
@@ -955,6 +1025,7 @@ func CreateSourceTypesTheTradeDesk(theTradeDesk SourceTheTradeDesk) SourceTypes 
 
 func CreateSourceTypesTikTokAds(tikTokAds SourceTikTokAds) SourceTypes {
 	typ := SourceTypesTypeTikTokAds
+
 	typStr := SourceTikTokAdsType(typ)
 	tikTokAds.Type = typStr
 
@@ -966,6 +1037,7 @@ func CreateSourceTypesTikTokAds(tikTokAds SourceTikTokAds) SourceTypes {
 
 func CreateSourceTypesTwilio(twilio SourceTwilio) SourceTypes {
 	typ := SourceTypesTypeTwilio
+
 	typStr := SourceTwilioType(typ)
 	twilio.Type = typStr
 
@@ -977,6 +1049,7 @@ func CreateSourceTypesTwilio(twilio SourceTwilio) SourceTypes {
 
 func CreateSourceTypesTwitterAds(twitterAds SourceTwitter) SourceTypes {
 	typ := SourceTypesTypeTwitterAds
+
 	typStr := SourceTwitterType(typ)
 	twitterAds.Type = typStr
 
@@ -988,6 +1061,7 @@ func CreateSourceTypesTwitterAds(twitterAds SourceTwitter) SourceTypes {
 
 func CreateSourceTypesUserDefinedAPI(userDefinedAPI SourceUserDefinedAPI) SourceTypes {
 	typ := SourceTypesTypeUserDefinedAPI
+
 	typStr := SourceUserDefinedAPIType(typ)
 	userDefinedAPI.Type = typStr
 
@@ -999,6 +1073,7 @@ func CreateSourceTypesUserDefinedAPI(userDefinedAPI SourceUserDefinedAPI) Source
 
 func CreateSourceTypesUservoice(uservoice SourceUserVoice) SourceTypes {
 	typ := SourceTypesTypeUservoice
+
 	typStr := SourceUserVoiceType(typ)
 	uservoice.Type = typStr
 
@@ -1010,6 +1085,7 @@ func CreateSourceTypesUservoice(uservoice SourceUserVoice) SourceTypes {
 
 func CreateSourceTypesVeeva(veeva SourceVeeva) SourceTypes {
 	typ := SourceTypesTypeVeeva
+
 	typStr := SourceVeevaType(typ)
 	veeva.Type = typStr
 
@@ -1021,6 +1097,7 @@ func CreateSourceTypesVeeva(veeva SourceVeeva) SourceTypes {
 
 func CreateSourceTypesVerizonMediaDsp(verizonMediaDsp SourceVerizonMediaDsp) SourceTypes {
 	typ := SourceTypesTypeVerizonMediaDsp
+
 	typStr := SourceVerizonMediaDspType(typ)
 	verizonMediaDsp.Type = typStr
 
@@ -1032,6 +1109,7 @@ func CreateSourceTypesVerizonMediaDsp(verizonMediaDsp SourceVerizonMediaDsp) Sou
 
 func CreateSourceTypesWorkdayReport(workdayReport SourceWorkdayReport) SourceTypes {
 	typ := SourceTypesTypeWorkdayReport
+
 	typStr := SourceWorkdayReportType(typ)
 	workdayReport.Type = typStr
 
@@ -1043,6 +1121,7 @@ func CreateSourceTypesWorkdayReport(workdayReport SourceWorkdayReport) SourceTyp
 
 func CreateSourceTypesWorkfront(workfront SourceWorkfront) SourceTypes {
 	typ := SourceTypesTypeWorkfront
+
 	typStr := SourceWorkfrontType(typ)
 	workfront.Type = typStr
 
@@ -1054,6 +1133,7 @@ func CreateSourceTypesWorkfront(workfront SourceWorkfront) SourceTypes {
 
 func CreateSourceTypesZendesk(zendesk SourceZendesk) SourceTypes {
 	typ := SourceTypesTypeZendesk
+
 	typStr := SourceZendeskType(typ)
 	zendesk.Type = typStr
 
@@ -1065,6 +1145,7 @@ func CreateSourceTypesZendesk(zendesk SourceZendesk) SourceTypes {
 
 func CreateSourceTypesZoomPhone(zoomPhone SourceZoomPhone) SourceTypes {
 	typ := SourceTypesTypeZoomPhone
+
 	typStr := SourceZoomPhoneType(typ)
 	zoomPhone.Type = typStr
 
@@ -1076,6 +1157,7 @@ func CreateSourceTypesZoomPhone(zoomPhone SourceZoomPhone) SourceTypes {
 
 func CreateSourceTypesZuora(zuora SourceZuora) SourceTypes {
 	typ := SourceTypesTypeZuora
+
 	typStr := SourceZuoraType(typ)
 	zuora.Type = typStr
 

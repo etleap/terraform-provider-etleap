@@ -31,6 +31,7 @@ type RefreshScheduleTypes struct {
 
 func CreateRefreshScheduleTypesNever(never RefreshScheduleModeNever) RefreshScheduleTypes {
 	typ := RefreshScheduleTypesTypeNever
+
 	typStr := RefreshScheduleModeNeverMode(typ)
 	never.Mode = typStr
 
@@ -42,6 +43,7 @@ func CreateRefreshScheduleTypesNever(never RefreshScheduleModeNever) RefreshSche
 
 func CreateRefreshScheduleTypesHourly(hourly RefreshScheduleModeHourly) RefreshScheduleTypes {
 	typ := RefreshScheduleTypesTypeHourly
+
 	typStr := RefreshScheduleModeHourlyMode(typ)
 	hourly.Mode = typStr
 
@@ -53,6 +55,7 @@ func CreateRefreshScheduleTypesHourly(hourly RefreshScheduleModeHourly) RefreshS
 
 func CreateRefreshScheduleTypesDaily(daily RefreshScheduleModeDaily) RefreshScheduleTypes {
 	typ := RefreshScheduleTypesTypeDaily
+
 	typStr := RefreshScheduleModeDailyMode(typ)
 	daily.Mode = typStr
 
@@ -64,6 +67,7 @@ func CreateRefreshScheduleTypesDaily(daily RefreshScheduleModeDaily) RefreshSche
 
 func CreateRefreshScheduleTypesWeekly(weekly RefreshScheduleModeWeekly) RefreshScheduleTypes {
 	typ := RefreshScheduleTypesTypeWeekly
+
 	typStr := RefreshScheduleModeWeeklyMode(typ)
 	weekly.Mode = typStr
 
@@ -75,6 +79,7 @@ func CreateRefreshScheduleTypesWeekly(weekly RefreshScheduleModeWeekly) RefreshS
 
 func CreateRefreshScheduleTypesMonthly(monthly RefreshScheduleModeMonthly) RefreshScheduleTypes {
 	typ := RefreshScheduleTypesTypeMonthly
+
 	typStr := RefreshScheduleModeMonthlyMode(typ)
 	monthly.Mode = typStr
 

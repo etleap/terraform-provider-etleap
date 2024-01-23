@@ -25,6 +25,7 @@ type WarehouseTypes struct {
 
 func CreateWarehouseTypesRedshift(redshift WarehouseRedshift) WarehouseTypes {
 	typ := WarehouseTypesTypeRedshift
+
 	typStr := WarehouseRedshiftType(typ)
 	redshift.Type = typStr
 
@@ -36,6 +37,7 @@ func CreateWarehouseTypesRedshift(redshift WarehouseRedshift) WarehouseTypes {
 
 func CreateWarehouseTypesSnowflake(snowflake WarehouseSnowflake) WarehouseTypes {
 	typ := WarehouseTypesTypeSnowflake
+
 	typStr := WarehouseSnowflakeType(typ)
 	snowflake.Type = typStr
 

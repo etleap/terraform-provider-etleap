@@ -32,6 +32,7 @@ type UpdateScheduleTypes struct {
 
 func CreateUpdateScheduleTypesInterval(interval UpdateScheduleModeInterval) UpdateScheduleTypes {
 	typ := UpdateScheduleTypesTypeInterval
+
 	typStr := Mode(typ)
 	interval.Mode = typStr
 
@@ -43,6 +44,7 @@ func CreateUpdateScheduleTypesInterval(interval UpdateScheduleModeInterval) Upda
 
 func CreateUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourly) UpdateScheduleTypes {
 	typ := UpdateScheduleTypesTypeHourly
+
 	typStr := UpdateScheduleModeHourlyMode(typ)
 	hourly.Mode = typStr
 
@@ -54,6 +56,7 @@ func CreateUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourly) UpdateSche
 
 func CreateUpdateScheduleTypesDaily(daily UpdateScheduleModeDaily) UpdateScheduleTypes {
 	typ := UpdateScheduleTypesTypeDaily
+
 	typStr := UpdateScheduleModeDailyMode(typ)
 	daily.Mode = typStr
 
@@ -65,6 +68,7 @@ func CreateUpdateScheduleTypesDaily(daily UpdateScheduleModeDaily) UpdateSchedul
 
 func CreateUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeekly) UpdateScheduleTypes {
 	typ := UpdateScheduleTypesTypeWeekly
+
 	typStr := UpdateScheduleModeWeeklyMode(typ)
 	weekly.Mode = typStr
 
@@ -76,6 +80,7 @@ func CreateUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeekly) UpdateSche
 
 func CreateUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthly) UpdateScheduleTypes {
 	typ := UpdateScheduleTypesTypeMonthly
+
 	typStr := UpdateScheduleModeMonthlyMode(typ)
 	monthly.Mode = typStr
 

@@ -181,6 +181,7 @@ type ConnectionTypesInput struct {
 
 func CreateConnectionTypesInputActiveCampaign(activeCampaign ConnectionActiveCampaignInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeActiveCampaign
+
 	typStr := ConnectionActiveCampaignType(typ)
 	activeCampaign.Type = typStr
 
@@ -192,6 +193,7 @@ func CreateConnectionTypesInputActiveCampaign(activeCampaign ConnectionActiveCam
 
 func CreateConnectionTypesInputBigquery(bigquery ConnectionBigQueryInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeBigquery
+
 	typStr := ConnectionBigQueryType(typ)
 	bigquery.Type = typStr
 
@@ -203,6 +205,7 @@ func CreateConnectionTypesInputBigquery(bigquery ConnectionBigQueryInput) Connec
 
 func CreateConnectionTypesInputBingAds(bingAds ConnectionBingInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeBingAds
+
 	typStr := ConnectionBingType(typ)
 	bingAds.Type = typStr
 
@@ -214,6 +217,7 @@ func CreateConnectionTypesInputBingAds(bingAds ConnectionBingInput) ConnectionTy
 
 func CreateConnectionTypesInputBlackline(blackline ConnectionBlacklineInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeBlackline
+
 	typStr := ConnectionBlacklineType(typ)
 	blackline.Type = typStr
 
@@ -225,6 +229,7 @@ func CreateConnectionTypesInputBlackline(blackline ConnectionBlacklineInput) Con
 
 func CreateConnectionTypesInputCriteo(criteo ConnectionCriteoInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeCriteo
+
 	typStr := ConnectionCriteoType(typ)
 	criteo.Type = typStr
 
@@ -236,6 +241,7 @@ func CreateConnectionTypesInputCriteo(criteo ConnectionCriteoInput) ConnectionTy
 
 func CreateConnectionTypesInputDb2(db2 ConnectionDb2Input) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeDb2
+
 	typStr := ConnectionDb2Type(typ)
 	db2.Type = typStr
 
@@ -247,6 +253,7 @@ func CreateConnectionTypesInputDb2(db2 ConnectionDb2Input) ConnectionTypesInput 
 
 func CreateConnectionTypesInputDb2Sharded(db2Sharded ConnectionDb2ShardedInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeDb2Sharded
+
 	typStr := ConnectionDb2ShardedType(typ)
 	db2Sharded.Type = typStr
 
@@ -258,6 +265,7 @@ func CreateConnectionTypesInputDb2Sharded(db2Sharded ConnectionDb2ShardedInput) 
 
 func CreateConnectionTypesInputDeltaLake(deltaLake ConnectionDeltaLakeInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeDeltaLake
+
 	typStr := ConnectionDeltaLakeType(typ)
 	deltaLake.Type = typStr
 
@@ -269,6 +277,7 @@ func CreateConnectionTypesInputDeltaLake(deltaLake ConnectionDeltaLakeInput) Con
 
 func CreateConnectionTypesInputElasticsearch(elasticsearch ConnectionElasticSearchInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeElasticsearch
+
 	typStr := ConnectionElasticSearchType(typ)
 	elasticsearch.Type = typStr
 
@@ -280,6 +289,7 @@ func CreateConnectionTypesInputElasticsearch(elasticsearch ConnectionElasticSear
 
 func CreateConnectionTypesInputElluminate(elluminate ConnectionElluminateInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeElluminate
+
 	typStr := ConnectionElluminateType(typ)
 	elluminate.Type = typStr
 
@@ -291,6 +301,7 @@ func CreateConnectionTypesInputElluminate(elluminate ConnectionElluminateInput) 
 
 func CreateConnectionTypesInputEloqua(eloqua ConnectionEloquaInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeEloqua
+
 	typStr := ConnectionEloquaType(typ)
 	eloqua.Type = typStr
 
@@ -302,6 +313,7 @@ func CreateConnectionTypesInputEloqua(eloqua ConnectionEloquaInput) ConnectionTy
 
 func CreateConnectionTypesInputFacebookAds(facebookAds ConnectionFbInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeFacebookAds
+
 	typStr := ConnectionFbType(typ)
 	facebookAds.Type = typStr
 
@@ -313,6 +325,7 @@ func CreateConnectionTypesInputFacebookAds(facebookAds ConnectionFbInput) Connec
 
 func CreateConnectionTypesInputFifteenFive(fifteenFive ConnectionFifteenFiveInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeFifteenFive
+
 	typStr := ConnectionFifteenFiveType(typ)
 	fifteenFive.Type = typStr
 
@@ -324,6 +337,7 @@ func CreateConnectionTypesInputFifteenFive(fifteenFive ConnectionFifteenFiveInpu
 
 func CreateConnectionTypesInputFreshworks(freshworks ConnectionFreshworksInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeFreshworks
+
 	typStr := ConnectionFreshworksType(typ)
 	freshworks.Type = typStr
 
@@ -335,6 +349,7 @@ func CreateConnectionTypesInputFreshworks(freshworks ConnectionFreshworksInput) 
 
 func CreateConnectionTypesInputFtp(ftp ConnectionFtpInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeFtp
+
 	typStr := ConnectionFtpType(typ)
 	ftp.Type = typStr
 
@@ -346,6 +361,7 @@ func CreateConnectionTypesInputFtp(ftp ConnectionFtpInput) ConnectionTypesInput 
 
 func CreateConnectionTypesInputGong(gong ConnectionGongInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeGong
+
 	typStr := ConnectionGongType(typ)
 	gong.Type = typStr
 
@@ -357,6 +373,7 @@ func CreateConnectionTypesInputGong(gong ConnectionGongInput) ConnectionTypesInp
 
 func CreateConnectionTypesInputGoogleAds(googleAds ConnectionGoogleAdsInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeGoogleAds
+
 	typStr := ConnectionGoogleAdsType(typ)
 	googleAds.Type = typStr
 
@@ -368,6 +385,7 @@ func CreateConnectionTypesInputGoogleAds(googleAds ConnectionGoogleAdsInput) Con
 
 func CreateConnectionTypesInputGoogleAnalytics(googleAnalytics ConnectionGaInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeGoogleAnalytics
+
 	typStr := ConnectionGaType(typ)
 	googleAnalytics.Type = typStr
 
@@ -379,6 +397,7 @@ func CreateConnectionTypesInputGoogleAnalytics(googleAnalytics ConnectionGaInput
 
 func CreateConnectionTypesInputGoogleAnalyticsGa4(googleAnalyticsGa4 ConnectionGoogleAnalyticsGa4Input) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeGoogleAnalyticsGa4
+
 	typStr := ConnectionGoogleAnalyticsGa4Type(typ)
 	googleAnalyticsGa4.Type = typStr
 
@@ -390,6 +409,7 @@ func CreateConnectionTypesInputGoogleAnalyticsGa4(googleAnalyticsGa4 ConnectionG
 
 func CreateConnectionTypesInputGoogleCloudStorage(googleCloudStorage ConnectionGoogleCloudStorageInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeGoogleCloudStorage
+
 	typStr := ConnectionGoogleCloudStorageType(typ)
 	googleCloudStorage.Type = typStr
 
@@ -401,6 +421,7 @@ func CreateConnectionTypesInputGoogleCloudStorage(googleCloudStorage ConnectionG
 
 func CreateConnectionTypesInputGoogleSheets(googleSheets ConnectionGoogleSheetsInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeGoogleSheets
+
 	typStr := ConnectionGoogleSheetsType(typ)
 	googleSheets.Type = typStr
 
@@ -412,6 +433,7 @@ func CreateConnectionTypesInputGoogleSheets(googleSheets ConnectionGoogleSheetsI
 
 func CreateConnectionTypesInputHubspot(hubspot ConnectionHubspotInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeHubspot
+
 	typStr := ConnectionHubspotType(typ)
 	hubspot.Type = typStr
 
@@ -423,6 +445,7 @@ func CreateConnectionTypesInputHubspot(hubspot ConnectionHubspotInput) Connectio
 
 func CreateConnectionTypesInputImpactRadius(impactRadius ConnectionImpactRadiusInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeImpactRadius
+
 	typStr := ConnectionImpactRadiusType(typ)
 	impactRadius.Type = typStr
 
@@ -434,6 +457,7 @@ func CreateConnectionTypesInputImpactRadius(impactRadius ConnectionImpactRadiusI
 
 func CreateConnectionTypesInputIntercom(intercom ConnectionIntercomInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeIntercom
+
 	typStr := ConnectionIntercomType(typ)
 	intercom.Type = typStr
 
@@ -445,6 +469,7 @@ func CreateConnectionTypesInputIntercom(intercom ConnectionIntercomInput) Connec
 
 func CreateConnectionTypesInputJiraAlign(jiraAlign ConnectionJiraAlignInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeJiraAlign
+
 	typStr := ConnectionJiraAlignType(typ)
 	jiraAlign.Type = typStr
 
@@ -456,6 +481,7 @@ func CreateConnectionTypesInputJiraAlign(jiraAlign ConnectionJiraAlignInput) Con
 
 func CreateConnectionTypesInputKafka(kafka ConnectionKafkaInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeKafka
+
 	typStr := ConnectionKafkaType(typ)
 	kafka.Type = typStr
 
@@ -467,6 +493,7 @@ func CreateConnectionTypesInputKafka(kafka ConnectionKafkaInput) ConnectionTypes
 
 func CreateConnectionTypesInputKustomer(kustomer ConnectionKustomerInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeKustomer
+
 	typStr := ConnectionKustomerType(typ)
 	kustomer.Type = typStr
 
@@ -478,6 +505,7 @@ func CreateConnectionTypesInputKustomer(kustomer ConnectionKustomerInput) Connec
 
 func CreateConnectionTypesInputLdap(ldap ConnectionLdapInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeLdap
+
 	typStr := ConnectionLdapType(typ)
 	ldap.Type = typStr
 
@@ -489,6 +517,7 @@ func CreateConnectionTypesInputLdap(ldap ConnectionLdapInput) ConnectionTypesInp
 
 func CreateConnectionTypesInputLdapVirtualListView(ldapVirtualListView ConnectionLdapVirtualListViewInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeLdapVirtualListView
+
 	typStr := ConnectionLdapVirtualListViewType(typ)
 	ldapVirtualListView.Type = typStr
 
@@ -500,6 +529,7 @@ func CreateConnectionTypesInputLdapVirtualListView(ldapVirtualListView Connectio
 
 func CreateConnectionTypesInputLinkedInAds(linkedInAds ConnectionLinkedInAdsInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeLinkedInAds
+
 	typStr := ConnectionLinkedInAdsType(typ)
 	linkedInAds.Type = typStr
 
@@ -511,6 +541,7 @@ func CreateConnectionTypesInputLinkedInAds(linkedInAds ConnectionLinkedInAdsInpu
 
 func CreateConnectionTypesInputMarketo(marketo ConnectionMarketoInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeMarketo
+
 	typStr := ConnectionMarketoType(typ)
 	marketo.Type = typStr
 
@@ -522,6 +553,7 @@ func CreateConnectionTypesInputMarketo(marketo ConnectionMarketoInput) Connectio
 
 func CreateConnectionTypesInputMixpanel(mixpanel ConnectionMixpanelInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeMixpanel
+
 	typStr := ConnectionMixpanelType(typ)
 	mixpanel.Type = typStr
 
@@ -533,6 +565,7 @@ func CreateConnectionTypesInputMixpanel(mixpanel ConnectionMixpanelInput) Connec
 
 func CreateConnectionTypesInputMongodb(mongodb ConnectionMongoInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeMongodb
+
 	typStr := ConnectionMongoType(typ)
 	mongodb.Type = typStr
 
@@ -544,6 +577,7 @@ func CreateConnectionTypesInputMongodb(mongodb ConnectionMongoInput) ConnectionT
 
 func CreateConnectionTypesInputMysql(mysql ConnectionMysqlInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeMysql
+
 	typStr := ConnectionMysqlType(typ)
 	mysql.Type = typStr
 
@@ -555,6 +589,7 @@ func CreateConnectionTypesInputMysql(mysql ConnectionMysqlInput) ConnectionTypes
 
 func CreateConnectionTypesInputMysqlSharded(mysqlSharded ConnectionMysqlShardedInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeMysqlSharded
+
 	typStr := ConnectionMysqlShardedType(typ)
 	mysqlSharded.Type = typStr
 
@@ -566,6 +601,7 @@ func CreateConnectionTypesInputMysqlSharded(mysqlSharded ConnectionMysqlShardedI
 
 func CreateConnectionTypesInputNetsuite(netsuite ConnectionNetsuiteInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeNetsuite
+
 	typStr := ConnectionNetsuiteType(typ)
 	netsuite.Type = typStr
 
@@ -577,6 +613,7 @@ func CreateConnectionTypesInputNetsuite(netsuite ConnectionNetsuiteInput) Connec
 
 func CreateConnectionTypesInputNetsuiteV2(netsuiteV2 ConnectionNetsuiteV2Input) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeNetsuiteV2
+
 	typStr := ConnectionNetsuiteV2Type(typ)
 	netsuiteV2.Type = typStr
 
@@ -588,6 +625,7 @@ func CreateConnectionTypesInputNetsuiteV2(netsuiteV2 ConnectionNetsuiteV2Input) 
 
 func CreateConnectionTypesInputOracle(oracle ConnectionOracleInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeOracle
+
 	typStr := ConnectionOracleType(typ)
 	oracle.Type = typStr
 
@@ -599,6 +637,7 @@ func CreateConnectionTypesInputOracle(oracle ConnectionOracleInput) ConnectionTy
 
 func CreateConnectionTypesInputOracleSharded(oracleSharded ConnectionOracleShardedInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeOracleSharded
+
 	typStr := ConnectionOracleShardedType(typ)
 	oracleSharded.Type = typStr
 
@@ -610,6 +649,7 @@ func CreateConnectionTypesInputOracleSharded(oracleSharded ConnectionOracleShard
 
 func CreateConnectionTypesInputOutlook(outlook ConnectionOutlookInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeOutlook
+
 	typStr := ConnectionOutlookType(typ)
 	outlook.Type = typStr
 
@@ -621,6 +661,7 @@ func CreateConnectionTypesInputOutlook(outlook ConnectionOutlookInput) Connectio
 
 func CreateConnectionTypesInputOutreach(outreach ConnectionOutreachInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeOutreach
+
 	typStr := ConnectionOutreachType(typ)
 	outreach.Type = typStr
 
@@ -632,6 +673,7 @@ func CreateConnectionTypesInputOutreach(outreach ConnectionOutreachInput) Connec
 
 func CreateConnectionTypesInputPinterestAds(pinterestAds ConnectionPinterestAdsInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypePinterestAds
+
 	typStr := ConnectionPinterestAdsType(typ)
 	pinterestAds.Type = typStr
 
@@ -643,6 +685,7 @@ func CreateConnectionTypesInputPinterestAds(pinterestAds ConnectionPinterestAdsI
 
 func CreateConnectionTypesInputPostgres(postgres ConnectionPostgresInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypePostgres
+
 	typStr := ConnectionPostgresType(typ)
 	postgres.Type = typStr
 
@@ -654,6 +697,7 @@ func CreateConnectionTypesInputPostgres(postgres ConnectionPostgresInput) Connec
 
 func CreateConnectionTypesInputPostgresSharded(postgresSharded ConnectionPostgresShardedInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypePostgresSharded
+
 	typStr := ConnectionPostgresShardedType(typ)
 	postgresSharded.Type = typStr
 
@@ -665,6 +709,7 @@ func CreateConnectionTypesInputPostgresSharded(postgresSharded ConnectionPostgre
 
 func CreateConnectionTypesInputQuoraAds(quoraAds ConnectionQuoraInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeQuoraAds
+
 	typStr := ConnectionQuoraType(typ)
 	quoraAds.Type = typStr
 
@@ -676,6 +721,7 @@ func CreateConnectionTypesInputQuoraAds(quoraAds ConnectionQuoraInput) Connectio
 
 func CreateConnectionTypesInputRaveMedidata(raveMedidata ConnectionRaveMedidataInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeRaveMedidata
+
 	typStr := ConnectionRaveMedidataType(typ)
 	raveMedidata.Type = typStr
 
@@ -687,6 +733,7 @@ func CreateConnectionTypesInputRaveMedidata(raveMedidata ConnectionRaveMedidataI
 
 func CreateConnectionTypesInputRecurly(recurly ConnectionRecurlyInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeRecurly
+
 	typStr := ConnectionRecurlyType(typ)
 	recurly.Type = typStr
 
@@ -698,6 +745,7 @@ func CreateConnectionTypesInputRecurly(recurly ConnectionRecurlyInput) Connectio
 
 func CreateConnectionTypesInputRedshift(redshift ConnectionRedshiftInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeRedshift
+
 	typStr := ConnectionRedshiftType(typ)
 	redshift.Type = typStr
 
@@ -709,6 +757,7 @@ func CreateConnectionTypesInputRedshift(redshift ConnectionRedshiftInput) Connec
 
 func CreateConnectionTypesInputRedshiftSharded(redshiftSharded ConnectionRedshiftShardedInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeRedshiftSharded
+
 	typStr := ConnectionRedshiftShardedType(typ)
 	redshiftSharded.Type = typStr
 
@@ -720,6 +769,7 @@ func CreateConnectionTypesInputRedshiftSharded(redshiftSharded ConnectionRedshif
 
 func CreateConnectionTypesInputS3DataLake(s3DataLake ConnectionS3DataLakeInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeS3DataLake
+
 	typStr := ConnectionS3DataLakeType(typ)
 	s3DataLake.Type = typStr
 
@@ -731,6 +781,7 @@ func CreateConnectionTypesInputS3DataLake(s3DataLake ConnectionS3DataLakeInput) 
 
 func CreateConnectionTypesInputS3Input(s3Input ConnectionS3InputInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeS3Input
+
 	typStr := ConnectionS3InputType(typ)
 	s3Input.Type = typStr
 
@@ -742,6 +793,7 @@ func CreateConnectionTypesInputS3Input(s3Input ConnectionS3InputInput) Connectio
 
 func CreateConnectionTypesInputSalesforce(salesforce ConnectionSalesforceInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSalesforce
+
 	typStr := ConnectionSalesforceType(typ)
 	salesforce.Type = typStr
 
@@ -753,6 +805,7 @@ func CreateConnectionTypesInputSalesforce(salesforce ConnectionSalesforceInput) 
 
 func CreateConnectionTypesInputSalesforceMarketingCloud(salesforceMarketingCloud ConnectionSalesforceMarketingCloudInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSalesforceMarketingCloud
+
 	typStr := ConnectionSalesforceMarketingCloudType(typ)
 	salesforceMarketingCloud.Type = typStr
 
@@ -764,6 +817,7 @@ func CreateConnectionTypesInputSalesforceMarketingCloud(salesforceMarketingCloud
 
 func CreateConnectionTypesInputSapHana(sapHana ConnectionSapHanaInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSapHana
+
 	typStr := ConnectionSapHanaType(typ)
 	sapHana.Type = typStr
 
@@ -775,6 +829,7 @@ func CreateConnectionTypesInputSapHana(sapHana ConnectionSapHanaInput) Connectio
 
 func CreateConnectionTypesInputSapHanaSharded(sapHanaSharded ConnectionSapHanaShardedInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSapHanaSharded
+
 	typStr := ConnectionSapHanaShardedType(typ)
 	sapHanaSharded.Type = typStr
 
@@ -786,6 +841,7 @@ func CreateConnectionTypesInputSapHanaSharded(sapHanaSharded ConnectionSapHanaSh
 
 func CreateConnectionTypesInputSeismic(seismic ConnectionSeismicInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSeismic
+
 	typStr := ConnectionSeismicType(typ)
 	seismic.Type = typStr
 
@@ -797,6 +853,7 @@ func CreateConnectionTypesInputSeismic(seismic ConnectionSeismicInput) Connectio
 
 func CreateConnectionTypesInputSftp(sftp ConnectionSftpInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSftp
+
 	typStr := ConnectionSftpType(typ)
 	sftp.Type = typStr
 
@@ -808,6 +865,7 @@ func CreateConnectionTypesInputSftp(sftp ConnectionSftpInput) ConnectionTypesInp
 
 func CreateConnectionTypesInputShopify(shopify ConnectionShopifyInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeShopify
+
 	typStr := ConnectionShopifyType(typ)
 	shopify.Type = typStr
 
@@ -819,6 +877,7 @@ func CreateConnectionTypesInputShopify(shopify ConnectionShopifyInput) Connectio
 
 func CreateConnectionTypesInputSkyward(skyward ConnectionSkywardInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSkyward
+
 	typStr := ConnectionSkywardType(typ)
 	skyward.Type = typStr
 
@@ -830,6 +889,7 @@ func CreateConnectionTypesInputSkyward(skyward ConnectionSkywardInput) Connectio
 
 func CreateConnectionTypesInputSnapchatAds(snapchatAds ConnectionSnapchatAdsInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSnapchatAds
+
 	typStr := ConnectionSnapchatAdsType(typ)
 	snapchatAds.Type = typStr
 
@@ -841,6 +901,7 @@ func CreateConnectionTypesInputSnapchatAds(snapchatAds ConnectionSnapchatAdsInpu
 
 func CreateConnectionTypesInputSnowflake(snowflake ConnectionSnowflakeInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSnowflake
+
 	typStr := ConnectionSnowflakeType(typ)
 	snowflake.Type = typStr
 
@@ -852,6 +913,7 @@ func CreateConnectionTypesInputSnowflake(snowflake ConnectionSnowflakeInput) Con
 
 func CreateConnectionTypesInputSnowflakeSharded(snowflakeSharded ConnectionSnowflakeShardedInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSnowflakeSharded
+
 	typStr := ConnectionSnowflakeShardedType(typ)
 	snowflakeSharded.Type = typStr
 
@@ -863,6 +925,7 @@ func CreateConnectionTypesInputSnowflakeSharded(snowflakeSharded ConnectionSnowf
 
 func CreateConnectionTypesInputSQLServer(sqlServer ConnectionSQLServerInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSQLServer
+
 	typStr := ConnectionSQLServerType(typ)
 	sqlServer.Type = typStr
 
@@ -874,6 +937,7 @@ func CreateConnectionTypesInputSQLServer(sqlServer ConnectionSQLServerInput) Con
 
 func CreateConnectionTypesInputSQLServerSharded(sqlServerSharded ConnectionSQLServerShardedInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSQLServerSharded
+
 	typStr := ConnectionSQLServerShardedType(typ)
 	sqlServerSharded.Type = typStr
 
@@ -885,6 +949,7 @@ func CreateConnectionTypesInputSQLServerSharded(sqlServerSharded ConnectionSQLSe
 
 func CreateConnectionTypesInputSquare(square ConnectionSquareInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSquare
+
 	typStr := ConnectionSquareType(typ)
 	square.Type = typStr
 
@@ -896,6 +961,7 @@ func CreateConnectionTypesInputSquare(square ConnectionSquareInput) ConnectionTy
 
 func CreateConnectionTypesInputStripe(stripe ConnectionStripeInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeStripe
+
 	typStr := ConnectionStripeType(typ)
 	stripe.Type = typStr
 
@@ -907,6 +973,7 @@ func CreateConnectionTypesInputStripe(stripe ConnectionStripeInput) ConnectionTy
 
 func CreateConnectionTypesInputSumtotal(sumtotal ConnectionSumTotalInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeSumtotal
+
 	typStr := ConnectionSumTotalType(typ)
 	sumtotal.Type = typStr
 
@@ -918,6 +985,7 @@ func CreateConnectionTypesInputSumtotal(sumtotal ConnectionSumTotalInput) Connec
 
 func CreateConnectionTypesInputTheTradeDesk(theTradeDesk ConnectionTheTradeDeskInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeTheTradeDesk
+
 	typStr := ConnectionTheTradeDeskType(typ)
 	theTradeDesk.Type = typStr
 
@@ -929,6 +997,7 @@ func CreateConnectionTypesInputTheTradeDesk(theTradeDesk ConnectionTheTradeDeskI
 
 func CreateConnectionTypesInputTikTokAds(tikTokAds ConnectionTikTokAdsInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeTikTokAds
+
 	typStr := ConnectionTikTokAdsType(typ)
 	tikTokAds.Type = typStr
 
@@ -940,6 +1009,7 @@ func CreateConnectionTypesInputTikTokAds(tikTokAds ConnectionTikTokAdsInput) Con
 
 func CreateConnectionTypesInputTwilio(twilio ConnectionTwilioInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeTwilio
+
 	typStr := ConnectionTwilioType(typ)
 	twilio.Type = typStr
 
@@ -951,6 +1021,7 @@ func CreateConnectionTypesInputTwilio(twilio ConnectionTwilioInput) ConnectionTy
 
 func CreateConnectionTypesInputTwitterAds(twitterAds ConnectionTwitterInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeTwitterAds
+
 	typStr := ConnectionTwitterType(typ)
 	twitterAds.Type = typStr
 
@@ -962,6 +1033,7 @@ func CreateConnectionTypesInputTwitterAds(twitterAds ConnectionTwitterInput) Con
 
 func CreateConnectionTypesInputUservoice(uservoice ConnectionUserVoiceInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeUservoice
+
 	typStr := ConnectionUserVoiceType(typ)
 	uservoice.Type = typStr
 
@@ -973,6 +1045,7 @@ func CreateConnectionTypesInputUservoice(uservoice ConnectionUserVoiceInput) Con
 
 func CreateConnectionTypesInputUserDefinedAPI(userDefinedAPI ConnectionUserDefinedAPIInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeUserDefinedAPI
+
 	typStr := ConnectionUserDefinedAPIType(typ)
 	userDefinedAPI.Type = typStr
 
@@ -984,6 +1057,7 @@ func CreateConnectionTypesInputUserDefinedAPI(userDefinedAPI ConnectionUserDefin
 
 func CreateConnectionTypesInputVeeva(veeva ConnectionVeevaInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeVeeva
+
 	typStr := ConnectionVeevaType(typ)
 	veeva.Type = typStr
 
@@ -995,6 +1069,7 @@ func CreateConnectionTypesInputVeeva(veeva ConnectionVeevaInput) ConnectionTypes
 
 func CreateConnectionTypesInputVerizonMediaDsp(verizonMediaDsp ConnectionVerizonMediaInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeVerizonMediaDsp
+
 	typStr := ConnectionVerizonMediaType(typ)
 	verizonMediaDsp.Type = typStr
 
@@ -1006,6 +1081,7 @@ func CreateConnectionTypesInputVerizonMediaDsp(verizonMediaDsp ConnectionVerizon
 
 func CreateConnectionTypesInputWorkdayReport(workdayReport ConnectionWorkdayReportInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeWorkdayReport
+
 	typStr := ConnectionWorkdayReportType(typ)
 	workdayReport.Type = typStr
 
@@ -1017,6 +1093,7 @@ func CreateConnectionTypesInputWorkdayReport(workdayReport ConnectionWorkdayRepo
 
 func CreateConnectionTypesInputWorkfront(workfront ConnectionWorkfrontInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeWorkfront
+
 	typStr := ConnectionWorkfrontType(typ)
 	workfront.Type = typStr
 
@@ -1028,6 +1105,7 @@ func CreateConnectionTypesInputWorkfront(workfront ConnectionWorkfrontInput) Con
 
 func CreateConnectionTypesInputZendesk(zendesk ConnectionZendeskInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeZendesk
+
 	typStr := ConnectionZendeskType(typ)
 	zendesk.Type = typStr
 
@@ -1039,6 +1117,7 @@ func CreateConnectionTypesInputZendesk(zendesk ConnectionZendeskInput) Connectio
 
 func CreateConnectionTypesInputZoomPhone(zoomPhone ConnectionZoomPhoneInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeZoomPhone
+
 	typStr := ConnectionZoomPhoneType(typ)
 	zoomPhone.Type = typStr
 
@@ -1050,6 +1129,7 @@ func CreateConnectionTypesInputZoomPhone(zoomPhone ConnectionZoomPhoneInput) Con
 
 func CreateConnectionTypesInputZuora(zuora ConnectionZuoraInput) ConnectionTypesInput {
 	typ := ConnectionTypesInputTypeZuora
+
 	typStr := ConnectionZuoraType(typ)
 	zuora.Type = typStr
 

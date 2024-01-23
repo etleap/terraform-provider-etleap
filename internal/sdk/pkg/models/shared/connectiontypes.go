@@ -181,6 +181,7 @@ type ConnectionTypes struct {
 
 func CreateConnectionTypesActiveCampaign(activeCampaign ConnectionActiveCampaign) ConnectionTypes {
 	typ := ConnectionTypesTypeActiveCampaign
+
 	typStr := ConnectionActiveCampaignType(typ)
 	activeCampaign.Type = typStr
 
@@ -192,6 +193,7 @@ func CreateConnectionTypesActiveCampaign(activeCampaign ConnectionActiveCampaign
 
 func CreateConnectionTypesBigquery(bigquery ConnectionBigQuery) ConnectionTypes {
 	typ := ConnectionTypesTypeBigquery
+
 	typStr := ConnectionBigQueryType(typ)
 	bigquery.Type = typStr
 
@@ -203,6 +205,7 @@ func CreateConnectionTypesBigquery(bigquery ConnectionBigQuery) ConnectionTypes 
 
 func CreateConnectionTypesBingAds(bingAds ConnectionBing) ConnectionTypes {
 	typ := ConnectionTypesTypeBingAds
+
 	typStr := ConnectionBingType(typ)
 	bingAds.Type = typStr
 
@@ -214,6 +217,7 @@ func CreateConnectionTypesBingAds(bingAds ConnectionBing) ConnectionTypes {
 
 func CreateConnectionTypesBlackline(blackline ConnectionBlackline) ConnectionTypes {
 	typ := ConnectionTypesTypeBlackline
+
 	typStr := ConnectionBlacklineType(typ)
 	blackline.Type = typStr
 
@@ -225,6 +229,7 @@ func CreateConnectionTypesBlackline(blackline ConnectionBlackline) ConnectionTyp
 
 func CreateConnectionTypesCriteo(criteo ConnectionCriteo) ConnectionTypes {
 	typ := ConnectionTypesTypeCriteo
+
 	typStr := ConnectionCriteoType(typ)
 	criteo.Type = typStr
 
@@ -236,6 +241,7 @@ func CreateConnectionTypesCriteo(criteo ConnectionCriteo) ConnectionTypes {
 
 func CreateConnectionTypesDb2(db2 ConnectionDb2) ConnectionTypes {
 	typ := ConnectionTypesTypeDb2
+
 	typStr := ConnectionDb2Type(typ)
 	db2.Type = typStr
 
@@ -247,6 +253,7 @@ func CreateConnectionTypesDb2(db2 ConnectionDb2) ConnectionTypes {
 
 func CreateConnectionTypesDb2Sharded(db2Sharded ConnectionDb2Sharded) ConnectionTypes {
 	typ := ConnectionTypesTypeDb2Sharded
+
 	typStr := ConnectionDb2ShardedType(typ)
 	db2Sharded.Type = typStr
 
@@ -258,6 +265,7 @@ func CreateConnectionTypesDb2Sharded(db2Sharded ConnectionDb2Sharded) Connection
 
 func CreateConnectionTypesDeltaLake(deltaLake ConnectionDeltaLake) ConnectionTypes {
 	typ := ConnectionTypesTypeDeltaLake
+
 	typStr := ConnectionDeltaLakeType(typ)
 	deltaLake.Type = typStr
 
@@ -269,6 +277,7 @@ func CreateConnectionTypesDeltaLake(deltaLake ConnectionDeltaLake) ConnectionTyp
 
 func CreateConnectionTypesElasticsearch(elasticsearch ConnectionElasticSearch) ConnectionTypes {
 	typ := ConnectionTypesTypeElasticsearch
+
 	typStr := ConnectionElasticSearchType(typ)
 	elasticsearch.Type = typStr
 
@@ -280,6 +289,7 @@ func CreateConnectionTypesElasticsearch(elasticsearch ConnectionElasticSearch) C
 
 func CreateConnectionTypesElluminate(elluminate ConnectionElluminate) ConnectionTypes {
 	typ := ConnectionTypesTypeElluminate
+
 	typStr := ConnectionElluminateType(typ)
 	elluminate.Type = typStr
 
@@ -291,6 +301,7 @@ func CreateConnectionTypesElluminate(elluminate ConnectionElluminate) Connection
 
 func CreateConnectionTypesEloqua(eloqua ConnectionEloqua) ConnectionTypes {
 	typ := ConnectionTypesTypeEloqua
+
 	typStr := ConnectionEloquaType(typ)
 	eloqua.Type = typStr
 
@@ -302,6 +313,7 @@ func CreateConnectionTypesEloqua(eloqua ConnectionEloqua) ConnectionTypes {
 
 func CreateConnectionTypesFacebookAds(facebookAds ConnectionFb) ConnectionTypes {
 	typ := ConnectionTypesTypeFacebookAds
+
 	typStr := ConnectionFbType(typ)
 	facebookAds.Type = typStr
 
@@ -313,6 +325,7 @@ func CreateConnectionTypesFacebookAds(facebookAds ConnectionFb) ConnectionTypes 
 
 func CreateConnectionTypesFifteenFive(fifteenFive ConnectionFifteenFive) ConnectionTypes {
 	typ := ConnectionTypesTypeFifteenFive
+
 	typStr := ConnectionFifteenFiveType(typ)
 	fifteenFive.Type = typStr
 
@@ -324,6 +337,7 @@ func CreateConnectionTypesFifteenFive(fifteenFive ConnectionFifteenFive) Connect
 
 func CreateConnectionTypesFreshworks(freshworks ConnectionFreshworks) ConnectionTypes {
 	typ := ConnectionTypesTypeFreshworks
+
 	typStr := ConnectionFreshworksType(typ)
 	freshworks.Type = typStr
 
@@ -335,6 +349,7 @@ func CreateConnectionTypesFreshworks(freshworks ConnectionFreshworks) Connection
 
 func CreateConnectionTypesFtp(ftp ConnectionFtp) ConnectionTypes {
 	typ := ConnectionTypesTypeFtp
+
 	typStr := ConnectionFtpType(typ)
 	ftp.Type = typStr
 
@@ -346,6 +361,7 @@ func CreateConnectionTypesFtp(ftp ConnectionFtp) ConnectionTypes {
 
 func CreateConnectionTypesGong(gong ConnectionGong) ConnectionTypes {
 	typ := ConnectionTypesTypeGong
+
 	typStr := ConnectionGongType(typ)
 	gong.Type = typStr
 
@@ -357,6 +373,7 @@ func CreateConnectionTypesGong(gong ConnectionGong) ConnectionTypes {
 
 func CreateConnectionTypesGoogleAds(googleAds ConnectionGoogleAds) ConnectionTypes {
 	typ := ConnectionTypesTypeGoogleAds
+
 	typStr := ConnectionGoogleAdsType(typ)
 	googleAds.Type = typStr
 
@@ -368,6 +385,7 @@ func CreateConnectionTypesGoogleAds(googleAds ConnectionGoogleAds) ConnectionTyp
 
 func CreateConnectionTypesGoogleAnalytics(googleAnalytics ConnectionGa) ConnectionTypes {
 	typ := ConnectionTypesTypeGoogleAnalytics
+
 	typStr := ConnectionGaType(typ)
 	googleAnalytics.Type = typStr
 
@@ -379,6 +397,7 @@ func CreateConnectionTypesGoogleAnalytics(googleAnalytics ConnectionGa) Connecti
 
 func CreateConnectionTypesGoogleAnalyticsGa4(googleAnalyticsGa4 ConnectionGoogleAnalyticsGa4) ConnectionTypes {
 	typ := ConnectionTypesTypeGoogleAnalyticsGa4
+
 	typStr := ConnectionGoogleAnalyticsGa4Type(typ)
 	googleAnalyticsGa4.Type = typStr
 
@@ -390,6 +409,7 @@ func CreateConnectionTypesGoogleAnalyticsGa4(googleAnalyticsGa4 ConnectionGoogle
 
 func CreateConnectionTypesGoogleCloudStorage(googleCloudStorage ConnectionGoogleCloudStorage) ConnectionTypes {
 	typ := ConnectionTypesTypeGoogleCloudStorage
+
 	typStr := ConnectionGoogleCloudStorageType(typ)
 	googleCloudStorage.Type = typStr
 
@@ -401,6 +421,7 @@ func CreateConnectionTypesGoogleCloudStorage(googleCloudStorage ConnectionGoogle
 
 func CreateConnectionTypesGoogleSheets(googleSheets ConnectionGoogleSheets) ConnectionTypes {
 	typ := ConnectionTypesTypeGoogleSheets
+
 	typStr := ConnectionGoogleSheetsType(typ)
 	googleSheets.Type = typStr
 
@@ -412,6 +433,7 @@ func CreateConnectionTypesGoogleSheets(googleSheets ConnectionGoogleSheets) Conn
 
 func CreateConnectionTypesHubspot(hubspot ConnectionHubspot) ConnectionTypes {
 	typ := ConnectionTypesTypeHubspot
+
 	typStr := ConnectionHubspotType(typ)
 	hubspot.Type = typStr
 
@@ -423,6 +445,7 @@ func CreateConnectionTypesHubspot(hubspot ConnectionHubspot) ConnectionTypes {
 
 func CreateConnectionTypesImpactRadius(impactRadius ConnectionImpactRadius) ConnectionTypes {
 	typ := ConnectionTypesTypeImpactRadius
+
 	typStr := ConnectionImpactRadiusType(typ)
 	impactRadius.Type = typStr
 
@@ -434,6 +457,7 @@ func CreateConnectionTypesImpactRadius(impactRadius ConnectionImpactRadius) Conn
 
 func CreateConnectionTypesIntercom(intercom ConnectionIntercom) ConnectionTypes {
 	typ := ConnectionTypesTypeIntercom
+
 	typStr := ConnectionIntercomType(typ)
 	intercom.Type = typStr
 
@@ -445,6 +469,7 @@ func CreateConnectionTypesIntercom(intercom ConnectionIntercom) ConnectionTypes 
 
 func CreateConnectionTypesJiraAlign(jiraAlign ConnectionJiraAlign) ConnectionTypes {
 	typ := ConnectionTypesTypeJiraAlign
+
 	typStr := ConnectionJiraAlignType(typ)
 	jiraAlign.Type = typStr
 
@@ -456,6 +481,7 @@ func CreateConnectionTypesJiraAlign(jiraAlign ConnectionJiraAlign) ConnectionTyp
 
 func CreateConnectionTypesKafka(kafka ConnectionKafka) ConnectionTypes {
 	typ := ConnectionTypesTypeKafka
+
 	typStr := ConnectionKafkaType(typ)
 	kafka.Type = typStr
 
@@ -467,6 +493,7 @@ func CreateConnectionTypesKafka(kafka ConnectionKafka) ConnectionTypes {
 
 func CreateConnectionTypesKustomer(kustomer ConnectionKustomer) ConnectionTypes {
 	typ := ConnectionTypesTypeKustomer
+
 	typStr := ConnectionKustomerType(typ)
 	kustomer.Type = typStr
 
@@ -478,6 +505,7 @@ func CreateConnectionTypesKustomer(kustomer ConnectionKustomer) ConnectionTypes 
 
 func CreateConnectionTypesLdap(ldap ConnectionLdap) ConnectionTypes {
 	typ := ConnectionTypesTypeLdap
+
 	typStr := ConnectionLdapType(typ)
 	ldap.Type = typStr
 
@@ -489,6 +517,7 @@ func CreateConnectionTypesLdap(ldap ConnectionLdap) ConnectionTypes {
 
 func CreateConnectionTypesLdapVirtualListView(ldapVirtualListView ConnectionLdapVirtualListView) ConnectionTypes {
 	typ := ConnectionTypesTypeLdapVirtualListView
+
 	typStr := ConnectionLdapVirtualListViewType(typ)
 	ldapVirtualListView.Type = typStr
 
@@ -500,6 +529,7 @@ func CreateConnectionTypesLdapVirtualListView(ldapVirtualListView ConnectionLdap
 
 func CreateConnectionTypesLinkedInAds(linkedInAds ConnectionLinkedInAds) ConnectionTypes {
 	typ := ConnectionTypesTypeLinkedInAds
+
 	typStr := ConnectionLinkedInAdsType(typ)
 	linkedInAds.Type = typStr
 
@@ -511,6 +541,7 @@ func CreateConnectionTypesLinkedInAds(linkedInAds ConnectionLinkedInAds) Connect
 
 func CreateConnectionTypesMarketo(marketo ConnectionMarketo) ConnectionTypes {
 	typ := ConnectionTypesTypeMarketo
+
 	typStr := ConnectionMarketoType(typ)
 	marketo.Type = typStr
 
@@ -522,6 +553,7 @@ func CreateConnectionTypesMarketo(marketo ConnectionMarketo) ConnectionTypes {
 
 func CreateConnectionTypesMixpanel(mixpanel ConnectionMixpanel) ConnectionTypes {
 	typ := ConnectionTypesTypeMixpanel
+
 	typStr := ConnectionMixpanelType(typ)
 	mixpanel.Type = typStr
 
@@ -533,6 +565,7 @@ func CreateConnectionTypesMixpanel(mixpanel ConnectionMixpanel) ConnectionTypes 
 
 func CreateConnectionTypesMongodb(mongodb ConnectionMongo) ConnectionTypes {
 	typ := ConnectionTypesTypeMongodb
+
 	typStr := ConnectionMongoType(typ)
 	mongodb.Type = typStr
 
@@ -544,6 +577,7 @@ func CreateConnectionTypesMongodb(mongodb ConnectionMongo) ConnectionTypes {
 
 func CreateConnectionTypesMysql(mysql ConnectionMysql) ConnectionTypes {
 	typ := ConnectionTypesTypeMysql
+
 	typStr := ConnectionMysqlType(typ)
 	mysql.Type = typStr
 
@@ -555,6 +589,7 @@ func CreateConnectionTypesMysql(mysql ConnectionMysql) ConnectionTypes {
 
 func CreateConnectionTypesMysqlSharded(mysqlSharded ConnectionMysqlSharded) ConnectionTypes {
 	typ := ConnectionTypesTypeMysqlSharded
+
 	typStr := ConnectionMysqlShardedType(typ)
 	mysqlSharded.Type = typStr
 
@@ -566,6 +601,7 @@ func CreateConnectionTypesMysqlSharded(mysqlSharded ConnectionMysqlSharded) Conn
 
 func CreateConnectionTypesNetsuite(netsuite ConnectionNetsuite) ConnectionTypes {
 	typ := ConnectionTypesTypeNetsuite
+
 	typStr := ConnectionNetsuiteType(typ)
 	netsuite.Type = typStr
 
@@ -577,6 +613,7 @@ func CreateConnectionTypesNetsuite(netsuite ConnectionNetsuite) ConnectionTypes 
 
 func CreateConnectionTypesNetsuiteV2(netsuiteV2 ConnectionNetsuiteV2) ConnectionTypes {
 	typ := ConnectionTypesTypeNetsuiteV2
+
 	typStr := ConnectionNetsuiteV2Type(typ)
 	netsuiteV2.Type = typStr
 
@@ -588,6 +625,7 @@ func CreateConnectionTypesNetsuiteV2(netsuiteV2 ConnectionNetsuiteV2) Connection
 
 func CreateConnectionTypesOracle(oracle ConnectionOracle) ConnectionTypes {
 	typ := ConnectionTypesTypeOracle
+
 	typStr := ConnectionOracleType(typ)
 	oracle.Type = typStr
 
@@ -599,6 +637,7 @@ func CreateConnectionTypesOracle(oracle ConnectionOracle) ConnectionTypes {
 
 func CreateConnectionTypesOracleSharded(oracleSharded ConnectionOracleSharded) ConnectionTypes {
 	typ := ConnectionTypesTypeOracleSharded
+
 	typStr := ConnectionOracleShardedType(typ)
 	oracleSharded.Type = typStr
 
@@ -610,6 +649,7 @@ func CreateConnectionTypesOracleSharded(oracleSharded ConnectionOracleSharded) C
 
 func CreateConnectionTypesOutlook(outlook ConnectionOutlook) ConnectionTypes {
 	typ := ConnectionTypesTypeOutlook
+
 	typStr := ConnectionOutlookType(typ)
 	outlook.Type = typStr
 
@@ -621,6 +661,7 @@ func CreateConnectionTypesOutlook(outlook ConnectionOutlook) ConnectionTypes {
 
 func CreateConnectionTypesOutreach(outreach ConnectionOutreach) ConnectionTypes {
 	typ := ConnectionTypesTypeOutreach
+
 	typStr := ConnectionOutreachType(typ)
 	outreach.Type = typStr
 
@@ -632,6 +673,7 @@ func CreateConnectionTypesOutreach(outreach ConnectionOutreach) ConnectionTypes 
 
 func CreateConnectionTypesPinterestAds(pinterestAds ConnectionPinterestAds) ConnectionTypes {
 	typ := ConnectionTypesTypePinterestAds
+
 	typStr := ConnectionPinterestAdsType(typ)
 	pinterestAds.Type = typStr
 
@@ -643,6 +685,7 @@ func CreateConnectionTypesPinterestAds(pinterestAds ConnectionPinterestAds) Conn
 
 func CreateConnectionTypesPostgres(postgres ConnectionPostgres) ConnectionTypes {
 	typ := ConnectionTypesTypePostgres
+
 	typStr := ConnectionPostgresType(typ)
 	postgres.Type = typStr
 
@@ -654,6 +697,7 @@ func CreateConnectionTypesPostgres(postgres ConnectionPostgres) ConnectionTypes 
 
 func CreateConnectionTypesPostgresSharded(postgresSharded ConnectionPostgresSharded) ConnectionTypes {
 	typ := ConnectionTypesTypePostgresSharded
+
 	typStr := ConnectionPostgresShardedType(typ)
 	postgresSharded.Type = typStr
 
@@ -665,6 +709,7 @@ func CreateConnectionTypesPostgresSharded(postgresSharded ConnectionPostgresShar
 
 func CreateConnectionTypesQuoraAds(quoraAds ConnectionQuora) ConnectionTypes {
 	typ := ConnectionTypesTypeQuoraAds
+
 	typStr := ConnectionQuoraType(typ)
 	quoraAds.Type = typStr
 
@@ -676,6 +721,7 @@ func CreateConnectionTypesQuoraAds(quoraAds ConnectionQuora) ConnectionTypes {
 
 func CreateConnectionTypesRaveMedidata(raveMedidata ConnectionRaveMedidata) ConnectionTypes {
 	typ := ConnectionTypesTypeRaveMedidata
+
 	typStr := ConnectionRaveMedidataType(typ)
 	raveMedidata.Type = typStr
 
@@ -687,6 +733,7 @@ func CreateConnectionTypesRaveMedidata(raveMedidata ConnectionRaveMedidata) Conn
 
 func CreateConnectionTypesRecurly(recurly ConnectionRecurly) ConnectionTypes {
 	typ := ConnectionTypesTypeRecurly
+
 	typStr := ConnectionRecurlyType(typ)
 	recurly.Type = typStr
 
@@ -698,6 +745,7 @@ func CreateConnectionTypesRecurly(recurly ConnectionRecurly) ConnectionTypes {
 
 func CreateConnectionTypesRedshift(redshift ConnectionRedshift) ConnectionTypes {
 	typ := ConnectionTypesTypeRedshift
+
 	typStr := ConnectionRedshiftType(typ)
 	redshift.Type = typStr
 
@@ -709,6 +757,7 @@ func CreateConnectionTypesRedshift(redshift ConnectionRedshift) ConnectionTypes 
 
 func CreateConnectionTypesRedshiftSharded(redshiftSharded ConnectionRedshiftSharded) ConnectionTypes {
 	typ := ConnectionTypesTypeRedshiftSharded
+
 	typStr := ConnectionRedshiftShardedType(typ)
 	redshiftSharded.Type = typStr
 
@@ -720,6 +769,7 @@ func CreateConnectionTypesRedshiftSharded(redshiftSharded ConnectionRedshiftShar
 
 func CreateConnectionTypesS3DataLake(s3DataLake ConnectionS3DataLake) ConnectionTypes {
 	typ := ConnectionTypesTypeS3DataLake
+
 	typStr := ConnectionS3DataLakeType(typ)
 	s3DataLake.Type = typStr
 
@@ -731,6 +781,7 @@ func CreateConnectionTypesS3DataLake(s3DataLake ConnectionS3DataLake) Connection
 
 func CreateConnectionTypesS3Input(s3Input ConnectionS3Input) ConnectionTypes {
 	typ := ConnectionTypesTypeS3Input
+
 	typStr := ConnectionS3InputType(typ)
 	s3Input.Type = typStr
 
@@ -742,6 +793,7 @@ func CreateConnectionTypesS3Input(s3Input ConnectionS3Input) ConnectionTypes {
 
 func CreateConnectionTypesSalesforce(salesforce ConnectionSalesforce) ConnectionTypes {
 	typ := ConnectionTypesTypeSalesforce
+
 	typStr := ConnectionSalesforceType(typ)
 	salesforce.Type = typStr
 
@@ -753,6 +805,7 @@ func CreateConnectionTypesSalesforce(salesforce ConnectionSalesforce) Connection
 
 func CreateConnectionTypesSalesforceMarketingCloud(salesforceMarketingCloud ConnectionSalesforceMarketingCloud) ConnectionTypes {
 	typ := ConnectionTypesTypeSalesforceMarketingCloud
+
 	typStr := ConnectionSalesforceMarketingCloudType(typ)
 	salesforceMarketingCloud.Type = typStr
 
@@ -764,6 +817,7 @@ func CreateConnectionTypesSalesforceMarketingCloud(salesforceMarketingCloud Conn
 
 func CreateConnectionTypesSapHana(sapHana ConnectionSapHana) ConnectionTypes {
 	typ := ConnectionTypesTypeSapHana
+
 	typStr := ConnectionSapHanaType(typ)
 	sapHana.Type = typStr
 
@@ -775,6 +829,7 @@ func CreateConnectionTypesSapHana(sapHana ConnectionSapHana) ConnectionTypes {
 
 func CreateConnectionTypesSapHanaSharded(sapHanaSharded ConnectionSapHanaSharded) ConnectionTypes {
 	typ := ConnectionTypesTypeSapHanaSharded
+
 	typStr := ConnectionSapHanaShardedType(typ)
 	sapHanaSharded.Type = typStr
 
@@ -786,6 +841,7 @@ func CreateConnectionTypesSapHanaSharded(sapHanaSharded ConnectionSapHanaSharded
 
 func CreateConnectionTypesSeismic(seismic ConnectionSeismic) ConnectionTypes {
 	typ := ConnectionTypesTypeSeismic
+
 	typStr := ConnectionSeismicType(typ)
 	seismic.Type = typStr
 
@@ -797,6 +853,7 @@ func CreateConnectionTypesSeismic(seismic ConnectionSeismic) ConnectionTypes {
 
 func CreateConnectionTypesSftp(sftp ConnectionSftp) ConnectionTypes {
 	typ := ConnectionTypesTypeSftp
+
 	typStr := ConnectionSftpType(typ)
 	sftp.Type = typStr
 
@@ -808,6 +865,7 @@ func CreateConnectionTypesSftp(sftp ConnectionSftp) ConnectionTypes {
 
 func CreateConnectionTypesShopify(shopify ConnectionShopify) ConnectionTypes {
 	typ := ConnectionTypesTypeShopify
+
 	typStr := ConnectionShopifyType(typ)
 	shopify.Type = typStr
 
@@ -819,6 +877,7 @@ func CreateConnectionTypesShopify(shopify ConnectionShopify) ConnectionTypes {
 
 func CreateConnectionTypesSkyward(skyward ConnectionSkyward) ConnectionTypes {
 	typ := ConnectionTypesTypeSkyward
+
 	typStr := ConnectionSkywardType(typ)
 	skyward.Type = typStr
 
@@ -830,6 +889,7 @@ func CreateConnectionTypesSkyward(skyward ConnectionSkyward) ConnectionTypes {
 
 func CreateConnectionTypesSnapchatAds(snapchatAds ConnectionSnapchatAds) ConnectionTypes {
 	typ := ConnectionTypesTypeSnapchatAds
+
 	typStr := ConnectionSnapchatAdsType(typ)
 	snapchatAds.Type = typStr
 
@@ -841,6 +901,7 @@ func CreateConnectionTypesSnapchatAds(snapchatAds ConnectionSnapchatAds) Connect
 
 func CreateConnectionTypesSnowflake(snowflake ConnectionSnowflake) ConnectionTypes {
 	typ := ConnectionTypesTypeSnowflake
+
 	typStr := ConnectionSnowflakeType(typ)
 	snowflake.Type = typStr
 
@@ -852,6 +913,7 @@ func CreateConnectionTypesSnowflake(snowflake ConnectionSnowflake) ConnectionTyp
 
 func CreateConnectionTypesSnowflakeSharded(snowflakeSharded ConnectionSnowflakeSharded) ConnectionTypes {
 	typ := ConnectionTypesTypeSnowflakeSharded
+
 	typStr := ConnectionSnowflakeShardedType(typ)
 	snowflakeSharded.Type = typStr
 
@@ -863,6 +925,7 @@ func CreateConnectionTypesSnowflakeSharded(snowflakeSharded ConnectionSnowflakeS
 
 func CreateConnectionTypesSQLServer(sqlServer ConnectionSQLServer) ConnectionTypes {
 	typ := ConnectionTypesTypeSQLServer
+
 	typStr := ConnectionSQLServerType(typ)
 	sqlServer.Type = typStr
 
@@ -874,6 +937,7 @@ func CreateConnectionTypesSQLServer(sqlServer ConnectionSQLServer) ConnectionTyp
 
 func CreateConnectionTypesSQLServerSharded(sqlServerSharded ConnectionSQLServerSharded) ConnectionTypes {
 	typ := ConnectionTypesTypeSQLServerSharded
+
 	typStr := ConnectionSQLServerShardedType(typ)
 	sqlServerSharded.Type = typStr
 
@@ -885,6 +949,7 @@ func CreateConnectionTypesSQLServerSharded(sqlServerSharded ConnectionSQLServerS
 
 func CreateConnectionTypesSquare(square ConnectionSquare) ConnectionTypes {
 	typ := ConnectionTypesTypeSquare
+
 	typStr := ConnectionSquareType(typ)
 	square.Type = typStr
 
@@ -896,6 +961,7 @@ func CreateConnectionTypesSquare(square ConnectionSquare) ConnectionTypes {
 
 func CreateConnectionTypesStripe(stripe ConnectionStripe) ConnectionTypes {
 	typ := ConnectionTypesTypeStripe
+
 	typStr := ConnectionStripeType(typ)
 	stripe.Type = typStr
 
@@ -907,6 +973,7 @@ func CreateConnectionTypesStripe(stripe ConnectionStripe) ConnectionTypes {
 
 func CreateConnectionTypesSumtotal(sumtotal ConnectionSumTotal) ConnectionTypes {
 	typ := ConnectionTypesTypeSumtotal
+
 	typStr := ConnectionSumTotalType(typ)
 	sumtotal.Type = typStr
 
@@ -918,6 +985,7 @@ func CreateConnectionTypesSumtotal(sumtotal ConnectionSumTotal) ConnectionTypes 
 
 func CreateConnectionTypesTheTradeDesk(theTradeDesk ConnectionTheTradeDesk) ConnectionTypes {
 	typ := ConnectionTypesTypeTheTradeDesk
+
 	typStr := ConnectionTheTradeDeskType(typ)
 	theTradeDesk.Type = typStr
 
@@ -929,6 +997,7 @@ func CreateConnectionTypesTheTradeDesk(theTradeDesk ConnectionTheTradeDesk) Conn
 
 func CreateConnectionTypesTikTokAds(tikTokAds ConnectionTikTokAds) ConnectionTypes {
 	typ := ConnectionTypesTypeTikTokAds
+
 	typStr := ConnectionTikTokAdsType(typ)
 	tikTokAds.Type = typStr
 
@@ -940,6 +1009,7 @@ func CreateConnectionTypesTikTokAds(tikTokAds ConnectionTikTokAds) ConnectionTyp
 
 func CreateConnectionTypesTwilio(twilio ConnectionTwilio) ConnectionTypes {
 	typ := ConnectionTypesTypeTwilio
+
 	typStr := ConnectionTwilioType(typ)
 	twilio.Type = typStr
 
@@ -951,6 +1021,7 @@ func CreateConnectionTypesTwilio(twilio ConnectionTwilio) ConnectionTypes {
 
 func CreateConnectionTypesTwitterAds(twitterAds ConnectionTwitter) ConnectionTypes {
 	typ := ConnectionTypesTypeTwitterAds
+
 	typStr := ConnectionTwitterType(typ)
 	twitterAds.Type = typStr
 
@@ -962,6 +1033,7 @@ func CreateConnectionTypesTwitterAds(twitterAds ConnectionTwitter) ConnectionTyp
 
 func CreateConnectionTypesUservoice(uservoice ConnectionUserVoice) ConnectionTypes {
 	typ := ConnectionTypesTypeUservoice
+
 	typStr := ConnectionUserVoiceType(typ)
 	uservoice.Type = typStr
 
@@ -973,6 +1045,7 @@ func CreateConnectionTypesUservoice(uservoice ConnectionUserVoice) ConnectionTyp
 
 func CreateConnectionTypesUserDefinedAPI(userDefinedAPI ConnectionUserDefinedAPI) ConnectionTypes {
 	typ := ConnectionTypesTypeUserDefinedAPI
+
 	typStr := ConnectionUserDefinedAPIType(typ)
 	userDefinedAPI.Type = typStr
 
@@ -984,6 +1057,7 @@ func CreateConnectionTypesUserDefinedAPI(userDefinedAPI ConnectionUserDefinedAPI
 
 func CreateConnectionTypesVeeva(veeva ConnectionVeeva) ConnectionTypes {
 	typ := ConnectionTypesTypeVeeva
+
 	typStr := ConnectionVeevaType(typ)
 	veeva.Type = typStr
 
@@ -995,6 +1069,7 @@ func CreateConnectionTypesVeeva(veeva ConnectionVeeva) ConnectionTypes {
 
 func CreateConnectionTypesVerizonMediaDsp(verizonMediaDsp ConnectionVerizonMedia) ConnectionTypes {
 	typ := ConnectionTypesTypeVerizonMediaDsp
+
 	typStr := ConnectionVerizonMediaType(typ)
 	verizonMediaDsp.Type = typStr
 
@@ -1006,6 +1081,7 @@ func CreateConnectionTypesVerizonMediaDsp(verizonMediaDsp ConnectionVerizonMedia
 
 func CreateConnectionTypesWorkdayReport(workdayReport ConnectionWorkdayReport) ConnectionTypes {
 	typ := ConnectionTypesTypeWorkdayReport
+
 	typStr := ConnectionWorkdayReportType(typ)
 	workdayReport.Type = typStr
 
@@ -1017,6 +1093,7 @@ func CreateConnectionTypesWorkdayReport(workdayReport ConnectionWorkdayReport) C
 
 func CreateConnectionTypesWorkfront(workfront ConnectionWorkfront) ConnectionTypes {
 	typ := ConnectionTypesTypeWorkfront
+
 	typStr := ConnectionWorkfrontType(typ)
 	workfront.Type = typStr
 
@@ -1028,6 +1105,7 @@ func CreateConnectionTypesWorkfront(workfront ConnectionWorkfront) ConnectionTyp
 
 func CreateConnectionTypesZendesk(zendesk ConnectionZendesk) ConnectionTypes {
 	typ := ConnectionTypesTypeZendesk
+
 	typStr := ConnectionZendeskType(typ)
 	zendesk.Type = typStr
 
@@ -1039,6 +1117,7 @@ func CreateConnectionTypesZendesk(zendesk ConnectionZendesk) ConnectionTypes {
 
 func CreateConnectionTypesZoomPhone(zoomPhone ConnectionZoomPhone) ConnectionTypes {
 	typ := ConnectionTypesTypeZoomPhone
+
 	typStr := ConnectionZoomPhoneType(typ)
 	zoomPhone.Type = typStr
 
@@ -1050,6 +1129,7 @@ func CreateConnectionTypesZoomPhone(zoomPhone ConnectionZoomPhone) ConnectionTyp
 
 func CreateConnectionTypesZuora(zuora ConnectionZuora) ConnectionTypes {
 	typ := ConnectionTypesTypeZuora
+
 	typStr := ConnectionZuoraType(typ)
 	zuora.Type = typStr
 

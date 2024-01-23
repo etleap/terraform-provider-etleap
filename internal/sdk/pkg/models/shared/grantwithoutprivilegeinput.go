@@ -26,6 +26,7 @@ type GrantWithoutPrivilegeInput struct {
 
 func CreateGrantWithoutPrivilegeInputUser(user GrantUserInput) GrantWithoutPrivilegeInput {
 	typ := GrantWithoutPrivilegeInputTypeUser
+
 	typStr := GrantUserType(typ)
 	user.Type = typStr
 
@@ -37,6 +38,7 @@ func CreateGrantWithoutPrivilegeInputUser(user GrantUserInput) GrantWithoutPrivi
 
 func CreateGrantWithoutPrivilegeInputTeam(team GrantTeamInput) GrantWithoutPrivilegeInput {
 	typ := GrantWithoutPrivilegeInputTypeTeam
+
 	typStr := GrantTeamType(typ)
 	team.Type = typStr
 

@@ -1,22 +1,22 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 2789f397868dd60c695104a366325f6b
+  docChecksum: 75addedbe555f7fcf2674ec734755162
   docVersion: 2.6.13
   speakeasyVersion: internal
-  generationVersion: 2.230.3
-  releaseVersion: 0.2.0
-  configChecksum: 08e534281040ac627259dfda2e6cf28e
+  generationVersion: 2.237.3
+  releaseVersion: 0.0.2
+  configChecksum: efc51e2fcd324e5ebee2b33bd25a9d58
 features:
   terraform:
     constsAndDefaults: 0.1.2
-    core: 3.8.1
+    core: 3.8.4
     deprecations: 2.81.1
-    globalSecurity: 2.81.2
+    globalSecurity: 2.81.3
     globalServerURLs: 2.82.1
     groups: 2.81.2
     inputOutputModels: 2.83.0
-    methodSecurity: 2.82.0
+    methodSecurity: 2.82.1
     nameOverrides: 2.81.1
     typeOverrides: 2.81.1
     unions: 2.81.7

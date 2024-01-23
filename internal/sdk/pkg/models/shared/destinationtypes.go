@@ -29,6 +29,7 @@ type DestinationTypes struct {
 
 func CreateDestinationTypesRedshift(redshift DestinationRedshift) DestinationTypes {
 	typ := DestinationTypesTypeRedshift
+
 	typStr := DestinationRedshiftType(typ)
 	redshift.Type = typStr
 
@@ -40,6 +41,7 @@ func CreateDestinationTypesRedshift(redshift DestinationRedshift) DestinationTyp
 
 func CreateDestinationTypesSnowflake(snowflake DestinationSnowflake) DestinationTypes {
 	typ := DestinationTypesTypeSnowflake
+
 	typStr := DestinationSnowflakeType(typ)
 	snowflake.Type = typStr
 
@@ -51,6 +53,7 @@ func CreateDestinationTypesSnowflake(snowflake DestinationSnowflake) Destination
 
 func CreateDestinationTypesDeltaLake(deltaLake DestinationDeltaLake) DestinationTypes {
 	typ := DestinationTypesTypeDeltaLake
+
 	typStr := DestinationDeltaLakeType(typ)
 	deltaLake.Type = typStr
 
@@ -62,6 +65,7 @@ func CreateDestinationTypesDeltaLake(deltaLake DestinationDeltaLake) Destination
 
 func CreateDestinationTypesS3DataLake(s3DataLake DestinationS3DataLake) DestinationTypes {
 	typ := DestinationTypesTypeS3DataLake
+
 	typStr := DestinationS3DataLakeType(typ)
 	s3DataLake.Type = typStr
 

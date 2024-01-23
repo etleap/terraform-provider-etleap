@@ -27,6 +27,7 @@ type Authentication struct {
 
 func CreateAuthenticationBasic(basic BasicAuthentication) Authentication {
 	typ := AuthenticationTypeBasic
+
 	typStr := BasicAuthenticationType(typ)
 	basic.Type = &typStr
 
@@ -38,6 +39,7 @@ func CreateAuthenticationBasic(basic BasicAuthentication) Authentication {
 
 func CreateAuthenticationBearer(bearer BearerAuthentication) Authentication {
 	typ := AuthenticationTypeBearer
+
 	typStr := BearerAuthenticationType(typ)
 	bearer.Type = &typStr
 
@@ -49,6 +51,7 @@ func CreateAuthenticationBearer(bearer BearerAuthentication) Authentication {
 
 func CreateAuthenticationHeader(header HeaderAuthentication) Authentication {
 	typ := AuthenticationTypeHeader
+
 	typStr := HeaderAuthenticationType(typ)
 	header.Type = &typStr
 
