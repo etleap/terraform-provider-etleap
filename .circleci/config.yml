@@ -1,0 +1,135 @@
+version: 2.1
+orbs:
+  go: circleci/go@1.11.0
+  python: circleci/python@2.0.3
+
+parameters:
+  generate-provider:
+    type: boolean
+    default: false
+  publish-provider:
+    type: boolean
+    default: true
+
+jobs:
+  download-and-process:
+    resource_class: small
+    executor:
+      name: python/default
+      tag: "3.11"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Create /tmp/workspace/schema/ folder
+          command: mkdir -p /tmp/workspace/schema/
+      - run:
+          name: Download schema
+          command: curl -o /tmp/workspace/schema/schema.json https://stoplight.io/api/v1/projects/etleap/api-v2/nodes/api-specs/external-api-v2/reference/etleap-api.v2.json?deref=optimizedBundle
+      - run: 
+          name: Process schema
+          command: python preprocessor/process.py /tmp/workspace/schema/schema.json /tmp/workspace/schema/schema-adapted.json
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - schema
+      - store_artifacts:
+          path: /tmp/workspace/schema
+
+  generate:
+    resource_class: 2xlarge
+    executor:
+      name: go/default
+      tag: "1.21"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Install Speakeasy
+          command: |
+            export VERSION="1.165.1"
+            curl -fsSL https://raw.githubusercontent.com/speakeasy-api/speakeasy/main/install.sh | sh
+      - run: 
+          name: Configure Speakasy
+          command: |
+            mkdir ~/.speakeasy
+            touch ~/.speakeasy/config
+            echo "speakeasy_api_key: $SPEAKEASY_API_KEY" >> ~/.speakeasy/config
+            echo 'speakeasy_customer_id: ""' >> ~/.speakeasy/config
+            echo 'speakeasy_workspace_id: ""' >> ~/.speakeasy/config
+      - run:
+          name: Generate provider
+          command: speakeasy generate sdk --lang terraform -o . -s /tmp/workspace/schema/schema-adapted.json
+      - run:
+          name: Generate docs
+          command: go generate
+      - run:
+          name: Check if any changes
+          command: |
+            if [ -z "$(git status --porcelain)" ]; then 
+              echo "Regeneration did not produce any changes; ending here"
+              circleci-agent step halt
+            fi
+      - run:
+          name: git tag
+          command: |
+            git config --global user.email "dev@etleap.com"
+            git config --global user.name "Etleap Dev"
+            git add .
+            git commit -m "Regenerated provider and docs"
+            git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" --tags
+  
+  publish:
+    resource_class: small
+    executor:
+      name: go/default
+      tag: "1.21"
+    steps:
+      - checkout
+      - run: 
+          name: Install GPG
+          command: |
+            sudo apt update && sudo apt install gnupg
+      - run: 
+          name: Import GPG key
+          command: |
+            echo "$PGP_PRIVATE_KEY" | base64 -d > pk.txt
+            gpg --import pk.txt
+            rm pk.txt
+      - run: 
+          name: Tag if needed
+          command: |
+            if [[ "$(git name-rev --name-only --tags HEAD)" == "undefined" ]]; then
+              echo "No tag found; tagging and releasing"
+              git tag v$(yq .terraform.version .speakeasy/gen.yaml)
+              git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" --tags
+            else
+              echo "Tag exists; Publishing existing tag"
+            fi
+      - run:
+          name: Release
+          command: curl -sfL https://goreleaser.com/static/run | bash /dev/stdin release --clean
+
+workflows:
+  version: 2
+  regenerate:
+    when:
+      and:
+        - equal: [ true, <<pipeline.parameters.generate-provider>>]
+    jobs:
+      - download-and-process
+      - generate:
+          context: Speakeasy
+          requires: 
+            - download-and-process
+  
+  publish:
+    when:
+      and:
+        - equal: [ true, <<pipeline.parameters.publish-provider>> ]
+        - equal: [ "main", <<pipeline.git.branch>> ]
+    jobs:
+      - publish:
+          context: Speakeasy

@@ -4,3 +4,4 @@
 .DS_Store
 dist/
 .envrc
+preprocessor/__pycache__/
