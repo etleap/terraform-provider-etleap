@@ -78,6 +78,62 @@ func (e *ConnectionDeltaLakeStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type ConnectionDeltaLakeDefaultUpdateSchedule struct {
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+}
+
+func (o *ConnectionDeltaLakeDefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
+	if o == nil {
+		return nil
+	}
+	return o.PipelineMode
+}
+
+func (o *ConnectionDeltaLakeDefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionDeltaLakeDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLakeDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLakeDefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLakeDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLakeDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 type ConnectionDeltaLake struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -92,7 +148,11 @@ type ConnectionDeltaLake struct {
 	Status ConnectionDeltaLakeStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	Hostname   string    `json:"hostname"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionDeltaLakeDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	Hostname              string                                     `json:"hostname"`
 	// HTTP path for your Databricks compute cluster or SQL Warehouse.
 	HTTPPath string `json:"httpPath"`
 	// The schema to use when this connection is used as a source. When the connection is used as a destination the schema can be set to a different one for each pipeline.
@@ -104,7 +164,7 @@ func (c ConnectionDeltaLake) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionDeltaLake) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
@@ -152,6 +212,55 @@ func (o *ConnectionDeltaLake) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
+func (o *ConnectionDeltaLake) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionDeltaLake) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLake) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLake) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLake) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLake) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLake) GetDefaultUpdateSchedule() []ConnectionDeltaLakeDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionDeltaLakeDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
+}
+
 func (o *ConnectionDeltaLake) GetHostname() string {
 	if o == nil {
 		return ""
@@ -178,8 +287,10 @@ type ConnectionDeltaLakeInput struct {
 	Name string `json:"name"`
 	// <!-- theme: warning -->
 	// > Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
-	Type     ConnectionDeltaLakeType `json:"type"`
-	Hostname string                  `json:"hostname"`
+	Type ConnectionDeltaLakeType `json:"type"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	Hostname       string               `json:"hostname"`
 	// HTTP path for your Databricks compute cluster or SQL Warehouse.
 	HTTPPath string `json:"httpPath"`
 	// Authenticates the user that you want to connect to Databricks with. Instructions on generating a personal access token can be found <a href='https://docs.databricks.com/dev-tools/api/latest/authentication.html#token-management' target="_blank">here</a>.
@@ -200,6 +311,48 @@ func (o *ConnectionDeltaLakeInput) GetType() ConnectionDeltaLakeType {
 		return ConnectionDeltaLakeType("")
 	}
 	return o.Type
+}
+
+func (o *ConnectionDeltaLakeInput) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionDeltaLakeInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLakeInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLakeInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLakeInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLakeInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
 }
 
 func (o *ConnectionDeltaLakeInput) GetHostname() string {

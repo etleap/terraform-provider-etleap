@@ -76,6 +76,62 @@ func (e *ConnectionZoomPhoneStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type ConnectionZoomPhoneDefaultUpdateSchedule struct {
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+}
+
+func (o *ConnectionZoomPhoneDefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
+	if o == nil {
+		return nil
+	}
+	return o.PipelineMode
+}
+
+func (o *ConnectionZoomPhoneDefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionZoomPhoneDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhoneDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhoneDefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhoneDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhoneDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 type ConnectionZoomPhone struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -88,6 +144,10 @@ type ConnectionZoomPhone struct {
 	Status ConnectionZoomPhoneStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionZoomPhoneDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Under Admin Dashboard > Created App > App credentials
 	ClientID string `json:"clientId"`
 }
@@ -97,7 +157,7 @@ func (c ConnectionZoomPhone) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionZoomPhone) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
@@ -145,6 +205,55 @@ func (o *ConnectionZoomPhone) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
+func (o *ConnectionZoomPhone) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionZoomPhone) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhone) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhone) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhone) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhone) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhone) GetDefaultUpdateSchedule() []ConnectionZoomPhoneDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionZoomPhoneDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
+}
+
 func (o *ConnectionZoomPhone) GetClientID() string {
 	if o == nil {
 		return ""
@@ -156,6 +265,8 @@ type ConnectionZoomPhoneInput struct {
 	// The unique name of this connection.
 	Name string                  `json:"name"`
 	Type ConnectionZoomPhoneType `json:"type"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code string `json:"code"`
 	// Under Admin Dashboard > Created App > App credentials
@@ -176,6 +287,48 @@ func (o *ConnectionZoomPhoneInput) GetType() ConnectionZoomPhoneType {
 		return ConnectionZoomPhoneType("")
 	}
 	return o.Type
+}
+
+func (o *ConnectionZoomPhoneInput) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionZoomPhoneInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhoneInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhoneInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhoneInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhoneInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
 }
 
 func (o *ConnectionZoomPhoneInput) GetCode() string {

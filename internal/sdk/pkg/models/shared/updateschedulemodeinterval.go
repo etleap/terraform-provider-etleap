@@ -31,7 +31,7 @@ func (e *Mode) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// UpdateScheduleModeInterval - Specify how long to wait after each extraction before polling for new data. When undefined, the pipeline will default to the schedule set on the source connection.
+// UpdateScheduleModeInterval - The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
 type UpdateScheduleModeInterval struct {
 	Mode Mode `json:"mode"`
 	// Time to wait before new data is pulled (in minutes).

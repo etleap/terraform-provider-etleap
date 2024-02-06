@@ -3,45 +3,9 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
 )
-
-// PipelineMode - The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
-type PipelineMode string
-
-const (
-	PipelineModeUpdate  PipelineMode = "UPDATE"
-	PipelineModeAppend  PipelineMode = "APPEND"
-	PipelineModeReplace PipelineMode = "REPLACE"
-	PipelineModeQuery   PipelineMode = "QUERY"
-)
-
-func (e PipelineMode) ToPointer() *PipelineMode {
-	return &e
-}
-
-func (e *PipelineMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "UPDATE":
-		fallthrough
-	case "APPEND":
-		fallthrough
-	case "REPLACE":
-		fallthrough
-	case "QUERY":
-		*e = PipelineMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for PipelineMode: %v", v)
-	}
-}
 
 type PipelineOutput struct {
 	// The unique identifier of the pipeline.
@@ -52,7 +16,7 @@ type PipelineOutput struct {
 	Destinations []DestinationInfoAndPipelineVersions `json:"destinations"`
 	Owner        User                                 `json:"owner"`
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
-	PipelineMode PipelineMode `json:"pipelineMode"`
+	PipelineMode PipelineUpdateModes `json:"pipelineMode"`
 	// If the pipeline is paused. Defaults to `false`.
 	Paused               bool                  `json:"paused"`
 	ParsingErrorSettings *ParsingErrorSettings `json:"parsingErrorSettings,omitempty"`
@@ -162,6 +126,10 @@ func (o *PipelineOutput) GetSourceFacebookAds() *SourceFacebookAds {
 
 func (o *PipelineOutput) GetSourceFifteenFive() *SourceFifteenFive {
 	return o.GetSource().SourceFifteenFive
+}
+
+func (o *PipelineOutput) GetSourceFreshsales() *SourceFreshsales {
+	return o.GetSource().SourceFreshsales
 }
 
 func (o *PipelineOutput) GetSourceFreshworks() *SourceFreshworks {
@@ -454,9 +422,9 @@ func (o *PipelineOutput) GetOwner() User {
 	return o.Owner
 }
 
-func (o *PipelineOutput) GetPipelineMode() PipelineMode {
+func (o *PipelineOutput) GetPipelineMode() PipelineUpdateModes {
 	if o == nil {
-		return PipelineMode("")
+		return PipelineUpdateModes("")
 	}
 	return o.PipelineMode
 }

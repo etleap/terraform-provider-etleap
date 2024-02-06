@@ -76,6 +76,62 @@ func (e *ConnectionGoogleAnalyticsGa4Status) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule struct {
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+}
+
+func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
+	if o == nil {
+		return nil
+	}
+	return o.PipelineMode
+}
+
+func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 type ConnectionGoogleAnalyticsGa4 struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -88,6 +144,10 @@ type ConnectionGoogleAnalyticsGa4 struct {
 	Status ConnectionGoogleAnalyticsGa4Status `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 }
 
 func (c ConnectionGoogleAnalyticsGa4) MarshalJSON() ([]byte, error) {
@@ -95,7 +155,7 @@ func (c ConnectionGoogleAnalyticsGa4) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionGoogleAnalyticsGa4) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
@@ -143,10 +203,61 @@ func (o *ConnectionGoogleAnalyticsGa4) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
+func (o *ConnectionGoogleAnalyticsGa4) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4) GetDefaultUpdateSchedule() []ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
+}
+
 type ConnectionGoogleAnalyticsGa4Input struct {
 	// The unique name of this connection.
 	Name string                           `json:"name"`
 	Type ConnectionGoogleAnalyticsGa4Type `json:"type"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code string `json:"code"`
 }
@@ -163,6 +274,48 @@ func (o *ConnectionGoogleAnalyticsGa4Input) GetType() ConnectionGoogleAnalyticsG
 		return ConnectionGoogleAnalyticsGa4Type("")
 	}
 	return o.Type
+}
+
+func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
 }
 
 func (o *ConnectionGoogleAnalyticsGa4Input) GetCode() string {

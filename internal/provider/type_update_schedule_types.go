@@ -3,9 +3,9 @@
 package provider
 
 type UpdateScheduleTypes struct {
-	Daily    *RefreshScheduleModeDaily   `tfsdk:"daily"`
-	Hourly   *RefreshScheduleModeHourly  `tfsdk:"hourly"`
+	Daily    *UpdateScheduleModeDaily    `tfsdk:"daily"`
+	Hourly   *UpdateScheduleModeHourly   `tfsdk:"hourly"`
 	Interval *UpdateScheduleModeInterval `tfsdk:"interval"`
-	Monthly  *RefreshScheduleModeMonthly `tfsdk:"monthly"`
-	Weekly   *RefreshScheduleModeWeekly  `tfsdk:"weekly"`
+	Monthly  *UpdateScheduleModeMonthly  `tfsdk:"monthly"`
+	Weekly   *UpdateScheduleModeWeekly   `tfsdk:"weekly"`
 }

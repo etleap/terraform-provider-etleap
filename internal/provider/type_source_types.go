@@ -16,6 +16,7 @@ type SourceTypes struct {
 	Eloqua                   *SourceEloqua                   `tfsdk:"eloqua"`
 	FacebookAds              *SourceFacebookAds              `tfsdk:"facebook_ads"`
 	FifteenFive              *SourceFifteenFive              `tfsdk:"fifteen_five"`
+	Freshsales               *SourceFreshsales               `tfsdk:"freshsales"`
 	Freshworks               *SourceFreshworks               `tfsdk:"freshworks"`
 	Ftp                      *SourceFtp                      `tfsdk:"ftp"`
 	Gong                     *SourceGong                     `tfsdk:"gong"`

@@ -76,6 +76,62 @@ func (e *ConnectionSeismicStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type ConnectionSeismicDefaultUpdateSchedule struct {
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+}
+
+func (o *ConnectionSeismicDefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
+	if o == nil {
+		return nil
+	}
+	return o.PipelineMode
+}
+
+func (o *ConnectionSeismicDefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionSeismicDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionSeismicDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSeismicDefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionSeismicDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionSeismicDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 type ConnectionSeismic struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -88,6 +144,10 @@ type ConnectionSeismic struct {
 	Status ConnectionSeismicStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionSeismicDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The name of the tenant. This is in the URL when you use seismic: [tenant].seismic.com
 	TenantName string `json:"tenantName"`
 	ClientID   string `json:"clientId"`
@@ -98,7 +158,7 @@ func (c ConnectionSeismic) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionSeismic) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
@@ -146,6 +206,55 @@ func (o *ConnectionSeismic) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
+func (o *ConnectionSeismic) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionSeismic) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionSeismic) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSeismic) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionSeismic) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionSeismic) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionSeismic) GetDefaultUpdateSchedule() []ConnectionSeismicDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionSeismicDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
+}
+
 func (o *ConnectionSeismic) GetTenantName() string {
 	if o == nil {
 		return ""
@@ -164,6 +273,8 @@ type ConnectionSeismicInput struct {
 	// The unique name of this connection.
 	Name string                `json:"name"`
 	Type ConnectionSeismicType `json:"type"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code string `json:"code"`
 	// The name of the tenant. This is in the URL when you use seismic: [tenant].seismic.com
@@ -185,6 +296,48 @@ func (o *ConnectionSeismicInput) GetType() ConnectionSeismicType {
 		return ConnectionSeismicType("")
 	}
 	return o.Type
+}
+
+func (o *ConnectionSeismicInput) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionSeismicInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionSeismicInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSeismicInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionSeismicInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionSeismicInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
 }
 
 func (o *ConnectionSeismicInput) GetCode() string {

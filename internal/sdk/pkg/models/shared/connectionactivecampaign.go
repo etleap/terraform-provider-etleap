@@ -33,24 +33,24 @@ func (e *ConnectionActiveCampaignType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Status - The current status of the connection.
-type Status string
+// ConnectionActiveCampaignStatus - The current status of the connection.
+type ConnectionActiveCampaignStatus string
 
 const (
-	StatusUnknown     Status = "UNKNOWN"
-	StatusUp          Status = "UP"
-	StatusDown        Status = "DOWN"
-	StatusResize      Status = "RESIZE"
-	StatusMaintenance Status = "MAINTENANCE"
-	StatusQuota       Status = "QUOTA"
-	StatusCreating    Status = "CREATING"
+	ConnectionActiveCampaignStatusUnknown     ConnectionActiveCampaignStatus = "UNKNOWN"
+	ConnectionActiveCampaignStatusUp          ConnectionActiveCampaignStatus = "UP"
+	ConnectionActiveCampaignStatusDown        ConnectionActiveCampaignStatus = "DOWN"
+	ConnectionActiveCampaignStatusResize      ConnectionActiveCampaignStatus = "RESIZE"
+	ConnectionActiveCampaignStatusMaintenance ConnectionActiveCampaignStatus = "MAINTENANCE"
+	ConnectionActiveCampaignStatusQuota       ConnectionActiveCampaignStatus = "QUOTA"
+	ConnectionActiveCampaignStatusCreating    ConnectionActiveCampaignStatus = "CREATING"
 )
 
-func (e Status) ToPointer() *Status {
+func (e ConnectionActiveCampaignStatus) ToPointer() *ConnectionActiveCampaignStatus {
 	return &e
 }
 
-func (e *Status) UnmarshalJSON(data []byte) error {
+func (e *ConnectionActiveCampaignStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -69,11 +69,67 @@ func (e *Status) UnmarshalJSON(data []byte) error {
 	case "QUOTA":
 		fallthrough
 	case "CREATING":
-		*e = Status(v)
+		*e = ConnectionActiveCampaignStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Status: %v", v)
+		return fmt.Errorf("invalid value for ConnectionActiveCampaignStatus: %v", v)
 	}
+}
+
+type DefaultUpdateSchedule struct {
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+}
+
+func (o *DefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
+	if o == nil {
+		return nil
+	}
+	return o.PipelineMode
+}
+
+func (o *DefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *DefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *DefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *DefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *DefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *DefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
 }
 
 type ConnectionActiveCampaign struct {
@@ -85,9 +141,13 @@ type ConnectionActiveCampaign struct {
 	// Whether this connection has been marked as active.
 	Active bool `json:"active"`
 	// The current status of the connection.
-	Status Status `json:"status"`
+	Status ConnectionActiveCampaignStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []DefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The base URL is specific to your account. Your API URL can be found in your account on the My Settings page under the "Developer" tab.
 	BaseURL string `json:"baseUrl"`
 }
@@ -97,7 +157,7 @@ func (c ConnectionActiveCampaign) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionActiveCampaign) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
@@ -131,9 +191,9 @@ func (o *ConnectionActiveCampaign) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionActiveCampaign) GetStatus() Status {
+func (o *ConnectionActiveCampaign) GetStatus() ConnectionActiveCampaignStatus {
 	if o == nil {
-		return Status("")
+		return ConnectionActiveCampaignStatus("")
 	}
 	return o.Status
 }
@@ -143,6 +203,55 @@ func (o *ConnectionActiveCampaign) GetCreateDate() time.Time {
 		return time.Time{}
 	}
 	return o.CreateDate
+}
+
+func (o *ConnectionActiveCampaign) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionActiveCampaign) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaign) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaign) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaign) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaign) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaign) GetDefaultUpdateSchedule() []DefaultUpdateSchedule {
+	if o == nil {
+		return []DefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionActiveCampaign) GetBaseURL() string {
@@ -156,6 +265,8 @@ type ConnectionActiveCampaignInput struct {
 	// The unique name of this connection.
 	Name string                       `json:"name"`
 	Type ConnectionActiveCampaignType `json:"type"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The base URL is specific to your account. Your API URL can be found in your account on the My Settings page under the "Developer" tab.
 	BaseURL string `json:"baseUrl"`
 	// Your API key can be found in your account on the Settings page under the "Developer" tab. Each user in your ActiveCampaign account has their own unique API key.
@@ -174,6 +285,48 @@ func (o *ConnectionActiveCampaignInput) GetType() ConnectionActiveCampaignType {
 		return ConnectionActiveCampaignType("")
 	}
 	return o.Type
+}
+
+func (o *ConnectionActiveCampaignInput) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
 }
 
 func (o *ConnectionActiveCampaignInput) GetBaseURL() string {

@@ -7,8 +7,8 @@ type ConnectionsOutput struct {
 	// Contains a cursor to the next page of results.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 	// The total number of items in the entire collection (not just this page).
-	TotalSize   int64             `json:"totalSize"`
-	Connections []ConnectionTypes `json:"connections"`
+	TotalSize   int64         `json:"totalSize"`
+	Connections []interface{} `json:"connections"`
 }
 
 func (o *ConnectionsOutput) GetNextPageToken() *string {
@@ -25,9 +25,9 @@ func (o *ConnectionsOutput) GetTotalSize() int64 {
 	return o.TotalSize
 }
 
-func (o *ConnectionsOutput) GetConnections() []ConnectionTypes {
+func (o *ConnectionsOutput) GetConnections() []interface{} {
 	if o == nil {
-		return []ConnectionTypes{}
+		return []interface{}{}
 	}
 	return o.Connections
 }

@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -126,6 +127,7 @@ func (r *DbtScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 			"paused": schema.BoolAttribute{
 				Computed:    true,
 				Optional:    true,
+				Default:     booldefault.StaticBool(false),
 				Description: `` + "`" + `true` + "`" + ` if the schedule should start as paused; defaults to ` + "`" + `false` + "`" + `. Default: false`,
 			},
 			"selector": schema.StringAttribute{
@@ -139,6 +141,7 @@ func (r *DbtScheduleResource) Schema(ctx context.Context, req resource.SchemaReq
 			"skip_build_if_no_new_data": schema.BoolAttribute{
 				Computed:    true,
 				Optional:    true,
+				Default:     booldefault.StaticBool(false),
 				Description: `Whether the dbt build is skipped if no new data has been ingested for any of the pipelines this schedule depends on. Default: false`,
 			},
 			"target_schema": schema.StringAttribute{

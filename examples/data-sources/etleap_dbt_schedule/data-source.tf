@@ -1,3 +1,3 @@
 data "etleap_dbt_schedule" "my_dbtschedule" {
-  id = "cc65bc92-8154-4552-a30c-048b8c2b5ed5"
+  id = "c0b9049f-acc1-4fd5-a8bd-d21ad42f4152"
 }

@@ -56,7 +56,7 @@ type UserDefinedAPIUpdateMode struct {
 	LastUpdatedColumn string                        `json:"lastUpdatedColumn"`
 	PrimaryKeyColumns []string                      `json:"primaryKeyColumns"`
 	// The foreign columns of the entity.
-	ForeignKeyColumns []ForeignKeyColumn `json:"foreignKeyColumns,omitempty"`
+	ForeignKeyColumns []SchemaV1ForeignKeyColumn `json:"foreignKeyColumns,omitempty"`
 	// Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}]
 	HighWatermarkQueryParameters []KeyValuePair         `json:"highWatermarkQueryParameters"`
 	BeginTimeParameter           WatermarkKeyValuePair  `json:"beginTimeParameter"`
@@ -95,7 +95,7 @@ func (o *UserDefinedAPIUpdateMode) GetPrimaryKeyColumns() []string {
 	return o.PrimaryKeyColumns
 }
 
-func (o *UserDefinedAPIUpdateMode) GetForeignKeyColumns() []ForeignKeyColumn {
+func (o *UserDefinedAPIUpdateMode) GetForeignKeyColumns() []SchemaV1ForeignKeyColumn {
 	if o == nil {
 		return nil
 	}

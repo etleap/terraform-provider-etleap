@@ -236,16 +236,16 @@ func (r *ModelResourceModel) RefreshFromSharedModelOutput(resp *shared.ModelOutp
 		r.Shares = append(r.Shares, types.StringValue(v))
 	}
 	if resp.UpdateSchedule.RefreshScheduleModeDaily != nil {
-		r.UpdateSchedule.Daily = &RefreshScheduleModeDaily{}
+		r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
 		r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeDaily.HourOfDay)
 		r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeDaily.Mode))
 	}
 	if resp.UpdateSchedule.RefreshScheduleModeHourly != nil {
-		r.UpdateSchedule.Hourly = &RefreshScheduleModeHourly{}
+		r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
 		r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeHourly.Mode))
 	}
 	if resp.UpdateSchedule.RefreshScheduleModeMonthly != nil {
-		r.UpdateSchedule.Monthly = &RefreshScheduleModeMonthly{}
+		r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
 		r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeMonthly.DayOfMonth)
 		r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeMonthly.HourOfDay)
 		r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeMonthly.Mode))
@@ -255,7 +255,7 @@ func (r *ModelResourceModel) RefreshFromSharedModelOutput(resp *shared.ModelOutp
 		r.UpdateSchedule.Never.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeNever.Mode))
 	}
 	if resp.UpdateSchedule.RefreshScheduleModeWeekly != nil {
-		r.UpdateSchedule.Weekly = &RefreshScheduleModeWeekly{}
+		r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
 		r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeWeekly.DayOfWeek)
 		r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeWeekly.HourOfDay)
 		r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeWeekly.Mode))

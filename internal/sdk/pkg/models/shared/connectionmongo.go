@@ -76,19 +76,75 @@ func (e *ConnectionMongoStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type ReplicaSet struct {
+type ConnectionMongoDefaultUpdateSchedule struct {
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+}
+
+func (o *ConnectionMongoDefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
+	if o == nil {
+		return nil
+	}
+	return o.PipelineMode
+}
+
+func (o *ConnectionMongoDefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionMongoDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionMongoDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionMongoDefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionMongoDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionMongoDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+type ConnectionMongoReplicaSet struct {
 	Address string `json:"address"`
 	Port    int64  `json:"port"`
 }
 
-func (o *ReplicaSet) GetAddress() string {
+func (o *ConnectionMongoReplicaSet) GetAddress() string {
 	if o == nil {
 		return ""
 	}
 	return o.Address
 }
 
-func (o *ReplicaSet) GetPort() int64 {
+func (o *ConnectionMongoReplicaSet) GetPort() int64 {
 	if o == nil {
 		return 0
 	}
@@ -106,9 +162,13 @@ type ConnectionMongo struct {
 	// The current status of the connection.
 	Status ConnectionMongoStatus `json:"status"`
 	// The date and time when then the connection was created.
-	CreateDate time.Time    `json:"createDate"`
-	SSHConfig  *SSHConfig   `json:"sshConfig,omitempty"`
-	ReplicaSet []ReplicaSet `json:"replicaSet"`
+	CreateDate time.Time `json:"createDate"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionMongoDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	SSHConfig             *SSHConfig                             `json:"sshConfig,omitempty"`
+	ReplicaSet            []ConnectionMongoReplicaSet            `json:"replicaSet"`
 	// The name of the database, e.g. 'etleap'
 	DatabaseName string `json:"databaseName"`
 	// Whether Etleap should connect over SSL.
@@ -123,7 +183,7 @@ func (c ConnectionMongo) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionMongo) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
@@ -171,6 +231,55 @@ func (o *ConnectionMongo) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
+func (o *ConnectionMongo) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionMongo) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionMongo) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionMongo) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionMongo) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionMongo) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionMongo) GetDefaultUpdateSchedule() []ConnectionMongoDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionMongoDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
+}
+
 func (o *ConnectionMongo) GetSSHConfig() *SSHConfig {
 	if o == nil {
 		return nil
@@ -178,9 +287,9 @@ func (o *ConnectionMongo) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
-func (o *ConnectionMongo) GetReplicaSet() []ReplicaSet {
+func (o *ConnectionMongo) GetReplicaSet() []ConnectionMongoReplicaSet {
 	if o == nil {
-		return []ReplicaSet{}
+		return []ConnectionMongoReplicaSet{}
 	}
 	return o.ReplicaSet
 }
@@ -215,10 +324,12 @@ func (o *ConnectionMongo) GetAuthDatabaseName() *string {
 
 type ConnectionMongoInput struct {
 	// The unique name of this connection.
-	Name       string              `json:"name"`
-	Type       ConnectionMongoType `json:"type"`
-	SSHConfig  *SSHConfig          `json:"sshConfig,omitempty"`
-	ReplicaSet []ReplicaSet        `json:"replicaSet"`
+	Name string              `json:"name"`
+	Type ConnectionMongoType `json:"type"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes        `json:"updateSchedule,omitempty"`
+	SSHConfig      *SSHConfig                  `json:"sshConfig,omitempty"`
+	ReplicaSet     []ConnectionMongoReplicaSet `json:"replicaSet"`
 	// The name of the database, e.g. 'etleap'
 	DatabaseName string `json:"databaseName"`
 	// Whether Etleap should connect over SSL.
@@ -234,7 +345,7 @@ func (c ConnectionMongoInput) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionMongoInput) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
@@ -254,6 +365,48 @@ func (o *ConnectionMongoInput) GetType() ConnectionMongoType {
 	return o.Type
 }
 
+func (o *ConnectionMongoInput) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionMongoInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionMongoInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionMongoInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionMongoInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionMongoInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 func (o *ConnectionMongoInput) GetSSHConfig() *SSHConfig {
 	if o == nil {
 		return nil
@@ -261,9 +414,9 @@ func (o *ConnectionMongoInput) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
-func (o *ConnectionMongoInput) GetReplicaSet() []ReplicaSet {
+func (o *ConnectionMongoInput) GetReplicaSet() []ConnectionMongoReplicaSet {
 	if o == nil {
-		return []ReplicaSet{}
+		return []ConnectionMongoReplicaSet{}
 	}
 	return o.ReplicaSet
 }

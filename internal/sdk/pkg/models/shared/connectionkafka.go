@@ -76,20 +76,76 @@ func (e *ConnectionKafkaStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// AuthMechanism - Kafka SASL authentication mechanism.
-type AuthMechanism string
+type ConnectionKafkaDefaultUpdateSchedule struct {
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+}
+
+func (o *ConnectionKafkaDefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
+	if o == nil {
+		return nil
+	}
+	return o.PipelineMode
+}
+
+func (o *ConnectionKafkaDefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionKafkaDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionKafkaDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionKafkaDefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionKafkaDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionKafkaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+// ConnectionKafkaAuthMechanism - Kafka SASL authentication mechanism.
+type ConnectionKafkaAuthMechanism string
 
 const (
-	AuthMechanismSaslSsl      AuthMechanism = "SASL_SSL"
-	AuthMechanismSaslScram256 AuthMechanism = "SASL_SCRAM_256"
-	AuthMechanismSaslScram512 AuthMechanism = "SASL_SCRAM_512"
+	ConnectionKafkaAuthMechanismSaslSsl      ConnectionKafkaAuthMechanism = "SASL_SSL"
+	ConnectionKafkaAuthMechanismSaslScram256 ConnectionKafkaAuthMechanism = "SASL_SCRAM_256"
+	ConnectionKafkaAuthMechanismSaslScram512 ConnectionKafkaAuthMechanism = "SASL_SCRAM_512"
 )
 
-func (e AuthMechanism) ToPointer() *AuthMechanism {
+func (e ConnectionKafkaAuthMechanism) ToPointer() *ConnectionKafkaAuthMechanism {
 	return &e
 }
 
-func (e *AuthMechanism) UnmarshalJSON(data []byte) error {
+func (e *ConnectionKafkaAuthMechanism) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -100,10 +156,10 @@ func (e *AuthMechanism) UnmarshalJSON(data []byte) error {
 	case "SASL_SCRAM_256":
 		fallthrough
 	case "SASL_SCRAM_512":
-		*e = AuthMechanism(v)
+		*e = ConnectionKafkaAuthMechanism(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AuthMechanism: %v", v)
+		return fmt.Errorf("invalid value for ConnectionKafkaAuthMechanism: %v", v)
 	}
 }
 
@@ -119,12 +175,16 @@ type ConnectionKafka struct {
 	Status ConnectionKafkaStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionKafkaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The Kafka server list. The list should be in the form host1:port1,host2:port2,...
 	ServerList string `json:"serverList"`
 	User       string `json:"user"`
 	// Kafka SASL authentication mechanism.
-	AuthMechanism         *AuthMechanism `default:"SASL_SSL" json:"authMechanism"`
-	TruststoreCertificate string         `json:"truststoreCertificate"`
+	AuthMechanism         *ConnectionKafkaAuthMechanism `default:"SASL_SSL" json:"authMechanism"`
+	TruststoreCertificate string                        `json:"truststoreCertificate"`
 	// The Schema Registry server: host:port
 	SchemaRegistryServer *string `json:"schemaRegistryServer,omitempty"`
 	SchemaRegistryUser   *string `json:"schemaRegistryUser,omitempty"`
@@ -135,7 +195,7 @@ func (c ConnectionKafka) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionKafka) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
@@ -183,6 +243,55 @@ func (o *ConnectionKafka) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
+func (o *ConnectionKafka) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionKafka) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionKafka) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionKafka) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionKafka) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionKafka) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionKafka) GetDefaultUpdateSchedule() []ConnectionKafkaDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionKafkaDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
+}
+
 func (o *ConnectionKafka) GetServerList() string {
 	if o == nil {
 		return ""
@@ -197,7 +306,7 @@ func (o *ConnectionKafka) GetUser() string {
 	return o.User
 }
 
-func (o *ConnectionKafka) GetAuthMechanism() *AuthMechanism {
+func (o *ConnectionKafka) GetAuthMechanism() *ConnectionKafkaAuthMechanism {
 	if o == nil {
 		return nil
 	}
@@ -229,13 +338,15 @@ type ConnectionKafkaInput struct {
 	// The unique name of this connection.
 	Name string              `json:"name"`
 	Type ConnectionKafkaType `json:"type"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The Kafka server list. The list should be in the form host1:port1,host2:port2,...
 	ServerList string `json:"serverList"`
 	User       string `json:"user"`
 	Password   string `json:"password"`
 	// Kafka SASL authentication mechanism.
-	AuthMechanism         *AuthMechanism `default:"SASL_SSL" json:"authMechanism"`
-	TruststoreCertificate string         `json:"truststoreCertificate"`
+	AuthMechanism         *ConnectionKafkaAuthMechanism `default:"SASL_SSL" json:"authMechanism"`
+	TruststoreCertificate string                        `json:"truststoreCertificate"`
 	// The Schema Registry server: host:port
 	SchemaRegistryServer   *string `json:"schemaRegistryServer,omitempty"`
 	SchemaRegistryUser     *string `json:"schemaRegistryUser,omitempty"`
@@ -247,7 +358,7 @@ func (c ConnectionKafkaInput) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectionKafkaInput) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
@@ -265,6 +376,48 @@ func (o *ConnectionKafkaInput) GetType() ConnectionKafkaType {
 		return ConnectionKafkaType("")
 	}
 	return o.Type
+}
+
+func (o *ConnectionKafkaInput) GetUpdateSchedule() *UpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateSchedule
+}
+
+func (o *ConnectionKafkaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
+	}
+	return nil
+}
+
+func (o *ConnectionKafkaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionKafkaInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeDaily
+	}
+	return nil
+}
+
+func (o *ConnectionKafkaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionKafkaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
 }
 
 func (o *ConnectionKafkaInput) GetServerList() string {
@@ -288,7 +441,7 @@ func (o *ConnectionKafkaInput) GetPassword() string {
 	return o.Password
 }
 
-func (o *ConnectionKafkaInput) GetAuthMechanism() *AuthMechanism {
+func (o *ConnectionKafkaInput) GetAuthMechanism() *ConnectionKafkaAuthMechanism {
 	if o == nil {
 		return nil
 	}

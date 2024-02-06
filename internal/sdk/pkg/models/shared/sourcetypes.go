@@ -25,6 +25,7 @@ const (
 	SourceTypesTypeEloqua                   SourceTypesType = "ELOQUA"
 	SourceTypesTypeFacebookAds              SourceTypesType = "FACEBOOK_ADS"
 	SourceTypesTypeFifteenFive              SourceTypesType = "FIFTEEN_FIVE"
+	SourceTypesTypeFreshsales               SourceTypesType = "FRESHSALES"
 	SourceTypesTypeFreshworks               SourceTypesType = "FRESHWORKS"
 	SourceTypesTypeFtp                      SourceTypesType = "FTP"
 	SourceTypesTypeGong                     SourceTypesType = "GONG"
@@ -110,6 +111,7 @@ type SourceTypes struct {
 	SourceEloqua                   *SourceEloqua
 	SourceFacebookAds              *SourceFacebookAds
 	SourceFifteenFive              *SourceFifteenFive
+	SourceFreshsales               *SourceFreshsales
 	SourceFreshworks               *SourceFreshworks
 	SourceFtp                      *SourceFtp
 	SourceGong                     *SourceGong
@@ -336,6 +338,18 @@ func CreateSourceTypesFifteenFive(fifteenFive SourceFifteenFive) SourceTypes {
 	return SourceTypes{
 		SourceFifteenFive: &fifteenFive,
 		Type:              typ,
+	}
+}
+
+func CreateSourceTypesFreshsales(freshsales SourceFreshsales) SourceTypes {
+	typ := SourceTypesTypeFreshsales
+
+	typStr := SourceFreshsalesType(typ)
+	freshsales.Type = typStr
+
+	return SourceTypes{
+		SourceFreshsales: &freshsales,
+		Type:             typ,
 	}
 }
 
@@ -1296,6 +1310,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceFifteenFive = sourceFifteenFive
 		u.Type = SourceTypesTypeFifteenFive
 		return nil
+	case "FRESHSALES":
+		sourceFreshsales := new(SourceFreshsales)
+		if err := utils.UnmarshalJSON(data, &sourceFreshsales, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceFreshsales = sourceFreshsales
+		u.Type = SourceTypesTypeFreshsales
+		return nil
 	case "FRESHWORKS":
 		sourceFreshworks := new(SourceFreshworks)
 		if err := utils.UnmarshalJSON(data, &sourceFreshworks, "", true, true); err != nil {
@@ -1973,6 +1996,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceFifteenFive != nil {
 		return utils.MarshalJSON(u.SourceFifteenFive, "", true)
+	}
+
+	if u.SourceFreshsales != nil {
+		return utils.MarshalJSON(u.SourceFreshsales, "", true)
 	}
 
 	if u.SourceFreshworks != nil {

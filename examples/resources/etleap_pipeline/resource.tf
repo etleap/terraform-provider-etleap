@@ -9,14 +9,14 @@ resource "etleap_pipeline" "my_pipeline" {
       primary_key = [
         "...",
       ]
-      retain_history         = true
+      retain_history         = false
       schema                 = "...my_schema..."
       table                  = "...my_table..."
       type                   = "DELTA_LAKE"
       wait_for_quality_check = false
     }
   }
-  name   = "Felipe Block"
+  name   = "Elvira Ledner"
   paused = true
   script = {
     legacy_script = {
@@ -27,7 +27,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 3
+      latency_threshold = 8
       type              = "ACTIVE_CAMPAIGN"
     }
   }

@@ -5,6 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type TransformRenameColumns struct {
-	Columns []Columns    `tfsdk:"columns"`
+	Columns []Columns1   `tfsdk:"columns"`
 	Type    types.String `tfsdk:"type"`
 }

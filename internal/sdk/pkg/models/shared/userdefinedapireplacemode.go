@@ -76,13 +76,13 @@ func (u UserDefinedAPIReplaceMode1) MarshalJSON() ([]byte, error) {
 type UserDefinedAPIReplaceModeType string
 
 const (
-	UserDefinedAPIReplaceModeTypeUserDefinedAPIReplaceMode1 UserDefinedAPIReplaceModeType = "user_defined_api_replace_mode_1"
-	UserDefinedAPIReplaceModeTypeExtendedReplaceMode        UserDefinedAPIReplaceModeType = "ExtendedReplaceMode"
+	UserDefinedAPIReplaceModeTypeUserDefinedAPIReplaceMode1  UserDefinedAPIReplaceModeType = "user_defined_api_replace_mode_1"
+	UserDefinedAPIReplaceModeTypeSchemaV1ExtendedReplaceMode UserDefinedAPIReplaceModeType = "Schema.v1_ExtendedReplaceMode"
 )
 
 type UserDefinedAPIReplaceMode struct {
-	UserDefinedAPIReplaceMode1 *UserDefinedAPIReplaceMode1
-	ExtendedReplaceMode        *ExtendedReplaceMode
+	UserDefinedAPIReplaceMode1  *UserDefinedAPIReplaceMode1
+	SchemaV1ExtendedReplaceMode *SchemaV1ExtendedReplaceMode
 
 	Type UserDefinedAPIReplaceModeType
 }
@@ -96,21 +96,21 @@ func CreateUserDefinedAPIReplaceModeUserDefinedAPIReplaceMode1(userDefinedAPIRep
 	}
 }
 
-func CreateUserDefinedAPIReplaceModeExtendedReplaceMode(extendedReplaceMode ExtendedReplaceMode) UserDefinedAPIReplaceMode {
-	typ := UserDefinedAPIReplaceModeTypeExtendedReplaceMode
+func CreateUserDefinedAPIReplaceModeSchemaV1ExtendedReplaceMode(schemaV1ExtendedReplaceMode SchemaV1ExtendedReplaceMode) UserDefinedAPIReplaceMode {
+	typ := UserDefinedAPIReplaceModeTypeSchemaV1ExtendedReplaceMode
 
 	return UserDefinedAPIReplaceMode{
-		ExtendedReplaceMode: &extendedReplaceMode,
-		Type:                typ,
+		SchemaV1ExtendedReplaceMode: &schemaV1ExtendedReplaceMode,
+		Type:                        typ,
 	}
 }
 
 func (u *UserDefinedAPIReplaceMode) UnmarshalJSON(data []byte) error {
 
-	extendedReplaceMode := new(ExtendedReplaceMode)
-	if err := utils.UnmarshalJSON(data, &extendedReplaceMode, "", true, true); err == nil {
-		u.ExtendedReplaceMode = extendedReplaceMode
-		u.Type = UserDefinedAPIReplaceModeTypeExtendedReplaceMode
+	schemaV1ExtendedReplaceMode := new(SchemaV1ExtendedReplaceMode)
+	if err := utils.UnmarshalJSON(data, &schemaV1ExtendedReplaceMode, "", true, true); err == nil {
+		u.SchemaV1ExtendedReplaceMode = schemaV1ExtendedReplaceMode
+		u.Type = UserDefinedAPIReplaceModeTypeSchemaV1ExtendedReplaceMode
 		return nil
 	}
 
@@ -129,8 +129,8 @@ func (u UserDefinedAPIReplaceMode) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.UserDefinedAPIReplaceMode1, "", true)
 	}
 
-	if u.ExtendedReplaceMode != nil {
-		return utils.MarshalJSON(u.ExtendedReplaceMode, "", true)
+	if u.SchemaV1ExtendedReplaceMode != nil {
+		return utils.MarshalJSON(u.SchemaV1ExtendedReplaceMode, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

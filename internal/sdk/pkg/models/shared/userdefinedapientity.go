@@ -41,7 +41,7 @@ type UserDefinedAPIEntity struct {
 	// The unique identifier of the entity.
 	ID string `json:"id"`
 	// The columns of the entity.
-	Columns []Column `json:"columns"`
+	Columns []interface{} `json:"columns"`
 	// The name of the entity.
 	DisplayName string `json:"displayName"`
 	// The base URL to fetch data. Note that query parameters for things like pagination and sorting will be appended.
@@ -78,9 +78,9 @@ func (o *UserDefinedAPIEntity) GetID() string {
 	return o.ID
 }
 
-func (o *UserDefinedAPIEntity) GetColumns() []Column {
+func (o *UserDefinedAPIEntity) GetColumns() []interface{} {
 	if o == nil {
-		return []Column{}
+		return []interface{}{}
 	}
 	return o.Columns
 }

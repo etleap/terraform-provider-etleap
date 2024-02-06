@@ -239,16 +239,16 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	r.Paused = types.BoolValue(resp.Paused)
 	r.PipelineMode = types.StringValue(string(resp.PipelineMode))
 	if resp.RefreshSchedule.RefreshScheduleModeDaily != nil {
-		r.RefreshSchedule.Daily = &RefreshScheduleModeDaily{}
+		r.RefreshSchedule.Daily = &UpdateScheduleModeDaily{}
 		r.RefreshSchedule.Daily.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeDaily.HourOfDay)
 		r.RefreshSchedule.Daily.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeDaily.Mode))
 	}
 	if resp.RefreshSchedule.RefreshScheduleModeHourly != nil {
-		r.RefreshSchedule.Hourly = &RefreshScheduleModeHourly{}
+		r.RefreshSchedule.Hourly = &UpdateScheduleModeHourly{}
 		r.RefreshSchedule.Hourly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeHourly.Mode))
 	}
 	if resp.RefreshSchedule.RefreshScheduleModeMonthly != nil {
-		r.RefreshSchedule.Monthly = &RefreshScheduleModeMonthly{}
+		r.RefreshSchedule.Monthly = &UpdateScheduleModeMonthly{}
 		r.RefreshSchedule.Monthly.DayOfMonth = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeMonthly.DayOfMonth)
 		r.RefreshSchedule.Monthly.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeMonthly.HourOfDay)
 		r.RefreshSchedule.Monthly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeMonthly.Mode))
@@ -258,7 +258,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.RefreshSchedule.Never.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeNever.Mode))
 	}
 	if resp.RefreshSchedule.RefreshScheduleModeWeekly != nil {
-		r.RefreshSchedule.Weekly = &RefreshScheduleModeWeekly{}
+		r.RefreshSchedule.Weekly = &UpdateScheduleModeWeekly{}
 		r.RefreshSchedule.Weekly.DayOfWeek = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeWeekly.DayOfWeek)
 		r.RefreshSchedule.Weekly.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeWeekly.HourOfDay)
 		r.RefreshSchedule.Weekly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeWeekly.Mode))
@@ -414,6 +414,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.FifteenFive.Entity = types.StringValue(resp.Source.SourceFifteenFive.Entity)
 		r.Source.FifteenFive.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFifteenFive.LatencyThreshold)
 		r.Source.FifteenFive.Type = types.StringValue(string(resp.Source.SourceFifteenFive.Type))
+	}
+	if resp.Source.SourceFreshsales != nil {
+		r.Source.Freshsales = &SourceFreshsales{}
+		r.Source.Freshsales.ConnectionID = types.StringValue(resp.Source.SourceFreshsales.ConnectionID)
+		r.Source.Freshsales.Entity = types.StringValue(resp.Source.SourceFreshsales.Entity)
+		r.Source.Freshsales.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFreshsales.LatencyThreshold)
+		r.Source.Freshsales.Type = types.StringValue(string(resp.Source.SourceFreshsales.Type))
 	}
 	if resp.Source.SourceFreshworks != nil {
 		r.Source.Freshworks = &SourceFreshworks{}
@@ -1162,12 +1169,12 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	} else {
 		r.UpdateSchedule = &UpdateScheduleTypes{}
 		if resp.UpdateSchedule.UpdateScheduleModeDaily != nil {
-			r.UpdateSchedule.Daily = &RefreshScheduleModeDaily{}
+			r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
 			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
 			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDaily.Mode))
 		}
 		if resp.UpdateSchedule.UpdateScheduleModeHourly != nil {
-			r.UpdateSchedule.Hourly = &RefreshScheduleModeHourly{}
+			r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
 			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourly.Mode))
 		}
 		if resp.UpdateSchedule.UpdateScheduleModeInterval != nil {
@@ -1176,13 +1183,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeInterval.Mode))
 		}
 		if resp.UpdateSchedule.UpdateScheduleModeMonthly != nil {
-			r.UpdateSchedule.Monthly = &RefreshScheduleModeMonthly{}
+			r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
 			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.DayOfMonth)
 			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.HourOfDay)
 			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthly.Mode))
 		}
 		if resp.UpdateSchedule.UpdateScheduleModeWeekly != nil {
-			r.UpdateSchedule.Weekly = &RefreshScheduleModeWeekly{}
+			r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
 			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.DayOfWeek)
 			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.HourOfDay)
 			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))

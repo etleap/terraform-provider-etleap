@@ -86,6 +86,10 @@ func (o *PipelineInput) GetSourceFifteenFive() *SourceFifteenFive {
 	return o.GetSource().SourceFifteenFive
 }
 
+func (o *PipelineInput) GetSourceFreshsales() *SourceFreshsales {
+	return o.GetSource().SourceFreshsales
+}
+
 func (o *PipelineInput) GetSourceFreshworks() *SourceFreshworks {
 	return o.GetSource().SourceFreshworks
 }

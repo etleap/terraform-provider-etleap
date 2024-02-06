@@ -7,8 +7,9 @@ generation:
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
+    parameterOrderingFeb2024: false
 terraform:
-  version: 0.0.2
+  version: 0.1.0
   author: etleap
   imports:
     option: openapi

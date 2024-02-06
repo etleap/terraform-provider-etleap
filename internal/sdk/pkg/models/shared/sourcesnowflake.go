@@ -23,6 +23,7 @@ const (
 	SourceSnowflakeTypeEloqua                   SourceSnowflakeType = "ELOQUA"
 	SourceSnowflakeTypeFacebookAds              SourceSnowflakeType = "FACEBOOK_ADS"
 	SourceSnowflakeTypeFifteenFive              SourceSnowflakeType = "FIFTEEN_FIVE"
+	SourceSnowflakeTypeFreshsales               SourceSnowflakeType = "FRESHSALES"
 	SourceSnowflakeTypeFreshworks               SourceSnowflakeType = "FRESHWORKS"
 	SourceSnowflakeTypeFtp                      SourceSnowflakeType = "FTP"
 	SourceSnowflakeTypeGong                     SourceSnowflakeType = "GONG"
@@ -130,6 +131,8 @@ func (e *SourceSnowflakeType) UnmarshalJSON(data []byte) error {
 	case "FACEBOOK_ADS":
 		fallthrough
 	case "FIFTEEN_FIVE":
+		fallthrough
+	case "FRESHSALES":
 		fallthrough
 	case "FRESHWORKS":
 		fallthrough
