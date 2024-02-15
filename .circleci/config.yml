@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   go: circleci/go@1.11.0
   python: circleci/python@2.0.3
+  slack: circleci/slack@4.8.3
 
 parameters:
   generate-provider:
@@ -80,6 +81,15 @@ jobs:
             git add .
             git commit -m "Regenerated provider and docs"
             git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" --tags
+      - slack/notify:
+          channel: -devops
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: -devops
+          event: pass
+          template: basic_pass_1
+
   
   publish:
     resource_class: small
@@ -111,6 +121,14 @@ jobs:
       - run:
           name: Release
           command: curl -sfL https://goreleaser.com/static/run | bash /dev/stdin release --clean
+      - slack/notify:
+          channel: -devops
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: -devops
+          event: pass
+          template: basic_pass_1
 
 workflows:
   version: 2
@@ -121,7 +139,9 @@ workflows:
     jobs:
       - download-and-process
       - generate:
-          context: Speakeasy
+          context: 
+            - Speakeasy
+            - CircleCI context
           requires: 
             - download-and-process
   
@@ -132,4 +152,6 @@ workflows:
         - equal: [ "main", <<pipeline.git.branch>> ]
     jobs:
       - publish:
-          context: Speakeasy
+          context: 
+            - Speakeasy
+            - CircleCI context
