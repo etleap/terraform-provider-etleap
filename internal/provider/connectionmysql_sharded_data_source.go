@@ -60,7 +60,7 @@ func (r *ConnectionMYSQLSHARDEDDataSource) Schema(ctx context.Context, req datas
 			},
 			"auto_replicate": schema.StringAttribute{
 				Computed:    true,
-				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property. Note that only the connection owner can change this setting.`,
+				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.`,
 			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed:    true,

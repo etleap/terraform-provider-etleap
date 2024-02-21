@@ -4672,7 +4672,12 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 }
 
 func (r *PipelineResourceModel) ToSharedPipelineDelete() *shared.PipelineDelete {
-	deletionOfExportProducts := r.DeletionOfExportProducts.ValueBool()
+	deletionOfExportProducts := new(bool)
+	if !r.DeletionOfExportProducts.IsUnknown() && !r.DeletionOfExportProducts.IsNull() {
+		*deletionOfExportProducts = r.DeletionOfExportProducts.ValueBool()
+	} else {
+		deletionOfExportProducts = nil
+	}
 	out := shared.PipelineDelete{
 		DeletionOfExportProducts: deletionOfExportProducts,
 	}

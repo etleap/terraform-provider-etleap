@@ -79,7 +79,7 @@ When enabled, this pipeline will create Delta Lake tables that can be read by Da
 
 However, without column mapping, native schema changes are not supported and will cause the table's underlying Parquet files to be rewritten, which can be slow. Schema changes will also not preserve column constraints such as `NOT NULL` on the destination tables.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
 - `schema` (String) The schema in the destination that the tables will be created in.
 - `table` (String)
 - `type` (String) <!-- theme: warning -->
@@ -99,7 +99,7 @@ Read-Only:
 - `distribution_style` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination--redshift--distribution_style))
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the destination.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
 - `schema` (String) The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 - `sort_columns` (List of String) The sort columns to use.
 - `table` (String)
@@ -151,7 +151,7 @@ Read-Only:
 - `connection_id` (String) The universally unique identifier of the destination connection.
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the destination.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
 - `schema` (String) The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 - `table` (String)
 - `type` (String) must be one of ["SNOWFLAKE"]
@@ -569,7 +569,7 @@ Read-Only:
 
 Read-Only:
 
-- `breakdowns` (List of String) The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v16.0#insights-api-breakdowns)
+- `breakdowns` (List of String) The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v19.0#insights-api-breakdowns)
 - `connection_id` (String) The universally unique identifier for the source.
 - `entity` (String) The aggregation level of the Facebook report. Example values: [Insights by Ad, Insights by Adset, Insights by Campaign, Insights by Account]
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.

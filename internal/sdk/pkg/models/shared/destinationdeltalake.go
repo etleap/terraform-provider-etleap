@@ -41,18 +41,18 @@ type DestinationDeltaLake struct {
 	// The universally unique identifier of the destination connection.
 	ConnectionID string `json:"connectionId"`
 	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
-	WaitForQualityCheck *bool `json:"waitForQualityCheck,omitempty"`
+	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
 	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
 	PrimaryKey []string `json:"primaryKey,omitempty"`
 	// Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
-	AutomaticSchemaChanges *bool `json:"automaticSchemaChanges,omitempty"`
+	AutomaticSchemaChanges *bool `default:"true" json:"automaticSchemaChanges"`
 	// The schema in the destination that the tables will be created in.
 	Schema string `json:"schema"`
 	Table  string `json:"table"`
 	// Name of a column that indicates the time the record was updated at the destination.
 	LastUpdatedColumn *string `json:"lastUpdatedColumn,omitempty"`
-	// If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`.
-	RetainHistory *bool `json:"retainHistory,omitempty"`
+	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
+	RetainHistory *bool `default:"false" json:"retainHistory"`
 	// This setting disables column mapping on the tables created by this pipeline.
 	//
 	// When enabled, this pipeline will create Delta Lake tables that can be read by Databricks clusters with runtime versions before 10.2.

@@ -43,7 +43,7 @@ resource "etleap_connection_kafka" "my_connectionkafka" {
 ### Optional
 
 - `auth_mechanism` (String) Kafka SASL authentication mechanism. must be one of ["SASL_SSL", "SASL_SCRAM_256", "SASL_SCRAM_512"]; Default: "SASL_SSL"
-- `deletion_of_export_products` (Boolean) Required for REDSHIFT and SNOWFLAKE connections in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted.
+- `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `schema_registry_password` (String)
 - `schema_registry_server` (String) The Schema Registry server: host:port
 - `schema_registry_user` (String)

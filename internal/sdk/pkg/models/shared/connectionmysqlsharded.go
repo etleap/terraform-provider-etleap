@@ -152,7 +152,7 @@ type ConnectionMysqlSharded struct {
 	ValidateSslCert       *bool                                         `default:"false" json:"validateSslCert"`
 	// Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
-	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property. Note that only the connection owner can change this setting.
+	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
 	TinyInt1IsBoolean *bool `default:"false" json:"tinyInt1IsBoolean"`
@@ -307,7 +307,7 @@ type ConnectionMysqlShardedInput struct {
 	ValidateSslCert *bool                `default:"false" json:"validateSslCert"`
 	// Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
-	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property. Note that only the connection owner can change this setting.
+	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
 	TinyInt1IsBoolean *bool `default:"false" json:"tinyInt1IsBoolean"`

@@ -217,8 +217,10 @@ func (r *ConnectionSAPHANASHARDEDResource) Schema(ctx context.Context, req resou
 				Description: `When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per ` + "`" + `pipelineMode` + "`" + ` and may be subject to change.`,
 			},
 			"deletion_of_export_products": schema.BoolAttribute{
+				Computed:    true,
 				Optional:    true,
-				Description: `Required for REDSHIFT and SNOWFLAKE connections in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted.`,
+				Default:     booldefault.StaticBool(false),
+				Description: `Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
 			},
 			"id": schema.StringAttribute{
 				Computed:    true,

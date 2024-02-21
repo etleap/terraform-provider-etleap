@@ -54,15 +54,15 @@ resource "etleap_pipeline" "my_pipeline" {
 
 ### Required
 
-- `deletion_of_export_products` (Boolean) Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue.
 - `destination` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--destination))
 - `name` (String)
 - `source` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source))
 
 ### Optional
 
+- `deletion_of_export_products` (Boolean) Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue. Defaults to `false`. Default: false
 - `parsing_error_settings` (Attributes) (see [below for nested schema](#nestedatt--parsing_error_settings))
-- `paused` (Boolean) If the pipeline is paused. Defaults to `false`.
+- `paused` (Boolean) If the pipeline is paused. Defaults to `false`. Default: false
 - `script` (Attributes) Whenever a script is required, we accept and/or return two types of scripts: a Script or Legacy Script. We return a Script object if all transforms specified in that script are supported by this API. Otherwise it will return a Legacy Script. Either Script or Legacy Script can be used when adding a script to a pipeline. Requires replacement if changed. (see [below for nested schema](#nestedatt--script))
 - `shares` (List of String) An array of user email's to share the pipeline with.
 
@@ -109,7 +109,7 @@ Requires replacement if changed. ; must be one of ["DELTA_LAKE"]
 
 Optional:
 
-- `automatic_schema_changes` (Boolean) Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`. Requires replacement if changed.
+- `automatic_schema_changes` (Boolean) Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`. Requires replacement if changed. ; Default: true
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the destination. Requires replacement if changed.
 - `pre10_dot2_runtime_support` (Boolean) This setting disables column mapping on the tables created by this pipeline.
 
@@ -118,8 +118,8 @@ When enabled, this pipeline will create Delta Lake tables that can be read by Da
 However, without column mapping, native schema changes are not supported and will cause the table's underlying Parquet files to be rewritten, which can be slow. Schema changes will also not preserve column constraints such as `NOT NULL` on the destination tables.
 Requires replacement if changed. ; Default: false
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier. Requires replacement if changed.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`. Requires replacement if changed.
-- `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`. Requires replacement if changed.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`. Requires replacement if changed. ; Default: false
+- `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`. Requires replacement if changed. ; Default: false
 
 
 <a id="nestedatt--destination--redshift"></a>
@@ -133,16 +133,16 @@ Required:
 
 Optional:
 
-- `automatic_schema_changes` (Boolean) Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`. Requires replacement if changed.
-- `compress_columns` (Boolean) Whether columns should be compressed. Defaults to `true`. Requires replacement if changed.
+- `automatic_schema_changes` (Boolean) Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`. Requires replacement if changed. ; Default: true
+- `compress_columns` (Boolean) Whether columns should be compressed. Defaults to `true`. Requires replacement if changed. ; Default: true
 - `distribution_style` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--destination--redshift--distribution_style))
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the destination. Requires replacement if changed.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier. Requires replacement if changed.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`. Requires replacement if changed.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`. Requires replacement if changed. ; Default: false
 - `schema` (String) The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used. Requires replacement if changed.
 - `sort_columns` (List of String) The sort columns to use. Requires replacement if changed.
-- `truncate_strings` (Boolean) Truncate strings to 64K characters, the max allowed by Redshift in a single column. Defaults to `false`. Requires replacement if changed.
-- `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`. Requires replacement if changed.
+- `truncate_strings` (Boolean) Truncate strings to 64K characters, the max allowed by Redshift in a single column. Defaults to `false`. Requires replacement if changed. ; Default: false
+- `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`. Requires replacement if changed. ; Default: false
 
 <a id="nestedatt--destination--redshift--distribution_style"></a>
 ### Nested Schema for `destination.redshift.distribution_style`
@@ -174,11 +174,11 @@ Required:
 
 Optional:
 
-- `automatic_schema_changes` (Boolean) Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`. Requires replacement if changed.
-- `generate_snapshots` (Boolean) Defaults to 'false'. Requires replacement if changed.
+- `automatic_schema_changes` (Boolean) Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`. Requires replacement if changed. ; Default: true
+- `generate_snapshots` (Boolean) Defaults to 'false'. Requires replacement if changed. ; Default: false
 - `output_format` (String) Format for output files. Defaults to `PARQUET`. For Glue-enabled destinations, only `PARQUET` is a valid format. Requires replacement if changed. ; must be one of ["PARQUET", "CSV"]; Default: "PARQUET"
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier. Requires replacement if changed.
-- `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`. Requires replacement if changed.
+- `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`. Requires replacement if changed. ; Default: false
 
 
 <a id="nestedatt--destination--snowflake"></a>
@@ -192,13 +192,13 @@ Required:
 
 Optional:
 
-- `automatic_schema_changes` (Boolean) Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`. Requires replacement if changed.
+- `automatic_schema_changes` (Boolean) Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`. Requires replacement if changed. ; Default: true
 - `clustering_keys` (List of String) Keys to cluster the table on. If unspecified, the table will use "automatic clustering". Requires replacement if changed.
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the destination. Requires replacement if changed.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier. Requires replacement if changed.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`. Requires replacement if changed.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`. Requires replacement if changed. ; Default: false
 - `schema` (String) The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used. Requires replacement if changed.
-- `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`. Requires replacement if changed.
+- `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`. Requires replacement if changed. ; Default: false
 
 
 
@@ -440,7 +440,7 @@ Optional:
 
 Optional:
 
-- `breakdowns` (List of String) The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v16.0#insights-api-breakdowns). Requires replacement if changed. ; Not Null
+- `breakdowns` (List of String) The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v19.0#insights-api-breakdowns). Requires replacement if changed. ; Not Null
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The aggregation level of the Facebook report. Example values: [Insights by Ad, Insights by Adset, Insights by Campaign, Insights by Account]. Requires replacement if changed. ; Not Null
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
@@ -1549,7 +1549,7 @@ When enabled, this pipeline will create Delta Lake tables that can be read by Da
 
 However, without column mapping, native schema changes are not supported and will cause the table's underlying Parquet files to be rewritten, which can be slow. Schema changes will also not preserve column constraints such as `NOT NULL` on the destination tables.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
 - `schema` (String) The schema in the destination that the tables will be created in.
 - `table` (String)
 - `type` (String) <!-- theme: warning -->
@@ -1569,7 +1569,7 @@ Read-Only:
 - `distribution_style` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination--redshift--distribution_style))
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the destination.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
 - `schema` (String) The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 - `sort_columns` (List of String) The sort columns to use.
 - `table` (String)
@@ -1621,7 +1621,7 @@ Read-Only:
 - `connection_id` (String) The universally unique identifier of the destination connection.
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the destination.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
 - `schema` (String) The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 - `table` (String)
 - `type` (String) must be one of ["SNOWFLAKE"]

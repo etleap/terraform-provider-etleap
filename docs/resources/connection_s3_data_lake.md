@@ -40,7 +40,7 @@ resource "etleap_connection_s3_data_lake" "my_connections3_data_lake" {
 
 ### Optional
 
-- `deletion_of_export_products` (Boolean) Required for REDSHIFT and SNOWFLAKE connections in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted.
+- `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `glue_database` (String)
 - `glue_region` (String)
 - `kms_key` (String) Customer KMS key used to encrypt all files written to the S3 bucket.

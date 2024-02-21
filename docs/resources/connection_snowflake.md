@@ -44,7 +44,7 @@ resource "etleap_connection_snowflake" "my_connectionsnowflake" {
 
 ### Optional
 
-- `deletion_of_export_products` (Boolean) Required for REDSHIFT and SNOWFLAKE connections in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted.
+- `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `role` (String) The role the user will use to connect
 - `roles` (List of String) When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
 - `source_only` (Boolean) Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database. Default: false

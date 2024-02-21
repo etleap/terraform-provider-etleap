@@ -24,7 +24,7 @@ data "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
 ### Read-Only
 
 - `active` (Boolean) Whether this connection has been marked as active.
-- `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property. Note that only the connection owner can change this setting.
+- `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
 - `cdc_enabled` (Boolean) Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))

@@ -93,8 +93,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 				},
 			},
 			"deletion_of_export_products": schema.BoolAttribute{
-				Required:    true,
-				Description: `Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue.`,
+				Computed:    true,
+				Optional:    true,
+				Default:     booldefault.StaticBool(false),
+				Description: `Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
 			},
 			"destination": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -109,11 +111,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"automatic_schema_changes": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(true),
+								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
 							},
 							"connection_id": schema.StringAttribute{
 								PlanModifiers: []planmodifier.String{
@@ -155,11 +159,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 							"retain_history": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(false),
+								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"schema": schema.StringAttribute{
 								PlanModifiers: []planmodifier.String{
@@ -190,11 +196,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 							"wait_for_quality_check": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `If set to ` + "`" + `true` + "`" + `, a ` + "`" + `Transformation Complete` + "`" + ` event is published once a transformation completes, and the pipeline waits for a ` + "`" + `Quality Check Complete` + "`" + ` event before loading to the destination. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(false),
+								Description: `If set to ` + "`" + `true` + "`" + `, a ` + "`" + `Transformation Complete` + "`" + ` event is published once a transformation completes, and the pipeline waits for a ` + "`" + `Quality Check Complete` + "`" + ` event before loading to the destination. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 						},
 						Description: `Requires replacement if changed. `,
@@ -206,18 +214,22 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"automatic_schema_changes": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(true),
+								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
 							},
 							"compress_columns": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `Whether columns should be compressed. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(true),
+								Description: `Whether columns should be compressed. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
 							},
 							"connection_id": schema.StringAttribute{
 								PlanModifiers: []planmodifier.String{
@@ -299,11 +311,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 							"retain_history": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(false),
+								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"schema": schema.StringAttribute{
 								PlanModifiers: []planmodifier.String{
@@ -331,11 +345,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `Requires replacement if changed. `,
 							},
 							"truncate_strings": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `Truncate strings to 64K characters, the max allowed by Redshift in a single column. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(false),
+								Description: `Truncate strings to 64K characters, the max allowed by Redshift in a single column. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"type": schema.StringAttribute{
 								PlanModifiers: []planmodifier.String{
@@ -350,11 +366,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 							"wait_for_quality_check": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `If set to ` + "`" + `true` + "`" + `, a ` + "`" + `Transformation Complete` + "`" + ` event is published once a transformation completes, and the pipeline waits for a ` + "`" + `Quality Check Complete` + "`" + ` event before loading to the destination. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(false),
+								Description: `If set to ` + "`" + `true` + "`" + `, a ` + "`" + `Transformation Complete` + "`" + ` event is published once a transformation completes, and the pipeline waits for a ` + "`" + `Quality Check Complete` + "`" + ` event before loading to the destination. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 						},
 						Description: `Requires replacement if changed. `,
@@ -366,11 +384,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"automatic_schema_changes": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(true),
+								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
 							},
 							"connection_id": schema.StringAttribute{
 								PlanModifiers: []planmodifier.String{
@@ -380,11 +400,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `The universally unique identifier of the destination connection. Requires replacement if changed. `,
 							},
 							"generate_snapshots": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `Defaults to 'false'. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(false),
+								Description: `Defaults to 'false'. Requires replacement if changed. ; Default: false`,
 							},
 							"output_format": schema.StringAttribute{
 								Computed: true,
@@ -432,11 +454,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 							"wait_for_quality_check": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `If set to ` + "`" + `true` + "`" + `, a ` + "`" + `Transformation Complete` + "`" + ` event is published once a transformation completes, and the pipeline waits for a ` + "`" + `Quality Check Complete` + "`" + ` event before loading to the destination. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(false),
+								Description: `If set to ` + "`" + `true` + "`" + `, a ` + "`" + `Transformation Complete` + "`" + ` event is published once a transformation completes, and the pipeline waits for a ` + "`" + `Quality Check Complete` + "`" + ` event before loading to the destination. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 						},
 						Description: `Requires replacement if changed. `,
@@ -448,11 +472,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"automatic_schema_changes": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(true),
+								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
 							},
 							"clustering_keys": schema.ListAttribute{
 								PlanModifiers: []planmodifier.List{
@@ -488,11 +514,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 							"retain_history": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(false),
+								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"schema": schema.StringAttribute{
 								PlanModifiers: []planmodifier.String{
@@ -521,11 +549,13 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 							"wait_for_quality_check": schema.BoolAttribute{
+								Computed: true,
 								PlanModifiers: []planmodifier.Bool{
 									boolplanmodifier.RequiresReplaceIfConfigured(),
 								},
 								Optional:    true,
-								Description: `If set to ` + "`" + `true` + "`" + `, a ` + "`" + `Transformation Complete` + "`" + ` event is published once a transformation completes, and the pipeline waits for a ` + "`" + `Quality Check Complete` + "`" + ` event before loading to the destination. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. `,
+								Default:     booldefault.StaticBool(false),
+								Description: `If set to ` + "`" + `true` + "`" + `, a ` + "`" + `Transformation Complete` + "`" + ` event is published once a transformation completes, and the pipeline waits for a ` + "`" + `Quality Check Complete` + "`" + ` event before loading to the destination. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 						},
 						Description: `Requires replacement if changed. `,
@@ -610,7 +640,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 											PlanModifiers: []planmodifier.Bool{
 												speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
 											},
-											Description: `If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to ` + "`" + `false` + "`" + `.`,
+											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `.`,
 										},
 										"schema": schema.StringAttribute{
 											Computed: true,
@@ -749,7 +779,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 											PlanModifiers: []planmodifier.Bool{
 												speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
 											},
-											Description: `If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to ` + "`" + `false` + "`" + `.`,
+											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `.`,
 										},
 										"schema": schema.StringAttribute{
 											Computed: true,
@@ -933,7 +963,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 											PlanModifiers: []planmodifier.Bool{
 												speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
 											},
-											Description: `If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to ` + "`" + `false` + "`" + `.`,
+											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `.`,
 										},
 										"schema": schema.StringAttribute{
 											Computed: true,
@@ -1332,7 +1362,8 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
 				},
 				Optional:    true,
-				Description: `If the pipeline is paused. Defaults to ` + "`" + `false` + "`" + `.`,
+				Default:     booldefault.StaticBool(false),
+				Description: `If the pipeline is paused. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
 			},
 			"pipeline_mode": schema.StringAttribute{
 				Computed: true,
@@ -2853,7 +2884,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 								Optional:    true,
 								ElementType: types.StringType,
-								Description: `The breakdown fields. The first one must be ` + "`" + `date_start` + "`" + `. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v16.0#insights-api-breakdowns). Requires replacement if changed. ; Not Null`,
+								Description: `The breakdown fields. The first one must be ` + "`" + `date_start` + "`" + `. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v19.0#insights-api-breakdowns). Requires replacement if changed. ; Not Null`,
 								Validators: []validator.List{
 									speakeasy_listvalidators.NotNull(),
 									listvalidator.SizeAtLeast(1),

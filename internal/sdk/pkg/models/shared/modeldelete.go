@@ -2,14 +2,29 @@
 
 package shared
 
+import (
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
+)
+
 type ModelDelete struct {
-	// Specifies whether the table in the destination created by this model should be deleted.
-	DeletionOfExportProducts bool `json:"deletionOfExportProducts"`
+	// Specifies whether the table in the destination created by this model should be deleted. Defaults to `false`.
+	DeletionOfExportProducts *bool `default:"false" json:"deletionOfExportProducts"`
 }
 
-func (o *ModelDelete) GetDeletionOfExportProducts() bool {
+func (m ModelDelete) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(m, "", false)
+}
+
+func (m *ModelDelete) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &m, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ModelDelete) GetDeletionOfExportProducts() *bool {
 	if o == nil {
-		return false
+		return nil
 	}
 	return o.DeletionOfExportProducts
 }

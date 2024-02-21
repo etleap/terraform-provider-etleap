@@ -25,7 +25,7 @@ data "etleap_connection_mysql" "my_connectionmysql" {
 
 - `active` (Boolean) Whether this connection has been marked as active.
 - `address` (String)
-- `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property. Note that only the connection owner can change this setting.
+- `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
 - `cdc_enabled` (Boolean) Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 - `create_date` (String) The date and time when then the connection was created.
 - `database` (String)

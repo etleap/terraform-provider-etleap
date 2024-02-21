@@ -78,7 +78,7 @@ func (r *ConnectionMYSQLResource) Schema(ctx context.Context, req resource.Schem
 			"auto_replicate": schema.StringAttribute{
 				Computed:    true,
 				Optional:    true,
-				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property. Note that only the connection owner can change this setting.`,
+				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.`,
 			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed: true,
@@ -227,8 +227,10 @@ func (r *ConnectionMYSQLResource) Schema(ctx context.Context, req resource.Schem
 				Description: `When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per ` + "`" + `pipelineMode` + "`" + ` and may be subject to change.`,
 			},
 			"deletion_of_export_products": schema.BoolAttribute{
+				Computed:    true,
 				Optional:    true,
-				Description: `Required for REDSHIFT and SNOWFLAKE connections in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted.`,
+				Default:     booldefault.StaticBool(false),
+				Description: `Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
 			},
 			"id": schema.StringAttribute{
 				Computed:    true,

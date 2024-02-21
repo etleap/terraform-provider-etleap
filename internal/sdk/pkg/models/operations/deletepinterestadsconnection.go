@@ -34,7 +34,7 @@ type DeletePINTERESTADSConnectionResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-	// Bad Request. For Redshift and Snowflake connections you must specify `deletionOfExportProducts` property.
+	// Bad Request.
 	Errors *shared.Errors
 }
 

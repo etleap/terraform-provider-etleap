@@ -39,7 +39,7 @@ type SourceFacebookAds struct {
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The aggregation level of the Facebook report. Example values: [Insights by Ad, Insights by Adset, Insights by Campaign, Insights by Account]
 	Entity string `json:"entity"`
-	// The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v16.0#insights-api-breakdowns)
+	// The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v19.0#insights-api-breakdowns)
 	Breakdowns []string `json:"breakdowns"`
 }
 

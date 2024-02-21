@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
+)
+
 // PipelineInput - The script returned by `GET /pipelines/{id}/scripts/{version}` can be used as the `script` input. If `script` is not specified, the default script is used.
 type PipelineInput struct {
 	Name        string           `json:"name"`
@@ -10,7 +14,7 @@ type PipelineInput struct {
 	// Whenever a script is required, we accept and/or return two types of scripts: a Script or Legacy Script. We return a Script object if all transforms specified in that script are supported by this API. Otherwise it will return a Legacy Script. Either Script or Legacy Script can be used when adding a script to a pipeline.
 	Script *ScriptOrLegacyScriptInput `json:"script,omitempty"`
 	// If the pipeline is paused. Defaults to `false`.
-	Paused               *bool                 `json:"paused,omitempty"`
+	Paused               *bool                 `default:"false" json:"paused"`
 	ParsingErrorSettings *ParsingErrorSettings `json:"parsingErrorSettings,omitempty"`
 	// An array of user email's to share the pipeline with.
 	//
@@ -18,6 +22,17 @@ type PipelineInput struct {
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Shares []string `json:"shares,omitempty"`
+}
+
+func (p PipelineInput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *PipelineInput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *PipelineInput) GetName() string {

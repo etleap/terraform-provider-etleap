@@ -2,10 +2,25 @@
 
 package shared
 
-// ConnectionDelete - Connection delete body, required only for REDSHIFT and SNOWFLAKE destinations.
+import (
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
+)
+
+// ConnectionDelete - Connection delete body, applicable only for REDSHIFT and SNOWFLAKE destinations.
 type ConnectionDelete struct {
-	// Required for REDSHIFT and SNOWFLAKE connections in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted.
-	DeletionOfExportProducts *bool `json:"deletionOfExportProducts,omitempty"`
+	// Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`.
+	DeletionOfExportProducts *bool `default:"false" json:"deletionOfExportProducts"`
+}
+
+func (c ConnectionDelete) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *ConnectionDelete) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ConnectionDelete) GetDeletionOfExportProducts() *bool {

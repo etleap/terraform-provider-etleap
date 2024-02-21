@@ -65,17 +65,17 @@ type DestinationS3DataLake struct {
 	// The universally unique identifier of the destination connection.
 	ConnectionID string `json:"connectionId"`
 	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
-	WaitForQualityCheck *bool `json:"waitForQualityCheck,omitempty"`
+	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
 	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
 	PrimaryKey []string `json:"primaryKey,omitempty"`
 	// Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
-	AutomaticSchemaChanges *bool `json:"automaticSchemaChanges,omitempty"`
+	AutomaticSchemaChanges *bool `default:"true" json:"automaticSchemaChanges"`
 	// The S3 path prefix to use for this pipeline. The data key in the destination bucket starts with `{connection.pathPrefix}/{pathPrefix}/v{version.pipeline}/`.
 	PathPrefix string `json:"pathPrefix"`
 	// Format for output files. Defaults to `PARQUET`. For Glue-enabled destinations, only `PARQUET` is a valid format.
 	OutputFormat *OutputFormat `default:"PARQUET" json:"outputFormat"`
 	// Defaults to 'false'.
-	GenerateSnapshots *bool `json:"generateSnapshots,omitempty"`
+	GenerateSnapshots *bool `default:"false" json:"generateSnapshots"`
 }
 
 func (d DestinationS3DataLake) MarshalJSON() ([]byte, error) {

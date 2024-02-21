@@ -66,7 +66,7 @@ func (r *ConnectionPOSTGRESDataSource) Schema(ctx context.Context, req datasourc
 			},
 			"auto_replicate": schema.StringAttribute{
 				Computed:    true,
-				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property. Note that only the connection owner can change this setting.`,
+				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.`,
 			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed:    true,

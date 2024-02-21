@@ -19,6 +19,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -74,8 +75,10 @@ func (r *ModelResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 				},
 			},
 			"deletion_of_export_products": schema.BoolAttribute{
-				Required:    true,
-				Description: `Specifies whether the table in the destination created by this model should be deleted.`,
+				Computed:    true,
+				Optional:    true,
+				Default:     booldefault.StaticBool(false),
+				Description: `Specifies whether the table in the destination created by this model should be deleted. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
 			},
 			"dependencies": schema.ListNestedAttribute{
 				Computed: true,

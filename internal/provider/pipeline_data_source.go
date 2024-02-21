@@ -103,7 +103,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										},
 										"retain_history": schema.BoolAttribute{
 											Computed:    true,
-											Description: `If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to ` + "`" + `false` + "`" + `.`,
+											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `.`,
 										},
 										"schema": schema.StringAttribute{
 											Computed:    true,
@@ -171,7 +171,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										},
 										"retain_history": schema.BoolAttribute{
 											Computed:    true,
-											Description: `If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to ` + "`" + `false` + "`" + `.`,
+											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `.`,
 										},
 										"schema": schema.StringAttribute{
 											Computed:    true,
@@ -264,7 +264,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										},
 										"retain_history": schema.BoolAttribute{
 											Computed:    true,
-											Description: `If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to ` + "`" + `false` + "`" + `.`,
+											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `.`,
 										},
 										"schema": schema.StringAttribute{
 											Computed:    true,
@@ -898,7 +898,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"breakdowns": schema.ListAttribute{
 								Computed:    true,
 								ElementType: types.StringType,
-								Description: `The breakdown fields. The first one must be ` + "`" + `date_start` + "`" + `. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v16.0#insights-api-breakdowns)`,
+								Description: `The breakdown fields. The first one must be ` + "`" + `date_start` + "`" + `. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v19.0#insights-api-breakdowns)`,
 							},
 							"connection_id": schema.StringAttribute{
 								Computed:    true,

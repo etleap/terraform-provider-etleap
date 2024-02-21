@@ -9,18 +9,6 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-type SourceUpdate struct {
-	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceUpdate) GetLatencyThreshold() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.LatencyThreshold
-}
-
 // PipelineUpdateAction - Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached.
 type PipelineUpdateAction string
 

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 162f94e200b58a76ff623a9815204f65
-  docVersion: 2.6.16
+  docChecksum: 43961cf080a10f9343fe5085a800d433
+  docVersion: 2.6.17
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.1.0
-  configChecksum: d85785147b2fb5e1be82acdafea01b31
+  releaseVersion: 0.1.1
+  configChecksum: c73fb555aea0ba8ddf1d44df16d64d44
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -576,6 +576,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourcezuora.go
   - internal/sdk/pkg/models/shared/pipelineupdate.go
   - internal/sdk/pkg/models/shared/destinationupdate.go
+  - internal/sdk/pkg/models/shared/sourceupdate.go
   - internal/sdk/pkg/models/shared/pipelinedelete.go
   - internal/sdk/pkg/models/shared/pipelinesoutput.go
   - internal/sdk/pkg/models/shared/pipelineinput.go

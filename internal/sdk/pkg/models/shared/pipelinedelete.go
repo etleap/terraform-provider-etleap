@@ -2,14 +2,29 @@
 
 package shared
 
+import (
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
+)
+
 type PipelineDelete struct {
-	// Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue.
-	DeletionOfExportProducts bool `json:"deletionOfExportProducts"`
+	// Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue. Defaults to `false`.
+	DeletionOfExportProducts *bool `default:"false" json:"deletionOfExportProducts"`
 }
 
-func (o *PipelineDelete) GetDeletionOfExportProducts() bool {
+func (p PipelineDelete) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *PipelineDelete) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *PipelineDelete) GetDeletionOfExportProducts() *bool {
 	if o == nil {
-		return false
+		return nil
 	}
 	return o.DeletionOfExportProducts
 }

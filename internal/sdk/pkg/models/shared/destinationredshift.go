@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
 type DestinationRedshiftType string
@@ -36,11 +37,11 @@ type DestinationRedshift struct {
 	// The universally unique identifier of the destination connection.
 	ConnectionID string `json:"connectionId"`
 	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
-	WaitForQualityCheck *bool `json:"waitForQualityCheck,omitempty"`
+	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
 	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
 	PrimaryKey []string `json:"primaryKey,omitempty"`
 	// Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
-	AutomaticSchemaChanges *bool `json:"automaticSchemaChanges,omitempty"`
+	AutomaticSchemaChanges *bool `default:"true" json:"automaticSchemaChanges"`
 	// The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 	Schema *string `json:"schema,omitempty"`
 	Table  string  `json:"table"`
@@ -48,13 +49,24 @@ type DestinationRedshift struct {
 	SortColumns       []string           `json:"sortColumns,omitempty"`
 	DistributionStyle *DistributionStyle `json:"distributionStyle,omitempty"`
 	// Truncate strings to 64K characters, the max allowed by Redshift in a single column. Defaults to `false`.
-	TruncateStrings *bool `json:"truncateStrings,omitempty"`
-	// If the destination table should retain the history of the source. More information here: https://support.etleap.com/hc/en-us/articles/360008168574. Defaults to `false`.
-	RetainHistory *bool `json:"retainHistory,omitempty"`
+	TruncateStrings *bool `default:"false" json:"truncateStrings"`
+	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
+	RetainHistory *bool `default:"false" json:"retainHistory"`
 	// Whether columns should be compressed. Defaults to `true`.
-	CompressColumns *bool `json:"compressColumns,omitempty"`
+	CompressColumns *bool `default:"true" json:"compressColumns"`
 	// Name of a column that indicates the time the record was updated at the destination.
 	LastUpdatedColumn *string `json:"lastUpdatedColumn,omitempty"`
+}
+
+func (d DestinationRedshift) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationRedshift) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *DestinationRedshift) GetType() DestinationRedshiftType {

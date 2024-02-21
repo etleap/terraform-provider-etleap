@@ -479,7 +479,12 @@ func (r *ModelResourceModel) ToSharedModelUpdate() *shared.ModelUpdate {
 }
 
 func (r *ModelResourceModel) ToSharedModelDelete() *shared.ModelDelete {
-	deletionOfExportProducts := r.DeletionOfExportProducts.ValueBool()
+	deletionOfExportProducts := new(bool)
+	if !r.DeletionOfExportProducts.IsUnknown() && !r.DeletionOfExportProducts.IsNull() {
+		*deletionOfExportProducts = r.DeletionOfExportProducts.ValueBool()
+	} else {
+		deletionOfExportProducts = nil
+	}
 	out := shared.ModelDelete{
 		DeletionOfExportProducts: deletionOfExportProducts,
 	}

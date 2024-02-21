@@ -53,7 +53,6 @@ resource "etleap_model" "my_model" {
 
 ### Required
 
-- `deletion_of_export_products` (Boolean) Specifies whether the table in the destination created by this model should be deleted.
 - `name` (String)
 - `query_and_triggers` (Attributes) (see [below for nested schema](#nestedatt--query_and_triggers))
 - `update_schedule` (Attributes) How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-updates) for more information. (see [below for nested schema](#nestedatt--update_schedule))
@@ -61,6 +60,7 @@ resource "etleap_model" "my_model" {
 
 ### Optional
 
+- `deletion_of_export_products` (Boolean) Specifies whether the table in the destination created by this model should be deleted. Defaults to `false`. Default: false
 - `shares` (List of String) An array of users' emails to share the model with. Once shared, a model cannot be unshared, and future calls to `PATCH` can only add to this list.
 
 ### Read-Only
