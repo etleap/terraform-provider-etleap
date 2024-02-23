@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 43961cf080a10f9343fe5085a800d433
-  docVersion: 2.6.17
+  docChecksum: 569b3911990a5f205036a542896db32a
+  docVersion: 2.6.18
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.1.1
-  configChecksum: c73fb555aea0ba8ddf1d44df16d64d44
+  releaseVersion: 0.1.2
+  configChecksum: c1465f7fc98839705b84bef5f65fb4bf
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -1232,7 +1232,6 @@ generatedFiles:
   - internal/provider/model_resource.go
   - internal/provider/model_resource_sdk.go
   - examples/resources/etleap_model/resource.tf
-  - internal/provider/pipeline_resource.go
   - internal/provider/pipeline_resource_sdk.go
   - examples/resources/etleap_pipeline/resource.tf
   - internal/provider/team_resource.go

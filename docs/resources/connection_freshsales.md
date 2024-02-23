@@ -18,6 +18,7 @@ resource "etleap_connection_freshsales" "my_connectionfreshsales" {
   deletion_of_export_products = true
   domain                      = "...my_domain..."
   name                        = "Leroy Orn"
+  quota_limit                 = 88.4
   type                        = "FRESHSALES"
 }
 ```
@@ -30,6 +31,7 @@ resource "etleap_connection_freshsales" "my_connectionfreshsales" {
 - `api_key` (String) Your Freshsales API Key. Can be found under Admin Settings -> API Settings under the "API Key" label.
 - `domain` (String) Your Freshsales domain. Can be found under Admin Settings -> API Settings under the "bundle alias" label.
 - `name` (String) The unique name of this connection.
+- `quota_limit` (Number) The maximum number of requests Etleap can make per hour against the Freshsales API.
 - `type` (String) must be one of ["FRESHSALES"]
 
 ### Optional

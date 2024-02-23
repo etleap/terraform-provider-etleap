@@ -150,6 +150,8 @@ type ConnectionFreshsales struct {
 	DefaultUpdateSchedule []ConnectionFreshsalesDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Your Freshsales domain. Can be found under Admin Settings -> API Settings under the "bundle alias" label.
 	Domain string `json:"domain"`
+	// The maximum number of requests Etleap can make per hour against the Freshsales API.
+	QuotaLimit float64 `json:"quotaLimit"`
 }
 
 func (c ConnectionFreshsales) MarshalJSON() ([]byte, error) {
@@ -261,6 +263,13 @@ func (o *ConnectionFreshsales) GetDomain() string {
 	return o.Domain
 }
 
+func (o *ConnectionFreshsales) GetQuotaLimit() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.QuotaLimit
+}
+
 type ConnectionFreshsalesInput struct {
 	// The unique name of this connection.
 	Name string                   `json:"name"`
@@ -271,6 +280,8 @@ type ConnectionFreshsalesInput struct {
 	Domain string `json:"domain"`
 	// Your Freshsales API Key. Can be found under Admin Settings -> API Settings under the "API Key" label.
 	APIKey string `json:"apiKey"`
+	// The maximum number of requests Etleap can make per hour against the Freshsales API.
+	QuotaLimit float64 `json:"quotaLimit"`
 }
 
 func (o *ConnectionFreshsalesInput) GetName() string {
@@ -341,4 +352,11 @@ func (o *ConnectionFreshsalesInput) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *ConnectionFreshsalesInput) GetQuotaLimit() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.QuotaLimit
 }

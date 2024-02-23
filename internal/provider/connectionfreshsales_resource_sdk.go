@@ -5,6 +5,7 @@ package provider
 import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"math/big"
 	"time"
 )
 
@@ -88,12 +89,14 @@ func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsalesInput() 
 	}
 	domain := r.Domain.ValueString()
 	apiKey := r.APIKey.ValueString()
+	quotaLimit, _ := r.QuotaLimit.ValueBigFloat().Float64()
 	out := shared.ConnectionFreshsalesInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
 		Domain:         domain,
 		APIKey:         apiKey,
+		QuotaLimit:     quotaLimit,
 	}
 	return &out
 }
@@ -152,6 +155,7 @@ func (r *ConnectionFRESHSALESResourceModel) RefreshFromSharedConnectionFreshsale
 	r.Domain = types.StringValue(resp.Domain)
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
+	r.QuotaLimit = types.NumberValue(big.NewFloat(float64(resp.QuotaLimit)))
 	r.Status = types.StringValue(string(resp.Status))
 	r.Type = types.StringValue(string(resp.Type))
 	if resp.UpdateSchedule == nil {
@@ -293,6 +297,12 @@ func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsalesUpdate()
 	} else {
 		apiKey = nil
 	}
+	quotaLimit := new(float64)
+	if !r.QuotaLimit.IsUnknown() && !r.QuotaLimit.IsNull() {
+		*quotaLimit, _ = r.QuotaLimit.ValueBigFloat().Float64()
+	} else {
+		quotaLimit = nil
+	}
 	out := shared.ConnectionFreshsalesUpdate{
 		Name:           name,
 		Type:           typeVar,
@@ -300,6 +310,7 @@ func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsalesUpdate()
 		UpdateSchedule: updateSchedule,
 		Domain:         domain,
 		APIKey:         apiKey,
+		QuotaLimit:     quotaLimit,
 	}
 	return &out
 }

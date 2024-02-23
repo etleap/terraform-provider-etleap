@@ -5,6 +5,11 @@ package provider
 import (
 	"context"
 	"fmt"
+	speakeasy_boolplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/boolplanmodifier"
+	speakeasy_int64planmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/stringplanmodifier"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/operations"
 	"github.com/etleap/terraform-provider-etleap/internal/validators"
@@ -15,6 +20,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -58,15 +64,24 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 
 		Attributes: map[string]schema.Attribute{
 			"active": schema.BoolAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.Bool{
+					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+				},
 				Description: `Whether this connection has been marked as active.`,
 			},
 			"bucket": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Required:    true,
 				Description: `A bucket you want to extract from. E.g. 'mybucket'`,
 			},
 			"create_date": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Description: `The date and time when then the connection was created.`,
 				Validators: []validator.String{
 					validators.IsRFC3339(),
@@ -74,10 +89,16 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 			},
 			"default_update_schedule": schema.ListNestedAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.List{
+					speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
-							Computed:    true,
+							Computed: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
 							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
@@ -90,16 +111,28 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+							},
 							Attributes: map[string]schema.Attribute{
 								"daily": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"hour_of_day": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Hour of day the  pipeline update should be started at (in UTC).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["DAILY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -112,9 +145,15 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 								},
 								"hourly": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["HOURLY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -127,13 +166,22 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 								},
 								"interval": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"interval_minutes": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Time to wait before new data is pulled (in minutes).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["INTERVAL"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -146,16 +194,28 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 								},
 								"monthly": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"day_of_month": schema.Int64Attribute{
 											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 										},
 										"hour_of_day": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Hour of day the  pipeline update should be started at (in UTC).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["MONTHLY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -168,16 +228,28 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 								},
 								"weekly": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"day_of_week": schema.Int64Attribute{
 											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 										},
 										"hour_of_day": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Hour of day the  pipeline update should be started at (in UTC).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["WEEKLY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -205,7 +277,10 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 				Description: `Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
 			},
 			"id": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Description: `The unique identifier of the connection.`,
 			},
 			"json_credentials": schema.StringAttribute{
@@ -213,11 +288,17 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 				Description: `To generate new JSON Credentials, go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials/), make sure you are on the correct project, and create or select an existing service account. Select the service account, and under "Keys" create a new key in JSON format. Paste the JSON object into the "JSON Credentials" fields.`,
 			},
 			"name": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Required:    true,
 				Description: `The unique name of this connection.`,
 			},
 			"status": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Description: `The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -232,6 +313,9 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 				},
 			},
 			"type": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Required:    true,
 				Description: `must be one of ["GOOGLE_CLOUD_STORAGE"]`,
 				Validators: []validator.String{
@@ -242,14 +326,23 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 			},
 			"update_schedule": schema.SingleNestedAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"daily": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"hour_of_day": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
 								Validators: []validator.Int64{
@@ -257,7 +350,10 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["DAILY"]`,
 								Validators: []validator.String{
@@ -272,10 +368,16 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 					},
 					"hourly": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["HOURLY"]`,
 								Validators: []validator.String{
@@ -290,10 +392,16 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 					},
 					"interval": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"interval_minutes": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Time to wait before new data is pulled (in minutes). Not Null`,
 								Validators: []validator.Int64{
@@ -301,7 +409,10 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["INTERVAL"]`,
 								Validators: []validator.String{
@@ -316,10 +427,16 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 					},
 					"monthly": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"day_of_month": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null`,
 								Validators: []validator.Int64{
@@ -327,7 +444,10 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 								},
 							},
 							"hour_of_day": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
 								Validators: []validator.Int64{
@@ -335,7 +455,10 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["MONTHLY"]`,
 								Validators: []validator.String{
@@ -350,10 +473,16 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 					},
 					"weekly": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"day_of_week": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null`,
 								Validators: []validator.Int64{
@@ -361,7 +490,10 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 								},
 							},
 							"hour_of_day": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
 								Validators: []validator.Int64{
@@ -369,7 +501,10 @@ func (r *ConnectionGOOGLECLOUDSTORAGEResource) Schema(ctx context.Context, req r
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["WEEKLY"]`,
 								Validators: []validator.String{

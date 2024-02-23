@@ -1,10 +1,10 @@
 resource "etleap_connection_ftp" "my_connectionftp" {
-  deletion_of_export_products = true
-  hostname                    = "flimsy-tank-top.org"
-  name                        = "Leroy Paucek"
+  deletion_of_export_products = false
+  hostname                    = "unfit-teletype.name"
+  name                        = "Kristine Ferry"
   passive_mode                = true
   password                    = "...my_password..."
-  port                        = 10
+  port                        = 2
   type                        = "FTP"
-  username                    = "Deshawn_McLaughlin78"
+  username                    = "Landen_Schaefer75"
 }

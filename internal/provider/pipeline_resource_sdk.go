@@ -484,11 +484,16 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			latencyThreshold13 = nil
 		}
 		entity9 := r.Source.Freshsales.Entity.ValueString()
+		var view []string = nil
+		for _, viewItem := range r.Source.Freshsales.View {
+			view = append(view, viewItem.ValueString())
+		}
 		sourceFreshsales = &shared.SourceFreshsales{
 			Type:             typeVar13,
 			ConnectionID:     connectionId13,
 			LatencyThreshold: latencyThreshold13,
 			Entity:           entity9,
+			View:             view,
 		}
 	}
 	if sourceFreshsales != nil {
@@ -3712,6 +3717,10 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 		r.Source.Freshsales.Entity = types.StringValue(resp.Source.SourceFreshsales.Entity)
 		r.Source.Freshsales.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFreshsales.LatencyThreshold)
 		r.Source.Freshsales.Type = types.StringValue(string(resp.Source.SourceFreshsales.Type))
+		r.Source.Freshsales.View = nil
+		for _, v := range resp.Source.SourceFreshsales.View {
+			r.Source.Freshsales.View = append(r.Source.Freshsales.View, types.StringValue(v))
+		}
 	}
 	if resp.Source.SourceFreshworks != nil {
 		r.Source.Freshworks = &SourceFreshworks{}

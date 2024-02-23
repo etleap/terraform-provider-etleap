@@ -39,6 +39,8 @@ type SourceFreshsales struct {
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Freshsales resource. Example values: [Leads, Deals, Appointments or Tasks]
 	Entity string `json:"entity"`
+	// Only when Entity is related to Deals. Select which views you want Etleap to pull data from.
+	View []string `json:"view,omitempty"`
 }
 
 func (o *SourceFreshsales) GetType() SourceFreshsalesType {
@@ -67,4 +69,11 @@ func (o *SourceFreshsales) GetEntity() string {
 		return ""
 	}
 	return o.Entity
+}
+
+func (o *SourceFreshsales) GetView() []string {
+	if o == nil {
+		return nil
+	}
+	return o.View
 }

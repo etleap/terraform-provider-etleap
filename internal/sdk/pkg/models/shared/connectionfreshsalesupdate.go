@@ -43,6 +43,8 @@ type ConnectionFreshsalesUpdate struct {
 	Domain *string `json:"domain,omitempty"`
 	// Your Freshsales API Key. Can be found under Admin Settings -> API Settings under the "API Key" label.
 	APIKey *string `json:"apiKey,omitempty"`
+	// The maximum number of requests Etleap can make per hour against the Freshsales API.
+	QuotaLimit *float64 `json:"quotaLimit,omitempty"`
 }
 
 func (o *ConnectionFreshsalesUpdate) GetName() *string {
@@ -120,4 +122,11 @@ func (o *ConnectionFreshsalesUpdate) GetAPIKey() *string {
 		return nil
 	}
 	return o.APIKey
+}
+
+func (o *ConnectionFreshsalesUpdate) GetQuotaLimit() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.QuotaLimit
 }

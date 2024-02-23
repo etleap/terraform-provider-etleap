@@ -421,6 +421,10 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Freshsales.Entity = types.StringValue(resp.Source.SourceFreshsales.Entity)
 		r.Source.Freshsales.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFreshsales.LatencyThreshold)
 		r.Source.Freshsales.Type = types.StringValue(string(resp.Source.SourceFreshsales.Type))
+		r.Source.Freshsales.View = nil
+		for _, v := range resp.Source.SourceFreshsales.View {
+			r.Source.Freshsales.View = append(r.Source.Freshsales.View, types.StringValue(v))
+		}
 	}
 	if resp.Source.SourceFreshworks != nil {
 		r.Source.Freshworks = &SourceFreshworks{}

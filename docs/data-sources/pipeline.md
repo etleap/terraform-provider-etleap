@@ -596,6 +596,7 @@ Read-Only:
 - `entity` (String) The Freshsales resource. Example values: [Leads, Deals, Appointments or Tasks]
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["FRESHSALES"]
+- `view` (List of String) Only when Entity is related to Deals. Select which views you want Etleap to pull data from.
 
 
 <a id="nestedatt--source--freshworks"></a>

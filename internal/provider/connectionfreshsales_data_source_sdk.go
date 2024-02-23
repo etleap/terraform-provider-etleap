@@ -5,6 +5,7 @@ package provider
 import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"math/big"
 	"time"
 )
 
@@ -62,6 +63,7 @@ func (r *ConnectionFRESHSALESDataSourceModel) RefreshFromSharedConnectionFreshsa
 	r.Domain = types.StringValue(resp.Domain)
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
+	r.QuotaLimit = types.NumberValue(big.NewFloat(float64(resp.QuotaLimit)))
 	r.Status = types.StringValue(string(resp.Status))
 	r.Type = types.StringValue(string(resp.Type))
 	if resp.UpdateSchedule == nil {

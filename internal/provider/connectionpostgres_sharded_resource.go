@@ -6,6 +6,10 @@ import (
 	"context"
 	"fmt"
 	speakeasy_boolplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/boolplanmodifier"
+	speakeasy_int64planmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/stringplanmodifier"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/operations"
 	"github.com/etleap/terraform-provider-etleap/internal/validators"
@@ -64,11 +68,17 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 
 		Attributes: map[string]schema.Attribute{
 			"active": schema.BoolAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.Bool{
+					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+				},
 				Description: `Whether this connection has been marked as active.`,
 			},
 			"auto_replicate": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Optional:    true,
 				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.`,
 			},
@@ -83,7 +93,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 				Description: `Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/docs/documentation/ZG9jOjM3MjY3NzM5-postgres) and ensure that all requirements are met. Requires replacement if changed. ; Default: false`,
 			},
 			"create_date": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Description: `The date and time when then the connection was created.`,
 				Validators: []validator.String{
 					validators.IsRFC3339(),
@@ -91,10 +104,16 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 			},
 			"default_update_schedule": schema.ListNestedAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.List{
+					speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
-							Computed:    true,
+							Computed: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
 							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
@@ -107,16 +126,28 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+							},
 							Attributes: map[string]schema.Attribute{
 								"daily": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"hour_of_day": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Hour of day the  pipeline update should be started at (in UTC).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["DAILY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -129,9 +160,15 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 								"hourly": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["HOURLY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -144,13 +181,22 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 								"interval": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"interval_minutes": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Time to wait before new data is pulled (in minutes).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["INTERVAL"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -163,16 +209,28 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 								"monthly": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"day_of_month": schema.Int64Attribute{
 											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 										},
 										"hour_of_day": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Hour of day the  pipeline update should be started at (in UTC).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["MONTHLY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -185,16 +243,28 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 								"weekly": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"day_of_week": schema.Int64Attribute{
 											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 										},
 										"hour_of_day": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Hour of day the  pipeline update should be started at (in UTC).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["WEEKLY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -222,24 +292,39 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 				Description: `Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
 			},
 			"id": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Description: `The unique identifier of the connection.`,
 			},
 			"name": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Required:    true,
 				Description: `The unique name of this connection.`,
 			},
 			"schema": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Optional:    true,
 				Description: `If not specified, the default schema will be used.`,
 			},
 			"shards": schema.ListNestedAttribute{
+				PlanModifiers: []planmodifier.List{
+					speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"address": schema.StringAttribute{
-							Computed:    true,
+							Computed: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
 							Optional:    true,
 							Description: `Not Null`,
 							Validators: []validator.String{
@@ -247,7 +332,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 							},
 						},
 						"database": schema.StringAttribute{
-							Computed:    true,
+							Computed: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
 							Optional:    true,
 							Description: `Not Null`,
 							Validators: []validator.String{
@@ -255,7 +343,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 							},
 						},
 						"password": schema.StringAttribute{
-							Computed:    true,
+							Computed: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
 							Optional:    true,
 							Description: `Not Null`,
 							Validators: []validator.String{
@@ -263,7 +354,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 							},
 						},
 						"port": schema.Int64Attribute{
-							Computed:    true,
+							Computed: true,
+							PlanModifiers: []planmodifier.Int64{
+								speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+							},
 							Optional:    true,
 							Description: `Not Null`,
 							Validators: []validator.Int64{
@@ -271,7 +365,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 							},
 						},
 						"shard_id": schema.StringAttribute{
-							Computed:    true,
+							Computed: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
 							Optional:    true,
 							Description: `Not Null`,
 							Validators: []validator.String{
@@ -280,10 +377,16 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 						},
 						"ssh_config": schema.SingleNestedAttribute{
 							Computed: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+							},
 							Optional: true,
 							Attributes: map[string]schema.Attribute{
 								"address": schema.StringAttribute{
-									Computed:    true,
+									Computed: true,
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+									},
 									Optional:    true,
 									Description: `The server address for the SSH connection. Not Null`,
 									Validators: []validator.String{
@@ -291,7 +394,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 									},
 								},
 								"username": schema.StringAttribute{
-									Computed:    true,
+									Computed: true,
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+									},
 									Optional:    true,
 									Description: `The username for the SSH connection. Not Null`,
 									Validators: []validator.String{
@@ -301,7 +407,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 							},
 						},
 						"username": schema.StringAttribute{
-							Computed:    true,
+							Computed: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
 							Optional:    true,
 							Description: `Not Null`,
 							Validators: []validator.String{
@@ -315,7 +424,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 				},
 			},
 			"status": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Description: `The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -330,6 +442,9 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 				},
 			},
 			"type": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Required:    true,
 				Description: `must be one of ["POSTGRES_SHARDED"]`,
 				Validators: []validator.String{
@@ -340,14 +455,23 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 			},
 			"update_schedule": schema.SingleNestedAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"daily": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"hour_of_day": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
 								Validators: []validator.Int64{
@@ -355,7 +479,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["DAILY"]`,
 								Validators: []validator.String{
@@ -370,10 +497,16 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 					},
 					"hourly": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["HOURLY"]`,
 								Validators: []validator.String{
@@ -388,10 +521,16 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 					},
 					"interval": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"interval_minutes": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Time to wait before new data is pulled (in minutes). Not Null`,
 								Validators: []validator.Int64{
@@ -399,7 +538,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["INTERVAL"]`,
 								Validators: []validator.String{
@@ -414,10 +556,16 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 					},
 					"monthly": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"day_of_month": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null`,
 								Validators: []validator.Int64{
@@ -425,7 +573,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"hour_of_day": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
 								Validators: []validator.Int64{
@@ -433,7 +584,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["MONTHLY"]`,
 								Validators: []validator.String{
@@ -448,10 +602,16 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 					},
 					"weekly": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"day_of_week": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null`,
 								Validators: []validator.Int64{
@@ -459,7 +619,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"hour_of_day": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
 								Validators: []validator.Int64{
@@ -467,7 +630,10 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["WEEKLY"]`,
 								Validators: []validator.String{

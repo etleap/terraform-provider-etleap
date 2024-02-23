@@ -34,6 +34,7 @@ type ConnectionFRESHSALESDataSourceModel struct {
 	Domain                types.String            `tfsdk:"domain"`
 	ID                    types.String            `tfsdk:"id"`
 	Name                  types.String            `tfsdk:"name"`
+	QuotaLimit            types.Number            `tfsdk:"quota_limit"`
 	Status                types.String            `tfsdk:"status"`
 	Type                  types.String            `tfsdk:"type"`
 	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
@@ -158,6 +159,10 @@ func (r *ConnectionFRESHSALESDataSource) Schema(ctx context.Context, req datasou
 			"name": schema.StringAttribute{
 				Computed:    true,
 				Description: `The unique name of this connection.`,
+			},
+			"quota_limit": schema.NumberAttribute{
+				Computed:    true,
+				Description: `The maximum number of requests Etleap can make per hour against the Freshsales API.`,
 			},
 			"status": schema.StringAttribute{
 				Computed:    true,

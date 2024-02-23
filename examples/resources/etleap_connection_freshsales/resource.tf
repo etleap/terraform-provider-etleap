@@ -3,5 +3,6 @@ resource "etleap_connection_freshsales" "my_connectionfreshsales" {
   deletion_of_export_products = true
   domain                      = "...my_domain..."
   name                        = "Leroy Orn"
+  quota_limit                 = 88.4
   type                        = "FRESHSALES"
 }

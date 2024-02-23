@@ -958,6 +958,11 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed:    true,
 								Description: `must be one of ["FRESHSALES"]`,
 							},
+							"view": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `Only when Entity is related to Deals. Select which views you want Etleap to pull data from.`,
+							},
 						},
 					},
 					"freshworks": schema.SingleNestedAttribute{

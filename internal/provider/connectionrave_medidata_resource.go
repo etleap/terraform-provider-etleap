@@ -5,6 +5,11 @@ package provider
 import (
 	"context"
 	"fmt"
+	speakeasy_boolplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/boolplanmodifier"
+	speakeasy_int64planmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/stringplanmodifier"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/operations"
 	"github.com/etleap/terraform-provider-etleap/internal/validators"
@@ -15,6 +20,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -59,11 +65,17 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 
 		Attributes: map[string]schema.Attribute{
 			"active": schema.BoolAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.Bool{
+					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+				},
 				Description: `Whether this connection has been marked as active.`,
 			},
 			"create_date": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Description: `The date and time when then the connection was created.`,
 				Validators: []validator.String{
 					validators.IsRFC3339(),
@@ -71,10 +83,16 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 			},
 			"default_update_schedule": schema.ListNestedAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.List{
+					speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+				},
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
-							Computed:    true,
+							Computed: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
 							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
@@ -87,16 +105,28 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+							},
 							Attributes: map[string]schema.Attribute{
 								"daily": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"hour_of_day": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Hour of day the  pipeline update should be started at (in UTC).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["DAILY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -109,9 +139,15 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 								},
 								"hourly": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["HOURLY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -124,13 +160,22 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 								},
 								"interval": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"interval_minutes": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Time to wait before new data is pulled (in minutes).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["INTERVAL"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -143,16 +188,28 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 								},
 								"monthly": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"day_of_month": schema.Int64Attribute{
 											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 										},
 										"hour_of_day": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Hour of day the  pipeline update should be started at (in UTC).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["MONTHLY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -165,16 +222,28 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 								},
 								"weekly": schema.SingleNestedAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
 									Attributes: map[string]schema.Attribute{
 										"day_of_week": schema.Int64Attribute{
 											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 										},
 										"hour_of_day": schema.Int64Attribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
 											Description: `Hour of day the  pipeline update should be started at (in UTC).`,
 										},
 										"mode": schema.StringAttribute{
-											Computed:    true,
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
 											Description: `must be one of ["WEEKLY"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
@@ -206,10 +275,16 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 				Description: `E.g., my-org.mdsol.com`,
 			},
 			"id": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Description: `The unique identifier of the connection.`,
 			},
 			"name": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Required:    true,
 				Description: `The unique name of this connection.`,
 			},
@@ -218,7 +293,10 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 				Description: `Rave Account Password`,
 			},
 			"status": schema.StringAttribute{
-				Computed:    true,
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Description: `The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -233,6 +311,9 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 				},
 			},
 			"type": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
 				Required:    true,
 				Description: `must be one of ["RAVE_MEDIDATA"]`,
 				Validators: []validator.String{
@@ -243,14 +324,23 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 			},
 			"update_schedule": schema.SingleNestedAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"daily": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"hour_of_day": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
 								Validators: []validator.Int64{
@@ -258,7 +348,10 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["DAILY"]`,
 								Validators: []validator.String{
@@ -273,10 +366,16 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 					},
 					"hourly": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["HOURLY"]`,
 								Validators: []validator.String{
@@ -291,10 +390,16 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 					},
 					"interval": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"interval_minutes": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Time to wait before new data is pulled (in minutes). Not Null`,
 								Validators: []validator.Int64{
@@ -302,7 +407,10 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["INTERVAL"]`,
 								Validators: []validator.String{
@@ -317,10 +425,16 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 					},
 					"monthly": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"day_of_month": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null`,
 								Validators: []validator.Int64{
@@ -328,7 +442,10 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 								},
 							},
 							"hour_of_day": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
 								Validators: []validator.Int64{
@@ -336,7 +453,10 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["MONTHLY"]`,
 								Validators: []validator.String{
@@ -351,10 +471,16 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 					},
 					"weekly": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"day_of_week": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null`,
 								Validators: []validator.Int64{
@@ -362,7 +488,10 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 								},
 							},
 							"hour_of_day": schema.Int64Attribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
 								Validators: []validator.Int64{
@@ -370,7 +499,10 @@ func (r *ConnectionRAVEMEDIDATAResource) Schema(ctx context.Context, req resourc
 								},
 							},
 							"mode": schema.StringAttribute{
-								Computed:    true,
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
 								Optional:    true,
 								Description: `Not Null; must be one of ["WEEKLY"]`,
 								Validators: []validator.String{
