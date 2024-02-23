@@ -123,12 +123,6 @@ jobs:
           command: curl -sfL https://goreleaser.com/static/run | bash /dev/stdin release --clean
       - slack/notify:
           channel: -devops
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          channel: -devops
-          event: pass
-          template: basic_pass_1
 
 workflows:
   version: 2
