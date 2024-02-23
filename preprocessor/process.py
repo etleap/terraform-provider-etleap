@@ -61,6 +61,7 @@ for connection_type_update in connection_types_update:
     paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][PATCH]['x-speakeasy-entity-operation'] = 'Connection' + enum_value + '#update'
 
     schemas[update_connection_schema]['x-speakeasy-entity'] = 'Connection' + enum_value
+    schemas[update_connection_schema]['x-speakeasy-param-suppress-computed-diff'] = 'true'
 
 for connection_type in connection_types:
     connections_schema = schema_from_ref(connection_type['$ref'])
@@ -87,6 +88,7 @@ for connection_type in connection_types:
     paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][DELETE]['x-speakeasy-entity-operation'] = 'Connection' + enum_value + '#delete'
 
     schemas[connections_schema]['x-speakeasy-entity'] = 'Connection' + enum_value
+    schemas[connections_schema]['x-speakeasy-param-suppress-computed-diff'] = 'true'
 
 with open(outputSchemaFile, 'w+') as f:
     j.dump(api_spec, f, indent=4)
