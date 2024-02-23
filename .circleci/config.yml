@@ -92,7 +92,7 @@ jobs:
 
   
   publish:
-    resource_class: small
+    resource_class: medium
     executor:
       name: go/default
       tag: "1.21"
