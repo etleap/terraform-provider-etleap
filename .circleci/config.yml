@@ -83,13 +83,6 @@ jobs:
             git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" --tags
       - slack/notify:
           channel: -devops
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          channel: -devops
-          event: pass
-          template: basic_pass_1
-
   
   publish:
     resource_class: medium
@@ -112,9 +105,15 @@ jobs:
           name: Tag if needed
           command: |
             if [[ "$(git name-rev --name-only --tags HEAD)" == "undefined" ]]; then
-              echo "No tag found; tagging and releasing"
-              git tag v$(yq .terraform.version .speakeasy/gen.yaml)
-              git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" --tags
+              echo "No tag found at HEAD; trying to tag and release"
+              NEW_TAG=v$(yq .terraform.version .speakeasy/gen.yaml)
+              if [ $(git tag -l "$NEW_TAG") ]; then
+                echo "Tag already exists; skipping."
+                circleci-agent step halt
+              else
+                git tag v$(yq .terraform.version .speakeasy/gen.yaml)
+                git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" --tags
+              fi
             else
               echo "Tag exists; Publishing existing tag"
             fi
