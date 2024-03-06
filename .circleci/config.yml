@@ -83,6 +83,36 @@ jobs:
             git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" --tags
       - slack/notify:
           channel: -devops
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          channel: -devops
+          event: pass
+          template: basic_pass_1
+
+  test:
+    resource_class: medium
+    executor: 
+      name: go/default
+      tag: "1.21"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - go-mod-v4-{{ checksum "go.sum" }}
+      - run:
+          name: Install Dependencies
+          command: go get ./...
+      - run:
+          name: Run tests
+          command: TF_ACC=1 gotestsum --junitfile /tmp/test-results/unit-tests.xml --format testdox
+      - save_cache:
+          key: go-mod-v4-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+      - store_test_results:
+          path: /tmp/test-results
+        
   
   publish:
     resource_class: medium
@@ -138,13 +168,21 @@ workflows:
           requires: 
             - download-and-process
   
-  publish:
+  test-and-publish:
     when:
       and:
         - equal: [ true, <<pipeline.parameters.publish-provider>> ]
-        - equal: [ "main", <<pipeline.git.branch>> ]
     jobs:
+      - test:
+          context: 
+            - Terraform Provider Testing
       - publish:
           context: 
             - Speakeasy
             - CircleCI context
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
+          
