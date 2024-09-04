@@ -1,23 +1,23 @@
 resource "etleap_pipeline" "my_pipeline" {
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   destination = {
     delta_lake = {
       automatic_schema_changes   = true
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
-      pre10_dot2_runtime_support = true
+      pre10_dot2_runtime_support = false
       primary_key = [
         "...",
       ]
-      retain_history         = false
+      retain_history         = true
       schema                 = "...my_schema..."
       table                  = "...my_table..."
       type                   = "DELTA_LAKE"
-      wait_for_quality_check = false
+      wait_for_quality_check = true
     }
   }
-  name   = "Elvira Ledner"
-  paused = true
+  name   = "Vicky Witting"
+  paused = false
   script = {
     legacy_script = {
       legacy_script = "...my_legacy_script..."
@@ -27,7 +27,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 8
+      latency_threshold = 10
       type              = "ACTIVE_CAMPAIGN"
     }
   }

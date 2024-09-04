@@ -109,8 +109,16 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed:    true,
 											Description: `The schema in the destination that the tables will be created in.`,
 										},
+										"schema_changing_to": schema.StringAttribute{
+											Computed:    true,
+											Description: `The schema that the destination table is being moved to. Only returned when moving the destination table to a new schema has been requested but not yet completed.`,
+										},
 										"table": schema.StringAttribute{
 											Computed: true,
+										},
+										"table_changing_to": schema.StringAttribute{
+											Computed:    true,
+											Description: `The name that the destination table is being changed to. Only returned when the rename has been requested but not yet completed.`,
 										},
 										"type": schema.StringAttribute{
 											Computed: true,
@@ -159,6 +167,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 													},
 												},
 											},
+											Description: `Can either be one the strings ` + "`" + `ALL` + "`" + `, ` + "`" + `AUTO` + "`" + ` or ` + "`" + `EVEN` + "`" + `, or an object for ` + "`" + `KEY` + "`" + ` distribution that specifies a column.`,
 										},
 										"last_updated_column": schema.StringAttribute{
 											Computed:    true,
@@ -177,6 +186,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed:    true,
 											Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used.`,
 										},
+										"schema_changing_to": schema.StringAttribute{
+											Computed:    true,
+											Description: `The schema that the destination table is being moved to. Only returned when moving the destination table to a new schema has been requested but not yet completed.`,
+										},
 										"sort_columns": schema.ListAttribute{
 											Computed:    true,
 											ElementType: types.StringType,
@@ -184,6 +197,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										},
 										"table": schema.StringAttribute{
 											Computed: true,
+										},
+										"table_changing_to": schema.StringAttribute{
+											Computed:    true,
+											Description: `The name that the destination table is being changed to. Only returned when the rename has been requested but not yet completed.`,
 										},
 										"truncate_strings": schema.BoolAttribute{
 											Computed:    true,
@@ -270,8 +287,16 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed:    true,
 											Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used.`,
 										},
+										"schema_changing_to": schema.StringAttribute{
+											Computed:    true,
+											Description: `The schema that the destination table is being moved to. Only returned when moving the destination table to a new schema has been requested but not yet completed.`,
+										},
 										"table": schema.StringAttribute{
 											Computed: true,
+										},
+										"table_changing_to": schema.StringAttribute{
+											Computed:    true,
+											Description: `The name that the destination table is being changed to. Only returned when the rename has been requested but not yet completed.`,
 										},
 										"type": schema.StringAttribute{
 											Computed:    true,
@@ -892,6 +917,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
+					"erpx": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The ERPx resource.`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["ERPX"]`,
+							},
+						},
+					},
 					"facebook_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -936,6 +982,32 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"type": schema.StringAttribute{
 								Computed:    true,
 								Description: `must be one of ["FIFTEEN_FIVE"]`,
+							},
+						},
+					},
+					"freshchat": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The Freshchat resource. Example values: [Agents, Channels, Conversations, Conversation Messages]`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["FRESHCHAT"]`,
+							},
+							"view": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `Only when Entity is related to Deals. Select which views you want Etleap to pull data from.`,
 							},
 						},
 					},
@@ -994,7 +1066,11 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified.`,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
+							},
+							"glob_pattern": schema.StringAttribute{
+								Computed:    true,
+								Description: `A glob pattern to be used as a path. Either ` + "`" + `globPattern` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified, but not both.`,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,
@@ -1011,7 +1087,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"paths": schema.ListAttribute{
 								Computed:    true,
 								ElementType: types.StringType,
-								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here.`,
+								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. ` + "`" + `paths` + "`" + ` can't be used when a ` + "`" + `globPattern` + "`" + ` is specified.`,
 							},
 							"type": schema.StringAttribute{
 								Computed:    true,
@@ -1081,50 +1157,6 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
-					"google_analytics": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"connection_id": schema.StringAttribute{
-								Computed:    true,
-								Description: `The universally unique identifier for the source.`,
-							},
-							"dimensions": schema.ListAttribute{
-								Computed:    true,
-								ElementType: types.StringType,
-							},
-							"entity": schema.StringAttribute{
-								Computed:    true,
-								Description: `The full name of the site in Google Analytics`,
-							},
-							"latency_threshold": schema.Int64Attribute{
-								Computed:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
-							},
-							"max_accuracy_start_date": schema.StringAttribute{
-								Computed:    true,
-								Description: `Format of the timestamp: 'yyyy-MM-dd'.`,
-							},
-							"metrics": schema.ListAttribute{
-								Computed:    true,
-								ElementType: types.StringType,
-							},
-							"segment": schema.StringAttribute{
-								Computed: true,
-							},
-							"service": schema.StringAttribute{
-								Computed: true,
-								MarkdownDescription: `| | |` + "\n" +
-									`| - | - |` + "\n" +
-									`| ` + "`" + `REPORTING` + "`" + ` | Gives you access to Google Analytics data, including segments. |` + "\n" +
-									`| ` + "`" + `MULTI_CHANNEL_FUNNELS ` + "`" + ` | Get conversion path data which shows user interactions with various traffic sources. |` + "\n" +
-									`must be one of ["REPORTING", "MULTI_CHANNEL_FUNNELS"]`,
-							},
-							"type": schema.StringAttribute{
-								Computed:    true,
-								Description: `must be one of ["GOOGLE_ANALYTICS"]`,
-							},
-						},
-					},
 					"google_analytics_ga4": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -1165,7 +1197,11 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified.`,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
+							},
+							"glob_pattern": schema.StringAttribute{
+								Computed:    true,
+								Description: `A glob pattern to be used as a path. Either ` + "`" + `globPattern` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified, but not both.`,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,
@@ -1182,7 +1218,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"paths": schema.ListAttribute{
 								Computed:    true,
 								ElementType: types.StringType,
-								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here.`,
+								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. ` + "`" + `paths` + "`" + ` can't be used when a ` + "`" + `globPattern` + "`" + ` is specified.`,
 							},
 							"type": schema.StringAttribute{
 								Computed:    true,
@@ -1996,7 +2032,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified.`,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
 							},
 							"files_can_change": schema.BoolAttribute{
 								Computed:    true,
@@ -2038,7 +2074,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified.`,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,
@@ -2211,7 +2247,11 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified.`,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
+							},
+							"glob_pattern": schema.StringAttribute{
+								Computed:    true,
+								Description: `A glob pattern to be used as a path. Either ` + "`" + `globPattern` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified, but not both.`,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,
@@ -2228,7 +2268,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"paths": schema.ListAttribute{
 								Computed:    true,
 								ElementType: types.StringType,
-								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here.`,
+								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. ` + "`" + `paths` + "`" + ` can't be used when a ` + "`" + `globPattern` + "`" + ` is specified.`,
 							},
 							"type": schema.StringAttribute{
 								Computed:    true,
@@ -2352,7 +2392,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"type": schema.StringAttribute{
 								Computed:    true,
-								Description: `must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]`,
+								Description: `must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]`,
 							},
 						},
 					},
@@ -2500,7 +2540,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified.`,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,

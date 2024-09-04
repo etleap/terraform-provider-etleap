@@ -110,9 +110,14 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlInput() *shared.Co
 	} else {
 		tinyInt1IsBoolean = nil
 	}
+	database := new(string)
+	if !r.Database.IsUnknown() && !r.Database.IsNull() {
+		*database = r.Database.ValueString()
+	} else {
+		database = nil
+	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
-	database := r.Database.ValueString()
 	username := r.Username.ValueString()
 	password := r.Password.ValueString()
 	var sshConfig *shared.SSHConfig
@@ -132,9 +137,9 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlInput() *shared.Co
 		CdcEnabled:        cdcEnabled,
 		AutoReplicate:     autoReplicate,
 		TinyInt1IsBoolean: tinyInt1IsBoolean,
+		Database:          database,
 		Address:           address,
 		Port:              port,
-		Database:          database,
 		Username:          username,
 		Password:          password,
 		SSHConfig:         sshConfig,
@@ -148,7 +153,7 @@ func (r *ConnectionMYSQLResourceModel) RefreshFromSharedConnectionMysql(resp *sh
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
-	r.Database = types.StringValue(resp.Database)
+	r.Database = types.StringPointerValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
@@ -352,6 +357,12 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 	} else {
 		tinyInt1IsBoolean = nil
 	}
+	database := new(string)
+	if !r.Database.IsUnknown() && !r.Database.IsNull() {
+		*database = r.Database.ValueString()
+	} else {
+		database = nil
+	}
 	address := new(string)
 	if !r.Address.IsUnknown() && !r.Address.IsNull() {
 		*address = r.Address.ValueString()
@@ -363,12 +374,6 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 		*port = r.Port.ValueInt64()
 	} else {
 		port = nil
-	}
-	database := new(string)
-	if !r.Database.IsUnknown() && !r.Database.IsNull() {
-		*database = r.Database.ValueString()
-	} else {
-		database = nil
 	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
@@ -409,9 +414,9 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 		ValidateSslCert:   validateSslCert,
 		AutoReplicate:     autoReplicate,
 		TinyInt1IsBoolean: tinyInt1IsBoolean,
+		Database:          database,
 		Address:           address,
 		Port:              port,
-		Database:          database,
 		Username:          username,
 		Password:          password,
 		SSHConfig:         sshConfig,

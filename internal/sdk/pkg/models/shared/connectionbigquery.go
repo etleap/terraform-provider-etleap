@@ -148,7 +148,8 @@ type ConnectionBigQuery struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionBigQueryDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	Dataset               string                                    `json:"dataset"`
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Dataset *string `json:"dataset,omitempty"`
 }
 
 func (c ConnectionBigQuery) MarshalJSON() ([]byte, error) {
@@ -253,9 +254,9 @@ func (o *ConnectionBigQuery) GetDefaultUpdateSchedule() []ConnectionBigQueryDefa
 	return o.DefaultUpdateSchedule
 }
 
-func (o *ConnectionBigQuery) GetDataset() string {
+func (o *ConnectionBigQuery) GetDataset() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Dataset
 }
@@ -266,7 +267,8 @@ type ConnectionBigQueryInput struct {
 	Type ConnectionBigQueryType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Dataset        string               `json:"dataset"`
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Dataset *string `json:"dataset,omitempty"`
 	// To generate new JSON Credentials, go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials/), make sure you are on the correct project, and create or select an existing service account. Select the service account, and under "Keys" create a new key in JSON format. Paste the JSON object into the "JSON Credentials" fields.
 	JSONCredentials string `json:"jsonCredentials"`
 }
@@ -327,9 +329,9 @@ func (o *ConnectionBigQueryInput) GetUpdateScheduleMonthly() *UpdateScheduleMode
 	return nil
 }
 
-func (o *ConnectionBigQueryInput) GetDataset() string {
+func (o *ConnectionBigQueryInput) GetDataset() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Dataset
 }

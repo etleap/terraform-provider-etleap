@@ -91,7 +91,7 @@ func (r *ConnectionMYSQLResource) Schema(ctx context.Context, req resource.Schem
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Optional:    true,
-				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.`,
+				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.`,
 			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed: true,
@@ -114,10 +114,11 @@ func (r *ConnectionMYSQLResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"database": schema.StringAttribute{
+				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Required: true,
+				Optional: true,
 			},
 			"default_update_schedule": schema.ListNestedAttribute{
 				Computed: true,

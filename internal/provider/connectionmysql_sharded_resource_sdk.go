@@ -110,12 +110,23 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 	} else {
 		tinyInt1IsBoolean = nil
 	}
-	var shards []shared.DatabaseShard = nil
+	database := new(string)
+	if !r.Database.IsUnknown() && !r.Database.IsNull() {
+		*database = r.Database.ValueString()
+	} else {
+		database = nil
+	}
+	var shards []shared.MysqlShard = nil
 	for _, shardsItem := range r.Shards {
 		shardID := shardsItem.ShardID.ValueString()
+		database1 := new(string)
+		if !shardsItem.Database.IsUnknown() && !shardsItem.Database.IsNull() {
+			*database1 = shardsItem.Database.ValueString()
+		} else {
+			database1 = nil
+		}
 		address := shardsItem.Address.ValueString()
 		port := shardsItem.Port.ValueInt64()
-		database := shardsItem.Database.ValueString()
 		username := shardsItem.Username.ValueString()
 		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
@@ -127,11 +138,11 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 				Username: username1,
 			}
 		}
-		shards = append(shards, shared.DatabaseShard{
+		shards = append(shards, shared.MysqlShard{
 			ShardID:   shardID,
+			Database:  database1,
 			Address:   address,
 			Port:      port,
-			Database:  database,
 			Username:  username,
 			Password:  password,
 			SSHConfig: sshConfig,
@@ -145,6 +156,7 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 		CdcEnabled:        cdcEnabled,
 		AutoReplicate:     autoReplicate,
 		TinyInt1IsBoolean: tinyInt1IsBoolean,
+		Database:          database,
 		Shards:            shards,
 	}
 	return &out
@@ -155,6 +167,7 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) RefreshFromSharedConnectionMysqlSh
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
+	r.Database = types.StringPointerValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
@@ -209,9 +222,9 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) RefreshFromSharedConnectionMysqlSh
 		r.Shards = r.Shards[:len(resp.Shards)]
 	}
 	for shardsCount, shardsItem := range resp.Shards {
-		var shards1 DatabaseShard
+		var shards1 MysqlShard
 		shards1.Address = types.StringValue(shardsItem.Address)
-		shards1.Database = types.StringValue(shardsItem.Database)
+		shards1.Database = types.StringPointerValue(shardsItem.Database)
 		shards1.Port = types.Int64Value(shardsItem.Port)
 		shards1.ShardID = types.StringValue(shardsItem.ShardID)
 		if shardsItem.SSHConfig == nil {
@@ -377,12 +390,23 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 	} else {
 		tinyInt1IsBoolean = nil
 	}
-	var shards []shared.DatabaseShard = nil
+	database := new(string)
+	if !r.Database.IsUnknown() && !r.Database.IsNull() {
+		*database = r.Database.ValueString()
+	} else {
+		database = nil
+	}
+	var shards []shared.MysqlShard = nil
 	for _, shardsItem := range r.Shards {
 		shardID := shardsItem.ShardID.ValueString()
+		database1 := new(string)
+		if !shardsItem.Database.IsUnknown() && !shardsItem.Database.IsNull() {
+			*database1 = shardsItem.Database.ValueString()
+		} else {
+			database1 = nil
+		}
 		address := shardsItem.Address.ValueString()
 		port := shardsItem.Port.ValueInt64()
-		database := shardsItem.Database.ValueString()
 		username := shardsItem.Username.ValueString()
 		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
@@ -394,11 +418,11 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 				Username: username1,
 			}
 		}
-		shards = append(shards, shared.DatabaseShard{
+		shards = append(shards, shared.MysqlShard{
 			ShardID:   shardID,
+			Database:  database1,
 			Address:   address,
 			Port:      port,
-			Database:  database,
 			Username:  username,
 			Password:  password,
 			SSHConfig: sshConfig,
@@ -412,6 +436,7 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 		ValidateSslCert:   validateSslCert,
 		AutoReplicate:     autoReplicate,
 		TinyInt1IsBoolean: tinyInt1IsBoolean,
+		Database:          database,
 		Shards:            shards,
 	}
 	return &out

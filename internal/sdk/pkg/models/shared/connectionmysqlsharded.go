@@ -152,12 +152,14 @@ type ConnectionMysqlSharded struct {
 	ValidateSslCert       *bool                                         `default:"false" json:"validateSslCert"`
 	// Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
-	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
+	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
 	TinyInt1IsBoolean *bool `default:"false" json:"tinyInt1IsBoolean"`
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Database *string `json:"database,omitempty"`
 	// All MySQL shards for a connection should specify the same database.
-	Shards []DatabaseShardOutput `json:"shards"`
+	Shards []MysqlShardOutput `json:"shards"`
 }
 
 func (c ConnectionMysqlSharded) MarshalJSON() ([]byte, error) {
@@ -290,9 +292,16 @@ func (o *ConnectionMysqlSharded) GetTinyInt1IsBoolean() *bool {
 	return o.TinyInt1IsBoolean
 }
 
-func (o *ConnectionMysqlSharded) GetShards() []DatabaseShardOutput {
+func (o *ConnectionMysqlSharded) GetDatabase() *string {
 	if o == nil {
-		return []DatabaseShardOutput{}
+		return nil
+	}
+	return o.Database
+}
+
+func (o *ConnectionMysqlSharded) GetShards() []MysqlShardOutput {
+	if o == nil {
+		return []MysqlShardOutput{}
 	}
 	return o.Shards
 }
@@ -307,12 +316,14 @@ type ConnectionMysqlShardedInput struct {
 	ValidateSslCert *bool                `default:"false" json:"validateSslCert"`
 	// Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
-	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
+	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
 	TinyInt1IsBoolean *bool `default:"false" json:"tinyInt1IsBoolean"`
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Database *string `json:"database,omitempty"`
 	// All MySQL shards for a connection should specify the same database.
-	Shards []DatabaseShard `json:"shards"`
+	Shards []MysqlShard `json:"shards"`
 }
 
 func (c ConnectionMysqlShardedInput) MarshalJSON() ([]byte, error) {
@@ -410,9 +421,16 @@ func (o *ConnectionMysqlShardedInput) GetTinyInt1IsBoolean() *bool {
 	return o.TinyInt1IsBoolean
 }
 
-func (o *ConnectionMysqlShardedInput) GetShards() []DatabaseShard {
+func (o *ConnectionMysqlShardedInput) GetDatabase() *string {
 	if o == nil {
-		return []DatabaseShard{}
+		return nil
+	}
+	return o.Database
+}
+
+func (o *ConnectionMysqlShardedInput) GetShards() []MysqlShard {
+	if o == nil {
+		return []MysqlShard{}
 	}
 	return o.Shards
 }

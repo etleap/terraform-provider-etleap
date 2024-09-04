@@ -40,6 +40,8 @@ type ConnectionSnowflakeUpdate struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Take into account that the schema is case sensitive
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
 	Roles []string `json:"roles,omitempty"`
@@ -53,6 +55,8 @@ type ConnectionSnowflakeUpdate struct {
 	Password  *string `json:"password,omitempty"`
 	// The role the user will use to connect
 	Role *string `json:"role,omitempty"`
+	// Snowflake Authentication Types
+	Authentication *SnowflakeAuthenticationTypes `json:"authentication,omitempty"`
 }
 
 func (o *ConnectionSnowflakeUpdate) GetName() *string {
@@ -179,4 +183,25 @@ func (o *ConnectionSnowflakeUpdate) GetRole() *string {
 		return nil
 	}
 	return o.Role
+}
+
+func (o *ConnectionSnowflakeUpdate) GetAuthentication() *SnowflakeAuthenticationTypes {
+	if o == nil {
+		return nil
+	}
+	return o.Authentication
+}
+
+func (o *ConnectionSnowflakeUpdate) GetAuthenticationPassword() *SnowflakeAuthenticationPassword {
+	if v := o.GetAuthentication(); v != nil {
+		return v.SnowflakeAuthenticationPassword
+	}
+	return nil
+}
+
+func (o *ConnectionSnowflakeUpdate) GetAuthenticationKeyPair() *SnowflakeAuthenticationKeyPair {
+	if v := o.GetAuthentication(); v != nil {
+		return v.SnowflakeAuthenticationKeyPair
+	}
+	return nil
 }

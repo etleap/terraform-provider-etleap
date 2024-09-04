@@ -14,7 +14,7 @@ func (r *ConnectionMYSQLDataSourceModel) RefreshFromSharedConnectionMysql(resp *
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
-	r.Database = types.StringValue(resp.Database)
+	r.Database = types.StringPointerValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}

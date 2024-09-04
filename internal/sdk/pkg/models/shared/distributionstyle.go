@@ -46,6 +46,7 @@ const (
 	DistributionStyleTypeDistributionStyleKey DistributionStyleType = "distribution_style_key"
 )
 
+// DistributionStyle - Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
 type DistributionStyle struct {
 	One                  *One
 	DistributionStyleKey *DistributionStyleKey

@@ -375,7 +375,7 @@ func (r *ModelResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 										},
 									},
 								},
-								Description: `Not Null`,
+								Description: `Can either be one the strings ` + "`" + `ALL` + "`" + `, ` + "`" + `AUTO` + "`" + ` or ` + "`" + `EVEN` + "`" + `, or an object for ` + "`" + `KEY` + "`" + ` distribution that specifies a column. Not Null`,
 								Validators: []validator.Object{
 									speakeasy_objectvalidators.NotNull(),
 									validators.ExactlyOneChild(),

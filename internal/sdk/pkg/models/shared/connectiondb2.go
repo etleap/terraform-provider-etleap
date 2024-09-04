@@ -150,12 +150,14 @@ type ConnectionDb2 struct {
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionDb2DefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema    *string    `json:"schema,omitempty"`
 	Address   string     `json:"address"`
 	Port      int64      `json:"port"`
-	Database  string     `json:"database"`
 	Username  string     `json:"username"`
 	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionDb2) MarshalJSON() ([]byte, error) {
@@ -281,13 +283,6 @@ func (o *ConnectionDb2) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionDb2) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *ConnectionDb2) GetUsername() string {
 	if o == nil {
 		return ""
@@ -302,6 +297,13 @@ func (o *ConnectionDb2) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
+func (o *ConnectionDb2) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
 // ConnectionDb2Input - Specifies the location of a database.
 type ConnectionDb2Input struct {
 	// The unique name of this connection.
@@ -310,13 +312,15 @@ type ConnectionDb2Input struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema    *string    `json:"schema,omitempty"`
 	Address   string     `json:"address"`
 	Port      int64      `json:"port"`
-	Database  string     `json:"database"`
 	Username  string     `json:"username"`
 	Password  string     `json:"password"`
 	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Database  string     `json:"database"`
 }
 
 func (o *ConnectionDb2Input) GetName() string {
@@ -396,13 +400,6 @@ func (o *ConnectionDb2Input) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionDb2Input) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *ConnectionDb2Input) GetUsername() string {
 	if o == nil {
 		return ""
@@ -422,4 +419,11 @@ func (o *ConnectionDb2Input) GetSSHConfig() *SSHConfig {
 		return nil
 	}
 	return o.SSHConfig
+}
+
+func (o *ConnectionDb2Input) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
 }

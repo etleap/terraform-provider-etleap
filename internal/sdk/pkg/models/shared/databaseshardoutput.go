@@ -4,19 +4,12 @@ package shared
 
 // DatabaseShardOutput - Use shards when the database is split amongst several physical machines, but should be treated as a single database. For performance reasons, only the first shard is validated.
 type DatabaseShardOutput struct {
-	ShardID   string     `json:"shardId"`
 	Address   string     `json:"address"`
 	Port      int64      `json:"port"`
-	Database  string     `json:"database"`
 	Username  string     `json:"username"`
 	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
-}
-
-func (o *DatabaseShardOutput) GetShardID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ShardID
+	Database  string     `json:"database"`
+	ShardID   string     `json:"shardId"`
 }
 
 func (o *DatabaseShardOutput) GetAddress() string {
@@ -33,13 +26,6 @@ func (o *DatabaseShardOutput) GetPort() int64 {
 	return o.Port
 }
 
-func (o *DatabaseShardOutput) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *DatabaseShardOutput) GetUsername() string {
 	if o == nil {
 		return ""
@@ -52,4 +38,18 @@ func (o *DatabaseShardOutput) GetSSHConfig() *SSHConfig {
 		return nil
 	}
 	return o.SSHConfig
+}
+
+func (o *DatabaseShardOutput) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DatabaseShardOutput) GetShardID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ShardID
 }

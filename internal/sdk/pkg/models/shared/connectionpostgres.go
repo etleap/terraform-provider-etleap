@@ -150,6 +150,8 @@ type ConnectionPostgres struct {
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionPostgresDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
@@ -157,9 +159,9 @@ type ConnectionPostgres struct {
 	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
 	Address    string     `json:"address"`
 	Port       int64      `json:"port"`
-	Database   string     `json:"database"`
 	Username   string     `json:"username"`
 	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
+	Database   string     `json:"database"`
 }
 
 func (c ConnectionPostgres) MarshalJSON() ([]byte, error) {
@@ -299,13 +301,6 @@ func (o *ConnectionPostgres) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionPostgres) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *ConnectionPostgres) GetUsername() string {
 	if o == nil {
 		return ""
@@ -320,6 +315,13 @@ func (o *ConnectionPostgres) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
+func (o *ConnectionPostgres) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
 // ConnectionPostgresInput - Specifies the location of a database.
 type ConnectionPostgresInput struct {
 	// The unique name of this connection.
@@ -328,6 +330,8 @@ type ConnectionPostgresInput struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
@@ -335,10 +339,10 @@ type ConnectionPostgresInput struct {
 	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
 	Address    string     `json:"address"`
 	Port       int64      `json:"port"`
-	Database   string     `json:"database"`
 	Username   string     `json:"username"`
 	Password   string     `json:"password"`
 	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
+	Database   string     `json:"database"`
 }
 
 func (c ConnectionPostgresInput) MarshalJSON() ([]byte, error) {
@@ -443,13 +447,6 @@ func (o *ConnectionPostgresInput) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionPostgresInput) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *ConnectionPostgresInput) GetUsername() string {
 	if o == nil {
 		return ""
@@ -469,4 +466,11 @@ func (o *ConnectionPostgresInput) GetSSHConfig() *SSHConfig {
 		return nil
 	}
 	return o.SSHConfig
+}
+
+func (o *ConnectionPostgresInput) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
 }

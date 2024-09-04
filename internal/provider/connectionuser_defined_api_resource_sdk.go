@@ -175,88 +175,52 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 		}
 		var userDefinedAPIReplaceMode *shared.UserDefinedAPIReplaceMode
 		if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode != nil {
-			var userDefinedAPIReplaceMode1 *shared.UserDefinedAPIReplaceMode1
-			if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.One != nil {
-				str := new(string)
-				if !entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.One.Str.IsUnknown() && !entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.One.Str.IsNull() {
-					*str = entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.One.Str.ValueString()
-				} else {
-					str = nil
-				}
-				if str != nil {
-					userDefinedAPIReplaceMode1 = &shared.UserDefinedAPIReplaceMode1{
-						Str: str,
+			typeVar4 := new(shared.UserDefinedAPIReplaceModeType)
+			if !entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.Type.IsUnknown() && !entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.Type.IsNull() {
+				*typeVar4 = shared.UserDefinedAPIReplaceModeType(entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.Type.ValueString())
+			} else {
+				typeVar4 = nil
+			}
+			var primaryKeyColumns []string = nil
+			for _, primaryKeyColumnsItem := range entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.PrimaryKeyColumns {
+				primaryKeyColumns = append(primaryKeyColumns, primaryKeyColumnsItem.ValueString())
+			}
+			var foreignKeyColumns []shared.SchemaV1ForeignKeyColumn = nil
+			for _, foreignKeyColumnsItem := range entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.ForeignKeyColumns {
+				if foreignKeyColumnsItem.TopLevelForeignKeyColumn != nil {
+					columnName := foreignKeyColumnsItem.TopLevelForeignKeyColumn.ColumnName.ValueString()
+					referencedEntityID := foreignKeyColumnsItem.TopLevelForeignKeyColumn.ReferencedEntityID.ValueString()
+					referencedColumnName := foreignKeyColumnsItem.TopLevelForeignKeyColumn.ReferencedColumnName.ValueString()
+					topLevelForeignKeyColumn := shared.TopLevelForeignKeyColumn{
+						ColumnName:           columnName,
+						ReferencedEntityID:   referencedEntityID,
+						ReferencedColumnName: referencedColumnName,
 					}
+					foreignKeyColumns = append(foreignKeyColumns, shared.SchemaV1ForeignKeyColumn{
+						TopLevelForeignKeyColumn: &topLevelForeignKeyColumn,
+					})
 				}
-				var two *shared.Two
-				if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.One.Two != nil {
-					two = &shared.Two{}
-				}
-				if two != nil {
-					userDefinedAPIReplaceMode1 = &shared.UserDefinedAPIReplaceMode1{
-						Two: two,
+				if foreignKeyColumnsItem.ForeignColumn != nil {
+					var columnPath []string = nil
+					for _, columnPathItem := range foreignKeyColumnsItem.ForeignColumn.ColumnPath {
+						columnPath = append(columnPath, columnPathItem.ValueString())
 					}
+					referencedEntityId1 := foreignKeyColumnsItem.ForeignColumn.ReferencedEntityID.ValueString()
+					referencedColumnName1 := foreignKeyColumnsItem.ForeignColumn.ReferencedColumnName.ValueString()
+					foreignColumn := shared.ForeignColumn{
+						ColumnPath:           columnPath,
+						ReferencedEntityID:   referencedEntityId1,
+						ReferencedColumnName: referencedColumnName1,
+					}
+					foreignKeyColumns = append(foreignKeyColumns, shared.SchemaV1ForeignKeyColumn{
+						ForeignColumn: &foreignColumn,
+					})
 				}
 			}
-			if userDefinedAPIReplaceMode1 != nil {
-				userDefinedAPIReplaceMode = &shared.UserDefinedAPIReplaceMode{
-					UserDefinedAPIReplaceMode1: userDefinedAPIReplaceMode1,
-				}
-			}
-			var schemaV1ExtendedReplaceMode *shared.SchemaV1ExtendedReplaceMode
-			if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode != nil {
-				typeVar4 := new(shared.SchemaV1ExtendedReplaceModeType)
-				if !entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.Type.IsUnknown() && !entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.Type.IsNull() {
-					*typeVar4 = shared.SchemaV1ExtendedReplaceModeType(entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.Type.ValueString())
-				} else {
-					typeVar4 = nil
-				}
-				var primaryKeyColumns []string = nil
-				for _, primaryKeyColumnsItem := range entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.PrimaryKeyColumns {
-					primaryKeyColumns = append(primaryKeyColumns, primaryKeyColumnsItem.ValueString())
-				}
-				var foreignKeyColumns []shared.SchemaV1ForeignKeyColumn = nil
-				for _, foreignKeyColumnsItem := range entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.ForeignKeyColumns {
-					if foreignKeyColumnsItem.TopLevelForeignKeyColumn != nil {
-						columnName := foreignKeyColumnsItem.TopLevelForeignKeyColumn.ColumnName.ValueString()
-						referencedEntityID := foreignKeyColumnsItem.TopLevelForeignKeyColumn.ReferencedEntityID.ValueString()
-						referencedColumnName := foreignKeyColumnsItem.TopLevelForeignKeyColumn.ReferencedColumnName.ValueString()
-						topLevelForeignKeyColumn := shared.TopLevelForeignKeyColumn{
-							ColumnName:           columnName,
-							ReferencedEntityID:   referencedEntityID,
-							ReferencedColumnName: referencedColumnName,
-						}
-						foreignKeyColumns = append(foreignKeyColumns, shared.SchemaV1ForeignKeyColumn{
-							TopLevelForeignKeyColumn: &topLevelForeignKeyColumn,
-						})
-					}
-					if foreignKeyColumnsItem.ForeignColumn != nil {
-						var columnPath []string = nil
-						for _, columnPathItem := range foreignKeyColumnsItem.ForeignColumn.ColumnPath {
-							columnPath = append(columnPath, columnPathItem.ValueString())
-						}
-						referencedEntityId1 := foreignKeyColumnsItem.ForeignColumn.ReferencedEntityID.ValueString()
-						referencedColumnName1 := foreignKeyColumnsItem.ForeignColumn.ReferencedColumnName.ValueString()
-						foreignColumn := shared.ForeignColumn{
-							ColumnPath:           columnPath,
-							ReferencedEntityID:   referencedEntityId1,
-							ReferencedColumnName: referencedColumnName1,
-						}
-						foreignKeyColumns = append(foreignKeyColumns, shared.SchemaV1ForeignKeyColumn{
-							ForeignColumn: &foreignColumn,
-						})
-					}
-				}
-				schemaV1ExtendedReplaceMode = &shared.SchemaV1ExtendedReplaceMode{
-					Type:              typeVar4,
-					PrimaryKeyColumns: primaryKeyColumns,
-					ForeignKeyColumns: foreignKeyColumns,
-				}
-			}
-			if schemaV1ExtendedReplaceMode != nil {
-				userDefinedAPIReplaceMode = &shared.UserDefinedAPIReplaceMode{
-					SchemaV1ExtendedReplaceMode: schemaV1ExtendedReplaceMode,
-				}
+			userDefinedAPIReplaceMode = &shared.UserDefinedAPIReplaceMode{
+				Type:              typeVar4,
+				PrimaryKeyColumns: primaryKeyColumns,
+				ForeignKeyColumns: foreignKeyColumns,
 			}
 		}
 		if userDefinedAPIReplaceMode != nil {
@@ -604,48 +568,36 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) RefreshFromSharedConnectionUserD
 		}
 		if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode != nil {
 			entities1.PipelineMode.UserDefinedAPIReplaceMode = &UserDefinedAPIReplaceMode{}
-			if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.UserDefinedAPIReplaceMode1 != nil {
-				entities1.PipelineMode.UserDefinedAPIReplaceMode.One = &UserDefinedAPIReplaceMode1{}
-				if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.UserDefinedAPIReplaceMode1.Str != nil {
-					entities1.PipelineMode.UserDefinedAPIReplaceMode.One.Str = types.StringPointerValue(entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.UserDefinedAPIReplaceMode1.Str)
+			for foreignKeyColumnsCount, foreignKeyColumnsItem := range entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.ForeignKeyColumns {
+				var foreignKeyColumns1 SchemaV1ForeignKeyColumn
+				if foreignKeyColumnsItem.ForeignColumn != nil {
+					foreignKeyColumns1.ForeignColumn = &ForeignColumn{}
+					foreignKeyColumns1.ForeignColumn.ColumnPath = nil
+					for _, v := range foreignKeyColumnsItem.ForeignColumn.ColumnPath {
+						foreignKeyColumns1.ForeignColumn.ColumnPath = append(foreignKeyColumns1.ForeignColumn.ColumnPath, types.StringValue(v))
+					}
+					foreignKeyColumns1.ForeignColumn.ReferencedColumnName = types.StringValue(foreignKeyColumnsItem.ForeignColumn.ReferencedColumnName)
+					foreignKeyColumns1.ForeignColumn.ReferencedEntityID = types.StringValue(foreignKeyColumnsItem.ForeignColumn.ReferencedEntityID)
 				}
-				if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.UserDefinedAPIReplaceMode1.Two != nil {
-					entities1.PipelineMode.UserDefinedAPIReplaceMode.One.Two = &Two{}
+				if foreignKeyColumnsItem.TopLevelForeignKeyColumn != nil {
+					foreignKeyColumns1.TopLevelForeignKeyColumn = &TopLevelForeignKeyColumn{}
+					foreignKeyColumns1.TopLevelForeignKeyColumn.ColumnName = types.StringValue(foreignKeyColumnsItem.TopLevelForeignKeyColumn.ColumnName)
+					foreignKeyColumns1.TopLevelForeignKeyColumn.ReferencedColumnName = types.StringValue(foreignKeyColumnsItem.TopLevelForeignKeyColumn.ReferencedColumnName)
+					foreignKeyColumns1.TopLevelForeignKeyColumn.ReferencedEntityID = types.StringValue(foreignKeyColumnsItem.TopLevelForeignKeyColumn.ReferencedEntityID)
+				}
+				if foreignKeyColumnsCount+1 > len(entities1.PipelineMode.UserDefinedAPIReplaceMode.ForeignKeyColumns) {
+					entities1.PipelineMode.UserDefinedAPIReplaceMode.ForeignKeyColumns = append(entities1.PipelineMode.UserDefinedAPIReplaceMode.ForeignKeyColumns, foreignKeyColumns1)
+				} else {
 				}
 			}
-			if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode != nil {
-				entities1.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode = &SchemaV1ExtendedReplaceMode{}
-				for foreignKeyColumnsCount, foreignKeyColumnsItem := range entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.ForeignKeyColumns {
-					var foreignKeyColumns1 SchemaV1ForeignKeyColumn
-					if foreignKeyColumnsItem.ForeignColumn != nil {
-						foreignKeyColumns1.ForeignColumn = &ForeignColumn{}
-						foreignKeyColumns1.ForeignColumn.ColumnPath = nil
-						for _, v := range foreignKeyColumnsItem.ForeignColumn.ColumnPath {
-							foreignKeyColumns1.ForeignColumn.ColumnPath = append(foreignKeyColumns1.ForeignColumn.ColumnPath, types.StringValue(v))
-						}
-						foreignKeyColumns1.ForeignColumn.ReferencedColumnName = types.StringValue(foreignKeyColumnsItem.ForeignColumn.ReferencedColumnName)
-						foreignKeyColumns1.ForeignColumn.ReferencedEntityID = types.StringValue(foreignKeyColumnsItem.ForeignColumn.ReferencedEntityID)
-					}
-					if foreignKeyColumnsItem.TopLevelForeignKeyColumn != nil {
-						foreignKeyColumns1.TopLevelForeignKeyColumn = &TopLevelForeignKeyColumn{}
-						foreignKeyColumns1.TopLevelForeignKeyColumn.ColumnName = types.StringValue(foreignKeyColumnsItem.TopLevelForeignKeyColumn.ColumnName)
-						foreignKeyColumns1.TopLevelForeignKeyColumn.ReferencedColumnName = types.StringValue(foreignKeyColumnsItem.TopLevelForeignKeyColumn.ReferencedColumnName)
-						foreignKeyColumns1.TopLevelForeignKeyColumn.ReferencedEntityID = types.StringValue(foreignKeyColumnsItem.TopLevelForeignKeyColumn.ReferencedEntityID)
-					}
-					if foreignKeyColumnsCount+1 > len(entities1.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.ForeignKeyColumns) {
-						entities1.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.ForeignKeyColumns = append(entities1.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.ForeignKeyColumns, foreignKeyColumns1)
-					} else {
-					}
-				}
-				entities1.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.PrimaryKeyColumns = nil
-				for _, v := range entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.PrimaryKeyColumns {
-					entities1.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.PrimaryKeyColumns = append(entities1.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.PrimaryKeyColumns, types.StringValue(v))
-				}
-				if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.Type != nil {
-					entities1.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.Type = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.Type))
-				} else {
-					entities1.PipelineMode.UserDefinedAPIReplaceMode.SchemaV1ExtendedReplaceMode.Type = types.StringNull()
-				}
+			entities1.PipelineMode.UserDefinedAPIReplaceMode.PrimaryKeyColumns = nil
+			for _, v := range entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.PrimaryKeyColumns {
+				entities1.PipelineMode.UserDefinedAPIReplaceMode.PrimaryKeyColumns = append(entities1.PipelineMode.UserDefinedAPIReplaceMode.PrimaryKeyColumns, types.StringValue(v))
+			}
+			if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.Type != nil {
+				entities1.PipelineMode.UserDefinedAPIReplaceMode.Type = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.Type))
+			} else {
+				entities1.PipelineMode.UserDefinedAPIReplaceMode.Type = types.StringNull()
 			}
 		}
 		if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode != nil {

@@ -120,7 +120,6 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftInput() *sha
 	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
-	database := r.Database.ValueString()
 	username := r.Username.ValueString()
 	password := r.Password.ValueString()
 	var sshConfig *shared.SSHConfig
@@ -132,6 +131,7 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftInput() *sha
 			Username: username1,
 		}
 	}
+	database := r.Database.ValueString()
 	out := shared.ConnectionRedshiftInput{
 		Name:                       name,
 		Type:                       typeVar,
@@ -144,10 +144,10 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftInput() *sha
 		DynamicVarcharWidthEnabled: dynamicVarcharWidthEnabled,
 		Address:                    address,
 		Port:                       port,
-		Database:                   database,
 		Username:                   username,
 		Password:                   password,
 		SSHConfig:                  sshConfig,
+		Database:                   database,
 	}
 	return &out
 }
@@ -396,12 +396,6 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftUpdate() *sh
 	} else {
 		port = nil
 	}
-	database := new(string)
-	if !r.Database.IsUnknown() && !r.Database.IsNull() {
-		*database = r.Database.ValueString()
-	} else {
-		database = nil
-	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
 		*username = r.Username.ValueString()
@@ -433,6 +427,12 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftUpdate() *sh
 			Username: username1,
 		}
 	}
+	database := new(string)
+	if !r.Database.IsUnknown() && !r.Database.IsNull() {
+		*database = r.Database.ValueString()
+	} else {
+		database = nil
+	}
 	out := shared.ConnectionRedshiftUpdate{
 		Name:                       name,
 		Type:                       typeVar,
@@ -446,10 +446,10 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftUpdate() *sh
 		DynamicVarcharWidthEnabled: dynamicVarcharWidthEnabled,
 		Address:                    address,
 		Port:                       port,
-		Database:                   database,
 		Username:                   username,
 		Password:                   password,
 		SSHConfig:                  sshConfig,
+		Database:                   database,
 	}
 	return &out
 }

@@ -106,7 +106,6 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresInput() *sha
 	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
-	database := r.Database.ValueString()
 	username := r.Username.ValueString()
 	password := r.Password.ValueString()
 	var sshConfig *shared.SSHConfig
@@ -118,6 +117,7 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresInput() *sha
 			Username: username1,
 		}
 	}
+	database := r.Database.ValueString()
 	out := shared.ConnectionPostgresInput{
 		Name:           name,
 		Type:           typeVar,
@@ -127,10 +127,10 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresInput() *sha
 		CdcEnabled:     cdcEnabled,
 		Address:        address,
 		Port:           port,
-		Database:       database,
 		Username:       username,
 		Password:       password,
 		SSHConfig:      sshConfig,
+		Database:       database,
 	}
 	return &out
 }
@@ -350,12 +350,6 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 	} else {
 		port = nil
 	}
-	database := new(string)
-	if !r.Database.IsUnknown() && !r.Database.IsNull() {
-		*database = r.Database.ValueString()
-	} else {
-		database = nil
-	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
 		*username = r.Username.ValueString()
@@ -387,6 +381,12 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 			Username: username1,
 		}
 	}
+	database := new(string)
+	if !r.Database.IsUnknown() && !r.Database.IsNull() {
+		*database = r.Database.ValueString()
+	} else {
+		database = nil
+	}
 	out := shared.ConnectionPostgresUpdate{
 		Name:           name,
 		Type:           typeVar,
@@ -396,10 +396,10 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 		AutoReplicate:  autoReplicate,
 		Address:        address,
 		Port:           port,
-		Database:       database,
 		Username:       username,
 		Password:       password,
 		SSHConfig:      sshConfig,
+		Database:       database,
 	}
 	return &out
 }

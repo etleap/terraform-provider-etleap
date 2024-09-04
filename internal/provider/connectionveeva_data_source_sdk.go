@@ -96,4 +96,9 @@ func (r *ConnectionVEEVADataSourceModel) RefreshFromSharedConnectionVeeva(resp *
 	}
 	r.Username = types.StringValue(resp.Username)
 	r.VaultDomainName = types.StringValue(resp.VaultDomainName)
+	if resp.VaultType != nil {
+		r.VaultType = types.StringValue(string(*resp.VaultType))
+	} else {
+		r.VaultType = types.StringNull()
+	}
 }

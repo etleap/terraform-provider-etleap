@@ -3,135 +3,70 @@
 package shared
 
 import (
-	"errors"
+	"encoding/json"
+	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
-
-type Two struct {
-}
-
-type UserDefinedAPIReplaceMode1Type string
-
-const (
-	UserDefinedAPIReplaceMode1TypeStr UserDefinedAPIReplaceMode1Type = "str"
-	UserDefinedAPIReplaceMode1TypeTwo UserDefinedAPIReplaceMode1Type = "2"
-)
-
-type UserDefinedAPIReplaceMode1 struct {
-	Str *string
-	Two *Two
-
-	Type UserDefinedAPIReplaceMode1Type
-}
-
-func CreateUserDefinedAPIReplaceMode1Str(str string) UserDefinedAPIReplaceMode1 {
-	typ := UserDefinedAPIReplaceMode1TypeStr
-
-	return UserDefinedAPIReplaceMode1{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateUserDefinedAPIReplaceMode1Two(two Two) UserDefinedAPIReplaceMode1 {
-	typ := UserDefinedAPIReplaceMode1TypeTwo
-
-	return UserDefinedAPIReplaceMode1{
-		Two:  &two,
-		Type: typ,
-	}
-}
-
-func (u *UserDefinedAPIReplaceMode1) UnmarshalJSON(data []byte) error {
-
-	two := new(Two)
-	if err := utils.UnmarshalJSON(data, &two, "", true, true); err == nil {
-		u.Two = two
-		u.Type = UserDefinedAPIReplaceMode1TypeTwo
-		return nil
-	}
-
-	str := new(string)
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
-		u.Str = str
-		u.Type = UserDefinedAPIReplaceMode1TypeStr
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u UserDefinedAPIReplaceMode1) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Two != nil {
-		return utils.MarshalJSON(u.Two, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
 
 type UserDefinedAPIReplaceModeType string
 
 const (
-	UserDefinedAPIReplaceModeTypeUserDefinedAPIReplaceMode1  UserDefinedAPIReplaceModeType = "user_defined_api_replace_mode_1"
-	UserDefinedAPIReplaceModeTypeSchemaV1ExtendedReplaceMode UserDefinedAPIReplaceModeType = "Schema.v1_ExtendedReplaceMode"
+	UserDefinedAPIReplaceModeTypeReplace UserDefinedAPIReplaceModeType = "REPLACE"
 )
 
+func (e UserDefinedAPIReplaceModeType) ToPointer() *UserDefinedAPIReplaceModeType {
+	return &e
+}
+
+func (e *UserDefinedAPIReplaceModeType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "REPLACE":
+		*e = UserDefinedAPIReplaceModeType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UserDefinedAPIReplaceModeType: %v", v)
+	}
+}
+
 type UserDefinedAPIReplaceMode struct {
-	UserDefinedAPIReplaceMode1  *UserDefinedAPIReplaceMode1
-	SchemaV1ExtendedReplaceMode *SchemaV1ExtendedReplaceMode
-
-	Type UserDefinedAPIReplaceModeType
-}
-
-func CreateUserDefinedAPIReplaceModeUserDefinedAPIReplaceMode1(userDefinedAPIReplaceMode1 UserDefinedAPIReplaceMode1) UserDefinedAPIReplaceMode {
-	typ := UserDefinedAPIReplaceModeTypeUserDefinedAPIReplaceMode1
-
-	return UserDefinedAPIReplaceMode{
-		UserDefinedAPIReplaceMode1: &userDefinedAPIReplaceMode1,
-		Type:                       typ,
-	}
-}
-
-func CreateUserDefinedAPIReplaceModeSchemaV1ExtendedReplaceMode(schemaV1ExtendedReplaceMode SchemaV1ExtendedReplaceMode) UserDefinedAPIReplaceMode {
-	typ := UserDefinedAPIReplaceModeTypeSchemaV1ExtendedReplaceMode
-
-	return UserDefinedAPIReplaceMode{
-		SchemaV1ExtendedReplaceMode: &schemaV1ExtendedReplaceMode,
-		Type:                        typ,
-	}
-}
-
-func (u *UserDefinedAPIReplaceMode) UnmarshalJSON(data []byte) error {
-
-	schemaV1ExtendedReplaceMode := new(SchemaV1ExtendedReplaceMode)
-	if err := utils.UnmarshalJSON(data, &schemaV1ExtendedReplaceMode, "", true, true); err == nil {
-		u.SchemaV1ExtendedReplaceMode = schemaV1ExtendedReplaceMode
-		u.Type = UserDefinedAPIReplaceModeTypeSchemaV1ExtendedReplaceMode
-		return nil
-	}
-
-	userDefinedAPIReplaceMode1 := new(UserDefinedAPIReplaceMode1)
-	if err := utils.UnmarshalJSON(data, &userDefinedAPIReplaceMode1, "", true, true); err == nil {
-		u.UserDefinedAPIReplaceMode1 = userDefinedAPIReplaceMode1
-		u.Type = UserDefinedAPIReplaceModeTypeUserDefinedAPIReplaceMode1
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
+	Type              *UserDefinedAPIReplaceModeType `default:"REPLACE" json:"type"`
+	PrimaryKeyColumns []string                       `json:"primaryKeyColumns"`
+	// The foreign columns of the entity.
+	ForeignKeyColumns []SchemaV1ForeignKeyColumn `json:"foreignKeyColumns,omitempty"`
 }
 
 func (u UserDefinedAPIReplaceMode) MarshalJSON() ([]byte, error) {
-	if u.UserDefinedAPIReplaceMode1 != nil {
-		return utils.MarshalJSON(u.UserDefinedAPIReplaceMode1, "", true)
-	}
+	return utils.MarshalJSON(u, "", false)
+}
 
-	if u.SchemaV1ExtendedReplaceMode != nil {
-		return utils.MarshalJSON(u.SchemaV1ExtendedReplaceMode, "", true)
+func (u *UserDefinedAPIReplaceMode) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, true); err != nil {
+		return err
 	}
+	return nil
+}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+func (o *UserDefinedAPIReplaceMode) GetType() *UserDefinedAPIReplaceModeType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *UserDefinedAPIReplaceMode) GetPrimaryKeyColumns() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.PrimaryKeyColumns
+}
+
+func (o *UserDefinedAPIReplaceMode) GetForeignKeyColumns() []SchemaV1ForeignKeyColumn {
+	if o == nil {
+		return nil
+	}
+	return o.ForeignKeyColumns
 }

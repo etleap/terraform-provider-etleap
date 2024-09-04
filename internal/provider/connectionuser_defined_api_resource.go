@@ -702,194 +702,147 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 									},
 									Optional: true,
 									Attributes: map[string]schema.Attribute{
-										"one": schema.SingleNestedAttribute{
+										"foreign_key_columns": schema.ListNestedAttribute{
 											Computed: true,
-											PlanModifiers: []planmodifier.Object{
-												objectplanmodifier.RequiresReplaceIfConfigured(),
-												speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+											PlanModifiers: []planmodifier.List{
+												listplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 											},
 											Optional: true,
-											Attributes: map[string]schema.Attribute{
-												"str": schema.StringAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.String{
-														stringplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											NestedObject: schema.NestedAttributeObject{
+												Attributes: map[string]schema.Attribute{
+													"foreign_column": schema.SingleNestedAttribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.Object{
+															objectplanmodifier.RequiresReplaceIfConfigured(),
+															speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+														},
+														Optional: true,
+														Attributes: map[string]schema.Attribute{
+															"column_path": schema.ListAttribute{
+																Computed: true,
+																PlanModifiers: []planmodifier.List{
+																	listplanmodifier.RequiresReplaceIfConfigured(),
+																	speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+																},
+																Optional:    true,
+																ElementType: types.StringType,
+																Description: `Represents the path in the entity schema where the column is located. If the column is at the top level of an entity, use ` + "`" + `Top Level Foreign Key Column` + "`" + ` instead. Requires replacement if changed. ; Not Null`,
+																Validators: []validator.List{
+																	speakeasy_listvalidators.NotNull(),
+																},
+															},
+															"referenced_column_name": schema.StringAttribute{
+																Computed: true,
+																PlanModifiers: []planmodifier.String{
+																	stringplanmodifier.RequiresReplaceIfConfigured(),
+																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																},
+																Optional:    true,
+																Description: `The column name of the referenced entity. Requires replacement if changed. ; Not Null`,
+																Validators: []validator.String{
+																	speakeasy_stringvalidators.NotNull(),
+																},
+															},
+															"referenced_entity_id": schema.StringAttribute{
+																Computed: true,
+																PlanModifiers: []planmodifier.String{
+																	stringplanmodifier.RequiresReplaceIfConfigured(),
+																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																},
+																Optional:    true,
+																Description: `The id of the referenced entity. Requires replacement if changed. ; Not Null`,
+																Validators: []validator.String{
+																	speakeasy_stringvalidators.NotNull(),
+																},
+															},
+														},
+														Description: `Requires replacement if changed. `,
 													},
-													Optional:    true,
-													Description: `Requires replacement if changed. `,
+													"top_level_foreign_key_column": schema.SingleNestedAttribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.Object{
+															objectplanmodifier.RequiresReplaceIfConfigured(),
+															speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+														},
+														Optional: true,
+														Attributes: map[string]schema.Attribute{
+															"column_name": schema.StringAttribute{
+																Computed: true,
+																PlanModifiers: []planmodifier.String{
+																	stringplanmodifier.RequiresReplaceIfConfigured(),
+																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																},
+																Optional:    true,
+																Description: `The entity's foreign key column. If the column is nested inside the entity's structure and not at the top level, use ` + "`" + `NestedForeignKeyColumn` + "`" + ` instead. Requires replacement if changed. ; Not Null`,
+																Validators: []validator.String{
+																	speakeasy_stringvalidators.NotNull(),
+																},
+															},
+															"referenced_column_name": schema.StringAttribute{
+																Computed: true,
+																PlanModifiers: []planmodifier.String{
+																	stringplanmodifier.RequiresReplaceIfConfigured(),
+																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																},
+																Optional:    true,
+																Description: `The column name of the referenced entity. Requires replacement if changed. ; Not Null`,
+																Validators: []validator.String{
+																	speakeasy_stringvalidators.NotNull(),
+																},
+															},
+															"referenced_entity_id": schema.StringAttribute{
+																Computed: true,
+																PlanModifiers: []planmodifier.String{
+																	stringplanmodifier.RequiresReplaceIfConfigured(),
+																	speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																},
+																Optional:    true,
+																Description: `The id of the referenced entity. Requires replacement if changed. ; Not Null`,
+																Validators: []validator.String{
+																	speakeasy_stringvalidators.NotNull(),
+																},
+															},
+														},
+														Description: `Requires replacement if changed. `,
+													},
 												},
-												"two": schema.SingleNestedAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.Object{
-														objectplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
-													},
-													Optional:    true,
-													Attributes:  map[string]schema.Attribute{},
-													Description: `Requires replacement if changed. `,
+												Validators: []validator.Object{
+													validators.ExactlyOneChild(),
 												},
 											},
-											Description: `Requires replacement if changed. `,
-											Validators: []validator.Object{
-												validators.ExactlyOneChild(),
+											Description: `The foreign columns of the entity. Requires replacement if changed. `,
+										},
+										"primary_key_columns": schema.ListAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.List{
+												listplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											ElementType: types.StringType,
+											Description: `Requires replacement if changed. ; Not Null`,
+											Validators: []validator.List{
+												speakeasy_listvalidators.NotNull(),
 											},
 										},
-										"schema_v1_extended_replace_mode": schema.SingleNestedAttribute{
+										"type": schema.StringAttribute{
 											Computed: true,
-											PlanModifiers: []planmodifier.Object{
-												objectplanmodifier.RequiresReplaceIfConfigured(),
-												speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+											PlanModifiers: []planmodifier.String{
+												stringplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 											},
-											Optional: true,
-											Attributes: map[string]schema.Attribute{
-												"foreign_key_columns": schema.ListNestedAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.List{
-														listplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-													},
-													Optional: true,
-													NestedObject: schema.NestedAttributeObject{
-														Attributes: map[string]schema.Attribute{
-															"foreign_column": schema.SingleNestedAttribute{
-																Computed: true,
-																PlanModifiers: []planmodifier.Object{
-																	objectplanmodifier.RequiresReplaceIfConfigured(),
-																	speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
-																},
-																Optional: true,
-																Attributes: map[string]schema.Attribute{
-																	"column_path": schema.ListAttribute{
-																		Computed: true,
-																		PlanModifiers: []planmodifier.List{
-																			listplanmodifier.RequiresReplaceIfConfigured(),
-																			speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-																		},
-																		Optional:    true,
-																		ElementType: types.StringType,
-																		Description: `Represents the path in the entity schema where the column is located. If the column is at the top level of an entity, use ` + "`" + `Top Level Foreign Key Column` + "`" + ` instead. Requires replacement if changed. ; Not Null`,
-																		Validators: []validator.List{
-																			speakeasy_listvalidators.NotNull(),
-																		},
-																	},
-																	"referenced_column_name": schema.StringAttribute{
-																		Computed: true,
-																		PlanModifiers: []planmodifier.String{
-																			stringplanmodifier.RequiresReplaceIfConfigured(),
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
-																		Optional:    true,
-																		Description: `The column name of the referenced entity. Requires replacement if changed. ; Not Null`,
-																		Validators: []validator.String{
-																			speakeasy_stringvalidators.NotNull(),
-																		},
-																	},
-																	"referenced_entity_id": schema.StringAttribute{
-																		Computed: true,
-																		PlanModifiers: []planmodifier.String{
-																			stringplanmodifier.RequiresReplaceIfConfigured(),
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
-																		Optional:    true,
-																		Description: `The id of the referenced entity. Requires replacement if changed. ; Not Null`,
-																		Validators: []validator.String{
-																			speakeasy_stringvalidators.NotNull(),
-																		},
-																	},
-																},
-																Description: `Requires replacement if changed. `,
-															},
-															"top_level_foreign_key_column": schema.SingleNestedAttribute{
-																Computed: true,
-																PlanModifiers: []planmodifier.Object{
-																	objectplanmodifier.RequiresReplaceIfConfigured(),
-																	speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
-																},
-																Optional: true,
-																Attributes: map[string]schema.Attribute{
-																	"column_name": schema.StringAttribute{
-																		Computed: true,
-																		PlanModifiers: []planmodifier.String{
-																			stringplanmodifier.RequiresReplaceIfConfigured(),
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
-																		Optional:    true,
-																		Description: `The entity's foreign key column. If the column is nested inside the entity's structure and not at the top level, use ` + "`" + `NestedForeignKeyColumn` + "`" + ` instead. Requires replacement if changed. ; Not Null`,
-																		Validators: []validator.String{
-																			speakeasy_stringvalidators.NotNull(),
-																		},
-																	},
-																	"referenced_column_name": schema.StringAttribute{
-																		Computed: true,
-																		PlanModifiers: []planmodifier.String{
-																			stringplanmodifier.RequiresReplaceIfConfigured(),
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
-																		Optional:    true,
-																		Description: `The column name of the referenced entity. Requires replacement if changed. ; Not Null`,
-																		Validators: []validator.String{
-																			speakeasy_stringvalidators.NotNull(),
-																		},
-																	},
-																	"referenced_entity_id": schema.StringAttribute{
-																		Computed: true,
-																		PlanModifiers: []planmodifier.String{
-																			stringplanmodifier.RequiresReplaceIfConfigured(),
-																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-																		},
-																		Optional:    true,
-																		Description: `The id of the referenced entity. Requires replacement if changed. ; Not Null`,
-																		Validators: []validator.String{
-																			speakeasy_stringvalidators.NotNull(),
-																		},
-																	},
-																},
-																Description: `Requires replacement if changed. `,
-															},
-														},
-														Validators: []validator.Object{
-															validators.ExactlyOneChild(),
-														},
-													},
-													Description: `The foreign columns of the entity. Requires replacement if changed. `,
-												},
-												"primary_key_columns": schema.ListAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.List{
-														listplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-													},
-													Optional:    true,
-													ElementType: types.StringType,
-													Description: `Requires replacement if changed. ; Not Null`,
-													Validators: []validator.List{
-														speakeasy_listvalidators.NotNull(),
-													},
-												},
-												"type": schema.StringAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.String{
-														stringplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-													},
-													Optional:    true,
-													Default:     stringdefault.StaticString("REPLACE"),
-													Description: `Requires replacement if changed. ; must be one of ["REPLACE"]; Default: "REPLACE"`,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"REPLACE",
-														),
-													},
-												},
+											Optional:    true,
+											Default:     stringdefault.StaticString("REPLACE"),
+											Description: `Requires replacement if changed. ; must be one of ["REPLACE"]; Default: "REPLACE"`,
+											Validators: []validator.String{
+												stringvalidator.OneOf(
+													"REPLACE",
+												),
 											},
-											Description: `Requires replacement if changed. `,
 										},
 									},
 									Description: `Requires replacement if changed. `,
-									Validators: []validator.Object{
-										validators.ExactlyOneChild(),
-									},
 								},
 								"user_defined_api_update_mode": schema.SingleNestedAttribute{
 									Computed: true,
@@ -1203,7 +1156,7 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 									Description: `Requires replacement if changed. `,
 								},
 							},
-							Description: `The pipeline mode. Requires replacement if changed. ; Not Null`,
+							Description: `Can be either the string ` + "`" + `REPLACE` + "`" + ` or one of the supported objects. Requires replacement if changed. ; Not Null`,
 							Validators: []validator.Object{
 								speakeasy_objectvalidators.NotNull(),
 								validators.ExactlyOneChild(),

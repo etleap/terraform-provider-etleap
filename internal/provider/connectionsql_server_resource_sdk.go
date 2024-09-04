@@ -100,7 +100,6 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerInput() *s
 	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
-	database := r.Database.ValueString()
 	username := r.Username.ValueString()
 	password := r.Password.ValueString()
 	var sshConfig *shared.SSHConfig
@@ -112,6 +111,7 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerInput() *s
 			Username: username1,
 		}
 	}
+	database := r.Database.ValueString()
 	out := shared.ConnectionSQLServerInput{
 		Name:           name,
 		Type:           typeVar,
@@ -120,10 +120,10 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerInput() *s
 		CdcEnabled:     cdcEnabled,
 		Address:        address,
 		Port:           port,
-		Database:       database,
 		Username:       username,
 		Password:       password,
 		SSHConfig:      sshConfig,
+		Database:       database,
 	}
 	return &out
 }
@@ -336,12 +336,6 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerUpdate() *
 	} else {
 		port = nil
 	}
-	database := new(string)
-	if !r.Database.IsUnknown() && !r.Database.IsNull() {
-		*database = r.Database.ValueString()
-	} else {
-		database = nil
-	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
 		*username = r.Username.ValueString()
@@ -373,6 +367,12 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerUpdate() *
 			Username: username1,
 		}
 	}
+	database := new(string)
+	if !r.Database.IsUnknown() && !r.Database.IsNull() {
+		*database = r.Database.ValueString()
+	} else {
+		database = nil
+	}
 	out := shared.ConnectionSQLServerUpdate{
 		Name:           name,
 		Type:           typeVar,
@@ -381,10 +381,10 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerUpdate() *
 		Schema:         schema,
 		Address:        address,
 		Port:           port,
-		Database:       database,
 		Username:       username,
 		Password:       password,
 		SSHConfig:      sshConfig,
+		Database:       database,
 	}
 	return &out
 }

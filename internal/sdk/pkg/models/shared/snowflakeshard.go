@@ -8,11 +8,13 @@ type SnowflakeShard struct {
 	Address  string `json:"address"`
 	Database string `json:"database"`
 	// The virtual warehouse to use once connected.
-	Warehouse string `json:"warehouse"`
-	Username  string `json:"username"`
-	Password  string `json:"password"`
+	Warehouse string  `json:"warehouse"`
+	Username  string  `json:"username"`
+	Password  *string `json:"password,omitempty"`
 	// The role the user will use to connect
 	Role *string `json:"role,omitempty"`
+	// Snowflake Authentication Types
+	Authentication *SnowflakeAuthenticationTypes `json:"authentication,omitempty"`
 }
 
 func (o *SnowflakeShard) GetShardID() string {
@@ -50,9 +52,9 @@ func (o *SnowflakeShard) GetUsername() string {
 	return o.Username
 }
 
-func (o *SnowflakeShard) GetPassword() string {
+func (o *SnowflakeShard) GetPassword() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Password
 }
@@ -62,4 +64,25 @@ func (o *SnowflakeShard) GetRole() *string {
 		return nil
 	}
 	return o.Role
+}
+
+func (o *SnowflakeShard) GetAuthentication() *SnowflakeAuthenticationTypes {
+	if o == nil {
+		return nil
+	}
+	return o.Authentication
+}
+
+func (o *SnowflakeShard) GetAuthenticationPassword() *SnowflakeAuthenticationPassword {
+	if v := o.GetAuthentication(); v != nil {
+		return v.SnowflakeAuthenticationPassword
+	}
+	return nil
+}
+
+func (o *SnowflakeShard) GetAuthenticationKeyPair() *SnowflakeAuthenticationKeyPair {
+	if v := o.GetAuthentication(); v != nil {
+		return v.SnowflakeAuthenticationKeyPair
+	}
+	return nil
 }

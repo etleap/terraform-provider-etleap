@@ -120,12 +120,20 @@ func (o *PipelineOutput) GetSourceEloqua() *SourceEloqua {
 	return o.GetSource().SourceEloqua
 }
 
+func (o *PipelineOutput) GetSourceErpx() *SourceErpx {
+	return o.GetSource().SourceErpx
+}
+
 func (o *PipelineOutput) GetSourceFacebookAds() *SourceFacebookAds {
 	return o.GetSource().SourceFacebookAds
 }
 
 func (o *PipelineOutput) GetSourceFifteenFive() *SourceFifteenFive {
 	return o.GetSource().SourceFifteenFive
+}
+
+func (o *PipelineOutput) GetSourceFreshchat() *SourceFreshchat {
+	return o.GetSource().SourceFreshchat
 }
 
 func (o *PipelineOutput) GetSourceFreshsales() *SourceFreshsales {
@@ -142,10 +150,6 @@ func (o *PipelineOutput) GetSourceFtp() *SourceFtp {
 
 func (o *PipelineOutput) GetSourceGong() *SourceGong {
 	return o.GetSource().SourceGong
-}
-
-func (o *PipelineOutput) GetSourceGoogleAnalytics() *SourceGoogleAnalytics {
-	return o.GetSource().SourceGoogleAnalytics
 }
 
 func (o *PipelineOutput) GetSourceGoogleAnalyticsGa4() *SourceGoogleAnalyticsGa4 {

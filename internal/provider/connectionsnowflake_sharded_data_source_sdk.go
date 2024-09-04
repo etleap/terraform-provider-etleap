@@ -65,13 +65,27 @@ func (r *ConnectionSNOWFLAKESHARDEDDataSourceModel) RefreshFromSharedConnectionS
 	for _, v := range resp.Roles {
 		r.Roles = append(r.Roles, types.StringValue(v))
 	}
-	r.Schema = types.StringValue(resp.Schema)
+	r.Schema = types.StringPointerValue(resp.Schema)
 	if len(r.Shards) > len(resp.Shards) {
 		r.Shards = r.Shards[:len(resp.Shards)]
 	}
 	for shardsCount, shardsItem := range resp.Shards {
 		var shards1 SnowflakeShardOutput
 		shards1.Address = types.StringValue(shardsItem.Address)
+		if shardsItem.Authentication == nil {
+			shards1.Authentication = nil
+		} else {
+			shards1.Authentication = &SnowflakeAuthenticationTypesOutput{}
+			if shardsItem.Authentication.SnowflakeAuthenticationKeyPairOutput != nil {
+				shards1.Authentication.KeyPair = &SnowflakeAuthenticationKeyPairOutput{}
+				shards1.Authentication.KeyPair.PublicKey = types.StringValue(shardsItem.Authentication.SnowflakeAuthenticationKeyPairOutput.PublicKey)
+				shards1.Authentication.KeyPair.Type = types.StringValue(string(shardsItem.Authentication.SnowflakeAuthenticationKeyPairOutput.Type))
+			}
+			if shardsItem.Authentication.SnowflakeAuthenticationPasswordOutput != nil {
+				shards1.Authentication.Password = &SnowflakeAuthenticationPasswordOutput{}
+				shards1.Authentication.Password.Type = types.StringValue(string(shardsItem.Authentication.SnowflakeAuthenticationPasswordOutput.Type))
+			}
+		}
 		shards1.Database = types.StringValue(shardsItem.Database)
 		shards1.Role = types.StringPointerValue(shardsItem.Role)
 		shards1.ShardID = types.StringValue(shardsItem.ShardID)
@@ -81,6 +95,7 @@ func (r *ConnectionSNOWFLAKESHARDEDDataSourceModel) RefreshFromSharedConnectionS
 			r.Shards = append(r.Shards, shards1)
 		} else {
 			r.Shards[shardsCount].Address = shards1.Address
+			r.Shards[shardsCount].Authentication = shards1.Authentication
 			r.Shards[shardsCount].Database = shards1.Database
 			r.Shards[shardsCount].Role = shards1.Role
 			r.Shards[shardsCount].ShardID = shards1.ShardID

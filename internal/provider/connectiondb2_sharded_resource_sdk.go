@@ -94,10 +94,8 @@ func (r *ConnectionDb2SHARDEDResourceModel) ToSharedConnectionDb2ShardedInput() 
 	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
-		shardID := shardsItem.ShardID.ValueString()
 		address := shardsItem.Address.ValueString()
 		port := shardsItem.Port.ValueInt64()
-		database := shardsItem.Database.ValueString()
 		username := shardsItem.Username.ValueString()
 		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
@@ -109,14 +107,16 @@ func (r *ConnectionDb2SHARDEDResourceModel) ToSharedConnectionDb2ShardedInput() 
 				Username: username1,
 			}
 		}
+		database := shardsItem.Database.ValueString()
+		shardID := shardsItem.ShardID.ValueString()
 		shards = append(shards, shared.DatabaseShard{
-			ShardID:   shardID,
 			Address:   address,
 			Port:      port,
-			Database:  database,
 			Username:  username,
 			Password:  password,
 			SSHConfig: sshConfig,
+			Database:  database,
+			ShardID:   shardID,
 		})
 	}
 	out := shared.ConnectionDb2ShardedInput{
@@ -343,10 +343,8 @@ func (r *ConnectionDb2SHARDEDResourceModel) ToSharedConnectionDb2ShardedUpdate()
 	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
-		shardID := shardsItem.ShardID.ValueString()
 		address := shardsItem.Address.ValueString()
 		port := shardsItem.Port.ValueInt64()
-		database := shardsItem.Database.ValueString()
 		username := shardsItem.Username.ValueString()
 		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
@@ -358,14 +356,16 @@ func (r *ConnectionDb2SHARDEDResourceModel) ToSharedConnectionDb2ShardedUpdate()
 				Username: username1,
 			}
 		}
+		database := shardsItem.Database.ValueString()
+		shardID := shardsItem.ShardID.ValueString()
 		shards = append(shards, shared.DatabaseShard{
-			ShardID:   shardID,
 			Address:   address,
 			Port:      port,
-			Database:  database,
 			Username:  username,
 			Password:  password,
 			SSHConfig: sshConfig,
+			Database:  database,
+			ShardID:   shardID,
 		})
 	}
 	out := shared.ConnectionDb2ShardedUpdate{

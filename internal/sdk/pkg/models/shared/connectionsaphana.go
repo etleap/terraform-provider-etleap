@@ -150,6 +150,8 @@ type ConnectionSapHana struct {
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionSapHanaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// <i>Please note, this feature is currently in alpha and may be unstable.</i>
 	//
@@ -161,9 +163,9 @@ type ConnectionSapHana struct {
 	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
 	Address    string     `json:"address"`
 	Port       int64      `json:"port"`
-	Database   string     `json:"database"`
 	Username   string     `json:"username"`
 	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
+	Database   string     `json:"database"`
 }
 
 func (c ConnectionSapHana) MarshalJSON() ([]byte, error) {
@@ -296,13 +298,6 @@ func (o *ConnectionSapHana) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionSapHana) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *ConnectionSapHana) GetUsername() string {
 	if o == nil {
 		return ""
@@ -317,6 +312,13 @@ func (o *ConnectionSapHana) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
+func (o *ConnectionSapHana) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
 // ConnectionSapHanaInput - Specifies the location of a database.
 type ConnectionSapHanaInput struct {
 	// The unique name of this connection.
@@ -325,6 +327,8 @@ type ConnectionSapHanaInput struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// <i>Please note, this feature is currently in alpha and may be unstable.</i>
 	//
@@ -336,10 +340,10 @@ type ConnectionSapHanaInput struct {
 	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
 	Address    string     `json:"address"`
 	Port       int64      `json:"port"`
-	Database   string     `json:"database"`
 	Username   string     `json:"username"`
 	Password   string     `json:"password"`
 	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
+	Database   string     `json:"database"`
 }
 
 func (c ConnectionSapHanaInput) MarshalJSON() ([]byte, error) {
@@ -437,13 +441,6 @@ func (o *ConnectionSapHanaInput) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionSapHanaInput) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *ConnectionSapHanaInput) GetUsername() string {
 	if o == nil {
 		return ""
@@ -463,4 +460,11 @@ func (o *ConnectionSapHanaInput) GetSSHConfig() *SSHConfig {
 		return nil
 	}
 	return o.SSHConfig
+}
+
+func (o *ConnectionSapHanaInput) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
 }

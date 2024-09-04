@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 569b3911990a5f205036a542896db32a
-  docVersion: 2.6.19
+  docChecksum: 2eacf9e8ecd7d9dbe12e293a9c39c3fb
+  docVersion: 2.6.30
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.1.3
-  configChecksum: c1465f7fc98839705b84bef5f65fb4bf
+  releaseVersion: 0.2.0
+  configChecksum: a6dfc817a4e45ea824ceecf04cbfdf59
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -153,12 +153,18 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updateeloquaconnection.go
   - internal/sdk/pkg/models/operations/geteloquaconnection.go
   - internal/sdk/pkg/models/operations/deleteeloquaconnection.go
+  - internal/sdk/pkg/models/operations/updateerpxconnection.go
+  - internal/sdk/pkg/models/operations/geterpxconnection.go
+  - internal/sdk/pkg/models/operations/deleteerpxconnection.go
   - internal/sdk/pkg/models/operations/updatefacebookadsconnection.go
   - internal/sdk/pkg/models/operations/getfacebookadsconnection.go
   - internal/sdk/pkg/models/operations/deletefacebookadsconnection.go
   - internal/sdk/pkg/models/operations/updatefifteenfiveconnection.go
   - internal/sdk/pkg/models/operations/getfifteenfiveconnection.go
   - internal/sdk/pkg/models/operations/deletefifteenfiveconnection.go
+  - internal/sdk/pkg/models/operations/updatefreshchatconnection.go
+  - internal/sdk/pkg/models/operations/getfreshchatconnection.go
+  - internal/sdk/pkg/models/operations/deletefreshchatconnection.go
   - internal/sdk/pkg/models/operations/updatefreshsalesconnection.go
   - internal/sdk/pkg/models/operations/getfreshsalesconnection.go
   - internal/sdk/pkg/models/operations/deletefreshsalesconnection.go
@@ -168,9 +174,6 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updateftpconnection.go
   - internal/sdk/pkg/models/operations/getftpconnection.go
   - internal/sdk/pkg/models/operations/deleteftpconnection.go
-  - internal/sdk/pkg/models/operations/updategoogleanalyticsconnection.go
-  - internal/sdk/pkg/models/operations/getgoogleanalyticsconnection.go
-  - internal/sdk/pkg/models/operations/deletegoogleanalyticsconnection.go
   - internal/sdk/pkg/models/operations/updategongconnection.go
   - internal/sdk/pkg/models/operations/getgongconnection.go
   - internal/sdk/pkg/models/operations/deletegongconnection.go
@@ -374,12 +377,13 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/createelasticsearchconnection.go
   - internal/sdk/pkg/models/operations/createelluminateconnection.go
   - internal/sdk/pkg/models/operations/createeloquaconnection.go
+  - internal/sdk/pkg/models/operations/createerpxconnection.go
   - internal/sdk/pkg/models/operations/createfacebookadsconnection.go
   - internal/sdk/pkg/models/operations/createfifteenfiveconnection.go
+  - internal/sdk/pkg/models/operations/createfreshchatconnection.go
   - internal/sdk/pkg/models/operations/createfreshsalesconnection.go
   - internal/sdk/pkg/models/operations/createfreshworksconnection.go
   - internal/sdk/pkg/models/operations/createftpconnection.go
-  - internal/sdk/pkg/models/operations/creategoogleanalyticsconnection.go
   - internal/sdk/pkg/models/operations/creategongconnection.go
   - internal/sdk/pkg/models/operations/creategoogleadsconnection.go
   - internal/sdk/pkg/models/operations/creategoogleanalyticsga4connection.go
@@ -502,13 +506,14 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourceelasticsearch.go
   - internal/sdk/pkg/models/shared/sourceelluminate.go
   - internal/sdk/pkg/models/shared/sourceeloqua.go
+  - internal/sdk/pkg/models/shared/sourceerpx.go
   - internal/sdk/pkg/models/shared/sourcefacebookads.go
   - internal/sdk/pkg/models/shared/sourcefifteenfive.go
+  - internal/sdk/pkg/models/shared/sourcefreshchat.go
   - internal/sdk/pkg/models/shared/sourcefreshsales.go
   - internal/sdk/pkg/models/shared/sourcefreshworks.go
   - internal/sdk/pkg/models/shared/sourceftp.go
   - internal/sdk/pkg/models/shared/sourcegong.go
-  - internal/sdk/pkg/models/shared/sourcegoogleanalytics.go
   - internal/sdk/pkg/models/shared/sourcegoogleanalyticsga4.go
   - internal/sdk/pkg/models/shared/sourcegooglecloudstorage.go
   - internal/sdk/pkg/models/shared/sourcegoogleads.go
@@ -592,6 +597,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/transformparsebyregex.go
   - internal/sdk/pkg/models/shared/transformrenamecolumns.go
   - internal/sdk/pkg/models/shared/legacyscriptinput.go
+  - internal/sdk/pkg/models/shared/destinationtypesinput.go
   - internal/sdk/pkg/models/shared/addscriptresponse.go
   - internal/sdk/pkg/models/shared/destinationandpipelineversions.go
   - internal/sdk/pkg/models/shared/scriptorlegacyscript.go
@@ -656,18 +662,20 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionelluminateupdate.go
   - internal/sdk/pkg/models/shared/connectioneloqua.go
   - internal/sdk/pkg/models/shared/connectioneloquaupdate.go
+  - internal/sdk/pkg/models/shared/connectionerpx.go
+  - internal/sdk/pkg/models/shared/connectionerpxupdate.go
   - internal/sdk/pkg/models/shared/connectionfb.go
   - internal/sdk/pkg/models/shared/connectionfbupdate.go
   - internal/sdk/pkg/models/shared/connectionfifteenfive.go
   - internal/sdk/pkg/models/shared/connectionfifteenfiveupdate.go
+  - internal/sdk/pkg/models/shared/connectionfreshchat.go
+  - internal/sdk/pkg/models/shared/connectionfreshchatupdate.go
   - internal/sdk/pkg/models/shared/connectionfreshsales.go
   - internal/sdk/pkg/models/shared/connectionfreshsalesupdate.go
   - internal/sdk/pkg/models/shared/connectionfreshworks.go
   - internal/sdk/pkg/models/shared/connectionfreshworksupdate.go
   - internal/sdk/pkg/models/shared/connectionftp.go
   - internal/sdk/pkg/models/shared/connectionftpupdate.go
-  - internal/sdk/pkg/models/shared/connectionga.go
-  - internal/sdk/pkg/models/shared/connectiongaupdate.go
   - internal/sdk/pkg/models/shared/connectiongong.go
   - internal/sdk/pkg/models/shared/connectiongongupdate.go
   - internal/sdk/pkg/models/shared/connectiongoogleads.go
@@ -702,7 +710,9 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionmysql.go
   - internal/sdk/pkg/models/shared/connectionmysqlupdate.go
   - internal/sdk/pkg/models/shared/connectionmysqlsharded.go
+  - internal/sdk/pkg/models/shared/mysqlshardoutput.go
   - internal/sdk/pkg/models/shared/connectionmysqlshardedupdate.go
+  - internal/sdk/pkg/models/shared/mysqlshard.go
   - internal/sdk/pkg/models/shared/connectionnetsuite.go
   - internal/sdk/pkg/models/shared/connectionnetsuiteupdate.go
   - internal/sdk/pkg/models/shared/connectionnetsuitev2.go
@@ -754,7 +764,11 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionsnapchatads.go
   - internal/sdk/pkg/models/shared/connectionsnapchatadsupdate.go
   - internal/sdk/pkg/models/shared/connectionsnowflake.go
+  - internal/sdk/pkg/models/shared/snowflakeauthenticationtypesoutput.go
+  - internal/sdk/pkg/models/shared/snowflakeauthenticationkeypairoutput.go
+  - internal/sdk/pkg/models/shared/snowflakeauthenticationpasswordoutput.go
   - internal/sdk/pkg/models/shared/connectionsnowflakeupdate.go
+  - internal/sdk/pkg/models/shared/snowflakeauthenticationtypes.go
   - internal/sdk/pkg/models/shared/connectionsnowflakesharded.go
   - internal/sdk/pkg/models/shared/snowflakeshardoutput.go
   - internal/sdk/pkg/models/shared/connectionsnowflakeshardedupdate.go
@@ -786,7 +800,6 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/offsetpagingstrategy.go
   - internal/sdk/pkg/models/shared/userdefinedapipipelinemode.go
   - internal/sdk/pkg/models/shared/userdefinedapireplacemode.go
-  - internal/sdk/pkg/models/shared/schemav1extendedreplacemode.go
   - internal/sdk/pkg/models/shared/schemav1foreignkeycolumn.go
   - internal/sdk/pkg/models/shared/userdefinedapiupdatemode.go
   - internal/sdk/pkg/models/shared/watermarkkeyvaluepair.go
@@ -797,7 +810,6 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionuserdefinedapiupdate.go
   - internal/sdk/pkg/models/shared/connectionuservoice.go
   - internal/sdk/pkg/models/shared/connectionuservoiceupdate.go
-  - internal/sdk/pkg/models/shared/connectionveeva.go
   - internal/sdk/pkg/models/shared/connectionveevaupdate.go
   - internal/sdk/pkg/models/shared/connectionverizonmedia.go
   - internal/sdk/pkg/models/shared/connectionverizonmediaupdate.go
@@ -814,6 +826,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionkafka.go
   - internal/sdk/pkg/models/shared/connectionldapvirtuallistview.go
   - internal/sdk/pkg/models/shared/connectionmongo.go
+  - internal/sdk/pkg/models/shared/connectionveeva.go
   - internal/sdk/pkg/models/shared/teamsoutput.go
   - internal/sdk/pkg/models/shared/teamoutput.go
   - internal/sdk/pkg/models/shared/teaminput.go
@@ -834,6 +847,10 @@ generatedFiles:
   - internal/provider/type_ssh_config.go
   - internal/provider/type_database_shard.go
   - internal/provider/type_replica_set.go
+  - internal/provider/type_mysql_shard.go
+  - internal/provider/type_snowflake_authentication_key_pair.go
+  - internal/provider/type_snowflake_authentication_password.go
+  - internal/provider/type_snowflake_authentication_types.go
   - internal/provider/type_snowflake_shard.go
   - internal/provider/type_basic_authentication.go
   - internal/provider/type_bearer_authentication.go
@@ -843,12 +860,9 @@ generatedFiles:
   - internal/provider/type_cursor_uri_paging_strategy.go
   - internal/provider/type_offset_paging_strategy.go
   - internal/provider/type_paging_strategy.go
-  - internal/provider/type_two.go
-  - internal/provider/type_user_defined_api_replace_mode1.go
   - internal/provider/type_foreign_column.go
   - internal/provider/type_top_level_foreign_key_column.go
   - internal/provider/type_schema_v1_foreign_key_column.go
-  - internal/provider/type_schema_v1_extended_replace_mode.go
   - internal/provider/type_user_defined_api_replace_mode.go
   - internal/provider/type_watermark_key_value_pair.go
   - internal/provider/type_user_defined_api_update_mode.go
@@ -864,9 +878,13 @@ generatedFiles:
   - internal/provider/type_warehouse_redshift.go
   - internal/provider/type_warehouse_snowflake.go
   - internal/provider/type_warehouse_types_input.go
+  - internal/provider/type_destination_delta_lake_input.go
+  - internal/provider/type_destination_redshift_input.go
+  - internal/provider/type_destination_s3_data_lake.go
+  - internal/provider/type_destination_snowflake_input.go
+  - internal/provider/type_destination_types_input.go
   - internal/provider/type_destination_delta_lake.go
   - internal/provider/type_destination_redshift.go
-  - internal/provider/type_destination_s3_data_lake.go
   - internal/provider/type_destination_snowflake.go
   - internal/provider/type_destination_types.go
   - internal/provider/type_operation_errors_by_operation.go
@@ -905,14 +923,15 @@ generatedFiles:
   - internal/provider/type_source_elastic_search.go
   - internal/provider/type_source_elluminate.go
   - internal/provider/type_source_eloqua.go
+  - internal/provider/type_source_erpx.go
   - internal/provider/type_source_facebook_ads.go
   - internal/provider/type_source_fifteen_five.go
+  - internal/provider/type_source_freshchat.go
   - internal/provider/type_source_freshsales.go
   - internal/provider/type_source_freshworks.go
   - internal/provider/type_source_ftp.go
   - internal/provider/type_source_gong.go
   - internal/provider/type_source_google_ads.go
-  - internal/provider/type_source_google_analytics.go
   - internal/provider/type_source_google_analytics_ga4.go
   - internal/provider/type_source_google_cloud_storage.go
   - internal/provider/type_source_google_sheets.go
@@ -979,6 +998,10 @@ generatedFiles:
   - internal/provider/type_source_zuora.go
   - internal/provider/type_source_types.go
   - internal/provider/type_database_shard_output.go
+  - internal/provider/type_mysql_shard_output.go
+  - internal/provider/type_snowflake_authentication_key_pair_output.go
+  - internal/provider/type_snowflake_authentication_password_output.go
+  - internal/provider/type_snowflake_authentication_types_output.go
   - internal/provider/type_snowflake_shard_output.go
   - USAGE.md
   - internal/provider/provider.go
@@ -1016,12 +1039,18 @@ generatedFiles:
   - internal/provider/connectioneloqua_resource.go
   - internal/provider/connectioneloqua_resource_sdk.go
   - examples/resources/etleap_connection_eloqua/resource.tf
+  - internal/provider/connectionerpx_resource.go
+  - internal/provider/connectionerpx_resource_sdk.go
+  - examples/resources/etleap_connection_erpx/resource.tf
   - internal/provider/connectionfacebook_ads_resource.go
   - internal/provider/connectionfacebook_ads_resource_sdk.go
   - examples/resources/etleap_connection_facebook_ads/resource.tf
   - internal/provider/connectionfifteen_five_resource.go
   - internal/provider/connectionfifteen_five_resource_sdk.go
   - examples/resources/etleap_connection_fifteen_five/resource.tf
+  - internal/provider/connectionfreshchat_resource.go
+  - internal/provider/connectionfreshchat_resource_sdk.go
+  - examples/resources/etleap_connection_freshchat/resource.tf
   - internal/provider/connectionfreshsales_resource.go
   - internal/provider/connectionfreshsales_resource_sdk.go
   - examples/resources/etleap_connection_freshsales/resource.tf
@@ -1037,9 +1066,6 @@ generatedFiles:
   - internal/provider/connectiongoogle_ads_resource.go
   - internal/provider/connectiongoogle_ads_resource_sdk.go
   - examples/resources/etleap_connection_google_ads/resource.tf
-  - internal/provider/connectiongoogle_analytics_resource.go
-  - internal/provider/connectiongoogle_analytics_resource_sdk.go
-  - examples/resources/etleap_connection_google_analytics/resource.tf
   - internal/provider/connectiongoogle_analytics_ga4_resource.go
   - internal/provider/connectiongoogle_analytics_ga4_resource_sdk.go
   - examples/resources/etleap_connection_google_analytics_ga4/resource.tf
@@ -1270,12 +1296,18 @@ generatedFiles:
   - internal/provider/connectioneloqua_data_source.go
   - internal/provider/connectioneloqua_data_source_sdk.go
   - examples/data-sources/etleap_connection_eloqua/data-source.tf
+  - internal/provider/connectionerpx_data_source.go
+  - internal/provider/connectionerpx_data_source_sdk.go
+  - examples/data-sources/etleap_connection_erpx/data-source.tf
   - internal/provider/connectionfacebook_ads_data_source.go
   - internal/provider/connectionfacebook_ads_data_source_sdk.go
   - examples/data-sources/etleap_connection_facebook_ads/data-source.tf
   - internal/provider/connectionfifteen_five_data_source.go
   - internal/provider/connectionfifteen_five_data_source_sdk.go
   - examples/data-sources/etleap_connection_fifteen_five/data-source.tf
+  - internal/provider/connectionfreshchat_data_source.go
+  - internal/provider/connectionfreshchat_data_source_sdk.go
+  - examples/data-sources/etleap_connection_freshchat/data-source.tf
   - internal/provider/connectionfreshsales_data_source.go
   - internal/provider/connectionfreshsales_data_source_sdk.go
   - examples/data-sources/etleap_connection_freshsales/data-source.tf
@@ -1291,9 +1323,6 @@ generatedFiles:
   - internal/provider/connectiongoogle_ads_data_source.go
   - internal/provider/connectiongoogle_ads_data_source_sdk.go
   - examples/data-sources/etleap_connection_google_ads/data-source.tf
-  - internal/provider/connectiongoogle_analytics_data_source.go
-  - internal/provider/connectiongoogle_analytics_data_source_sdk.go
-  - examples/data-sources/etleap_connection_google_analytics/data-source.tf
   - internal/provider/connectiongoogle_analytics_ga4_data_source.go
   - internal/provider/connectiongoogle_analytics_ga4_data_source_sdk.go
   - examples/data-sources/etleap_connection_google_analytics_ga4/data-source.tf

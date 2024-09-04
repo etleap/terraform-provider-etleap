@@ -150,6 +150,8 @@ type ConnectionRedshift struct {
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionRedshiftDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// When Etleap creates Redshift tables, SELECT privileges will be granted to user groups specified here.
 	UserGroups []string `json:"userGroups,omitempty"`
@@ -163,9 +165,9 @@ type ConnectionRedshift struct {
 	DynamicVarcharWidthEnabled *bool      `default:"false" json:"dynamicVarcharWidthEnabled"`
 	Address                    string     `json:"address"`
 	Port                       int64      `json:"port"`
-	Database                   string     `json:"database"`
 	Username                   string     `json:"username"`
 	SSHConfig                  *SSHConfig `json:"sshConfig,omitempty"`
+	Database                   string     `json:"database"`
 }
 
 func (c ConnectionRedshift) MarshalJSON() ([]byte, error) {
@@ -326,13 +328,6 @@ func (o *ConnectionRedshift) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionRedshift) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *ConnectionRedshift) GetUsername() string {
 	if o == nil {
 		return ""
@@ -347,6 +342,13 @@ func (o *ConnectionRedshift) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
+func (o *ConnectionRedshift) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
 // ConnectionRedshiftInput - Specifies the location of a database.
 type ConnectionRedshiftInput struct {
 	// The unique name of this connection.
@@ -355,6 +357,8 @@ type ConnectionRedshiftInput struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// When Etleap creates Redshift tables, SELECT privileges will be granted to user groups specified here.
 	UserGroups []string `json:"userGroups,omitempty"`
@@ -368,10 +372,10 @@ type ConnectionRedshiftInput struct {
 	DynamicVarcharWidthEnabled *bool      `default:"false" json:"dynamicVarcharWidthEnabled"`
 	Address                    string     `json:"address"`
 	Port                       int64      `json:"port"`
-	Database                   string     `json:"database"`
 	Username                   string     `json:"username"`
 	Password                   string     `json:"password"`
 	SSHConfig                  *SSHConfig `json:"sshConfig,omitempty"`
+	Database                   string     `json:"database"`
 }
 
 func (c ConnectionRedshiftInput) MarshalJSON() ([]byte, error) {
@@ -497,13 +501,6 @@ func (o *ConnectionRedshiftInput) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionRedshiftInput) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *ConnectionRedshiftInput) GetUsername() string {
 	if o == nil {
 		return ""
@@ -523,4 +520,11 @@ func (o *ConnectionRedshiftInput) GetSSHConfig() *SSHConfig {
 		return nil
 	}
 	return o.SSHConfig
+}
+
+func (o *ConnectionRedshiftInput) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
 }

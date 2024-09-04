@@ -41,7 +41,7 @@ const (
 	UserDefinedAPIPipelineModeTypeUserDefinedAPIUpdateMode    UserDefinedAPIPipelineModeType = "user_defined_api_update_mode"
 )
 
-// UserDefinedAPIPipelineMode - The pipeline mode.
+// UserDefinedAPIPipelineMode - Can be either the string `REPLACE` or one of the supported objects.
 type UserDefinedAPIPipelineMode struct {
 	UserDefinedAPIPipelineMode1 *UserDefinedAPIPipelineMode1
 	UserDefinedAPIReplaceMode   *UserDefinedAPIReplaceMode
@@ -79,6 +79,13 @@ func CreateUserDefinedAPIPipelineModeUserDefinedAPIUpdateMode(userDefinedAPIUpda
 
 func (u *UserDefinedAPIPipelineMode) UnmarshalJSON(data []byte) error {
 
+	userDefinedAPIReplaceMode := new(UserDefinedAPIReplaceMode)
+	if err := utils.UnmarshalJSON(data, &userDefinedAPIReplaceMode, "", true, true); err == nil {
+		u.UserDefinedAPIReplaceMode = userDefinedAPIReplaceMode
+		u.Type = UserDefinedAPIPipelineModeTypeUserDefinedAPIReplaceMode
+		return nil
+	}
+
 	userDefinedAPIUpdateMode := new(UserDefinedAPIUpdateMode)
 	if err := utils.UnmarshalJSON(data, &userDefinedAPIUpdateMode, "", true, true); err == nil {
 		u.UserDefinedAPIUpdateMode = userDefinedAPIUpdateMode
@@ -90,13 +97,6 @@ func (u *UserDefinedAPIPipelineMode) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &userDefinedAPIPipelineMode1, "", true, true); err == nil {
 		u.UserDefinedAPIPipelineMode1 = userDefinedAPIPipelineMode1
 		u.Type = UserDefinedAPIPipelineModeTypeUserDefinedAPIPipelineMode1
-		return nil
-	}
-
-	userDefinedAPIReplaceMode := new(UserDefinedAPIReplaceMode)
-	if err := utils.UnmarshalJSON(data, &userDefinedAPIReplaceMode, "", true, true); err == nil {
-		u.UserDefinedAPIReplaceMode = userDefinedAPIReplaceMode
-		u.Type = UserDefinedAPIPipelineModeTypeUserDefinedAPIReplaceMode
 		return nil
 	}
 

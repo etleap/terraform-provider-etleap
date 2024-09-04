@@ -296,10 +296,11 @@ func (r *ConnectionSNOWFLAKESHARDEDResource) Schema(ctx context.Context, req res
 				Description: `When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.`,
 			},
 			"schema": schema.StringAttribute{
+				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Required:    true,
+				Optional:    true,
 				Description: `Take into account that the schema is case sensitive`,
 			},
 			"shards": schema.ListNestedAttribute{
@@ -320,6 +321,97 @@ func (r *ConnectionSNOWFLAKESHARDEDResource) Schema(ctx context.Context, req res
 								speakeasy_stringvalidators.NotNull(),
 							},
 						},
+						"authentication": schema.SingleNestedAttribute{
+							Computed: true,
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+							},
+							Optional: true,
+							Attributes: map[string]schema.Attribute{
+								"key_pair": schema.SingleNestedAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
+									Optional: true,
+									Attributes: map[string]schema.Attribute{
+										"private_key": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Description: `Not Null`,
+											Validators: []validator.String{
+												speakeasy_stringvalidators.NotNull(),
+											},
+										},
+										"public_key": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"type": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Description: `Not Null; must be one of ["PASSWORD", "KEY_PAIR"]`,
+											Validators: []validator.String{
+												speakeasy_stringvalidators.NotNull(),
+												stringvalidator.OneOf(
+													"PASSWORD",
+													"KEY_PAIR",
+												),
+											},
+										},
+									},
+									Description: `Snowflake Key Pair Authentication`,
+								},
+								"password": schema.SingleNestedAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
+									Optional: true,
+									Attributes: map[string]schema.Attribute{
+										"password": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Description: `Not Null`,
+											Validators: []validator.String{
+												speakeasy_stringvalidators.NotNull(),
+											},
+										},
+										"type": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Description: `Not Null; must be one of ["PASSWORD", "KEY_PAIR"]`,
+											Validators: []validator.String{
+												speakeasy_stringvalidators.NotNull(),
+												stringvalidator.OneOf(
+													"PASSWORD",
+													"KEY_PAIR",
+												),
+											},
+										},
+									},
+									Description: `Snowflake Password Authentication`,
+								},
+							},
+							Description: `Snowflake Authentication Types`,
+							Validators: []validator.Object{
+								validators.ExactlyOneChild(),
+							},
+						},
 						"database": schema.StringAttribute{
 							Computed: true,
 							PlanModifiers: []planmodifier.String{
@@ -336,11 +428,7 @@ func (r *ConnectionSNOWFLAKESHARDEDResource) Schema(ctx context.Context, req res
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Optional:    true,
-							Description: `Not Null`,
-							Validators: []validator.String{
-								speakeasy_stringvalidators.NotNull(),
-							},
+							Optional: true,
 						},
 						"role": schema.StringAttribute{
 							Computed: true,

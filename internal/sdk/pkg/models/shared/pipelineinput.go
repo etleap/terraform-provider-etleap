@@ -8,9 +8,9 @@ import (
 
 // PipelineInput - The script returned by `GET /pipelines/{id}/scripts/{version}` can be used as the `script` input. If `script` is not specified, the default script is used.
 type PipelineInput struct {
-	Name        string           `json:"name"`
-	Source      SourceTypes      `json:"source"`
-	Destination DestinationTypes `json:"destination"`
+	Name        string                `json:"name"`
+	Source      SourceTypes           `json:"source"`
+	Destination DestinationTypesInput `json:"destination"`
 	// Whenever a script is required, we accept and/or return two types of scripts: a Script or Legacy Script. We return a Script object if all transforms specified in that script are supported by this API. Otherwise it will return a Legacy Script. Either Script or Legacy Script can be used when adding a script to a pipeline.
 	Script *ScriptOrLegacyScriptInput `json:"script,omitempty"`
 	// If the pipeline is paused. Defaults to `false`.
@@ -93,12 +93,20 @@ func (o *PipelineInput) GetSourceEloqua() *SourceEloqua {
 	return o.GetSource().SourceEloqua
 }
 
+func (o *PipelineInput) GetSourceErpx() *SourceErpx {
+	return o.GetSource().SourceErpx
+}
+
 func (o *PipelineInput) GetSourceFacebookAds() *SourceFacebookAds {
 	return o.GetSource().SourceFacebookAds
 }
 
 func (o *PipelineInput) GetSourceFifteenFive() *SourceFifteenFive {
 	return o.GetSource().SourceFifteenFive
+}
+
+func (o *PipelineInput) GetSourceFreshchat() *SourceFreshchat {
+	return o.GetSource().SourceFreshchat
 }
 
 func (o *PipelineInput) GetSourceFreshsales() *SourceFreshsales {
@@ -115,10 +123,6 @@ func (o *PipelineInput) GetSourceFtp() *SourceFtp {
 
 func (o *PipelineInput) GetSourceGong() *SourceGong {
 	return o.GetSource().SourceGong
-}
-
-func (o *PipelineInput) GetSourceGoogleAnalytics() *SourceGoogleAnalytics {
-	return o.GetSource().SourceGoogleAnalytics
 }
 
 func (o *PipelineInput) GetSourceGoogleAnalyticsGa4() *SourceGoogleAnalyticsGa4 {
@@ -381,23 +385,23 @@ func (o *PipelineInput) GetSourceZuora() *SourceZuora {
 	return o.GetSource().SourceZuora
 }
 
-func (o *PipelineInput) GetDestination() DestinationTypes {
+func (o *PipelineInput) GetDestination() DestinationTypesInput {
 	if o == nil {
-		return DestinationTypes{}
+		return DestinationTypesInput{}
 	}
 	return o.Destination
 }
 
-func (o *PipelineInput) GetDestinationRedshift() *DestinationRedshift {
-	return o.GetDestination().DestinationRedshift
+func (o *PipelineInput) GetDestinationRedshift() *DestinationRedshiftInput {
+	return o.GetDestination().DestinationRedshiftInput
 }
 
-func (o *PipelineInput) GetDestinationSnowflake() *DestinationSnowflake {
-	return o.GetDestination().DestinationSnowflake
+func (o *PipelineInput) GetDestinationSnowflake() *DestinationSnowflakeInput {
+	return o.GetDestination().DestinationSnowflakeInput
 }
 
-func (o *PipelineInput) GetDestinationDeltaLake() *DestinationDeltaLake {
-	return o.GetDestination().DestinationDeltaLake
+func (o *PipelineInput) GetDestinationDeltaLake() *DestinationDeltaLakeInput {
+	return o.GetDestination().DestinationDeltaLakeInput
 }
 
 func (o *PipelineInput) GetDestinationS3DataLake() *DestinationS3DataLake {

@@ -81,10 +81,11 @@ func (r *ConnectionBIGQUERYResource) Schema(ctx context.Context, req resource.Sc
 				},
 			},
 			"dataset": schema.StringAttribute{
+				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Required: true,
+				Optional: true,
 			},
 			"default_update_schedule": schema.ListNestedAttribute{
 				Computed: true,

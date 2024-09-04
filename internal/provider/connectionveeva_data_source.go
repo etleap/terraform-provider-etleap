@@ -38,6 +38,7 @@ type ConnectionVEEVADataSourceModel struct {
 	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 	Username              types.String            `tfsdk:"username"`
 	VaultDomainName       types.String            `tfsdk:"vault_domain_name"`
+	VaultType             types.String            `tfsdk:"vault_type"`
 }
 
 // Metadata returns the data source type name.
@@ -248,6 +249,10 @@ func (r *ConnectionVEEVADataSource) Schema(ctx context.Context, req datasource.S
 			"vault_domain_name": schema.StringAttribute{
 				Computed:    true,
 				Description: `The vault domain name is part of the URL that you use to access your Veeva Vault. You can follow the<a target="_blank" href="https://developer.veevavault.com/docs/#authentication">'Structuring the Endpoint'</a> instructions to find the URL.`,
+			},
+			"vault_type": schema.StringAttribute{
+				Computed:    true,
+				Description: `Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY. must be one of ["QUALITY", "CTMS", "RIM", "PROMOMATS"]`,
 			},
 		},
 	}

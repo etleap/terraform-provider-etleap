@@ -1,6 +1,6 @@
 resource "etleap_model" "my_model" {
-  deletion_of_export_products = true
-  name                        = "Dr. Ricardo Willms"
+  deletion_of_export_products = false
+  name                        = "Lindsay Bernhard"
   query_and_triggers = {
     query = "...my_query..."
     triggers = [
@@ -9,7 +9,7 @@ resource "etleap_model" "my_model" {
   }
   update_schedule = {
     daily = {
-      hour_of_day = 3
+      hour_of_day = 1
       mode        = "DAILY"
     }
   }
@@ -17,7 +17,7 @@ resource "etleap_model" "my_model" {
     redshift = {
       connection_id = "...my_connection_id..."
       distribution_style = {
-        one = "AUTO"
+        one = "ALL"
       }
       materialized_view     = false
       pending_renamed_table = "...my_pending_renamed_table..."

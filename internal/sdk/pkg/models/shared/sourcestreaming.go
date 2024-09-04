@@ -70,14 +70,14 @@ type SourceStreaming struct {
 	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-	// File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here.
-	Paths []string `json:"paths"`
-	// Regular expression matching the names of the files to be processed by this pipeline. `fileNameFilter` or `paths` must be specified.
+	// Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 	FileNameFilter *string `json:"fileNameFilter,omitempty"`
 	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
 	NewFileBehavior SourceStreamingNewFileBehavior `json:"newFileBehavior"`
 	// Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
 	LowWatermark *types.Date `json:"lowWatermark,omitempty"`
+	// File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here.
+	Paths []string `json:"paths"`
 }
 
 func (s SourceStreaming) MarshalJSON() ([]byte, error) {
@@ -112,13 +112,6 @@ func (o *SourceStreaming) GetLatencyThreshold() *int64 {
 	return o.LatencyThreshold
 }
 
-func (o *SourceStreaming) GetPaths() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Paths
-}
-
 func (o *SourceStreaming) GetFileNameFilter() *string {
 	if o == nil {
 		return nil
@@ -138,4 +131,11 @@ func (o *SourceStreaming) GetLowWatermark() *types.Date {
 		return nil
 	}
 	return o.LowWatermark
+}
+
+func (o *SourceStreaming) GetPaths() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Paths
 }

@@ -49,6 +49,8 @@ type ConnectionDeltaLakeUpdate struct {
 	// Authenticates the user that you want to connect to Databricks with. Instructions on generating a personal access token can be found <a href='https://docs.databricks.com/dev-tools/api/latest/authentication.html#token-management' target="_blank">here</a>.
 	PersonalAccessToken *string `json:"personalAccessToken,omitempty"`
 	// The schema to use when this connection is used as a source. When the connection is used as a destination the schema can be set to a different one for each pipeline.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 }
 

@@ -303,10 +303,11 @@ func (r *ConnectionDELTALAKEResource) Schema(ctx context.Context, req resource.S
 				Description: `Authenticates the user that you want to connect to Databricks with. Instructions on generating a personal access token can be found <a href='https://docs.databricks.com/dev-tools/api/latest/authentication.html#token-management' target="_blank">here</a>.`,
 			},
 			"schema": schema.StringAttribute{
+				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Required:    true,
+				Optional:    true,
 				Description: `The schema to use when this connection is used as a source. When the connection is used as a destination the schema can be set to a different one for each pipeline.`,
 			},
 			"status": schema.StringAttribute{

@@ -304,73 +304,56 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 								"user_defined_api_replace_mode": schema.SingleNestedAttribute{
 									Computed: true,
 									Attributes: map[string]schema.Attribute{
-										"one": schema.SingleNestedAttribute{
+										"foreign_key_columns": schema.ListNestedAttribute{
 											Computed: true,
-											Attributes: map[string]schema.Attribute{
-												"str": schema.StringAttribute{
-													Computed: true,
-												},
-												"two": schema.SingleNestedAttribute{
-													Computed:   true,
-													Attributes: map[string]schema.Attribute{},
-												},
-											},
-										},
-										"schema_v1_extended_replace_mode": schema.SingleNestedAttribute{
-											Computed: true,
-											Attributes: map[string]schema.Attribute{
-												"foreign_key_columns": schema.ListNestedAttribute{
-													Computed: true,
-													NestedObject: schema.NestedAttributeObject{
+											NestedObject: schema.NestedAttributeObject{
+												Attributes: map[string]schema.Attribute{
+													"foreign_column": schema.SingleNestedAttribute{
+														Computed: true,
 														Attributes: map[string]schema.Attribute{
-															"foreign_column": schema.SingleNestedAttribute{
-																Computed: true,
-																Attributes: map[string]schema.Attribute{
-																	"column_path": schema.ListAttribute{
-																		Computed:    true,
-																		ElementType: types.StringType,
-																		Description: `Represents the path in the entity schema where the column is located. If the column is at the top level of an entity, use ` + "`" + `Top Level Foreign Key Column` + "`" + ` instead.`,
-																	},
-																	"referenced_column_name": schema.StringAttribute{
-																		Computed:    true,
-																		Description: `The column name of the referenced entity.`,
-																	},
-																	"referenced_entity_id": schema.StringAttribute{
-																		Computed:    true,
-																		Description: `The id of the referenced entity.`,
-																	},
-																},
+															"column_path": schema.ListAttribute{
+																Computed:    true,
+																ElementType: types.StringType,
+																Description: `Represents the path in the entity schema where the column is located. If the column is at the top level of an entity, use ` + "`" + `Top Level Foreign Key Column` + "`" + ` instead.`,
 															},
-															"top_level_foreign_key_column": schema.SingleNestedAttribute{
-																Computed: true,
-																Attributes: map[string]schema.Attribute{
-																	"column_name": schema.StringAttribute{
-																		Computed:    true,
-																		Description: `The entity's foreign key column. If the column is nested inside the entity's structure and not at the top level, use ` + "`" + `NestedForeignKeyColumn` + "`" + ` instead.`,
-																	},
-																	"referenced_column_name": schema.StringAttribute{
-																		Computed:    true,
-																		Description: `The column name of the referenced entity.`,
-																	},
-																	"referenced_entity_id": schema.StringAttribute{
-																		Computed:    true,
-																		Description: `The id of the referenced entity.`,
-																	},
-																},
+															"referenced_column_name": schema.StringAttribute{
+																Computed:    true,
+																Description: `The column name of the referenced entity.`,
+															},
+															"referenced_entity_id": schema.StringAttribute{
+																Computed:    true,
+																Description: `The id of the referenced entity.`,
 															},
 														},
 													},
-													Description: `The foreign columns of the entity.`,
-												},
-												"primary_key_columns": schema.ListAttribute{
-													Computed:    true,
-													ElementType: types.StringType,
-												},
-												"type": schema.StringAttribute{
-													Computed:    true,
-													Description: `must be one of ["REPLACE"]`,
+													"top_level_foreign_key_column": schema.SingleNestedAttribute{
+														Computed: true,
+														Attributes: map[string]schema.Attribute{
+															"column_name": schema.StringAttribute{
+																Computed:    true,
+																Description: `The entity's foreign key column. If the column is nested inside the entity's structure and not at the top level, use ` + "`" + `NestedForeignKeyColumn` + "`" + ` instead.`,
+															},
+															"referenced_column_name": schema.StringAttribute{
+																Computed:    true,
+																Description: `The column name of the referenced entity.`,
+															},
+															"referenced_entity_id": schema.StringAttribute{
+																Computed:    true,
+																Description: `The id of the referenced entity.`,
+															},
+														},
+													},
 												},
 											},
+											Description: `The foreign columns of the entity.`,
+										},
+										"primary_key_columns": schema.ListAttribute{
+											Computed:    true,
+											ElementType: types.StringType,
+										},
+										"type": schema.StringAttribute{
+											Computed:    true,
+											Description: `must be one of ["REPLACE"]`,
 										},
 									},
 								},
@@ -478,7 +461,7 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 									},
 								},
 							},
-							Description: `The pipeline mode.`,
+							Description: `Can be either the string ` + "`" + `REPLACE` + "`" + ` or one of the supported objects.`,
 						},
 						"query_parameters": schema.ListNestedAttribute{
 							Computed: true,

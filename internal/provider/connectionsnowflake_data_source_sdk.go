@@ -11,6 +11,20 @@ import (
 func (r *ConnectionSNOWFLAKEDataSourceModel) RefreshFromSharedConnectionSnowflake(resp *shared.ConnectionSnowflake) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
+	if resp.Authentication == nil {
+		r.Authentication = nil
+	} else {
+		r.Authentication = &SnowflakeAuthenticationTypesOutput{}
+		if resp.Authentication.SnowflakeAuthenticationKeyPairOutput != nil {
+			r.Authentication.KeyPair = &SnowflakeAuthenticationKeyPairOutput{}
+			r.Authentication.KeyPair.PublicKey = types.StringValue(resp.Authentication.SnowflakeAuthenticationKeyPairOutput.PublicKey)
+			r.Authentication.KeyPair.Type = types.StringValue(string(resp.Authentication.SnowflakeAuthenticationKeyPairOutput.Type))
+		}
+		if resp.Authentication.SnowflakeAuthenticationPasswordOutput != nil {
+			r.Authentication.Password = &SnowflakeAuthenticationPasswordOutput{}
+			r.Authentication.Password.Type = types.StringValue(string(resp.Authentication.SnowflakeAuthenticationPasswordOutput.Type))
+		}
+	}
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -68,7 +82,7 @@ func (r *ConnectionSNOWFLAKEDataSourceModel) RefreshFromSharedConnectionSnowflak
 	for _, v := range resp.Roles {
 		r.Roles = append(r.Roles, types.StringValue(v))
 	}
-	r.Schema = types.StringValue(resp.Schema)
+	r.Schema = types.StringPointerValue(resp.Schema)
 	r.SourceOnly = types.BoolPointerValue(resp.SourceOnly)
 	r.Status = types.StringValue(string(resp.Status))
 	r.Type = types.StringValue(string(resp.Type))

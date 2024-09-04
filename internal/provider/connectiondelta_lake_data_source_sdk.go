@@ -63,7 +63,7 @@ func (r *ConnectionDELTALAKEDataSourceModel) RefreshFromSharedConnectionDeltaLak
 	r.HTTPPath = types.StringValue(resp.HTTPPath)
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
-	r.Schema = types.StringValue(resp.Schema)
+	r.Schema = types.StringPointerValue(resp.Schema)
 	r.Status = types.StringValue(string(resp.Status))
 	r.Type = types.StringValue(string(resp.Type))
 	if resp.UpdateSchedule == nil {

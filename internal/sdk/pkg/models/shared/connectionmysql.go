@@ -132,7 +132,7 @@ func (o *ConnectionMysqlDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Updat
 	return nil
 }
 
-// ConnectionMysql - Specifies the location of a database.
+// ConnectionMysql - Specifies the properties of a database connection.
 type ConnectionMysql struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -152,15 +152,16 @@ type ConnectionMysql struct {
 	ValidateSslCert       *bool                                  `default:"false" json:"validateSslCert"`
 	// Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
-	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
+	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
-	TinyInt1IsBoolean *bool      `default:"false" json:"tinyInt1IsBoolean"`
-	Address           string     `json:"address"`
-	Port              int64      `json:"port"`
-	Database          string     `json:"database"`
-	Username          string     `json:"username"`
-	SSHConfig         *SSHConfig `json:"sshConfig,omitempty"`
+	TinyInt1IsBoolean *bool `default:"false" json:"tinyInt1IsBoolean"`
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Database  *string    `json:"database,omitempty"`
+	Address   string     `json:"address"`
+	Port      int64      `json:"port"`
+	Username  string     `json:"username"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
 }
 
 func (c ConnectionMysql) MarshalJSON() ([]byte, error) {
@@ -293,6 +294,13 @@ func (o *ConnectionMysql) GetTinyInt1IsBoolean() *bool {
 	return o.TinyInt1IsBoolean
 }
 
+func (o *ConnectionMysql) GetDatabase() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Database
+}
+
 func (o *ConnectionMysql) GetAddress() string {
 	if o == nil {
 		return ""
@@ -305,13 +313,6 @@ func (o *ConnectionMysql) GetPort() int64 {
 		return 0
 	}
 	return o.Port
-}
-
-func (o *ConnectionMysql) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
 }
 
 func (o *ConnectionMysql) GetUsername() string {
@@ -328,7 +329,7 @@ func (o *ConnectionMysql) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
-// ConnectionMysqlInput - Specifies the location of a database.
+// ConnectionMysqlInput - Specifies the properties of a database connection.
 type ConnectionMysqlInput struct {
 	// The unique name of this connection.
 	Name string              `json:"name"`
@@ -338,16 +339,17 @@ type ConnectionMysqlInput struct {
 	ValidateSslCert *bool                `default:"false" json:"validateSslCert"`
 	// Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
-	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
+	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
-	TinyInt1IsBoolean *bool      `default:"false" json:"tinyInt1IsBoolean"`
-	Address           string     `json:"address"`
-	Port              int64      `json:"port"`
-	Database          string     `json:"database"`
-	Username          string     `json:"username"`
-	Password          string     `json:"password"`
-	SSHConfig         *SSHConfig `json:"sshConfig,omitempty"`
+	TinyInt1IsBoolean *bool `default:"false" json:"tinyInt1IsBoolean"`
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Database  *string    `json:"database,omitempty"`
+	Address   string     `json:"address"`
+	Port      int64      `json:"port"`
+	Username  string     `json:"username"`
+	Password  string     `json:"password"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
 }
 
 func (c ConnectionMysqlInput) MarshalJSON() ([]byte, error) {
@@ -445,6 +447,13 @@ func (o *ConnectionMysqlInput) GetTinyInt1IsBoolean() *bool {
 	return o.TinyInt1IsBoolean
 }
 
+func (o *ConnectionMysqlInput) GetDatabase() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Database
+}
+
 func (o *ConnectionMysqlInput) GetAddress() string {
 	if o == nil {
 		return ""
@@ -457,13 +466,6 @@ func (o *ConnectionMysqlInput) GetPort() int64 {
 		return 0
 	}
 	return o.Port
-}
-
-func (o *ConnectionMysqlInput) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
 }
 
 func (o *ConnectionMysqlInput) GetUsername() string {

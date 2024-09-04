@@ -87,6 +87,12 @@ func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaInput() *shared.Co
 		}
 	}
 	vaultDomainName := r.VaultDomainName.ValueString()
+	vaultType := new(shared.ConnectionVeevaVaultType)
+	if !r.VaultType.IsUnknown() && !r.VaultType.IsNull() {
+		*vaultType = shared.ConnectionVeevaVaultType(r.VaultType.ValueString())
+	} else {
+		vaultType = nil
+	}
 	username := r.Username.ValueString()
 	password := r.Password.ValueString()
 	out := shared.ConnectionVeevaInput{
@@ -94,6 +100,7 @@ func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaInput() *shared.Co
 		Type:            typeVar,
 		UpdateSchedule:  updateSchedule,
 		VaultDomainName: vaultDomainName,
+		VaultType:       vaultType,
 		Username:        username,
 		Password:        password,
 	}
@@ -188,6 +195,11 @@ func (r *ConnectionVEEVAResourceModel) RefreshFromSharedConnectionVeeva(resp *sh
 	}
 	r.Username = types.StringValue(resp.Username)
 	r.VaultDomainName = types.StringValue(resp.VaultDomainName)
+	if resp.VaultType != nil {
+		r.VaultType = types.StringValue(string(*resp.VaultType))
+	} else {
+		r.VaultType = types.StringNull()
+	}
 }
 
 func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaUpdate() *shared.ConnectionVeevaUpdate {
@@ -290,6 +302,12 @@ func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaUpdate() *shared.C
 	} else {
 		vaultDomainName = nil
 	}
+	vaultType := new(shared.VaultType)
+	if !r.VaultType.IsUnknown() && !r.VaultType.IsNull() {
+		*vaultType = shared.VaultType(r.VaultType.ValueString())
+	} else {
+		vaultType = nil
+	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
 		*username = r.Username.ValueString()
@@ -308,6 +326,7 @@ func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaUpdate() *shared.C
 		Active:          active,
 		UpdateSchedule:  updateSchedule,
 		VaultDomainName: vaultDomainName,
+		VaultType:       vaultType,
 		Username:        username,
 		Password:        password,
 	}
