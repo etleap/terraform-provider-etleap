@@ -54,7 +54,7 @@ type PipelineResource struct {
 type PipelineResourceModel struct {
 	CreateDate               types.String                         `tfsdk:"create_date"`
 	DeletionOfExportProducts types.Bool                           `tfsdk:"deletion_of_export_products"`
-	Destination              DestinationTypesInput                `tfsdk:"destination"`
+	Destination              DestinationTypes                	  `tfsdk:"destination"`
 	Destinations             []DestinationInfoAndPipelineVersions `tfsdk:"destinations"`
 	ID                       types.String                         `tfsdk:"id"`
 	LastRefreshFinishDate    types.String                         `tfsdk:"last_refresh_finish_date"`
