@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 2eacf9e8ecd7d9dbe12e293a9c39c3fb
+  docChecksum: 6c2450f2128b2e3bc965d6d5ca01102e
   docVersion: 2.6.30
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.2.0
-  configChecksum: a6dfc817a4e45ea824ceecf04cbfdf59
+  releaseVersion: 0.3.0
+  configChecksum: ecfddea88680b2c78887e3ee39e1723d
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -15,6 +15,7 @@ features:
     globalSecurity: 2.81.3
     globalServerURLs: 2.82.1
     groups: 2.81.2
+    ignores: 2.81.1
     inputOutputModels: 2.83.0
     methodSecurity: 2.82.1
     nameOverrides: 2.81.1
@@ -597,7 +598,6 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/transformparsebyregex.go
   - internal/sdk/pkg/models/shared/transformrenamecolumns.go
   - internal/sdk/pkg/models/shared/legacyscriptinput.go
-  - internal/sdk/pkg/models/shared/destinationtypesinput.go
   - internal/sdk/pkg/models/shared/addscriptresponse.go
   - internal/sdk/pkg/models/shared/destinationandpipelineversions.go
   - internal/sdk/pkg/models/shared/scriptorlegacyscript.go
@@ -878,13 +878,9 @@ generatedFiles:
   - internal/provider/type_warehouse_redshift.go
   - internal/provider/type_warehouse_snowflake.go
   - internal/provider/type_warehouse_types_input.go
-  - internal/provider/type_destination_delta_lake_input.go
-  - internal/provider/type_destination_redshift_input.go
-  - internal/provider/type_destination_s3_data_lake.go
-  - internal/provider/type_destination_snowflake_input.go
-  - internal/provider/type_destination_types_input.go
   - internal/provider/type_destination_delta_lake.go
   - internal/provider/type_destination_redshift.go
+  - internal/provider/type_destination_s3_data_lake.go
   - internal/provider/type_destination_snowflake.go
   - internal/provider/type_destination_types.go
   - internal/provider/type_operation_errors_by_operation.go
@@ -1258,7 +1254,6 @@ generatedFiles:
   - internal/provider/model_resource.go
   - internal/provider/model_resource_sdk.go
   - examples/resources/etleap_model/resource.tf
-  - internal/provider/pipeline_resource.go
   - internal/provider/pipeline_resource_sdk.go
   - examples/resources/etleap_pipeline/resource.tf
   - internal/provider/team_resource.go

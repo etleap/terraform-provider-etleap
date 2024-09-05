@@ -109,16 +109,8 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed:    true,
 											Description: `The schema in the destination that the tables will be created in.`,
 										},
-										"schema_changing_to": schema.StringAttribute{
-											Computed:    true,
-											Description: `The schema that the destination table is being moved to. Only returned when moving the destination table to a new schema has been requested but not yet completed.`,
-										},
 										"table": schema.StringAttribute{
 											Computed: true,
-										},
-										"table_changing_to": schema.StringAttribute{
-											Computed:    true,
-											Description: `The name that the destination table is being changed to. Only returned when the rename has been requested but not yet completed.`,
 										},
 										"type": schema.StringAttribute{
 											Computed: true,
@@ -186,10 +178,6 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed:    true,
 											Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used.`,
 										},
-										"schema_changing_to": schema.StringAttribute{
-											Computed:    true,
-											Description: `The schema that the destination table is being moved to. Only returned when moving the destination table to a new schema has been requested but not yet completed.`,
-										},
 										"sort_columns": schema.ListAttribute{
 											Computed:    true,
 											ElementType: types.StringType,
@@ -197,10 +185,6 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										},
 										"table": schema.StringAttribute{
 											Computed: true,
-										},
-										"table_changing_to": schema.StringAttribute{
-											Computed:    true,
-											Description: `The name that the destination table is being changed to. Only returned when the rename has been requested but not yet completed.`,
 										},
 										"truncate_strings": schema.BoolAttribute{
 											Computed:    true,
@@ -287,16 +271,8 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed:    true,
 											Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used.`,
 										},
-										"schema_changing_to": schema.StringAttribute{
-											Computed:    true,
-											Description: `The schema that the destination table is being moved to. Only returned when moving the destination table to a new schema has been requested but not yet completed.`,
-										},
 										"table": schema.StringAttribute{
 											Computed: true,
-										},
-										"table_changing_to": schema.StringAttribute{
-											Computed:    true,
-											Description: `The name that the destination table is being changed to. Only returned when the rename has been requested but not yet completed.`,
 										},
 										"type": schema.StringAttribute{
 											Computed:    true,

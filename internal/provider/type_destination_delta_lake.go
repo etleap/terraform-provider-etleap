@@ -12,9 +12,7 @@ type DestinationDeltaLake struct {
 	PrimaryKey              []types.String `tfsdk:"primary_key"`
 	RetainHistory           types.Bool     `tfsdk:"retain_history"`
 	Schema                  types.String   `tfsdk:"schema"`
-	SchemaChangingTo        types.String   `tfsdk:"schema_changing_to"`
 	Table                   types.String   `tfsdk:"table"`
-	TableChangingTo         types.String   `tfsdk:"table_changing_to"`
 	Type                    types.String   `tfsdk:"type"`
 	WaitForQualityCheck     types.Bool     `tfsdk:"wait_for_quality_check"`
 }

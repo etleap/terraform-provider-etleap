@@ -29,9 +29,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 			}
 			destinations1.Destination.DeltaLake.RetainHistory = types.BoolPointerValue(destinationsItem.Destination.DestinationDeltaLake.RetainHistory)
 			destinations1.Destination.DeltaLake.Schema = types.StringValue(destinationsItem.Destination.DestinationDeltaLake.Schema)
-			destinations1.Destination.DeltaLake.SchemaChangingTo = types.StringPointerValue(destinationsItem.Destination.DestinationDeltaLake.SchemaChangingTo)
 			destinations1.Destination.DeltaLake.Table = types.StringValue(destinationsItem.Destination.DestinationDeltaLake.Table)
-			destinations1.Destination.DeltaLake.TableChangingTo = types.StringPointerValue(destinationsItem.Destination.DestinationDeltaLake.TableChangingTo)
 			destinations1.Destination.DeltaLake.Type = types.StringValue(string(destinationsItem.Destination.DestinationDeltaLake.Type))
 			destinations1.Destination.DeltaLake.WaitForQualityCheck = types.BoolPointerValue(destinationsItem.Destination.DestinationDeltaLake.WaitForQualityCheck)
 		}
@@ -64,13 +62,11 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 			}
 			destinations1.Destination.Redshift.RetainHistory = types.BoolPointerValue(destinationsItem.Destination.DestinationRedshift.RetainHistory)
 			destinations1.Destination.Redshift.Schema = types.StringPointerValue(destinationsItem.Destination.DestinationRedshift.Schema)
-			destinations1.Destination.Redshift.SchemaChangingTo = types.StringPointerValue(destinationsItem.Destination.DestinationRedshift.SchemaChangingTo)
 			destinations1.Destination.Redshift.SortColumns = nil
 			for _, v := range destinationsItem.Destination.DestinationRedshift.SortColumns {
 				destinations1.Destination.Redshift.SortColumns = append(destinations1.Destination.Redshift.SortColumns, types.StringValue(v))
 			}
 			destinations1.Destination.Redshift.Table = types.StringValue(destinationsItem.Destination.DestinationRedshift.Table)
-			destinations1.Destination.Redshift.TableChangingTo = types.StringPointerValue(destinationsItem.Destination.DestinationRedshift.TableChangingTo)
 			destinations1.Destination.Redshift.TruncateStrings = types.BoolPointerValue(destinationsItem.Destination.DestinationRedshift.TruncateStrings)
 			destinations1.Destination.Redshift.Type = types.StringValue(string(destinationsItem.Destination.DestinationRedshift.Type))
 			destinations1.Destination.Redshift.WaitForQualityCheck = types.BoolPointerValue(destinationsItem.Destination.DestinationRedshift.WaitForQualityCheck)
@@ -108,9 +104,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 			}
 			destinations1.Destination.Snowflake.RetainHistory = types.BoolPointerValue(destinationsItem.Destination.DestinationSnowflake.RetainHistory)
 			destinations1.Destination.Snowflake.Schema = types.StringPointerValue(destinationsItem.Destination.DestinationSnowflake.Schema)
-			destinations1.Destination.Snowflake.SchemaChangingTo = types.StringPointerValue(destinationsItem.Destination.DestinationSnowflake.SchemaChangingTo)
 			destinations1.Destination.Snowflake.Table = types.StringValue(destinationsItem.Destination.DestinationSnowflake.Table)
-			destinations1.Destination.Snowflake.TableChangingTo = types.StringPointerValue(destinationsItem.Destination.DestinationSnowflake.TableChangingTo)
 			destinations1.Destination.Snowflake.Type = types.StringValue(string(destinationsItem.Destination.DestinationSnowflake.Type))
 			destinations1.Destination.Snowflake.WaitForQualityCheck = types.BoolPointerValue(destinationsItem.Destination.DestinationSnowflake.WaitForQualityCheck)
 		}

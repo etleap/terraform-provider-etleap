@@ -45,10 +45,6 @@ type DestinationSnowflake struct {
 	// The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 	Schema *string `json:"schema,omitempty"`
 	Table  string  `json:"table"`
-	// The schema that the destination table is being moved to. Only returned when moving the destination table to a new schema has been requested but not yet completed.
-	SchemaChangingTo *string `json:"schemaChangingTo,omitempty"`
-	// The name that the destination table is being changed to. Only returned when the rename has been requested but not yet completed.
-	TableChangingTo *string `json:"tableChangingTo,omitempty"`
 	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
 	RetainHistory *bool `default:"false" json:"retainHistory"`
 	// Keys to cluster the table on. If unspecified, the table will use "automatic clustering".
@@ -117,20 +113,6 @@ func (o *DestinationSnowflake) GetTable() string {
 	return o.Table
 }
 
-func (o *DestinationSnowflake) GetSchemaChangingTo() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SchemaChangingTo
-}
-
-func (o *DestinationSnowflake) GetTableChangingTo() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TableChangingTo
-}
-
 func (o *DestinationSnowflake) GetRetainHistory() *bool {
 	if o == nil {
 		return nil
@@ -146,108 +128,6 @@ func (o *DestinationSnowflake) GetClusteringKeys() []string {
 }
 
 func (o *DestinationSnowflake) GetLastUpdatedColumn() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LastUpdatedColumn
-}
-
-type DestinationSnowflakeInput struct {
-	Type DestinationSnowflakeType `json:"type"`
-	// The universally unique identifier of the destination connection.
-	ConnectionID string `json:"connectionId"`
-	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
-	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
-	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-	PrimaryKey []string `json:"primaryKey,omitempty"`
-	// Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
-	AutomaticSchemaChanges *bool `default:"true" json:"automaticSchemaChanges"`
-	// The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
-	Schema *string `json:"schema,omitempty"`
-	Table  string  `json:"table"`
-	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
-	RetainHistory *bool `default:"false" json:"retainHistory"`
-	// Keys to cluster the table on. If unspecified, the table will use "automatic clustering".
-	ClusteringKeys []string `json:"clusteringKeys,omitempty"`
-	// Name of a column that indicates the time the record was updated at the destination.
-	LastUpdatedColumn *string `json:"lastUpdatedColumn,omitempty"`
-}
-
-func (d DestinationSnowflakeInput) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationSnowflakeInput) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationSnowflakeInput) GetType() DestinationSnowflakeType {
-	if o == nil {
-		return DestinationSnowflakeType("")
-	}
-	return o.Type
-}
-
-func (o *DestinationSnowflakeInput) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
-}
-
-func (o *DestinationSnowflakeInput) GetWaitForQualityCheck() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.WaitForQualityCheck
-}
-
-func (o *DestinationSnowflakeInput) GetPrimaryKey() []string {
-	if o == nil {
-		return nil
-	}
-	return o.PrimaryKey
-}
-
-func (o *DestinationSnowflakeInput) GetAutomaticSchemaChanges() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.AutomaticSchemaChanges
-}
-
-func (o *DestinationSnowflakeInput) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
-func (o *DestinationSnowflakeInput) GetTable() string {
-	if o == nil {
-		return ""
-	}
-	return o.Table
-}
-
-func (o *DestinationSnowflakeInput) GetRetainHistory() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.RetainHistory
-}
-
-func (o *DestinationSnowflakeInput) GetClusteringKeys() []string {
-	if o == nil {
-		return nil
-	}
-	return o.ClusteringKeys
-}
-
-func (o *DestinationSnowflakeInput) GetLastUpdatedColumn() *string {
 	if o == nil {
 		return nil
 	}

@@ -8667,9 +8667,9 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
 	// Additional - non-generated logic
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
-		data.Destination.Redshift 	= ConvertDestinationRedshiftToInput(data.Destinations[0].Destination.Redshift)
-		data.Destination.Snowflake 	= ConvertDestinationSnowflakeToInput(data.Destinations[0].Destination.Snowflake)
-		data.Destination.DeltaLake 	= ConvertDestinationDeltaLakeToInput(data.Destinations[0].Destination.DeltaLake)
+		data.Destination.Redshift 	= data.Destinations[0].Destination.Redshift
+		data.Destination.Snowflake 	= data.Destinations[0].Destination.Snowflake
+		data.Destination.DeltaLake 	= data.Destinations[0].Destination.DeltaLake
 		data.Destination.S3DataLake = data.Destinations[0].Destination.S3DataLake
 	}
 
@@ -8724,9 +8724,9 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
 	// Additional - non-generated logic
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
-		data.Destination.Redshift 	= ConvertDestinationRedshiftToInput(data.Destinations[0].Destination.Redshift)
-		data.Destination.Snowflake 	= ConvertDestinationSnowflakeToInput(data.Destinations[0].Destination.Snowflake)
-		data.Destination.DeltaLake 	= ConvertDestinationDeltaLakeToInput(data.Destinations[0].Destination.DeltaLake)
+		data.Destination.Redshift 	= data.Destinations[0].Destination.Redshift
+		data.Destination.Snowflake 	= data.Destinations[0].Destination.Snowflake
+		data.Destination.DeltaLake 	= data.Destinations[0].Destination.DeltaLake
 		data.Destination.S3DataLake = data.Destinations[0].Destination.S3DataLake
 	}
 
@@ -8816,9 +8816,9 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	// Additional - non-generated logic
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
-		data.Destination.Redshift 	= ConvertDestinationRedshiftToInput(data.Destinations[0].Destination.Redshift)
-		data.Destination.Snowflake 	= ConvertDestinationSnowflakeToInput(data.Destinations[0].Destination.Snowflake)
-		data.Destination.DeltaLake 	= ConvertDestinationDeltaLakeToInput(data.Destinations[0].Destination.DeltaLake)
+		data.Destination.Redshift 	= data.Destinations[0].Destination.Redshift
+		data.Destination.Snowflake 	= data.Destinations[0].Destination.Snowflake
+		data.Destination.DeltaLake 	= data.Destinations[0].Destination.DeltaLake
 		data.Destination.S3DataLake = data.Destinations[0].Destination.S3DataLake
 	}
 
