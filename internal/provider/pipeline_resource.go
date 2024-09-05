@@ -8939,7 +8939,7 @@ func getPipelineSchemaAndTable(ctx context.Context, r *PipelineResource, pipelin
 		}
 
 		if res == nil || res.PipelineOutput == nil || res.PipelineOutput.Destinations == nil {
-			return nil, "", fmt.Errorf("Missing expected body for pipeline %s, response: %w", pipelineId, debugResponse(res.RawResponse))
+			return nil, "", fmt.Errorf("missing expected body for pipeline %s, response: %s", pipelineId, debugResponse(res.RawResponse))
 		}
 
 		destinationIndex := slices.IndexFunc(res.PipelineOutput.Destinations, func(destination shared.DestinationInfoAndPipelineVersions) bool {
@@ -8947,7 +8947,7 @@ func getPipelineSchemaAndTable(ctx context.Context, r *PipelineResource, pipelin
 		})
 
 		if destinationIndex == -1 {
-			return nil, "", fmt.Errorf("Missing expected destination %s for pipeline %s, response: %w", destinationId, pipelineId, debugResponse(res.RawResponse))
+			return nil, "", fmt.Errorf("missing expected destination %s for pipeline %s, response: %s", destinationId, pipelineId, debugResponse(res.RawResponse))
 		}
 
 		var finalTableName string
