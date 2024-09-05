@@ -1258,6 +1258,7 @@ generatedFiles:
   - internal/provider/model_resource.go
   - internal/provider/model_resource_sdk.go
   - examples/resources/etleap_model/resource.tf
+  - internal/provider/pipeline_resource.go
   - internal/provider/pipeline_resource_sdk.go
   - examples/resources/etleap_pipeline/resource.tf
   - internal/provider/team_resource.go
