@@ -92,11 +92,11 @@ func Struct(ctx context.Context, typ attr.Type, object tftypes.Value, target ref
 			objectMissing = append(objectMissing, field)
 		}
 	}
-	for field := range objectFields {
-		if _, ok := targetFields[field]; !ok {
-			targetMissing = append(targetMissing, field)
-		}
-	}
+	// for field := range objectFields {
+	// 	if _, ok := targetFields[field]; !ok {
+	// 		targetMissing = append(targetMissing, field)
+	// 	}
+	// }
 	if len(objectMissing) > 0 || len(targetMissing) > 0 {
 		var missing []string
 		if len(objectMissing) > 0 {
@@ -188,9 +188,9 @@ func FromStruct(ctx context.Context, typ attr.TypeWithAttributeTypes, val reflec
 			objectMissing = append(objectMissing, attrName)
 		}
 
-		// if _, ok := targetFields[attrName]; !ok {
-		// 	structMissing = append(structMissing, attrName)
-		// }
+		if _, ok := targetFields[attrName]; !ok {
+			structMissing = append(structMissing, attrName)
+		}
 	}
 
 	if len(objectMissing) > 0 || len(structMissing) > 0 {
