@@ -188,11 +188,9 @@ func FromStruct(ctx context.Context, typ attr.TypeWithAttributeTypes, val reflec
 			objectMissing = append(objectMissing, attrName)
 		}
 
-		if _, ok := targetFields[attrName]; !ok {
-			if !(attrName == "schema_changing_to" || attrName == "table_changing_to") {
-				structMissing = append(structMissing, attrName)
-			}
-		}
+		// if _, ok := targetFields[attrName]; !ok {
+		// 	structMissing = append(structMissing, attrName)
+		// }
 	}
 
 	if len(objectMissing) > 0 || len(structMissing) > 0 {
