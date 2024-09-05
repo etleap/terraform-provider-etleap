@@ -5,6 +5,9 @@ package provider
 import (
 	"context"
 	"fmt"
+	"slices"
+	"time"
+
 	speakeasy_boolplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/boolplanmodifier"
 	speakeasy_int64planmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/int64planmodifier"
 	speakeasy_listplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/listplanmodifier"
@@ -35,6 +38,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -8664,7 +8668,7 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
 	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
-	// Additional - non-generated logic
+	// Etleap monkey-patch
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
 		data.Destination.Redshift 	= data.Destinations[0].Destination.Redshift
@@ -8721,7 +8725,7 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
 	}
 	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
 
-	// Additional - non-generated logic
+	// Etleap monkey-patch
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
 		data.Destination.Redshift 	= data.Destinations[0].Destination.Redshift
@@ -8751,7 +8755,7 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	id := data.ID.ValueString()
 	pipelineUpdate := *data.ToSharedPipelineUpdate()
 
-	// Additional - non-generated logic
+	// Etleap monkey-patch
 	schemaChanges := data.Destination.Redshift.AutomaticSchemaChanges.ValueBool()
 	connectionId := data.Destination.Redshift.ConnectionID.ValueString()
 	var destUpdate *shared.DestinationUpdate = &shared.DestinationUpdate{
@@ -8784,6 +8788,31 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
+
+	// Etleap monkey-patch
+	// Waiting for rename to complete
+	if destUpdate.Schema != nil || destUpdate.Table != nil {
+		var originalSchema string
+		var originalTable string
+		if data.Destination.Redshift != nil {
+			originalSchema = data.Destination.Redshift.Schema.String()
+			originalTable = data.Destination.Redshift.Table.String()
+		} else if data.Destination.Snowflake != nil {
+			originalSchema = data.Destination.Snowflake.Schema.String()
+			originalTable = data.Destination.Snowflake.Table.String()
+		} else if data.Destination.DeltaLake != nil {
+			originalSchema = data.Destination.DeltaLake.Schema.String()
+			originalTable = data.Destination.DeltaLake.Table.String()
+		}
+
+		_, err = waitPipelineRenamed(ctx, r, id, connectionId, originalSchema, originalTable, *destUpdate.Schema, *destUpdate.Table)
+		if err != nil {
+			resp.Diagnostics.AddError("failed while waiting for pipeline rename", err.Error())
+			return
+		}
+	}
+	// Etleap monkey-patch end
+
 	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
@@ -8813,7 +8842,7 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
-	// Additional - non-generated logic
+	// Etleap monkey-patch
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
 		data.Destination.Redshift 	= data.Destinations[0].Destination.Redshift
@@ -8871,4 +8900,72 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
 
 func (r *PipelineResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
+}
+
+// Etleap monkey-patch functions
+func waitPipelineRenamed(ctx context.Context, r *PipelineResource, pipelineId string, destinationId string, originalSchema string, originalTable string, newSchema string, newTable string) (*operations.GetPipelineRequest, error) {
+	const (
+		timeout = 75 * time.Minute
+	)
+	
+	stateConf := &retry.StateChangeConf{
+		Pending:    []string{originalSchema + originalTable},
+		Target:     []string{newSchema + newTable},
+		Refresh:    getPipelineSchemaAndTable(ctx, r, pipelineId, destinationId),
+		Timeout:    timeout,
+		MinTimeout: 10 * time.Second,
+		Delay:      30 * time.Second,
+	}
+
+	outputRaw, err := stateConf.WaitForStateContext(ctx)
+
+	if output, ok := outputRaw.(*operations.GetPipelineRequest); ok {
+		return output, err
+	}
+
+	return nil, err
+}
+
+func getPipelineSchemaAndTable(ctx context.Context, r *PipelineResource, pipelineId string, destinationId string) retry.StateRefreshFunc {
+	return func() (interface{}, string, error) {
+	
+		request := operations.GetPipelineRequest{
+			ID: pipelineId,
+		}
+		res, err := r.client.Pipeline.Get(ctx, request)
+		
+		if err != nil {
+			return nil, "", fmt.Errorf("failed to get pipeline %s: %w", pipelineId, err)
+		}
+
+		if res == nil || res.PipelineOutput == nil || res.PipelineOutput.Destinations == nil {
+			return nil, "", fmt.Errorf("Missing expected body for pipeline %s, response: %w", pipelineId, res)
+		}
+
+		destinationIndex := slices.IndexFunc(res.PipelineOutput.Destinations, func(destination shared.DestinationInfoAndPipelineVersions) bool {
+			return destination.Destination.DestinationRedshift.ConnectionID == destinationId
+		})
+
+		if destinationIndex == -1 {
+			return nil, "", fmt.Errorf("Missing expected destination %s for pipeline %s, response: %w", destinationId, pipelineId, res)
+		}
+
+		var finalTableName string
+		for _, destination := range res.PipelineOutput.Destinations {
+			if destination.Destination.DestinationRedshift != nil && destination.Destination.DestinationRedshift.ConnectionID == destinationId {
+				finalTableName = *destination.Destination.DestinationRedshift.Schema + destination.Destination.DestinationRedshift.Table
+			} else if destination.Destination.DestinationSnowflake != nil && destination.Destination.DestinationSnowflake.ConnectionID == destinationId {
+				finalTableName = *destination.Destination.DestinationSnowflake.Schema + destination.Destination.DestinationSnowflake.Table
+			} else if destination.Destination.DestinationDeltaLake != nil && destination.Destination.DestinationDeltaLake.ConnectionID == destinationId {
+				finalTableName = destination.Destination.DestinationDeltaLake.Schema + destination.Destination.DestinationDeltaLake.Table
+			}
+
+			if finalTableName != "" {
+				// Found the lucky one
+				break
+			}
+		}
+
+		return res, finalTableName, nil
+	}
 }
