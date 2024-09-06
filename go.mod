@@ -7,7 +7,7 @@ toolchain go1.23.0
 require (
 	github.com/cenkalti/backoff/v4 v4.2.0
 	github.com/ericlagergren/decimal v0.0.0-20221120152707-495c53812d05
-	github.com/hashicorp/terraform-plugin-framework v1.3.5
+	github.com/hashicorp/terraform-plugin-framework v1.11.0
 	github.com/hashicorp/terraform-plugin-go v0.23.0
 	github.com/hashicorp/terraform-plugin-sdk v1.17.2
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
