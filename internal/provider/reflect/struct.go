@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/attr/xattr"
@@ -86,12 +85,12 @@ func Struct(ctx context.Context, typ attr.Type, object tftypes.Value, target ref
 	// we require an exact, 1:1 match of these fields to avoid typos
 	// leading to surprises, so let's ensure they have the exact same
 	// fields defined
-	var objectMissing, targetMissing []string
-	for field := range targetFields {
-		if _, ok := objectFields[field]; !ok {
-			objectMissing = append(objectMissing, field)
-		}
-	}
+	// var objectMissing, targetMissing []string
+	// for field := range targetFields {
+	// 	if _, ok := objectFields[field]; !ok {
+	// 		objectMissing = append(objectMissing, field)
+	// 	}
+	// }
 	// for field := range objectFields {
 	// 	if _, ok := targetFields[field]; !ok {
 	// 		targetMissing = append(targetMissing, field)
@@ -175,13 +174,13 @@ func FromStruct(ctx context.Context, typ attr.TypeWithAttributeTypes, val reflec
 
 	attrTypes := typ.AttributeTypes()
 
-	var objectMissing, structMissing []string
+	// var objectMissing, structMissing []string
 
-	for field := range targetFields {
-		if _, ok := attrTypes[field]; !ok {
-			objectMissing = append(objectMissing, field)
-		}
-	}
+	// for field := range targetFields {
+	// 	if _, ok := attrTypes[field]; !ok {
+	// 		objectMissing = append(objectMissing, field)
+	// 	}
+	// }
 
 	// for attrName, attrType := range attrTypes {
 	// 	if attrType == nil {
