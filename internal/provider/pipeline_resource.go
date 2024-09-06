@@ -8702,10 +8702,27 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	pipelineUpdate := *data.ToSharedPipelineUpdate()
 
 	// Etleap monkey-patch
-	schemaChanges := data.Destination.Redshift.AutomaticSchemaChanges.ValueBool()
-	connectionId := data.Destination.Redshift.ConnectionID.ValueString()
-	schema := data.Destination.Redshift.Schema.ValueString()
-	table := data.Destination.Redshift.Table.ValueString()
+	var schemaChanges bool
+	var connectionId string
+	var schema string
+	var table string
+	if data.Destination.Redshift != nil {
+		schemaChanges = data.Destination.Redshift.AutomaticSchemaChanges.ValueBool()
+		connectionId = data.Destination.Redshift.ConnectionID.ValueString()
+		schema = data.Destination.Redshift.Schema.ValueString()
+		table = data.Destination.Redshift.Table.ValueString()
+	} else if data.Destination.Snowflake != nil {
+		schemaChanges = data.Destination.Snowflake.AutomaticSchemaChanges.ValueBool()
+		connectionId = data.Destination.Snowflake.ConnectionID.ValueString()
+		schema = data.Destination.Snowflake.Schema.ValueString()
+		table = data.Destination.Snowflake.Table.ValueString()
+	} else if data.Destination.DeltaLake != nil {
+		schemaChanges = data.Destination.DeltaLake.AutomaticSchemaChanges.ValueBool()
+		connectionId = data.Destination.DeltaLake.ConnectionID.ValueString()
+		schema = data.Destination.DeltaLake.Schema.ValueString()
+		table = data.Destination.DeltaLake.Table.ValueString()
+	}
+
 	var destUpdate *shared.DestinationUpdate = &shared.DestinationUpdate{
 		ConnectionID:           connectionId,
 		AutomaticSchemaChanges: &schemaChanges,
@@ -8713,6 +8730,7 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 		Table:                  &table,
 	}
 	pipelineUpdate.DestinationUpdate = []shared.DestinationUpdate{*destUpdate}
+	// Etleap monkey-patch end
 
 	request := operations.UpdatePipelineRequest{
 		ID:             id,
@@ -8720,7 +8738,7 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	}
 	res, err := r.client.Pipeline.Update(ctx, request)
 	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		resp.Diagnostics.AddError("failure to invoke API eyo", err.Error())
 		if res != nil && res.RawResponse != nil {
 			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
 		}
@@ -8859,8 +8877,8 @@ func waitPipelineRenamed(ctx context.Context, r *PipelineResource, pipelineId st
 	)
 	
 	stateConf := &retry.StateChangeConf{
-		Pending:    []string{originalSchema + originalTable},
-		Target:     []string{newSchema + newTable},
+		Pending:    []string{originalSchema + "." + originalTable},
+		Target:     []string{newSchema + "." + newTable},
 		Refresh:    getPipelineSchemaAndTable(ctx, r, pipelineId, destinationId),
 		Timeout:    timeout,
 		MinTimeout: 10 * time.Second,
@@ -8900,14 +8918,18 @@ func getPipelineSchemaAndTable(ctx context.Context, r *PipelineResource, pipelin
 			return nil, "", fmt.Errorf("missing expected destination %s for pipeline %s, response: %s", destinationId, pipelineId, debugResponse(res.RawResponse))
 		}
 
+		var finalSchemaName string
 		var finalTableName string
 		for _, destination := range res.PipelineOutput.Destinations {
 			if destination.Destination.DestinationRedshift != nil && destination.Destination.DestinationRedshift.ConnectionID == destinationId {
-				finalTableName = *destination.Destination.DestinationRedshift.Schema + destination.Destination.DestinationRedshift.Table
+				finalSchemaName = *destination.Destination.DestinationRedshift.Schema
+				finalTableName = destination.Destination.DestinationRedshift.Table
 			} else if destination.Destination.DestinationSnowflake != nil && destination.Destination.DestinationSnowflake.ConnectionID == destinationId {
-				finalTableName = *destination.Destination.DestinationSnowflake.Schema + destination.Destination.DestinationSnowflake.Table
+				finalSchemaName = *destination.Destination.DestinationSnowflake.Schema
+				finalTableName = destination.Destination.DestinationSnowflake.Table
 			} else if destination.Destination.DestinationDeltaLake != nil && destination.Destination.DestinationDeltaLake.ConnectionID == destinationId {
-				finalTableName = destination.Destination.DestinationDeltaLake.Schema + destination.Destination.DestinationDeltaLake.Table
+				finalSchemaName = destination.Destination.DestinationDeltaLake.Schema
+				finalTableName = destination.Destination.DestinationDeltaLake.Table
 			}
 
 			if finalTableName != "" {
@@ -8916,6 +8938,6 @@ func getPipelineSchemaAndTable(ctx context.Context, r *PipelineResource, pipelin
 			}
 		}
 
-		return res, finalTableName, nil
+		return res, finalSchemaName + "." + finalTableName, nil
 	}
 }

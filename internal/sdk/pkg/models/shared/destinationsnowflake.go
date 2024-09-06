@@ -58,7 +58,8 @@ func (d DestinationSnowflake) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DestinationSnowflake) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+	// Etleap monkey-patch: the unmarshal function allows unknown fields for ignoring schemaChangingTo and tableChangingTo
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
 		return err
 	}
 	return nil

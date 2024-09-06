@@ -1,2 +1,5 @@
 /internal/provider/pipeline_resource.go
 /internal/sdk/pkg/models/shared/destinationtypes.go
+/internal/sdk/pkg/models/shared/destinationredshift.go
+/internal/sdk/pkg/models/shared/destinationsnowflake.go
+/internal/sdk/pkg/models/shared/destinationdeltalake.go

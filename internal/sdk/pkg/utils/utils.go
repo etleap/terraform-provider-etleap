@@ -37,7 +37,7 @@ func UnmarshalJsonFromResponseBody(body io.Reader, out interface{}, tag string) 
 		return fmt.Errorf("error reading response body: %w", err)
 	}
 	if err := UnmarshalJSON(data, out, reflect.StructTag(tag), true, false); err != nil {
-		return fmt.Errorf("error unmarshalling json response body: %w", err)
+		return fmt.Errorf("error unmarshalling json response body: tagio %s: %w", reflect.StructTag(tag), err)
 	}
 
 	return nil

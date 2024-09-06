@@ -66,7 +66,8 @@ func (d DestinationDeltaLake) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DestinationDeltaLake) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+	// Etleap monkey-patch: the unmarshal function allows unknown fields for ignoring schemaChangingTo and tableChangingTo
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
 		return err
 	}
 	return nil
