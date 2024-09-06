@@ -167,16 +167,12 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Required:    true,
 								Description: `The schema in the destination that the tables will be created in. Requires replacement if changed. `,
 							},
 							"table": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Required:    true,
 								Description: `Requires replacement if changed. `,
 							},
@@ -315,9 +311,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Optional:    true,
 								Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used. Requires replacement if changed. `,
 							},
@@ -333,9 +327,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 							"table": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Required:    true,
 								Description: `Requires replacement if changed. `,
 							},
@@ -510,16 +502,12 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Optional:    true,
 								Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used. Requires replacement if changed. `,
 							},
 							"table": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Required:    true,
 								Description: `Requires replacement if changed. `,
 							},
@@ -8716,9 +8704,13 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	// Etleap monkey-patch
 	schemaChanges := data.Destination.Redshift.AutomaticSchemaChanges.ValueBool()
 	connectionId := data.Destination.Redshift.ConnectionID.ValueString()
+	schema := data.Destination.Redshift.Schema.ValueString()
+	table := data.Destination.Redshift.Table.ValueString()
 	var destUpdate *shared.DestinationUpdate = &shared.DestinationUpdate{
 		ConnectionID:           connectionId,
 		AutomaticSchemaChanges: &schemaChanges,
+		Schema:                 &schema,
+		Table:                  &table,
 	}
 	pipelineUpdate.DestinationUpdate = []shared.DestinationUpdate{*destUpdate}
 
