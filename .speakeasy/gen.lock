@@ -5,8 +5,8 @@ management:
   docVersion: 2.6.30
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.5.0
-  configChecksum: 85431d0888817d853e9a373e794f672d
+  releaseVersion: 0.1.4
+  configChecksum: 5cc3380d82ca0d9621c598450a6a6243
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -488,12 +488,8 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/operationerrorsbyoperation.go
   - internal/sdk/pkg/models/shared/typeerrorsbycolumn.go
   - internal/sdk/pkg/models/shared/parsingerrorperday.go
-  - internal/sdk/pkg/models/shared/destinationtypes.go
-  - internal/sdk/pkg/models/shared/destinationredshift.go
   - internal/sdk/pkg/models/shared/distributionstyle.go
   - internal/sdk/pkg/models/shared/distributionstylekey.go
-  - internal/sdk/pkg/models/shared/destinationsnowflake.go
-  - internal/sdk/pkg/models/shared/destinationdeltalake.go
   - internal/sdk/pkg/models/shared/destinations3datalake.go
   - internal/sdk/pkg/models/shared/sourcetypes.go
   - internal/sdk/pkg/models/shared/sourceactivecampaign.go

@@ -33,7 +33,6 @@ resource "etleap_connection_delta_lake" "my_connectiondelta_lake" {
 - `http_path` (String) HTTP path for your Databricks compute cluster or SQL Warehouse.
 - `name` (String) The unique name of this connection.
 - `personal_access_token` (String) Authenticates the user that you want to connect to Databricks with. Instructions on generating a personal access token can be found <a href='https://docs.databricks.com/dev-tools/api/latest/authentication.html#token-management' target="_blank">here</a>.
-- `schema` (String) The schema to use when this connection is used as a source. When the connection is used as a destination the schema can be set to a different one for each pipeline.
 - `type` (String) <!-- theme: warning -->
 > Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
 must be one of ["DELTA_LAKE"]
@@ -41,6 +40,7 @@ must be one of ["DELTA_LAKE"]
 ### Optional
 
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
+- `schema` (String) The schema to use when this connection is used as a source. When the connection is used as a destination the schema can be set to a different one for each pipeline.
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
 ### Read-Only

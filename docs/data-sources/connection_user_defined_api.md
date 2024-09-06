@@ -14,7 +14,7 @@ ConnectionUSERDEFINEDAPI DataSource
 
 ```terraform
 data "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
-  id = "0d8ac3e0-d0d4-47b3-b16a-34687ced05f2"
+  id = "92eb3c16-11c6-4eca-a5be-7abdeef93349"
 }
 ```
 
@@ -152,7 +152,7 @@ Read-Only:
 - `id` (String) The unique identifier of the entity.
 - `paging_strategy` (Attributes) The paging strategy. (see [below for nested schema](#nestedatt--entities--paging_strategy))
 - `path_to_results` (String) The [JMESPath](https://jmespath.org/) expression that converts the API response into an array containing one JSON object per record.
-- `pipeline_mode` (Attributes) The pipeline mode. (see [below for nested schema](#nestedatt--entities--pipeline_mode))
+- `pipeline_mode` (Attributes) Can be either the string `REPLACE` or one of the supported objects. (see [below for nested schema](#nestedatt--entities--pipeline_mode))
 - `query_parameters` (Attributes List) A list of query parameters to be passed with all the requests. (see [below for nested schema](#nestedatt--entities--query_parameters))
 - `rest_method` (String) The HTTP method used to call the apiUrl. must be one of ["GET", "POST"]
 
@@ -211,41 +211,20 @@ Read-Only:
 
 Read-Only:
 
-- `one` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--one))
-- `schema_v1_extended_replace_mode` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode))
-
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--one"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode`
-
-Read-Only:
-
-- `str` (String)
-- `two` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--two))
-
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--two"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode.two`
-
-
-
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode`
-
-Read-Only:
-
-- `foreign_key_columns` (Attributes List) The foreign columns of the entity. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns))
+- `foreign_key_columns` (Attributes List) The foreign columns of the entity. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--foreign_key_columns))
 - `primary_key_columns` (List of String)
 - `type` (String) must be one of ["REPLACE"]
 
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode.foreign_key_columns`
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--foreign_key_columns"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.type`
 
 Read-Only:
 
-- `foreign_column` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns--foreign_column))
-- `top_level_foreign_key_column` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns--top_level_foreign_key_column))
+- `foreign_column` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--type--foreign_column))
+- `top_level_foreign_key_column` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--type--top_level_foreign_key_column))
 
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns--foreign_column"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode.foreign_key_columns.top_level_foreign_key_column`
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--type--foreign_column"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.type.foreign_column`
 
 Read-Only:
 
@@ -254,15 +233,14 @@ Read-Only:
 - `referenced_entity_id` (String) The id of the referenced entity.
 
 
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns--top_level_foreign_key_column"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode.foreign_key_columns.top_level_foreign_key_column`
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--type--top_level_foreign_key_column"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.type.top_level_foreign_key_column`
 
 Read-Only:
 
 - `column_name` (String) The entity's foreign key column. If the column is nested inside the entity's structure and not at the top level, use `NestedForeignKeyColumn` instead.
 - `referenced_column_name` (String) The column name of the referenced entity.
 - `referenced_entity_id` (String) The id of the referenced entity.
-
 
 
 

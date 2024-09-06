@@ -14,22 +14,22 @@ ConnectionSAPHANASHARDED Resource
 
 ```terraform
 resource "etleap_connection_sap_hana_sharded" "my_connectionsap_hana_sharded" {
-  cdc_enabled                 = true
+  cdc_enabled                 = false
   deletion_of_export_products = true
-  name                        = "Mario Daugherty"
+  name                        = "Grace Kshlerin"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "41858 Price Crescent"
+      address  = "8561 Block Key"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 9
+      port     = 3
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "42997 Johan Pine"
-        username = "Tanner.Macejkovic"
+        address  = "974 Nienow Unions"
+        username = "Keeley18"
       }
-      username = "Chesley.Collins"
+      username = "Brigitte_Nader"
     },
   ]
   type = "SAP_HANA_SHARDED"

@@ -14,7 +14,7 @@ ConnectionSQLSERVER DataSource
 
 ```terraform
 data "etleap_connection_sql_server" "my_connectionsql_server" {
-  id = "e8c7f99d-adee-4008-b056-ee63ca81c6a6"
+  id = "1e39ec29-67e5-40f3-8f8a-f687b2df93c4"
 }
 ```
 

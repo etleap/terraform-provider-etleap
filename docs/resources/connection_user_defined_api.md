@@ -18,7 +18,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
     basic = {
       password = "...my_password..."
       type     = "BASIC"
-      username = "Mylene_Simonis72"
+      username = "Godfrey_Fritsch"
     }
   }
   deletion_of_export_products = false
@@ -35,10 +35,10 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      id = "e7464ae9-4bc8-49fb-903a-92242f2e3005"
+      id = "4bc89fbd-03a9-4224-af2e-3005dda2041a"
       paging_strategy = {
         cursor_uri = {
-          max_page_size        = 8
+          max_page_size        = 0
           page_size_field_name = "...my_page_size_field_name..."
           path_to_cursor       = "...my_path_to_cursor..."
           type                 = "CURSOR_URI"
@@ -58,7 +58,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
       rest_method = "POST"
     },
   ]
-  name = "Randy Barton MD"
+  name = "Vanessa Blanda"
   type = "USER_DEFINED_API"
 }
 ```
@@ -137,7 +137,7 @@ Optional:
 - `id` (String) The unique identifier of the entity. Requires replacement if changed. ; Not Null
 - `paging_strategy` (Attributes) The paging strategy. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--paging_strategy))
 - `path_to_results` (String) The [JMESPath](https://jmespath.org/) expression that converts the API response into an array containing one JSON object per record. Requires replacement if changed. ; Not Null
-- `pipeline_mode` (Attributes) The pipeline mode. Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--pipeline_mode))
+- `pipeline_mode` (Attributes) Can be either the string `REPLACE` or one of the supported objects. Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--pipeline_mode))
 - `query_parameters` (Attributes List) A list of query parameters to be passed with all the requests. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--query_parameters))
 - `rest_method` (String) The HTTP method used to call the apiUrl. Requires replacement if changed. ; must be one of ["GET", "POST"]; Default: "GET"
 
@@ -196,41 +196,20 @@ Optional:
 
 Optional:
 
-- `one` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--one))
-- `schema_v1_extended_replace_mode` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode))
-
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--one"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode`
-
-Optional:
-
-- `str` (String) Requires replacement if changed.
-- `two` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--two))
-
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--two"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode.two`
-
-
-
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode`
-
-Optional:
-
-- `foreign_key_columns` (Attributes List) The foreign columns of the entity. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns))
+- `foreign_key_columns` (Attributes List) The foreign columns of the entity. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--foreign_key_columns))
 - `primary_key_columns` (List of String) Requires replacement if changed. ; Not Null
 - `type` (String) Requires replacement if changed. ; must be one of ["REPLACE"]; Default: "REPLACE"
 
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode.foreign_key_columns`
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--foreign_key_columns"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.type`
 
 Optional:
 
-- `foreign_column` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns--foreign_column))
-- `top_level_foreign_key_column` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns--top_level_foreign_key_column))
+- `foreign_column` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--type--foreign_column))
+- `top_level_foreign_key_column` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--type--top_level_foreign_key_column))
 
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns--foreign_column"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode.foreign_key_columns.top_level_foreign_key_column`
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--type--foreign_column"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.type.foreign_column`
 
 Optional:
 
@@ -239,15 +218,14 @@ Optional:
 - `referenced_entity_id` (String) The id of the referenced entity. Requires replacement if changed. ; Not Null
 
 
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--schema_v1_extended_replace_mode--foreign_key_columns--top_level_foreign_key_column"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.schema_v1_extended_replace_mode.foreign_key_columns.top_level_foreign_key_column`
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_replace_mode--type--top_level_foreign_key_column"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_replace_mode.type.top_level_foreign_key_column`
 
 Optional:
 
 - `column_name` (String) The entity's foreign key column. If the column is nested inside the entity's structure and not at the top level, use `NestedForeignKeyColumn` instead. Requires replacement if changed. ; Not Null
 - `referenced_column_name` (String) The column name of the referenced entity. Requires replacement if changed. ; Not Null
 - `referenced_entity_id` (String) The id of the referenced entity. Requires replacement if changed. ; Not Null
-
 
 
 

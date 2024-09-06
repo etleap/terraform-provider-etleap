@@ -14,8 +14,8 @@ Model Resource
 
 ```terraform
 resource "etleap_model" "my_model" {
-  deletion_of_export_products = true
-  name                        = "Dr. Ricardo Willms"
+  deletion_of_export_products = false
+  name                        = "Lindsay Bernhard"
   query_and_triggers = {
     query = "...my_query..."
     triggers = [
@@ -24,7 +24,7 @@ resource "etleap_model" "my_model" {
   }
   update_schedule = {
     daily = {
-      hour_of_day = 3
+      hour_of_day = 1
       mode        = "DAILY"
     }
   }
@@ -32,7 +32,7 @@ resource "etleap_model" "my_model" {
     redshift = {
       connection_id = "...my_connection_id..."
       distribution_style = {
-        one = "AUTO"
+        one = "ALL"
       }
       materialized_view     = false
       pending_renamed_table = "...my_pending_renamed_table..."
@@ -167,7 +167,7 @@ Optional:
 Optional:
 
 - `connection_id` (String) Requires replacement if changed. ; Not Null
-- `distribution_style` (Attributes) Not Null (see [below for nested schema](#nestedatt--warehouse--redshift--distribution_style))
+- `distribution_style` (Attributes) Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column. Not Null (see [below for nested schema](#nestedatt--warehouse--redshift--distribution_style))
 - `materialized_view` (Boolean) Requires replacement if changed. ; Not Null
 - `schema` (String) Requires replacement if changed.
 - `sort_columns` (List of String) The sort columns to use.

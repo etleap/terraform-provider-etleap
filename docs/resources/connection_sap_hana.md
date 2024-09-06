@@ -14,16 +14,16 @@ ConnectionSAPHANA Resource
 
 ```terraform
 resource "etleap_connection_sap_hana" "my_connectionsap_hana" {
-  address                     = "98059 Schamberger Fields"
+  address                     = "572 Mayert Wells"
   cdc_enabled                 = false
   database                    = "...my_database..."
-  deletion_of_export_products = true
-  name                        = "Daryl Farrell"
+  deletion_of_export_products = false
+  name                        = "Herbert Volkman"
   password                    = "...my_password..."
-  port                        = 10
+  port                        = 5
   schema                      = "...my_schema..."
   type                        = "SAP_HANA"
-  username                    = "Jacynthe_Kshlerin"
+  username                    = "Zaria_Crist28"
 }
 ```
 

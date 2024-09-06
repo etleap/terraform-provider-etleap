@@ -14,17 +14,24 @@ ConnectionSNOWFLAKESHARDED Resource
 
 ```terraform
 resource "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" {
-  deletion_of_export_products = false
-  name                        = "Clifton Barrows"
+  deletion_of_export_products = true
+  name                        = "Adrienne Simonis III"
   schema                      = "...my_schema..."
   shards = [
     {
-      address   = "880 Mia Cape"
+      address = "072 Melisa Parks"
+      authentication = {
+        key_pair = {
+          private_key = "...my_private_key..."
+          public_key  = "...my_public_key..."
+          type        = "KEY_PAIR"
+        }
+      }
       database  = "...my_database..."
       password  = "...my_password..."
       role      = "...my_role..."
       shard_id  = "...my_shard_id..."
-      username  = "Michel70"
+      username  = "Gregorio96"
       warehouse = "...my_warehouse..."
     },
   ]
@@ -39,7 +46,6 @@ resource "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" 
 ### Required
 
 - `name` (String) The unique name of this connection.
-- `schema` (String) Take into account that the schema is case sensitive
 - `shards` (Attributes List) (see [below for nested schema](#nestedatt--shards))
 - `type` (String) must be one of ["SNOWFLAKE_SHARDED"]
 
@@ -47,6 +53,7 @@ resource "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" 
 
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `roles` (List of String) When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
+- `schema` (String) Take into account that the schema is case sensitive
 - `source_only` (Boolean) Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database. Default: false
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
@@ -64,12 +71,44 @@ resource "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" 
 Optional:
 
 - `address` (String) Not Null
+- `authentication` (Attributes) Snowflake Authentication Types (see [below for nested schema](#nestedatt--shards--authentication))
 - `database` (String) Not Null
-- `password` (String) Not Null
+- `password` (String)
 - `role` (String) The role the user will use to connect
 - `shard_id` (String) Not Null
 - `username` (String) Not Null
 - `warehouse` (String) The virtual warehouse to use once connected. Not Null
+
+<a id="nestedatt--shards--authentication"></a>
+### Nested Schema for `shards.authentication`
+
+Optional:
+
+- `key_pair` (Attributes) Snowflake Key Pair Authentication (see [below for nested schema](#nestedatt--shards--authentication--key_pair))
+- `password` (Attributes) Snowflake Password Authentication (see [below for nested schema](#nestedatt--shards--authentication--password))
+
+<a id="nestedatt--shards--authentication--key_pair"></a>
+### Nested Schema for `shards.authentication.key_pair`
+
+Optional:
+
+- `private_key` (String) Not Null
+- `type` (String) Not Null; must be one of ["PASSWORD", "KEY_PAIR"]
+
+Read-Only:
+
+- `public_key` (String)
+
+
+<a id="nestedatt--shards--authentication--password"></a>
+### Nested Schema for `shards.authentication.password`
+
+Optional:
+
+- `password` (String) Not Null
+- `type` (String) Not Null; must be one of ["PASSWORD", "KEY_PAIR"]
+
+
 
 
 <a id="nestedatt--update_schedule"></a>

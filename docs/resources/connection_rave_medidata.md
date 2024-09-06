@@ -15,11 +15,11 @@ ConnectionRAVEMEDIDATA Resource
 ```terraform
 resource "etleap_connection_rave_medidata" "my_connectionrave_medidata" {
   deletion_of_export_products = false
-  hostname                    = "optimistic-extreme.info"
-  name                        = "Brian Wolff"
+  hostname                    = "anxious-whack.biz"
+  name                        = "Claire Purdy"
   password                    = "...my_password..."
   type                        = "RAVE_MEDIDATA"
-  username                    = "Lavina73"
+  username                    = "Andy.Vandervort79"
 }
 ```
 

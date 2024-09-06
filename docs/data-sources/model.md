@@ -14,7 +14,7 @@ Model DataSource
 
 ```terraform
 data "etleap_model" "my_model" {
-  id = "2f4a0314-c6b6-4a61-89d2-a489c05f389b"
+  id = "3defa6df-6bb0-4c47-aeae-ba2040089401"
 }
 ```
 
@@ -151,7 +151,7 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String)
-- `distribution_style` (Attributes) (see [below for nested schema](#nestedatt--warehouse--redshift--distribution_style))
+- `distribution_style` (Attributes) Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column. (see [below for nested schema](#nestedatt--warehouse--redshift--distribution_style))
 - `materialized_view` (Boolean)
 - `pending_renamed_table` (String) Only set when a table rename was triggered but is not complete yet.
 - `schema` (String)
