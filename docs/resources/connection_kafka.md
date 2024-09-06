@@ -14,9 +14,9 @@ ConnectionKAFKA Resource
 
 ```terraform
 resource "etleap_connection_kafka" "my_connectionkafka" {
-  auth_mechanism              = "SASL_SCRAM_512"
+  auth_mechanism              = "SASL_SSL"
   deletion_of_export_products = true
-  name                        = "Joyce Rau"
+  name                        = "Ralph Lind"
   password                    = "...my_password..."
   schema_registry_password    = "...my_schema_registry_password..."
   schema_registry_server      = "...my_schema_registry_server..."

@@ -41,7 +41,8 @@ type WarehouseRedshift struct {
 	MaterializedView         bool    `json:"materializedView"`
 	WaitForUpdatePreparation bool    `json:"waitForUpdatePreparation"`
 	// The sort columns to use.
-	SortColumns       []string          `json:"sortColumns,omitempty"`
+	SortColumns []string `json:"sortColumns,omitempty"`
+	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
 	DistributionStyle DistributionStyle `json:"distributionStyle"`
 }
 
@@ -116,7 +117,8 @@ type WarehouseRedshiftInput struct {
 	MaterializedView         bool                  `json:"materializedView"`
 	WaitForUpdatePreparation bool                  `json:"waitForUpdatePreparation"`
 	// The sort columns to use.
-	SortColumns       []string          `json:"sortColumns,omitempty"`
+	SortColumns []string `json:"sortColumns,omitempty"`
+	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
 	DistributionStyle DistributionStyle `json:"distributionStyle"`
 }
 

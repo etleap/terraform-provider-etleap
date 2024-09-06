@@ -62,15 +62,17 @@ type ConnectionPostgresUpdate struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
 	AutoReplicate *string                                         `json:"autoReplicate,omitempty"`
 	Address       *string                                         `json:"address,omitempty"`
 	Port          *int64                                          `json:"port,omitempty"`
-	Database      *string                                         `json:"database,omitempty"`
 	Username      *string                                         `json:"username,omitempty"`
 	Password      *string                                         `json:"password,omitempty"`
 	SSHConfig     *ConnectionPostgresUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
+	Database      *string                                         `json:"database,omitempty"`
 }
 
 func (o *ConnectionPostgresUpdate) GetName() *string {
@@ -164,13 +166,6 @@ func (o *ConnectionPostgresUpdate) GetPort() *int64 {
 	return o.Port
 }
 
-func (o *ConnectionPostgresUpdate) GetDatabase() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Database
-}
-
 func (o *ConnectionPostgresUpdate) GetUsername() *string {
 	if o == nil {
 		return nil
@@ -190,4 +185,11 @@ func (o *ConnectionPostgresUpdate) GetSSHConfig() *ConnectionPostgresUpdateSSHCo
 		return nil
 	}
 	return o.SSHConfig
+}
+
+func (o *ConnectionPostgresUpdate) GetDatabase() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Database
 }

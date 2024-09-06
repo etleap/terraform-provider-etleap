@@ -32,10 +32,11 @@ type ConnectionMYSQLSHARDEDDataSourceModel struct {
 	AutoReplicate         types.String            `tfsdk:"auto_replicate"`
 	CdcEnabled            types.Bool              `tfsdk:"cdc_enabled"`
 	CreateDate            types.String            `tfsdk:"create_date"`
+	Database              types.String            `tfsdk:"database"`
 	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	ID                    types.String            `tfsdk:"id"`
 	Name                  types.String            `tfsdk:"name"`
-	Shards                []DatabaseShardOutput   `tfsdk:"shards"`
+	Shards                []MysqlShardOutput      `tfsdk:"shards"`
 	Status                types.String            `tfsdk:"status"`
 	TinyInt1IsBoolean     types.Bool              `tfsdk:"tiny_int1_is_boolean"`
 	Type                  types.String            `tfsdk:"type"`
@@ -60,7 +61,7 @@ func (r *ConnectionMYSQLSHARDEDDataSource) Schema(ctx context.Context, req datas
 			},
 			"auto_replicate": schema.StringAttribute{
 				Computed:    true,
-				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.`,
+				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.`,
 			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed:    true,
@@ -69,6 +70,9 @@ func (r *ConnectionMYSQLSHARDEDDataSource) Schema(ctx context.Context, req datas
 			"create_date": schema.StringAttribute{
 				Computed:    true,
 				Description: `The date and time when then the connection was created.`,
+			},
+			"database": schema.StringAttribute{
+				Computed: true,
 			},
 			"default_update_schedule": schema.ListNestedAttribute{
 				Computed: true,

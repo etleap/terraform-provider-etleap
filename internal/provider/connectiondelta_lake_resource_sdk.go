@@ -89,7 +89,12 @@ func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeInput() *s
 	hostname := r.Hostname.ValueString()
 	httpPath := r.HTTPPath.ValueString()
 	personalAccessToken := r.PersonalAccessToken.ValueString()
-	schema := r.Schema.ValueString()
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
+	} else {
+		schema = nil
+	}
 	out := shared.ConnectionDeltaLakeInput{
 		Name:                name,
 		Type:                typeVar,
@@ -157,7 +162,7 @@ func (r *ConnectionDELTALAKEResourceModel) RefreshFromSharedConnectionDeltaLake(
 	r.HTTPPath = types.StringValue(resp.HTTPPath)
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
-	r.Schema = types.StringValue(resp.Schema)
+	r.Schema = types.StringPointerValue(resp.Schema)
 	r.Status = types.StringValue(string(resp.Status))
 	r.Type = types.StringValue(string(resp.Type))
 	if resp.UpdateSchedule == nil {

@@ -1,3 +1,3 @@
 data "etleap_connection_bing_ads" "my_connectionbing_ads" {
-  id = "570e3140-589e-4447-81ce-6ef6435f4c67"
+  id = "40589e44-781c-4e6e-b643-5f4c67e89518"
 }

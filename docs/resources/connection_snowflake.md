@@ -14,16 +14,16 @@ ConnectionSNOWFLAKE Resource
 
 ```terraform
 resource "etleap_connection_snowflake" "my_connectionsnowflake" {
-  address                     = "688 Turner Meadow"
+  address                     = "095 Brakus Streets"
   database                    = "...my_database..."
-  deletion_of_export_products = false
-  name                        = "Antonia Lesch"
+  deletion_of_export_products = true
+  name                        = "Nathan Hansen"
   password                    = "...my_password..."
   role                        = "...my_role..."
   schema                      = "...my_schema..."
   source_only                 = false
   type                        = "SNOWFLAKE"
-  username                    = "Martine94"
+  username                    = "Trycia_Walter2"
   warehouse                   = "...my_warehouse..."
 }
 ```
@@ -36,17 +36,18 @@ resource "etleap_connection_snowflake" "my_connectionsnowflake" {
 - `address` (String)
 - `database` (String)
 - `name` (String) The unique name of this connection.
-- `password` (String)
-- `schema` (String) Take into account that the schema is case sensitive
 - `type` (String) must be one of ["SNOWFLAKE"]
 - `username` (String)
 - `warehouse` (String) The virtual warehouse to use once connected.
 
 ### Optional
 
+- `authentication` (Attributes) Snowflake Authentication Types (see [below for nested schema](#nestedatt--authentication))
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
+- `password` (String)
 - `role` (String) The role the user will use to connect
 - `roles` (List of String) When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
+- `schema` (String) Take into account that the schema is case sensitive
 - `source_only` (Boolean) Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database. Default: false
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
@@ -57,6 +58,37 @@ resource "etleap_connection_snowflake" "my_connectionsnowflake" {
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `id` (String) The unique identifier of the connection.
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]
+
+<a id="nestedatt--authentication"></a>
+### Nested Schema for `authentication`
+
+Optional:
+
+- `key_pair` (Attributes) Snowflake Key Pair Authentication (see [below for nested schema](#nestedatt--authentication--key_pair))
+- `password` (Attributes) Snowflake Password Authentication (see [below for nested schema](#nestedatt--authentication--password))
+
+<a id="nestedatt--authentication--key_pair"></a>
+### Nested Schema for `authentication.key_pair`
+
+Optional:
+
+- `private_key` (String) Not Null
+- `type` (String) Not Null; must be one of ["PASSWORD", "KEY_PAIR"]
+
+Read-Only:
+
+- `public_key` (String)
+
+
+<a id="nestedatt--authentication--password"></a>
+### Nested Schema for `authentication.password`
+
+Optional:
+
+- `password` (String) Not Null
+- `type` (String) Not Null; must be one of ["PASSWORD", "KEY_PAIR"]
+
+
 
 <a id="nestedatt--update_schedule"></a>
 ### Nested Schema for `update_schedule`

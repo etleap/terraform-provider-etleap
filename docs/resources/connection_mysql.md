@@ -14,17 +14,17 @@ ConnectionMYSQL Resource
 
 ```terraform
 resource "etleap_connection_mysql" "my_connectionmysql" {
-  address                     = "619 Dibbert Ford"
+  address                     = "12912 Selina Road"
   auto_replicate              = "...my_auto_replicate..."
   cdc_enabled                 = true
   database                    = "...my_database..."
   deletion_of_export_products = false
-  name                        = "Mr. Norma Sawayn"
+  name                        = "Rufus Adams"
   password                    = "...my_password..."
-  port                        = 10
+  port                        = 0
   tiny_int1_is_boolean        = false
   type                        = "MYSQL"
-  username                    = "Eleazar_Hoeger2"
+  username                    = "Nadia.Leannon"
   validate_ssl_cert           = false
 }
 ```
@@ -35,7 +35,6 @@ resource "etleap_connection_mysql" "my_connectionmysql" {
 ### Required
 
 - `address` (String)
-- `database` (String)
 - `name` (String) The unique name of this connection.
 - `password` (String)
 - `port` (Number)
@@ -44,8 +43,9 @@ resource "etleap_connection_mysql" "my_connectionmysql" {
 
 ### Optional
 
-- `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
+- `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
 - `cdc_enabled` (Boolean) Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later. Requires replacement if changed. ; Default: false
+- `database` (String)
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `ssh_config` (Attributes) (see [below for nested schema](#nestedatt--ssh_config))
 - `tiny_int1_is_boolean` (Boolean) Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?. Default: false

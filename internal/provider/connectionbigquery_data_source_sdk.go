@@ -11,7 +11,7 @@ import (
 func (r *ConnectionBIGQUERYDataSourceModel) RefreshFromSharedConnectionBigQuery(resp *shared.ConnectionBigQuery) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
-	r.Dataset = types.StringValue(resp.Dataset)
+	r.Dataset = types.StringPointerValue(resp.Dataset)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}

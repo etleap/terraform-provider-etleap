@@ -397,6 +397,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Eloqua.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceEloqua.LatencyThreshold)
 		r.Source.Eloqua.Type = types.StringValue(string(resp.Source.SourceEloqua.Type))
 	}
+	if resp.Source.SourceErpx != nil {
+		r.Source.Erpx = &SourceErpx{}
+		r.Source.Erpx.ConnectionID = types.StringValue(resp.Source.SourceErpx.ConnectionID)
+		r.Source.Erpx.Entity = types.StringValue(resp.Source.SourceErpx.Entity)
+		r.Source.Erpx.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceErpx.LatencyThreshold)
+		r.Source.Erpx.Type = types.StringValue(string(resp.Source.SourceErpx.Type))
+	}
 	if resp.Source.SourceFacebookAds != nil {
 		r.Source.FacebookAds = &SourceFacebookAds{}
 		r.Source.FacebookAds.Breakdowns = nil
@@ -414,6 +421,17 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.FifteenFive.Entity = types.StringValue(resp.Source.SourceFifteenFive.Entity)
 		r.Source.FifteenFive.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFifteenFive.LatencyThreshold)
 		r.Source.FifteenFive.Type = types.StringValue(string(resp.Source.SourceFifteenFive.Type))
+	}
+	if resp.Source.SourceFreshchat != nil {
+		r.Source.Freshchat = &SourceFreshchat{}
+		r.Source.Freshchat.ConnectionID = types.StringValue(resp.Source.SourceFreshchat.ConnectionID)
+		r.Source.Freshchat.Entity = types.StringValue(resp.Source.SourceFreshchat.Entity)
+		r.Source.Freshchat.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFreshchat.LatencyThreshold)
+		r.Source.Freshchat.Type = types.StringValue(string(resp.Source.SourceFreshchat.Type))
+		r.Source.Freshchat.View = nil
+		for _, v := range resp.Source.SourceFreshchat.View {
+			r.Source.Freshchat.View = append(r.Source.Freshchat.View, types.StringValue(v))
+		}
 	}
 	if resp.Source.SourceFreshsales != nil {
 		r.Source.Freshsales = &SourceFreshsales{}
@@ -437,6 +455,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Ftp = &SourceFtp{}
 		r.Source.Ftp.ConnectionID = types.StringValue(resp.Source.SourceFtp.ConnectionID)
 		r.Source.Ftp.FileNameFilter = types.StringPointerValue(resp.Source.SourceFtp.FileNameFilter)
+		r.Source.Ftp.GlobPattern = types.StringPointerValue(resp.Source.SourceFtp.GlobPattern)
 		r.Source.Ftp.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFtp.LatencyThreshold)
 		if resp.Source.SourceFtp.LowWatermark != nil {
 			r.Source.Ftp.LowWatermark = types.StringValue(resp.Source.SourceFtp.LowWatermark.String())
@@ -480,28 +499,6 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		}
 		r.Source.GoogleAds.Type = types.StringValue(string(resp.Source.SourceGoogleAds.Type))
 	}
-	if resp.Source.SourceGoogleAnalytics != nil {
-		r.Source.GoogleAnalytics = &SourceGoogleAnalytics{}
-		r.Source.GoogleAnalytics.ConnectionID = types.StringValue(resp.Source.SourceGoogleAnalytics.ConnectionID)
-		r.Source.GoogleAnalytics.Dimensions = nil
-		for _, v := range resp.Source.SourceGoogleAnalytics.Dimensions {
-			r.Source.GoogleAnalytics.Dimensions = append(r.Source.GoogleAnalytics.Dimensions, types.StringValue(v))
-		}
-		r.Source.GoogleAnalytics.Entity = types.StringValue(resp.Source.SourceGoogleAnalytics.Entity)
-		r.Source.GoogleAnalytics.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceGoogleAnalytics.LatencyThreshold)
-		if resp.Source.SourceGoogleAnalytics.MaxAccuracyStartDate != nil {
-			r.Source.GoogleAnalytics.MaxAccuracyStartDate = types.StringValue(resp.Source.SourceGoogleAnalytics.MaxAccuracyStartDate.String())
-		} else {
-			r.Source.GoogleAnalytics.MaxAccuracyStartDate = types.StringNull()
-		}
-		r.Source.GoogleAnalytics.Metrics = nil
-		for _, v := range resp.Source.SourceGoogleAnalytics.Metrics {
-			r.Source.GoogleAnalytics.Metrics = append(r.Source.GoogleAnalytics.Metrics, types.StringValue(v))
-		}
-		r.Source.GoogleAnalytics.Segment = types.StringPointerValue(resp.Source.SourceGoogleAnalytics.Segment)
-		r.Source.GoogleAnalytics.Service = types.StringValue(string(resp.Source.SourceGoogleAnalytics.Service))
-		r.Source.GoogleAnalytics.Type = types.StringValue(string(resp.Source.SourceGoogleAnalytics.Type))
-	}
 	if resp.Source.SourceGoogleAnalyticsGa4 != nil {
 		r.Source.GoogleAnalyticsGa4 = &SourceGoogleAnalyticsGa4{}
 		r.Source.GoogleAnalyticsGa4.ConnectionID = types.StringValue(resp.Source.SourceGoogleAnalyticsGa4.ConnectionID)
@@ -521,6 +518,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.GoogleCloudStorage = &SourceGoogleCloudStorage{}
 		r.Source.GoogleCloudStorage.ConnectionID = types.StringValue(resp.Source.SourceGoogleCloudStorage.ConnectionID)
 		r.Source.GoogleCloudStorage.FileNameFilter = types.StringPointerValue(resp.Source.SourceGoogleCloudStorage.FileNameFilter)
+		r.Source.GoogleCloudStorage.GlobPattern = types.StringPointerValue(resp.Source.SourceGoogleCloudStorage.GlobPattern)
 		r.Source.GoogleCloudStorage.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceGoogleCloudStorage.LatencyThreshold)
 		if resp.Source.SourceGoogleCloudStorage.LowWatermark != nil {
 			r.Source.GoogleCloudStorage.LowWatermark = types.StringValue(resp.Source.SourceGoogleCloudStorage.LowWatermark.String())
@@ -914,6 +912,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Sftp = &SourceSftp{}
 		r.Source.Sftp.ConnectionID = types.StringValue(resp.Source.SourceSftp.ConnectionID)
 		r.Source.Sftp.FileNameFilter = types.StringPointerValue(resp.Source.SourceSftp.FileNameFilter)
+		r.Source.Sftp.GlobPattern = types.StringPointerValue(resp.Source.SourceSftp.GlobPattern)
 		r.Source.Sftp.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSftp.LatencyThreshold)
 		if resp.Source.SourceSftp.LowWatermark != nil {
 			r.Source.Sftp.LowWatermark = types.StringValue(resp.Source.SourceSftp.LowWatermark.String())

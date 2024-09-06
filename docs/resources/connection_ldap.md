@@ -16,14 +16,14 @@ ConnectionLDAP Resource
 resource "etleap_connection_ldap" "my_connectionldap" {
   base_dn                     = "...my_base_dn..."
   deletion_of_export_products = false
-  hostname                    = "half-bird-watcher.net"
-  name                        = "Cynthia Beier"
+  hostname                    = "thrifty-gorilla.biz"
+  name                        = "Mr. Leroy Ullrich"
   password                    = "...my_password..."
-  pen                         = 9
-  port                        = 4
+  pen                         = 2
+  port                        = 1
   type                        = "LDAP"
   user                        = "...my_user..."
-  use_ssl                     = false
+  use_ssl                     = true
 }
 ```
 

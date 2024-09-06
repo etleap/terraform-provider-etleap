@@ -14,14 +14,15 @@ type SourceTypes struct {
 	Elasticsearch            *SourceElasticSearch            `tfsdk:"elasticsearch"`
 	Elluminate               *SourceElluminate               `tfsdk:"elluminate"`
 	Eloqua                   *SourceEloqua                   `tfsdk:"eloqua"`
+	Erpx                     *SourceErpx                     `tfsdk:"erpx"`
 	FacebookAds              *SourceFacebookAds              `tfsdk:"facebook_ads"`
 	FifteenFive              *SourceFifteenFive              `tfsdk:"fifteen_five"`
+	Freshchat                *SourceFreshchat                `tfsdk:"freshchat"`
 	Freshsales               *SourceFreshsales               `tfsdk:"freshsales"`
 	Freshworks               *SourceFreshworks               `tfsdk:"freshworks"`
 	Ftp                      *SourceFtp                      `tfsdk:"ftp"`
 	Gong                     *SourceGong                     `tfsdk:"gong"`
 	GoogleAds                *SourceGoogleAds                `tfsdk:"google_ads"`
-	GoogleAnalytics          *SourceGoogleAnalytics          `tfsdk:"google_analytics"`
 	GoogleAnalyticsGa4       *SourceGoogleAnalyticsGa4       `tfsdk:"google_analytics_ga4"`
 	GoogleCloudStorage       *SourceGoogleCloudStorage       `tfsdk:"google_cloud_storage"`
 	GoogleSheets             *SourceGoogleSheets             `tfsdk:"google_sheets"`

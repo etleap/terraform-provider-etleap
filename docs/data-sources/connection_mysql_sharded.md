@@ -14,7 +14,7 @@ ConnectionMYSQLSHARDED DataSource
 
 ```terraform
 data "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
-  id = "25c7a3d4-a0e5-4ce4-a0c2-7ae5badb7167"
+  id = "d7ad9e68-8b9e-4080-bb5b-2b1c04e7886a"
 }
 ```
 
@@ -24,9 +24,10 @@ data "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
 ### Read-Only
 
 - `active` (Boolean) Whether this connection has been marked as active.
-- `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
+- `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
 - `cdc_enabled` (Boolean) Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 - `create_date` (String) The date and time when then the connection was created.
+- `database` (String)
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `id` (String) The ID of this resource.
 - `name` (String) The unique name of this connection.

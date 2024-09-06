@@ -14,14 +14,14 @@ ConnectionFTP Resource
 
 ```terraform
 resource "etleap_connection_ftp" "my_connectionftp" {
-  deletion_of_export_products = false
-  hostname                    = "unfit-teletype.name"
-  name                        = "Kristine Ferry"
+  deletion_of_export_products = true
+  hostname                    = "repulsive-security.net"
+  name                        = "Sheldon Dickens"
   passive_mode                = true
   password                    = "...my_password..."
-  port                        = 2
+  port                        = 0
   type                        = "FTP"
-  username                    = "Landen_Schaefer75"
+  username                    = "Virgie94"
 }
 ```
 

@@ -86,7 +86,12 @@ func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryInput() *sha
 			}
 		}
 	}
-	dataset := r.Dataset.ValueString()
+	dataset := new(string)
+	if !r.Dataset.IsUnknown() && !r.Dataset.IsNull() {
+		*dataset = r.Dataset.ValueString()
+	} else {
+		dataset = nil
+	}
 	jsonCredentials := r.JSONCredentials.ValueString()
 	out := shared.ConnectionBigQueryInput{
 		Name:            name,
@@ -101,7 +106,7 @@ func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryInput() *sha
 func (r *ConnectionBIGQUERYResourceModel) RefreshFromSharedConnectionBigQuery(resp *shared.ConnectionBigQuery) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
-	r.Dataset = types.StringValue(resp.Dataset)
+	r.Dataset = types.StringPointerValue(resp.Dataset)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}

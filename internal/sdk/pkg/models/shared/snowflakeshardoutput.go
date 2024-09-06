@@ -12,6 +12,8 @@ type SnowflakeShardOutput struct {
 	Username  string `json:"username"`
 	// The role the user will use to connect
 	Role *string `json:"role,omitempty"`
+	// Snowflake Authentication Types
+	Authentication *SnowflakeAuthenticationTypesOutput `json:"authentication,omitempty"`
 }
 
 func (o *SnowflakeShardOutput) GetShardID() string {
@@ -54,4 +56,25 @@ func (o *SnowflakeShardOutput) GetRole() *string {
 		return nil
 	}
 	return o.Role
+}
+
+func (o *SnowflakeShardOutput) GetAuthentication() *SnowflakeAuthenticationTypesOutput {
+	if o == nil {
+		return nil
+	}
+	return o.Authentication
+}
+
+func (o *SnowflakeShardOutput) GetAuthenticationPassword() *SnowflakeAuthenticationPasswordOutput {
+	if v := o.GetAuthentication(); v != nil {
+		return v.SnowflakeAuthenticationPasswordOutput
+	}
+	return nil
+}
+
+func (o *SnowflakeShardOutput) GetAuthenticationKeyPair() *SnowflakeAuthenticationKeyPairOutput {
+	if v := o.GetAuthentication(); v != nil {
+		return v.SnowflakeAuthenticationKeyPairOutput
+	}
+	return nil
 }

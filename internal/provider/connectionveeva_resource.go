@@ -21,6 +21,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -53,6 +54,7 @@ type ConnectionVEEVAResourceModel struct {
 	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 	Username                 types.String            `tfsdk:"username"`
 	VaultDomainName          types.String            `tfsdk:"vault_domain_name"`
+	VaultType                types.String            `tfsdk:"vault_type"`
 }
 
 func (r *ConnectionVEEVAResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -528,6 +530,23 @@ func (r *ConnectionVEEVAResource) Schema(ctx context.Context, req resource.Schem
 				},
 				Required:    true,
 				Description: `The vault domain name is part of the URL that you use to access your Veeva Vault. You can follow the<a target="_blank" href="https://developer.veevavault.com/docs/#authentication">'Structuring the Endpoint'</a> instructions to find the URL.`,
+			},
+			"vault_type": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Default:     stringdefault.StaticString("QUALITY"),
+				Description: `Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY. must be one of ["QUALITY", "CTMS", "RIM", "PROMOMATS"]; Default: "QUALITY"`,
+				Validators: []validator.String{
+					stringvalidator.OneOf(
+						"QUALITY",
+						"CTMS",
+						"RIM",
+						"PROMOMATS",
+					),
+				},
 			},
 		},
 	}

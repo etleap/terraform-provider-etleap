@@ -150,14 +150,16 @@ type ConnectionOracle struct {
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionOracleDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
 	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
 	Address    string     `json:"address"`
 	Port       int64      `json:"port"`
-	Database   string     `json:"database"`
 	Username   string     `json:"username"`
 	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
+	Database   string     `json:"database"`
 }
 
 func (c ConnectionOracle) MarshalJSON() ([]byte, error) {
@@ -290,13 +292,6 @@ func (o *ConnectionOracle) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionOracle) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *ConnectionOracle) GetUsername() string {
 	if o == nil {
 		return ""
@@ -311,6 +306,13 @@ func (o *ConnectionOracle) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
+func (o *ConnectionOracle) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
 // ConnectionOracleInput - Specifies the location of a database.
 type ConnectionOracleInput struct {
 	// The unique name of this connection.
@@ -319,15 +321,17 @@ type ConnectionOracleInput struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
 	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
 	Address    string     `json:"address"`
 	Port       int64      `json:"port"`
-	Database   string     `json:"database"`
 	Username   string     `json:"username"`
 	Password   string     `json:"password"`
 	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
+	Database   string     `json:"database"`
 }
 
 func (c ConnectionOracleInput) MarshalJSON() ([]byte, error) {
@@ -425,13 +429,6 @@ func (o *ConnectionOracleInput) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionOracleInput) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *ConnectionOracleInput) GetUsername() string {
 	if o == nil {
 		return ""
@@ -451,4 +448,11 @@ func (o *ConnectionOracleInput) GetSSHConfig() *SSHConfig {
 		return nil
 	}
 	return o.SSHConfig
+}
+
+func (o *ConnectionOracleInput) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
 }

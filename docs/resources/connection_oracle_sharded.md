@@ -15,21 +15,21 @@ ConnectionORACLESHARDED Resource
 ```terraform
 resource "etleap_connection_oracle_sharded" "my_connectionoracle_sharded" {
   cdc_enabled                 = true
-  deletion_of_export_products = false
-  name                        = "Mr. Brooke Schamberger"
+  deletion_of_export_products = true
+  name                        = "Ella Schowalter"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "730 Rahul Crescent"
+      address  = "57523 Daisha Parks"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 6
+      port     = 5
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "57523 Daisha Parks"
-        username = "Julie.Goodwin"
+        address  = "33629 Kutch Freeway"
+        username = "Marisol_Cormier11"
       }
-      username = "Margarita_Emard49"
+      username = "Ralph80"
     },
   ]
   type = "ORACLE_SHARDED"

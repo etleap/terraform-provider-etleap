@@ -31,6 +31,40 @@ func (e *ConnectionVeevaUpdateType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// VaultType - Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
+type VaultType string
+
+const (
+	VaultTypeQuality   VaultType = "QUALITY"
+	VaultTypeCtms      VaultType = "CTMS"
+	VaultTypeRim       VaultType = "RIM"
+	VaultTypePromomats VaultType = "PROMOMATS"
+)
+
+func (e VaultType) ToPointer() *VaultType {
+	return &e
+}
+
+func (e *VaultType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "QUALITY":
+		fallthrough
+	case "CTMS":
+		fallthrough
+	case "RIM":
+		fallthrough
+	case "PROMOMATS":
+		*e = VaultType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for VaultType: %v", v)
+	}
+}
+
 type ConnectionVeevaUpdate struct {
 	// The unique name of this connection.
 	Name *string                    `json:"name,omitempty"`
@@ -41,8 +75,10 @@ type ConnectionVeevaUpdate struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The vault domain name is part of the URL that you use to access your Veeva Vault. You can follow the<a target="_blank" href="https://developer.veevavault.com/docs/#authentication">'Structuring the Endpoint'</a> instructions to find the URL.
 	VaultDomainName *string `json:"vaultDomainName,omitempty"`
-	Username        *string `json:"username,omitempty"`
-	Password        *string `json:"password,omitempty"`
+	// Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
+	VaultType *VaultType `json:"vaultType,omitempty"`
+	Username  *string    `json:"username,omitempty"`
+	Password  *string    `json:"password,omitempty"`
 }
 
 func (o *ConnectionVeevaUpdate) GetName() *string {
@@ -113,6 +149,13 @@ func (o *ConnectionVeevaUpdate) GetVaultDomainName() *string {
 		return nil
 	}
 	return o.VaultDomainName
+}
+
+func (o *ConnectionVeevaUpdate) GetVaultType() *VaultType {
+	if o == nil {
+		return nil
+	}
+	return o.VaultType
 }
 
 func (o *ConnectionVeevaUpdate) GetUsername() *string {

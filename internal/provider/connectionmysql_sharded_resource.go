@@ -47,11 +47,12 @@ type ConnectionMYSQLSHARDEDResourceModel struct {
 	AutoReplicate            types.String            `tfsdk:"auto_replicate"`
 	CdcEnabled               types.Bool              `tfsdk:"cdc_enabled"`
 	CreateDate               types.String            `tfsdk:"create_date"`
+	Database                 types.String            `tfsdk:"database"`
 	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
 	ID                       types.String            `tfsdk:"id"`
 	Name                     types.String            `tfsdk:"name"`
-	Shards                   []DatabaseShard         `tfsdk:"shards"`
+	Shards                   []MysqlShard            `tfsdk:"shards"`
 	Status                   types.String            `tfsdk:"status"`
 	TinyInt1IsBoolean        types.Bool              `tfsdk:"tiny_int1_is_boolean"`
 	Type                     types.String            `tfsdk:"type"`
@@ -81,7 +82,7 @@ func (r *ConnectionMYSQLSHARDEDResource) Schema(ctx context.Context, req resourc
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Optional:    true,
-				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.`,
+				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.`,
 			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed: true,
@@ -102,6 +103,13 @@ func (r *ConnectionMYSQLSHARDEDResource) Schema(ctx context.Context, req resourc
 				Validators: []validator.String{
 					validators.IsRFC3339(),
 				},
+			},
+			"database": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional: true,
 			},
 			"default_update_schedule": schema.ListNestedAttribute{
 				Computed: true,
@@ -329,11 +337,7 @@ func (r *ConnectionMYSQLSHARDEDResource) Schema(ctx context.Context, req resourc
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Optional:    true,
-							Description: `Not Null`,
-							Validators: []validator.String{
-								speakeasy_stringvalidators.NotNull(),
-							},
+							Optional: true,
 						},
 						"password": schema.StringAttribute{
 							Computed: true,

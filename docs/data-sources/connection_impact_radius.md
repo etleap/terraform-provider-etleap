@@ -14,7 +14,7 @@ ConnectionIMPACTRADIUS DataSource
 
 ```terraform
 data "etleap_connection_impact_radius" "my_connectionimpact_radius" {
-  id = "d93e7f46-8517-4a0d-9d6c-16b9c1280577"
+  id = "60b81a19-e052-4a61-b37b-d569600ed435"
 }
 ```
 

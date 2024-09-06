@@ -3,7 +3,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
     basic = {
       password = "...my_password..."
       type     = "BASIC"
-      username = "Mylene_Simonis72"
+      username = "Godfrey_Fritsch"
     }
   }
   deletion_of_export_products = false
@@ -20,10 +20,10 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      id = "e7464ae9-4bc8-49fb-903a-92242f2e3005"
+      id = "4bc89fbd-03a9-4224-af2e-3005dda2041a"
       paging_strategy = {
         cursor_uri = {
-          max_page_size        = 8
+          max_page_size        = 0
           page_size_field_name = "...my_page_size_field_name..."
           path_to_cursor       = "...my_path_to_cursor..."
           type                 = "CURSOR_URI"
@@ -43,6 +43,6 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
       rest_method = "POST"
     },
   ]
-  name = "Randy Barton MD"
+  name = "Vanessa Blanda"
   type = "USER_DEFINED_API"
 }

@@ -3,7 +3,7 @@ resource "etleap_connection_seismic" "my_connectionseismic" {
   client_secret               = "...my_client_secret..."
   code                        = "...my_code..."
   deletion_of_export_products = false
-  name                        = "Felipe Quitzon"
+  name                        = "Rudolph Heller MD"
   tenant_name                 = "...my_tenant_name..."
   type                        = "SEISMIC"
 }

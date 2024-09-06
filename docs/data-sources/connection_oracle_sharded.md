@@ -14,7 +14,7 @@ ConnectionORACLESHARDED DataSource
 
 ```terraform
 data "etleap_connection_oracle_sharded" "my_connectionoracle_sharded" {
-  id = "e6058ef8-adf1-4a55-aed5-7699395f3871"
+  id = "28f32518-da44-465a-acca-01b090a1e4b1"
 }
 ```
 

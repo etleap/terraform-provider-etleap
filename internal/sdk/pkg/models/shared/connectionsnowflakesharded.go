@@ -149,7 +149,9 @@ type ConnectionSnowflakeSharded struct {
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionSnowflakeShardedDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Take into account that the schema is case sensitive
-	Schema string `json:"schema"`
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Schema *string `json:"schema,omitempty"`
 	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
 	Roles []string `json:"roles,omitempty"`
 	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
@@ -259,9 +261,9 @@ func (o *ConnectionSnowflakeSharded) GetDefaultUpdateSchedule() []ConnectionSnow
 	return o.DefaultUpdateSchedule
 }
 
-func (o *ConnectionSnowflakeSharded) GetSchema() string {
+func (o *ConnectionSnowflakeSharded) GetSchema() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Schema
 }
@@ -294,7 +296,9 @@ type ConnectionSnowflakeShardedInput struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Take into account that the schema is case sensitive
-	Schema string `json:"schema"`
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Schema *string `json:"schema,omitempty"`
 	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
 	Roles []string `json:"roles,omitempty"`
 	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
@@ -369,9 +373,9 @@ func (o *ConnectionSnowflakeShardedInput) GetUpdateScheduleMonthly() *UpdateSche
 	return nil
 }
 
-func (o *ConnectionSnowflakeShardedInput) GetSchema() string {
+func (o *ConnectionSnowflakeShardedInput) GetSchema() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Schema
 }

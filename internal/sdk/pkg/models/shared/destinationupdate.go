@@ -30,6 +30,10 @@ type DestinationUpdate struct {
 	// Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
 	AutomaticSchemaChanges *bool                    `json:"automaticSchemaChanges,omitempty"`
 	RetentionPolicy        *PipelineRetentionPolicy `json:"retentionPolicy,omitempty"`
+	// The schema in the destination to move the table to. Moving the table is an asynchronous operation. While the move is in progress the destination property `schemaChangingTo` is present in the pipeline API response, and the `schema` property continues to have the schema that the table is being moved from. When the destination property `schemaChangingTo` is no longer present in the pipeline API response then the move is complete, and `schema` has the new schema.
+	Schema *string `json:"schema,omitempty"`
+	// The new destination table name. Renaming the table is an asynchronous operation. While the rename is in progress the destination property `tableChangingTo` is present in the pipeline API response, and the `table` property continues to have the old table name. When the destination property `tableChangingTo` is no longer present in the pipeline API response then the rename is complete, and `table` has the new table name.
+	Table *string `json:"table,omitempty"`
 }
 
 func (o *DestinationUpdate) GetConnectionID() string {
@@ -51,4 +55,18 @@ func (o *DestinationUpdate) GetRetentionPolicy() *PipelineRetentionPolicy {
 		return nil
 	}
 	return o.RetentionPolicy
+}
+
+func (o *DestinationUpdate) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *DestinationUpdate) GetTable() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Table
 }

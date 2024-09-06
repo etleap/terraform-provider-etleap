@@ -1,3 +1,3 @@
 data "etleap_connection_workday_report" "my_connectionworkday_report" {
-  id = "c3f77a74-7b09-4a5d-9dab-fed9a3763db0"
+  id = "4095e9c8-be60-4290-abe8-73853f11b9d2"
 }

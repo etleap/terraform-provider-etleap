@@ -2,11 +2,11 @@ resource "etleap_connection_ldap_virtual_list_view" "my_connectionldap_virtual_l
   base_dn                     = "...my_base_dn..."
   deletion_of_export_products = true
   filter                      = "...my_filter..."
-  hostname                    = "flamboyant-ticket.com"
-  name                        = "Francis Gerhold"
+  hostname                    = "difficult-corsage.com"
+  name                        = "Krista Lesch"
   password                    = "...my_password..."
-  port                        = 6
-  scope                       = "Base"
+  port                        = 7
+  scope                       = "Single-level"
   sort_order                  = "...my_sort_order..."
   type                        = "LDAP_VIRTUAL_LIST_VIEW"
   user                        = "...my_user..."

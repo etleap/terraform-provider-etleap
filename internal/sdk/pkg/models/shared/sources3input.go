@@ -70,14 +70,14 @@ type SourceS3Input struct {
 	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-	// File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here.
-	Paths []string `json:"paths"`
-	// Regular expression matching the names of the files to be processed by this pipeline. `fileNameFilter` or `paths` must be specified.
+	// Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 	FileNameFilter *string `json:"fileNameFilter,omitempty"`
 	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
 	NewFileBehavior SourceS3InputNewFileBehavior `json:"newFileBehavior"`
 	// Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
 	LowWatermark *types.Date `json:"lowWatermark,omitempty"`
+	// File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here.
+	Paths []string `json:"paths"`
 	// Etleap can check whether files that were already processed have changed. If the file has changed, then Etleap fetches the new file and removes the old file's data in the destination and adds the changed data. <br> This can only be enabled when `newFileBehavior` is set to `APPEND`. Defaults to `false`.
 	FilesCanChange *bool `json:"filesCanChange,omitempty"`
 	// Whether this source should be triggered by a `Batch Added` event (`true`) or Etleap should inspect the source to find new files to process (`false`). Defaults to `false`.
@@ -116,13 +116,6 @@ func (o *SourceS3Input) GetLatencyThreshold() *int64 {
 	return o.LatencyThreshold
 }
 
-func (o *SourceS3Input) GetPaths() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Paths
-}
-
 func (o *SourceS3Input) GetFileNameFilter() *string {
 	if o == nil {
 		return nil
@@ -142,6 +135,13 @@ func (o *SourceS3Input) GetLowWatermark() *types.Date {
 		return nil
 	}
 	return o.LowWatermark
+}
+
+func (o *SourceS3Input) GetPaths() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Paths
 }
 
 func (o *SourceS3Input) GetFilesCanChange() *bool {

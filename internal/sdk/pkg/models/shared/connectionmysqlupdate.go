@@ -52,7 +52,7 @@ func (o *ConnectionMysqlUpdateSSHConfigurationUpdate) GetUsername() *string {
 	return o.Username
 }
 
-// ConnectionMysqlUpdate - Specifies the location of a database.
+// ConnectionMysqlUpdate - Specifies the properties of a database connection.
 type ConnectionMysqlUpdate struct {
 	// The unique name of this connection.
 	Name *string                   `json:"name,omitempty"`
@@ -62,16 +62,17 @@ type ConnectionMysqlUpdate struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule  *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	ValidateSslCert *bool                `json:"validateSslCert,omitempty"`
-	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.
+	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
-	TinyInt1IsBoolean *bool                                        `json:"tinyInt1IsBoolean,omitempty"`
-	Address           *string                                      `json:"address,omitempty"`
-	Port              *int64                                       `json:"port,omitempty"`
-	Database          *string                                      `json:"database,omitempty"`
-	Username          *string                                      `json:"username,omitempty"`
-	Password          *string                                      `json:"password,omitempty"`
-	SSHConfig         *ConnectionMysqlUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
+	TinyInt1IsBoolean *bool `json:"tinyInt1IsBoolean,omitempty"`
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Database  *string                                      `json:"database,omitempty"`
+	Address   *string                                      `json:"address,omitempty"`
+	Port      *int64                                       `json:"port,omitempty"`
+	Username  *string                                      `json:"username,omitempty"`
+	Password  *string                                      `json:"password,omitempty"`
+	SSHConfig *ConnectionMysqlUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
 }
 
 func (o *ConnectionMysqlUpdate) GetName() *string {
@@ -158,6 +159,13 @@ func (o *ConnectionMysqlUpdate) GetTinyInt1IsBoolean() *bool {
 	return o.TinyInt1IsBoolean
 }
 
+func (o *ConnectionMysqlUpdate) GetDatabase() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Database
+}
+
 func (o *ConnectionMysqlUpdate) GetAddress() *string {
 	if o == nil {
 		return nil
@@ -170,13 +178,6 @@ func (o *ConnectionMysqlUpdate) GetPort() *int64 {
 		return nil
 	}
 	return o.Port
-}
-
-func (o *ConnectionMysqlUpdate) GetDatabase() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Database
 }
 
 func (o *ConnectionMysqlUpdate) GetUsername() *string {

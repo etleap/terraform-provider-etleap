@@ -62,6 +62,8 @@ type ConnectionRedshiftUpdate struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// When Etleap creates Redshift tables, SELECT privileges will be granted to user groups specified here.
 	UserGroups []string `json:"userGroups,omitempty"`
@@ -75,10 +77,10 @@ type ConnectionRedshiftUpdate struct {
 	DynamicVarcharWidthEnabled *bool                                           `json:"dynamicVarcharWidthEnabled,omitempty"`
 	Address                    *string                                         `json:"address,omitempty"`
 	Port                       *int64                                          `json:"port,omitempty"`
-	Database                   *string                                         `json:"database,omitempty"`
 	Username                   *string                                         `json:"username,omitempty"`
 	Password                   *string                                         `json:"password,omitempty"`
 	SSHConfig                  *ConnectionRedshiftUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
+	Database                   *string                                         `json:"database,omitempty"`
 }
 
 func (o *ConnectionRedshiftUpdate) GetName() *string {
@@ -200,13 +202,6 @@ func (o *ConnectionRedshiftUpdate) GetPort() *int64 {
 	return o.Port
 }
 
-func (o *ConnectionRedshiftUpdate) GetDatabase() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Database
-}
-
 func (o *ConnectionRedshiftUpdate) GetUsername() *string {
 	if o == nil {
 		return nil
@@ -226,4 +221,11 @@ func (o *ConnectionRedshiftUpdate) GetSSHConfig() *ConnectionRedshiftUpdateSSHCo
 		return nil
 	}
 	return o.SSHConfig
+}
+
+func (o *ConnectionRedshiftUpdate) GetDatabase() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Database
 }

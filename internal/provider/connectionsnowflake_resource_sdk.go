@@ -86,7 +86,12 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeInput() *s
 			}
 		}
 	}
-	schema := r.Schema.ValueString()
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
+	} else {
+		schema = nil
+	}
 	var roles []string = nil
 	for _, rolesItem := range r.Roles {
 		roles = append(roles, rolesItem.ValueString())
@@ -101,12 +106,48 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeInput() *s
 	database := r.Database.ValueString()
 	warehouse := r.Warehouse.ValueString()
 	username := r.Username.ValueString()
-	password := r.Password.ValueString()
+	password := new(string)
+	if !r.Password.IsUnknown() && !r.Password.IsNull() {
+		*password = r.Password.ValueString()
+	} else {
+		password = nil
+	}
 	role := new(string)
 	if !r.Role.IsUnknown() && !r.Role.IsNull() {
 		*role = r.Role.ValueString()
 	} else {
 		role = nil
+	}
+	var authentication *shared.SnowflakeAuthenticationTypes
+	if r.Authentication != nil {
+		var snowflakeAuthenticationKeyPair *shared.SnowflakeAuthenticationKeyPair
+		if r.Authentication.KeyPair != nil {
+			typeVar1 := shared.SnowflakeAuthenticationKeyPairType(r.Authentication.KeyPair.Type.ValueString())
+			privateKey := r.Authentication.KeyPair.PrivateKey.ValueString()
+			snowflakeAuthenticationKeyPair = &shared.SnowflakeAuthenticationKeyPair{
+				Type:       typeVar1,
+				PrivateKey: privateKey,
+			}
+		}
+		if snowflakeAuthenticationKeyPair != nil {
+			authentication = &shared.SnowflakeAuthenticationTypes{
+				SnowflakeAuthenticationKeyPair: snowflakeAuthenticationKeyPair,
+			}
+		}
+		var snowflakeAuthenticationPassword *shared.SnowflakeAuthenticationPassword
+		if r.Authentication.Password != nil {
+			typeVar2 := shared.SnowflakeAuthenticationPasswordType(r.Authentication.Password.Type.ValueString())
+			password1 := r.Authentication.Password.Password.ValueString()
+			snowflakeAuthenticationPassword = &shared.SnowflakeAuthenticationPassword{
+				Type:     typeVar2,
+				Password: password1,
+			}
+		}
+		if snowflakeAuthenticationPassword != nil {
+			authentication = &shared.SnowflakeAuthenticationTypes{
+				SnowflakeAuthenticationPassword: snowflakeAuthenticationPassword,
+			}
+		}
 	}
 	out := shared.ConnectionSnowflakeInput{
 		Name:           name,
@@ -121,6 +162,7 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeInput() *s
 		Username:       username,
 		Password:       password,
 		Role:           role,
+		Authentication: authentication,
 	}
 	return &out
 }
@@ -128,6 +170,20 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeInput() *s
 func (r *ConnectionSNOWFLAKEResourceModel) RefreshFromSharedConnectionSnowflake(resp *shared.ConnectionSnowflake) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
+	if resp.Authentication == nil {
+		r.Authentication = nil
+	} else {
+		r.Authentication = &SnowflakeAuthenticationTypes{}
+		if resp.Authentication.SnowflakeAuthenticationKeyPairOutput != nil {
+			r.Authentication.KeyPair = &SnowflakeAuthenticationKeyPair{}
+			r.Authentication.KeyPair.PublicKey = types.StringValue(resp.Authentication.SnowflakeAuthenticationKeyPairOutput.PublicKey)
+			r.Authentication.KeyPair.Type = types.StringValue(string(resp.Authentication.SnowflakeAuthenticationKeyPairOutput.Type))
+		}
+		if resp.Authentication.SnowflakeAuthenticationPasswordOutput != nil {
+			r.Authentication.Password = &SnowflakeAuthenticationPassword{}
+			r.Authentication.Password.Type = types.StringValue(string(resp.Authentication.SnowflakeAuthenticationPasswordOutput.Type))
+		}
+	}
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -185,7 +241,7 @@ func (r *ConnectionSNOWFLAKEResourceModel) RefreshFromSharedConnectionSnowflake(
 	for _, v := range resp.Roles {
 		r.Roles = append(r.Roles, types.StringValue(v))
 	}
-	r.Schema = types.StringValue(resp.Schema)
+	r.Schema = types.StringPointerValue(resp.Schema)
 	r.SourceOnly = types.BoolPointerValue(resp.SourceOnly)
 	r.Status = types.StringValue(string(resp.Status))
 	r.Type = types.StringValue(string(resp.Type))
@@ -365,6 +421,37 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeUpdate() *
 	} else {
 		role = nil
 	}
+	var authentication *shared.SnowflakeAuthenticationTypes
+	if r.Authentication != nil {
+		var snowflakeAuthenticationKeyPair *shared.SnowflakeAuthenticationKeyPair
+		if r.Authentication.KeyPair != nil {
+			typeVar1 := shared.SnowflakeAuthenticationKeyPairType(r.Authentication.KeyPair.Type.ValueString())
+			privateKey := r.Authentication.KeyPair.PrivateKey.ValueString()
+			snowflakeAuthenticationKeyPair = &shared.SnowflakeAuthenticationKeyPair{
+				Type:       typeVar1,
+				PrivateKey: privateKey,
+			}
+		}
+		if snowflakeAuthenticationKeyPair != nil {
+			authentication = &shared.SnowflakeAuthenticationTypes{
+				SnowflakeAuthenticationKeyPair: snowflakeAuthenticationKeyPair,
+			}
+		}
+		var snowflakeAuthenticationPassword *shared.SnowflakeAuthenticationPassword
+		if r.Authentication.Password != nil {
+			typeVar2 := shared.SnowflakeAuthenticationPasswordType(r.Authentication.Password.Type.ValueString())
+			password1 := r.Authentication.Password.Password.ValueString()
+			snowflakeAuthenticationPassword = &shared.SnowflakeAuthenticationPassword{
+				Type:     typeVar2,
+				Password: password1,
+			}
+		}
+		if snowflakeAuthenticationPassword != nil {
+			authentication = &shared.SnowflakeAuthenticationTypes{
+				SnowflakeAuthenticationPassword: snowflakeAuthenticationPassword,
+			}
+		}
+	}
 	out := shared.ConnectionSnowflakeUpdate{
 		Name:           name,
 		Type:           typeVar,
@@ -379,6 +466,7 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeUpdate() *
 		Username:       username,
 		Password:       password,
 		Role:           role,
+		Authentication: authentication,
 	}
 	return &out
 }

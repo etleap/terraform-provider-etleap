@@ -14,7 +14,7 @@ ConnectionSNOWFLAKESHARDED DataSource
 
 ```terraform
 data "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" {
-  id = "5f3246d7-bc4f-4f47-9c63-a432a010f2ab"
+  id = "9dadee00-8b05-46ee-a3ca-81c6a66008df"
 }
 ```
 
@@ -109,11 +109,38 @@ Read-Only:
 Read-Only:
 
 - `address` (String)
+- `authentication` (Attributes) Snowflake Authentication Types (see [below for nested schema](#nestedatt--shards--authentication))
 - `database` (String)
 - `role` (String) The role the user will use to connect
 - `shard_id` (String)
 - `username` (String)
 - `warehouse` (String) The virtual warehouse to use once connected.
+
+<a id="nestedatt--shards--authentication"></a>
+### Nested Schema for `shards.authentication`
+
+Read-Only:
+
+- `key_pair` (Attributes) Snowflake Key Pair Authentication (see [below for nested schema](#nestedatt--shards--authentication--key_pair))
+- `password` (Attributes) Snowflake Password Authentication (see [below for nested schema](#nestedatt--shards--authentication--password))
+
+<a id="nestedatt--shards--authentication--key_pair"></a>
+### Nested Schema for `shards.authentication.key_pair`
+
+Read-Only:
+
+- `public_key` (String)
+- `type` (String) must be one of ["PASSWORD", "KEY_PAIR"]
+
+
+<a id="nestedatt--shards--authentication--password"></a>
+### Nested Schema for `shards.authentication.password`
+
+Read-Only:
+
+- `type` (String) must be one of ["PASSWORD", "KEY_PAIR"]
+
+
 
 
 <a id="nestedatt--update_schedule"></a>

@@ -35,7 +35,8 @@ type WarehouseRedshiftUpdate struct {
 	Type  WarehouseRedshiftUpdateType `json:"type"`
 	Table *string                     `json:"table,omitempty"`
 	// The sort columns to use.
-	SortColumns       []string           `json:"sortColumns,omitempty"`
+	SortColumns []string `json:"sortColumns,omitempty"`
+	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
 	DistributionStyle *DistributionStyle `json:"distributionStyle,omitempty"`
 }
 

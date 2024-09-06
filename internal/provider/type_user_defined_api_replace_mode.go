@@ -2,7 +2,10 @@
 
 package provider
 
+import "github.com/hashicorp/terraform-plugin-framework/types"
+
 type UserDefinedAPIReplaceMode struct {
-	One                         *UserDefinedAPIReplaceMode1  `tfsdk:"one"`
-	SchemaV1ExtendedReplaceMode *SchemaV1ExtendedReplaceMode `tfsdk:"schema_v1_extended_replace_mode"`
+	ForeignKeyColumns []SchemaV1ForeignKeyColumn `tfsdk:"foreign_key_columns"`
+	PrimaryKeyColumns []types.String             `tfsdk:"primary_key_columns"`
+	Type              types.String               `tfsdk:"type"`
 }

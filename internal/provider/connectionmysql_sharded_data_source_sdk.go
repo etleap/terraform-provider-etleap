@@ -13,6 +13,7 @@ func (r *ConnectionMYSQLSHARDEDDataSourceModel) RefreshFromSharedConnectionMysql
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
+	r.Database = types.StringPointerValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
@@ -67,9 +68,9 @@ func (r *ConnectionMYSQLSHARDEDDataSourceModel) RefreshFromSharedConnectionMysql
 		r.Shards = r.Shards[:len(resp.Shards)]
 	}
 	for shardsCount, shardsItem := range resp.Shards {
-		var shards1 DatabaseShardOutput
+		var shards1 MysqlShardOutput
 		shards1.Address = types.StringValue(shardsItem.Address)
-		shards1.Database = types.StringValue(shardsItem.Database)
+		shards1.Database = types.StringPointerValue(shardsItem.Database)
 		shards1.Port = types.Int64Value(shardsItem.Port)
 		shards1.ShardID = types.StringValue(shardsItem.ShardID)
 		if shardsItem.SSHConfig == nil {

@@ -23,13 +23,14 @@ const (
 	SourceTypesTypeElasticsearch            SourceTypesType = "ELASTICSEARCH"
 	SourceTypesTypeElluminate               SourceTypesType = "ELLUMINATE"
 	SourceTypesTypeEloqua                   SourceTypesType = "ELOQUA"
+	SourceTypesTypeErpx                     SourceTypesType = "ERPX"
 	SourceTypesTypeFacebookAds              SourceTypesType = "FACEBOOK_ADS"
 	SourceTypesTypeFifteenFive              SourceTypesType = "FIFTEEN_FIVE"
+	SourceTypesTypeFreshchat                SourceTypesType = "FRESHCHAT"
 	SourceTypesTypeFreshsales               SourceTypesType = "FRESHSALES"
 	SourceTypesTypeFreshworks               SourceTypesType = "FRESHWORKS"
 	SourceTypesTypeFtp                      SourceTypesType = "FTP"
 	SourceTypesTypeGong                     SourceTypesType = "GONG"
-	SourceTypesTypeGoogleAnalytics          SourceTypesType = "GOOGLE_ANALYTICS"
 	SourceTypesTypeGoogleAnalyticsGa4       SourceTypesType = "GOOGLE_ANALYTICS_GA4"
 	SourceTypesTypeGoogleCloudStorage       SourceTypesType = "GOOGLE_CLOUD_STORAGE"
 	SourceTypesTypeGoogleAds                SourceTypesType = "GOOGLE_ADS"
@@ -109,13 +110,14 @@ type SourceTypes struct {
 	SourceElasticSearch            *SourceElasticSearch
 	SourceElluminate               *SourceElluminate
 	SourceEloqua                   *SourceEloqua
+	SourceErpx                     *SourceErpx
 	SourceFacebookAds              *SourceFacebookAds
 	SourceFifteenFive              *SourceFifteenFive
+	SourceFreshchat                *SourceFreshchat
 	SourceFreshsales               *SourceFreshsales
 	SourceFreshworks               *SourceFreshworks
 	SourceFtp                      *SourceFtp
 	SourceGong                     *SourceGong
-	SourceGoogleAnalytics          *SourceGoogleAnalytics
 	SourceGoogleAnalyticsGa4       *SourceGoogleAnalyticsGa4
 	SourceGoogleCloudStorage       *SourceGoogleCloudStorage
 	SourceGoogleAds                *SourceGoogleAds
@@ -317,6 +319,18 @@ func CreateSourceTypesEloqua(eloqua SourceEloqua) SourceTypes {
 	}
 }
 
+func CreateSourceTypesErpx(erpx SourceErpx) SourceTypes {
+	typ := SourceTypesTypeErpx
+
+	typStr := SourceErpxType(typ)
+	erpx.Type = typStr
+
+	return SourceTypes{
+		SourceErpx: &erpx,
+		Type:       typ,
+	}
+}
+
 func CreateSourceTypesFacebookAds(facebookAds SourceFacebookAds) SourceTypes {
 	typ := SourceTypesTypeFacebookAds
 
@@ -338,6 +352,18 @@ func CreateSourceTypesFifteenFive(fifteenFive SourceFifteenFive) SourceTypes {
 	return SourceTypes{
 		SourceFifteenFive: &fifteenFive,
 		Type:              typ,
+	}
+}
+
+func CreateSourceTypesFreshchat(freshchat SourceFreshchat) SourceTypes {
+	typ := SourceTypesTypeFreshchat
+
+	typStr := SourceFreshchatType(typ)
+	freshchat.Type = typStr
+
+	return SourceTypes{
+		SourceFreshchat: &freshchat,
+		Type:            typ,
 	}
 }
 
@@ -386,18 +412,6 @@ func CreateSourceTypesGong(gong SourceGong) SourceTypes {
 	return SourceTypes{
 		SourceGong: &gong,
 		Type:       typ,
-	}
-}
-
-func CreateSourceTypesGoogleAnalytics(googleAnalytics SourceGoogleAnalytics) SourceTypes {
-	typ := SourceTypesTypeGoogleAnalytics
-
-	typStr := SourceGoogleAnalyticsType(typ)
-	googleAnalytics.Type = typStr
-
-	return SourceTypes{
-		SourceGoogleAnalytics: &googleAnalytics,
-		Type:                  typ,
 	}
 }
 
@@ -1292,6 +1306,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceEloqua = sourceEloqua
 		u.Type = SourceTypesTypeEloqua
 		return nil
+	case "ERPX":
+		sourceErpx := new(SourceErpx)
+		if err := utils.UnmarshalJSON(data, &sourceErpx, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceErpx = sourceErpx
+		u.Type = SourceTypesTypeErpx
+		return nil
 	case "FACEBOOK_ADS":
 		sourceFacebookAds := new(SourceFacebookAds)
 		if err := utils.UnmarshalJSON(data, &sourceFacebookAds, "", true, true); err != nil {
@@ -1309,6 +1332,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceFifteenFive = sourceFifteenFive
 		u.Type = SourceTypesTypeFifteenFive
+		return nil
+	case "FRESHCHAT":
+		sourceFreshchat := new(SourceFreshchat)
+		if err := utils.UnmarshalJSON(data, &sourceFreshchat, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceFreshchat = sourceFreshchat
+		u.Type = SourceTypesTypeFreshchat
 		return nil
 	case "FRESHSALES":
 		sourceFreshsales := new(SourceFreshsales)
@@ -1345,15 +1377,6 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceGong = sourceGong
 		u.Type = SourceTypesTypeGong
-		return nil
-	case "GOOGLE_ANALYTICS":
-		sourceGoogleAnalytics := new(SourceGoogleAnalytics)
-		if err := utils.UnmarshalJSON(data, &sourceGoogleAnalytics, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceGoogleAnalytics = sourceGoogleAnalytics
-		u.Type = SourceTypesTypeGoogleAnalytics
 		return nil
 	case "GOOGLE_ANALYTICS_GA4":
 		sourceGoogleAnalyticsGa4 := new(SourceGoogleAnalyticsGa4)
@@ -1990,12 +2013,20 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceEloqua, "", true)
 	}
 
+	if u.SourceErpx != nil {
+		return utils.MarshalJSON(u.SourceErpx, "", true)
+	}
+
 	if u.SourceFacebookAds != nil {
 		return utils.MarshalJSON(u.SourceFacebookAds, "", true)
 	}
 
 	if u.SourceFifteenFive != nil {
 		return utils.MarshalJSON(u.SourceFifteenFive, "", true)
+	}
+
+	if u.SourceFreshchat != nil {
+		return utils.MarshalJSON(u.SourceFreshchat, "", true)
 	}
 
 	if u.SourceFreshsales != nil {
@@ -2012,10 +2043,6 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceGong != nil {
 		return utils.MarshalJSON(u.SourceGong, "", true)
-	}
-
-	if u.SourceGoogleAnalytics != nil {
-		return utils.MarshalJSON(u.SourceGoogleAnalytics, "", true)
 	}
 
 	if u.SourceGoogleAnalyticsGa4 != nil {

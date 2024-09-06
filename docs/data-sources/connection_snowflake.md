@@ -14,7 +14,7 @@ ConnectionSNOWFLAKE DataSource
 
 ```terraform
 data "etleap_connection_snowflake" "my_connectionsnowflake" {
-  id = "7f0a47bb-e450-46f3-b478-bccaef2db02d"
+  id = "d7bc4ff4-71c6-43a4-b2a0-10f2abe8c7f9"
 }
 ```
 
@@ -25,6 +25,7 @@ data "etleap_connection_snowflake" "my_connectionsnowflake" {
 
 - `active` (Boolean) Whether this connection has been marked as active.
 - `address` (String)
+- `authentication` (Attributes) Snowflake Authentication Types (see [below for nested schema](#nestedatt--authentication))
 - `create_date` (String) The date and time when then the connection was created.
 - `database` (String)
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
@@ -39,6 +40,32 @@ data "etleap_connection_snowflake" "my_connectionsnowflake" {
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 - `username` (String)
 - `warehouse` (String) The virtual warehouse to use once connected.
+
+<a id="nestedatt--authentication"></a>
+### Nested Schema for `authentication`
+
+Read-Only:
+
+- `key_pair` (Attributes) Snowflake Key Pair Authentication (see [below for nested schema](#nestedatt--authentication--key_pair))
+- `password` (Attributes) Snowflake Password Authentication (see [below for nested schema](#nestedatt--authentication--password))
+
+<a id="nestedatt--authentication--key_pair"></a>
+### Nested Schema for `authentication.key_pair`
+
+Read-Only:
+
+- `public_key` (String)
+- `type` (String) must be one of ["PASSWORD", "KEY_PAIR"]
+
+
+<a id="nestedatt--authentication--password"></a>
+### Nested Schema for `authentication.password`
+
+Read-Only:
+
+- `type` (String) must be one of ["PASSWORD", "KEY_PAIR"]
+
+
 
 <a id="nestedatt--default_update_schedule"></a>
 ### Nested Schema for `default_update_schedule`

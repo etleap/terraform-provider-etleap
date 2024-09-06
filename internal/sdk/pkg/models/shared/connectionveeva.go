@@ -132,6 +132,40 @@ func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Updat
 	return nil
 }
 
+// ConnectionVeevaVaultType - Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
+type ConnectionVeevaVaultType string
+
+const (
+	ConnectionVeevaVaultTypeQuality   ConnectionVeevaVaultType = "QUALITY"
+	ConnectionVeevaVaultTypeCtms      ConnectionVeevaVaultType = "CTMS"
+	ConnectionVeevaVaultTypeRim       ConnectionVeevaVaultType = "RIM"
+	ConnectionVeevaVaultTypePromomats ConnectionVeevaVaultType = "PROMOMATS"
+)
+
+func (e ConnectionVeevaVaultType) ToPointer() *ConnectionVeevaVaultType {
+	return &e
+}
+
+func (e *ConnectionVeevaVaultType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "QUALITY":
+		fallthrough
+	case "CTMS":
+		fallthrough
+	case "RIM":
+		fallthrough
+	case "PROMOMATS":
+		*e = ConnectionVeevaVaultType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionVeevaVaultType: %v", v)
+	}
+}
+
 type ConnectionVeeva struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -150,7 +184,9 @@ type ConnectionVeeva struct {
 	DefaultUpdateSchedule []ConnectionVeevaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The vault domain name is part of the URL that you use to access your Veeva Vault. You can follow the<a target="_blank" href="https://developer.veevavault.com/docs/#authentication">'Structuring the Endpoint'</a> instructions to find the URL.
 	VaultDomainName string `json:"vaultDomainName"`
-	Username        string `json:"username"`
+	// Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
+	VaultType *ConnectionVeevaVaultType `default:"QUALITY" json:"vaultType"`
+	Username  string                    `json:"username"`
 }
 
 func (c ConnectionVeeva) MarshalJSON() ([]byte, error) {
@@ -262,6 +298,13 @@ func (o *ConnectionVeeva) GetVaultDomainName() string {
 	return o.VaultDomainName
 }
 
+func (o *ConnectionVeeva) GetVaultType() *ConnectionVeevaVaultType {
+	if o == nil {
+		return nil
+	}
+	return o.VaultType
+}
+
 func (o *ConnectionVeeva) GetUsername() string {
 	if o == nil {
 		return ""
@@ -277,8 +320,21 @@ type ConnectionVeevaInput struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The vault domain name is part of the URL that you use to access your Veeva Vault. You can follow the<a target="_blank" href="https://developer.veevavault.com/docs/#authentication">'Structuring the Endpoint'</a> instructions to find the URL.
 	VaultDomainName string `json:"vaultDomainName"`
-	Username        string `json:"username"`
-	Password        string `json:"password"`
+	// Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
+	VaultType *ConnectionVeevaVaultType `default:"QUALITY" json:"vaultType"`
+	Username  string                    `json:"username"`
+	Password  string                    `json:"password"`
+}
+
+func (c ConnectionVeevaInput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *ConnectionVeevaInput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ConnectionVeevaInput) GetName() string {
@@ -342,6 +398,13 @@ func (o *ConnectionVeevaInput) GetVaultDomainName() string {
 		return ""
 	}
 	return o.VaultDomainName
+}
+
+func (o *ConnectionVeevaInput) GetVaultType() *ConnectionVeevaVaultType {
+	if o == nil {
+		return nil
+	}
+	return o.VaultType
 }
 
 func (o *ConnectionVeevaInput) GetUsername() string {

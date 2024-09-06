@@ -94,7 +94,6 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Input() *shared.Connec
 	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
-	database := r.Database.ValueString()
 	username := r.Username.ValueString()
 	password := r.Password.ValueString()
 	var sshConfig *shared.SSHConfig
@@ -106,6 +105,7 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Input() *shared.Connec
 			Username: username1,
 		}
 	}
+	database := r.Database.ValueString()
 	out := shared.ConnectionDb2Input{
 		Name:           name,
 		Type:           typeVar,
@@ -113,10 +113,10 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Input() *shared.Connec
 		Schema:         schema,
 		Address:        address,
 		Port:           port,
-		Database:       database,
 		Username:       username,
 		Password:       password,
 		SSHConfig:      sshConfig,
+		Database:       database,
 	}
 	return &out
 }
@@ -328,12 +328,6 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Update() *shared.Conne
 	} else {
 		port = nil
 	}
-	database := new(string)
-	if !r.Database.IsUnknown() && !r.Database.IsNull() {
-		*database = r.Database.ValueString()
-	} else {
-		database = nil
-	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
 		*username = r.Username.ValueString()
@@ -365,6 +359,12 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Update() *shared.Conne
 			Username: username1,
 		}
 	}
+	database := new(string)
+	if !r.Database.IsUnknown() && !r.Database.IsNull() {
+		*database = r.Database.ValueString()
+	} else {
+		database = nil
+	}
 	out := shared.ConnectionDb2Update{
 		Name:           name,
 		Type:           typeVar,
@@ -373,10 +373,10 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Update() *shared.Conne
 		Schema:         schema,
 		Address:        address,
 		Port:           port,
-		Database:       database,
 		Username:       username,
 		Password:       password,
 		SSHConfig:      sshConfig,
+		Database:       database,
 	}
 	return &out
 }

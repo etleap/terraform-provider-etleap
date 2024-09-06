@@ -156,7 +156,9 @@ type ConnectionDeltaLake struct {
 	// HTTP path for your Databricks compute cluster or SQL Warehouse.
 	HTTPPath string `json:"httpPath"`
 	// The schema to use when this connection is used as a source. When the connection is used as a destination the schema can be set to a different one for each pipeline.
-	Schema string `json:"schema"`
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Schema *string `json:"schema,omitempty"`
 }
 
 func (c ConnectionDeltaLake) MarshalJSON() ([]byte, error) {
@@ -275,9 +277,9 @@ func (o *ConnectionDeltaLake) GetHTTPPath() string {
 	return o.HTTPPath
 }
 
-func (o *ConnectionDeltaLake) GetSchema() string {
+func (o *ConnectionDeltaLake) GetSchema() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Schema
 }
@@ -296,7 +298,9 @@ type ConnectionDeltaLakeInput struct {
 	// Authenticates the user that you want to connect to Databricks with. Instructions on generating a personal access token can be found <a href='https://docs.databricks.com/dev-tools/api/latest/authentication.html#token-management' target="_blank">here</a>.
 	PersonalAccessToken string `json:"personalAccessToken"`
 	// The schema to use when this connection is used as a source. When the connection is used as a destination the schema can be set to a different one for each pipeline.
-	Schema string `json:"schema"`
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Schema *string `json:"schema,omitempty"`
 }
 
 func (o *ConnectionDeltaLakeInput) GetName() string {
@@ -376,9 +380,9 @@ func (o *ConnectionDeltaLakeInput) GetPersonalAccessToken() string {
 	return o.PersonalAccessToken
 }
 
-func (o *ConnectionDeltaLakeInput) GetSchema() string {
+func (o *ConnectionDeltaLakeInput) GetSchema() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Schema
 }

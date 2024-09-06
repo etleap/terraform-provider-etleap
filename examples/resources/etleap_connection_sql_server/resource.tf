@@ -1,12 +1,12 @@
 resource "etleap_connection_sql_server" "my_connectionsql_server" {
-  address                     = "432 Little Flats"
-  cdc_enabled                 = false
+  address                     = "69179 Osinski Crescent"
+  cdc_enabled                 = true
   database                    = "...my_database..."
   deletion_of_export_products = false
-  name                        = "Karla West"
+  name                        = "Marguerite Wuckert"
   password                    = "...my_password..."
-  port                        = 1
+  port                        = 8
   schema                      = "...my_schema..."
   type                        = "SQL_SERVER"
-  username                    = "Kaitlyn62"
+  username                    = "Maida_Wyman"
 }

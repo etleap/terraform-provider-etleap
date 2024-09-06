@@ -5,6 +5,8 @@ package provider
 import (
 	"context"
 	"fmt"
+	"slices"
+	"time"
 
 	speakeasy_boolplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/boolplanmodifier"
 	speakeasy_int64planmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/int64planmodifier"
@@ -36,6 +38,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -164,16 +167,12 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Required:    true,
 								Description: `The schema in the destination that the tables will be created in. Requires replacement if changed. `,
 							},
 							"table": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Required:    true,
 								Description: `Requires replacement if changed. `,
 							},
@@ -279,7 +278,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 										Description: `Requires replacement if changed. `,
 									},
 								},
-								Description: `Requires replacement if changed. `,
+								Description: `Can either be one the strings ` + "`" + `ALL` + "`" + `, ` + "`" + `AUTO` + "`" + ` or ` + "`" + `EVEN` + "`" + `, or an object for ` + "`" + `KEY` + "`" + ` distribution that specifies a column. Requires replacement if changed. `,
 								Validators: []validator.Object{
 									validators.ExactlyOneChild(),
 								},
@@ -312,9 +311,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Optional:    true,
 								Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used. Requires replacement if changed. `,
 							},
@@ -330,9 +327,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 							"table": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Required:    true,
 								Description: `Requires replacement if changed. `,
 							},
@@ -507,16 +502,12 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Optional:    true,
 								Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used. Requires replacement if changed. `,
 							},
 							"table": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-								},
+								PlanModifiers: []planmodifier.String{},
 								Required:    true,
 								Description: `Requires replacement if changed. `,
 							},
@@ -736,6 +727,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 													},
 												},
 											},
+											Description: `Can either be one the strings ` + "`" + `ALL` + "`" + `, ` + "`" + `AUTO` + "`" + ` or ` + "`" + `EVEN` + "`" + `, or an object for ` + "`" + `KEY` + "`" + ` distribution that specifies a column.`,
 											Validators: []validator.Object{
 												validators.ExactlyOneChild(),
 											},
@@ -2852,6 +2844,65 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						},
 						Description: `Requires replacement if changed. `,
 					},
+					"erpx": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							objectplanmodifier.RequiresReplaceIfConfigured(),
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The universally unique identifier for the source. Requires replacement if changed. ; Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"entity": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The ERPx resource. Requires replacement if changed. ; Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									int64planmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+							},
+							"type": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Requires replacement if changed. ; Not Null; must be one of ["ERPX"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"ERPX",
+									),
+								},
+							},
+						},
+						Description: `Requires replacement if changed. `,
+					},
 					"facebook_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
@@ -2984,6 +3035,75 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						},
 						Description: `Requires replacement if changed. `,
 					},
+					"freshchat": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							objectplanmodifier.RequiresReplaceIfConfigured(),
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The universally unique identifier for the source. Requires replacement if changed. ; Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"entity": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The Freshchat resource. Example values: [Agents, Channels, Conversations, Conversation Messages]. Requires replacement if changed. ; Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									int64planmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+							},
+							"type": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Requires replacement if changed. ; Not Null; must be one of ["FRESHCHAT"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"FRESHCHAT",
+									),
+								},
+							},
+							"view": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									listplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								ElementType: types.StringType,
+								Description: `Only when Entity is related to Deals. Select which views you want Etleap to pull data from. Requires replacement if changed. `,
+							},
+						},
+						Description: `Requires replacement if changed. `,
+					},
 					"freshsales": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
@@ -3039,6 +3159,16 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 										"FRESHSALES",
 									),
 								},
+							},
+							"view": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									listplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								ElementType: types.StringType,
+								Description: `Only when Entity is related to Deals. Select which views you want Etleap to pull data from. Requires replacement if changed. `,
 							},
 						},
 						Description: `Requires replacement if changed. `,
@@ -3129,7 +3259,16 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified. Requires replacement if changed. `,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified. Requires replacement if changed. `,
+							},
+							"glob_pattern": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `A glob pattern to be used as a path. Either ` + "`" + `globPattern` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified, but not both. Requires replacement if changed. `,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
@@ -3177,9 +3316,8 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 								Optional:    true,
 								ElementType: types.StringType,
-								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. Requires replacement if changed. ; Not Null`,
+								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. ` + "`" + `paths` + "`" + ` can't be used when a ` + "`" + `globPattern` + "`" + ` is specified. Requires replacement if changed. `,
 								Validators: []validator.List{
-									speakeasy_listvalidators.NotNull(),
 									listvalidator.SizeAtLeast(1),
 								},
 							},
@@ -3371,134 +3509,6 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						},
 						Description: `Requires replacement if changed. `,
 					},
-					"google_analytics": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
-							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
-						},
-						Optional: true,
-						Attributes: map[string]schema.Attribute{
-							"connection_id": schema.StringAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-								},
-								Optional:    true,
-								Description: `The universally unique identifier for the source. Requires replacement if changed. ; Not Null`,
-								Validators: []validator.String{
-									speakeasy_stringvalidators.NotNull(),
-								},
-							},
-							"dimensions": schema.ListAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.List{
-									listplanmodifier.RequiresReplaceIfConfigured(),
-									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-								},
-								Optional:    true,
-								ElementType: types.StringType,
-								Description: `Requires replacement if changed. ; Not Null`,
-								Validators: []validator.List{
-									speakeasy_listvalidators.NotNull(),
-									listvalidator.SizeAtLeast(1),
-								},
-							},
-							"entity": schema.StringAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-								},
-								Optional:    true,
-								Description: `The full name of the site in Google Analytics. Requires replacement if changed. ; Not Null`,
-								Validators: []validator.String{
-									speakeasy_stringvalidators.NotNull(),
-								},
-							},
-							"latency_threshold": schema.Int64Attribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
-									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
-								},
-								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
-							},
-							"max_accuracy_start_date": schema.StringAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-								},
-								Optional:    true,
-								Description: `Format of the timestamp: 'yyyy-MM-dd'. Requires replacement if changed. `,
-								Validators: []validator.String{
-									validators.IsValidDate(),
-								},
-							},
-							"metrics": schema.ListAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.List{
-									listplanmodifier.RequiresReplaceIfConfigured(),
-									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-								},
-								Optional:    true,
-								ElementType: types.StringType,
-								Description: `Requires replacement if changed. ; Not Null`,
-								Validators: []validator.List{
-									speakeasy_listvalidators.NotNull(),
-									listvalidator.SizeAtLeast(1),
-								},
-							},
-							"segment": schema.StringAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-								},
-								Optional:    true,
-								Description: `Requires replacement if changed. `,
-							},
-							"service": schema.StringAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-								},
-								Optional: true,
-								MarkdownDescription: `| | |` + "\n" +
-									`| - | - |` + "\n" +
-									`| ` + "`" + `REPORTING` + "`" + ` | Gives you access to Google Analytics data, including segments. |` + "\n" +
-									`| ` + "`" + `MULTI_CHANNEL_FUNNELS ` + "`" + ` | Get conversion path data which shows user interactions with various traffic sources. |` + "\n" +
-									`Requires replacement if changed. ; Not Null; must be one of ["REPORTING", "MULTI_CHANNEL_FUNNELS"]`,
-								Validators: []validator.String{
-									speakeasy_stringvalidators.NotNull(),
-									stringvalidator.OneOf(
-										"REPORTING",
-										"MULTI_CHANNEL_FUNNELS",
-									),
-								},
-							},
-							"type": schema.StringAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
-									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-								},
-								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["GOOGLE_ANALYTICS"]`,
-								Validators: []validator.String{
-									speakeasy_stringvalidators.NotNull(),
-									stringvalidator.OneOf(
-										"GOOGLE_ANALYTICS",
-									),
-								},
-							},
-						},
-						Description: `Requires replacement if changed. `,
-					},
 					"google_analytics_ga4": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
@@ -3613,7 +3623,16 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified. Requires replacement if changed. `,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified. Requires replacement if changed. `,
+							},
+							"glob_pattern": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `A glob pattern to be used as a path. Either ` + "`" + `globPattern` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified, but not both. Requires replacement if changed. `,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
@@ -3661,9 +3680,8 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 								Optional:    true,
 								ElementType: types.StringType,
-								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. Requires replacement if changed. ; Not Null`,
+								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. ` + "`" + `paths` + "`" + ` can't be used when a ` + "`" + `globPattern` + "`" + ` is specified. Requires replacement if changed. `,
 								Validators: []validator.List{
-									speakeasy_listvalidators.NotNull(),
 									listvalidator.SizeAtLeast(1),
 								},
 							},
@@ -5859,7 +5877,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified. Requires replacement if changed. `,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified. Requires replacement if changed. `,
 							},
 							"files_can_change": schema.BoolAttribute{
 								Computed: true,
@@ -5976,7 +5994,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified. Requires replacement if changed. `,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified. Requires replacement if changed. `,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
@@ -6444,7 +6462,16 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified. Requires replacement if changed. `,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified. Requires replacement if changed. `,
+							},
+							"glob_pattern": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `A glob pattern to be used as a path. Either ` + "`" + `globPattern` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified, but not both. Requires replacement if changed. `,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
@@ -6492,9 +6519,8 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 								Optional:    true,
 								ElementType: types.StringType,
-								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. Requires replacement if changed. ; Not Null`,
+								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. ` + "`" + `paths` + "`" + ` can't be used when a ` + "`" + `globPattern` + "`" + ` is specified. Requires replacement if changed. `,
 								Validators: []validator.List{
-									speakeasy_listvalidators.NotNull(),
 									listvalidator.SizeAtLeast(1),
 								},
 							},
@@ -6820,7 +6846,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]`,
+								Description: `Requires replacement if changed. ; Not Null; must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6835,13 +6861,14 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 										"ELASTICSEARCH",
 										"ELLUMINATE",
 										"ELOQUA",
+										"ERPX",
 										"FACEBOOK_ADS",
 										"FIFTEEN_FIVE",
+										"FRESHCHAT",
 										"FRESHSALES",
 										"FRESHWORKS",
 										"FTP",
 										"GONG",
-										"GOOGLE_ANALYTICS",
 										"GOOGLE_ANALYTICS_GA4",
 										"GOOGLE_CLOUD_STORAGE",
 										"GOOGLE_ADS",
@@ -7288,7 +7315,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Regular expression matching the names of the files to be processed by this pipeline. ` + "`" + `fileNameFilter` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified. Requires replacement if changed. `,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified. Requires replacement if changed. `,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
@@ -8587,6 +8614,7 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
 	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
+	// Etleap monkey-patch
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
 		data.Destination.Redshift = data.Destinations[0].Destination.Redshift
@@ -8643,6 +8671,7 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
 	}
 	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
 
+	// Etleap monkey-patch
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
 		data.Destination.Redshift = data.Destinations[0].Destination.Redshift
@@ -8672,13 +8701,36 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	id := data.ID.ValueString()
 	pipelineUpdate := *data.ToSharedPipelineUpdate()
 
-	schemaChanges := data.Destination.Redshift.AutomaticSchemaChanges.ValueBool()
-	connectionId := data.Destination.Redshift.ConnectionID.ValueString()
+	// Etleap monkey-patch
+	var schemaChanges bool
+	var connectionId string
+	var schema string
+	var table string
+	if data.Destination.Redshift != nil {
+		schemaChanges = data.Destination.Redshift.AutomaticSchemaChanges.ValueBool()
+		connectionId = data.Destination.Redshift.ConnectionID.ValueString()
+		schema = data.Destination.Redshift.Schema.ValueString()
+		table = data.Destination.Redshift.Table.ValueString()
+	} else if data.Destination.Snowflake != nil {
+		schemaChanges = data.Destination.Snowflake.AutomaticSchemaChanges.ValueBool()
+		connectionId = data.Destination.Snowflake.ConnectionID.ValueString()
+		schema = data.Destination.Snowflake.Schema.ValueString()
+		table = data.Destination.Snowflake.Table.ValueString()
+	} else if data.Destination.DeltaLake != nil {
+		schemaChanges = data.Destination.DeltaLake.AutomaticSchemaChanges.ValueBool()
+		connectionId = data.Destination.DeltaLake.ConnectionID.ValueString()
+		schema = data.Destination.DeltaLake.Schema.ValueString()
+		table = data.Destination.DeltaLake.Table.ValueString()
+	}
+
 	var destUpdate *shared.DestinationUpdate = &shared.DestinationUpdate{
 		ConnectionID:           connectionId,
 		AutomaticSchemaChanges: &schemaChanges,
+		Schema:                 &schema,
+		Table:                  &table,
 	}
 	pipelineUpdate.DestinationUpdate = []shared.DestinationUpdate{*destUpdate}
+	// Etleap monkey-patch end
 
 	request := operations.UpdatePipelineRequest{
 		ID:             id,
@@ -8704,6 +8756,31 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
+
+	// Etleap monkey-patch
+	// Waiting for rename to complete
+	if destUpdate.Schema != nil || destUpdate.Table != nil {
+		var originalSchema string
+		var originalTable string
+		if data.Destination.Redshift != nil {
+			originalSchema = data.Destination.Redshift.Schema.String()
+			originalTable = data.Destination.Redshift.Table.String()
+		} else if data.Destination.Snowflake != nil {
+			originalSchema = data.Destination.Snowflake.Schema.String()
+			originalTable = data.Destination.Snowflake.Table.String()
+		} else if data.Destination.DeltaLake != nil {
+			originalSchema = data.Destination.DeltaLake.Schema.String()
+			originalTable = data.Destination.DeltaLake.Table.String()
+		}
+
+		_, err = waitPipelineRenamed(ctx, r, id, connectionId, originalSchema, originalTable, *destUpdate.Schema, *destUpdate.Table)
+		if err != nil {
+			resp.Diagnostics.AddError("failed while waiting for pipeline rename", err.Error())
+			return
+		}
+	}
+	// Etleap monkey-patch end
+
 	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
@@ -8733,6 +8810,7 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
+	// Etleap monkey-patch
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
 		data.Destination.Redshift = data.Destinations[0].Destination.Redshift
@@ -8790,4 +8868,76 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
 
 func (r *PipelineResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
+}
+
+// Etleap monkey-patch functions
+func waitPipelineRenamed(ctx context.Context, r *PipelineResource, pipelineId string, destinationId string, originalSchema string, originalTable string, newSchema string, newTable string) (*operations.GetPipelineRequest, error) {
+	const (
+		timeout = 15 * time.Minute
+	)
+	
+	stateConf := &retry.StateChangeConf{
+		Pending:    []string{originalSchema + "." + originalTable},
+		Target:     []string{newSchema + "." + newTable},
+		Refresh:    getPipelineSchemaAndTable(ctx, r, pipelineId, destinationId),
+		Timeout:    timeout,
+		MinTimeout: 10 * time.Second,
+		Delay:      30 * time.Second,
+	}
+
+	outputRaw, err := stateConf.WaitForStateContext(ctx)
+
+	if output, ok := outputRaw.(*operations.GetPipelineRequest); ok {
+		return output, err
+	}
+
+	return nil, err
+}
+
+func getPipelineSchemaAndTable(ctx context.Context, r *PipelineResource, pipelineId string, destinationId string) retry.StateRefreshFunc {
+	return func() (interface{}, string, error) {
+	
+		request := operations.GetPipelineRequest{
+			ID: pipelineId,
+		}
+		res, err := r.client.Pipeline.Get(ctx, request)
+		
+		if err != nil {
+			return nil, "", fmt.Errorf("failed to get pipeline %s: %w", pipelineId, err)
+		}
+
+		if res == nil || res.PipelineOutput == nil || res.PipelineOutput.Destinations == nil {
+			return nil, "", fmt.Errorf("missing expected body for pipeline %s, response: %s", pipelineId, debugResponse(res.RawResponse))
+		}
+
+		destinationIndex := slices.IndexFunc(res.PipelineOutput.Destinations, func(destination shared.DestinationInfoAndPipelineVersions) bool {
+			return destination.Destination.DestinationRedshift.ConnectionID == destinationId
+		})
+
+		if destinationIndex == -1 {
+			return nil, "", fmt.Errorf("missing expected destination %s for pipeline %s, response: %s", destinationId, pipelineId, debugResponse(res.RawResponse))
+		}
+
+		var finalSchemaName string
+		var finalTableName string
+		for _, destination := range res.PipelineOutput.Destinations {
+			if destination.Destination.DestinationRedshift != nil && destination.Destination.DestinationRedshift.ConnectionID == destinationId {
+				finalSchemaName = *destination.Destination.DestinationRedshift.Schema
+				finalTableName = destination.Destination.DestinationRedshift.Table
+			} else if destination.Destination.DestinationSnowflake != nil && destination.Destination.DestinationSnowflake.ConnectionID == destinationId {
+				finalSchemaName = *destination.Destination.DestinationSnowflake.Schema
+				finalTableName = destination.Destination.DestinationSnowflake.Table
+			} else if destination.Destination.DestinationDeltaLake != nil && destination.Destination.DestinationDeltaLake.ConnectionID == destinationId {
+				finalSchemaName = destination.Destination.DestinationDeltaLake.Schema
+				finalTableName = destination.Destination.DestinationDeltaLake.Table
+			}
+
+			if finalTableName != "" {
+				// Found the lucky one
+				break
+			}
+		}
+
+		return res, finalSchemaName + "." + finalTableName, nil
+	}
 }

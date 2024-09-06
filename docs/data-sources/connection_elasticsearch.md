@@ -14,7 +14,7 @@ ConnectionELASTICSEARCH DataSource
 
 ```terraform
 data "etleap_connection_elasticsearch" "my_connectionelasticsearch" {
-  id = "a76d6e7a-a77d-4674-a5f3-719b9386785f"
+  id = "7aa77d67-425f-4371-9b93-86785f0be613"
 }
 ```
 

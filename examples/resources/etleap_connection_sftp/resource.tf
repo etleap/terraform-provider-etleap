@@ -1,10 +1,10 @@
 resource "etleap_connection_sftp" "my_connectionsftp" {
   base_directory              = "...my_base_directory..."
   deletion_of_export_products = false
-  hostname                    = "potable-gather.com"
-  name                        = "Mae Bartell"
+  hostname                    = "complete-altar.name"
+  name                        = "Natalie Price"
   password                    = "...my_password..."
-  port                        = 9
+  port                        = 0
   type                        = "SFTP"
-  username                    = "Richmond22"
+  username                    = "Dayana.Fadel"
 }

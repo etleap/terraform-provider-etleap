@@ -41,24 +41,25 @@ type ConnectionSNOWFLAKEResource struct {
 
 // ConnectionSNOWFLAKEResourceModel describes the resource data model.
 type ConnectionSNOWFLAKEResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	Address                  types.String            `tfsdk:"address"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	Database                 types.String            `tfsdk:"database"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Password                 types.String            `tfsdk:"password"`
-	Role                     types.String            `tfsdk:"role"`
-	Roles                    []types.String          `tfsdk:"roles"`
-	Schema                   types.String            `tfsdk:"schema"`
-	SourceOnly               types.Bool              `tfsdk:"source_only"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	Username                 types.String            `tfsdk:"username"`
-	Warehouse                types.String            `tfsdk:"warehouse"`
+	Active                   types.Bool                    `tfsdk:"active"`
+	Address                  types.String                  `tfsdk:"address"`
+	Authentication           *SnowflakeAuthenticationTypes `tfsdk:"authentication"`
+	CreateDate               types.String                  `tfsdk:"create_date"`
+	Database                 types.String                  `tfsdk:"database"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule       `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                    `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                  `tfsdk:"id"`
+	Name                     types.String                  `tfsdk:"name"`
+	Password                 types.String                  `tfsdk:"password"`
+	Role                     types.String                  `tfsdk:"role"`
+	Roles                    []types.String                `tfsdk:"roles"`
+	Schema                   types.String                  `tfsdk:"schema"`
+	SourceOnly               types.Bool                    `tfsdk:"source_only"`
+	Status                   types.String                  `tfsdk:"status"`
+	Type                     types.String                  `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes          `tfsdk:"update_schedule"`
+	Username                 types.String                  `tfsdk:"username"`
+	Warehouse                types.String                  `tfsdk:"warehouse"`
 }
 
 func (r *ConnectionSNOWFLAKEResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -82,6 +83,97 @@ func (r *ConnectionSNOWFLAKEResource) Schema(ctx context.Context, req resource.S
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
+			},
+			"authentication": schema.SingleNestedAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
+				Optional: true,
+				Attributes: map[string]schema.Attribute{
+					"key_pair": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"private_key": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"public_key": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"type": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["PASSWORD", "KEY_PAIR"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"PASSWORD",
+										"KEY_PAIR",
+									),
+								},
+							},
+						},
+						Description: `Snowflake Key Pair Authentication`,
+					},
+					"password": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"password": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"type": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["PASSWORD", "KEY_PAIR"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"PASSWORD",
+										"KEY_PAIR",
+									),
+								},
+							},
+						},
+						Description: `Snowflake Password Authentication`,
+					},
+				},
+				Description: `Snowflake Authentication Types`,
+				Validators: []validator.Object{
+					validators.ExactlyOneChild(),
+				},
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,
@@ -303,7 +395,7 @@ func (r *ConnectionSNOWFLAKEResource) Schema(ctx context.Context, req resource.S
 				Description: `The unique name of this connection.`,
 			},
 			"password": schema.StringAttribute{
-				Required: true,
+				Optional: true,
 			},
 			"role": schema.StringAttribute{
 				Computed: true,
@@ -323,10 +415,11 @@ func (r *ConnectionSNOWFLAKEResource) Schema(ctx context.Context, req resource.S
 				Description: `When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.`,
 			},
 			"schema": schema.StringAttribute{
+				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Required:    true,
+				Optional:    true,
 				Description: `Take into account that the schema is case sensitive`,
 			},
 			"source_only": schema.BoolAttribute{

@@ -243,6 +243,7 @@ func (r *ModelDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 										},
 									},
 								},
+								Description: `Can either be one the strings ` + "`" + `ALL` + "`" + `, ` + "`" + `AUTO` + "`" + ` or ` + "`" + `EVEN` + "`" + `, or an object for ` + "`" + `KEY` + "`" + ` distribution that specifies a column.`,
 							},
 							"materialized_view": schema.BoolAttribute{
 								Computed: true,

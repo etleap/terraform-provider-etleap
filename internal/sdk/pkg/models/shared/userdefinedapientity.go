@@ -48,7 +48,7 @@ type UserDefinedAPIEntity struct {
 	APIURL string `json:"apiUrl"`
 	// The [JMESPath](https://jmespath.org/) expression that converts the API response into an array containing one JSON object per record.
 	PathToResults string `json:"pathToResults"`
-	// The pipeline mode.
+	// Can be either the string `REPLACE` or one of the supported objects.
 	PipelineMode UserDefinedAPIPipelineMode `json:"pipelineMode"`
 	// The paging strategy.
 	PagingStrategy *PagingStrategy `json:"pagingStrategy,omitempty"`

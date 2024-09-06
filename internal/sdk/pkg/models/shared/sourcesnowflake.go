@@ -21,13 +21,14 @@ const (
 	SourceSnowflakeTypeElasticsearch            SourceSnowflakeType = "ELASTICSEARCH"
 	SourceSnowflakeTypeElluminate               SourceSnowflakeType = "ELLUMINATE"
 	SourceSnowflakeTypeEloqua                   SourceSnowflakeType = "ELOQUA"
+	SourceSnowflakeTypeErpx                     SourceSnowflakeType = "ERPX"
 	SourceSnowflakeTypeFacebookAds              SourceSnowflakeType = "FACEBOOK_ADS"
 	SourceSnowflakeTypeFifteenFive              SourceSnowflakeType = "FIFTEEN_FIVE"
+	SourceSnowflakeTypeFreshchat                SourceSnowflakeType = "FRESHCHAT"
 	SourceSnowflakeTypeFreshsales               SourceSnowflakeType = "FRESHSALES"
 	SourceSnowflakeTypeFreshworks               SourceSnowflakeType = "FRESHWORKS"
 	SourceSnowflakeTypeFtp                      SourceSnowflakeType = "FTP"
 	SourceSnowflakeTypeGong                     SourceSnowflakeType = "GONG"
-	SourceSnowflakeTypeGoogleAnalytics          SourceSnowflakeType = "GOOGLE_ANALYTICS"
 	SourceSnowflakeTypeGoogleAnalyticsGa4       SourceSnowflakeType = "GOOGLE_ANALYTICS_GA4"
 	SourceSnowflakeTypeGoogleCloudStorage       SourceSnowflakeType = "GOOGLE_CLOUD_STORAGE"
 	SourceSnowflakeTypeGoogleAds                SourceSnowflakeType = "GOOGLE_ADS"
@@ -128,9 +129,13 @@ func (e *SourceSnowflakeType) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "ELOQUA":
 		fallthrough
+	case "ERPX":
+		fallthrough
 	case "FACEBOOK_ADS":
 		fallthrough
 	case "FIFTEEN_FIVE":
+		fallthrough
+	case "FRESHCHAT":
 		fallthrough
 	case "FRESHSALES":
 		fallthrough
@@ -139,8 +144,6 @@ func (e *SourceSnowflakeType) UnmarshalJSON(data []byte) error {
 	case "FTP":
 		fallthrough
 	case "GONG":
-		fallthrough
-	case "GOOGLE_ANALYTICS":
 		fallthrough
 	case "GOOGLE_ANALYTICS_GA4":
 		fallthrough

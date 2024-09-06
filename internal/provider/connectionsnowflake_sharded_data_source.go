@@ -174,6 +174,35 @@ func (r *ConnectionSNOWFLAKESHARDEDDataSource) Schema(ctx context.Context, req d
 						"address": schema.StringAttribute{
 							Computed: true,
 						},
+						"authentication": schema.SingleNestedAttribute{
+							Computed: true,
+							Attributes: map[string]schema.Attribute{
+								"key_pair": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"public_key": schema.StringAttribute{
+											Computed: true,
+										},
+										"type": schema.StringAttribute{
+											Computed:    true,
+											Description: `must be one of ["PASSWORD", "KEY_PAIR"]`,
+										},
+									},
+									Description: `Snowflake Key Pair Authentication`,
+								},
+								"password": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"type": schema.StringAttribute{
+											Computed:    true,
+											Description: `must be one of ["PASSWORD", "KEY_PAIR"]`,
+										},
+									},
+									Description: `Snowflake Password Authentication`,
+								},
+							},
+							Description: `Snowflake Authentication Types`,
+						},
 						"database": schema.StringAttribute{
 							Computed: true,
 						},

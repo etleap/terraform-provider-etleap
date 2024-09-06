@@ -14,7 +14,7 @@ ConnectionVEEVA DataSource
 
 ```terraform
 data "etleap_connection_veeva" "my_connectionveeva" {
-  id = "f93349ac-d501-43e0-8d33-c77143d4b5f2"
+  id = "e3bff739-5bc9-4773-b88a-fed831c3f77a"
 }
 ```
 
@@ -33,6 +33,7 @@ data "etleap_connection_veeva" "my_connectionveeva" {
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 - `username` (String)
 - `vault_domain_name` (String) The vault domain name is part of the URL that you use to access your Veeva Vault. You can follow the<a target="_blank" href="https://developer.veevavault.com/docs/#authentication">'Structuring the Endpoint'</a> instructions to find the URL.
+- `vault_type` (String) Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY. must be one of ["QUALITY", "CTMS", "RIM", "PROMOMATS"]
 
 <a id="nestedatt--default_update_schedule"></a>
 ### Nested Schema for `default_update_schedule`
