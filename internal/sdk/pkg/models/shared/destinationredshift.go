@@ -45,8 +45,6 @@ type DestinationRedshift struct {
 	// The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 	Schema *string `json:"schema,omitempty"`
 	Table  string  `json:"table"`
-	SchemaChangingTo *string `json:"schemaChangingTo,omitempty"`
-	TableChangingTo  *string `json:"tableChangingTo,omitempty"`
 	// The sort columns to use.
 	SortColumns []string `json:"sortColumns,omitempty"`
 	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
