@@ -8617,9 +8617,9 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
 	// Etleap monkey-patch
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
-		data.Destination.Redshift 	= data.Destinations[0].Destination.Redshift
-		data.Destination.Snowflake 	= data.Destinations[0].Destination.Snowflake
-		data.Destination.DeltaLake 	= data.Destinations[0].Destination.DeltaLake
+		data.Destination.Redshift = data.Destinations[0].Destination.Redshift
+		data.Destination.Snowflake = data.Destinations[0].Destination.Snowflake
+		data.Destination.DeltaLake = data.Destinations[0].Destination.DeltaLake
 		data.Destination.S3DataLake = data.Destinations[0].Destination.S3DataLake
 	}
 
@@ -8674,9 +8674,9 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
 	// Etleap monkey-patch
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
-		data.Destination.Redshift 	= data.Destinations[0].Destination.Redshift
-		data.Destination.Snowflake 	= data.Destinations[0].Destination.Snowflake
-		data.Destination.DeltaLake 	= data.Destinations[0].Destination.DeltaLake
+		data.Destination.Redshift = data.Destinations[0].Destination.Redshift
+		data.Destination.Snowflake = data.Destinations[0].Destination.Snowflake
+		data.Destination.DeltaLake = data.Destinations[0].Destination.DeltaLake
 		data.Destination.S3DataLake = data.Destinations[0].Destination.S3DataLake
 	}
 
@@ -8738,7 +8738,7 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	}
 	res, err := r.client.Pipeline.Update(ctx, request)
 	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API eyo", err.Error())
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
 			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
 		}
@@ -8813,9 +8813,9 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	// Etleap monkey-patch
 	existingDestination := data.Destination.Redshift
 	if existingDestination == nil {
-		data.Destination.Redshift 	= data.Destinations[0].Destination.Redshift
-		data.Destination.Snowflake 	= data.Destinations[0].Destination.Snowflake
-		data.Destination.DeltaLake 	= data.Destinations[0].Destination.DeltaLake
+		data.Destination.Redshift = data.Destinations[0].Destination.Redshift
+		data.Destination.Snowflake = data.Destinations[0].Destination.Snowflake
+		data.Destination.DeltaLake = data.Destinations[0].Destination.DeltaLake
 		data.Destination.S3DataLake = data.Destinations[0].Destination.S3DataLake
 	}
 
@@ -8873,7 +8873,7 @@ func (r *PipelineResource) ImportState(ctx context.Context, req resource.ImportS
 // Etleap monkey-patch functions
 func waitPipelineRenamed(ctx context.Context, r *PipelineResource, pipelineId string, destinationId string, originalSchema string, originalTable string, newSchema string, newTable string) (*operations.GetPipelineRequest, error) {
 	const (
-		timeout = 75 * time.Minute
+		timeout = 15 * time.Minute
 	)
 	
 	stateConf := &retry.StateChangeConf{
