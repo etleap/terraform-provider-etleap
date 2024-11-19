@@ -9,7 +9,7 @@ generation:
     nameResolutionDec2023: true
     parameterOrderingFeb2024: false
 terraform:
-  version: 0.1.4
+  version: 0.1.5
   author: etleap
   imports:
     option: openapi
