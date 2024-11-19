@@ -3,3 +3,4 @@
 /internal/sdk/pkg/models/shared/destinationredshift.go
 /internal/sdk/pkg/models/shared/destinationsnowflake.go
 /internal/sdk/pkg/models/shared/destinationdeltalake.go
+/internal/provider/provider.go
