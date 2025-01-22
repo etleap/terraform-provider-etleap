@@ -11,9 +11,7 @@ import (
 type Format string
 
 const (
-	FormatYyyyMmDdThhMmSsX Format = "yyyy-MM-ddTHH:mm:ssX"
-	FormatYyyyMmDdThhMmSsZ Format = "yyyy-MM-ddTHH:mm:ssZ"
-	FormatYyyyMmDd         Format = "yyyy-MM-dd"
+	FormatYyyyMmDd Format = "yyyy-MM-dd"
 )
 
 func (e Format) ToPointer() *Format {
@@ -26,10 +24,6 @@ func (e *Format) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
-	case "yyyy-MM-ddTHH:mm:ssX":
-		fallthrough
-	case "yyyy-MM-ddTHH:mm:ssZ":
-		fallthrough
 	case "yyyy-MM-dd":
 		*e = Format(v)
 		return nil
@@ -38,38 +32,38 @@ func (e *Format) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type WatermarkKeyValuePair struct {
+type WatermarkDateonlyKeyValuePair struct {
 	Key    string  `json:"key"`
 	Value  string  `json:"value"`
-	Format *Format `default:"yyyy-MM-ddTHH:mm:ssX" json:"format"`
+	Format *Format `default:"yyyy-MM-dd" json:"format"`
 }
 
-func (w WatermarkKeyValuePair) MarshalJSON() ([]byte, error) {
+func (w WatermarkDateonlyKeyValuePair) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(w, "", false)
 }
 
-func (w *WatermarkKeyValuePair) UnmarshalJSON(data []byte) error {
+func (w *WatermarkDateonlyKeyValuePair) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &w, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *WatermarkKeyValuePair) GetKey() string {
+func (o *WatermarkDateonlyKeyValuePair) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
 }
 
-func (o *WatermarkKeyValuePair) GetValue() string {
+func (o *WatermarkDateonlyKeyValuePair) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
 }
 
-func (o *WatermarkKeyValuePair) GetFormat() *Format {
+func (o *WatermarkDateonlyKeyValuePair) GetFormat() *Format {
 	if o == nil {
 		return nil
 	}

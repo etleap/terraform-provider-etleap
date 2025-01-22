@@ -6,7 +6,7 @@ resource "etleap_connection_s3_data_lake" "my_connections3_data_lake" {
   iam_role                    = "...my_iam_role..."
   input_bucket                = "...my_input_bucket..."
   kms_key                     = "...my_kms_key..."
-  name                        = "Carlton Pfeffer"
+  name                        = "Devin Franey"
   type                        = "S3_DATA_LAKE"
-  write_manifest              = true
+  write_manifest              = false
 }

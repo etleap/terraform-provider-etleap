@@ -124,6 +124,39 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										},
 									},
 								},
+								"iceberg": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"automatic_schema_changes": schema.BoolAttribute{
+											Computed:    true,
+											Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `.`,
+										},
+										"connection_id": schema.StringAttribute{
+											Computed:    true,
+											Description: `The universally unique identifier of the destination connection.`,
+										},
+										"primary_key": schema.ListAttribute{
+											Computed:    true,
+											ElementType: types.StringType,
+											Description: `The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.`,
+										},
+										"schema": schema.StringAttribute{
+											Computed:    true,
+											Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used.`,
+										},
+										"table": schema.StringAttribute{
+											Computed: true,
+										},
+										"type": schema.StringAttribute{
+											Computed:    true,
+											Description: `must be one of ["ICEBERG"]`,
+										},
+										"wait_for_quality_check": schema.BoolAttribute{
+											Computed:    true,
+											Description: `If set to ` + "`" + `true` + "`" + `, a ` + "`" + `Transformation Complete` + "`" + ` event is published once a transformation completes, and the pipeline waits for a ` + "`" + `Quality Check Complete` + "`" + ` event before loading to the destination. Defaults to ` + "`" + `false` + "`" + `.`,
+										},
+									},
+								},
 								"redshift": schema.SingleNestedAttribute{
 									Computed: true,
 									Attributes: map[string]schema.Attribute{
@@ -341,7 +374,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 									},
 								},
 							},
-							Description: `Parsing errors that occur during the transformation of the pipeline.`,
+							Description: `Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline.`,
 						},
 						"refresh_version": schema.Int64Attribute{
 							Computed:    true,
@@ -398,7 +431,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 									Description: `Policy for the automatic deletion of rows in the destination.`,
 								},
 							},
-							Description: `Etleap can remove old rows from your destination. This is a summary of the data retention.`,
+							Description: `Etleap can remove old rows from your destination. This is a summary of the data retention. If a pipeline is being refreshed, this will be the summary for the refreshing pipeline.`,
 						},
 						"schema_change_activity": schema.ListNestedAttribute{
 							Computed: true,
@@ -413,7 +446,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 									},
 								},
 							},
-							Description: `Array of schema change objects.`,
+							Description: `Array of schema change objects. If a pipeline is being refreshed, the schema change activities will be for the refreshing pipeline.`,
 						},
 					},
 				},
@@ -663,6 +696,69 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"type": schema.StringAttribute{
 								Computed:    true,
 								Description: `must be one of ["BLACKLINE"]`,
+							},
+						},
+					},
+					"braintree": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The Braintree entity.`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["BRAINTREE"]`,
+							},
+						},
+					},
+					"confluent_cloud": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `You can ingest data from Kafka topics in your Confluent Cloud cluster.`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["CONFLUENT_CLOUD"]`,
+							},
+						},
+					},
+					"coupa": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The Coupa resource. Example: Approvals, Items, Suppliers.`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["COUPA"]`,
 							},
 						},
 					},
@@ -920,7 +1016,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"breakdowns": schema.ListAttribute{
 								Computed:    true,
 								ElementType: types.StringType,
-								Description: `The breakdown fields. The first one must be ` + "`" + `date_start` + "`" + `. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v19.0#insights-api-breakdowns)`,
+								Description: `The breakdown fields. The first one must be ` + "`" + `date_start` + "`" + `. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v21.0#insights-api-breakdowns)`,
 							},
 							"connection_id": schema.StringAttribute{
 								Computed:    true,
@@ -2214,6 +2310,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
+					"service_now": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The ServiceNow entity. Example values: [Task, Problem, Incident]`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["SERVICE_NOW"]`,
+							},
+						},
+					},
 					"sftp": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -2368,7 +2485,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"type": schema.StringAttribute{
 								Computed:    true,
-								Description: `must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]`,
+								Description: `must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "BRAINTREE", "CONFLUENT_CLOUD", "COUPA", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SERVICE_NOW", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]`,
 							},
 						},
 					},
@@ -2879,7 +2996,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 			},
 			"stop_reason": schema.StringAttribute{
 				Computed:    true,
-				Description: `Describes the reason a pipeline has stopped. ` + "`" + `null` + "`" + ` if the pipeline is currently running. must be one of ["PAUSED", "PARSING_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE"]`,
+				Description: `Describes the reason a pipeline has stopped. ` + "`" + `null` + "`" + ` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline. must be one of ["PAUSED", "PARSING_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE"]`,
 			},
 			"update_schedule": schema.SingleNestedAttribute{
 				Computed: true,

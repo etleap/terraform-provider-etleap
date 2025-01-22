@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-// StopReason - Describes the reason a pipeline has stopped. `null` if the pipeline is currently running.
+// StopReason - Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline.
 type StopReason string
 
 const (

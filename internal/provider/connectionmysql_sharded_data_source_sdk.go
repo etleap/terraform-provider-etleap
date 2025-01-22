@@ -64,6 +64,7 @@ func (r *ConnectionMYSQLSHARDEDDataSourceModel) RefreshFromSharedConnectionMysql
 	}
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
+	r.RequireSslAndValidateCertificate = types.BoolPointerValue(resp.RequireSslAndValidateCertificate)
 	if len(r.Shards) > len(resp.Shards) {
 		r.Shards = r.Shards[:len(resp.Shards)]
 	}
@@ -126,5 +127,4 @@ func (r *ConnectionMYSQLSHARDEDDataSourceModel) RefreshFromSharedConnectionMysql
 			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
 		}
 	}
-	r.ValidateSslCert = types.BoolPointerValue(resp.ValidateSslCert)
 }

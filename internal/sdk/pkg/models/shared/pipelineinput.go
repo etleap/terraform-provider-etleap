@@ -65,6 +65,18 @@ func (o *PipelineInput) GetSourceBlackline() *SourceBlackline {
 	return o.GetSource().SourceBlackline
 }
 
+func (o *PipelineInput) GetSourceBraintree() *SourceBraintree {
+	return o.GetSource().SourceBraintree
+}
+
+func (o *PipelineInput) GetSourceConfluentCloud() *SourceConfluentCloud {
+	return o.GetSource().SourceConfluentCloud
+}
+
+func (o *PipelineInput) GetSourceCoupa() *SourceCoupa {
+	return o.GetSource().SourceCoupa
+}
+
 func (o *PipelineInput) GetSourceCriteo() *SourceCriteo {
 	return o.GetSource().SourceCriteo
 }
@@ -281,6 +293,10 @@ func (o *PipelineInput) GetSourceSeismic() *SourceSeismic {
 	return o.GetSource().SourceSeismic
 }
 
+func (o *PipelineInput) GetSourceServiceNow() *SourceServiceNow {
+	return o.GetSource().SourceServiceNow
+}
+
 func (o *PipelineInput) GetSourceShopify() *SourceShopify {
 	return o.GetSource().SourceShopify
 }
@@ -406,6 +422,10 @@ func (o *PipelineInput) GetDestinationDeltaLake() *DestinationDeltaLake {
 
 func (o *PipelineInput) GetDestinationS3DataLake() *DestinationS3DataLake {
 	return o.GetDestination().DestinationS3DataLake
+}
+
+func (o *PipelineInput) GetDestinationIceberg() *DestinationIceberg {
+	return o.GetDestination().DestinationIceberg
 }
 
 func (o *PipelineInput) GetScript() *ScriptOrLegacyScriptInput {

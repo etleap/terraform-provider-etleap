@@ -4,6 +4,6 @@ resource "etleap_connection_freshworks" "my_connectionfreshworks" {
   freshcaller_domain          = "...my_freshcaller_domain..."
   freshdesk_api_key           = "...my_freshdesk_api_key..."
   freshdesk_domain            = "...my_freshdesk_domain..."
-  name                        = "Rudolph Zulauf"
+  name                        = "Ronnie Huels"
   type                        = "FRESHWORKS"
 }

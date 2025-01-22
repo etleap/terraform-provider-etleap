@@ -1,20 +1,20 @@
 resource "etleap_connection_sap_hana_sharded" "my_connectionsap_hana_sharded" {
   cdc_enabled                 = false
   deletion_of_export_products = true
-  name                        = "Grace Kshlerin"
+  name                        = "Lora Maggio"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "8561 Block Key"
+      address  = "2063 Alba Orchard"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 3
+      port     = 0
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "974 Nienow Unions"
-        username = "Keeley18"
+        address  = "6880 Dameon Groves"
+        username = "Gertrude_Terry"
       }
-      username = "Brigitte_Nader"
+      username = "Jay_McKenzie"
     },
   ]
   type = "SAP_HANA_SHARDED"

@@ -1,3 +1,3 @@
 data "etleap_connection_redshift_sharded" "my_connectionredshift_sharded" {
-  id = "d1d1bce2-3f5e-43cd-927f-15c11db2e4f2"
+  id = "c4b6888c-b8d8-4c28-8325-30ffd2dfe0bc"
 }

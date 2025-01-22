@@ -33,6 +33,19 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 			destinations1.Destination.DeltaLake.Type = types.StringValue(string(destinationsItem.Destination.DestinationDeltaLake.Type))
 			destinations1.Destination.DeltaLake.WaitForQualityCheck = types.BoolPointerValue(destinationsItem.Destination.DestinationDeltaLake.WaitForQualityCheck)
 		}
+		if destinationsItem.Destination.DestinationIceberg != nil {
+			destinations1.Destination.Iceberg = &DestinationIceberg{}
+			destinations1.Destination.Iceberg.AutomaticSchemaChanges = types.BoolPointerValue(destinationsItem.Destination.DestinationIceberg.AutomaticSchemaChanges)
+			destinations1.Destination.Iceberg.ConnectionID = types.StringValue(destinationsItem.Destination.DestinationIceberg.ConnectionID)
+			destinations1.Destination.Iceberg.PrimaryKey = nil
+			for _, v := range destinationsItem.Destination.DestinationIceberg.PrimaryKey {
+				destinations1.Destination.Iceberg.PrimaryKey = append(destinations1.Destination.Iceberg.PrimaryKey, types.StringValue(v))
+			}
+			destinations1.Destination.Iceberg.Schema = types.StringPointerValue(destinationsItem.Destination.DestinationIceberg.Schema)
+			destinations1.Destination.Iceberg.Table = types.StringValue(destinationsItem.Destination.DestinationIceberg.Table)
+			destinations1.Destination.Iceberg.Type = types.StringValue(string(destinationsItem.Destination.DestinationIceberg.Type))
+			destinations1.Destination.Iceberg.WaitForQualityCheck = types.BoolPointerValue(destinationsItem.Destination.DestinationIceberg.WaitForQualityCheck)
+		}
 		if destinationsItem.Destination.DestinationRedshift != nil {
 			destinations1.Destination.Redshift = &DestinationRedshift{}
 			destinations1.Destination.Redshift.AutomaticSchemaChanges = types.BoolPointerValue(destinationsItem.Destination.DestinationRedshift.AutomaticSchemaChanges)
@@ -305,6 +318,27 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Blackline.Entity = types.StringValue(resp.Source.SourceBlackline.Entity)
 		r.Source.Blackline.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceBlackline.LatencyThreshold)
 		r.Source.Blackline.Type = types.StringValue(string(resp.Source.SourceBlackline.Type))
+	}
+	if resp.Source.SourceBraintree != nil {
+		r.Source.Braintree = &SourceBraintree{}
+		r.Source.Braintree.ConnectionID = types.StringValue(resp.Source.SourceBraintree.ConnectionID)
+		r.Source.Braintree.Entity = types.StringValue(resp.Source.SourceBraintree.Entity)
+		r.Source.Braintree.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceBraintree.LatencyThreshold)
+		r.Source.Braintree.Type = types.StringValue(string(resp.Source.SourceBraintree.Type))
+	}
+	if resp.Source.SourceConfluentCloud != nil {
+		r.Source.ConfluentCloud = &SourceConfluentCloud{}
+		r.Source.ConfluentCloud.ConnectionID = types.StringValue(resp.Source.SourceConfluentCloud.ConnectionID)
+		r.Source.ConfluentCloud.Entity = types.StringValue(resp.Source.SourceConfluentCloud.Entity)
+		r.Source.ConfluentCloud.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceConfluentCloud.LatencyThreshold)
+		r.Source.ConfluentCloud.Type = types.StringValue(string(resp.Source.SourceConfluentCloud.Type))
+	}
+	if resp.Source.SourceCoupa != nil {
+		r.Source.Coupa = &SourceCoupa{}
+		r.Source.Coupa.ConnectionID = types.StringValue(resp.Source.SourceCoupa.ConnectionID)
+		r.Source.Coupa.Entity = types.StringValue(resp.Source.SourceCoupa.Entity)
+		r.Source.Coupa.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceCoupa.LatencyThreshold)
+		r.Source.Coupa.Type = types.StringValue(string(resp.Source.SourceCoupa.Type))
 	}
 	if resp.Source.SourceCriteo != nil {
 		r.Source.Criteo = &SourceCriteo{}
@@ -907,6 +941,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Seismic.Entity = types.StringValue(resp.Source.SourceSeismic.Entity)
 		r.Source.Seismic.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSeismic.LatencyThreshold)
 		r.Source.Seismic.Type = types.StringValue(string(resp.Source.SourceSeismic.Type))
+	}
+	if resp.Source.SourceServiceNow != nil {
+		r.Source.ServiceNow = &SourceServiceNow{}
+		r.Source.ServiceNow.ConnectionID = types.StringValue(resp.Source.SourceServiceNow.ConnectionID)
+		r.Source.ServiceNow.Entity = types.StringValue(resp.Source.SourceServiceNow.Entity)
+		r.Source.ServiceNow.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceServiceNow.LatencyThreshold)
+		r.Source.ServiceNow.Type = types.StringValue(string(resp.Source.SourceServiceNow.Type))
 	}
 	if resp.Source.SourceSftp != nil {
 		r.Source.Sftp = &SourceSftp{}

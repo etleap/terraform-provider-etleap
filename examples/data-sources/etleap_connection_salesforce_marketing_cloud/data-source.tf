@@ -1,3 +1,3 @@
 data "etleap_connection_salesforce_marketing_cloud" "my_connectionsalesforce_marketing_cloud" {
-  id = "b9d56dbd-7d1a-456f-8212-690368a0d2b2"
+  id = "8c08e448-ddb2-4237-8a72-481b6269371d"
 }

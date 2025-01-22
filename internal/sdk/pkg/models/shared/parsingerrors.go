@@ -2,7 +2,7 @@
 
 package shared
 
-// ParsingErrors - Parsing errors that occur during the transformation of the pipeline.
+// ParsingErrors - Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline.
 type ParsingErrors struct {
 	ParsingErrorsPerDay        []ParsingErrorPerDay         `json:"parsingErrorsPerDay"`
 	TypeErrorsByColumn         []TypeErrorsByColumn         `json:"typeErrorsByColumn"`

@@ -1,3 +1,3 @@
 data "etleap_connection_mixpanel" "my_connectionmixpanel" {
-  id = "345d7e4d-22d9-44d7-b73f-047ba88311bb"
+  id = "8f2e8e13-bc78-488e-a058-ef8adf1a552e"
 }

@@ -173,10 +173,8 @@ func (r *ConnectionDELTALAKEDataSource) Schema(ctx context.Context, req datasour
 				Description: `The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]`,
 			},
 			"type": schema.StringAttribute{
-				Computed: true,
-				MarkdownDescription: `<!-- theme: warning -->` + "\n" +
-					`> Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.` + "\n" +
-					`must be one of ["DELTA_LAKE"]`,
+				Computed:    true,
+				Description: `must be one of ["DELTA_LAKE"]`,
 			},
 			"update_schedule": schema.SingleNestedAttribute{
 				Computed: true,

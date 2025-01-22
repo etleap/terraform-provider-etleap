@@ -23,6 +23,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
@@ -852,113 +853,6 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 									},
 									Optional: true,
 									Attributes: map[string]schema.Attribute{
-										"begin_time_parameter": schema.SingleNestedAttribute{
-											Computed: true,
-											PlanModifiers: []planmodifier.Object{
-												objectplanmodifier.RequiresReplaceIfConfigured(),
-												speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
-											},
-											Optional: true,
-											Attributes: map[string]schema.Attribute{
-												"format": schema.StringAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.String{
-														stringplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-													},
-													Optional:    true,
-													Default:     stringdefault.StaticString("yyyy-MM-ddTHH:mm:ssX"),
-													Description: `Requires replacement if changed. ; must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]; Default: "yyyy-MM-ddTHH:mm:ssX"`,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"yyyy-MM-ddTHH:mm:ssX",
-															"yyyy-MM-ddTHH:mm:ssZ",
-															"yyyy-MM-dd",
-														),
-													},
-												},
-												"key": schema.StringAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.String{
-														stringplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-													},
-													Optional:    true,
-													Description: `Requires replacement if changed. ; Not Null`,
-													Validators: []validator.String{
-														speakeasy_stringvalidators.NotNull(),
-													},
-												},
-												"value": schema.StringAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.String{
-														stringplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-													},
-													Optional:    true,
-													Description: `Requires replacement if changed. ; Not Null`,
-													Validators: []validator.String{
-														speakeasy_stringvalidators.NotNull(),
-													},
-												},
-											},
-											Description: `Requires replacement if changed. ; Not Null`,
-											Validators: []validator.Object{
-												speakeasy_objectvalidators.NotNull(),
-											},
-										},
-										"end_time_parameter": schema.SingleNestedAttribute{
-											Computed: true,
-											PlanModifiers: []planmodifier.Object{
-												objectplanmodifier.RequiresReplaceIfConfigured(),
-												speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
-											},
-											Optional: true,
-											Attributes: map[string]schema.Attribute{
-												"format": schema.StringAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.String{
-														stringplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-													},
-													Optional:    true,
-													Default:     stringdefault.StaticString("yyyy-MM-ddTHH:mm:ssX"),
-													Description: `Requires replacement if changed. ; must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]; Default: "yyyy-MM-ddTHH:mm:ssX"`,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"yyyy-MM-ddTHH:mm:ssX",
-															"yyyy-MM-ddTHH:mm:ssZ",
-															"yyyy-MM-dd",
-														),
-													},
-												},
-												"key": schema.StringAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.String{
-														stringplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-													},
-													Optional:    true,
-													Description: `Requires replacement if changed. ; Not Null`,
-													Validators: []validator.String{
-														speakeasy_stringvalidators.NotNull(),
-													},
-												},
-												"value": schema.StringAttribute{
-													Computed: true,
-													PlanModifiers: []planmodifier.String{
-														stringplanmodifier.RequiresReplaceIfConfigured(),
-														speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-													},
-													Optional:    true,
-													Description: `Requires replacement if changed. ; Not Null`,
-													Validators: []validator.String{
-														speakeasy_stringvalidators.NotNull(),
-													},
-												},
-											},
-											Description: `Requires replacement if changed. `,
-										},
 										"foreign_key_columns": schema.ListNestedAttribute{
 											Computed: true,
 											PlanModifiers: []planmodifier.List{
@@ -1070,59 +964,6 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 											},
 											Description: `The foreign columns of the entity. Requires replacement if changed. `,
 										},
-										"high_watermark_query_parameters": schema.ListNestedAttribute{
-											Computed: true,
-											PlanModifiers: []planmodifier.List{
-												listplanmodifier.RequiresReplaceIfConfigured(),
-												speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-											},
-											Optional: true,
-											NestedObject: schema.NestedAttributeObject{
-												Attributes: map[string]schema.Attribute{
-													"key": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplaceIfConfigured(),
-															speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-														},
-														Optional:    true,
-														Description: `Requires replacement if changed. ; Not Null`,
-														Validators: []validator.String{
-															speakeasy_stringvalidators.NotNull(),
-														},
-													},
-													"value": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplaceIfConfigured(),
-															speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-														},
-														Optional:    true,
-														Description: `Requires replacement if changed. ; Not Null`,
-														Validators: []validator.String{
-															speakeasy_stringvalidators.NotNull(),
-														},
-													},
-												},
-											},
-											Description: `Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}]. Requires replacement if changed. ; Not Null`,
-											Validators: []validator.List{
-												speakeasy_listvalidators.NotNull(),
-												listvalidator.SizeAtLeast(1),
-											},
-										},
-										"last_updated_column": schema.StringAttribute{
-											Computed: true,
-											PlanModifiers: []planmodifier.String{
-												stringplanmodifier.RequiresReplaceIfConfigured(),
-												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-											},
-											Optional:    true,
-											Description: `Requires replacement if changed. ; Not Null`,
-											Validators: []validator.String{
-												speakeasy_stringvalidators.NotNull(),
-											},
-										},
 										"primary_key_columns": schema.ListAttribute{
 											Computed: true,
 											PlanModifiers: []planmodifier.List{
@@ -1131,10 +972,360 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 											},
 											Optional:    true,
 											ElementType: types.StringType,
-											Description: `Requires replacement if changed. ; Not Null`,
+											Description: `Requires replacement if changed. `,
 											Validators: []validator.List{
-												speakeasy_listvalidators.NotNull(),
 												listvalidator.SizeAtLeast(1),
+											},
+										},
+										"strategy": schema.SingleNestedAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.Object{
+												objectplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+											},
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"extracted_data": schema.SingleNestedAttribute{
+													Computed: true,
+													PlanModifiers: []planmodifier.Object{
+														objectplanmodifier.RequiresReplaceIfConfigured(),
+														speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+													},
+													Optional: true,
+													Attributes: map[string]schema.Attribute{
+														"begin_time_parameter": schema.SingleNestedAttribute{
+															Computed: true,
+															PlanModifiers: []planmodifier.Object{
+																objectplanmodifier.RequiresReplaceIfConfigured(),
+																speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+															},
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"format": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Default:     stringdefault.StaticString("yyyy-MM-ddTHH:mm:ssX"),
+																	Description: `Requires replacement if changed. ; must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]; Default: "yyyy-MM-ddTHH:mm:ssX"`,
+																	Validators: []validator.String{
+																		stringvalidator.OneOf(
+																			"yyyy-MM-ddTHH:mm:ssX",
+																			"yyyy-MM-ddTHH:mm:ssZ",
+																			"yyyy-MM-dd",
+																		),
+																	},
+																},
+																"key": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+																"value": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+															},
+															Description: `Requires replacement if changed. ; Not Null`,
+															Validators: []validator.Object{
+																speakeasy_objectvalidators.NotNull(),
+															},
+														},
+														"end_time_parameter": schema.SingleNestedAttribute{
+															Computed: true,
+															PlanModifiers: []planmodifier.Object{
+																objectplanmodifier.RequiresReplaceIfConfigured(),
+																speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+															},
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"format": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Default:     stringdefault.StaticString("yyyy-MM-ddTHH:mm:ssX"),
+																	Description: `Requires replacement if changed. ; must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]; Default: "yyyy-MM-ddTHH:mm:ssX"`,
+																	Validators: []validator.String{
+																		stringvalidator.OneOf(
+																			"yyyy-MM-ddTHH:mm:ssX",
+																			"yyyy-MM-ddTHH:mm:ssZ",
+																			"yyyy-MM-dd",
+																		),
+																	},
+																},
+																"key": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+																"value": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+															},
+															Description: `Requires replacement if changed. `,
+														},
+														"high_watermark_query_parameters": schema.ListNestedAttribute{
+															Computed: true,
+															PlanModifiers: []planmodifier.List{
+																listplanmodifier.RequiresReplaceIfConfigured(),
+																speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+															},
+															Optional: true,
+															NestedObject: schema.NestedAttributeObject{
+																Attributes: map[string]schema.Attribute{
+																	"key": schema.StringAttribute{
+																		Computed: true,
+																		PlanModifiers: []planmodifier.String{
+																			stringplanmodifier.RequiresReplaceIfConfigured(),
+																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																		},
+																		Optional:    true,
+																		Description: `Requires replacement if changed. ; Not Null`,
+																		Validators: []validator.String{
+																			speakeasy_stringvalidators.NotNull(),
+																		},
+																	},
+																	"value": schema.StringAttribute{
+																		Computed: true,
+																		PlanModifiers: []planmodifier.String{
+																			stringplanmodifier.RequiresReplaceIfConfigured(),
+																			speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																		},
+																		Optional:    true,
+																		Description: `Requires replacement if changed. ; Not Null`,
+																		Validators: []validator.String{
+																			speakeasy_stringvalidators.NotNull(),
+																		},
+																	},
+																},
+															},
+															Description: `Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}]. Requires replacement if changed. ; Not Null`,
+															Validators: []validator.List{
+																speakeasy_listvalidators.NotNull(),
+																listvalidator.SizeAtLeast(1),
+															},
+														},
+														"last_updated_column": schema.StringAttribute{
+															Computed: true,
+															PlanModifiers: []planmodifier.String{
+																stringplanmodifier.RequiresReplaceIfConfigured(),
+																speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+															},
+															Optional:    true,
+															Description: `Requires replacement if changed. ; Not Null`,
+															Validators: []validator.String{
+																speakeasy_stringvalidators.NotNull(),
+															},
+														},
+														"type": schema.StringAttribute{
+															Computed: true,
+															PlanModifiers: []planmodifier.String{
+																stringplanmodifier.RequiresReplaceIfConfigured(),
+																speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+															},
+															Optional:    true,
+															Description: `Requires replacement if changed. ; Not Null; must be one of ["EXTRACTED_DATA"]`,
+															Validators: []validator.String{
+																speakeasy_stringvalidators.NotNull(),
+																stringvalidator.OneOf(
+																	"EXTRACTED_DATA",
+																),
+															},
+														},
+													},
+													Description: `Requires replacement if changed. `,
+												},
+												"wall_clock": schema.SingleNestedAttribute{
+													Computed: true,
+													PlanModifiers: []planmodifier.Object{
+														objectplanmodifier.RequiresReplaceIfConfigured(),
+														speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+													},
+													Optional: true,
+													Attributes: map[string]schema.Attribute{
+														"begin_date_parameter": schema.SingleNestedAttribute{
+															Computed: true,
+															PlanModifiers: []planmodifier.Object{
+																objectplanmodifier.RequiresReplaceIfConfigured(),
+																speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+															},
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"format": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Default:     stringdefault.StaticString("yyyy-MM-dd"),
+																	Description: `Requires replacement if changed. ; must be one of ["yyyy-MM-dd"]; Default: "yyyy-MM-dd"`,
+																	Validators: []validator.String{
+																		stringvalidator.OneOf(
+																			"yyyy-MM-dd",
+																		),
+																	},
+																},
+																"key": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+																"value": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+															},
+															Description: `Requires replacement if changed. ; Not Null`,
+															Validators: []validator.Object{
+																speakeasy_objectvalidators.NotNull(),
+															},
+														},
+														"end_date_parameter": schema.SingleNestedAttribute{
+															Computed: true,
+															PlanModifiers: []planmodifier.Object{
+																objectplanmodifier.RequiresReplaceIfConfigured(),
+																speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+															},
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"format": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Default:     stringdefault.StaticString("yyyy-MM-dd"),
+																	Description: `Requires replacement if changed. ; must be one of ["yyyy-MM-dd"]; Default: "yyyy-MM-dd"`,
+																	Validators: []validator.String{
+																		stringvalidator.OneOf(
+																			"yyyy-MM-dd",
+																		),
+																	},
+																},
+																"inclusive": schema.BoolAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.Bool{
+																		boolplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Default:     booldefault.StaticBool(true),
+																	Description: `Requires replacement if changed. ; Default: true`,
+																},
+																"key": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+																"value": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+															},
+															Description: `Requires replacement if changed. `,
+														},
+														"lookback_window": schema.Int64Attribute{
+															Computed: true,
+															PlanModifiers: []planmodifier.Int64{
+																int64planmodifier.RequiresReplaceIfConfigured(),
+																speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+															},
+															Optional:    true,
+															Description: `The number of days we look back during each delta extraction. Requires replacement if changed. ; Not Null`,
+															Validators: []validator.Int64{
+																speakeasy_int64validators.NotNull(),
+															},
+														},
+														"type": schema.StringAttribute{
+															Computed: true,
+															PlanModifiers: []planmodifier.String{
+																stringplanmodifier.RequiresReplaceIfConfigured(),
+																speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+															},
+															Optional:    true,
+															Description: `Requires replacement if changed. ; Not Null; must be one of ["WALL_CLOCK"]`,
+															Validators: []validator.String{
+																speakeasy_stringvalidators.NotNull(),
+																stringvalidator.OneOf(
+																	"WALL_CLOCK",
+																),
+															},
+														},
+													},
+													Description: `Requires replacement if changed. `,
+												},
+											},
+											Description: `Requires replacement if changed. `,
+											Validators: []validator.Object{
+												validators.ExactlyOneChild(),
 											},
 										},
 										"type": schema.StringAttribute{
@@ -1199,20 +1390,96 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 							},
 							Description: `A list of query parameters to be passed with all the requests. Requires replacement if changed. `,
 						},
-						"rest_method": schema.StringAttribute{
+						"rest_method": schema.SingleNestedAttribute{
 							Computed: true,
-							PlanModifiers: []planmodifier.String{
-								stringplanmodifier.RequiresReplaceIfConfigured(),
-								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							PlanModifiers: []planmodifier.Object{
+								objectplanmodifier.RequiresReplaceIfConfigured(),
+								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 							},
-							Optional:    true,
-							Default:     stringdefault.StaticString("GET"),
-							Description: `The HTTP method used to call the apiUrl. Requires replacement if changed. ; must be one of ["GET", "POST"]; Default: "GET"`,
-							Validators: []validator.String{
-								stringvalidator.OneOf(
-									"GET",
-									"POST",
-								),
+							Optional: true,
+							Attributes: map[string]schema.Attribute{
+								"one": schema.StringAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.String{
+										stringplanmodifier.RequiresReplaceIfConfigured(),
+										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+									},
+									Optional:    true,
+									Description: `Requires replacement if changed. ; must be one of ["GET"]`,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"GET",
+										),
+									},
+								},
+								"post_method": schema.SingleNestedAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										objectplanmodifier.RequiresReplaceIfConfigured(),
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
+									Optional: true,
+									Attributes: map[string]schema.Attribute{
+										"body_parameters": schema.ListNestedAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.List{
+												listplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+											},
+											Optional: true,
+											NestedObject: schema.NestedAttributeObject{
+												Attributes: map[string]schema.Attribute{
+													"key": schema.StringAttribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															stringplanmodifier.RequiresReplaceIfConfigured(),
+															speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+														},
+														Optional:    true,
+														Description: `Requires replacement if changed. ; Not Null`,
+														Validators: []validator.String{
+															speakeasy_stringvalidators.NotNull(),
+														},
+													},
+													"value": schema.StringAttribute{
+														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															stringplanmodifier.RequiresReplaceIfConfigured(),
+															speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+														},
+														Optional:    true,
+														Description: `Requires replacement if changed. ; Not Null`,
+														Validators: []validator.String{
+															speakeasy_stringvalidators.NotNull(),
+														},
+													},
+												},
+											},
+											Description: `A list of body parameters to be passed with all the requests. Requires replacement if changed. `,
+										},
+										"type": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												stringplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Default:     stringdefault.StaticString("POST"),
+											Description: `Requires replacement if changed. ; must be one of ["POST"]; Default: "POST"`,
+											Validators: []validator.String{
+												stringvalidator.OneOf(
+													"POST",
+												),
+											},
+										},
+									},
+									Description: `Requires replacement if changed. `,
+								},
+							},
+							Description: `Can be either the string ` + "`" + `GET` + "`" + ` or ` + "`" + `POST` + "`" + `, which includes body parameters. Requires replacement if changed. ; Not Null`,
+							Validators: []validator.Object{
+								speakeasy_objectvalidators.NotNull(),
+								validators.ExactlyOneChild(),
 							},
 						},
 					},

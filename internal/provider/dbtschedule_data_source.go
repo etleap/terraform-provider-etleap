@@ -28,19 +28,20 @@ type DbtScheduleDataSource struct {
 
 // DbtScheduleDataSourceModel describes the data model.
 type DbtScheduleDataSourceModel struct {
-	ConnectionID         types.String `tfsdk:"connection_id"`
-	CreateDate           types.String `tfsdk:"create_date"`
-	Cron                 types.String `tfsdk:"cron"`
-	CurrentActivity      types.String `tfsdk:"current_activity"`
-	ID                   types.String `tfsdk:"id"`
-	LastDbtBuildDate     types.String `tfsdk:"last_dbt_build_date"`
-	LastDbtRunTime       types.Int64  `tfsdk:"last_dbt_run_time"`
-	Name                 types.String `tfsdk:"name"`
-	Owner                User         `tfsdk:"owner"`
-	Paused               types.Bool   `tfsdk:"paused"`
-	Selector             types.String `tfsdk:"selector"`
-	SkipBuildIfNoNewData types.Bool   `tfsdk:"skip_build_if_no_new_data"`
-	TargetSchema         types.String `tfsdk:"target_schema"`
+	ConnectionID         types.String        `tfsdk:"connection_id"`
+	CreateDate           types.String        `tfsdk:"create_date"`
+	Cron                 types.String        `tfsdk:"cron"`
+	CurrentActivity      types.String        `tfsdk:"current_activity"`
+	ID                   types.String        `tfsdk:"id"`
+	LastDbtBuildDate     types.String        `tfsdk:"last_dbt_build_date"`
+	LastDbtRunTime       types.Int64         `tfsdk:"last_dbt_run_time"`
+	LatestRun            DbtScheduleRunTypes `tfsdk:"latest_run"`
+	Name                 types.String        `tfsdk:"name"`
+	Owner                User                `tfsdk:"owner"`
+	Paused               types.Bool          `tfsdk:"paused"`
+	Selector             types.String        `tfsdk:"selector"`
+	SkipBuildIfNoNewData types.Bool          `tfsdk:"skip_build_if_no_new_data"`
+	TargetSchema         types.String        `tfsdk:"target_schema"`
 }
 
 // Metadata returns the data source type name.
@@ -67,7 +68,7 @@ func (r *DbtScheduleDataSource) Schema(ctx context.Context, req datasource.Schem
 			},
 			"current_activity": schema.StringAttribute{
 				Computed:    true,
-				Description: `must be one of ["LOADING", "BUILDING"]`,
+				Description: `This field is deprecated and will be removed and replaced by the properties in ` + "`" + `latestRun` + "`" + ` when that field is implemented. must be one of ["LOADING", "BUILDING"]`,
 			},
 			"id": schema.StringAttribute{
 				Required:    true,
@@ -75,11 +76,112 @@ func (r *DbtScheduleDataSource) Schema(ctx context.Context, req datasource.Schem
 			},
 			"last_dbt_build_date": schema.StringAttribute{
 				Computed:    true,
-				Description: `The last time that a successful dbt build started.`,
+				Description: `The last time that a successful dbt build started. This field is deprecated and will be removed and replaced by the properties in ` + "`" + `latestRun` + "`" + ` when that field is implemented.`,
 			},
 			"last_dbt_run_time": schema.Int64Attribute{
 				Computed:    true,
-				Description: `The duration of the last successful dbt build.`,
+				Description: `The duration of the last successful dbt build. This field is deprecated and will be removed and replaced by the properties in ` + "`" + `latestRun` + "`" + ` when that field is implemented.`,
+			},
+			"latest_run": schema.SingleNestedAttribute{
+				Computed: true,
+				Attributes: map[string]schema.Attribute{
+					"etleap_error": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"duration": schema.Int64Attribute{
+								Computed:    true,
+								Description: `The duration, in seconds, between the time this dbt run was triggered and the time the dbt build for this run completed.`,
+							},
+							"last_successful_dbt_build_date": schema.StringAttribute{
+								Computed:    true,
+								Description: `The last time that a successful dbt build finished.`,
+							},
+							"next_trigger_date": schema.StringAttribute{
+								Computed:    true,
+								Description: `Timestamp for the next dbt schedule trigger.`,
+							},
+							"start_date": schema.StringAttribute{
+								Computed:    true,
+								Description: `The time that this dbt run was triggered.`,
+							},
+							"status": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["ETLEAP_ERROR", "DBT_ERROR"]`,
+							},
+						},
+					},
+					"in_progress": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"build_is_taking_too_long": schema.BoolAttribute{
+								Computed:    true,
+								Description: `Whether the dbt build phase is taking too long.`,
+							},
+							"last_successful_dbt_build_date": schema.StringAttribute{
+								Computed:    true,
+								Description: `The last time that a successful dbt build finished.`,
+							},
+							"phase": schema.StringAttribute{
+								Computed:    true,
+								Description: `The phase that this dbt run is currently in. dbt runs consist of an ` + "`" + `INGEST` + "`" + ` phase where source pipelines ingest data into the warehouse, followed by a ` + "`" + `BUILD` + "`" + ` phase where the dbt models are built. must be one of ["INGEST", "BUILD"]`,
+							},
+							"previous_run_duration": schema.Int64Attribute{
+								Computed:    true,
+								Description: `The duration, in seconds, between the time the previous run was triggered and the time it completed. This will be ` + "`" + `null` + "`" + ` if this is the first time this schedule has run.`,
+							},
+							"previous_run_status": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["IN_PROGRESS", "ETLEAP_ERROR", "DBT_ERROR", "SUCCESS_WITH_DBT_WARNINGS", "SUCCESS"]`,
+							},
+							"start_date": schema.StringAttribute{
+								Computed:    true,
+								Description: `The time that this dbt run was triggered.`,
+							},
+							"status": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["IN_PROGRESS"]`,
+							},
+						},
+					},
+					"not_yet_run": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"next_trigger_date": schema.StringAttribute{
+								Computed:    true,
+								Description: `Timestamp for the next dbt schedule trigger.`,
+							},
+							"status": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["NOT_YET_RUN"]`,
+							},
+						},
+					},
+					"success_with_dbt_warnings": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"duration": schema.Int64Attribute{
+								Computed:    true,
+								Description: `The duration, in seconds, between the time this dbt run was triggered and the time the dbt build for this run completed.`,
+							},
+							"last_successful_dbt_build_date": schema.StringAttribute{
+								Computed:    true,
+								Description: `The last time that a successful dbt build finished.`,
+							},
+							"next_trigger_date": schema.StringAttribute{
+								Computed:    true,
+								Description: `Timestamp for the next dbt schedule trigger.`,
+							},
+							"start_date": schema.StringAttribute{
+								Computed:    true,
+								Description: `The time that this dbt run was triggered.`,
+							},
+							"status": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["SUCCESS", "SUCCESS_WITH_DBT_WARNINGS"]`,
+							},
+						},
+					},
+				},
 			},
 			"name": schema.StringAttribute{
 				Computed:    true,

@@ -86,11 +86,11 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlInput() *shared.Co
 			}
 		}
 	}
-	validateSslCert := new(bool)
-	if !r.ValidateSslCert.IsUnknown() && !r.ValidateSslCert.IsNull() {
-		*validateSslCert = r.ValidateSslCert.ValueBool()
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
 	} else {
-		validateSslCert = nil
+		requireSslAndValidateCertificate = nil
 	}
 	cdcEnabled := new(bool)
 	if !r.CdcEnabled.IsUnknown() && !r.CdcEnabled.IsNull() {
@@ -130,19 +130,19 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlInput() *shared.Co
 		}
 	}
 	out := shared.ConnectionMysqlInput{
-		Name:              name,
-		Type:              typeVar,
-		UpdateSchedule:    updateSchedule,
-		ValidateSslCert:   validateSslCert,
-		CdcEnabled:        cdcEnabled,
-		AutoReplicate:     autoReplicate,
-		TinyInt1IsBoolean: tinyInt1IsBoolean,
-		Database:          database,
-		Address:           address,
-		Port:              port,
-		Username:          username,
-		Password:          password,
-		SSHConfig:         sshConfig,
+		Name:                             name,
+		Type:                             typeVar,
+		UpdateSchedule:                   updateSchedule,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		CdcEnabled:                       cdcEnabled,
+		AutoReplicate:                    autoReplicate,
+		TinyInt1IsBoolean:                tinyInt1IsBoolean,
+		Database:                         database,
+		Address:                          address,
+		Port:                             port,
+		Username:                         username,
+		Password:                         password,
+		SSHConfig:                        sshConfig,
 	}
 	return &out
 }
@@ -205,6 +205,7 @@ func (r *ConnectionMYSQLResourceModel) RefreshFromSharedConnectionMysql(resp *sh
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.Port = types.Int64Value(resp.Port)
+	r.RequireSslAndValidateCertificate = types.BoolPointerValue(resp.RequireSslAndValidateCertificate)
 	if resp.SSHConfig == nil {
 		r.SSHConfig = nil
 	} else {
@@ -247,7 +248,6 @@ func (r *ConnectionMYSQLResourceModel) RefreshFromSharedConnectionMysql(resp *sh
 		}
 	}
 	r.Username = types.StringValue(resp.Username)
-	r.ValidateSslCert = types.BoolPointerValue(resp.ValidateSslCert)
 }
 
 func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.ConnectionMysqlUpdate {
@@ -339,11 +339,11 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 			}
 		}
 	}
-	validateSslCert := new(bool)
-	if !r.ValidateSslCert.IsUnknown() && !r.ValidateSslCert.IsNull() {
-		*validateSslCert = r.ValidateSslCert.ValueBool()
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
 	} else {
-		validateSslCert = nil
+		requireSslAndValidateCertificate = nil
 	}
 	autoReplicate := new(string)
 	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
@@ -407,19 +407,19 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 		}
 	}
 	out := shared.ConnectionMysqlUpdate{
-		Name:              name,
-		Type:              typeVar,
-		Active:            active,
-		UpdateSchedule:    updateSchedule,
-		ValidateSslCert:   validateSslCert,
-		AutoReplicate:     autoReplicate,
-		TinyInt1IsBoolean: tinyInt1IsBoolean,
-		Database:          database,
-		Address:           address,
-		Port:              port,
-		Username:          username,
-		Password:          password,
-		SSHConfig:         sshConfig,
+		Name:                             name,
+		Type:                             typeVar,
+		Active:                           active,
+		UpdateSchedule:                   updateSchedule,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		AutoReplicate:                    autoReplicate,
+		TinyInt1IsBoolean:                tinyInt1IsBoolean,
+		Database:                         database,
+		Address:                          address,
+		Port:                             port,
+		Username:                         username,
+		Password:                         password,
+		SSHConfig:                        sshConfig,
 	}
 	return &out
 }

@@ -1,3 +1,3 @@
 data "etleap_connection_sumtotal" "my_connectionsumtotal" {
-  id = "70f0d28e-aba3-4838-9989-7d4872841337"
+  id = "33c77143-d4b5-4f22-8913-1e3bff7395bc"
 }

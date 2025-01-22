@@ -86,11 +86,11 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 			}
 		}
 	}
-	validateSslCert := new(bool)
-	if !r.ValidateSslCert.IsUnknown() && !r.ValidateSslCert.IsNull() {
-		*validateSslCert = r.ValidateSslCert.ValueBool()
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
 	} else {
-		validateSslCert = nil
+		requireSslAndValidateCertificate = nil
 	}
 	cdcEnabled := new(bool)
 	if !r.CdcEnabled.IsUnknown() && !r.CdcEnabled.IsNull() {
@@ -149,15 +149,15 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 		})
 	}
 	out := shared.ConnectionMysqlShardedInput{
-		Name:              name,
-		Type:              typeVar,
-		UpdateSchedule:    updateSchedule,
-		ValidateSslCert:   validateSslCert,
-		CdcEnabled:        cdcEnabled,
-		AutoReplicate:     autoReplicate,
-		TinyInt1IsBoolean: tinyInt1IsBoolean,
-		Database:          database,
-		Shards:            shards,
+		Name:                             name,
+		Type:                             typeVar,
+		UpdateSchedule:                   updateSchedule,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		CdcEnabled:                       cdcEnabled,
+		AutoReplicate:                    autoReplicate,
+		TinyInt1IsBoolean:                tinyInt1IsBoolean,
+		Database:                         database,
+		Shards:                           shards,
 	}
 	return &out
 }
@@ -218,6 +218,7 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) RefreshFromSharedConnectionMysqlSh
 	}
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
+	r.RequireSslAndValidateCertificate = types.BoolPointerValue(resp.RequireSslAndValidateCertificate)
 	if len(r.Shards) > len(resp.Shards) {
 		r.Shards = r.Shards[:len(resp.Shards)]
 	}
@@ -280,7 +281,6 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) RefreshFromSharedConnectionMysqlSh
 			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
 		}
 	}
-	r.ValidateSslCert = types.BoolPointerValue(resp.ValidateSslCert)
 }
 
 func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpdate() *shared.ConnectionMysqlShardedUpdate {
@@ -372,11 +372,11 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 			}
 		}
 	}
-	validateSslCert := new(bool)
-	if !r.ValidateSslCert.IsUnknown() && !r.ValidateSslCert.IsNull() {
-		*validateSslCert = r.ValidateSslCert.ValueBool()
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
 	} else {
-		validateSslCert = nil
+		requireSslAndValidateCertificate = nil
 	}
 	autoReplicate := new(string)
 	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
@@ -429,15 +429,15 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 		})
 	}
 	out := shared.ConnectionMysqlShardedUpdate{
-		Name:              name,
-		Type:              typeVar,
-		Active:            active,
-		UpdateSchedule:    updateSchedule,
-		ValidateSslCert:   validateSslCert,
-		AutoReplicate:     autoReplicate,
-		TinyInt1IsBoolean: tinyInt1IsBoolean,
-		Database:          database,
-		Shards:            shards,
+		Name:                             name,
+		Type:                             typeVar,
+		Active:                           active,
+		UpdateSchedule:                   updateSchedule,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		AutoReplicate:                    autoReplicate,
+		TinyInt1IsBoolean:                tinyInt1IsBoolean,
+		Database:                         database,
+		Shards:                           shards,
 	}
 	return &out
 }

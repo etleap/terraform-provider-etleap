@@ -2,40 +2,6 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
-)
-
-// RestMethod - The HTTP method used to call the apiUrl.
-type RestMethod string
-
-const (
-	RestMethodGet  RestMethod = "GET"
-	RestMethodPost RestMethod = "POST"
-)
-
-func (e RestMethod) ToPointer() *RestMethod {
-	return &e
-}
-
-func (e *RestMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "GET":
-		fallthrough
-	case "POST":
-		*e = RestMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for RestMethod: %v", v)
-	}
-}
-
 // UserDefinedAPIEntity - Extends [Entity](entity-schema.v1.json) with properties required by the connector for extracting all its data, such as a paging strategy.
 type UserDefinedAPIEntity struct {
 	// The unique identifier of the entity.
@@ -56,19 +22,8 @@ type UserDefinedAPIEntity struct {
 	QueryParameters []QueryParameters `json:"queryParameters,omitempty"`
 	// A list of headers to be passed with all the requests.
 	HeaderParameters []HeaderParameters `json:"headerParameters,omitempty"`
-	// The HTTP method used to call the apiUrl.
-	RestMethod *RestMethod `default:"GET" json:"restMethod"`
-}
-
-func (u UserDefinedAPIEntity) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(u, "", false)
-}
-
-func (u *UserDefinedAPIEntity) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
-		return err
-	}
-	return nil
+	// Can be either the string `GET` or `POST`, which includes body parameters.
+	RestMethod RestMethod `json:"restMethod"`
 }
 
 func (o *UserDefinedAPIEntity) GetID() string {
@@ -148,9 +103,9 @@ func (o *UserDefinedAPIEntity) GetHeaderParameters() []HeaderParameters {
 	return o.HeaderParameters
 }
 
-func (o *UserDefinedAPIEntity) GetRestMethod() *RestMethod {
+func (o *UserDefinedAPIEntity) GetRestMethod() RestMethod {
 	if o == nil {
-		return nil
+		return RestMethod{}
 	}
 	return o.RestMethod
 }

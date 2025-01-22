@@ -9,6 +9,7 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
+// Type1 - Note: JSON_OBJECT is deprecated and is a synonym of JSON.
 type Type1 string
 
 const (
@@ -20,6 +21,7 @@ const (
 	Type1Double     Type1 = "DOUBLE"
 	Type1String     Type1 = "STRING"
 	Type1JSONObject Type1 = "JSON_OBJECT"
+	Type1JSON       Type1 = "JSON"
 )
 
 func (e Type1) ToPointer() *Type1 {
@@ -47,6 +49,8 @@ func (e *Type1) UnmarshalJSON(data []byte) error {
 	case "STRING":
 		fallthrough
 	case "JSON_OBJECT":
+		fallthrough
+	case "JSON":
 		*e = Type1(v)
 		return nil
 	default:

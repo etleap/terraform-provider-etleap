@@ -1,3 +1,3 @@
 data "etleap_connection_oracle" "my_connectionoracle" {
-  id = "f8adf1a5-52ed-4576-9939-5f3871796576"
+  id = "0d06aac0-6fbf-4670-a7b5-cd6b824ec37a"
 }

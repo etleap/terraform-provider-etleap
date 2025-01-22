@@ -1,8 +1,8 @@
 resource "etleap_connection_eloqua" "my_connectioneloqua" {
-  company                     = "Huel Inc"
-  deletion_of_export_products = false
-  name                        = "Colin Brekke"
+  company                     = "Dare - Bins"
+  deletion_of_export_products = true
+  name                        = "Maryann Cummerata"
   password                    = "...my_password..."
   type                        = "ELOQUA"
-  username                    = "Hassan25"
+  username                    = "Edna98"
 }

@@ -4,6 +4,7 @@ package provider
 
 type DestinationTypes struct {
 	DeltaLake  *DestinationDeltaLake  `tfsdk:"delta_lake"`
+	Iceberg    *DestinationIceberg    `tfsdk:"iceberg"`
 	Redshift   *DestinationRedshift   `tfsdk:"redshift"`
 	S3DataLake *DestinationS3DataLake `tfsdk:"s3_data_lake"`
 	Snowflake  *DestinationSnowflake  `tfsdk:"snowflake"`

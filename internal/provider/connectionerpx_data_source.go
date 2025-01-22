@@ -31,6 +31,7 @@ type ConnectionERPXDataSourceModel struct {
 	Active                types.Bool              `tfsdk:"active"`
 	APIURL                types.String            `tfsdk:"api_url"`
 	ClientID              types.String            `tfsdk:"client_id"`
+	CompanyIds            types.String            `tfsdk:"company_ids"`
 	CreateDate            types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	ID                    types.String            `tfsdk:"id"`
@@ -63,6 +64,10 @@ func (r *ConnectionERPXDataSource) Schema(ctx context.Context, req datasource.Sc
 			"client_id": schema.StringAttribute{
 				Computed:    true,
 				Description: `Client ID`,
+			},
+			"company_ids": schema.StringAttribute{
+				Computed:    true,
+				Description: `Company IDs from which this connection will extract data, separated by commas. If not specified, Etleap will use the default ID linked to your user account. Please note that this field cannot be edited after the connection is created. Example: COMPANY1,COMPANY2`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed:    true,

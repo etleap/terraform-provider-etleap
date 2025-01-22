@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 6c2450f2128b2e3bc965d6d5ca01102e
-  docVersion: 2.6.30
+  docChecksum: f047edf1d03e06a02ba3efb9428e67c1
+  docVersion: 2.7.5
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.1.4
-  configChecksum: 5cc3380d82ca0d9621c598450a6a6243
+  releaseVersion: 0.1.6
+  configChecksum: 3b8bab98fd66bd61f96b68c4e3474468
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -101,6 +101,8 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/getpipelinegrants.go
   - internal/sdk/pkg/models/operations/grantaccesstopipeline.go
   - internal/sdk/pkg/models/operations/removeaccesstopipeline.go
+  - internal/sdk/pkg/models/operations/adddestinationtopipeline.go
+  - internal/sdk/pkg/models/operations/removedestinationforpipeline.go
   - internal/sdk/pkg/models/operations/getmodels.go
   - internal/sdk/pkg/models/operations/createmodel.go
   - internal/sdk/pkg/models/operations/getmodel.go
@@ -133,6 +135,15 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updateblacklineconnection.go
   - internal/sdk/pkg/models/operations/getblacklineconnection.go
   - internal/sdk/pkg/models/operations/deleteblacklineconnection.go
+  - internal/sdk/pkg/models/operations/updatebraintreeconnection.go
+  - internal/sdk/pkg/models/operations/getbraintreeconnection.go
+  - internal/sdk/pkg/models/operations/deletebraintreeconnection.go
+  - internal/sdk/pkg/models/operations/updateconfluentcloudconnection.go
+  - internal/sdk/pkg/models/operations/getconfluentcloudconnection.go
+  - internal/sdk/pkg/models/operations/deleteconfluentcloudconnection.go
+  - internal/sdk/pkg/models/operations/updatecoupaconnection.go
+  - internal/sdk/pkg/models/operations/getcoupaconnection.go
+  - internal/sdk/pkg/models/operations/deletecoupaconnection.go
   - internal/sdk/pkg/models/operations/updatecriteoconnection.go
   - internal/sdk/pkg/models/operations/getcriteoconnection.go
   - internal/sdk/pkg/models/operations/deletecriteoconnection.go
@@ -193,6 +204,9 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatehubspotconnection.go
   - internal/sdk/pkg/models/operations/gethubspotconnection.go
   - internal/sdk/pkg/models/operations/deletehubspotconnection.go
+  - internal/sdk/pkg/models/operations/updateicebergconnection.go
+  - internal/sdk/pkg/models/operations/geticebergconnection.go
+  - internal/sdk/pkg/models/operations/deleteicebergconnection.go
   - internal/sdk/pkg/models/operations/updateimpactradiusconnection.go
   - internal/sdk/pkg/models/operations/getimpactradiusconnection.go
   - internal/sdk/pkg/models/operations/deleteimpactradiusconnection.go
@@ -295,6 +309,9 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updateseismicconnection.go
   - internal/sdk/pkg/models/operations/getseismicconnection.go
   - internal/sdk/pkg/models/operations/deleteseismicconnection.go
+  - internal/sdk/pkg/models/operations/updateservicenowconnection.go
+  - internal/sdk/pkg/models/operations/getservicenowconnection.go
+  - internal/sdk/pkg/models/operations/deleteservicenowconnection.go
   - internal/sdk/pkg/models/operations/updatesftpconnection.go
   - internal/sdk/pkg/models/operations/getsftpconnection.go
   - internal/sdk/pkg/models/operations/deletesftpconnection.go
@@ -371,6 +388,9 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/createbigqueryconnection.go
   - internal/sdk/pkg/models/operations/createbingadsconnection.go
   - internal/sdk/pkg/models/operations/createblacklineconnection.go
+  - internal/sdk/pkg/models/operations/createbraintreeconnection.go
+  - internal/sdk/pkg/models/operations/createconfluentcloudconnection.go
+  - internal/sdk/pkg/models/operations/createcoupaconnection.go
   - internal/sdk/pkg/models/operations/createcriteoconnection.go
   - internal/sdk/pkg/models/operations/createdb2connection.go
   - internal/sdk/pkg/models/operations/createdb2shardedconnection.go
@@ -391,6 +411,7 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/creategooglecloudstorageconnection.go
   - internal/sdk/pkg/models/operations/creategooglesheetsconnection.go
   - internal/sdk/pkg/models/operations/createhubspotconnection.go
+  - internal/sdk/pkg/models/operations/createicebergconnection.go
   - internal/sdk/pkg/models/operations/createimpactradiusconnection.go
   - internal/sdk/pkg/models/operations/createintercomconnection.go
   - internal/sdk/pkg/models/operations/createjiraalignconnection.go
@@ -425,6 +446,7 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/createsaphanaconnection.go
   - internal/sdk/pkg/models/operations/createsaphanashardedconnection.go
   - internal/sdk/pkg/models/operations/createseismicconnection.go
+  - internal/sdk/pkg/models/operations/createservicenowconnection.go
   - internal/sdk/pkg/models/operations/createsftpconnection.go
   - internal/sdk/pkg/models/operations/createshopifyconnection.go
   - internal/sdk/pkg/models/operations/createskywardconnection.go
@@ -488,14 +510,22 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/operationerrorsbyoperation.go
   - internal/sdk/pkg/models/shared/typeerrorsbycolumn.go
   - internal/sdk/pkg/models/shared/parsingerrorperday.go
+  - internal/sdk/pkg/models/shared/destinationtypes.go
+  - internal/sdk/pkg/models/shared/destinationredshift.go
   - internal/sdk/pkg/models/shared/distributionstyle.go
   - internal/sdk/pkg/models/shared/distributionstylekey.go
+  - internal/sdk/pkg/models/shared/destinationsnowflake.go
+  - internal/sdk/pkg/models/shared/destinationdeltalake.go
   - internal/sdk/pkg/models/shared/destinations3datalake.go
+  - internal/sdk/pkg/models/shared/destinationiceberg.go
   - internal/sdk/pkg/models/shared/sourcetypes.go
   - internal/sdk/pkg/models/shared/sourceactivecampaign.go
   - internal/sdk/pkg/models/shared/sourcebigquery.go
   - internal/sdk/pkg/models/shared/sourcebingads.go
   - internal/sdk/pkg/models/shared/sourceblackline.go
+  - internal/sdk/pkg/models/shared/sourcebraintree.go
+  - internal/sdk/pkg/models/shared/sourceconfluentcloud.go
+  - internal/sdk/pkg/models/shared/sourcecoupa.go
   - internal/sdk/pkg/models/shared/sourcecriteo.go
   - internal/sdk/pkg/models/shared/sourcedb2.go
   - internal/sdk/pkg/models/shared/sourcedb2sharded.go
@@ -550,6 +580,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourcesaphana.go
   - internal/sdk/pkg/models/shared/sourcesaphanasharded.go
   - internal/sdk/pkg/models/shared/sourceseismic.go
+  - internal/sdk/pkg/models/shared/sourceservicenow.go
   - internal/sdk/pkg/models/shared/sourceshopify.go
   - internal/sdk/pkg/models/shared/sourceskyward.go
   - internal/sdk/pkg/models/shared/sourcesalesforce.go
@@ -607,6 +638,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/grantswithoutprivilegelist.go
   - internal/sdk/pkg/models/shared/grantswithoutprivilegelistinput.go
   - internal/sdk/pkg/models/shared/grantwithoutprivilegeinput.go
+  - internal/sdk/pkg/models/shared/pipelinedestinationinput.go
   - internal/sdk/pkg/models/shared/modelsoutput.go
   - internal/sdk/pkg/models/shared/modeloutput.go
   - internal/sdk/pkg/models/shared/modeldependency.go
@@ -641,6 +673,12 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionbingupdate.go
   - internal/sdk/pkg/models/shared/connectionblackline.go
   - internal/sdk/pkg/models/shared/connectionblacklineupdate.go
+  - internal/sdk/pkg/models/shared/connectionbraintree.go
+  - internal/sdk/pkg/models/shared/connectionbraintreeupdate.go
+  - internal/sdk/pkg/models/shared/connectionconfluentcloud.go
+  - internal/sdk/pkg/models/shared/connectionconfluentcloudupdate.go
+  - internal/sdk/pkg/models/shared/connectioncoupa.go
+  - internal/sdk/pkg/models/shared/connectioncoupaupdate.go
   - internal/sdk/pkg/models/shared/connectioncriteo.go
   - internal/sdk/pkg/models/shared/connectioncriteoupdate.go
   - internal/sdk/pkg/models/shared/connectiondb2.go
@@ -684,6 +722,8 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectiongooglesheetsupdate.go
   - internal/sdk/pkg/models/shared/connectionhubspot.go
   - internal/sdk/pkg/models/shared/connectionhubspotupdate.go
+  - internal/sdk/pkg/models/shared/connectioniceberg.go
+  - internal/sdk/pkg/models/shared/connectionicebergupdate.go
   - internal/sdk/pkg/models/shared/connectionimpactradius.go
   - internal/sdk/pkg/models/shared/connectionimpactradiusupdate.go
   - internal/sdk/pkg/models/shared/connectionintercom.go
@@ -751,6 +791,8 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionsaphanashardedupdate.go
   - internal/sdk/pkg/models/shared/connectionseismic.go
   - internal/sdk/pkg/models/shared/connectionseismicupdate.go
+  - internal/sdk/pkg/models/shared/connectionservicenow.go
+  - internal/sdk/pkg/models/shared/connectionservicenowupdate.go
   - internal/sdk/pkg/models/shared/connectionsftp.go
   - internal/sdk/pkg/models/shared/connectionsftpupdate.go
   - internal/sdk/pkg/models/shared/connectionshopify.go
@@ -789,6 +831,9 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectiontwitterupdate.go
   - internal/sdk/pkg/models/shared/connectionuserdefinedapi.go
   - internal/sdk/pkg/models/shared/userdefinedapientity.go
+  - internal/sdk/pkg/models/shared/restmethod.go
+  - internal/sdk/pkg/models/shared/postmethod.go
+  - internal/sdk/pkg/models/shared/bodyparameters.go
   - internal/sdk/pkg/models/shared/headerparameters.go
   - internal/sdk/pkg/models/shared/queryparameters.go
   - internal/sdk/pkg/models/shared/pagingstrategy.go
@@ -798,7 +843,12 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/userdefinedapireplacemode.go
   - internal/sdk/pkg/models/shared/schemav1foreignkeycolumn.go
   - internal/sdk/pkg/models/shared/userdefinedapiupdatemode.go
-  - internal/sdk/pkg/models/shared/watermarkkeyvaluepair.go
+  - internal/sdk/pkg/models/shared/updatemodestrategytypes.go
+  - internal/sdk/pkg/models/shared/wallclockstrategy.go
+  - internal/sdk/pkg/models/shared/inclusiveorexclusivewatermarkdateonlykeyvaluepair.go
+  - internal/sdk/pkg/models/shared/watermarkdateonlykeyvaluepair.go
+  - internal/sdk/pkg/models/shared/extracteddatastrategy.go
+  - internal/sdk/pkg/models/shared/watermarkdatetimekeyvaluepair.go
   - internal/sdk/pkg/models/shared/authentication.go
   - internal/sdk/pkg/models/shared/basicauthentication.go
   - internal/sdk/pkg/models/shared/bearerauthentication.go
@@ -830,6 +880,12 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/usersoutput.go
   - internal/sdk/pkg/models/shared/userlistitem.go
   - internal/sdk/pkg/models/shared/dbtscheduleoutput.go
+  - internal/sdk/pkg/models/shared/dbtscheduleruntypes.go
+  - internal/sdk/pkg/models/shared/dbtschedulerunsuccess.go
+  - internal/sdk/pkg/models/shared/dbtschedulerunfailure.go
+  - internal/sdk/pkg/models/shared/dbtscheduleruninprogress.go
+  - internal/sdk/pkg/models/shared/dbtbuildstatus.go
+  - internal/sdk/pkg/models/shared/dbtschedulerunnotyetrun.go
   - internal/sdk/pkg/models/shared/dbtscheduleinput.go
   - internal/sdk/pkg/models/shared/dbtscheduleupdate.go
   - internal/sdk/pkg/models/shared/security.go
@@ -860,10 +916,22 @@ generatedFiles:
   - internal/provider/type_top_level_foreign_key_column.go
   - internal/provider/type_schema_v1_foreign_key_column.go
   - internal/provider/type_user_defined_api_replace_mode.go
-  - internal/provider/type_watermark_key_value_pair.go
+  - internal/provider/type_watermark_datetime_key_value_pair.go
+  - internal/provider/type_extracted_data_strategy.go
+  - internal/provider/type_watermark_dateonly_key_value_pair.go
+  - internal/provider/type_inclusive_or_exclusive_watermark_dateonly_key_value_pair.go
+  - internal/provider/type_wall_clock_strategy.go
+  - internal/provider/type_update_mode_strategy_types.go
   - internal/provider/type_user_defined_api_update_mode.go
   - internal/provider/type_user_defined_api_pipeline_mode.go
+  - internal/provider/type_post_method.go
+  - internal/provider/type_rest_method.go
   - internal/provider/type_user_defined_api_entity.go
+  - internal/provider/type_dbt_schedule_run_failure.go
+  - internal/provider/type_dbt_schedule_run_in_progress.go
+  - internal/provider/type_dbt_schedule_run_not_yet_run.go
+  - internal/provider/type_dbt_schedule_run_success.go
+  - internal/provider/type_dbt_schedule_run_types.go
   - internal/provider/type_user.go
   - internal/provider/type_model_dependency.go
   - internal/provider/type_query_and_triggers.go
@@ -875,6 +943,7 @@ generatedFiles:
   - internal/provider/type_warehouse_snowflake.go
   - internal/provider/type_warehouse_types_input.go
   - internal/provider/type_destination_delta_lake.go
+  - internal/provider/type_destination_iceberg.go
   - internal/provider/type_destination_redshift.go
   - internal/provider/type_destination_s3_data_lake.go
   - internal/provider/type_destination_snowflake.go
@@ -908,6 +977,9 @@ generatedFiles:
   - internal/provider/type_source_big_query.go
   - internal/provider/type_source_bing_ads.go
   - internal/provider/type_source_blackline.go
+  - internal/provider/type_source_braintree.go
+  - internal/provider/type_source_confluent_cloud.go
+  - internal/provider/type_source_coupa.go
   - internal/provider/type_source_criteo.go
   - internal/provider/type_source_db2.go
   - internal/provider/type_source_db2_sharded.go
@@ -963,6 +1035,7 @@ generatedFiles:
   - internal/provider/type_source_sap_hana.go
   - internal/provider/type_source_sap_hana_sharded.go
   - internal/provider/type_source_seismic.go
+  - internal/provider/type_source_service_now.go
   - internal/provider/type_source_sftp.go
   - internal/provider/type_source_shopify.go
   - internal/provider/type_source_skyward.go
@@ -1010,6 +1083,15 @@ generatedFiles:
   - internal/provider/connectionblackline_resource.go
   - internal/provider/connectionblackline_resource_sdk.go
   - examples/resources/etleap_connection_blackline/resource.tf
+  - internal/provider/connectionbraintree_resource.go
+  - internal/provider/connectionbraintree_resource_sdk.go
+  - examples/resources/etleap_connection_braintree/resource.tf
+  - internal/provider/connectionconfluent_cloud_resource.go
+  - internal/provider/connectionconfluent_cloud_resource_sdk.go
+  - examples/resources/etleap_connection_confluent_cloud/resource.tf
+  - internal/provider/connectioncoupa_resource.go
+  - internal/provider/connectioncoupa_resource_sdk.go
+  - examples/resources/etleap_connection_coupa/resource.tf
   - internal/provider/connectioncriteo_resource.go
   - internal/provider/connectioncriteo_resource_sdk.go
   - examples/resources/etleap_connection_criteo/resource.tf
@@ -1070,6 +1152,9 @@ generatedFiles:
   - internal/provider/connectionhubspot_resource.go
   - internal/provider/connectionhubspot_resource_sdk.go
   - examples/resources/etleap_connection_hubspot/resource.tf
+  - internal/provider/connectioniceberg_resource.go
+  - internal/provider/connectioniceberg_resource_sdk.go
+  - examples/resources/etleap_connection_iceberg/resource.tf
   - internal/provider/connectionimpact_radius_resource.go
   - internal/provider/connectionimpact_radius_resource_sdk.go
   - examples/resources/etleap_connection_impact_radius/resource.tf
@@ -1172,6 +1257,9 @@ generatedFiles:
   - internal/provider/connectionseismic_resource.go
   - internal/provider/connectionseismic_resource_sdk.go
   - examples/resources/etleap_connection_seismic/resource.tf
+  - internal/provider/connectionservice_now_resource.go
+  - internal/provider/connectionservice_now_resource_sdk.go
+  - examples/resources/etleap_connection_service_now/resource.tf
   - internal/provider/connectionsftp_resource.go
   - internal/provider/connectionsftp_resource_sdk.go
   - examples/resources/etleap_connection_sftp/resource.tf
@@ -1250,6 +1338,7 @@ generatedFiles:
   - internal/provider/model_resource.go
   - internal/provider/model_resource_sdk.go
   - examples/resources/etleap_model/resource.tf
+  - internal/provider/pipeline_resource.go
   - internal/provider/pipeline_resource_sdk.go
   - examples/resources/etleap_pipeline/resource.tf
   - internal/provider/team_resource.go
@@ -1267,6 +1356,15 @@ generatedFiles:
   - internal/provider/connectionblackline_data_source.go
   - internal/provider/connectionblackline_data_source_sdk.go
   - examples/data-sources/etleap_connection_blackline/data-source.tf
+  - internal/provider/connectionbraintree_data_source.go
+  - internal/provider/connectionbraintree_data_source_sdk.go
+  - examples/data-sources/etleap_connection_braintree/data-source.tf
+  - internal/provider/connectionconfluent_cloud_data_source.go
+  - internal/provider/connectionconfluent_cloud_data_source_sdk.go
+  - examples/data-sources/etleap_connection_confluent_cloud/data-source.tf
+  - internal/provider/connectioncoupa_data_source.go
+  - internal/provider/connectioncoupa_data_source_sdk.go
+  - examples/data-sources/etleap_connection_coupa/data-source.tf
   - internal/provider/connectioncriteo_data_source.go
   - internal/provider/connectioncriteo_data_source_sdk.go
   - examples/data-sources/etleap_connection_criteo/data-source.tf
@@ -1327,6 +1425,9 @@ generatedFiles:
   - internal/provider/connectionhubspot_data_source.go
   - internal/provider/connectionhubspot_data_source_sdk.go
   - examples/data-sources/etleap_connection_hubspot/data-source.tf
+  - internal/provider/connectioniceberg_data_source.go
+  - internal/provider/connectioniceberg_data_source_sdk.go
+  - examples/data-sources/etleap_connection_iceberg/data-source.tf
   - internal/provider/connectionimpact_radius_data_source.go
   - internal/provider/connectionimpact_radius_data_source_sdk.go
   - examples/data-sources/etleap_connection_impact_radius/data-source.tf
@@ -1429,6 +1530,9 @@ generatedFiles:
   - internal/provider/connectionseismic_data_source.go
   - internal/provider/connectionseismic_data_source_sdk.go
   - examples/data-sources/etleap_connection_seismic/data-source.tf
+  - internal/provider/connectionservice_now_data_source.go
+  - internal/provider/connectionservice_now_data_source_sdk.go
+  - examples/data-sources/etleap_connection_service_now/data-source.tf
   - internal/provider/connectionsftp_data_source.go
   - internal/provider/connectionsftp_data_source_sdk.go
   - examples/data-sources/etleap_connection_sftp/data-source.tf
