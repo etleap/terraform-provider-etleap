@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  go: circleci/go@1.11.0
+  go: circleci/go@2.2.4
   python: circleci/python@2.0.3
   slack: circleci/slack@4.12.6
 
@@ -42,7 +42,7 @@ jobs:
     resource_class: 2xlarge
     executor:
       name: go/default
-      tag: "1.21"
+      tag: "1.23.4"
     steps:
       - checkout
       - attach_workspace:
@@ -62,10 +62,7 @@ jobs:
             echo 'speakeasy_workspace_id: ""' >> ~/.speakeasy/config
       - run:
           name: Generate provider
-          command: speakeasy generate sdk --lang terraform -o . -s /tmp/workspace/schema/schema-adapted.json
-      - run:
-          name: Generate docs
-          command: go generate
+          command: speakeasy generate sdk --lang terraform -o . -s /tmp/workspace/schema/schema-adapted.json  
       - run:
           name: Check if any changes
           command: |
@@ -74,35 +71,42 @@ jobs:
               circleci-agent step halt
             fi
       - run:
-          name: git tag
+          name: Generate docs
+          command: go generate
+      - run:
+          name: git commit
           command: |
             git config --global user.email "dev@etleap.com"
             git config --global user.name "Etleap Dev"
             git add .
             git commit -m "Regenerated provider and docs"
-            git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" --tags
+            git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH"
       - slack/notify:
           channel: -devops
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          channel: -devops
-          event: pass
-          template: basic_pass_1
 
   test:
     resource_class: medium
     executor: 
       name: go/default
-      tag: "1.21"
+      tag: "1.23.4"
     steps:
       - checkout
+      - run:
+          name: Apply Etleap's patch
+          command: git apply etleap.patch
       - restore_cache:
           keys:
             - go-mod-v4-{{ checksum "go.sum" }}
       - run:
           name: Install Dependencies
           command: go get ./...
+      - run:
+          name: Update stale dependencies
+          command: | 
+            go get -u github.com/hashicorp/terraform-plugin-framework
+            go get github.com/hashicorp/terraform-plugin-sdk/helper/acctest
+            go get github.com/hashicorp/terraform-plugin-testing/helper/acctest
+            go get github.com/hashicorp/terraform-plugin-testing/helper/resource
       - run:
           name: Run tests
           command: TF_ACC=1 gotestsum --junitfile /tmp/test-results/unit-tests.xml --format testdox
@@ -118,7 +122,7 @@ jobs:
     resource_class: medium
     executor:
       name: go/default
-      tag: "1.21"
+      tag: "1.23.4"
     steps:
       - checkout
       - run: 
@@ -131,6 +135,9 @@ jobs:
             echo "$PGP_PRIVATE_KEY" | base64 -d > pk.txt
             gpg --import pk.txt
             rm pk.txt
+      - run:
+          name: Apply Etleap's patch
+          command: git apply etleap.patch
       - run: 
           name: Tag if needed
           command: |
