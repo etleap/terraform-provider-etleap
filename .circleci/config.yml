@@ -116,6 +116,9 @@ jobs:
             - "/go/pkg/mod"
       - store_test_results:
           path: /tmp/test-results
+      - slack/notify:
+          branch_pattern: main
+          event: fail
         
   
   publish:
