@@ -3,6 +3,7 @@ package provider
 import (
 	"os"
 	"text/template"
+	"../provider"
 
 	"github.com/etleap/terraform-provider-etleap/internal/provider/testutils"
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
