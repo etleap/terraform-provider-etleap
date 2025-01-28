@@ -29,7 +29,7 @@ type DbtScheduleConfig struct {
 }
 
 func TestAccDbtSchedule(t *testing.T) {
-	t.Skip("Ignoring until VIK-6358 is done")
+	t.Skip("Ignoring until VIK-6179 is done")
 	dbtScheduleName := acctest.RandomWithPrefix("DbtSchedule")
 
 	resource.ParallelTest(t, resource.TestCase{
