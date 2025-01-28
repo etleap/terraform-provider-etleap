@@ -21,6 +21,7 @@ resource "etleap_connection_mysql" "test_mysql"{
     port = 3306
     username = "{{.Username}}"
     password = "{{.Password}}"
+    require_ssl_and_validate_certificate = false
 }
 `
 

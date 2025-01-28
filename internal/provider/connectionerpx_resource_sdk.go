@@ -90,6 +90,12 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxInput() *shared.Conn
 	clientSecret := r.ClientSecret.ValueString()
 	tokenURL := r.TokenURL.ValueString()
 	apiURL := r.APIURL.ValueString()
+	companyIds := new(string)
+	if !r.CompanyIds.IsUnknown() && !r.CompanyIds.IsNull() {
+		*companyIds = r.CompanyIds.ValueString()
+	} else {
+		companyIds = nil
+	}
 	out := shared.ConnectionErpxInput{
 		Name:           name,
 		Type:           typeVar,
@@ -98,6 +104,7 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxInput() *shared.Conn
 		ClientSecret:   clientSecret,
 		TokenURL:       tokenURL,
 		APIURL:         apiURL,
+		CompanyIds:     companyIds,
 	}
 	return &out
 }
@@ -106,6 +113,7 @@ func (r *ConnectionERPXResourceModel) RefreshFromSharedConnectionErpx(resp *shar
 	r.Active = types.BoolValue(resp.Active)
 	r.APIURL = types.StringValue(resp.APIURL)
 	r.ClientID = types.StringValue(resp.ClientID)
+	r.CompanyIds = types.StringPointerValue(resp.CompanyIds)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]

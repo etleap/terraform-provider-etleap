@@ -1,3 +1,3 @@
 data "etleap_connection_sql_server_sharded" "my_connectionsql_server_sharded" {
-  id = "80e1175d-4af3-4c85-b3d6-105cd66bfe85"
+  id = "4f337120-5b1b-4b10-98ac-3e0d0d47b3b1"
 }

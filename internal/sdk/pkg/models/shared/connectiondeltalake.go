@@ -9,8 +9,6 @@ import (
 	"time"
 )
 
-// ConnectionDeltaLakeType - <!-- theme: warning -->
-// > Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
 type ConnectionDeltaLakeType string
 
 const (
@@ -138,9 +136,7 @@ type ConnectionDeltaLake struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
 	// The unique name of this connection.
-	Name string `json:"name"`
-	// <!-- theme: warning -->
-	// > Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
+	Name string                  `json:"name"`
 	Type ConnectionDeltaLakeType `json:"type"`
 	// Whether this connection has been marked as active.
 	Active bool `json:"active"`
@@ -286,9 +282,7 @@ func (o *ConnectionDeltaLake) GetSchema() *string {
 
 type ConnectionDeltaLakeInput struct {
 	// The unique name of this connection.
-	Name string `json:"name"`
-	// <!-- theme: warning -->
-	// > Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
+	Name string                  `json:"name"`
 	Type ConnectionDeltaLakeType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`

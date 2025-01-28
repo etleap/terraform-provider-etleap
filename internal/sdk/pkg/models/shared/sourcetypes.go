@@ -16,6 +16,9 @@ const (
 	SourceTypesTypeBigquery                 SourceTypesType = "BIGQUERY"
 	SourceTypesTypeBingAds                  SourceTypesType = "BING_ADS"
 	SourceTypesTypeBlackline                SourceTypesType = "BLACKLINE"
+	SourceTypesTypeBraintree                SourceTypesType = "BRAINTREE"
+	SourceTypesTypeConfluentCloud           SourceTypesType = "CONFLUENT_CLOUD"
+	SourceTypesTypeCoupa                    SourceTypesType = "COUPA"
 	SourceTypesTypeCriteo                   SourceTypesType = "CRITEO"
 	SourceTypesTypeDb2                      SourceTypesType = "DB2"
 	SourceTypesTypeDb2Sharded               SourceTypesType = "DB2_SHARDED"
@@ -70,6 +73,7 @@ const (
 	SourceTypesTypeSapHana                  SourceTypesType = "SAP_HANA"
 	SourceTypesTypeSapHanaSharded           SourceTypesType = "SAP_HANA_SHARDED"
 	SourceTypesTypeSeismic                  SourceTypesType = "SEISMIC"
+	SourceTypesTypeServiceNow               SourceTypesType = "SERVICE_NOW"
 	SourceTypesTypeShopify                  SourceTypesType = "SHOPIFY"
 	SourceTypesTypeSkyward                  SourceTypesType = "SKYWARD"
 	SourceTypesTypeSalesforce               SourceTypesType = "SALESFORCE"
@@ -103,6 +107,9 @@ type SourceTypes struct {
 	SourceBigQuery                 *SourceBigQuery
 	SourceBingAds                  *SourceBingAds
 	SourceBlackline                *SourceBlackline
+	SourceBraintree                *SourceBraintree
+	SourceConfluentCloud           *SourceConfluentCloud
+	SourceCoupa                    *SourceCoupa
 	SourceCriteo                   *SourceCriteo
 	SourceDb2                      *SourceDb2
 	SourceDb2Sharded               *SourceDb2Sharded
@@ -157,6 +164,7 @@ type SourceTypes struct {
 	SourceSapHana                  *SourceSapHana
 	SourceSapHanaSharded           *SourceSapHanaSharded
 	SourceSeismic                  *SourceSeismic
+	SourceServiceNow               *SourceServiceNow
 	SourceShopify                  *SourceShopify
 	SourceSkyward                  *SourceSkyward
 	SourceSalesforce               *SourceSalesforce
@@ -232,6 +240,42 @@ func CreateSourceTypesBlackline(blackline SourceBlackline) SourceTypes {
 	return SourceTypes{
 		SourceBlackline: &blackline,
 		Type:            typ,
+	}
+}
+
+func CreateSourceTypesBraintree(braintree SourceBraintree) SourceTypes {
+	typ := SourceTypesTypeBraintree
+
+	typStr := SourceBraintreeType(typ)
+	braintree.Type = typStr
+
+	return SourceTypes{
+		SourceBraintree: &braintree,
+		Type:            typ,
+	}
+}
+
+func CreateSourceTypesConfluentCloud(confluentCloud SourceConfluentCloud) SourceTypes {
+	typ := SourceTypesTypeConfluentCloud
+
+	typStr := SourceConfluentCloudType(typ)
+	confluentCloud.Type = typStr
+
+	return SourceTypes{
+		SourceConfluentCloud: &confluentCloud,
+		Type:                 typ,
+	}
+}
+
+func CreateSourceTypesCoupa(coupa SourceCoupa) SourceTypes {
+	typ := SourceTypesTypeCoupa
+
+	typStr := SourceCoupaType(typ)
+	coupa.Type = typStr
+
+	return SourceTypes{
+		SourceCoupa: &coupa,
+		Type:        typ,
 	}
 }
 
@@ -883,6 +927,18 @@ func CreateSourceTypesSeismic(seismic SourceSeismic) SourceTypes {
 	}
 }
 
+func CreateSourceTypesServiceNow(serviceNow SourceServiceNow) SourceTypes {
+	typ := SourceTypesTypeServiceNow
+
+	typStr := SourceServiceNowType(typ)
+	serviceNow.Type = typStr
+
+	return SourceTypes{
+		SourceServiceNow: &serviceNow,
+		Type:             typ,
+	}
+}
+
 func CreateSourceTypesShopify(shopify SourceShopify) SourceTypes {
 	typ := SourceTypesTypeShopify
 
@@ -1242,6 +1298,33 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceBlackline = sourceBlackline
 		u.Type = SourceTypesTypeBlackline
+		return nil
+	case "BRAINTREE":
+		sourceBraintree := new(SourceBraintree)
+		if err := utils.UnmarshalJSON(data, &sourceBraintree, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceBraintree = sourceBraintree
+		u.Type = SourceTypesTypeBraintree
+		return nil
+	case "CONFLUENT_CLOUD":
+		sourceConfluentCloud := new(SourceConfluentCloud)
+		if err := utils.UnmarshalJSON(data, &sourceConfluentCloud, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceConfluentCloud = sourceConfluentCloud
+		u.Type = SourceTypesTypeConfluentCloud
+		return nil
+	case "COUPA":
+		sourceCoupa := new(SourceCoupa)
+		if err := utils.UnmarshalJSON(data, &sourceCoupa, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceCoupa = sourceCoupa
+		u.Type = SourceTypesTypeCoupa
 		return nil
 	case "CRITEO":
 		sourceCriteo := new(SourceCriteo)
@@ -1729,6 +1812,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceSeismic = sourceSeismic
 		u.Type = SourceTypesTypeSeismic
 		return nil
+	case "SERVICE_NOW":
+		sourceServiceNow := new(SourceServiceNow)
+		if err := utils.UnmarshalJSON(data, &sourceServiceNow, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceServiceNow = sourceServiceNow
+		u.Type = SourceTypesTypeServiceNow
+		return nil
 	case "SHOPIFY":
 		sourceShopify := new(SourceShopify)
 		if err := utils.UnmarshalJSON(data, &sourceShopify, "", true, true); err != nil {
@@ -1985,6 +2077,18 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceBlackline, "", true)
 	}
 
+	if u.SourceBraintree != nil {
+		return utils.MarshalJSON(u.SourceBraintree, "", true)
+	}
+
+	if u.SourceConfluentCloud != nil {
+		return utils.MarshalJSON(u.SourceConfluentCloud, "", true)
+	}
+
+	if u.SourceCoupa != nil {
+		return utils.MarshalJSON(u.SourceCoupa, "", true)
+	}
+
 	if u.SourceCriteo != nil {
 		return utils.MarshalJSON(u.SourceCriteo, "", true)
 	}
@@ -2199,6 +2303,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceSeismic != nil {
 		return utils.MarshalJSON(u.SourceSeismic, "", true)
+	}
+
+	if u.SourceServiceNow != nil {
+		return utils.MarshalJSON(u.SourceServiceNow, "", true)
 	}
 
 	if u.SourceShopify != nil {

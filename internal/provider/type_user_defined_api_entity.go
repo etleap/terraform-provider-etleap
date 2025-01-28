@@ -14,5 +14,5 @@ type UserDefinedAPIEntity struct {
 	PathToResults    types.String               `tfsdk:"path_to_results"`
 	PipelineMode     UserDefinedAPIPipelineMode `tfsdk:"pipeline_mode"`
 	QueryParameters  []HeaderParameters         `tfsdk:"query_parameters"`
-	RestMethod       types.String               `tfsdk:"rest_method"`
+	RestMethod       RestMethod                 `tfsdk:"rest_method"`
 }

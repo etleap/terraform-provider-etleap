@@ -24,6 +24,49 @@ func (r *DbtScheduleDataSourceModel) RefreshFromSharedDbtScheduleOutput(resp *sh
 		r.LastDbtBuildDate = types.StringNull()
 	}
 	r.LastDbtRunTime = types.Int64PointerValue(resp.LastDbtRunTime)
+	if resp.LatestRun.DbtScheduleRunFailure != nil {
+		r.LatestRun.EtleapError = &DbtScheduleRunFailure{}
+		r.LatestRun.EtleapError.Duration = types.Int64Value(resp.LatestRun.DbtScheduleRunFailure.Duration)
+		if resp.LatestRun.DbtScheduleRunFailure.LastSuccessfulDbtBuildDate != nil {
+			r.LatestRun.EtleapError.LastSuccessfulDbtBuildDate = types.StringValue(resp.LatestRun.DbtScheduleRunFailure.LastSuccessfulDbtBuildDate.Format(time.RFC3339Nano))
+		} else {
+			r.LatestRun.EtleapError.LastSuccessfulDbtBuildDate = types.StringNull()
+		}
+		r.LatestRun.EtleapError.NextTriggerDate = types.StringValue(resp.LatestRun.DbtScheduleRunFailure.NextTriggerDate.Format(time.RFC3339Nano))
+		r.LatestRun.EtleapError.StartDate = types.StringValue(resp.LatestRun.DbtScheduleRunFailure.StartDate.Format(time.RFC3339Nano))
+		r.LatestRun.EtleapError.Status = types.StringValue(string(resp.LatestRun.DbtScheduleRunFailure.Status))
+	}
+	if resp.LatestRun.DbtScheduleRunInProgress != nil {
+		r.LatestRun.InProgress = &DbtScheduleRunInProgress{}
+		r.LatestRun.InProgress.BuildIsTakingTooLong = types.BoolValue(resp.LatestRun.DbtScheduleRunInProgress.BuildIsTakingTooLong)
+		if resp.LatestRun.DbtScheduleRunInProgress.LastSuccessfulDbtBuildDate != nil {
+			r.LatestRun.InProgress.LastSuccessfulDbtBuildDate = types.StringValue(resp.LatestRun.DbtScheduleRunInProgress.LastSuccessfulDbtBuildDate.Format(time.RFC3339Nano))
+		} else {
+			r.LatestRun.InProgress.LastSuccessfulDbtBuildDate = types.StringNull()
+		}
+		r.LatestRun.InProgress.Phase = types.StringValue(string(resp.LatestRun.DbtScheduleRunInProgress.Phase))
+		r.LatestRun.InProgress.PreviousRunDuration = types.Int64PointerValue(resp.LatestRun.DbtScheduleRunInProgress.PreviousRunDuration)
+		if resp.LatestRun.DbtScheduleRunInProgress.PreviousRunStatus != nil {
+			r.LatestRun.InProgress.PreviousRunStatus = types.StringValue(string(*resp.LatestRun.DbtScheduleRunInProgress.PreviousRunStatus))
+		} else {
+			r.LatestRun.InProgress.PreviousRunStatus = types.StringNull()
+		}
+		r.LatestRun.InProgress.StartDate = types.StringValue(resp.LatestRun.DbtScheduleRunInProgress.StartDate.Format(time.RFC3339Nano))
+		r.LatestRun.InProgress.Status = types.StringValue(string(resp.LatestRun.DbtScheduleRunInProgress.Status))
+	}
+	if resp.LatestRun.DbtScheduleRunNotYetRun != nil {
+		r.LatestRun.NotYetRun = &DbtScheduleRunNotYetRun{}
+		r.LatestRun.NotYetRun.NextTriggerDate = types.StringValue(resp.LatestRun.DbtScheduleRunNotYetRun.NextTriggerDate.Format(time.RFC3339Nano))
+		r.LatestRun.NotYetRun.Status = types.StringValue(string(resp.LatestRun.DbtScheduleRunNotYetRun.Status))
+	}
+	if resp.LatestRun.DbtScheduleRunSuccess != nil {
+		r.LatestRun.SuccessWithDbtWarnings = &DbtScheduleRunSuccess{}
+		r.LatestRun.SuccessWithDbtWarnings.Duration = types.Int64Value(resp.LatestRun.DbtScheduleRunSuccess.Duration)
+		r.LatestRun.SuccessWithDbtWarnings.LastSuccessfulDbtBuildDate = types.StringValue(resp.LatestRun.DbtScheduleRunSuccess.LastSuccessfulDbtBuildDate.Format(time.RFC3339Nano))
+		r.LatestRun.SuccessWithDbtWarnings.NextTriggerDate = types.StringValue(resp.LatestRun.DbtScheduleRunSuccess.NextTriggerDate.Format(time.RFC3339Nano))
+		r.LatestRun.SuccessWithDbtWarnings.StartDate = types.StringValue(resp.LatestRun.DbtScheduleRunSuccess.StartDate.Format(time.RFC3339Nano))
+		r.LatestRun.SuccessWithDbtWarnings.Status = types.StringValue(string(resp.LatestRun.DbtScheduleRunSuccess.Status))
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.Owner.EmailAddress = types.StringValue(resp.Owner.EmailAddress)
 	r.Owner.FirstName = types.StringValue(resp.Owner.FirstName)

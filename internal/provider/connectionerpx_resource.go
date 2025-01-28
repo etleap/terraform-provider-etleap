@@ -46,6 +46,7 @@ type ConnectionERPXResourceModel struct {
 	APIURL                   types.String            `tfsdk:"api_url"`
 	ClientID                 types.String            `tfsdk:"client_id"`
 	ClientSecret             types.String            `tfsdk:"client_secret"`
+	CompanyIds               types.String            `tfsdk:"company_ids"`
 	CreateDate               types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
@@ -91,6 +92,15 @@ func (r *ConnectionERPXResource) Schema(ctx context.Context, req resource.Schema
 			"client_secret": schema.StringAttribute{
 				Required:    true,
 				Description: `Client Secret`,
+			},
+			"company_ids": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `Company IDs from which this connection will extract data, separated by commas. If not specified, Etleap will use the default ID linked to your user account. Please note that this field cannot be edited after the connection is created. Example: COMPANY1,COMPANY2. Requires replacement if changed. `,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,

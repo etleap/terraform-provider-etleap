@@ -148,8 +148,8 @@ type ConnectionMysql struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionMysqlDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	ValidateSslCert       *bool                                  `default:"false" json:"validateSslCert"`
+	DefaultUpdateSchedule            []ConnectionMysqlDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	RequireSslAndValidateCertificate *bool                                  `default:"true" json:"requireSslAndValidateCertificate"`
 	// Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
 	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
@@ -266,11 +266,11 @@ func (o *ConnectionMysql) GetDefaultUpdateSchedule() []ConnectionMysqlDefaultUpd
 	return o.DefaultUpdateSchedule
 }
 
-func (o *ConnectionMysql) GetValidateSslCert() *bool {
+func (o *ConnectionMysql) GetRequireSslAndValidateCertificate() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.ValidateSslCert
+	return o.RequireSslAndValidateCertificate
 }
 
 func (o *ConnectionMysql) GetCdcEnabled() *bool {
@@ -335,8 +335,8 @@ type ConnectionMysqlInput struct {
 	Name string              `json:"name"`
 	Type ConnectionMysqlType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule  *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	ValidateSslCert *bool                `default:"false" json:"validateSslCert"`
+	UpdateSchedule                   *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	RequireSslAndValidateCertificate *bool                `default:"true" json:"requireSslAndValidateCertificate"`
 	// Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
 	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
@@ -419,11 +419,11 @@ func (o *ConnectionMysqlInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMon
 	return nil
 }
 
-func (o *ConnectionMysqlInput) GetValidateSslCert() *bool {
+func (o *ConnectionMysqlInput) GetRequireSslAndValidateCertificate() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.ValidateSslCert
+	return o.RequireSslAndValidateCertificate
 }
 
 func (o *ConnectionMysqlInput) GetCdcEnabled() *bool {

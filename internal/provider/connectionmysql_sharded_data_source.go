@@ -28,20 +28,20 @@ type ConnectionMYSQLSHARDEDDataSource struct {
 
 // ConnectionMYSQLSHARDEDDataSourceModel describes the data model.
 type ConnectionMYSQLSHARDEDDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	AutoReplicate         types.String            `tfsdk:"auto_replicate"`
-	CdcEnabled            types.Bool              `tfsdk:"cdc_enabled"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	Database              types.String            `tfsdk:"database"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Shards                []MysqlShardOutput      `tfsdk:"shards"`
-	Status                types.String            `tfsdk:"status"`
-	TinyInt1IsBoolean     types.Bool              `tfsdk:"tiny_int1_is_boolean"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	ValidateSslCert       types.Bool              `tfsdk:"validate_ssl_cert"`
+	Active                           types.Bool              `tfsdk:"active"`
+	AutoReplicate                    types.String            `tfsdk:"auto_replicate"`
+	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
+	CreateDate                       types.String            `tfsdk:"create_date"`
+	Database                         types.String            `tfsdk:"database"`
+	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                               types.String            `tfsdk:"id"`
+	Name                             types.String            `tfsdk:"name"`
+	RequireSslAndValidateCertificate types.Bool              `tfsdk:"require_ssl_and_validate_certificate"`
+	Shards                           []MysqlShardOutput      `tfsdk:"shards"`
+	Status                           types.String            `tfsdk:"status"`
+	TinyInt1IsBoolean                types.Bool              `tfsdk:"tiny_int1_is_boolean"`
+	Type                             types.String            `tfsdk:"type"`
+	UpdateSchedule                   *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -171,6 +171,9 @@ func (r *ConnectionMYSQLSHARDEDDataSource) Schema(ctx context.Context, req datas
 				Computed:    true,
 				Description: `The unique name of this connection.`,
 			},
+			"require_ssl_and_validate_certificate": schema.BoolAttribute{
+				Computed: true,
+			},
 			"shards": schema.ListNestedAttribute{
 				Computed: true,
 				NestedObject: schema.NestedAttributeObject{
@@ -296,9 +299,6 @@ func (r *ConnectionMYSQLSHARDEDDataSource) Schema(ctx context.Context, req datas
 					},
 				},
 				Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.`,
-			},
-			"validate_ssl_cert": schema.BoolAttribute{
-				Computed: true,
 			},
 		},
 	}

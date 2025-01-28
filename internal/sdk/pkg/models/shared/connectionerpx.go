@@ -154,6 +154,8 @@ type ConnectionErpx struct {
 	TokenURL string `json:"tokenUrl"`
 	// Your ERPx tenant API URL.
 	APIURL string `json:"apiUrl"`
+	// Company IDs from which this connection will extract data, separated by commas. If not specified, Etleap will use the default ID linked to your user account. Please note that this field cannot be edited after the connection is created. Example: COMPANY1,COMPANY2
+	CompanyIds *string `json:"companyIds,omitempty"`
 }
 
 func (c ConnectionErpx) MarshalJSON() ([]byte, error) {
@@ -279,6 +281,13 @@ func (o *ConnectionErpx) GetAPIURL() string {
 	return o.APIURL
 }
 
+func (o *ConnectionErpx) GetCompanyIds() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CompanyIds
+}
+
 type ConnectionErpxInput struct {
 	// The unique name of this connection.
 	Name string             `json:"name"`
@@ -293,6 +302,8 @@ type ConnectionErpxInput struct {
 	TokenURL string `json:"tokenUrl"`
 	// Your ERPx tenant API URL.
 	APIURL string `json:"apiUrl"`
+	// Company IDs from which this connection will extract data, separated by commas. If not specified, Etleap will use the default ID linked to your user account. Please note that this field cannot be edited after the connection is created. Example: COMPANY1,COMPANY2
+	CompanyIds *string `json:"companyIds,omitempty"`
 }
 
 func (o *ConnectionErpxInput) GetName() string {
@@ -377,4 +388,11 @@ func (o *ConnectionErpxInput) GetAPIURL() string {
 		return ""
 	}
 	return o.APIURL
+}
+
+func (o *ConnectionErpxInput) GetCompanyIds() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CompanyIds
 }

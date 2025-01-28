@@ -66,6 +66,7 @@ func (r *ConnectionMYSQLDataSourceModel) RefreshFromSharedConnectionMysql(resp *
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.Port = types.Int64Value(resp.Port)
+	r.RequireSslAndValidateCertificate = types.BoolPointerValue(resp.RequireSslAndValidateCertificate)
 	if resp.SSHConfig == nil {
 		r.SSHConfig = nil
 	} else {
@@ -108,5 +109,4 @@ func (r *ConnectionMYSQLDataSourceModel) RefreshFromSharedConnectionMysql(resp *
 		}
 	}
 	r.Username = types.StringValue(resp.Username)
-	r.ValidateSslCert = types.BoolPointerValue(resp.ValidateSslCert)
 }

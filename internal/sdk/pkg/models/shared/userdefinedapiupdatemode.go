@@ -32,35 +32,12 @@ func (e *UserDefinedAPIUpdateModeType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type KeyValuePair struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
-}
-
-func (o *KeyValuePair) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *KeyValuePair) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
 type UserDefinedAPIUpdateMode struct {
 	Type              *UserDefinedAPIUpdateModeType `default:"UPDATE" json:"type"`
-	LastUpdatedColumn string                        `json:"lastUpdatedColumn"`
-	PrimaryKeyColumns []string                      `json:"primaryKeyColumns"`
+	PrimaryKeyColumns []string                      `json:"primaryKeyColumns,omitempty"`
 	// The foreign columns of the entity.
 	ForeignKeyColumns []SchemaV1ForeignKeyColumn `json:"foreignKeyColumns,omitempty"`
-	// Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}]
-	HighWatermarkQueryParameters []KeyValuePair         `json:"highWatermarkQueryParameters"`
-	BeginTimeParameter           WatermarkKeyValuePair  `json:"beginTimeParameter"`
-	EndTimeParameter             *WatermarkKeyValuePair `json:"endTimeParameter,omitempty"`
+	Strategy          *UpdateModeStrategyTypes   `json:"strategy,omitempty"`
 }
 
 func (u UserDefinedAPIUpdateMode) MarshalJSON() ([]byte, error) {
@@ -81,16 +58,9 @@ func (o *UserDefinedAPIUpdateMode) GetType() *UserDefinedAPIUpdateModeType {
 	return o.Type
 }
 
-func (o *UserDefinedAPIUpdateMode) GetLastUpdatedColumn() string {
-	if o == nil {
-		return ""
-	}
-	return o.LastUpdatedColumn
-}
-
 func (o *UserDefinedAPIUpdateMode) GetPrimaryKeyColumns() []string {
 	if o == nil {
-		return []string{}
+		return nil
 	}
 	return o.PrimaryKeyColumns
 }
@@ -102,23 +72,23 @@ func (o *UserDefinedAPIUpdateMode) GetForeignKeyColumns() []SchemaV1ForeignKeyCo
 	return o.ForeignKeyColumns
 }
 
-func (o *UserDefinedAPIUpdateMode) GetHighWatermarkQueryParameters() []KeyValuePair {
-	if o == nil {
-		return []KeyValuePair{}
-	}
-	return o.HighWatermarkQueryParameters
-}
-
-func (o *UserDefinedAPIUpdateMode) GetBeginTimeParameter() WatermarkKeyValuePair {
-	if o == nil {
-		return WatermarkKeyValuePair{}
-	}
-	return o.BeginTimeParameter
-}
-
-func (o *UserDefinedAPIUpdateMode) GetEndTimeParameter() *WatermarkKeyValuePair {
+func (o *UserDefinedAPIUpdateMode) GetStrategy() *UpdateModeStrategyTypes {
 	if o == nil {
 		return nil
 	}
-	return o.EndTimeParameter
+	return o.Strategy
+}
+
+func (o *UserDefinedAPIUpdateMode) GetStrategyWallClock() *WallClockStrategy {
+	if v := o.GetStrategy(); v != nil {
+		return v.WallClockStrategy
+	}
+	return nil
+}
+
+func (o *UserDefinedAPIUpdateMode) GetStrategyExtractedData() *ExtractedDataStrategy {
+	if v := o.GetStrategy(); v != nil {
+		return v.ExtractedDataStrategy
+	}
+	return nil
 }

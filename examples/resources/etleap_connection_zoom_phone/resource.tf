@@ -3,6 +3,6 @@ resource "etleap_connection_zoom_phone" "my_connectionzoom_phone" {
   client_secret               = "...my_client_secret..."
   code                        = "...my_code..."
   deletion_of_export_products = false
-  name                        = "Lora Bradtke IV"
+  name                        = "Ms. Dexter Runte"
   type                        = "ZOOM_PHONE"
 }

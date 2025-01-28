@@ -33,6 +33,10 @@ func (o *DestinationAndPipelineVersions) GetDestinationS3DataLake() *Destination
 	return o.GetDestination().DestinationS3DataLake
 }
 
+func (o *DestinationAndPipelineVersions) GetDestinationIceberg() *DestinationIceberg {
+	return o.GetDestination().DestinationIceberg
+}
+
 func (o *DestinationAndPipelineVersions) GetCurrentVersion() int64 {
 	if o == nil {
 		return 0

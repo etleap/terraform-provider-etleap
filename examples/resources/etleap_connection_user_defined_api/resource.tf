@@ -3,7 +3,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
     basic = {
       password = "...my_password..."
       type     = "BASIC"
-      username = "Godfrey_Fritsch"
+      username = "Dangelo_Mayert"
     }
   }
   deletion_of_export_products = false
@@ -20,10 +20,10 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      id = "4bc89fbd-03a9-4224-af2e-3005dda2041a"
+      id = "1ee19453-9e33-4fdc-80a5-e4af3e79e632"
       paging_strategy = {
         cursor_uri = {
-          max_page_size        = 0
+          max_page_size        = 10
           page_size_field_name = "...my_page_size_field_name..."
           path_to_cursor       = "...my_path_to_cursor..."
           type                 = "CURSOR_URI"
@@ -40,9 +40,11 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      rest_method = "POST"
+      rest_method = {
+        one = "GET"
+      }
     },
   ]
-  name = "Vanessa Blanda"
+  name = "Lester Abbott"
   type = "USER_DEFINED_API"
 }

@@ -4,8 +4,7 @@ package provider
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type WatermarkKeyValuePair struct {
-	Format types.String `tfsdk:"format"`
-	Key    types.String `tfsdk:"key"`
-	Value  types.String `tfsdk:"value"`
+type RestMethod struct {
+	One        types.String `tfsdk:"one"`
+	PostMethod *PostMethod  `tfsdk:"post_method"`
 }

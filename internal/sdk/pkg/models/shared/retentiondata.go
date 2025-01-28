@@ -2,7 +2,7 @@
 
 package shared
 
-// RetentionData - Etleap can remove old rows from your destination. This is a summary of the data retention.
+// RetentionData - Etleap can remove old rows from your destination. This is a summary of the data retention. If a pipeline is being refreshed, this will be the summary for the refreshing pipeline.
 type RetentionData struct {
 	RetentionByDay RetentionByDay `json:"retentionByDay"`
 	// Policy for the automatic deletion of rows in the destination.

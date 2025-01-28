@@ -24,7 +24,7 @@ type PipelineOutput struct {
 	LatestScriptVersion int64 `json:"latestScriptVersion"`
 	// The end-to-end latency in seconds for this pipeline. Not `null` if the pipeline is running (not paused or stopped) and if the initial backfill has finished. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMTU3NTQ3-latency#end-to-end-latency">the documentation</a> for more details.
 	Latency *int64 `json:"latency,omitempty"`
-	// Describes the reason a pipeline has stopped. `null` if the pipeline is currently running.
+	// Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline.
 	StopReason *StopReason `json:"stopReason,omitempty"`
 	// The date and time when the last refresh was started. `null` if the pipeline was never refreshed.
 	LastRefreshStartDate *time.Time `json:"lastRefreshStartDate,omitempty"`
@@ -90,6 +90,18 @@ func (o *PipelineOutput) GetSourceBingAds() *SourceBingAds {
 
 func (o *PipelineOutput) GetSourceBlackline() *SourceBlackline {
 	return o.GetSource().SourceBlackline
+}
+
+func (o *PipelineOutput) GetSourceBraintree() *SourceBraintree {
+	return o.GetSource().SourceBraintree
+}
+
+func (o *PipelineOutput) GetSourceConfluentCloud() *SourceConfluentCloud {
+	return o.GetSource().SourceConfluentCloud
+}
+
+func (o *PipelineOutput) GetSourceCoupa() *SourceCoupa {
+	return o.GetSource().SourceCoupa
 }
 
 func (o *PipelineOutput) GetSourceCriteo() *SourceCriteo {
@@ -306,6 +318,10 @@ func (o *PipelineOutput) GetSourceSapHanaSharded() *SourceSapHanaSharded {
 
 func (o *PipelineOutput) GetSourceSeismic() *SourceSeismic {
 	return o.GetSource().SourceSeismic
+}
+
+func (o *PipelineOutput) GetSourceServiceNow() *SourceServiceNow {
+	return o.GetSource().SourceServiceNow
 }
 
 func (o *PipelineOutput) GetSourceShopify() *SourceShopify {

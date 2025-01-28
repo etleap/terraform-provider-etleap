@@ -43,21 +43,21 @@ type ConnectionMYSQLSHARDEDResource struct {
 
 // ConnectionMYSQLSHARDEDResourceModel describes the resource data model.
 type ConnectionMYSQLSHARDEDResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	AutoReplicate            types.String            `tfsdk:"auto_replicate"`
-	CdcEnabled               types.Bool              `tfsdk:"cdc_enabled"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	Database                 types.String            `tfsdk:"database"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Shards                   []MysqlShard            `tfsdk:"shards"`
-	Status                   types.String            `tfsdk:"status"`
-	TinyInt1IsBoolean        types.Bool              `tfsdk:"tiny_int1_is_boolean"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	ValidateSslCert          types.Bool              `tfsdk:"validate_ssl_cert"`
+	Active                           types.Bool              `tfsdk:"active"`
+	AutoReplicate                    types.String            `tfsdk:"auto_replicate"`
+	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
+	CreateDate                       types.String            `tfsdk:"create_date"`
+	Database                         types.String            `tfsdk:"database"`
+	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts         types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                               types.String            `tfsdk:"id"`
+	Name                             types.String            `tfsdk:"name"`
+	RequireSslAndValidateCertificate types.Bool              `tfsdk:"require_ssl_and_validate_certificate"`
+	Shards                           []MysqlShard            `tfsdk:"shards"`
+	Status                           types.String            `tfsdk:"status"`
+	TinyInt1IsBoolean                types.Bool              `tfsdk:"tiny_int1_is_boolean"`
+	Type                             types.String            `tfsdk:"type"`
+	UpdateSchedule                   *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionMYSQLSHARDEDResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -313,6 +313,15 @@ func (r *ConnectionMYSQLSHARDEDResource) Schema(ctx context.Context, req resourc
 				},
 				Required:    true,
 				Description: `The unique name of this connection.`,
+			},
+			"require_ssl_and_validate_certificate": schema.BoolAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Bool{
+					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Default:     booldefault.StaticBool(true),
+				Description: `Default: true`,
 			},
 			"shards": schema.ListNestedAttribute{
 				PlanModifiers: []planmodifier.List{
@@ -658,15 +667,6 @@ func (r *ConnectionMYSQLSHARDEDResource) Schema(ctx context.Context, req resourc
 				Validators: []validator.Object{
 					validators.ExactlyOneChild(),
 				},
-			},
-			"validate_ssl_cert": schema.BoolAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.Bool{
-					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
-				},
-				Optional:    true,
-				Default:     booldefault.StaticBool(false),
-				Description: `Default: false`,
 			},
 		},
 	}

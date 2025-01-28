@@ -360,36 +360,6 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 								"user_defined_api_update_mode": schema.SingleNestedAttribute{
 									Computed: true,
 									Attributes: map[string]schema.Attribute{
-										"begin_time_parameter": schema.SingleNestedAttribute{
-											Computed: true,
-											Attributes: map[string]schema.Attribute{
-												"format": schema.StringAttribute{
-													Computed:    true,
-													Description: `must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]`,
-												},
-												"key": schema.StringAttribute{
-													Computed: true,
-												},
-												"value": schema.StringAttribute{
-													Computed: true,
-												},
-											},
-										},
-										"end_time_parameter": schema.SingleNestedAttribute{
-											Computed: true,
-											Attributes: map[string]schema.Attribute{
-												"format": schema.StringAttribute{
-													Computed:    true,
-													Description: `must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]`,
-												},
-												"key": schema.StringAttribute{
-													Computed: true,
-												},
-												"value": schema.StringAttribute{
-													Computed: true,
-												},
-											},
-										},
 										"foreign_key_columns": schema.ListNestedAttribute{
 											Computed: true,
 											NestedObject: schema.NestedAttributeObject{
@@ -433,26 +403,116 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 											},
 											Description: `The foreign columns of the entity.`,
 										},
-										"high_watermark_query_parameters": schema.ListNestedAttribute{
-											Computed: true,
-											NestedObject: schema.NestedAttributeObject{
-												Attributes: map[string]schema.Attribute{
-													"key": schema.StringAttribute{
-														Computed: true,
-													},
-													"value": schema.StringAttribute{
-														Computed: true,
-													},
-												},
-											},
-											Description: `Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}]`,
-										},
-										"last_updated_column": schema.StringAttribute{
-											Computed: true,
-										},
 										"primary_key_columns": schema.ListAttribute{
 											Computed:    true,
 											ElementType: types.StringType,
+										},
+										"strategy": schema.SingleNestedAttribute{
+											Computed: true,
+											Attributes: map[string]schema.Attribute{
+												"extracted_data": schema.SingleNestedAttribute{
+													Computed: true,
+													Attributes: map[string]schema.Attribute{
+														"begin_time_parameter": schema.SingleNestedAttribute{
+															Computed: true,
+															Attributes: map[string]schema.Attribute{
+																"format": schema.StringAttribute{
+																	Computed:    true,
+																	Description: `must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]`,
+																},
+																"key": schema.StringAttribute{
+																	Computed: true,
+																},
+																"value": schema.StringAttribute{
+																	Computed: true,
+																},
+															},
+														},
+														"end_time_parameter": schema.SingleNestedAttribute{
+															Computed: true,
+															Attributes: map[string]schema.Attribute{
+																"format": schema.StringAttribute{
+																	Computed:    true,
+																	Description: `must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]`,
+																},
+																"key": schema.StringAttribute{
+																	Computed: true,
+																},
+																"value": schema.StringAttribute{
+																	Computed: true,
+																},
+															},
+														},
+														"high_watermark_query_parameters": schema.ListNestedAttribute{
+															Computed: true,
+															NestedObject: schema.NestedAttributeObject{
+																Attributes: map[string]schema.Attribute{
+																	"key": schema.StringAttribute{
+																		Computed: true,
+																	},
+																	"value": schema.StringAttribute{
+																		Computed: true,
+																	},
+																},
+															},
+															Description: `Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}]`,
+														},
+														"last_updated_column": schema.StringAttribute{
+															Computed: true,
+														},
+														"type": schema.StringAttribute{
+															Computed:    true,
+															Description: `must be one of ["EXTRACTED_DATA"]`,
+														},
+													},
+												},
+												"wall_clock": schema.SingleNestedAttribute{
+													Computed: true,
+													Attributes: map[string]schema.Attribute{
+														"begin_date_parameter": schema.SingleNestedAttribute{
+															Computed: true,
+															Attributes: map[string]schema.Attribute{
+																"format": schema.StringAttribute{
+																	Computed:    true,
+																	Description: `must be one of ["yyyy-MM-dd"]`,
+																},
+																"key": schema.StringAttribute{
+																	Computed: true,
+																},
+																"value": schema.StringAttribute{
+																	Computed: true,
+																},
+															},
+														},
+														"end_date_parameter": schema.SingleNestedAttribute{
+															Computed: true,
+															Attributes: map[string]schema.Attribute{
+																"format": schema.StringAttribute{
+																	Computed:    true,
+																	Description: `must be one of ["yyyy-MM-dd"]`,
+																},
+																"inclusive": schema.BoolAttribute{
+																	Computed: true,
+																},
+																"key": schema.StringAttribute{
+																	Computed: true,
+																},
+																"value": schema.StringAttribute{
+																	Computed: true,
+																},
+															},
+														},
+														"lookback_window": schema.Int64Attribute{
+															Computed:    true,
+															Description: `The number of days we look back during each delta extraction.`,
+														},
+														"type": schema.StringAttribute{
+															Computed:    true,
+															Description: `must be one of ["WALL_CLOCK"]`,
+														},
+													},
+												},
+											},
 										},
 										"type": schema.StringAttribute{
 											Computed:    true,
@@ -477,9 +537,38 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 							},
 							Description: `A list of query parameters to be passed with all the requests.`,
 						},
-						"rest_method": schema.StringAttribute{
-							Computed:    true,
-							Description: `The HTTP method used to call the apiUrl. must be one of ["GET", "POST"]`,
+						"rest_method": schema.SingleNestedAttribute{
+							Computed: true,
+							Attributes: map[string]schema.Attribute{
+								"one": schema.StringAttribute{
+									Computed:    true,
+									Description: `must be one of ["GET"]`,
+								},
+								"post_method": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"body_parameters": schema.ListNestedAttribute{
+											Computed: true,
+											NestedObject: schema.NestedAttributeObject{
+												Attributes: map[string]schema.Attribute{
+													"key": schema.StringAttribute{
+														Computed: true,
+													},
+													"value": schema.StringAttribute{
+														Computed: true,
+													},
+												},
+											},
+											Description: `A list of body parameters to be passed with all the requests.`,
+										},
+										"type": schema.StringAttribute{
+											Computed:    true,
+											Description: `must be one of ["POST"]`,
+										},
+									},
+								},
+							},
+							Description: `Can be either the string ` + "`" + `GET` + "`" + ` or ` + "`" + `POST` + "`" + `, which includes body parameters.`,
 						},
 					},
 				},

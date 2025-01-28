@@ -8,11 +8,11 @@ type DestinationInfoAndPipelineVersions struct {
 	CurrentVersion int64 `json:"currentVersion"`
 	// The version of the pipeline that is currently writing to the temporary refresh table. Only specified if there's currently a refresh in progress.
 	RefreshVersion *int64 `json:"refreshVersion,omitempty"`
-	// Parsing errors that occur during the transformation of the pipeline.
+	// Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline.
 	ParsingErrors ParsingErrors `json:"parsingErrors"`
-	// Etleap can remove old rows from your destination. This is a summary of the data retention.
+	// Etleap can remove old rows from your destination. This is a summary of the data retention. If a pipeline is being refreshed, this will be the summary for the refreshing pipeline.
 	RetentionData RetentionData `json:"retentionData"`
-	// Array of schema change objects.
+	// Array of schema change objects. If a pipeline is being refreshed, the schema change activities will be for the refreshing pipeline.
 	SchemaChangeActivity []SchemaChange `json:"schemaChangeActivity"`
 }
 
@@ -37,6 +37,10 @@ func (o *DestinationInfoAndPipelineVersions) GetDestinationDeltaLake() *Destinat
 
 func (o *DestinationInfoAndPipelineVersions) GetDestinationS3DataLake() *DestinationS3DataLake {
 	return o.GetDestination().DestinationS3DataLake
+}
+
+func (o *DestinationInfoAndPipelineVersions) GetDestinationIceberg() *DestinationIceberg {
+	return o.GetDestination().DestinationIceberg
 }
 
 func (o *DestinationInfoAndPipelineVersions) GetCurrentVersion() int64 {

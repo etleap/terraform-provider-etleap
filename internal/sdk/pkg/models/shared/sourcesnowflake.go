@@ -14,6 +14,9 @@ const (
 	SourceSnowflakeTypeBigquery                 SourceSnowflakeType = "BIGQUERY"
 	SourceSnowflakeTypeBingAds                  SourceSnowflakeType = "BING_ADS"
 	SourceSnowflakeTypeBlackline                SourceSnowflakeType = "BLACKLINE"
+	SourceSnowflakeTypeBraintree                SourceSnowflakeType = "BRAINTREE"
+	SourceSnowflakeTypeConfluentCloud           SourceSnowflakeType = "CONFLUENT_CLOUD"
+	SourceSnowflakeTypeCoupa                    SourceSnowflakeType = "COUPA"
 	SourceSnowflakeTypeCriteo                   SourceSnowflakeType = "CRITEO"
 	SourceSnowflakeTypeDb2                      SourceSnowflakeType = "DB2"
 	SourceSnowflakeTypeDb2Sharded               SourceSnowflakeType = "DB2_SHARDED"
@@ -69,6 +72,7 @@ const (
 	SourceSnowflakeTypeSapHana                  SourceSnowflakeType = "SAP_HANA"
 	SourceSnowflakeTypeSapHanaSharded           SourceSnowflakeType = "SAP_HANA_SHARDED"
 	SourceSnowflakeTypeSeismic                  SourceSnowflakeType = "SEISMIC"
+	SourceSnowflakeTypeServiceNow               SourceSnowflakeType = "SERVICE_NOW"
 	SourceSnowflakeTypeShopify                  SourceSnowflakeType = "SHOPIFY"
 	SourceSnowflakeTypeSkyward                  SourceSnowflakeType = "SKYWARD"
 	SourceSnowflakeTypeSalesforce               SourceSnowflakeType = "SALESFORCE"
@@ -114,6 +118,12 @@ func (e *SourceSnowflakeType) UnmarshalJSON(data []byte) error {
 	case "BING_ADS":
 		fallthrough
 	case "BLACKLINE":
+		fallthrough
+	case "BRAINTREE":
+		fallthrough
+	case "CONFLUENT_CLOUD":
+		fallthrough
+	case "COUPA":
 		fallthrough
 	case "CRITEO":
 		fallthrough
@@ -224,6 +234,8 @@ func (e *SourceSnowflakeType) UnmarshalJSON(data []byte) error {
 	case "SAP_HANA_SHARDED":
 		fallthrough
 	case "SEISMIC":
+		fallthrough
+	case "SERVICE_NOW":
 		fallthrough
 	case "SHOPIFY":
 		fallthrough

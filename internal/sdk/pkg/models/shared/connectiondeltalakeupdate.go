@@ -7,8 +7,6 @@ import (
 	"fmt"
 )
 
-// ConnectionDeltaLakeUpdateType - <!-- theme: warning -->
-// > Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
 type ConnectionDeltaLakeUpdateType string
 
 const (
@@ -35,9 +33,7 @@ func (e *ConnectionDeltaLakeUpdateType) UnmarshalJSON(data []byte) error {
 
 type ConnectionDeltaLakeUpdate struct {
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
-	// <!-- theme: warning -->
-	// > Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
+	Name *string                        `json:"name,omitempty"`
 	Type *ConnectionDeltaLakeUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
 	Active *bool `json:"active,omitempty"`

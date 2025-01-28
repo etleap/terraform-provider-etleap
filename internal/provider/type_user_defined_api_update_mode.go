@@ -5,11 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type UserDefinedAPIUpdateMode struct {
-	BeginTimeParameter           WatermarkKeyValuePair      `tfsdk:"begin_time_parameter"`
-	EndTimeParameter             *WatermarkKeyValuePair     `tfsdk:"end_time_parameter"`
-	ForeignKeyColumns            []SchemaV1ForeignKeyColumn `tfsdk:"foreign_key_columns"`
-	HighWatermarkQueryParameters []HeaderParameters         `tfsdk:"high_watermark_query_parameters"`
-	LastUpdatedColumn            types.String               `tfsdk:"last_updated_column"`
-	PrimaryKeyColumns            []types.String             `tfsdk:"primary_key_columns"`
-	Type                         types.String               `tfsdk:"type"`
+	ForeignKeyColumns []SchemaV1ForeignKeyColumn `tfsdk:"foreign_key_columns"`
+	PrimaryKeyColumns []types.String             `tfsdk:"primary_key_columns"`
+	Strategy          *UpdateModeStrategyTypes   `tfsdk:"strategy"`
+	Type              types.String               `tfsdk:"type"`
 }

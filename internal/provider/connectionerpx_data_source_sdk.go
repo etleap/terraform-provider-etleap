@@ -12,6 +12,7 @@ func (r *ConnectionERPXDataSourceModel) RefreshFromSharedConnectionErpx(resp *sh
 	r.Active = types.BoolValue(resp.Active)
 	r.APIURL = types.StringValue(resp.APIURL)
 	r.ClientID = types.StringValue(resp.ClientID)
+	r.CompanyIds = types.StringPointerValue(resp.CompanyIds)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]

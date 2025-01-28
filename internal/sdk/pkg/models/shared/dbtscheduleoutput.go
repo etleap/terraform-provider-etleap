@@ -9,6 +9,9 @@ import (
 	"time"
 )
 
+// CurrentActivity - This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+//
+// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
 type CurrentActivity string
 
 const (
@@ -54,13 +57,21 @@ type DbtScheduleOutput struct {
 	// The [connection](https://docs.etleap.com/docs/api-v2/edbec13814bbc-connection) where the dbt build runs. The only supported connections are Redshift, Snowflake or Databricks Delta Lake destinations.
 	ConnectionID string `json:"connectionId"`
 	// Whether the dbt build is skipped if no new data has been ingested for any of the pipelines in the table above.
-	SkipBuildIfNoNewData bool             `json:"skipBuildIfNoNewData"`
-	CurrentActivity      *CurrentActivity `json:"currentActivity,omitempty"`
-	// The last time that a successful dbt build started.
+	SkipBuildIfNoNewData bool `json:"skipBuildIfNoNewData"`
+	// This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	CurrentActivity *CurrentActivity `json:"currentActivity,omitempty"`
+	// The last time that a successful dbt build started. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	LastDbtBuildDate *time.Time `json:"lastDbtBuildDate,omitempty"`
-	// The duration of the last successful dbt build.
-	LastDbtRunTime *int64    `json:"lastDbtRunTime,omitempty"`
-	CreateDate     time.Time `json:"createDate"`
+	// The duration of the last successful dbt build. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	LastDbtRunTime *int64              `json:"lastDbtRunTime,omitempty"`
+	CreateDate     time.Time           `json:"createDate"`
+	LatestRun      DbtScheduleRunTypes `json:"latestRun"`
 }
 
 func (d DbtScheduleOutput) MarshalJSON() ([]byte, error) {
@@ -163,4 +174,35 @@ func (o *DbtScheduleOutput) GetCreateDate() time.Time {
 		return time.Time{}
 	}
 	return o.CreateDate
+}
+
+func (o *DbtScheduleOutput) GetLatestRun() DbtScheduleRunTypes {
+	if o == nil {
+		return DbtScheduleRunTypes{}
+	}
+	return o.LatestRun
+}
+
+func (o *DbtScheduleOutput) GetLatestRunNotYetRun() *DbtScheduleRunNotYetRun {
+	return o.GetLatestRun().DbtScheduleRunNotYetRun
+}
+
+func (o *DbtScheduleOutput) GetLatestRunInProgress() *DbtScheduleRunInProgress {
+	return o.GetLatestRun().DbtScheduleRunInProgress
+}
+
+func (o *DbtScheduleOutput) GetLatestRunEtleapError() *DbtScheduleRunFailure {
+	return o.GetLatestRun().DbtScheduleRunFailure
+}
+
+func (o *DbtScheduleOutput) GetLatestRunDbtError() *DbtScheduleRunFailure {
+	return o.GetLatestRun().DbtScheduleRunFailure
+}
+
+func (o *DbtScheduleOutput) GetLatestRunSuccessWithDbtWarnings() *DbtScheduleRunSuccess {
+	return o.GetLatestRun().DbtScheduleRunSuccess
+}
+
+func (o *DbtScheduleOutput) GetLatestRunSuccess() *DbtScheduleRunSuccess {
+	return o.GetLatestRun().DbtScheduleRunSuccess
 }

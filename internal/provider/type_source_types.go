@@ -7,6 +7,9 @@ type SourceTypes struct {
 	Bigquery                 *SourceBigQuery                 `tfsdk:"bigquery"`
 	BingAds                  *SourceBingAds                  `tfsdk:"bing_ads"`
 	Blackline                *SourceBlackline                `tfsdk:"blackline"`
+	Braintree                *SourceBraintree                `tfsdk:"braintree"`
+	ConfluentCloud           *SourceConfluentCloud           `tfsdk:"confluent_cloud"`
+	Coupa                    *SourceCoupa                    `tfsdk:"coupa"`
 	Criteo                   *SourceCriteo                   `tfsdk:"criteo"`
 	Db2                      *SourceDb2                      `tfsdk:"db2"`
 	Db2Sharded               *SourceDb2Sharded               `tfsdk:"db2_sharded"`
@@ -62,6 +65,7 @@ type SourceTypes struct {
 	SapHana                  *SourceSapHana                  `tfsdk:"sap_hana"`
 	SapHanaSharded           *SourceSapHanaSharded           `tfsdk:"sap_hana_sharded"`
 	Seismic                  *SourceSeismic                  `tfsdk:"seismic"`
+	ServiceNow               *SourceServiceNow               `tfsdk:"service_now"`
 	Sftp                     *SourceSftp                     `tfsdk:"sftp"`
 	Shopify                  *SourceShopify                  `tfsdk:"shopify"`
 	Skyward                  *SourceSkyward                  `tfsdk:"skyward"`

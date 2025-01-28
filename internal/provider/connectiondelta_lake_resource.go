@@ -332,10 +332,8 @@ func (r *ConnectionDELTALAKEResource) Schema(ctx context.Context, req resource.S
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Required: true,
-				MarkdownDescription: `<!-- theme: warning -->` + "\n" +
-					`> Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.` + "\n" +
-					`must be one of ["DELTA_LAKE"]`,
+				Required:    true,
+				Description: `must be one of ["DELTA_LAKE"]`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"DELTA_LAKE",

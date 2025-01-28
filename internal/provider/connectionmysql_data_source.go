@@ -28,23 +28,23 @@ type ConnectionMYSQLDataSource struct {
 
 // ConnectionMYSQLDataSourceModel describes the data model.
 type ConnectionMYSQLDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	Address               types.String            `tfsdk:"address"`
-	AutoReplicate         types.String            `tfsdk:"auto_replicate"`
-	CdcEnabled            types.Bool              `tfsdk:"cdc_enabled"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	Database              types.String            `tfsdk:"database"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Port                  types.Int64             `tfsdk:"port"`
-	SSHConfig             *SSHConfig              `tfsdk:"ssh_config"`
-	Status                types.String            `tfsdk:"status"`
-	TinyInt1IsBoolean     types.Bool              `tfsdk:"tiny_int1_is_boolean"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	Username              types.String            `tfsdk:"username"`
-	ValidateSslCert       types.Bool              `tfsdk:"validate_ssl_cert"`
+	Active                           types.Bool              `tfsdk:"active"`
+	Address                          types.String            `tfsdk:"address"`
+	AutoReplicate                    types.String            `tfsdk:"auto_replicate"`
+	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
+	CreateDate                       types.String            `tfsdk:"create_date"`
+	Database                         types.String            `tfsdk:"database"`
+	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                               types.String            `tfsdk:"id"`
+	Name                             types.String            `tfsdk:"name"`
+	Port                             types.Int64             `tfsdk:"port"`
+	RequireSslAndValidateCertificate types.Bool              `tfsdk:"require_ssl_and_validate_certificate"`
+	SSHConfig                        *SSHConfig              `tfsdk:"ssh_config"`
+	Status                           types.String            `tfsdk:"status"`
+	TinyInt1IsBoolean                types.Bool              `tfsdk:"tiny_int1_is_boolean"`
+	Type                             types.String            `tfsdk:"type"`
+	UpdateSchedule                   *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Username                         types.String            `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.
@@ -180,6 +180,9 @@ func (r *ConnectionMYSQLDataSource) Schema(ctx context.Context, req datasource.S
 			"port": schema.Int64Attribute{
 				Computed: true,
 			},
+			"require_ssl_and_validate_certificate": schema.BoolAttribute{
+				Computed: true,
+			},
 			"ssh_config": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
@@ -284,9 +287,6 @@ func (r *ConnectionMYSQLDataSource) Schema(ctx context.Context, req datasource.S
 				Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.`,
 			},
 			"username": schema.StringAttribute{
-				Computed: true,
-			},
-			"validate_ssl_cert": schema.BoolAttribute{
 				Computed: true,
 			},
 		},
