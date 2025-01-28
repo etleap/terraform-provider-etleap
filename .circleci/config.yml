@@ -12,6 +12,17 @@ parameters:
     type: boolean
     default: true
 
+commands:
+  update-go-dependencies:
+    steps:
+      - run:
+          name: Update stale dependencies
+          command: | 
+            go get -u github.com/hashicorp/terraform-plugin-framework
+            go get github.com/hashicorp/terraform-plugin-sdk/helper/acctest
+            go get github.com/hashicorp/terraform-plugin-testing/helper/acctest
+            go get github.com/hashicorp/terraform-plugin-testing/helper/resource
+
 jobs:
   download-and-process:
     resource_class: small
@@ -100,13 +111,7 @@ jobs:
       - run:
           name: Install Dependencies
           command: go get ./...
-      - run:
-          name: Update stale dependencies
-          command: | 
-            go get -u github.com/hashicorp/terraform-plugin-framework
-            go get github.com/hashicorp/terraform-plugin-sdk/helper/acctest
-            go get github.com/hashicorp/terraform-plugin-testing/helper/acctest
-            go get github.com/hashicorp/terraform-plugin-testing/helper/resource
+      - update-go-dependencies
       - run:
           name: Run tests
           command: TF_ACC=1 gotestsum --junitfile /tmp/test-results/unit-tests.xml --format testdox
@@ -122,7 +127,7 @@ jobs:
         
   
   publish:
-    resource_class: medium
+    resource_class: large
     executor:
       name: go/default
       tag: "1.23.4"
@@ -157,9 +162,10 @@ jobs:
             else
               echo "Tag exists; Publishing existing tag"
             fi
+      - update-go-dependencies
       - run:
           name: Release
-          command: curl -sfL https://goreleaser.com/static/run | bash /dev/stdin release --clean
+          command: curl -sfL https://goreleaser.com/static/run | bash /dev/stdin release --skip=validate --clean
       - slack/notify:
           channel: -devops
 
