@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: f047edf1d03e06a02ba3efb9428e67c1
-  docVersion: 2.7.5
+  docChecksum: 20cbe507490ee2d0997e5d102f87a9d7
+  docVersion: 2.7.7
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.1.6
-  configChecksum: 3b8bab98fd66bd61f96b68c4e3474468
+  releaseVersion: 0.1.7
+  configChecksum: 7067c1d2ceeed09a2e00df03dbe76cfa
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -884,8 +884,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/dbtschedulerunsuccess.go
   - internal/sdk/pkg/models/shared/dbtschedulerunfailure.go
   - internal/sdk/pkg/models/shared/dbtscheduleruninprogress.go
-  - internal/sdk/pkg/models/shared/dbtbuildstatus.go
-  - internal/sdk/pkg/models/shared/dbtschedulerunnotyetrun.go
+  - internal/sdk/pkg/models/shared/dbtrunstatus.go
   - internal/sdk/pkg/models/shared/dbtscheduleinput.go
   - internal/sdk/pkg/models/shared/dbtscheduleupdate.go
   - internal/sdk/pkg/models/shared/security.go
@@ -929,7 +928,6 @@ generatedFiles:
   - internal/provider/type_user_defined_api_entity.go
   - internal/provider/type_dbt_schedule_run_failure.go
   - internal/provider/type_dbt_schedule_run_in_progress.go
-  - internal/provider/type_dbt_schedule_run_not_yet_run.go
   - internal/provider/type_dbt_schedule_run_success.go
   - internal/provider/type_dbt_schedule_run_types.go
   - internal/provider/type_user.go

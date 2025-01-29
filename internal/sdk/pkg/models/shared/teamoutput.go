@@ -7,8 +7,6 @@ import (
 	"time"
 )
 
-// TeamOutput - <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 type TeamOutput struct {
 	// The unique identifier of the team.
 	ID          string `json:"id"`

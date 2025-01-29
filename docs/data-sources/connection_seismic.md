@@ -14,7 +14,7 @@ ConnectionSEISMIC DataSource
 
 ```terraform
 data "etleap_connection_seismic" "my_connectionseismic" {
-  id = "5fceaabb-365c-4600-9895-3539f3b5b5c2"
+  id = "63a432a0-10f2-4abe-8c7f-99dadee008b0"
 }
 ```
 

@@ -14,7 +14,7 @@ ConnectionINTERCOM DataSource
 
 ```terraform
 data "etleap_connection_intercom" "my_connectionintercom" {
-  id = "9a920392-80c1-4b7e-ab83-615f59182ce9"
+  id = "b08764d4-cefe-4742-b1dc-e7ef02af672b"
 }
 ```
 

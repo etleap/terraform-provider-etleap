@@ -14,16 +14,16 @@ ConnectionORACLE Resource
 
 ```terraform
 resource "etleap_connection_oracle" "my_connectionoracle" {
-  address                     = "915 Jerde Oval"
+  address                     = "1575 Geoffrey Corners"
   cdc_enabled                 = false
   database                    = "...my_database..."
-  deletion_of_export_products = false
-  name                        = "Wanda Kertzmann DDS"
+  deletion_of_export_products = true
+  name                        = "Ricky Herman"
   password                    = "...my_password..."
-  port                        = 8
+  port                        = 2
   schema                      = "...my_schema..."
   type                        = "ORACLE"
-  username                    = "Amalia_Cartwright"
+  username                    = "Talon.Yost"
 }
 ```
 

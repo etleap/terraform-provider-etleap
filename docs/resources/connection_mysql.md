@@ -14,18 +14,18 @@ ConnectionMYSQL Resource
 
 ```terraform
 resource "etleap_connection_mysql" "my_connectionmysql" {
-  address                     = "12912 Selina Road"
-  auto_replicate              = "...my_auto_replicate..."
-  cdc_enabled                 = true
-  database                    = "...my_database..."
-  deletion_of_export_products = false
-  name                        = "Rufus Adams"
-  password                    = "...my_password..."
-  port                        = 0
-  tiny_int1_is_boolean        = false
-  type                        = "MYSQL"
-  username                    = "Nadia.Leannon"
-  validate_ssl_cert           = false
+  address                              = "33233 Betsy Burg"
+  auto_replicate                       = "...my_auto_replicate..."
+  cdc_enabled                          = false
+  database                             = "...my_database..."
+  deletion_of_export_products          = true
+  name                                 = "Caleb Dickinson"
+  password                             = "...my_password..."
+  port                                 = 10
+  require_ssl_and_validate_certificate = false
+  tiny_int1_is_boolean                 = true
+  type                                 = "MYSQL"
+  username                             = "Emanuel_Doyle13"
 }
 ```
 
@@ -47,10 +47,10 @@ resource "etleap_connection_mysql" "my_connectionmysql" {
 - `cdc_enabled` (Boolean) Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later. Requires replacement if changed. ; Default: false
 - `database` (String)
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
+- `require_ssl_and_validate_certificate` (Boolean) Default: true
 - `ssh_config` (Attributes) (see [below for nested schema](#nestedatt--ssh_config))
 - `tiny_int1_is_boolean` (Boolean) Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?. Default: false
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
-- `validate_ssl_cert` (Boolean) Default: false
 
 ### Read-Only
 

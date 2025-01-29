@@ -14,7 +14,7 @@ ConnectionSNOWFLAKE DataSource
 
 ```terraform
 data "etleap_connection_snowflake" "my_connectionsnowflake" {
-  id = "d7bc4ff4-71c6-43a4-b2a0-10f2abe8c7f9"
+  id = "38381989-7d48-4728-8133-7b16d53a79fa"
 }
 ```
 

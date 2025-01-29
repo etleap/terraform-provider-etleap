@@ -15,9 +15,9 @@ ConnectionFRESHCHAT Resource
 ```terraform
 resource "etleap_connection_freshchat" "my_connectionfreshchat" {
   api_key                     = "...my_api_key..."
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   domain                      = "...my_domain..."
-  name                        = "Isabel Nienow"
+  name                        = "Willis Sawayn"
   type                        = "FRESHCHAT"
 }
 ```

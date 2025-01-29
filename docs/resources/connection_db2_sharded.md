@@ -15,20 +15,20 @@ ConnectionDb2SHARDED Resource
 ```terraform
 resource "etleap_connection_db2_sharded" "my_connectiondb2_sharded" {
   deletion_of_export_products = true
-  name                        = "Daryl Rutherford"
+  name                        = "Marilyn Abbott"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "98390 Windler Brook"
+      address  = "08361 Buckridge Forks"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 4
+      port     = 2
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "431 Carmine Alley"
-        username = "Kathryn3"
+        address  = "774 Maybell Hills"
+        username = "Lindsay80"
       }
-      username = "Sage.Hilll"
+      username = "Marina65"
     },
   ]
   type = "DB2_SHARDED"

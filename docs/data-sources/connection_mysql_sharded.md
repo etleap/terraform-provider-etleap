@@ -14,7 +14,7 @@ ConnectionMYSQLSHARDED DataSource
 
 ```terraform
 data "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
-  id = "d7ad9e68-8b9e-4080-bb5b-2b1c04e7886a"
+  id = "c621b02a-881c-4c3d-9f5f-04b497d346fb"
 }
 ```
 
@@ -31,12 +31,12 @@ data "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `id` (String) The ID of this resource.
 - `name` (String) The unique name of this connection.
+- `require_ssl_and_validate_certificate` (Boolean)
 - `shards` (Attributes List) All MySQL shards for a connection should specify the same database. (see [below for nested schema](#nestedatt--shards))
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]
 - `tiny_int1_is_boolean` (Boolean) Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
 - `type` (String) must be one of ["MYSQL_SHARDED"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
-- `validate_ssl_cert` (Boolean)
 
 <a id="nestedatt--default_update_schedule"></a>
 ### Nested Schema for `default_update_schedule`

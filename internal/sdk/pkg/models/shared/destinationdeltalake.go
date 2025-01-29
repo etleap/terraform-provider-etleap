@@ -8,8 +8,6 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-// DestinationDeltaLakeType - <!-- theme: warning -->
-// > Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
 type DestinationDeltaLakeType string
 
 const (
@@ -35,8 +33,6 @@ func (e *DestinationDeltaLakeType) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationDeltaLake struct {
-	// <!-- theme: warning -->
-	// > Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
 	Type DestinationDeltaLakeType `json:"type"`
 	// The universally unique identifier of the destination connection.
 	ConnectionID string `json:"connectionId"`

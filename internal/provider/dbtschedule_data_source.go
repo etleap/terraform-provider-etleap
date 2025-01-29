@@ -28,20 +28,20 @@ type DbtScheduleDataSource struct {
 
 // DbtScheduleDataSourceModel describes the data model.
 type DbtScheduleDataSourceModel struct {
-	ConnectionID         types.String        `tfsdk:"connection_id"`
-	CreateDate           types.String        `tfsdk:"create_date"`
-	Cron                 types.String        `tfsdk:"cron"`
-	CurrentActivity      types.String        `tfsdk:"current_activity"`
-	ID                   types.String        `tfsdk:"id"`
-	LastDbtBuildDate     types.String        `tfsdk:"last_dbt_build_date"`
-	LastDbtRunTime       types.Int64         `tfsdk:"last_dbt_run_time"`
-	LatestRun            DbtScheduleRunTypes `tfsdk:"latest_run"`
-	Name                 types.String        `tfsdk:"name"`
-	Owner                User                `tfsdk:"owner"`
-	Paused               types.Bool          `tfsdk:"paused"`
-	Selector             types.String        `tfsdk:"selector"`
-	SkipBuildIfNoNewData types.Bool          `tfsdk:"skip_build_if_no_new_data"`
-	TargetSchema         types.String        `tfsdk:"target_schema"`
+	ConnectionID         types.String         `tfsdk:"connection_id"`
+	CreateDate           types.String         `tfsdk:"create_date"`
+	Cron                 types.String         `tfsdk:"cron"`
+	CurrentActivity      types.String         `tfsdk:"current_activity"`
+	ID                   types.String         `tfsdk:"id"`
+	LastDbtBuildDate     types.String         `tfsdk:"last_dbt_build_date"`
+	LastDbtRunTime       types.Int64          `tfsdk:"last_dbt_run_time"`
+	LatestRun            *DbtScheduleRunTypes `tfsdk:"latest_run"`
+	Name                 types.String         `tfsdk:"name"`
+	Owner                User                 `tfsdk:"owner"`
+	Paused               types.Bool           `tfsdk:"paused"`
+	Selector             types.String         `tfsdk:"selector"`
+	SkipBuildIfNoNewData types.Bool           `tfsdk:"skip_build_if_no_new_data"`
+	TargetSchema         types.String         `tfsdk:"target_schema"`
 }
 
 // Metadata returns the data source type name.
@@ -85,7 +85,7 @@ func (r *DbtScheduleDataSource) Schema(ctx context.Context, req datasource.Schem
 			"latest_run": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"etleap_error": schema.SingleNestedAttribute{
+					"ingest_could_not_complete": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
 							"duration": schema.Int64Attribute{
@@ -106,7 +106,7 @@ func (r *DbtScheduleDataSource) Schema(ctx context.Context, req datasource.Schem
 							},
 							"status": schema.StringAttribute{
 								Computed:    true,
-								Description: `must be one of ["ETLEAP_ERROR", "DBT_ERROR"]`,
+								Description: `must be one of ["INGEST_COULD_NOT_COMPLETE", "DBT_ERROR"]`,
 							},
 						},
 					},
@@ -131,7 +131,7 @@ func (r *DbtScheduleDataSource) Schema(ctx context.Context, req datasource.Schem
 							},
 							"previous_run_status": schema.StringAttribute{
 								Computed:    true,
-								Description: `must be one of ["IN_PROGRESS", "ETLEAP_ERROR", "DBT_ERROR", "SUCCESS_WITH_DBT_WARNINGS", "SUCCESS"]`,
+								Description: `must be one of ["IN_PROGRESS", "INGEST_COULD_NOT_COMPLETE", "DBT_ERROR", "SUCCESS_WITH_DBT_WARNINGS", "SUCCESS"]`,
 							},
 							"start_date": schema.StringAttribute{
 								Computed:    true,
@@ -140,19 +140,6 @@ func (r *DbtScheduleDataSource) Schema(ctx context.Context, req datasource.Schem
 							"status": schema.StringAttribute{
 								Computed:    true,
 								Description: `must be one of ["IN_PROGRESS"]`,
-							},
-						},
-					},
-					"not_yet_run": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"next_trigger_date": schema.StringAttribute{
-								Computed:    true,
-								Description: `Timestamp for the next dbt schedule trigger.`,
-							},
-							"status": schema.StringAttribute{
-								Computed:    true,
-								Description: `must be one of ["NOT_YET_RUN"]`,
 							},
 						},
 					},

@@ -2,10 +2,7 @@
 
 package shared
 
-// ModelsOutput - The response body for GET /models
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
+// ModelsOutput - The response body for GET /models.
 type ModelsOutput struct {
 	// Contains a cursor to the next page of results.
 	NextPageToken *string `json:"nextPageToken,omitempty"`

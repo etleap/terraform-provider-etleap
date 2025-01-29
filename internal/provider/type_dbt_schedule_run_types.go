@@ -3,8 +3,7 @@
 package provider
 
 type DbtScheduleRunTypes struct {
-	EtleapError            *DbtScheduleRunFailure    `tfsdk:"etleap_error"`
+	IngestCouldNotComplete *DbtScheduleRunFailure    `tfsdk:"ingest_could_not_complete"`
 	InProgress             *DbtScheduleRunInProgress `tfsdk:"in_progress"`
-	NotYetRun              *DbtScheduleRunNotYetRun  `tfsdk:"not_yet_run"`
 	SuccessWithDbtWarnings *DbtScheduleRunSuccess    `tfsdk:"success_with_dbt_warnings"`
 }

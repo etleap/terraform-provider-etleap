@@ -27,9 +27,6 @@ func newTeam(sdkConfig sdkConfiguration) *Team {
 
 // GetTeams - Get a list of teams
 // Get a list of teams.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Team) GetTeams(ctx context.Context, request operations.GetTeamsRequest) (*operations.GetTeamsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/teams"
@@ -102,10 +99,7 @@ func (s *Team) GetTeams(ctx context.Context, request operations.GetTeamsRequest)
 }
 
 // Create a team
-// Create a new team
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
+// Create a new team.
 func (s *Team) Create(ctx context.Context, request *shared.TeamInput) (*operations.CreateTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/teams"
@@ -185,9 +179,6 @@ func (s *Team) Create(ctx context.Context, request *shared.TeamInput) (*operatio
 
 // Get a team
 // Get a team by its unique identifier.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Team) Get(ctx context.Context, request operations.GetTeamRequest) (*operations.GetTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/teams/{id}", request, nil)
@@ -262,9 +253,6 @@ func (s *Team) Get(ctx context.Context, request operations.GetTeamRequest) (*ope
 
 // Delete a team
 // Delete a team by its unique identifier.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Team) Delete(ctx context.Context, request operations.DeleteTeamRequest) (*operations.DeleteTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/teams/{id}", request, nil)
@@ -328,9 +316,6 @@ func (s *Team) Delete(ctx context.Context, request operations.DeleteTeamRequest)
 
 // AddMembersToTeam - Add members to a team
 // Add a list of members to a team.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Team) AddMembersToTeam(ctx context.Context, request operations.AddMembersToTeamRequest) (*operations.AddMembersToTeamResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/teams/{id}/members", request, nil)
@@ -415,9 +400,6 @@ func (s *Team) AddMembersToTeam(ctx context.Context, request operations.AddMembe
 
 // RemoveTeamMember - Remove a member from a team
 // Remove member from a team.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Team) RemoveTeamMember(ctx context.Context, request operations.RemoveTeamMemberRequest) (*operations.RemoveTeamMemberResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/teams/{teamId}/members/{memberId}", request, nil)

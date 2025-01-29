@@ -723,9 +723,6 @@ func (s *Pipeline) RetractEvent(ctx context.Context, request operations.RetractE
 
 // GetPipelineGrants - Get a list of grants for a pipeline
 // List the access grants for a pipeline.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Pipeline) GetPipelineGrants(ctx context.Context, request operations.GetPipelineGrantsRequest) (*operations.GetPipelineGrantsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/pipelines/{id}/grants", request, nil)
@@ -804,9 +801,6 @@ func (s *Pipeline) GetPipelineGrants(ctx context.Context, request operations.Get
 
 // GrantAccessToPipeline - Grant access to a pipeline
 // Grant access to a pipeline for a user.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Pipeline) GrantAccessToPipeline(ctx context.Context, request operations.GrantAccessToPipelineRequest) (*operations.GrantAccessToPipelineResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/pipelines/{id}/grants", request, nil)
@@ -895,9 +889,6 @@ func (s *Pipeline) GrantAccessToPipeline(ctx context.Context, request operations
 
 // RemoveAccessToPipeline - Remove access to a pipeline
 // Remove a user's access to a pipeline.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Pipeline) RemoveAccessToPipeline(ctx context.Context, request operations.RemoveAccessToPipelineRequest) (*operations.RemoveAccessToPipelineResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/pipelines/{id}/grants/{grantId}", request, nil)
@@ -959,11 +950,11 @@ func (s *Pipeline) RemoveAccessToPipeline(ctx context.Context, request operation
 	return res, nil
 }
 
-// AddDestinationToPipeline - Adds a new destination to a pipeline.
-// Adds a new destination to a pipeline. The destination that was added is returned by this endpoint on success.
+// AddDestinationToPipeline - Add a pipeline destination
+// Add a new destination to a pipeline. The destination that was added is returned by this endpoint on success.
 //
 // <!-- theme: warning -->
-// > Adding new destinations is currently in Beta which means that this endpoint is subject to non-backwards-compatible and breaking changes.
+// > Adding new destinations is currently in [preview](https://docs.etleap.com/docs/documentation/kn2fj3lprn9z9-preview-features) which means that this endpoint is subject to non-backwards-compatible and breaking changes.
 func (s *Pipeline) AddDestinationToPipeline(ctx context.Context, request operations.AddDestinationToPipelineRequest) (*operations.AddDestinationToPipelineResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/pipelines/{id}/destinations", request, nil)
@@ -1050,7 +1041,7 @@ func (s *Pipeline) AddDestinationToPipeline(ctx context.Context, request operati
 // Remove a destination from a pipeline that has multiple destinations.
 //
 // <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
+// > This feature is currently in [preview](https://docs.etleap.com/docs/documentation/kn2fj3lprn9z9-preview-features) which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Pipeline) RemoveDestinationForPipeline(ctx context.Context, request operations.RemoveDestinationForPipelineRequest) (*operations.RemoveDestinationForPipelineResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/pipelines/{id}/destinations/{connectionId}", request, nil)

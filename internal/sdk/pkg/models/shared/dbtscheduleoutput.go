@@ -69,9 +69,9 @@ type DbtScheduleOutput struct {
 	// The duration of the last successful dbt build. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	LastDbtRunTime *int64              `json:"lastDbtRunTime,omitempty"`
-	CreateDate     time.Time           `json:"createDate"`
-	LatestRun      DbtScheduleRunTypes `json:"latestRun"`
+	LastDbtRunTime *int64               `json:"lastDbtRunTime,omitempty"`
+	CreateDate     time.Time            `json:"createDate"`
+	LatestRun      *DbtScheduleRunTypes `json:"latestRun,omitempty"`
 }
 
 func (d DbtScheduleOutput) MarshalJSON() ([]byte, error) {
@@ -176,33 +176,44 @@ func (o *DbtScheduleOutput) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *DbtScheduleOutput) GetLatestRun() DbtScheduleRunTypes {
+func (o *DbtScheduleOutput) GetLatestRun() *DbtScheduleRunTypes {
 	if o == nil {
-		return DbtScheduleRunTypes{}
+		return nil
 	}
 	return o.LatestRun
 }
 
-func (o *DbtScheduleOutput) GetLatestRunNotYetRun() *DbtScheduleRunNotYetRun {
-	return o.GetLatestRun().DbtScheduleRunNotYetRun
-}
-
 func (o *DbtScheduleOutput) GetLatestRunInProgress() *DbtScheduleRunInProgress {
-	return o.GetLatestRun().DbtScheduleRunInProgress
+	if v := o.GetLatestRun(); v != nil {
+		return v.DbtScheduleRunInProgress
+	}
+	return nil
 }
 
-func (o *DbtScheduleOutput) GetLatestRunEtleapError() *DbtScheduleRunFailure {
-	return o.GetLatestRun().DbtScheduleRunFailure
+func (o *DbtScheduleOutput) GetLatestRunIngestCouldNotComplete() *DbtScheduleRunFailure {
+	if v := o.GetLatestRun(); v != nil {
+		return v.DbtScheduleRunFailure
+	}
+	return nil
 }
 
 func (o *DbtScheduleOutput) GetLatestRunDbtError() *DbtScheduleRunFailure {
-	return o.GetLatestRun().DbtScheduleRunFailure
+	if v := o.GetLatestRun(); v != nil {
+		return v.DbtScheduleRunFailure
+	}
+	return nil
 }
 
 func (o *DbtScheduleOutput) GetLatestRunSuccessWithDbtWarnings() *DbtScheduleRunSuccess {
-	return o.GetLatestRun().DbtScheduleRunSuccess
+	if v := o.GetLatestRun(); v != nil {
+		return v.DbtScheduleRunSuccess
+	}
+	return nil
 }
 
 func (o *DbtScheduleOutput) GetLatestRunSuccess() *DbtScheduleRunSuccess {
-	return o.GetLatestRun().DbtScheduleRunSuccess
+	if v := o.GetLatestRun(); v != nil {
+		return v.DbtScheduleRunSuccess
+	}
+	return nil
 }

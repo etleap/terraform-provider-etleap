@@ -27,9 +27,6 @@ func newModel(sdkConfig sdkConfiguration) *Model {
 
 // GetModels - Get a list of models
 // Get a list of models.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Model) GetModels(ctx context.Context, request operations.GetModelsRequest) (*operations.GetModelsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/models"
@@ -101,9 +98,6 @@ func (s *Model) GetModels(ctx context.Context, request operations.GetModelsReque
 
 // Create a model
 // Create a new model
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Model) Create(ctx context.Context, request *shared.ModelInput) (*operations.CreateModelResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/models"
@@ -181,9 +175,6 @@ func (s *Model) Create(ctx context.Context, request *shared.ModelInput) (*operat
 
 // Get a model
 // Get a model by its unique identifier.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Model) Get(ctx context.Context, request operations.GetModelRequest) (*operations.GetModelResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/models/{id}", request, nil)
@@ -344,9 +335,6 @@ func (s *Model) Update(ctx context.Context, request operations.UpdateModelReques
 
 // Delete a model
 // Delete a model by its unique identifier.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Model) Delete(ctx context.Context, request operations.DeleteModelRequest) (*operations.DeleteModelResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/models/{id}", request, nil)
@@ -485,9 +473,6 @@ func (s *Model) RefreshModel(ctx context.Context, request operations.RefreshMode
 
 // GetModelGrants - Get a list of grants for a model
 // List the access grants for a model.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Model) GetModelGrants(ctx context.Context, request operations.GetModelGrantsRequest) (*operations.GetModelGrantsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/models/{id}/grants", request, nil)
@@ -566,9 +551,6 @@ func (s *Model) GetModelGrants(ctx context.Context, request operations.GetModelG
 
 // GrantAccessToModel - Grant access to a model
 // Grant access to a model for a user.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Model) GrantAccessToModel(ctx context.Context, request operations.GrantAccessToModelRequest) (*operations.GrantAccessToModelResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/models/{id}/grants", request, nil)
@@ -657,9 +639,6 @@ func (s *Model) GrantAccessToModel(ctx context.Context, request operations.Grant
 
 // RemoveAccessToModel - Remove access to a model
 // Remove a user's access to a model.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Model) RemoveAccessToModel(ctx context.Context, request operations.RemoveAccessToModelRequest) (*operations.RemoveAccessToModelResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/models/{id}/grants/{grantId}", request, nil)

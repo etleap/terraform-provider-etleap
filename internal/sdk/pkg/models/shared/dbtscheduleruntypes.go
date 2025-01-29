@@ -12,9 +12,8 @@ import (
 type DbtScheduleRunTypesType string
 
 const (
-	DbtScheduleRunTypesTypeNotYetRun              DbtScheduleRunTypesType = "NOT_YET_RUN"
 	DbtScheduleRunTypesTypeInProgress             DbtScheduleRunTypesType = "IN_PROGRESS"
-	DbtScheduleRunTypesTypeEtleapError            DbtScheduleRunTypesType = "ETLEAP_ERROR"
+	DbtScheduleRunTypesTypeIngestCouldNotComplete DbtScheduleRunTypesType = "INGEST_COULD_NOT_COMPLETE"
 	DbtScheduleRunTypesTypeDbtError               DbtScheduleRunTypesType = "DBT_ERROR"
 	DbtScheduleRunTypesTypeSuccessWithDbtWarnings DbtScheduleRunTypesType = "SUCCESS_WITH_DBT_WARNINGS"
 	DbtScheduleRunTypesTypeSuccess                DbtScheduleRunTypesType = "SUCCESS"
@@ -24,21 +23,8 @@ type DbtScheduleRunTypes struct {
 	DbtScheduleRunSuccess    *DbtScheduleRunSuccess
 	DbtScheduleRunFailure    *DbtScheduleRunFailure
 	DbtScheduleRunInProgress *DbtScheduleRunInProgress
-	DbtScheduleRunNotYetRun  *DbtScheduleRunNotYetRun
 
 	Type DbtScheduleRunTypesType
-}
-
-func CreateDbtScheduleRunTypesNotYetRun(notYetRun DbtScheduleRunNotYetRun) DbtScheduleRunTypes {
-	typ := DbtScheduleRunTypesTypeNotYetRun
-
-	typStr := DbtScheduleRunNotYetRunStatus(typ)
-	notYetRun.Status = typStr
-
-	return DbtScheduleRunTypes{
-		DbtScheduleRunNotYetRun: &notYetRun,
-		Type:                    typ,
-	}
 }
 
 func CreateDbtScheduleRunTypesInProgress(inProgress DbtScheduleRunInProgress) DbtScheduleRunTypes {
@@ -53,14 +39,14 @@ func CreateDbtScheduleRunTypesInProgress(inProgress DbtScheduleRunInProgress) Db
 	}
 }
 
-func CreateDbtScheduleRunTypesEtleapError(etleapError DbtScheduleRunFailure) DbtScheduleRunTypes {
-	typ := DbtScheduleRunTypesTypeEtleapError
+func CreateDbtScheduleRunTypesIngestCouldNotComplete(ingestCouldNotComplete DbtScheduleRunFailure) DbtScheduleRunTypes {
+	typ := DbtScheduleRunTypesTypeIngestCouldNotComplete
 
 	typStr := DbtScheduleRunFailureStatus(typ)
-	etleapError.Status = typStr
+	ingestCouldNotComplete.Status = typStr
 
 	return DbtScheduleRunTypes{
-		DbtScheduleRunFailure: &etleapError,
+		DbtScheduleRunFailure: &ingestCouldNotComplete,
 		Type:                  typ,
 	}
 }
@@ -113,15 +99,6 @@ func (u *DbtScheduleRunTypes) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Status {
-	case "NOT_YET_RUN":
-		dbtScheduleRunNotYetRun := new(DbtScheduleRunNotYetRun)
-		if err := utils.UnmarshalJSON(data, &dbtScheduleRunNotYetRun, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.DbtScheduleRunNotYetRun = dbtScheduleRunNotYetRun
-		u.Type = DbtScheduleRunTypesTypeNotYetRun
-		return nil
 	case "IN_PROGRESS":
 		dbtScheduleRunInProgress := new(DbtScheduleRunInProgress)
 		if err := utils.UnmarshalJSON(data, &dbtScheduleRunInProgress, "", true, true); err != nil {
@@ -131,14 +108,14 @@ func (u *DbtScheduleRunTypes) UnmarshalJSON(data []byte) error {
 		u.DbtScheduleRunInProgress = dbtScheduleRunInProgress
 		u.Type = DbtScheduleRunTypesTypeInProgress
 		return nil
-	case "ETLEAP_ERROR":
+	case "INGEST_COULD_NOT_COMPLETE":
 		dbtScheduleRunFailure := new(DbtScheduleRunFailure)
 		if err := utils.UnmarshalJSON(data, &dbtScheduleRunFailure, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
 		u.DbtScheduleRunFailure = dbtScheduleRunFailure
-		u.Type = DbtScheduleRunTypesTypeEtleapError
+		u.Type = DbtScheduleRunTypesTypeIngestCouldNotComplete
 		return nil
 	case "DBT_ERROR":
 		dbtScheduleRunFailure := new(DbtScheduleRunFailure)
@@ -183,10 +160,6 @@ func (u DbtScheduleRunTypes) MarshalJSON() ([]byte, error) {
 
 	if u.DbtScheduleRunInProgress != nil {
 		return utils.MarshalJSON(u.DbtScheduleRunInProgress, "", true)
-	}
-
-	if u.DbtScheduleRunNotYetRun != nil {
-		return utils.MarshalJSON(u.DbtScheduleRunNotYetRun, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

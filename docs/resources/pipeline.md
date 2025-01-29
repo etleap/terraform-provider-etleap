@@ -24,14 +24,14 @@ resource "etleap_pipeline" "my_pipeline" {
       primary_key = [
         "...",
       ]
-      retain_history         = true
+      retain_history         = false
       schema                 = "...my_schema..."
       table                  = "...my_table..."
       type                   = "DELTA_LAKE"
       wait_for_quality_check = true
     }
   }
-  name   = "Vicky Witting"
+  name   = "Robin Greenfelder"
   paused = false
   script = {
     legacy_script = {
@@ -42,7 +42,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 10
+      latency_threshold = 7
       type              = "ACTIVE_CAMPAIGN"
     }
   }
@@ -82,7 +82,7 @@ Once shared, a pipeline cannot be unshared. Future call to `PATCH` on a pipeline
 - `refresh_schedule` (Attributes) A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
 
 Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`. (see [below for nested schema](#nestedatt--refresh_schedule))
-- `stop_reason` (String) Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. must be one of ["PAUSED", "PARSING_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE"]
+- `stop_reason` (String) Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline. must be one of ["PAUSED", "PARSING_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
 <a id="nestedatt--destination"></a>
@@ -91,6 +91,7 @@ Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`.
 Optional:
 
 - `delta_lake` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--destination--delta_lake))
+- `iceberg` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--destination--iceberg))
 - `redshift` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--destination--redshift))
 - `s3_data_lake` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--destination--s3_data_lake))
 - `snowflake` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--destination--snowflake))
@@ -103,9 +104,7 @@ Required:
 - `connection_id` (String) The universally unique identifier of the destination connection. Requires replacement if changed.
 - `schema` (String) The schema in the destination that the tables will be created in. Requires replacement if changed.
 - `table` (String) Requires replacement if changed.
-- `type` (String) <!-- theme: warning -->
-> Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
-Requires replacement if changed. ; must be one of ["DELTA_LAKE"]
+- `type` (String) Requires replacement if changed. ; must be one of ["DELTA_LAKE"]
 
 Optional:
 
@@ -119,6 +118,23 @@ However, without column mapping, native schema changes are not supported and wil
 Requires replacement if changed. ; Default: false
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier. Requires replacement if changed.
 - `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`. Requires replacement if changed. ; Default: false
+- `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`. Requires replacement if changed. ; Default: false
+
+
+<a id="nestedatt--destination--iceberg"></a>
+### Nested Schema for `destination.iceberg`
+
+Required:
+
+- `connection_id` (String) The universally unique identifier of the destination connection. Requires replacement if changed.
+- `table` (String) Requires replacement if changed.
+- `type` (String) Requires replacement if changed. ; must be one of ["ICEBERG"]
+
+Optional:
+
+- `automatic_schema_changes` (Boolean) Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`. Requires replacement if changed. ; Default: true
+- `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier. Requires replacement if changed.
+- `schema` (String) The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used. Requires replacement if changed.
 - `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`. Requires replacement if changed. ; Default: false
 
 
@@ -211,6 +227,9 @@ Optional:
 - `bigquery` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--bigquery))
 - `bing_ads` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--bing_ads))
 - `blackline` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--blackline))
+- `braintree` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--braintree))
+- `confluent_cloud` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--confluent_cloud))
+- `coupa` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--coupa))
 - `criteo` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--criteo))
 - `db2` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--db2))
 - `db2_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--db2_sharded))
@@ -266,6 +285,7 @@ Optional:
 - `sap_hana` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sap_hana))
 - `sap_hana_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sap_hana_sharded))
 - `seismic` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--seismic))
+- `service_now` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--service_now))
 - `sftp` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sftp))
 - `shopify` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--shopify))
 - `skyward` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--skyward))
@@ -339,6 +359,39 @@ Optional:
 - `entity` (String) The Blackline report name. Example: Account Details Extract Template. Requires replacement if changed. ; Not Null
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
 - `type` (String) Requires replacement if changed. ; Not Null; must be one of ["BLACKLINE"]
+
+
+<a id="nestedatt--source--braintree"></a>
+### Nested Schema for `source.braintree`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The Braintree entity. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["BRAINTREE"]
+
+
+<a id="nestedatt--source--confluent_cloud"></a>
+### Nested Schema for `source.confluent_cloud`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) You can ingest data from Kafka topics in your Confluent Cloud cluster. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["CONFLUENT_CLOUD"]
+
+
+<a id="nestedatt--source--coupa"></a>
+### Nested Schema for `source.coupa`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The Coupa resource. Example: Approvals, Items, Suppliers. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["COUPA"]
 
 
 <a id="nestedatt--source--criteo"></a>
@@ -452,7 +505,7 @@ Optional:
 
 Optional:
 
-- `breakdowns` (List of String) The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v19.0#insights-api-breakdowns). Requires replacement if changed. ; Not Null
+- `breakdowns` (List of String) The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v21.0#insights-api-breakdowns). Requires replacement if changed. ; Not Null
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The aggregation level of the Facebook report. Example values: [Insights by Ad, Insights by Adset, Insights by Campaign, Insights by Account]. Requires replacement if changed. ; Not Null
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
@@ -1036,6 +1089,17 @@ Optional:
 - `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SEISMIC"]
 
 
+<a id="nestedatt--source--service_now"></a>
+### Nested Schema for `source.service_now`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The ServiceNow entity. Example values: [Task, Problem, Incident]. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SERVICE_NOW"]
+
+
 <a id="nestedatt--source--sftp"></a>
 ### Nested Schema for `source.sftp`
 
@@ -1100,7 +1164,7 @@ Optional:
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "BRAINTREE", "CONFLUENT_CLOUD", "COUPA", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SERVICE_NOW", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]
 
 
 <a id="nestedatt--source--snowflake_sharded"></a>
@@ -1427,7 +1491,7 @@ Required:
 
 Optional:
 
-- `one` (String) Requires replacement if changed. ; must be one of ["AUTO", "BIGINT", "BOOLEAN", "DATE", "DATETIME", "DOUBLE", "STRING", "JSON_OBJECT"]
+- `one` (String) Note: JSON_OBJECT is deprecated and is a synonym of JSON. Requires replacement if changed. ; must be one of ["AUTO", "BIGINT", "BOOLEAN", "DATE", "DATETIME", "DOUBLE", "STRING", "JSON_OBJECT", "JSON"]
 - `type_decimal` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--script--script--transforms--transform_rename_columns--keys--type--type_decimal))
 - `type_string_with_max_length` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--script--script--transforms--transform_rename_columns--keys--type--type_string_with_max_length))
 
@@ -1495,7 +1559,7 @@ Required:
 
 Optional:
 
-- `type_1` (String) Requires replacement if changed. ; must be one of ["AUTO", "BIGINT", "BOOLEAN", "DATE", "DATETIME", "DOUBLE", "STRING", "JSON_OBJECT"]
+- `type_1` (String) Note: JSON_OBJECT is deprecated and is a synonym of JSON. Requires replacement if changed. ; must be one of ["AUTO", "BIGINT", "BOOLEAN", "DATE", "DATETIME", "DOUBLE", "STRING", "JSON_OBJECT", "JSON"]
 - `type_decimal` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--script--script--inferred_column_types--type_decimal))
 - `type_string_with_max_length` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--script--script--inferred_column_types--type_string_with_max_length))
 
@@ -1528,10 +1592,10 @@ Read-Only:
 
 - `current_version` (Number) The version of the pipeline that is currently writing to the output table.
 - `destination` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination))
-- `parsing_errors` (Attributes) Parsing errors that occur during the transformation of the pipeline. (see [below for nested schema](#nestedatt--destinations--parsing_errors))
+- `parsing_errors` (Attributes) Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--parsing_errors))
 - `refresh_version` (Number) The version of the pipeline that is currently writing to the temporary refresh table. Only specified if there's currently a refresh in progress.
-- `retention_data` (Attributes) Etleap can remove old rows from your destination. This is a summary of the data retention. (see [below for nested schema](#nestedatt--destinations--retention_data))
-- `schema_change_activity` (Attributes List) Array of schema change objects. (see [below for nested schema](#nestedatt--destinations--schema_change_activity))
+- `retention_data` (Attributes) Etleap can remove old rows from your destination. This is a summary of the data retention. If a pipeline is being refreshed, this will be the summary for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--retention_data))
+- `schema_change_activity` (Attributes List) Array of schema change objects. If a pipeline is being refreshed, the schema change activities will be for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--schema_change_activity))
 
 <a id="nestedatt--destinations--destination"></a>
 ### Nested Schema for `destinations.destination`
@@ -1539,6 +1603,7 @@ Read-Only:
 Read-Only:
 
 - `delta_lake` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination--delta_lake))
+- `iceberg` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination--iceberg))
 - `redshift` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination--redshift))
 - `s3_data_lake` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination--s3_data_lake))
 - `snowflake` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination--snowflake))
@@ -1560,9 +1625,21 @@ However, without column mapping, native schema changes are not supported and wil
 - `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
 - `schema` (String) The schema in the destination that the tables will be created in.
 - `table` (String)
-- `type` (String) <!-- theme: warning -->
-> Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
-must be one of ["DELTA_LAKE"]
+- `type` (String) must be one of ["DELTA_LAKE"]
+- `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
+
+
+<a id="nestedatt--destinations--destination--iceberg"></a>
+### Nested Schema for `destinations.destination.iceberg`
+
+Read-Only:
+
+- `automatic_schema_changes` (Boolean) Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
+- `connection_id` (String) The universally unique identifier of the destination connection.
+- `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
+- `schema` (String) The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
+- `table` (String)
+- `type` (String) must be one of ["ICEBERG"]
 - `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
 
 

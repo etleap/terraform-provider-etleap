@@ -15,13 +15,13 @@ ConnectionFTP Resource
 ```terraform
 resource "etleap_connection_ftp" "my_connectionftp" {
   deletion_of_export_products = true
-  hostname                    = "repulsive-security.net"
-  name                        = "Sheldon Dickens"
+  hostname                    = "awkward-coalition.name"
+  name                        = "Ronald Kreiger"
   passive_mode                = true
   password                    = "...my_password..."
-  port                        = 0
+  port                        = 6
   type                        = "FTP"
-  username                    = "Virgie94"
+  username                    = "Loyce88"
 }
 ```
 

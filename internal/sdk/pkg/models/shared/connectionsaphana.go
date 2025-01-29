@@ -153,8 +153,6 @@ type ConnectionSapHana struct {
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
-	// <i>Please note, this feature is currently in alpha and may be unstable.</i>
-	//
 	// Should Etleap use a change-tracking table and triggers defined on the source tables to capture changes from this database?
 	//
 	// For this setting to be enabled, the `ETLEAP_CTT` schema must be present in the source database, with the following privileges granted to the authenticating user: `SELECT`, `TRIGGER`, `CREATE ANY`, and `EXECUTE`.
@@ -330,8 +328,6 @@ type ConnectionSapHanaInput struct {
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
-	// <i>Please note, this feature is currently in alpha and may be unstable.</i>
-	//
 	// Should Etleap use a change-tracking table and triggers defined on the source tables to capture changes from this database?
 	//
 	// For this setting to be enabled, the `ETLEAP_CTT` schema must be present in the source database, with the following privileges granted to the authenticating user: `SELECT`, `TRIGGER`, `CREATE ANY`, and `EXECUTE`.

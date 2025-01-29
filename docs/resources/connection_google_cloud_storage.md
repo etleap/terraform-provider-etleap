@@ -17,7 +17,7 @@ resource "etleap_connection_google_cloud_storage" "my_connectiongoogle_cloud_sto
   bucket                      = "...my_bucket..."
   deletion_of_export_products = false
   json_credentials            = "...my_json_credentials..."
-  name                        = "Dr. Willie Schaefer"
+  name                        = "Patti Lesch"
   type                        = "GOOGLE_CLOUD_STORAGE"
 }
 ```

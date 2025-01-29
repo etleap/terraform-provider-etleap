@@ -17,7 +17,7 @@ resource "etleap_connection_delta_lake" "my_connectiondelta_lake" {
   deletion_of_export_products = false
   hostname                    = "etleap.cloud.databricks.com"
   http_path                   = "/sql/protocolv1/o/etleap/1234-5678-91011"
-  name                        = "Pete Runolfsson"
+  name                        = "Wilbert Hahn"
   personal_access_token       = "...my_personal_access_token..."
   schema                      = "...my_schema..."
   type                        = "DELTA_LAKE"
@@ -33,9 +33,7 @@ resource "etleap_connection_delta_lake" "my_connectiondelta_lake" {
 - `http_path` (String) HTTP path for your Databricks compute cluster or SQL Warehouse.
 - `name` (String) The unique name of this connection.
 - `personal_access_token` (String) Authenticates the user that you want to connect to Databricks with. Instructions on generating a personal access token can be found <a href='https://docs.databricks.com/dev-tools/api/latest/authentication.html#token-management' target="_blank">here</a>.
-- `type` (String) <!-- theme: warning -->
-> Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
-must be one of ["DELTA_LAKE"]
+- `type` (String) must be one of ["DELTA_LAKE"]
 
 ### Optional
 

@@ -18,7 +18,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
     basic = {
       password = "...my_password..."
       type     = "BASIC"
-      username = "Godfrey_Fritsch"
+      username = "Dangelo_Mayert"
     }
   }
   deletion_of_export_products = false
@@ -35,10 +35,10 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      id = "4bc89fbd-03a9-4224-af2e-3005dda2041a"
+      id = "1ee19453-9e33-4fdc-80a5-e4af3e79e632"
       paging_strategy = {
         cursor_uri = {
-          max_page_size        = 0
+          max_page_size        = 10
           page_size_field_name = "...my_page_size_field_name..."
           path_to_cursor       = "...my_path_to_cursor..."
           type                 = "CURSOR_URI"
@@ -55,10 +55,12 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      rest_method = "POST"
+      rest_method = {
+        one = "GET"
+      }
     },
   ]
-  name = "Vanessa Blanda"
+  name = "Lester Abbott"
   type = "USER_DEFINED_API"
 }
 ```
@@ -139,7 +141,7 @@ Optional:
 - `path_to_results` (String) The [JMESPath](https://jmespath.org/) expression that converts the API response into an array containing one JSON object per record. Requires replacement if changed. ; Not Null
 - `pipeline_mode` (Attributes) Can be either the string `REPLACE` or one of the supported objects. Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--pipeline_mode))
 - `query_parameters` (Attributes List) A list of query parameters to be passed with all the requests. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--query_parameters))
-- `rest_method` (String) The HTTP method used to call the apiUrl. Requires replacement if changed. ; must be one of ["GET", "POST"]; Default: "GET"
+- `rest_method` (Attributes) Can be either the string `GET` or `POST`, which includes body parameters. Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--rest_method))
 
 <a id="nestedatt--entities--header_parameters"></a>
 ### Nested Schema for `entities.header_parameters`
@@ -235,33 +237,10 @@ Optional:
 
 Optional:
 
-- `begin_time_parameter` (Attributes) Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--begin_time_parameter))
-- `end_time_parameter` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--end_time_parameter))
 - `foreign_key_columns` (Attributes List) The foreign columns of the entity. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--foreign_key_columns))
-- `high_watermark_query_parameters` (Attributes List) Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}]. Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--high_watermark_query_parameters))
-- `last_updated_column` (String) Requires replacement if changed. ; Not Null
-- `primary_key_columns` (List of String) Requires replacement if changed. ; Not Null
+- `primary_key_columns` (List of String) Requires replacement if changed.
+- `strategy` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--strategy))
 - `type` (String) Requires replacement if changed. ; must be one of ["UPDATE"]; Default: "UPDATE"
-
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--begin_time_parameter"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type`
-
-Optional:
-
-- `format` (String) Requires replacement if changed. ; must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]; Default: "yyyy-MM-ddTHH:mm:ssX"
-- `key` (String) Requires replacement if changed. ; Not Null
-- `value` (String) Requires replacement if changed. ; Not Null
-
-
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--end_time_parameter"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type`
-
-Optional:
-
-- `format` (String) Requires replacement if changed. ; must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]; Default: "yyyy-MM-ddTHH:mm:ssX"
-- `key` (String) Requires replacement if changed. ; Not Null
-- `value` (String) Requires replacement if changed. ; Not Null
-
 
 <a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--foreign_key_columns"></a>
 ### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type`
@@ -292,13 +271,86 @@ Optional:
 
 
 
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--high_watermark_query_parameters"></a>
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--strategy"></a>
 ### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type`
+
+Optional:
+
+- `extracted_data` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data))
+- `wall_clock` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock))
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.extracted_data`
+
+Optional:
+
+- `begin_time_parameter` (Attributes) Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--begin_time_parameter))
+- `end_time_parameter` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--end_time_parameter))
+- `high_watermark_query_parameters` (Attributes List) Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}]. Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--high_watermark_query_parameters))
+- `last_updated_column` (String) Requires replacement if changed. ; Not Null
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["EXTRACTED_DATA"]
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--begin_time_parameter"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.extracted_data.type`
+
+Optional:
+
+- `format` (String) Requires replacement if changed. ; must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]; Default: "yyyy-MM-ddTHH:mm:ssX"
+- `key` (String) Requires replacement if changed. ; Not Null
+- `value` (String) Requires replacement if changed. ; Not Null
+
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--end_time_parameter"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.extracted_data.type`
+
+Optional:
+
+- `format` (String) Requires replacement if changed. ; must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]; Default: "yyyy-MM-ddTHH:mm:ssX"
+- `key` (String) Requires replacement if changed. ; Not Null
+- `value` (String) Requires replacement if changed. ; Not Null
+
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--high_watermark_query_parameters"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.extracted_data.type`
 
 Optional:
 
 - `key` (String) Requires replacement if changed. ; Not Null
 - `value` (String) Requires replacement if changed. ; Not Null
+
+
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.wall_clock`
+
+Optional:
+
+- `begin_date_parameter` (Attributes) Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock--begin_date_parameter))
+- `end_date_parameter` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock--end_date_parameter))
+- `lookback_window` (Number) The number of days we look back during each delta extraction. Requires replacement if changed. ; Not Null
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["WALL_CLOCK"]
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock--begin_date_parameter"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.wall_clock.type`
+
+Optional:
+
+- `format` (String) Requires replacement if changed. ; must be one of ["yyyy-MM-dd"]; Default: "yyyy-MM-dd"
+- `key` (String) Requires replacement if changed. ; Not Null
+- `value` (String) Requires replacement if changed. ; Not Null
+
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock--end_date_parameter"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.wall_clock.type`
+
+Optional:
+
+- `format` (String) Requires replacement if changed. ; must be one of ["yyyy-MM-dd"]; Default: "yyyy-MM-dd"
+- `inclusive` (Boolean) Requires replacement if changed. ; Default: true
+- `key` (String) Requires replacement if changed. ; Not Null
+- `value` (String) Requires replacement if changed. ; Not Null
+
+
 
 
 
@@ -310,6 +362,33 @@ Optional:
 
 - `key` (String) Requires replacement if changed. ; Not Null
 - `value` (String) Requires replacement if changed. ; Not Null
+
+
+<a id="nestedatt--entities--rest_method"></a>
+### Nested Schema for `entities.rest_method`
+
+Optional:
+
+- `one` (String) Requires replacement if changed. ; must be one of ["GET"]
+- `post_method` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--rest_method--post_method))
+
+<a id="nestedatt--entities--rest_method--post_method"></a>
+### Nested Schema for `entities.rest_method.post_method`
+
+Optional:
+
+- `body_parameters` (Attributes List) A list of body parameters to be passed with all the requests. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--rest_method--post_method--body_parameters))
+- `type` (String) Requires replacement if changed. ; must be one of ["POST"]; Default: "POST"
+
+<a id="nestedatt--entities--rest_method--post_method--body_parameters"></a>
+### Nested Schema for `entities.rest_method.post_method.type`
+
+Optional:
+
+- `key` (String) Requires replacement if changed. ; Not Null
+- `value` (String) Requires replacement if changed. ; Not Null
+
+
 
 
 

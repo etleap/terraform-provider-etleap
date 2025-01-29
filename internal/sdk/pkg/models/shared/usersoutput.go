@@ -2,10 +2,7 @@
 
 package shared
 
-// UsersOutput - The response body for GET /teams
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
+// UsersOutput - The response body for GET /teams.
 type UsersOutput struct {
 	// Contains a cursor to the next page of results.
 	NextPageToken *string `json:"nextPageToken,omitempty"`

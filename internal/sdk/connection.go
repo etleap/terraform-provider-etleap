@@ -398,9 +398,6 @@ func (s *Connection) UpdateConnection(ctx context.Context, request operations.Up
 
 // GetConnectionGrants - Get a list of grants for a connection
 // List the access grants for a connection.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Connection) GetConnectionGrants(ctx context.Context, request operations.GetConnectionGrantsRequest) (*operations.GetConnectionGrantsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}/grants", request, nil)
@@ -479,9 +476,6 @@ func (s *Connection) GetConnectionGrants(ctx context.Context, request operations
 
 // GrantAccessToConnection - Grant access to a connection
 // Grant access to a pipeline for a user.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Connection) GrantAccessToConnection(ctx context.Context, request operations.GrantAccessToConnectionRequest) (*operations.GrantAccessToConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}/grants", request, nil)
@@ -570,9 +564,6 @@ func (s *Connection) GrantAccessToConnection(ctx context.Context, request operat
 
 // RemoveAccessToConnection - Remove access to a connection
 // Remove a user's or team's access to a connection.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Connection) RemoveAccessToConnection(ctx context.Context, request operations.RemoveAccessToConnectionRequest) (*operations.RemoveAccessToConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}/grants/{grantId}", request, nil)
@@ -636,9 +627,6 @@ func (s *Connection) RemoveAccessToConnection(ctx context.Context, request opera
 
 // UpdateConnectionGrantPrivilege - Update privilege of a connection grant
 // Update access rights of user or team for a connection.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Connection) UpdateConnectionGrantPrivilege(ctx context.Context, request operations.UpdateConnectionGrantPrivilegeRequest) (*operations.UpdateConnectionGrantPrivilegeResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}/grants/{grantId}", request, nil)

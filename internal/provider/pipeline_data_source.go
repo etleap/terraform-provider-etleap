@@ -113,10 +113,8 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 											Computed: true,
 										},
 										"type": schema.StringAttribute{
-											Computed: true,
-											MarkdownDescription: `<!-- theme: warning -->` + "\n" +
-												`> Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.` + "\n" +
-												`must be one of ["DELTA_LAKE"]`,
+											Computed:    true,
+											Description: `must be one of ["DELTA_LAKE"]`,
 										},
 										"wait_for_quality_check": schema.BoolAttribute{
 											Computed:    true,

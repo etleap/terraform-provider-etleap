@@ -17,8 +17,9 @@ resource "etleap_connection_erpx" "my_connectionerpx" {
   api_url                     = "...my_api_url..."
   client_id                   = "...my_client_id..."
   client_secret               = "...my_client_secret..."
+  company_ids                 = "...my_company_ids..."
   deletion_of_export_products = false
-  name                        = "Guy Schroeder"
+  name                        = "Isabel Nienow"
   token_url                   = "...my_token_url..."
   type                        = "ERPX"
 }
@@ -38,6 +39,7 @@ resource "etleap_connection_erpx" "my_connectionerpx" {
 
 ### Optional
 
+- `company_ids` (String) Company IDs from which this connection will extract data, separated by commas. If not specified, Etleap will use the default ID linked to your user account. Please note that this field cannot be edited after the connection is created. Example: COMPANY1,COMPANY2. Requires replacement if changed.
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 

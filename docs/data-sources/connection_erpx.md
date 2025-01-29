@@ -14,7 +14,7 @@ ConnectionERPX DataSource
 
 ```terraform
 data "etleap_connection_erpx" "my_connectionerpx" {
-  id = "7583574f-cbeb-4f58-9458-1a5948e1c8a3"
+  id = "ba6b9881-a6b5-42c1-8934-d25038b64047"
 }
 ```
 
@@ -26,6 +26,7 @@ data "etleap_connection_erpx" "my_connectionerpx" {
 - `active` (Boolean) Whether this connection has been marked as active.
 - `api_url` (String) Your ERPx tenant API URL.
 - `client_id` (String) Client ID
+- `company_ids` (String) Company IDs from which this connection will extract data, separated by commas. If not specified, Etleap will use the default ID linked to your user account. Please note that this field cannot be edited after the connection is created. Example: COMPANY1,COMPANY2
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `id` (String) The ID of this resource.

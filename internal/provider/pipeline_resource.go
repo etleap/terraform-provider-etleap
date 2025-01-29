@@ -185,10 +185,8 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								PlanModifiers: []planmodifier.String{
 									stringplanmodifier.RequiresReplaceIfConfigured(),
 								},
-								Required: true,
-								MarkdownDescription: `<!-- theme: warning -->` + "\n" +
-									`> Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.` + "\n" +
-									`Requires replacement if changed. ; must be one of ["DELTA_LAKE"]`,
+								Required:    true,
+								Description: `Requires replacement if changed. ; must be one of ["DELTA_LAKE"]`,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"DELTA_LAKE",
@@ -731,9 +729,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 											PlanModifiers: []planmodifier.String{
 												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 											},
-											MarkdownDescription: `<!-- theme: warning -->` + "\n" +
-												`> Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.` + "\n" +
-												`must be one of ["DELTA_LAKE"]`,
+											Description: `must be one of ["DELTA_LAKE"]`,
 											Validators: []validator.String{
 												stringvalidator.OneOf(
 													"DELTA_LAKE",

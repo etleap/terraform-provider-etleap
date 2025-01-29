@@ -14,7 +14,7 @@ ConnectionUSERDEFINEDAPI DataSource
 
 ```terraform
 data "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
-  id = "92eb3c16-11c6-4eca-a5be-7abdeef93349"
+  id = "36590d84-2280-46e5-8285-5c71c1ec7a01"
 }
 ```
 
@@ -154,7 +154,7 @@ Read-Only:
 - `path_to_results` (String) The [JMESPath](https://jmespath.org/) expression that converts the API response into an array containing one JSON object per record.
 - `pipeline_mode` (Attributes) Can be either the string `REPLACE` or one of the supported objects. (see [below for nested schema](#nestedatt--entities--pipeline_mode))
 - `query_parameters` (Attributes List) A list of query parameters to be passed with all the requests. (see [below for nested schema](#nestedatt--entities--query_parameters))
-- `rest_method` (String) The HTTP method used to call the apiUrl. must be one of ["GET", "POST"]
+- `rest_method` (Attributes) Can be either the string `GET` or `POST`, which includes body parameters. (see [below for nested schema](#nestedatt--entities--rest_method))
 
 <a id="nestedatt--entities--header_parameters"></a>
 ### Nested Schema for `entities.header_parameters`
@@ -250,33 +250,10 @@ Read-Only:
 
 Read-Only:
 
-- `begin_time_parameter` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--begin_time_parameter))
-- `end_time_parameter` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--end_time_parameter))
 - `foreign_key_columns` (Attributes List) The foreign columns of the entity. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--foreign_key_columns))
-- `high_watermark_query_parameters` (Attributes List) Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}] (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--high_watermark_query_parameters))
-- `last_updated_column` (String)
 - `primary_key_columns` (List of String)
+- `strategy` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--strategy))
 - `type` (String) must be one of ["UPDATE"]
-
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--begin_time_parameter"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type`
-
-Read-Only:
-
-- `format` (String) must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]
-- `key` (String)
-- `value` (String)
-
-
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--end_time_parameter"></a>
-### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type`
-
-Read-Only:
-
-- `format` (String) must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]
-- `key` (String)
-- `value` (String)
-
 
 <a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--foreign_key_columns"></a>
 ### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type`
@@ -307,13 +284,86 @@ Read-Only:
 
 
 
-<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--high_watermark_query_parameters"></a>
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--strategy"></a>
 ### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type`
+
+Read-Only:
+
+- `extracted_data` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data))
+- `wall_clock` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock))
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.extracted_data`
+
+Read-Only:
+
+- `begin_time_parameter` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--begin_time_parameter))
+- `end_time_parameter` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--end_time_parameter))
+- `high_watermark_query_parameters` (Attributes List) Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}] (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--high_watermark_query_parameters))
+- `last_updated_column` (String)
+- `type` (String) must be one of ["EXTRACTED_DATA"]
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--begin_time_parameter"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.extracted_data.type`
+
+Read-Only:
+
+- `format` (String) must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]
+- `key` (String)
+- `value` (String)
+
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--end_time_parameter"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.extracted_data.type`
+
+Read-Only:
+
+- `format` (String) must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]
+- `key` (String)
+- `value` (String)
+
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--extracted_data--high_watermark_query_parameters"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.extracted_data.type`
 
 Read-Only:
 
 - `key` (String)
 - `value` (String)
+
+
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.wall_clock`
+
+Read-Only:
+
+- `begin_date_parameter` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock--begin_date_parameter))
+- `end_date_parameter` (Attributes) (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock--end_date_parameter))
+- `lookback_window` (Number) The number of days we look back during each delta extraction.
+- `type` (String) must be one of ["WALL_CLOCK"]
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock--begin_date_parameter"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.wall_clock.type`
+
+Read-Only:
+
+- `format` (String) must be one of ["yyyy-MM-dd"]
+- `key` (String)
+- `value` (String)
+
+
+<a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--type--wall_clock--end_date_parameter"></a>
+### Nested Schema for `entities.pipeline_mode.user_defined_api_update_mode.type.wall_clock.type`
+
+Read-Only:
+
+- `format` (String) must be one of ["yyyy-MM-dd"]
+- `inclusive` (Boolean)
+- `key` (String)
+- `value` (String)
+
+
 
 
 
@@ -325,6 +375,33 @@ Read-Only:
 
 - `key` (String)
 - `value` (String)
+
+
+<a id="nestedatt--entities--rest_method"></a>
+### Nested Schema for `entities.rest_method`
+
+Read-Only:
+
+- `one` (String) must be one of ["GET"]
+- `post_method` (Attributes) (see [below for nested schema](#nestedatt--entities--rest_method--post_method))
+
+<a id="nestedatt--entities--rest_method--post_method"></a>
+### Nested Schema for `entities.rest_method.post_method`
+
+Read-Only:
+
+- `body_parameters` (Attributes List) A list of body parameters to be passed with all the requests. (see [below for nested schema](#nestedatt--entities--rest_method--post_method--body_parameters))
+- `type` (String) must be one of ["POST"]
+
+<a id="nestedatt--entities--rest_method--post_method--body_parameters"></a>
+### Nested Schema for `entities.rest_method.post_method.type`
+
+Read-Only:
+
+- `key` (String)
+- `value` (String)
+
+
 
 
 

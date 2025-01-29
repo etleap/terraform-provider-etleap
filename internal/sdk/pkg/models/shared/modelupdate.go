@@ -431,10 +431,7 @@ func (u ModelUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
-// ModelUpdate - The response body for PATCH /models
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
+// ModelUpdate - The response body for PATCH /models.
 type ModelUpdate struct {
 	Name             *string                `json:"name,omitempty"`
 	Paused           *bool                  `json:"paused,omitempty"`

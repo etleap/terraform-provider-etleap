@@ -14,7 +14,7 @@ ConnectionPOSTGRESSHARDED DataSource
 
 ```terraform
 data "etleap_connection_postgres_sharded" "my_connectionpostgres_sharded" {
-  id = "d6b824ec-37aa-4661-8fb1-9af73e3aa22d"
+  id = "e3cd927f-15c1-41db-ae4f-27a6f57fb632"
 }
 ```
 

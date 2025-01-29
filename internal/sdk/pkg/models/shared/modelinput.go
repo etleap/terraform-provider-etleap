@@ -2,8 +2,6 @@
 
 package shared
 
-// ModelInput - <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 type ModelInput struct {
 	Name             string              `json:"name"`
 	Warehouse        WarehouseTypesInput `json:"warehouse"`

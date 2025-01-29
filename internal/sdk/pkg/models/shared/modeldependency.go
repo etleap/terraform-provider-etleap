@@ -34,8 +34,6 @@ func (e *ModelDependencyType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// ModelDependency - <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 type ModelDependency struct {
 	Type ModelDependencyType `json:"type"`
 	// The unique identifier of the pipeline or model.

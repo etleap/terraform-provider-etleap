@@ -91,9 +91,7 @@ func (r *ConnectionSAPHANAResource) Schema(ctx context.Context, req resource.Sch
 				},
 				Optional: true,
 				Default:  booldefault.StaticBool(false),
-				MarkdownDescription: `<i>Please note, this feature is currently in alpha and may be unstable.</i>` + "\n" +
-					`` + "\n" +
-					`Should Etleap use a change-tracking table and triggers defined on the source tables to capture changes from this database?` + "\n" +
+				MarkdownDescription: `Should Etleap use a change-tracking table and triggers defined on the source tables to capture changes from this database?` + "\n" +
 					`` + "\n" +
 					`For this setting to be enabled, the ` + "`" + `ETLEAP_CTT` + "`" + ` schema must be present in the source database, with the following privileges granted to the authenticating user: ` + "`" + `SELECT` + "`" + `, ` + "`" + `TRIGGER` + "`" + `, ` + "`" + `CREATE ANY` + "`" + `, and ` + "`" + `EXECUTE` + "`" + `.` + "\n" +
 					`` + "\n" +

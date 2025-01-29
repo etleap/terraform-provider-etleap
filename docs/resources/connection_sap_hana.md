@@ -14,16 +14,16 @@ ConnectionSAPHANA Resource
 
 ```terraform
 resource "etleap_connection_sap_hana" "my_connectionsap_hana" {
-  address                     = "572 Mayert Wells"
-  cdc_enabled                 = false
+  address                     = "8561 Block Key"
+  cdc_enabled                 = true
   database                    = "...my_database..."
-  deletion_of_export_products = false
-  name                        = "Herbert Volkman"
+  deletion_of_export_products = true
+  name                        = "Archie Johnston"
   password                    = "...my_password..."
-  port                        = 5
+  port                        = 10
   schema                      = "...my_schema..."
   type                        = "SAP_HANA"
-  username                    = "Zaria_Crist28"
+  username                    = "Keeley18"
 }
 ```
 
@@ -42,9 +42,7 @@ resource "etleap_connection_sap_hana" "my_connectionsap_hana" {
 
 ### Optional
 
-- `cdc_enabled` (Boolean) <i>Please note, this feature is currently in alpha and may be unstable.</i>
-
-Should Etleap use a change-tracking table and triggers defined on the source tables to capture changes from this database?
+- `cdc_enabled` (Boolean) Should Etleap use a change-tracking table and triggers defined on the source tables to capture changes from this database?
 
 For this setting to be enabled, the `ETLEAP_CTT` schema must be present in the source database, with the following privileges granted to the authenticating user: `SELECT`, `TRIGGER`, `CREATE ANY`, and `EXECUTE`.
 

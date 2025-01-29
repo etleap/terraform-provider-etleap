@@ -14,7 +14,7 @@ DbtSchedule DataSource
 
 ```terraform
 data "etleap_dbt_schedule" "my_dbtschedule" {
-  id = "14c6b6a6-149d-42a4-89c0-5f389bf72d90"
+  id = "faa31bc1-c436-4b9a-83f3-b29145642162"
 }
 ```
 
@@ -30,15 +30,64 @@ data "etleap_dbt_schedule" "my_dbtschedule" {
 - `connection_id` (String) The [connection](https://docs.etleap.com/docs/api-v2/edbec13814bbc-connection) where the dbt build runs. The only supported connections are Redshift, Snowflake or Databricks Delta Lake destinations.
 - `create_date` (String)
 - `cron` (String) The cron expression that defines triggers for this schedule. The maximum supported cron schedule precision is 1 minute.
-- `current_activity` (String) must be one of ["LOADING", "BUILDING"]
-- `last_dbt_build_date` (String) The last time that a successful dbt build started.
-- `last_dbt_run_time` (Number) The duration of the last successful dbt build.
+- `current_activity` (String) This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented. must be one of ["LOADING", "BUILDING"]
+- `last_dbt_build_date` (String) The last time that a successful dbt build started. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+- `last_dbt_run_time` (Number) The duration of the last successful dbt build. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+- `latest_run` (Attributes) (see [below for nested schema](#nestedatt--latest_run))
 - `name` (String) The name of the dbt schedule.
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
 - `paused` (Boolean) `true` if the schedule is paused.
 - `selector` (String) The selector this schedule runs.
 - `skip_build_if_no_new_data` (Boolean) Whether the dbt build is skipped if no new data has been ingested for any of the pipelines in the table above.
 - `target_schema` (String) The target schema for the dbt build. See [here](https://docs.getdbt.com/docs/build/custom-schemas) for details on how it's used.
+
+<a id="nestedatt--latest_run"></a>
+### Nested Schema for `latest_run`
+
+Read-Only:
+
+- `in_progress` (Attributes) (see [below for nested schema](#nestedatt--latest_run--in_progress))
+- `ingest_could_not_complete` (Attributes) (see [below for nested schema](#nestedatt--latest_run--ingest_could_not_complete))
+- `success_with_dbt_warnings` (Attributes) (see [below for nested schema](#nestedatt--latest_run--success_with_dbt_warnings))
+
+<a id="nestedatt--latest_run--in_progress"></a>
+### Nested Schema for `latest_run.in_progress`
+
+Read-Only:
+
+- `build_is_taking_too_long` (Boolean) Whether the dbt build phase is taking too long.
+- `last_successful_dbt_build_date` (String) The last time that a successful dbt build finished.
+- `phase` (String) The phase that this dbt run is currently in. dbt runs consist of an `INGEST` phase where source pipelines ingest data into the warehouse, followed by a `BUILD` phase where the dbt models are built. must be one of ["INGEST", "BUILD"]
+- `previous_run_duration` (Number) The duration, in seconds, between the time the previous run was triggered and the time it completed. This will be `null` if this is the first time this schedule has run.
+- `previous_run_status` (String) must be one of ["IN_PROGRESS", "INGEST_COULD_NOT_COMPLETE", "DBT_ERROR", "SUCCESS_WITH_DBT_WARNINGS", "SUCCESS"]
+- `start_date` (String) The time that this dbt run was triggered.
+- `status` (String) must be one of ["IN_PROGRESS"]
+
+
+<a id="nestedatt--latest_run--ingest_could_not_complete"></a>
+### Nested Schema for `latest_run.ingest_could_not_complete`
+
+Read-Only:
+
+- `duration` (Number) The duration, in seconds, between the time this dbt run was triggered and the time the dbt build for this run completed.
+- `last_successful_dbt_build_date` (String) The last time that a successful dbt build finished.
+- `next_trigger_date` (String) Timestamp for the next dbt schedule trigger.
+- `start_date` (String) The time that this dbt run was triggered.
+- `status` (String) must be one of ["INGEST_COULD_NOT_COMPLETE", "DBT_ERROR"]
+
+
+<a id="nestedatt--latest_run--success_with_dbt_warnings"></a>
+### Nested Schema for `latest_run.success_with_dbt_warnings`
+
+Read-Only:
+
+- `duration` (Number) The duration, in seconds, between the time this dbt run was triggered and the time the dbt build for this run completed.
+- `last_successful_dbt_build_date` (String) The last time that a successful dbt build finished.
+- `next_trigger_date` (String) Timestamp for the next dbt schedule trigger.
+- `start_date` (String) The time that this dbt run was triggered.
+- `status` (String) must be one of ["SUCCESS", "SUCCESS_WITH_DBT_WARNINGS"]
+
+
 
 <a id="nestedatt--owner"></a>
 ### Nested Schema for `owner`

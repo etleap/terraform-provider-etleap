@@ -14,7 +14,7 @@ ConnectionDELTALAKE DataSource
 
 ```terraform
 data "etleap_connection_delta_lake" "my_connectiondelta_lake" {
-  id = "cf5048df-6c7e-4f0f-b14d-961063a76d6e"
+  id = "bf589458-1a59-448e-9c8a-39c4c5cef6b7"
 }
 ```
 
@@ -32,9 +32,7 @@ data "etleap_connection_delta_lake" "my_connectiondelta_lake" {
 - `name` (String) The unique name of this connection.
 - `schema` (String) The schema to use when this connection is used as a source. When the connection is used as a destination the schema can be set to a different one for each pipeline.
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]
-- `type` (String) <!-- theme: warning -->
-> Delta Lake connections are currently in Beta which means that they are subject to non-backwards-compatible and breaking changes.
-must be one of ["DELTA_LAKE"]
+- `type` (String) must be one of ["DELTA_LAKE"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
 <a id="nestedatt--default_update_schedule"></a>

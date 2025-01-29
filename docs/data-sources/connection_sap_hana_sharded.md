@@ -14,7 +14,7 @@ ConnectionSAPHANASHARDED DataSource
 
 ```terraform
 data "etleap_connection_sap_hana_sharded" "my_connectionsap_hana_sharded" {
-  id = "0ffd2dfe-0bc5-490a-a0ec-d60ebaff3abf"
+  id = "78bccaef-2db0-42d5-b324-6d7bc4ff471c"
 }
 ```
 
@@ -24,9 +24,7 @@ data "etleap_connection_sap_hana_sharded" "my_connectionsap_hana_sharded" {
 ### Read-Only
 
 - `active` (Boolean) Whether this connection has been marked as active.
-- `cdc_enabled` (Boolean) <i>Please note, this feature is currently in alpha and may be unstable.</i>
-
-Should Etleap use a change-tracking table and triggers defined on the source tables to capture changes from this database?
+- `cdc_enabled` (Boolean) Should Etleap use a change-tracking table and triggers defined on the source tables to capture changes from this database?
 
 For this setting to be enabled, the `ETLEAP_CTT` schema must be present in the source database, with the following privileges granted to the authenticating user: `SELECT`, `TRIGGER`, `CREATE ANY`, and `EXECUTE`.
 

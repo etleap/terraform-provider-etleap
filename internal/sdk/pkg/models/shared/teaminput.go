@@ -2,8 +2,6 @@
 
 package shared
 
-// TeamInput - <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 type TeamInput struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`

@@ -27,9 +27,6 @@ func newUser(sdkConfig sdkConfiguration) *User {
 
 // GetUsers - Get a list of users
 // Get a list of users in your organization.
-//
-// <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *User) GetUsers(ctx context.Context, request operations.GetUsersRequest) (*operations.GetUsersResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/users"

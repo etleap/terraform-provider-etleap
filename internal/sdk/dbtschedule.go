@@ -29,7 +29,7 @@ func newDbtSchedule(sdkConfig sdkConfiguration) *DbtSchedule {
 // Creates a dbt schedule.
 //
 // <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
+// > This feature is currently in preview which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *DbtSchedule) Create(ctx context.Context, request *shared.DbtScheduleInput) (*operations.CreateDbtSchedulesResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/dbtSchedules"
@@ -113,7 +113,7 @@ func (s *DbtSchedule) Create(ctx context.Context, request *shared.DbtScheduleInp
 // Returns the details of a dbt schedule.
 //
 // <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
+// > This feature is currently in preview which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *DbtSchedule) Get(ctx context.Context, request operations.GetDbtScheduleRequest) (*operations.GetDbtScheduleResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/dbtSchedules/{id}", request, nil)
@@ -188,7 +188,7 @@ func (s *DbtSchedule) Get(ctx context.Context, request operations.GetDbtSchedule
 // Modify an existing dbt schedule.
 //
 // <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
+// > This feature is currently in preview which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *DbtSchedule) Update(ctx context.Context, request operations.UpdateDbtScheduleRequest) (*operations.UpdateDbtScheduleResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/dbtSchedules/{id}", request, nil)
@@ -275,7 +275,7 @@ func (s *DbtSchedule) Update(ctx context.Context, request operations.UpdateDbtSc
 // Delete a dbt schedule.
 //
 // <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
+// > This feature is currently in preview which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *DbtSchedule) Delete(ctx context.Context, request operations.DeleteDbtScheduleRequest) (*operations.DeleteDbtScheduleResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/dbtSchedules/{id}", request, nil)

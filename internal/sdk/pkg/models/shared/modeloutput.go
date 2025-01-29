@@ -7,8 +7,6 @@ import (
 	"time"
 )
 
-// ModelOutput - <!-- theme: warning -->
-// > This feature is currently in Beta which means that it is subject to non-backwards-compatible and breaking changes.
 type ModelOutput struct {
 	// The unique identifier of the model.
 	ID               string            `json:"id"`

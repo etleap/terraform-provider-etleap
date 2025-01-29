@@ -14,7 +14,7 @@ ConnectionPINTERESTADS DataSource
 
 ```terraform
 data "etleap_connection_pinterest_ads" "my_connectionpinterest_ads" {
-  id = "ef9f156b-22de-4d92-84dc-200dcbfb6fcd"
+  id = "f4b1e1ba-64c3-4ea7-9065-3f59f6488a53"
 }
 ```
 

@@ -14,7 +14,7 @@ ConnectionSALESFORCE DataSource
 
 ```terraform
 data "etleap_connection_salesforce" "my_connectionsalesforce" {
-  id = "3323d709-e4dc-4825-9708-cecf05b4bbfd"
+  id = "a39645e0-3cb6-47dc-872f-29566e637551"
 }
 ```
 

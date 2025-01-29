@@ -12,8 +12,8 @@ import (
 type DbtScheduleRunFailureStatus string
 
 const (
-	DbtScheduleRunFailureStatusEtleapError DbtScheduleRunFailureStatus = "ETLEAP_ERROR"
-	DbtScheduleRunFailureStatusDbtError    DbtScheduleRunFailureStatus = "DBT_ERROR"
+	DbtScheduleRunFailureStatusIngestCouldNotComplete DbtScheduleRunFailureStatus = "INGEST_COULD_NOT_COMPLETE"
+	DbtScheduleRunFailureStatusDbtError               DbtScheduleRunFailureStatus = "DBT_ERROR"
 )
 
 func (e DbtScheduleRunFailureStatus) ToPointer() *DbtScheduleRunFailureStatus {
@@ -26,7 +26,7 @@ func (e *DbtScheduleRunFailureStatus) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
-	case "ETLEAP_ERROR":
+	case "INGEST_COULD_NOT_COMPLETE":
 		fallthrough
 	case "DBT_ERROR":
 		*e = DbtScheduleRunFailureStatus(v)

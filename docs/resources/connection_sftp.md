@@ -15,13 +15,13 @@ ConnectionSFTP Resource
 ```terraform
 resource "etleap_connection_sftp" "my_connectionsftp" {
   base_directory              = "...my_base_directory..."
-  deletion_of_export_products = false
-  hostname                    = "complete-altar.name"
-  name                        = "Natalie Price"
+  deletion_of_export_products = true
+  hostname                    = "third-major.name"
+  name                        = "Joann Pfeffer"
   password                    = "...my_password..."
-  port                        = 0
+  port                        = 10
   type                        = "SFTP"
-  username                    = "Dayana.Fadel"
+  username                    = "Tierra.Schmidt"
 }
 ```
 

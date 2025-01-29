@@ -70,8 +70,8 @@ type DbtScheduleRunInProgress struct {
 	// Whether the dbt build phase is taking too long.
 	BuildIsTakingTooLong bool `json:"buildIsTakingTooLong"`
 	// The duration, in seconds, between the time the previous run was triggered and the time it completed. This will be `null` if this is the first time this schedule has run.
-	PreviousRunDuration *int64          `json:"previousRunDuration,omitempty"`
-	PreviousRunStatus   *DbtBuildStatus `json:"previousRunStatus,omitempty"`
+	PreviousRunDuration *int64        `json:"previousRunDuration,omitempty"`
+	PreviousRunStatus   *DbtRunStatus `json:"previousRunStatus,omitempty"`
 	// The last time that a successful dbt build finished.
 	LastSuccessfulDbtBuildDate *time.Time `json:"lastSuccessfulDbtBuildDate,omitempty"`
 }
@@ -122,7 +122,7 @@ func (o *DbtScheduleRunInProgress) GetPreviousRunDuration() *int64 {
 	return o.PreviousRunDuration
 }
 
-func (o *DbtScheduleRunInProgress) GetPreviousRunStatus() *DbtBuildStatus {
+func (o *DbtScheduleRunInProgress) GetPreviousRunStatus() *DbtRunStatus {
 	if o == nil {
 		return nil
 	}
