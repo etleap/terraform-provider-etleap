@@ -1,6 +1,7 @@
 resource "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
   auto_replicate                       = "...my_auto_replicate..."
   cdc_enabled                          = true
+  certificate                          = "...my_certificate..."
   database                             = "...my_database..."
   deletion_of_export_products          = true
   name                                 = "Ms. Marsha Krajcik"

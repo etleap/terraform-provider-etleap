@@ -2,6 +2,7 @@ resource "etleap_connection_mysql" "my_connectionmysql" {
   address                              = "33233 Betsy Burg"
   auto_replicate                       = "...my_auto_replicate..."
   cdc_enabled                          = false
+  certificate                          = "...my_certificate..."
   database                             = "...my_database..."
   deletion_of_export_products          = true
   name                                 = "Caleb Dickinson"

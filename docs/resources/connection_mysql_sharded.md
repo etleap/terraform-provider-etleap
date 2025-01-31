@@ -16,6 +16,7 @@ ConnectionMYSQLSHARDED Resource
 resource "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
   auto_replicate                       = "...my_auto_replicate..."
   cdc_enabled                          = true
+  certificate                          = "...my_certificate..."
   database                             = "...my_database..."
   deletion_of_export_products          = true
   name                                 = "Ms. Marsha Krajcik"
@@ -52,6 +53,7 @@ resource "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
 
 - `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
 - `cdc_enabled` (Boolean) Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later. Requires replacement if changed. ; Default: false
+- `certificate` (String) The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
 - `database` (String)
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `require_ssl_and_validate_certificate` (Boolean) Default: true

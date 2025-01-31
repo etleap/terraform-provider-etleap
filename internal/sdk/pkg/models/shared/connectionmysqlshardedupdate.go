@@ -41,6 +41,8 @@ type ConnectionMysqlShardedUpdate struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule                   *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	RequireSslAndValidateCertificate *bool                `json:"requireSslAndValidateCertificate,omitempty"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate *string `json:"certificate,omitempty"`
 	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
@@ -119,6 +121,13 @@ func (o *ConnectionMysqlShardedUpdate) GetRequireSslAndValidateCertificate() *bo
 		return nil
 	}
 	return o.RequireSslAndValidateCertificate
+}
+
+func (o *ConnectionMysqlShardedUpdate) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionMysqlShardedUpdate) GetAutoReplicate() *string {

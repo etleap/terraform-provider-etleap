@@ -92,6 +92,12 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlInput() *shared.Co
 	} else {
 		requireSslAndValidateCertificate = nil
 	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
 	cdcEnabled := new(bool)
 	if !r.CdcEnabled.IsUnknown() && !r.CdcEnabled.IsNull() {
 		*cdcEnabled = r.CdcEnabled.ValueBool()
@@ -134,6 +140,7 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlInput() *shared.Co
 		Type:                             typeVar,
 		UpdateSchedule:                   updateSchedule,
 		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		Certificate:                      certificate,
 		CdcEnabled:                       cdcEnabled,
 		AutoReplicate:                    autoReplicate,
 		TinyInt1IsBoolean:                tinyInt1IsBoolean,
@@ -152,6 +159,7 @@ func (r *ConnectionMYSQLResourceModel) RefreshFromSharedConnectionMysql(resp *sh
 	r.Address = types.StringValue(resp.Address)
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringPointerValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -345,6 +353,12 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 	} else {
 		requireSslAndValidateCertificate = nil
 	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
 	autoReplicate := new(string)
 	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
 		*autoReplicate = r.AutoReplicate.ValueString()
@@ -412,6 +426,7 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 		Active:                           active,
 		UpdateSchedule:                   updateSchedule,
 		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		Certificate:                      certificate,
 		AutoReplicate:                    autoReplicate,
 		TinyInt1IsBoolean:                tinyInt1IsBoolean,
 		Database:                         database,

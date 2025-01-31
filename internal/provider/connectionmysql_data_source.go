@@ -32,6 +32,7 @@ type ConnectionMYSQLDataSourceModel struct {
 	Address                          types.String            `tfsdk:"address"`
 	AutoReplicate                    types.String            `tfsdk:"auto_replicate"`
 	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
+	Certificate                      types.String            `tfsdk:"certificate"`
 	CreateDate                       types.String            `tfsdk:"create_date"`
 	Database                         types.String            `tfsdk:"database"`
 	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
@@ -72,6 +73,10 @@ func (r *ConnectionMYSQLDataSource) Schema(ctx context.Context, req datasource.S
 			"cdc_enabled": schema.BoolAttribute{
 				Computed:    true,
 				Description: `Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.`,
+			},
+			"certificate": schema.StringAttribute{
+				Computed:    true,
+				Description: `The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if ` + "`" + `requireSslAndValidateCertificate` + "`" + ` is set to ` + "`" + `true` + "`" + `.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed:    true,
