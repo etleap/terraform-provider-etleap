@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 20cbe507490ee2d0997e5d102f87a9d7
-  docVersion: 2.7.7
+  docChecksum: aec86a39661bb3a00c29667abb6e6034
+  docVersion: 2.7.8
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.1.7
-  configChecksum: 7067c1d2ceeed09a2e00df03dbe76cfa
+  releaseVersion: 0.1.8
+  configChecksum: f9cb191507d45b69a9401005b3a86db5
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -300,6 +300,9 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatesalesforcemarketingcloudconnection.go
   - internal/sdk/pkg/models/operations/getsalesforcemarketingcloudconnection.go
   - internal/sdk/pkg/models/operations/deletesalesforcemarketingcloudconnection.go
+  - internal/sdk/pkg/models/operations/updatesapconcurconnection.go
+  - internal/sdk/pkg/models/operations/getsapconcurconnection.go
+  - internal/sdk/pkg/models/operations/deletesapconcurconnection.go
   - internal/sdk/pkg/models/operations/updatesaphanaconnection.go
   - internal/sdk/pkg/models/operations/getsaphanaconnection.go
   - internal/sdk/pkg/models/operations/deletesaphanaconnection.go
@@ -443,6 +446,7 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/creates3inputconnection.go
   - internal/sdk/pkg/models/operations/createsalesforceconnection.go
   - internal/sdk/pkg/models/operations/createsalesforcemarketingcloudconnection.go
+  - internal/sdk/pkg/models/operations/createsapconcurconnection.go
   - internal/sdk/pkg/models/operations/createsaphanaconnection.go
   - internal/sdk/pkg/models/operations/createsaphanashardedconnection.go
   - internal/sdk/pkg/models/operations/createseismicconnection.go
@@ -577,6 +581,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sources3legacy.go
   - internal/sdk/pkg/models/shared/sources3input.go
   - internal/sdk/pkg/models/shared/sourcesalesforcemarketingcloud.go
+  - internal/sdk/pkg/models/shared/sourcesapconcur.go
   - internal/sdk/pkg/models/shared/sourcesaphana.go
   - internal/sdk/pkg/models/shared/sourcesaphanasharded.go
   - internal/sdk/pkg/models/shared/sourceseismic.go
@@ -785,6 +790,8 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionsalesforceupdate.go
   - internal/sdk/pkg/models/shared/connectionsalesforcemarketingcloud.go
   - internal/sdk/pkg/models/shared/connectionsalesforcemarketingcloudupdate.go
+  - internal/sdk/pkg/models/shared/connectionsapconcur.go
+  - internal/sdk/pkg/models/shared/connectionsapconcurupdate.go
   - internal/sdk/pkg/models/shared/connectionsaphana.go
   - internal/sdk/pkg/models/shared/connectionsaphanaupdate.go
   - internal/sdk/pkg/models/shared/connectionsaphanasharded.go
@@ -1030,6 +1037,7 @@ generatedFiles:
   - internal/provider/type_source_s3_legacy.go
   - internal/provider/type_source_salesforce.go
   - internal/provider/type_source_salesforce_marketing_cloud.go
+  - internal/provider/type_source_sap_concur.go
   - internal/provider/type_source_sap_hana.go
   - internal/provider/type_source_sap_hana_sharded.go
   - internal/provider/type_source_seismic.go
@@ -1246,6 +1254,9 @@ generatedFiles:
   - internal/provider/connectionsalesforce_marketing_cloud_resource.go
   - internal/provider/connectionsalesforce_marketing_cloud_resource_sdk.go
   - examples/resources/etleap_connection_salesforce_marketing_cloud/resource.tf
+  - internal/provider/connectionsap_concur_resource.go
+  - internal/provider/connectionsap_concur_resource_sdk.go
+  - examples/resources/etleap_connection_sap_concur/resource.tf
   - internal/provider/connectionsap_hana_resource.go
   - internal/provider/connectionsap_hana_resource_sdk.go
   - examples/resources/etleap_connection_sap_hana/resource.tf
@@ -1519,6 +1530,9 @@ generatedFiles:
   - internal/provider/connectionsalesforce_marketing_cloud_data_source.go
   - internal/provider/connectionsalesforce_marketing_cloud_data_source_sdk.go
   - examples/data-sources/etleap_connection_salesforce_marketing_cloud/data-source.tf
+  - internal/provider/connectionsap_concur_data_source.go
+  - internal/provider/connectionsap_concur_data_source_sdk.go
+  - examples/data-sources/etleap_connection_sap_concur/data-source.tf
   - internal/provider/connectionsap_hana_data_source.go
   - internal/provider/connectionsap_hana_data_source_sdk.go
   - examples/data-sources/etleap_connection_sap_hana/data-source.tf

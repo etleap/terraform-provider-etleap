@@ -14,7 +14,7 @@ ConnectionELLUMINATE DataSource
 
 ```terraform
 data "etleap_connection_elluminate" "my_connectionelluminate" {
-  id = "663364a8-975f-45e8-9b7b-2a71c0e74e01"
+  id = "75f5e89b-7b2a-471c-8e74-e016d64fc1e4"
 }
 ```
 

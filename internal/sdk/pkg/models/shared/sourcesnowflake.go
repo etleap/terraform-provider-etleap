@@ -69,6 +69,7 @@ const (
 	SourceSnowflakeTypeS3Input                  SourceSnowflakeType = "S3_INPUT"
 	SourceSnowflakeTypeS3DataLake               SourceSnowflakeType = "S3_DATA_LAKE"
 	SourceSnowflakeTypeSalesforceMarketingCloud SourceSnowflakeType = "SALESFORCE_MARKETING_CLOUD"
+	SourceSnowflakeTypeSapConcur                SourceSnowflakeType = "SAP_CONCUR"
 	SourceSnowflakeTypeSapHana                  SourceSnowflakeType = "SAP_HANA"
 	SourceSnowflakeTypeSapHanaSharded           SourceSnowflakeType = "SAP_HANA_SHARDED"
 	SourceSnowflakeTypeSeismic                  SourceSnowflakeType = "SEISMIC"
@@ -228,6 +229,8 @@ func (e *SourceSnowflakeType) UnmarshalJSON(data []byte) error {
 	case "S3_DATA_LAKE":
 		fallthrough
 	case "SALESFORCE_MARKETING_CLOUD":
+		fallthrough
+	case "SAP_CONCUR":
 		fallthrough
 	case "SAP_HANA":
 		fallthrough

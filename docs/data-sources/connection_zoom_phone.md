@@ -14,7 +14,7 @@ ConnectionZOOMPHONE DataSource
 
 ```terraform
 data "etleap_connection_zoom_phone" "my_connectionzoom_phone" {
-  id = "28a54017-093c-46a2-9fd2-55abc37c47de"
+  id = "8532115e-fe78-4407-a278-18efaa31bc1c"
 }
 ```
 

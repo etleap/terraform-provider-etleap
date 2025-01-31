@@ -1,3 +1,3 @@
 data "etleap_connection_criteo" "my_connectioncriteo" {
-  id = "f3719b93-8678-45f0-be61-3b6b8b950998"
+  id = "6785f0be-613b-46b8-b950-9980b3b36ede"
 }

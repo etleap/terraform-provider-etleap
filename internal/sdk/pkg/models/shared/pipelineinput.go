@@ -281,6 +281,10 @@ func (o *PipelineInput) GetSourceSalesforceMarketingCloud() *SourceSalesforceMar
 	return o.GetSource().SourceSalesforceMarketingCloud
 }
 
+func (o *PipelineInput) GetSourceSapConcur() *SourceSapConcur {
+	return o.GetSource().SourceSapConcur
+}
+
 func (o *PipelineInput) GetSourceSapHana() *SourceSapHana {
 	return o.GetSource().SourceSapHana
 }

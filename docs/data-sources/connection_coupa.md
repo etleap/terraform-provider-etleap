@@ -14,7 +14,7 @@ ConnectionCOUPA DataSource
 
 ```terraform
 data "etleap_connection_coupa" "my_connectioncoupa" {
-  id = "ef0f714d-9610-463a-b6d6-e7aa77d67425"
+  id = "61063a76-d6e7-4aa7-bd67-425f3719b938"
 }
 ```
 

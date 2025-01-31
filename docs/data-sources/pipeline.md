@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "0d059537-8e7c-48db-ac39-1d42cc5e3c89"
+  id = "8bc3b3b0-1c14-401c-b4ab-26cae8ba678d"
 }
 ```
 
@@ -408,6 +408,7 @@ Read-Only:
 - `s3_legacy` (Attributes) (see [below for nested schema](#nestedatt--source--s3_legacy))
 - `salesforce` (Attributes) (see [below for nested schema](#nestedatt--source--salesforce))
 - `salesforce_marketing_cloud` (Attributes) (see [below for nested schema](#nestedatt--source--salesforce_marketing_cloud))
+- `sap_concur` (Attributes) (see [below for nested schema](#nestedatt--source--sap_concur))
 - `sap_hana` (Attributes) (see [below for nested schema](#nestedatt--source--sap_hana))
 - `sap_hana_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--sap_hana_sharded))
 - `seismic` (Attributes) (see [below for nested schema](#nestedatt--source--seismic))
@@ -1174,6 +1175,17 @@ Read-Only:
 - `type` (String) must be one of ["SALESFORCE_MARKETING_CLOUD"]
 
 
+<a id="nestedatt--source--sap_concur"></a>
+### Nested Schema for `source.sap_concur`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The SAP Concur entity. Example Values: [ExpenseEntries, Reports, Users]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["SAP_CONCUR"]
+
+
 <a id="nestedatt--source--sap_hana"></a>
 ### Nested Schema for `source.sap_hana`
 
@@ -1290,7 +1302,7 @@ Read-Only:
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both.
-- `type` (String) must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "BRAINTREE", "CONFLUENT_CLOUD", "COUPA", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SERVICE_NOW", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]
+- `type` (String) must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "BRAINTREE", "CONFLUENT_CLOUD", "COUPA", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_CONCUR", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SERVICE_NOW", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]
 
 
 <a id="nestedatt--source--snowflake_sharded"></a>

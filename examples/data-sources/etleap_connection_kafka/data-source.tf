@@ -1,3 +1,3 @@
 data "etleap_connection_kafka" "my_connectionkafka" {
-  id = "fbbf703d-c357-481c-a06b-a345d7e4d22d"
+  id = "35781c60-6ba3-445d-be4d-22d94d7773f0"
 }

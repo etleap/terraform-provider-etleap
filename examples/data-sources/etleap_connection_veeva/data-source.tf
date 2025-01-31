@@ -1,3 +1,3 @@
 data "etleap_connection_veeva" "my_connectionveeva" {
-  id = "bdd21ad4-2f41-4522-b4a0-314c6b6a6149"
+  id = "f389bf72-d903-4def-a6df-6bb0c476eaeb"
 }

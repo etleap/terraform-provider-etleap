@@ -14,13 +14,13 @@ ConnectionTHETRADEDESK Resource
 
 ```terraform
 resource "etleap_connection_the_trade_desk" "my_connectionthe_trade_desk" {
-  deletion_of_export_products = true
-  name                        = "Frank Dietrich"
+  deletion_of_export_products = false
+  name                        = "Mr. Elvira Douglas"
   partner_id                  = "...my_partner_id..."
   password                    = "...my_password..."
-  sandbox                     = false
+  sandbox                     = true
   type                        = "THE_TRADE_DESK"
-  username                    = "Casey95"
+  username                    = "Reymundo3"
 }
 ```
 

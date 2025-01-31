@@ -1,3 +1,3 @@
 data "etleap_connection_oracle_sharded" "my_connectionoracle_sharded" {
-  id = "a6610fb1-9af7-43e3-aa22-dd3c2cc29d5c"
+  id = "af73e3aa-22dd-43c2-8c29-d5c43402a678"
 }

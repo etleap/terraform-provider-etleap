@@ -14,7 +14,7 @@ ConnectionNETSUITE DataSource
 
 ```terraform
 data "etleap_connection_netsuite" "my_connectionnetsuite" {
-  id = "604ed0d6-bf50-4e1a-8fb9-aef9f156b22d"
+  id = "f50e1a4f-b9ae-4f9f-956b-22ded9244dc2"
 }
 ```
 

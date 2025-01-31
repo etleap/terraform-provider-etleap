@@ -14,7 +14,7 @@ ConnectionRAVEMEDIDATA DataSource
 
 ```terraform
 data "etleap_connection_rave_medidata" "my_connectionrave_medidata" {
-  id = "edce8c58-a2b3-4c09-85a4-53323d709e4d"
+  id = "2b3c0985-a453-4323-9709-e4dc825d708c"
 }
 ```
 

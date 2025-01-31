@@ -907,6 +907,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.SalesforceMarketingCloud.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSalesforceMarketingCloud.LatencyThreshold)
 		r.Source.SalesforceMarketingCloud.Type = types.StringValue(string(resp.Source.SourceSalesforceMarketingCloud.Type))
 	}
+	if resp.Source.SourceSapConcur != nil {
+		r.Source.SapConcur = &SourceSapConcur{}
+		r.Source.SapConcur.ConnectionID = types.StringValue(resp.Source.SourceSapConcur.ConnectionID)
+		r.Source.SapConcur.Entity = types.StringValue(resp.Source.SourceSapConcur.Entity)
+		r.Source.SapConcur.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSapConcur.LatencyThreshold)
+		r.Source.SapConcur.Type = types.StringValue(string(resp.Source.SourceSapConcur.Type))
+	}
 	if resp.Source.SourceSapHana != nil {
 		r.Source.SapHana = &SourceSapHana{}
 		r.Source.SapHana.ConnectionID = types.StringValue(resp.Source.SourceSapHana.ConnectionID)

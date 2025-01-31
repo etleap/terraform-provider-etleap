@@ -62,6 +62,7 @@ type SourceTypes struct {
 	S3Legacy                 *SourceS3Legacy                 `tfsdk:"s3_legacy"`
 	Salesforce               *SourceSalesforce               `tfsdk:"salesforce"`
 	SalesforceMarketingCloud *SourceSalesforceMarketingCloud `tfsdk:"salesforce_marketing_cloud"`
+	SapConcur                *SourceSapConcur                `tfsdk:"sap_concur"`
 	SapHana                  *SourceSapHana                  `tfsdk:"sap_hana"`
 	SapHanaSharded           *SourceSapHanaSharded           `tfsdk:"sap_hana_sharded"`
 	Seismic                  *SourceSeismic                  `tfsdk:"seismic"`

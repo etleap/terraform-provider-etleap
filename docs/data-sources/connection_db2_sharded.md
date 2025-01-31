@@ -14,7 +14,7 @@ ConnectionDb2SHARDED DataSource
 
 ```terraform
 data "etleap_connection_db2_sharded" "my_connectiondb2_sharded" {
-  id = "f2575a98-9c8e-42bb-bd9f-d7583574fcbe"
+  id = "c8e2bbbd-9fd7-4583-974f-cbebf5894581"
 }
 ```
 

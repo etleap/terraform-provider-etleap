@@ -14,13 +14,13 @@ Pipeline Resource
 
 ```terraform
 resource "etleap_pipeline" "my_pipeline" {
-  deletion_of_export_products = true
+  deletion_of_export_products = false
   destination = {
     delta_lake = {
-      automatic_schema_changes   = true
+      automatic_schema_changes   = false
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
-      pre10_dot2_runtime_support = false
+      pre10_dot2_runtime_support = true
       primary_key = [
         "...",
       ]
@@ -31,8 +31,8 @@ resource "etleap_pipeline" "my_pipeline" {
       wait_for_quality_check = true
     }
   }
-  name   = "Robin Greenfelder"
-  paused = false
+  name   = "Jenny Wuckert"
+  paused = true
   script = {
     legacy_script = {
       legacy_script = "...my_legacy_script..."
@@ -42,7 +42,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 7
+      latency_threshold = 10
       type              = "ACTIVE_CAMPAIGN"
     }
   }
@@ -282,6 +282,7 @@ Optional:
 - `s3_legacy` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--s3_legacy))
 - `salesforce` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--salesforce))
 - `salesforce_marketing_cloud` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--salesforce_marketing_cloud))
+- `sap_concur` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sap_concur))
 - `sap_hana` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sap_hana))
 - `sap_hana_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sap_hana_sharded))
 - `seismic` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--seismic))
@@ -1048,6 +1049,17 @@ Optional:
 - `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SALESFORCE_MARKETING_CLOUD"]
 
 
+<a id="nestedatt--source--sap_concur"></a>
+### Nested Schema for `source.sap_concur`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The SAP Concur entity. Example Values: [ExpenseEntries, Reports, Users]. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SAP_CONCUR"]
+
+
 <a id="nestedatt--source--sap_hana"></a>
 ### Nested Schema for `source.sap_hana`
 
@@ -1164,7 +1176,7 @@ Optional:
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "BRAINTREE", "CONFLUENT_CLOUD", "COUPA", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SERVICE_NOW", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "BRAINTREE", "CONFLUENT_CLOUD", "COUPA", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_CONCUR", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SERVICE_NOW", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]
 
 
 <a id="nestedatt--source--snowflake_sharded"></a>

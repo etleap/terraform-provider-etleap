@@ -1,3 +1,3 @@
 data "etleap_connection_impact_radius" "my_connectionimpact_radius" {
-  id = "625cc82e-a9cb-4435-9404-f97f1fadd5be"
+  id = "9cb435d4-04f9-47f1-badd-5beb08764d4c"
 }

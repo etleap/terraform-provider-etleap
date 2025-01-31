@@ -18,7 +18,7 @@ resource "etleap_connection_square" "my_connectionsquare" {
   application_secret          = "...my_application_secret..."
   code                        = "...my_code..."
   deletion_of_export_products = true
-  name                        = "Sherman Reinger"
+  name                        = "Cornelius Moen"
   sandbox_account             = false
   type                        = "SQUARE"
 }

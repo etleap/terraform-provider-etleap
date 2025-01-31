@@ -70,6 +70,7 @@ const (
 	SourceTypesTypeS3Legacy                 SourceTypesType = "S3_LEGACY"
 	SourceTypesTypeS3Input                  SourceTypesType = "S3_INPUT"
 	SourceTypesTypeSalesforceMarketingCloud SourceTypesType = "SALESFORCE_MARKETING_CLOUD"
+	SourceTypesTypeSapConcur                SourceTypesType = "SAP_CONCUR"
 	SourceTypesTypeSapHana                  SourceTypesType = "SAP_HANA"
 	SourceTypesTypeSapHanaSharded           SourceTypesType = "SAP_HANA_SHARDED"
 	SourceTypesTypeSeismic                  SourceTypesType = "SEISMIC"
@@ -161,6 +162,7 @@ type SourceTypes struct {
 	SourceS3Legacy                 *SourceS3Legacy
 	SourceS3Input                  *SourceS3Input
 	SourceSalesforceMarketingCloud *SourceSalesforceMarketingCloud
+	SourceSapConcur                *SourceSapConcur
 	SourceSapHana                  *SourceSapHana
 	SourceSapHanaSharded           *SourceSapHanaSharded
 	SourceSeismic                  *SourceSeismic
@@ -888,6 +890,18 @@ func CreateSourceTypesSalesforceMarketingCloud(salesforceMarketingCloud SourceSa
 	return SourceTypes{
 		SourceSalesforceMarketingCloud: &salesforceMarketingCloud,
 		Type:                           typ,
+	}
+}
+
+func CreateSourceTypesSapConcur(sapConcur SourceSapConcur) SourceTypes {
+	typ := SourceTypesTypeSapConcur
+
+	typStr := SourceSapConcurType(typ)
+	sapConcur.Type = typStr
+
+	return SourceTypes{
+		SourceSapConcur: &sapConcur,
+		Type:            typ,
 	}
 }
 
@@ -1785,6 +1799,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceSalesforceMarketingCloud = sourceSalesforceMarketingCloud
 		u.Type = SourceTypesTypeSalesforceMarketingCloud
 		return nil
+	case "SAP_CONCUR":
+		sourceSapConcur := new(SourceSapConcur)
+		if err := utils.UnmarshalJSON(data, &sourceSapConcur, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSapConcur = sourceSapConcur
+		u.Type = SourceTypesTypeSapConcur
+		return nil
 	case "SAP_HANA":
 		sourceSapHana := new(SourceSapHana)
 		if err := utils.UnmarshalJSON(data, &sourceSapHana, "", true, true); err != nil {
@@ -2291,6 +2314,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceSalesforceMarketingCloud != nil {
 		return utils.MarshalJSON(u.SourceSalesforceMarketingCloud, "", true)
+	}
+
+	if u.SourceSapConcur != nil {
+		return utils.MarshalJSON(u.SourceSapConcur, "", true)
 	}
 
 	if u.SourceSapHana != nil {
