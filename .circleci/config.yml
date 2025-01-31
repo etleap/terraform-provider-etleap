@@ -165,7 +165,7 @@ jobs:
       - update-go-dependencies
       - run:
           name: Release
-          command: curl -sfL https://goreleaser.com/static/run | bash /dev/stdin release --skip=validate --clean
+          command: curl -sfL https://goreleaser.com/static/run | bash /dev/stdin release --skip=validate --clean -p 4
       - slack/notify:
           channel: -devops
 
