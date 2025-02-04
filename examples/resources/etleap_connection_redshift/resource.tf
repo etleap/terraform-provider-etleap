@@ -1,5 +1,5 @@
 resource "etleap_connection_redshift" "my_connectionredshift" {
-  address                       = "9848 Emanuel Underpass"
+  address                       = "848 Emanuel Underpass"
   database                      = "...my_database..."
   deletion_of_export_products   = true
   dynamic_varchar_width_enabled = true

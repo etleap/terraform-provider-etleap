@@ -1,3 +1,3 @@
 data "etleap_connection_sql_server" "my_connectionsql_server" {
-  id = "b1bb10d8-ac3e-40d0-947b-3b16a34687ce"
+  id = "d05f2bab-d629-42eb-bc16-11c6eca25be7"
 }

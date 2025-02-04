@@ -14,7 +14,7 @@ ConnectionGONG DataSource
 
 ```terraform
 data "etleap_connection_gong" "my_connectiongong" {
-  id = "2a3add93-e7f4-4685-97a0-d1d6c16b9c12"
+  id = "805779f0-7666-40b8-9a19-e052a61337bd"
 }
 ```
 

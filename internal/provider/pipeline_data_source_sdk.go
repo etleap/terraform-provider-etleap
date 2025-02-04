@@ -405,6 +405,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.DeltaLake.TableNameFilter = types.StringPointerValue(resp.Source.SourceDeltaLake.TableNameFilter)
 		r.Source.DeltaLake.Type = types.StringValue(string(resp.Source.SourceDeltaLake.Type))
 	}
+	if resp.Source.SourceEgnyte != nil {
+		r.Source.Egnyte = &SourceEgnyte{}
+		r.Source.Egnyte.ConnectionID = types.StringValue(resp.Source.SourceEgnyte.ConnectionID)
+		r.Source.Egnyte.Entity = types.StringValue(resp.Source.SourceEgnyte.Entity)
+		r.Source.Egnyte.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceEgnyte.LatencyThreshold)
+		r.Source.Egnyte.Type = types.StringValue(string(resp.Source.SourceEgnyte.Type))
+	}
 	if resp.Source.SourceElasticSearch != nil {
 		r.Source.Elasticsearch = &SourceElasticSearch{}
 		r.Source.Elasticsearch.ConnectionID = types.StringValue(resp.Source.SourceElasticSearch.ConnectionID)

@@ -23,6 +23,7 @@ const (
 	SourceTypesTypeDb2                      SourceTypesType = "DB2"
 	SourceTypesTypeDb2Sharded               SourceTypesType = "DB2_SHARDED"
 	SourceTypesTypeDeltaLake                SourceTypesType = "DELTA_LAKE"
+	SourceTypesTypeEgnyte                   SourceTypesType = "EGNYTE"
 	SourceTypesTypeElasticsearch            SourceTypesType = "ELASTICSEARCH"
 	SourceTypesTypeElluminate               SourceTypesType = "ELLUMINATE"
 	SourceTypesTypeEloqua                   SourceTypesType = "ELOQUA"
@@ -115,6 +116,7 @@ type SourceTypes struct {
 	SourceDb2                      *SourceDb2
 	SourceDb2Sharded               *SourceDb2Sharded
 	SourceDeltaLake                *SourceDeltaLake
+	SourceEgnyte                   *SourceEgnyte
 	SourceElasticSearch            *SourceElasticSearch
 	SourceElluminate               *SourceElluminate
 	SourceEloqua                   *SourceEloqua
@@ -326,6 +328,18 @@ func CreateSourceTypesDeltaLake(deltaLake SourceDeltaLake) SourceTypes {
 	return SourceTypes{
 		SourceDeltaLake: &deltaLake,
 		Type:            typ,
+	}
+}
+
+func CreateSourceTypesEgnyte(egnyte SourceEgnyte) SourceTypes {
+	typ := SourceTypesTypeEgnyte
+
+	typStr := SourceEgnyteType(typ)
+	egnyte.Type = typStr
+
+	return SourceTypes{
+		SourceEgnyte: &egnyte,
+		Type:         typ,
 	}
 }
 
@@ -1376,6 +1390,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceDeltaLake = sourceDeltaLake
 		u.Type = SourceTypesTypeDeltaLake
 		return nil
+	case "EGNYTE":
+		sourceEgnyte := new(SourceEgnyte)
+		if err := utils.UnmarshalJSON(data, &sourceEgnyte, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceEgnyte = sourceEgnyte
+		u.Type = SourceTypesTypeEgnyte
+		return nil
 	case "ELASTICSEARCH":
 		sourceElasticSearch := new(SourceElasticSearch)
 		if err := utils.UnmarshalJSON(data, &sourceElasticSearch, "", true, true); err != nil {
@@ -2126,6 +2149,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceDeltaLake != nil {
 		return utils.MarshalJSON(u.SourceDeltaLake, "", true)
+	}
+
+	if u.SourceEgnyte != nil {
+		return utils.MarshalJSON(u.SourceEgnyte, "", true)
 	}
 
 	if u.SourceElasticSearch != nil {

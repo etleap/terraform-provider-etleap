@@ -21,6 +21,7 @@ const (
 	SourceSnowflakeTypeDb2                      SourceSnowflakeType = "DB2"
 	SourceSnowflakeTypeDb2Sharded               SourceSnowflakeType = "DB2_SHARDED"
 	SourceSnowflakeTypeDeltaLake                SourceSnowflakeType = "DELTA_LAKE"
+	SourceSnowflakeTypeEgnyte                   SourceSnowflakeType = "EGNYTE"
 	SourceSnowflakeTypeElasticsearch            SourceSnowflakeType = "ELASTICSEARCH"
 	SourceSnowflakeTypeElluminate               SourceSnowflakeType = "ELLUMINATE"
 	SourceSnowflakeTypeEloqua                   SourceSnowflakeType = "ELOQUA"
@@ -133,6 +134,8 @@ func (e *SourceSnowflakeType) UnmarshalJSON(data []byte) error {
 	case "DB2_SHARDED":
 		fallthrough
 	case "DELTA_LAKE":
+		fallthrough
+	case "EGNYTE":
 		fallthrough
 	case "ELASTICSEARCH":
 		fallthrough

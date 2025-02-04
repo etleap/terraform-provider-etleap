@@ -19,7 +19,7 @@ resource "etleap_connection_erpx" "my_connectionerpx" {
   client_secret               = "...my_client_secret..."
   company_ids                 = "...my_company_ids..."
   deletion_of_export_products = false
-  name                        = "Isabel Nienow"
+  name                        = "Clifton Grant"
   token_url                   = "...my_token_url..."
   type                        = "ERPX"
 }

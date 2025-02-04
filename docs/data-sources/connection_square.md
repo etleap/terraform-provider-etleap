@@ -14,7 +14,7 @@ ConnectionSQUARE DataSource
 
 ```terraform
 data "etleap_connection_square" "my_connectionsquare" {
-  id = "abdeef93-349a-4cd5-813e-0cd33c77143d"
+  id = "4b5f22c9-131e-43bf-b739-5bc9773788af"
 }
 ```
 

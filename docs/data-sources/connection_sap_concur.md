@@ -14,7 +14,7 @@ ConnectionSAPCONCUR DataSource
 
 ```terraform
 data "etleap_connection_sap_concur" "my_connectionsap_concur" {
-  id = "2373a7f0-a47b-4be4-906f-3b478bccaef2"
+  id = "db02d5f3-246d-47bc-8ff4-71c63a432a01"
 }
 ```
 

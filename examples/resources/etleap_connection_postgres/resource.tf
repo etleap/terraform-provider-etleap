@@ -1,13 +1,13 @@
 resource "etleap_connection_postgres" "my_connectionpostgres" {
-  address                     = "189 Dean Loaf"
+  address                     = "224 Sporer Bridge"
   auto_replicate              = "...my_auto_replicate..."
-  cdc_enabled                 = false
+  cdc_enabled                 = true
   database                    = "...my_database..."
   deletion_of_export_products = false
-  name                        = "Leona Strosin"
+  name                        = "Merle Kohler"
   password                    = "...my_password..."
-  port                        = 5
+  port                        = 10
   schema                      = "...my_schema..."
   type                        = "POSTGRES"
-  username                    = "Felipe_Muller5"
+  username                    = "Maureen_Becker6"
 }

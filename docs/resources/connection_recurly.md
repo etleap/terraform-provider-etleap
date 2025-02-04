@@ -15,8 +15,8 @@ ConnectionRECURLY Resource
 ```terraform
 resource "etleap_connection_recurly" "my_connectionrecurly" {
   api_key                     = "...my_api_key..."
-  deletion_of_export_products = false
-  name                        = "Blanche Hackett"
+  deletion_of_export_products = true
+  name                        = "Tom Ward"
   subdomain                   = "...my_subdomain..."
   type                        = "RECURLY"
 }

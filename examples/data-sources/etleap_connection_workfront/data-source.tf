@@ -1,3 +1,3 @@
 data "etleap_connection_workfront" "my_connectionworkfront" {
-  id = "fbca03f6-66e3-4fd7-ba26-0fc28a540170"
+  id = "93c6a21f-d255-4abc-b7c4-7de46d082779"
 }

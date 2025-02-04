@@ -120,6 +120,10 @@ func (o *PipelineOutput) GetSourceDeltaLake() *SourceDeltaLake {
 	return o.GetSource().SourceDeltaLake
 }
 
+func (o *PipelineOutput) GetSourceEgnyte() *SourceEgnyte {
+	return o.GetSource().SourceEgnyte
+}
+
 func (o *PipelineOutput) GetSourceElasticsearch() *SourceElasticSearch {
 	return o.GetSource().SourceElasticSearch
 }

@@ -1,7 +1,7 @@
 resource "etleap_connection_fifteen_five" "my_connectionfifteen_five" {
   access_token                = "...my_access_token..."
-  deletion_of_export_products = false
-  name                        = "Shawna Rath"
+  deletion_of_export_products = true
+  name                        = "Guillermo Orn"
   subdomain                   = "...my_subdomain..."
   type                        = "FIFTEEN_FIVE"
 }

@@ -1,3 +1,3 @@
 data "etleap_team" "my_team" {
-  id = "290e85d3-f67a-4bc4-841b-16fece898858"
+  id = "0f7a0eb5-e847-4f89-8011-e68c1e70037a"
 }

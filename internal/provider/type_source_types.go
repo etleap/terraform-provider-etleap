@@ -14,6 +14,7 @@ type SourceTypes struct {
 	Db2                      *SourceDb2                      `tfsdk:"db2"`
 	Db2Sharded               *SourceDb2Sharded               `tfsdk:"db2_sharded"`
 	DeltaLake                *SourceDeltaLake                `tfsdk:"delta_lake"`
+	Egnyte                   *SourceEgnyte                   `tfsdk:"egnyte"`
 	Elasticsearch            *SourceElasticSearch            `tfsdk:"elasticsearch"`
 	Elluminate               *SourceElluminate               `tfsdk:"elluminate"`
 	Eloqua                   *SourceEloqua                   `tfsdk:"eloqua"`

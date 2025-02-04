@@ -14,14 +14,14 @@ ConnectionELASTICSEARCH Resource
 
 ```terraform
 resource "etleap_connection_elasticsearch" "my_connectionelasticsearch" {
-  address                     = "642 Liam Rapids"
-  deletion_of_export_products = true
-  name                        = "Lisa Upton"
+  address                     = "30987 Rosalia Inlet"
+  deletion_of_export_products = false
+  name                        = "Louis Gerlach"
   password                    = "...my_password..."
-  port                        = 1
-  ssl_enabled                 = true
+  port                        = 5
+  ssl_enabled                 = false
   type                        = "ELASTICSEARCH"
-  username                    = "Grace.Johns25"
+  username                    = "Valentine.Reichert"
 }
 ```
 

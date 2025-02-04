@@ -1,7 +1,7 @@
 resource "etleap_connection_kafka" "my_connectionkafka" {
-  auth_mechanism              = "SASL_SSL"
+  auth_mechanism              = "SASL_SCRAM_512"
   deletion_of_export_products = true
-  name                        = "Johnny Ebert"
+  name                        = "Antonio Predovic"
   password                    = "...my_password..."
   schema_registry_password    = "...my_schema_registry_password..."
   schema_registry_server      = "...my_schema_registry_server..."

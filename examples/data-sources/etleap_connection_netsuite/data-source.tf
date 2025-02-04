@@ -1,3 +1,3 @@
 data "etleap_connection_netsuite" "my_connectionnetsuite" {
-  id = "f50e1a4f-b9ae-4f9f-956b-22ded9244dc2"
+  id = "00dcbfb6-fcd8-4e3f-9da6-ff80d06aac06"
 }
