@@ -43,7 +43,10 @@ resource "etleap_dbt_schedule" "my_dbtschedule" {
 ### Read-Only
 
 - `create_date` (String)
+- `current_activity` (String) This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented. must be one of ["LOADING", "BUILDING"]
 - `id` (String) The id of the dbt schedule
+- `last_dbt_build_date` (String) The last time that a successful dbt build started. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+- `last_dbt_run_time` (Number) The duration of the last successful dbt build. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
 - `latest_run` (Attributes) (see [below for nested schema](#nestedatt--latest_run))
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
 
