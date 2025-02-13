@@ -31,7 +31,10 @@ type DbtScheduleDataSourceModel struct {
 	ConnectionID         types.String         `tfsdk:"connection_id"`
 	CreateDate           types.String         `tfsdk:"create_date"`
 	Cron                 types.String         `tfsdk:"cron"`
+	CurrentActivity      types.String         `tfsdk:"current_activity"`
 	ID                   types.String         `tfsdk:"id"`
+	LastDbtBuildDate     types.String         `tfsdk:"last_dbt_build_date"`
+	LastDbtRunTime       types.Int64          `tfsdk:"last_dbt_run_time"`
 	LatestRun            *DbtScheduleRunTypes `tfsdk:"latest_run"`
 	Name                 types.String         `tfsdk:"name"`
 	Owner                User                 `tfsdk:"owner"`
@@ -63,9 +66,21 @@ func (r *DbtScheduleDataSource) Schema(ctx context.Context, req datasource.Schem
 				Computed:    true,
 				Description: `The cron expression that defines triggers for this schedule. The maximum supported cron schedule precision is 1 minute.`,
 			},
+			"current_activity": schema.StringAttribute{
+				Computed:    true,
+				Description: `This field is deprecated and will be removed and replaced by the properties in ` + "`" + `latestRun` + "`" + ` when that field is implemented. must be one of ["LOADING", "BUILDING"]`,
+			},
 			"id": schema.StringAttribute{
 				Required:    true,
 				Description: `The id of the dbt schedule`,
+			},
+			"last_dbt_build_date": schema.StringAttribute{
+				Computed:    true,
+				Description: `The last time that a successful dbt build started. This field is deprecated and will be removed and replaced by the properties in ` + "`" + `latestRun` + "`" + ` when that field is implemented.`,
+			},
+			"last_dbt_run_time": schema.Int64Attribute{
+				Computed:    true,
+				Description: `The duration of the last successful dbt build. This field is deprecated and will be removed and replaced by the properties in ` + "`" + `latestRun` + "`" + ` when that field is implemented.`,
 			},
 			"latest_run": schema.SingleNestedAttribute{
 				Computed: true,
