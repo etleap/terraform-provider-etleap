@@ -3,9 +3,41 @@
 package shared
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
 )
+
+// CurrentActivity - This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+//
+// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
+type CurrentActivity string
+
+const (
+	CurrentActivityLoading  CurrentActivity = "LOADING"
+	CurrentActivityBuilding CurrentActivity = "BUILDING"
+)
+
+func (e CurrentActivity) ToPointer() *CurrentActivity {
+	return &e
+}
+
+func (e *CurrentActivity) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "LOADING":
+		fallthrough
+	case "BUILDING":
+		*e = CurrentActivity(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CurrentActivity: %v", v)
+	}
+}
 
 // DbtScheduleOutput - Response body for GET /dbtSchedules/{id}
 type DbtScheduleOutput struct {
@@ -25,9 +57,21 @@ type DbtScheduleOutput struct {
 	// The [connection](https://docs.etleap.com/docs/api-v2/edbec13814bbc-connection) where the dbt build runs. The only supported connections are Redshift, Snowflake or Databricks Delta Lake destinations.
 	ConnectionID string `json:"connectionId"`
 	// Whether the dbt build is skipped if no new data has been ingested for any of the pipelines in the table above.
-	SkipBuildIfNoNewData bool                 `json:"skipBuildIfNoNewData"`
-	CreateDate           time.Time            `json:"createDate"`
-	LatestRun            *DbtScheduleRunTypes `json:"latestRun,omitempty"`
+	SkipBuildIfNoNewData bool `json:"skipBuildIfNoNewData"`
+	// This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	CurrentActivity *CurrentActivity `json:"currentActivity,omitempty"`
+	// The last time that a successful dbt build started. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	LastDbtBuildDate *time.Time `json:"lastDbtBuildDate,omitempty"`
+	// The duration of the last successful dbt build. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	LastDbtRunTime *int64               `json:"lastDbtRunTime,omitempty"`
+	CreateDate     time.Time            `json:"createDate"`
+	LatestRun      *DbtScheduleRunTypes `json:"latestRun,omitempty"`
 }
 
 func (d DbtScheduleOutput) MarshalJSON() ([]byte, error) {
@@ -102,6 +146,27 @@ func (o *DbtScheduleOutput) GetSkipBuildIfNoNewData() bool {
 		return false
 	}
 	return o.SkipBuildIfNoNewData
+}
+
+func (o *DbtScheduleOutput) GetCurrentActivity() *CurrentActivity {
+	if o == nil {
+		return nil
+	}
+	return o.CurrentActivity
+}
+
+func (o *DbtScheduleOutput) GetLastDbtBuildDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.LastDbtBuildDate
+}
+
+func (o *DbtScheduleOutput) GetLastDbtRunTime() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LastDbtRunTime
 }
 
 func (o *DbtScheduleOutput) GetCreateDate() time.Time {
