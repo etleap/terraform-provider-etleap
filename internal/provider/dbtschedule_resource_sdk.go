@@ -42,18 +42,7 @@ func (r *DbtScheduleResourceModel) RefreshFromSharedDbtScheduleOutput(resp *shar
 	r.ConnectionID = types.StringValue(resp.ConnectionID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Cron = types.StringValue(resp.Cron)
-	if resp.CurrentActivity != nil {
-		r.CurrentActivity = types.StringValue(string(*resp.CurrentActivity))
-	} else {
-		r.CurrentActivity = types.StringNull()
-	}
 	r.ID = types.StringValue(resp.ID)
-	if resp.LastDbtBuildDate != nil {
-		r.LastDbtBuildDate = types.StringValue(resp.LastDbtBuildDate.Format(time.RFC3339Nano))
-	} else {
-		r.LastDbtBuildDate = types.StringNull()
-	}
-	r.LastDbtRunTime = types.Int64PointerValue(resp.LastDbtRunTime)
 	if resp.LatestRun == nil {
 		r.LatestRun = nil
 	} else {

@@ -30,9 +30,6 @@ data "etleap_dbt_schedule" "my_dbtschedule" {
 - `connection_id` (String) The [connection](https://docs.etleap.com/docs/api-v2/edbec13814bbc-connection) where the dbt build runs. The only supported connections are Redshift, Snowflake or Databricks Delta Lake destinations.
 - `create_date` (String)
 - `cron` (String) The cron expression that defines triggers for this schedule. The maximum supported cron schedule precision is 1 minute.
-- `current_activity` (String) This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented. must be one of ["LOADING", "BUILDING"]
-- `last_dbt_build_date` (String) The last time that a successful dbt build started. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
-- `last_dbt_run_time` (Number) The duration of the last successful dbt build. This field is deprecated and will be removed and replaced by the properties in `latestRun` when that field is implemented.
 - `latest_run` (Attributes) (see [below for nested schema](#nestedatt--latest_run))
 - `name` (String) The name of the dbt schedule.
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
