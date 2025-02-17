@@ -1,5 +1,6 @@
 import json as j
 import sys
+import copy
 
 def schema_from_ref(ref):
     return ref.split('/')[-1]
@@ -89,6 +90,45 @@ for connection_type in connection_types:
 
     schemas[connections_schema]['x-speakeasy-entity'] = 'Connection' + enum_value
     schemas[connections_schema]['x-speakeasy-param-suppress-computed-diff'] = 'true'
+
+def update_ref_in_all_of(all_of, new_reference):
+    for obj in all_of:
+        if isinstance(obj, dict) and '$ref' in obj:
+            obj['$ref'] = new_reference
+
+def remove_properties_not_in_from_objects_in_all_of(all_of, keep_properties):
+    for obj in all_of:
+        if isinstance(obj, dict) and not '$ref' in obj and 'properties' in obj:
+            new_properties = dict()
+            for prop in obj['properties']:
+                if prop in keep_properties:
+                    new_properties[prop] = obj['properties'][prop]
+            obj['properties'] = new_properties
+
+schemas['source_types_update'] = copy.deepcopy(schemas['source_types'])
+schemas['source_types_update']['title'] += ' Update'
+
+source_types_update = schemas['source_types_update']
+
+for mapping_key in source_types_update['discriminator']['mapping']:
+    source_types_update['discriminator']['mapping'][mapping_key] += '_update'
+
+for source_type in source_types_update['oneOf']:
+    source_type_schema = schema_from_ref(source_type['$ref'])
+    enum_value = get_enum_value_from_connection_spec(schemas[source_type_schema])
+    source_type['$ref'] += '_update'
+
+    schemas[source_type_schema + '_update'] = copy.deepcopy(schemas[source_type_schema])
+    schemas[source_type_schema + '_update']['title'] += ' Update'
+    update_ref_in_all_of(schemas[source_type_schema + '_update']['allOf'], "#/components/schemas/source_update")
+    remove_properties_not_in_from_objects_in_all_of(schemas[source_type_schema + '_update']['allOf'], ['type'])
+
+schemas['pipeline_update']['properties']['source']['$ref'] = "#/components/schemas/source_types_update"
+# Can we remove this if we remove the property in the api definition
+# SNOWFLAKE type object needs to be added to components.schema.source_snowflake
+# This method adds a type property to the api call, will this cause problems on the backend? Could add type to source_update as a nullable field which is non modifiable
+del schemas['source_update']['x-speakeasy-name-override']
+
 
 with open(outputSchemaFile, 'w+') as f:
     j.dump(api_spec, f, indent=4)
