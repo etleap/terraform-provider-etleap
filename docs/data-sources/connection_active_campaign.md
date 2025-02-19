@@ -14,7 +14,7 @@ ConnectionACTIVECAMPAIGN DataSource
 
 ```terraform
 data "etleap_connection_active_campaign" "my_connectionactive_campaign" {
-  id = "74e7f570-e314-4058-9e44-781ce6ef6435"
+  id = "e44781ce-6ef6-4435-b4c6-7e895185d4b1"
 }
 ```
 

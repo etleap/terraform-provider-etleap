@@ -14,7 +14,7 @@ ConnectionERPX DataSource
 
 ```terraform
 data "etleap_connection_erpx" "my_connectionerpx" {
-  id = "3bbb602f-ddbd-4eda-b753-fdfec263d66a"
+  id = "753fdfec-263d-466a-bb2a-081ddc281183"
 }
 ```
 

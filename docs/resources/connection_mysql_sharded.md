@@ -19,23 +19,23 @@ resource "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
   certificate                          = "...my_certificate..."
   database                             = "...my_database..."
   deletion_of_export_products          = true
-  name                                 = "Fannie Sipes"
-  require_ssl_and_validate_certificate = false
+  name                                 = "Enrique Gislason"
+  require_ssl_and_validate_certificate = true
   shards = [
     {
-      address  = "8523 Ankunding Ways"
+      address  = "305 Jailyn Terrace"
       database = "...my_database..."
       password = "...my_password..."
       port     = 3
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "52483 Yost Corners"
-        username = "Karianne_Luettgen"
+        address  = "915 Jerde Oval"
+        username = "Marlee.Towne"
       }
-      username = "Marlee.Towne"
+      username = "Hulda79"
     },
   ]
-  tiny_int1_is_boolean = true
+  tiny_int1_is_boolean = false
   type                 = "MYSQL_SHARDED"
 }
 ```

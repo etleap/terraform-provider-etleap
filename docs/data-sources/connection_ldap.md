@@ -14,7 +14,7 @@ ConnectionLDAP DataSource
 
 ```terraform
 data "etleap_connection_ldap" "my_connectionldap" {
-  id = "b71678cc-6ddd-47ad-9e68-8b9e0803b5b2"
+  id = "7ad0b19a-c252-444a-8f6c-80503daf018b"
 }
 ```
 

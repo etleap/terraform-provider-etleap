@@ -35,6 +35,7 @@ type SourceTypes struct {
 	Intercom                 *SourceIntercom                 `tfsdk:"intercom"`
 	Jira                     *SourceJira                     `tfsdk:"jira"`
 	JiraAlign                *SourceJiraAlign                `tfsdk:"jira_align"`
+	JiraCloud                *SourceJiraCloud                `tfsdk:"jira_cloud"`
 	Kafka                    *SourceKafka                    `tfsdk:"kafka"`
 	Kustomer                 *SourceKustomer                 `tfsdk:"kustomer"`
 	Ldap                     *SourceLdap                     `tfsdk:"ldap"`

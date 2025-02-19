@@ -1,10 +1,10 @@
 resource "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" {
-  deletion_of_export_products = true
-  name                        = "Ms. Gregory Howe"
+  deletion_of_export_products = false
+  name                        = "Celia Franecki"
   schema                      = "...my_schema..."
   shards = [
     {
-      address = "7823 Koss Road"
+      address = "6061 Upton Corners"
       authentication = {
         key_pair = {
           private_key = "...my_private_key..."
@@ -16,10 +16,10 @@ resource "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" 
       password  = "...my_password..."
       role      = "...my_role..."
       shard_id  = "...my_shard_id..."
-      username  = "Lukas_Skiles"
+      username  = "Margie_Zieme17"
       warehouse = "...my_warehouse..."
     },
   ]
-  source_only = false
+  source_only = true
   type        = "SNOWFLAKE_SHARDED"
 }

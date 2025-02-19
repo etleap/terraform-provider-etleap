@@ -615,6 +615,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.JiraAlign.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceJiraAlign.LatencyThreshold)
 		r.Source.JiraAlign.Type = types.StringValue(string(resp.Source.SourceJiraAlign.Type))
 	}
+	if resp.Source.SourceJiraCloud != nil {
+		r.Source.JiraCloud = &SourceJiraCloud{}
+		r.Source.JiraCloud.ConnectionID = types.StringValue(resp.Source.SourceJiraCloud.ConnectionID)
+		r.Source.JiraCloud.Entity = types.StringValue(resp.Source.SourceJiraCloud.Entity)
+		r.Source.JiraCloud.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceJiraCloud.LatencyThreshold)
+		r.Source.JiraCloud.Type = types.StringValue(string(resp.Source.SourceJiraCloud.Type))
+	}
 	if resp.Source.SourceKafka != nil {
 		r.Source.Kafka = &SourceKafka{}
 		r.Source.Kafka.ConnectionID = types.StringValue(resp.Source.SourceKafka.ConnectionID)

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 36d79f67239cee849310ee7b0793c7e1
-  docVersion: 2.7.11
+  docChecksum: 9b3443c7bad7899a102b3d63c4db2708
+  docVersion: 2.7.12
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.1.17
-  configChecksum: 5ac482e9e31b634cffdbaef800bf317c
+  releaseVersion: 0.1.18
+  configChecksum: 7e49dd81834f991c3f74b747b3969d1e
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -219,6 +219,9 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatejiraalignconnection.go
   - internal/sdk/pkg/models/operations/getjiraalignconnection.go
   - internal/sdk/pkg/models/operations/deletejiraalignconnection.go
+  - internal/sdk/pkg/models/operations/updatejiracloudconnection.go
+  - internal/sdk/pkg/models/operations/getjiracloudconnection.go
+  - internal/sdk/pkg/models/operations/deletejiracloudconnection.go
   - internal/sdk/pkg/models/operations/updatekafkaconnection.go
   - internal/sdk/pkg/models/operations/getkafkaconnection.go
   - internal/sdk/pkg/models/operations/deletekafkaconnection.go
@@ -422,6 +425,7 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/createimpactradiusconnection.go
   - internal/sdk/pkg/models/operations/createintercomconnection.go
   - internal/sdk/pkg/models/operations/createjiraalignconnection.go
+  - internal/sdk/pkg/models/operations/createjiracloudconnection.go
   - internal/sdk/pkg/models/operations/createkafkaconnection.go
   - internal/sdk/pkg/models/operations/createkustomerconnection.go
   - internal/sdk/pkg/models/operations/createldapconnection.go
@@ -559,6 +563,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourceimpactradius.go
   - internal/sdk/pkg/models/shared/sourcejira.go
   - internal/sdk/pkg/models/shared/sourcejiraalign.go
+  - internal/sdk/pkg/models/shared/sourcejiracloud.go
   - internal/sdk/pkg/models/shared/sourcekafka.go
   - internal/sdk/pkg/models/shared/sourcekustomer.go
   - internal/sdk/pkg/models/shared/sourceldap.go
@@ -742,6 +747,8 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionintercomupdate.go
   - internal/sdk/pkg/models/shared/connectionjiraalign.go
   - internal/sdk/pkg/models/shared/connectionjiraalignupdate.go
+  - internal/sdk/pkg/models/shared/connectionjiracloud.go
+  - internal/sdk/pkg/models/shared/connectionjiracloudupdate.go
   - internal/sdk/pkg/models/shared/connectionkafkaupdate.go
   - internal/sdk/pkg/models/shared/connectionkustomer.go
   - internal/sdk/pkg/models/shared/connectionkustomerupdate.go
@@ -1017,6 +1024,7 @@ generatedFiles:
   - internal/provider/type_source_intercom.go
   - internal/provider/type_source_jira.go
   - internal/provider/type_source_jira_align.go
+  - internal/provider/type_source_jira_cloud.go
   - internal/provider/type_source_kafka.go
   - internal/provider/type_source_kustomer.go
   - internal/provider/type_source_ldap.go
@@ -1181,6 +1189,9 @@ generatedFiles:
   - internal/provider/connectionjira_align_resource.go
   - internal/provider/connectionjira_align_resource_sdk.go
   - examples/resources/etleap_connection_jira_align/resource.tf
+  - internal/provider/connectionjira_cloud_resource.go
+  - internal/provider/connectionjira_cloud_resource_sdk.go
+  - examples/resources/etleap_connection_jira_cloud/resource.tf
   - internal/provider/connectionkafka_resource.go
   - internal/provider/connectionkafka_resource_sdk.go
   - examples/resources/etleap_connection_kafka/resource.tf
@@ -1460,6 +1471,9 @@ generatedFiles:
   - internal/provider/connectionjira_align_data_source.go
   - internal/provider/connectionjira_align_data_source_sdk.go
   - examples/data-sources/etleap_connection_jira_align/data-source.tf
+  - internal/provider/connectionjira_cloud_data_source.go
+  - internal/provider/connectionjira_cloud_data_source_sdk.go
+  - examples/data-sources/etleap_connection_jira_cloud/data-source.tf
   - internal/provider/connectionkafka_data_source.go
   - internal/provider/connectionkafka_data_source_sdk.go
   - examples/data-sources/etleap_connection_kafka/data-source.tf

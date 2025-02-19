@@ -19,8 +19,8 @@ resource "etleap_connection_zuora" "my_connectionzuora" {
   deletion_of_export_products = false
   endpoint                    = "...my_endpoint..."
   endpoint_hostname           = "...my_endpoint_hostname..."
-  name                        = "Christie Torphy"
-  sandbox                     = false
+  name                        = "Miss Clifford Witting"
+  sandbox                     = true
   type                        = "ZUORA"
 }
 ```

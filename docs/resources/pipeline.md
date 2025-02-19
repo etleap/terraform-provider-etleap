@@ -14,7 +14,7 @@ Pipeline Resource
 
 ```terraform
 resource "etleap_pipeline" "my_pipeline" {
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   destination = {
     delta_lake = {
       automatic_schema_changes   = false
@@ -28,11 +28,11 @@ resource "etleap_pipeline" "my_pipeline" {
       schema                 = "...my_schema..."
       table                  = "...my_table..."
       type                   = "DELTA_LAKE"
-      wait_for_quality_check = true
+      wait_for_quality_check = false
     }
   }
-  name   = "Jenny Wuckert"
-  paused = true
+  name   = "Johanna Hand PhD"
+  paused = false
   script = {
     legacy_script = {
       legacy_script = "...my_legacy_script..."
@@ -42,7 +42,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 10
+      latency_threshold = 1
       type              = "ACTIVE_CAMPAIGN"
     }
   }
@@ -255,6 +255,7 @@ Optional:
 - `intercom` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--intercom))
 - `jira` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--jira))
 - `jira_align` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--jira_align))
+- `jira_cloud` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--jira_cloud))
 - `kafka` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--kafka))
 - `kustomer` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--kustomer))
 - `ldap` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--ldap))
@@ -704,6 +705,17 @@ Optional:
 - `entity` (String) The JIRA Align entity. Spelled without spaces except for the Audit Logs. Example values: [Capabilities, Cities, Customers, Defects, Epics, Epics Audit Logs, Features, Features Audit Logs, Goals, Ideas, Iterations, KeyResults, Milestones, Milestones Audit Logs, Objectives, Objectives Audit Logs, Portfolios, Products, Programs, Regions, ReleaseVehicles, Releases, Snapshots, Stories, Tasks, Teams, Themes, Users, ValueStreams]. Requires replacement if changed. ; Not Null
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
 - `type` (String) Requires replacement if changed. ; Not Null; must be one of ["JIRA_ALIGN"]
+
+
+<a id="nestedatt--source--jira_cloud"></a>
+### Nested Schema for `source.jira_cloud`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The JIRA Software Cloud entity. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["JIRA_CLOUD"]
 
 
 <a id="nestedatt--source--kafka"></a>
@@ -1188,7 +1200,7 @@ Optional:
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "BRAINTREE", "CONFLUENT_CLOUD", "COUPA", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "EGNYTE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_CONCUR", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SERVICE_NOW", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]
+- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "BRAINTREE", "CONFLUENT_CLOUD", "COUPA", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "EGNYTE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "JIRA_CLOUD", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_CONCUR", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SERVICE_NOW", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]
 
 
 <a id="nestedatt--source--snowflake_sharded"></a>

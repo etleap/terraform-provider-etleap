@@ -1,3 +1,3 @@
 data "etleap_connection_coupa" "my_connectioncoupa" {
-  id = "61063a76-d6e7-4aa7-bd67-425f3719b938"
+  id = "d67425f3-719b-4938-a785-f0be613b6b8b"
 }

@@ -42,6 +42,7 @@ const (
 	SourceSnowflakeTypeImpactRadius             SourceSnowflakeType = "IMPACT_RADIUS"
 	SourceSnowflakeTypeJira                     SourceSnowflakeType = "JIRA"
 	SourceSnowflakeTypeJiraAlign                SourceSnowflakeType = "JIRA_ALIGN"
+	SourceSnowflakeTypeJiraCloud                SourceSnowflakeType = "JIRA_CLOUD"
 	SourceSnowflakeTypeKafka                    SourceSnowflakeType = "KAFKA"
 	SourceSnowflakeTypeKustomer                 SourceSnowflakeType = "KUSTOMER"
 	SourceSnowflakeTypeLdap                     SourceSnowflakeType = "LDAP"
@@ -176,6 +177,8 @@ func (e *SourceSnowflakeType) UnmarshalJSON(data []byte) error {
 	case "JIRA":
 		fallthrough
 	case "JIRA_ALIGN":
+		fallthrough
+	case "JIRA_CLOUD":
 		fallthrough
 	case "KAFKA":
 		fallthrough

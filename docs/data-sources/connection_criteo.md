@@ -14,7 +14,7 @@ ConnectionCRITEO DataSource
 
 ```terraform
 data "etleap_connection_criteo" "my_connectioncriteo" {
-  id = "6785f0be-613b-46b8-b950-9980b3b36ede"
+  id = "9509980b-3b36-4ede-b4ec-cd4d3dc96cf9"
 }
 ```
 

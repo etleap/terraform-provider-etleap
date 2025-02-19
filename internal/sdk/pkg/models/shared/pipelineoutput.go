@@ -204,6 +204,10 @@ func (o *PipelineOutput) GetSourceJiraAlign() *SourceJiraAlign {
 	return o.GetSource().SourceJiraAlign
 }
 
+func (o *PipelineOutput) GetSourceJiraCloud() *SourceJiraCloud {
+	return o.GetSource().SourceJiraCloud
+}
+
 func (o *PipelineOutput) GetSourceKafka() *SourceKafka {
 	return o.GetSource().SourceKafka
 }

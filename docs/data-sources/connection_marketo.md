@@ -14,7 +14,7 @@ ConnectionMARKETO DataSource
 
 ```terraform
 data "etleap_connection_marketo" "my_connectionmarketo" {
-  id = "c7888e60-58ef-48ad-b1a5-52ed57699395"
+  id = "518da446-5a2c-4ca0-9b09-0a1e4b12f84c"
 }
 ```
 

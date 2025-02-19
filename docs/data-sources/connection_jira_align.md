@@ -14,7 +14,7 @@ ConnectionJIRAALIGN DataSource
 
 ```terraform
 data "etleap_connection_jira_align" "my_connectionjira_align" {
-  id = "35781c60-6ba3-445d-be4d-22d94d7773f0"
+  id = "e4d22d94-d777-43f0-87ba-88311bb86e8e"
 }
 ```
 

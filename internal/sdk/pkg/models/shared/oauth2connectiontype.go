@@ -17,6 +17,7 @@ const (
 	Oauth2ConnectionTypeGoogleSheets    Oauth2ConnectionType = "GOOGLE_SHEETS"
 	Oauth2ConnectionTypeHubspot         Oauth2ConnectionType = "HUBSPOT"
 	Oauth2ConnectionTypeIntercom        Oauth2ConnectionType = "INTERCOM"
+	Oauth2ConnectionTypeJiraCloud       Oauth2ConnectionType = "JIRA_CLOUD"
 	Oauth2ConnectionTypeOutlook         Oauth2ConnectionType = "OUTLOOK"
 	Oauth2ConnectionTypeOutreach        Oauth2ConnectionType = "OUTREACH"
 	Oauth2ConnectionTypeQuoraAds        Oauth2ConnectionType = "QUORA_ADS"
@@ -52,6 +53,8 @@ func (e *Oauth2ConnectionType) UnmarshalJSON(data []byte) error {
 	case "HUBSPOT":
 		fallthrough
 	case "INTERCOM":
+		fallthrough
+	case "JIRA_CLOUD":
 		fallthrough
 	case "OUTLOOK":
 		fallthrough

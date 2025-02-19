@@ -44,6 +44,7 @@ const (
 	SourceTypesTypeImpactRadius             SourceTypesType = "IMPACT_RADIUS"
 	SourceTypesTypeJira                     SourceTypesType = "JIRA"
 	SourceTypesTypeJiraAlign                SourceTypesType = "JIRA_ALIGN"
+	SourceTypesTypeJiraCloud                SourceTypesType = "JIRA_CLOUD"
 	SourceTypesTypeKafka                    SourceTypesType = "KAFKA"
 	SourceTypesTypeKustomer                 SourceTypesType = "KUSTOMER"
 	SourceTypesTypeLdap                     SourceTypesType = "LDAP"
@@ -137,6 +138,7 @@ type SourceTypes struct {
 	SourceImpactRadius             *SourceImpactRadius
 	SourceJira                     *SourceJira
 	SourceJiraAlign                *SourceJiraAlign
+	SourceJiraCloud                *SourceJiraCloud
 	SourceKafka                    *SourceKafka
 	SourceKustomer                 *SourceKustomer
 	SourceLdap                     *SourceLdap
@@ -579,6 +581,18 @@ func CreateSourceTypesJiraAlign(jiraAlign SourceJiraAlign) SourceTypes {
 
 	return SourceTypes{
 		SourceJiraAlign: &jiraAlign,
+		Type:            typ,
+	}
+}
+
+func CreateSourceTypesJiraCloud(jiraCloud SourceJiraCloud) SourceTypes {
+	typ := SourceTypesTypeJiraCloud
+
+	typStr := SourceJiraCloudType(typ)
+	jiraCloud.Type = typStr
+
+	return SourceTypes{
+		SourceJiraCloud: &jiraCloud,
 		Type:            typ,
 	}
 }
@@ -1579,6 +1593,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceJiraAlign = sourceJiraAlign
 		u.Type = SourceTypesTypeJiraAlign
 		return nil
+	case "JIRA_CLOUD":
+		sourceJiraCloud := new(SourceJiraCloud)
+		if err := utils.UnmarshalJSON(data, &sourceJiraCloud, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceJiraCloud = sourceJiraCloud
+		u.Type = SourceTypesTypeJiraCloud
+		return nil
 	case "KAFKA":
 		sourceKafka := new(SourceKafka)
 		if err := utils.UnmarshalJSON(data, &sourceKafka, "", true, true); err != nil {
@@ -2233,6 +2256,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceJiraAlign != nil {
 		return utils.MarshalJSON(u.SourceJiraAlign, "", true)
+	}
+
+	if u.SourceJiraCloud != nil {
+		return utils.MarshalJSON(u.SourceJiraCloud, "", true)
 	}
 
 	if u.SourceKafka != nil {

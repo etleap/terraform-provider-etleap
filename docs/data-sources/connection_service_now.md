@@ -14,7 +14,7 @@ ConnectionSERVICENOW DataSource
 
 ```terraform
 data "etleap_connection_service_now" "my_connectionservice_now" {
-  id = "05cd66bf-e854-4e4c-81fe-244f8a0be6d5"
+  id = "15137a77-a6a5-42f4-88da-187d82370f0d"
 }
 ```
 

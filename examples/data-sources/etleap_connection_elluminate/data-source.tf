@@ -1,3 +1,3 @@
 data "etleap_connection_elluminate" "my_connectionelluminate" {
-  id = "6ed0867b-a256-4ac5-988f-c9dba6b9881a"
+  id = "88fc9dba-6b98-481a-ab52-c1c934d25038"
 }

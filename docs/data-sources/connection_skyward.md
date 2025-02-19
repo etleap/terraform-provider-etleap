@@ -14,7 +14,7 @@ ConnectionSKYWARD DataSource
 
 ```terraform
 data "etleap_connection_skyward" "my_connectionskyward" {
-  id = "d4872841-337b-416d-93a7-9fac97692965"
+  id = "e42482ec-0483-414b-ae70-d629705e91b1"
 }
 ```
 

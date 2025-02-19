@@ -14,7 +14,7 @@ ConnectionMONGODB DataSource
 
 ```terraform
 data "etleap_connection_mongodb" "my_connectionmongodb" {
-  id = "1b090a1e-4b12-4f84-82b5-7f4c621b02a8"
+  id = "d346fb60-4ed0-4d6b-b50e-1a4fb9aef9f1"
 }
 ```
 

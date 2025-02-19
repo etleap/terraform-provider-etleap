@@ -15,9 +15,9 @@ ConnectionNETSUITE Resource
 ```terraform
 resource "etleap_connection_netsuite" "my_connectionnetsuite" {
   account_id                  = "...my_account_id..."
-  deletion_of_export_products = false
-  email                       = "Peggie12@gmail.com"
-  name                        = "Conrad Rolfson III"
+  deletion_of_export_products = true
+  email                       = "Joyce.Veum2@gmail.com"
+  name                        = "Nichole Corwin"
   password                    = "...my_password..."
   type                        = "NETSUITE"
 }
