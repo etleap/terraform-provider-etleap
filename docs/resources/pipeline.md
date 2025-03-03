@@ -63,6 +63,9 @@ resource "etleap_pipeline" "my_pipeline" {
 - `deletion_of_export_products` (Boolean) Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue. Defaults to `false`. Default: false
 - `parsing_error_settings` (Attributes) (see [below for nested schema](#nestedatt--parsing_error_settings))
 - `paused` (Boolean) If the pipeline is paused. Defaults to `false`. Default: false
+- `refresh_schedule` (Attributes) A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
+
+Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`. (see [below for nested schema](#nestedatt--refresh_schedule))
 - `script` (Attributes) Whenever a script is required, we accept and/or return two types of scripts: a Script or Legacy Script. We return a Script object if all transforms specified in that script are supported by this API. Otherwise it will return a Legacy Script. Either Script or Legacy Script can be used when adding a script to a pipeline. Requires replacement if changed. (see [below for nested schema](#nestedatt--script))
 - `shares` (List of String) An array of user email's to share the pipeline with.
 
@@ -79,9 +82,6 @@ Once shared, a pipeline cannot be unshared. Future call to `PATCH` on a pipeline
 - `latest_script_version` (Number) Valid script versions are whole numbers and range from 1 to this number.
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
 - `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
-- `refresh_schedule` (Attributes) A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
-
-Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`. (see [below for nested schema](#nestedatt--refresh_schedule))
 - `stop_reason` (String) Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline. must be one of ["PAUSED", "PARSING_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
@@ -1453,6 +1453,63 @@ Optional:
 - `threshold` (Number) The parsing error threshold, in percentage points, for the `action` to be triggered. Not Null
 
 
+<a id="nestedatt--refresh_schedule"></a>
+### Nested Schema for `refresh_schedule`
+
+Optional:
+
+- `daily` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--daily))
+- `hourly` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--hourly))
+- `monthly` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--monthly))
+- `never` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--never))
+- `weekly` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--weekly))
+
+<a id="nestedatt--refresh_schedule--daily"></a>
+### Nested Schema for `refresh_schedule.daily`
+
+Optional:
+
+- `hour_of_day` (Number) Hour of day this schedule should trigger at (in UTC). Not Null
+- `mode` (String) Not Null; must be one of ["DAILY"]
+
+
+<a id="nestedatt--refresh_schedule--hourly"></a>
+### Nested Schema for `refresh_schedule.hourly`
+
+Optional:
+
+- `mode` (String) Not Null; must be one of ["HOURLY"]
+
+
+<a id="nestedatt--refresh_schedule--monthly"></a>
+### Nested Schema for `refresh_schedule.monthly`
+
+Optional:
+
+- `day_of_month` (Number) Day of the month this schedule should trigger at (in UTC). Not Null
+- `hour_of_day` (Number) Hour of day this schedule should trigger at (in UTC). Not Null
+- `mode` (String) Not Null; must be one of ["MONTHLY"]
+
+
+<a id="nestedatt--refresh_schedule--never"></a>
+### Nested Schema for `refresh_schedule.never`
+
+Optional:
+
+- `mode` (String) Not Null; must be one of ["NEVER"]
+
+
+<a id="nestedatt--refresh_schedule--weekly"></a>
+### Nested Schema for `refresh_schedule.weekly`
+
+Optional:
+
+- `day_of_week` (Number) The day of the week this schedule should trigger at (in UTC). Not Null
+- `hour_of_day` (Number) Hour of day this schedule should trigger at (in UTC). Not Null
+- `mode` (String) Not Null; must be one of ["WEEKLY"]
+
+
+
 <a id="nestedatt--script"></a>
 ### Nested Schema for `script`
 
@@ -1854,63 +1911,6 @@ Read-Only:
 - `first_name` (String)
 - `id` (String)
 - `last_name` (String)
-
-
-<a id="nestedatt--refresh_schedule"></a>
-### Nested Schema for `refresh_schedule`
-
-Read-Only:
-
-- `daily` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--daily))
-- `hourly` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--hourly))
-- `monthly` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--monthly))
-- `never` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--never))
-- `weekly` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--weekly))
-
-<a id="nestedatt--refresh_schedule--daily"></a>
-### Nested Schema for `refresh_schedule.daily`
-
-Read-Only:
-
-- `hour_of_day` (Number) Hour of day this schedule should trigger at (in UTC).
-- `mode` (String) must be one of ["DAILY"]
-
-
-<a id="nestedatt--refresh_schedule--hourly"></a>
-### Nested Schema for `refresh_schedule.hourly`
-
-Read-Only:
-
-- `mode` (String) must be one of ["HOURLY"]
-
-
-<a id="nestedatt--refresh_schedule--monthly"></a>
-### Nested Schema for `refresh_schedule.monthly`
-
-Read-Only:
-
-- `day_of_month` (Number) Day of the month this schedule should trigger at (in UTC).
-- `hour_of_day` (Number) Hour of day this schedule should trigger at (in UTC).
-- `mode` (String) must be one of ["MONTHLY"]
-
-
-<a id="nestedatt--refresh_schedule--never"></a>
-### Nested Schema for `refresh_schedule.never`
-
-Read-Only:
-
-- `mode` (String) must be one of ["NEVER"]
-
-
-<a id="nestedatt--refresh_schedule--weekly"></a>
-### Nested Schema for `refresh_schedule.weekly`
-
-Read-Only:
-
-- `day_of_week` (Number) The day of the week this schedule should trigger at (in UTC).
-- `hour_of_day` (Number) Hour of day this schedule should trigger at (in UTC).
-- `mode` (String) must be one of ["WEEKLY"]
-
 
 
 <a id="nestedatt--update_schedule"></a>

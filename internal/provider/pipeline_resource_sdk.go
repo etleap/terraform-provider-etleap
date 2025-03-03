@@ -3519,6 +3519,79 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	for _, sharesItem := range r.Shares {
 		shares = append(shares, sharesItem.ValueString())
 	}
+	var refreshSchedule *shared.PipelineInputScheduleTypes
+	if r.RefreshSchedule != nil {
+		var scheduleTypesNeverScheduleMode *shared.ScheduleTypesNeverScheduleMode
+		if r.RefreshSchedule.Never != nil {
+			mode := shared.RefreshScheduleModeNeverScheduleTypesMode(r.RefreshSchedule.Never.Mode.ValueString())
+			scheduleTypesNeverScheduleMode = &shared.ScheduleTypesNeverScheduleMode{
+				Mode: mode,
+			}
+		}
+		if scheduleTypesNeverScheduleMode != nil {
+			refreshSchedule = &shared.PipelineInputScheduleTypes{
+				ScheduleTypesNeverScheduleMode: scheduleTypesNeverScheduleMode,
+			}
+		}
+		var scheduleTypesHourlyScheduleMode *shared.ScheduleTypesHourlyScheduleMode
+		if r.RefreshSchedule.Hourly != nil {
+			mode1 := shared.RefreshScheduleModeHourlyScheduleTypesPipelineInputMode(r.RefreshSchedule.Hourly.Mode.ValueString())
+			scheduleTypesHourlyScheduleMode = &shared.ScheduleTypesHourlyScheduleMode{
+				Mode: mode1,
+			}
+		}
+		if scheduleTypesHourlyScheduleMode != nil {
+			refreshSchedule = &shared.PipelineInputScheduleTypes{
+				ScheduleTypesHourlyScheduleMode: scheduleTypesHourlyScheduleMode,
+			}
+		}
+		var scheduleTypesDailyScheduleMode *shared.ScheduleTypesDailyScheduleMode
+		if r.RefreshSchedule.Daily != nil {
+			mode2 := shared.RefreshScheduleModeDailyScheduleTypesPipelineInputMode(r.RefreshSchedule.Daily.Mode.ValueString())
+			hourOfDay := r.RefreshSchedule.Daily.HourOfDay.ValueInt64()
+			scheduleTypesDailyScheduleMode = &shared.ScheduleTypesDailyScheduleMode{
+				Mode:      mode2,
+				HourOfDay: hourOfDay,
+			}
+		}
+		if scheduleTypesDailyScheduleMode != nil {
+			refreshSchedule = &shared.PipelineInputScheduleTypes{
+				ScheduleTypesDailyScheduleMode: scheduleTypesDailyScheduleMode,
+			}
+		}
+		var scheduleTypesWeeklyScheduleMode *shared.ScheduleTypesWeeklyScheduleMode
+		if r.RefreshSchedule.Weekly != nil {
+			mode3 := shared.RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode(r.RefreshSchedule.Weekly.Mode.ValueString())
+			dayOfWeek := r.RefreshSchedule.Weekly.DayOfWeek.ValueInt64()
+			hourOfDay1 := r.RefreshSchedule.Weekly.HourOfDay.ValueInt64()
+			scheduleTypesWeeklyScheduleMode = &shared.ScheduleTypesWeeklyScheduleMode{
+				Mode:      mode3,
+				DayOfWeek: dayOfWeek,
+				HourOfDay: hourOfDay1,
+			}
+		}
+		if scheduleTypesWeeklyScheduleMode != nil {
+			refreshSchedule = &shared.PipelineInputScheduleTypes{
+				ScheduleTypesWeeklyScheduleMode: scheduleTypesWeeklyScheduleMode,
+			}
+		}
+		var scheduleTypesMonthlyScheduleMode *shared.ScheduleTypesMonthlyScheduleMode
+		if r.RefreshSchedule.Monthly != nil {
+			mode4 := shared.RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode(r.RefreshSchedule.Monthly.Mode.ValueString())
+			dayOfMonth := r.RefreshSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.RefreshSchedule.Monthly.HourOfDay.ValueInt64()
+			scheduleTypesMonthlyScheduleMode = &shared.ScheduleTypesMonthlyScheduleMode{
+				Mode:       mode4,
+				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
+			}
+		}
+		if scheduleTypesMonthlyScheduleMode != nil {
+			refreshSchedule = &shared.PipelineInputScheduleTypes{
+				ScheduleTypesMonthlyScheduleMode: scheduleTypesMonthlyScheduleMode,
+			}
+		}
+	}
 	out := shared.PipelineInput{
 		Name:                 name,
 		Source:               source,
@@ -3527,6 +3600,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		Paused:               paused,
 		ParsingErrorSettings: parsingErrorSettings,
 		Shares:               shares,
+		RefreshSchedule:      refreshSchedule,
 	}
 	return &out
 }
@@ -4886,74 +4960,76 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 		}
 	}
 	var refreshSchedule *shared.ScheduleTypes
-	var neverScheduleMode *shared.NeverScheduleMode
-	if r.RefreshSchedule.Never != nil {
-		mode5 := shared.ScheduleTypesMode(r.RefreshSchedule.Never.Mode.ValueString())
-		neverScheduleMode = &shared.NeverScheduleMode{
-			Mode: mode5,
+	if r.RefreshSchedule != nil {
+		var neverScheduleMode *shared.NeverScheduleMode
+		if r.RefreshSchedule.Never != nil {
+			mode5 := shared.ScheduleTypesMode(r.RefreshSchedule.Never.Mode.ValueString())
+			neverScheduleMode = &shared.NeverScheduleMode{
+				Mode: mode5,
+			}
 		}
-	}
-	if neverScheduleMode != nil {
-		refreshSchedule = &shared.ScheduleTypes{
-			NeverScheduleMode: neverScheduleMode,
+		if neverScheduleMode != nil {
+			refreshSchedule = &shared.ScheduleTypes{
+				NeverScheduleMode: neverScheduleMode,
+			}
 		}
-	}
-	var hourlyScheduleMode *shared.HourlyScheduleMode
-	if r.RefreshSchedule.Hourly != nil {
-		mode6 := shared.RefreshScheduleModeHourlyScheduleTypesMode(r.RefreshSchedule.Hourly.Mode.ValueString())
-		hourlyScheduleMode = &shared.HourlyScheduleMode{
-			Mode: mode6,
+		var hourlyScheduleMode *shared.HourlyScheduleMode
+		if r.RefreshSchedule.Hourly != nil {
+			mode6 := shared.RefreshScheduleModeHourlyScheduleTypesMode(r.RefreshSchedule.Hourly.Mode.ValueString())
+			hourlyScheduleMode = &shared.HourlyScheduleMode{
+				Mode: mode6,
+			}
 		}
-	}
-	if hourlyScheduleMode != nil {
-		refreshSchedule = &shared.ScheduleTypes{
-			HourlyScheduleMode: hourlyScheduleMode,
+		if hourlyScheduleMode != nil {
+			refreshSchedule = &shared.ScheduleTypes{
+				HourlyScheduleMode: hourlyScheduleMode,
+			}
 		}
-	}
-	var dailyScheduleMode *shared.DailyScheduleMode
-	if r.RefreshSchedule.Daily != nil {
-		mode7 := shared.RefreshScheduleModeDailyScheduleTypesMode(r.RefreshSchedule.Daily.Mode.ValueString())
-		hourOfDay3 := r.RefreshSchedule.Daily.HourOfDay.ValueInt64()
-		dailyScheduleMode = &shared.DailyScheduleMode{
-			Mode:      mode7,
-			HourOfDay: hourOfDay3,
+		var dailyScheduleMode *shared.DailyScheduleMode
+		if r.RefreshSchedule.Daily != nil {
+			mode7 := shared.RefreshScheduleModeDailyScheduleTypesMode(r.RefreshSchedule.Daily.Mode.ValueString())
+			hourOfDay3 := r.RefreshSchedule.Daily.HourOfDay.ValueInt64()
+			dailyScheduleMode = &shared.DailyScheduleMode{
+				Mode:      mode7,
+				HourOfDay: hourOfDay3,
+			}
 		}
-	}
-	if dailyScheduleMode != nil {
-		refreshSchedule = &shared.ScheduleTypes{
-			DailyScheduleMode: dailyScheduleMode,
+		if dailyScheduleMode != nil {
+			refreshSchedule = &shared.ScheduleTypes{
+				DailyScheduleMode: dailyScheduleMode,
+			}
 		}
-	}
-	var weeklyScheduleMode *shared.WeeklyScheduleMode
-	if r.RefreshSchedule.Weekly != nil {
-		mode8 := shared.RefreshScheduleModeWeeklyScheduleTypesMode(r.RefreshSchedule.Weekly.Mode.ValueString())
-		dayOfWeek1 := r.RefreshSchedule.Weekly.DayOfWeek.ValueInt64()
-		hourOfDay4 := r.RefreshSchedule.Weekly.HourOfDay.ValueInt64()
-		weeklyScheduleMode = &shared.WeeklyScheduleMode{
-			Mode:      mode8,
-			DayOfWeek: dayOfWeek1,
-			HourOfDay: hourOfDay4,
+		var weeklyScheduleMode *shared.WeeklyScheduleMode
+		if r.RefreshSchedule.Weekly != nil {
+			mode8 := shared.RefreshScheduleModeWeeklyScheduleTypesMode(r.RefreshSchedule.Weekly.Mode.ValueString())
+			dayOfWeek1 := r.RefreshSchedule.Weekly.DayOfWeek.ValueInt64()
+			hourOfDay4 := r.RefreshSchedule.Weekly.HourOfDay.ValueInt64()
+			weeklyScheduleMode = &shared.WeeklyScheduleMode{
+				Mode:      mode8,
+				DayOfWeek: dayOfWeek1,
+				HourOfDay: hourOfDay4,
+			}
 		}
-	}
-	if weeklyScheduleMode != nil {
-		refreshSchedule = &shared.ScheduleTypes{
-			WeeklyScheduleMode: weeklyScheduleMode,
+		if weeklyScheduleMode != nil {
+			refreshSchedule = &shared.ScheduleTypes{
+				WeeklyScheduleMode: weeklyScheduleMode,
+			}
 		}
-	}
-	var monthlyScheduleMode *shared.MonthlyScheduleMode
-	if r.RefreshSchedule.Monthly != nil {
-		mode9 := shared.RefreshScheduleModeMonthlyScheduleTypesMode(r.RefreshSchedule.Monthly.Mode.ValueString())
-		dayOfMonth1 := r.RefreshSchedule.Monthly.DayOfMonth.ValueInt64()
-		hourOfDay5 := r.RefreshSchedule.Monthly.HourOfDay.ValueInt64()
-		monthlyScheduleMode = &shared.MonthlyScheduleMode{
-			Mode:       mode9,
-			DayOfMonth: dayOfMonth1,
-			HourOfDay:  hourOfDay5,
+		var monthlyScheduleMode *shared.MonthlyScheduleMode
+		if r.RefreshSchedule.Monthly != nil {
+			mode9 := shared.RefreshScheduleModeMonthlyScheduleTypesMode(r.RefreshSchedule.Monthly.Mode.ValueString())
+			dayOfMonth1 := r.RefreshSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay5 := r.RefreshSchedule.Monthly.HourOfDay.ValueInt64()
+			monthlyScheduleMode = &shared.MonthlyScheduleMode{
+				Mode:       mode9,
+				DayOfMonth: dayOfMonth1,
+				HourOfDay:  hourOfDay5,
+			}
 		}
-	}
-	if monthlyScheduleMode != nil {
-		refreshSchedule = &shared.ScheduleTypes{
-			MonthlyScheduleMode: monthlyScheduleMode,
+		if monthlyScheduleMode != nil {
+			refreshSchedule = &shared.ScheduleTypes{
+				MonthlyScheduleMode: monthlyScheduleMode,
+			}
 		}
 	}
 	out := shared.PipelineUpdate{

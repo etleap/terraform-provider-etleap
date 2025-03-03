@@ -393,74 +393,74 @@ func (r *ModelResourceModel) ToSharedModelUpdate() *shared.ModelUpdate {
 		Triggers: triggers,
 	}
 	var updateSchedule *shared.ModelUpdateScheduleTypes
-	var scheduleTypesNeverScheduleMode *shared.ScheduleTypesNeverScheduleMode
+	var refreshScheduleModeNeverScheduleTypesNeverScheduleMode *shared.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode
 	if r.UpdateSchedule.Never != nil {
-		mode := shared.RefreshScheduleModeNeverScheduleTypesMode(r.UpdateSchedule.Never.Mode.ValueString())
-		scheduleTypesNeverScheduleMode = &shared.ScheduleTypesNeverScheduleMode{
+		mode := shared.RefreshScheduleModeNeverScheduleTypesModelUpdateMode(r.UpdateSchedule.Never.Mode.ValueString())
+		refreshScheduleModeNeverScheduleTypesNeverScheduleMode = &shared.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode{
 			Mode: mode,
 		}
 	}
-	if scheduleTypesNeverScheduleMode != nil {
+	if refreshScheduleModeNeverScheduleTypesNeverScheduleMode != nil {
 		updateSchedule = &shared.ModelUpdateScheduleTypes{
-			ScheduleTypesNeverScheduleMode: scheduleTypesNeverScheduleMode,
+			RefreshScheduleModeNeverScheduleTypesNeverScheduleMode: refreshScheduleModeNeverScheduleTypesNeverScheduleMode,
 		}
 	}
-	var scheduleTypesHourlyScheduleMode *shared.ScheduleTypesHourlyScheduleMode
+	var refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode *shared.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode
 	if r.UpdateSchedule.Hourly != nil {
 		mode1 := shared.RefreshScheduleModeHourlyScheduleTypesModelUpdateMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-		scheduleTypesHourlyScheduleMode = &shared.ScheduleTypesHourlyScheduleMode{
+		refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode = &shared.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode{
 			Mode: mode1,
 		}
 	}
-	if scheduleTypesHourlyScheduleMode != nil {
+	if refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode != nil {
 		updateSchedule = &shared.ModelUpdateScheduleTypes{
-			ScheduleTypesHourlyScheduleMode: scheduleTypesHourlyScheduleMode,
+			RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode: refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode,
 		}
 	}
-	var scheduleTypesDailyScheduleMode *shared.ScheduleTypesDailyScheduleMode
+	var refreshScheduleModeDailyScheduleTypesDailyScheduleMode *shared.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode
 	if r.UpdateSchedule.Daily != nil {
 		mode2 := shared.RefreshScheduleModeDailyScheduleTypesModelUpdateMode(r.UpdateSchedule.Daily.Mode.ValueString())
 		hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-		scheduleTypesDailyScheduleMode = &shared.ScheduleTypesDailyScheduleMode{
+		refreshScheduleModeDailyScheduleTypesDailyScheduleMode = &shared.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode{
 			Mode:      mode2,
 			HourOfDay: hourOfDay,
 		}
 	}
-	if scheduleTypesDailyScheduleMode != nil {
+	if refreshScheduleModeDailyScheduleTypesDailyScheduleMode != nil {
 		updateSchedule = &shared.ModelUpdateScheduleTypes{
-			ScheduleTypesDailyScheduleMode: scheduleTypesDailyScheduleMode,
+			RefreshScheduleModeDailyScheduleTypesDailyScheduleMode: refreshScheduleModeDailyScheduleTypesDailyScheduleMode,
 		}
 	}
-	var scheduleTypesWeeklyScheduleMode *shared.ScheduleTypesWeeklyScheduleMode
+	var refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode *shared.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode
 	if r.UpdateSchedule.Weekly != nil {
 		mode3 := shared.RefreshScheduleModeWeeklyScheduleTypesModelUpdateMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 		dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 		hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-		scheduleTypesWeeklyScheduleMode = &shared.ScheduleTypesWeeklyScheduleMode{
+		refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode = &shared.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode{
 			Mode:      mode3,
 			DayOfWeek: dayOfWeek,
 			HourOfDay: hourOfDay1,
 		}
 	}
-	if scheduleTypesWeeklyScheduleMode != nil {
+	if refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode != nil {
 		updateSchedule = &shared.ModelUpdateScheduleTypes{
-			ScheduleTypesWeeklyScheduleMode: scheduleTypesWeeklyScheduleMode,
+			RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode: refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode,
 		}
 	}
-	var scheduleTypesMonthlyScheduleMode *shared.ScheduleTypesMonthlyScheduleMode
+	var refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode *shared.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode
 	if r.UpdateSchedule.Monthly != nil {
 		mode4 := shared.RefreshScheduleModeMonthlyScheduleTypesModelUpdateMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 		dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 		hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-		scheduleTypesMonthlyScheduleMode = &shared.ScheduleTypesMonthlyScheduleMode{
+		refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode = &shared.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode{
 			Mode:       mode4,
 			DayOfMonth: dayOfMonth,
 			HourOfDay:  hourOfDay2,
 		}
 	}
-	if scheduleTypesMonthlyScheduleMode != nil {
+	if refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode != nil {
 		updateSchedule = &shared.ModelUpdateScheduleTypes{
-			ScheduleTypesMonthlyScheduleMode: scheduleTypesMonthlyScheduleMode,
+			RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode: refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode,
 		}
 	}
 	var shares []string = nil
