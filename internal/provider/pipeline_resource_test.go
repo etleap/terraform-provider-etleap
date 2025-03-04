@@ -80,7 +80,7 @@ func TestAccMysqlToRedshiftPipeline(t *testing.T) {
 			{ // Modify name and schema changes
 				Config: GetProviderDefinition() + getPipelineConfig(&PipelineConfig{
 					pipelineName + " 2",
-					tableName + " 2",
+					tableName,
 					true,
 					*testutils.Constants,
 				}),
