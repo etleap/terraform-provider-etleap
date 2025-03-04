@@ -57,7 +57,6 @@ func TestAccModel(t *testing.T) {
 			{ // Resource creation
 				Config: GetProviderDefinition() + getModelConfig(&ModelConfig{
 					modelName,
-					tableName,
 					*testutils.Constants,
 				}),
 				ConfigPlanChecks: resource.ConfigPlanChecks{
