@@ -12,6 +12,7 @@ import (
 
 type PipelineConfig struct {
 	Name                   string
+	TableName              string
 	AutomaticSchemaChanges bool
 	testutils.TestConstants
 }
@@ -35,7 +36,7 @@ resource "etleap_pipeline" "test_mysql_pipeline" {
 		type          = "REDSHIFT"
 		connection_id = "{{.RedshiftConnectionId}}"
 		schema        = "caius"
-		table         = "test_tf_mysql"
+		table         = "{{.TableName}}"
 
 		automatic_schema_changes = {{.AutomaticSchemaChanges}}
   
@@ -51,12 +52,15 @@ var pipelineConfigTemplate, _ = template.New("PipelineConfig").Parse(PIPELINE_CO
 
 func TestAccMysqlToRedshiftPipeline(t *testing.T) {
 	var pipelineName = acctest.RandomWithPrefix("Mysql Test")
+	var tableName = acctest.RandomWithPrefix("test_tf_mysql")
+
 	resource.ParallelTest(t, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{ // Resource creation
 				Config: GetProviderDefinition() + getPipelineConfig(&PipelineConfig{
 					pipelineName,
+					tableName,
 					false,
 					*testutils.Constants,
 				}),
@@ -76,6 +80,7 @@ func TestAccMysqlToRedshiftPipeline(t *testing.T) {
 			{ // Modify name and schema changes
 				Config: GetProviderDefinition() + getPipelineConfig(&PipelineConfig{
 					pipelineName + " 2",
+					tableName + " 2",
 					true,
 					*testutils.Constants,
 				}),
