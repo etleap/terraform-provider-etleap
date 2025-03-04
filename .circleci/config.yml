@@ -103,6 +103,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Setup custom environment variables"
+          command: echo $ETLEAP_MYSQL_CONFIG
+      - run:
           name: Apply Etleap's patch
           command: git apply etleap.patch
       - restore_cache:
@@ -192,9 +195,6 @@ workflows:
       - test:
           context: 
             - Terraform Provider Testing
-      - run:
-          name: "Setup custom environment variables"
-          command: echo $ETLEAP_MYSQL_CONFIG
       - publish:
           context: 
             - Speakeasy
