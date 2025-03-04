@@ -104,7 +104,7 @@ jobs:
       - checkout
       - run:
           name: "Setup custom environment variables"
-          command: echo $ETLEAP_MYSQL_CONFIG
+          command: echo ${ETLEAP_MYSQL_CONFIG}
       - run:
           name: Apply Etleap's patch
           command: git apply etleap.patch
