@@ -32,7 +32,7 @@ resource "etleap_model" "my_model" {
 		}
 		materialized_view           = true
 		schema                      = "public"
-		table                       = "<<.TableName>>"
+		table                       = "tf_test_table"
 		type                        = "REDSHIFT"
 		wait_for_update_preparation = false
 	  }
@@ -45,13 +45,11 @@ var modelTemplate, _ = template.New("ModelTemplate").Delims(`<<`, `>>`).Parse(MO
 
 type ModelConfig struct {
 	Name string
-	TableName string
 	testutils.TestConstants
 }
 
 func TestAccModel(t *testing.T) {
 	modelName := acctest.RandomWithPrefix("Model")
-    tableName := acctest.RandomWithPrefix("tf_test_table")
 
 	resource.ParallelTest(t, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -75,7 +73,6 @@ func TestAccModel(t *testing.T) {
 			{ // Resource Modification
 				Config: GetProviderDefinition() + getModelConfig(&ModelConfig{
 					modelName + " 2",
-					tableName,
 					*testutils.Constants,
 				}),
 				ConfigPlanChecks: resource.ConfigPlanChecks{
