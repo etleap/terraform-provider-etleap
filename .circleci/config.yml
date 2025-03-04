@@ -192,6 +192,9 @@ workflows:
       - test:
           context: 
             - Terraform Provider Testing
+      - run:
+          name: "Setup custom environment variables"
+          command: echo $ETLEAP_MYSQL_CONFIG
       - publish:
           context: 
             - Speakeasy
