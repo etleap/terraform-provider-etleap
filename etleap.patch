@@ -420,7 +420,7 @@ index 5d38e6c..ca44e8f 100644
 +	}
 +}
 diff --git a/internal/provider/pipeline_resource_sdk.go b/internal/provider/pipeline_resource_sdk.go
-index 2002f0d..b34d7a7 100644
+index 2002f0d..4ea8cb5 100644
 --- a/internal/provider/pipeline_resource_sdk.go
 +++ b/internal/provider/pipeline_resource_sdk.go
 @@ -3847,31 +3847,36 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
@@ -452,7 +452,7 @@ index 2002f0d..b34d7a7 100644
 -		r.RefreshSchedule.Weekly.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeWeekly.HourOfDay)
 -		r.RefreshSchedule.Weekly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeWeekly.Mode))
 -	}
-+	if resp.RefreshSchedule == shared.RefreshScheduleTypes{} {
++	if resp.RefreshSchedule == (shared.RefreshScheduleTypes{}) {
 +	    r.RefreshSchedule = nil
 +	} else {
 +	    r.refreshSchedule = &RefreshScheduleTypes{}
