@@ -44,6 +44,13 @@ resource "etleap_pipeline" "test_mysql_pipeline" {
 		}
 	  }
 	}
+
+    refresh_schedule = {
+      daily = {
+        mode = "DAILY"
+        hour_of_day = 5
+      }
+    }
   }
 `
 
