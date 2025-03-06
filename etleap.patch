@@ -1,5 +1,5 @@
 diff --git a/internal/provider/pipeline_resource.go b/internal/provider/pipeline_resource.go
-index 2c93461..5a8a9ac 100644
+index 5d38e6c..ca44e8f 100644
 --- a/internal/provider/pipeline_resource.go
 +++ b/internal/provider/pipeline_resource.go
 @@ -5,6 +5,9 @@ package provider
@@ -18,9 +18,9 @@ index 2c93461..5a8a9ac 100644
  	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/operations"
 +	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/shared"
  	"github.com/etleap/terraform-provider-etleap/internal/validators"
+ 	speakeasy_int64validators "github.com/etleap/terraform-provider-etleap/internal/validators/int64validators"
  	speakeasy_listvalidators "github.com/etleap/terraform-provider-etleap/internal/validators/listvalidators"
- 	speakeasy_numbervalidators "github.com/etleap/terraform-provider-etleap/internal/validators/numbervalidators"
-@@ -34,6 +38,7 @@ import (
+@@ -35,6 +39,7 @@ import (
  	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
  	"github.com/hashicorp/terraform-plugin-framework/types"
  	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -28,7 +28,7 @@ index 2c93461..5a8a9ac 100644
  )
  
  // Ensure provider defined types fully satisfy framework interfaces.
-@@ -99,25 +104,21 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -100,25 +105,21 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  				Description: `Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
  			},
  			"destination": schema.SingleNestedAttribute{
@@ -65,7 +65,7 @@ index 2c93461..5a8a9ac 100644
  							},
  							"connection_id": schema.StringAttribute{
  								PlanModifiers: []planmodifier.String{
-@@ -167,17 +168,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -168,17 +169,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  								Default:     booldefault.StaticBool(false),
  								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
  							},
@@ -87,7 +87,7 @@ index 2c93461..5a8a9ac 100644
  								Required:    true,
  								Description: `Requires replacement if changed. `,
  							},
-@@ -279,19 +278,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -278,19 +277,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  						Description: `Requires replacement if changed. `,
  					},
  					"redshift": schema.SingleNestedAttribute{
@@ -116,7 +116,7 @@ index 2c93461..5a8a9ac 100644
  							},
  							"compress_columns": schema.BoolAttribute{
  								Computed: true,
-@@ -390,10 +387,9 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -389,10 +386,9 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  								Default:     booldefault.StaticBool(false),
  								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
  							},
@@ -129,7 +129,7 @@ index 2c93461..5a8a9ac 100644
  								Optional:    true,
  								Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used. Requires replacement if changed. `,
  							},
-@@ -408,10 +404,9 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -407,10 +403,9 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  									listvalidator.SizeAtLeast(1),
  								},
  							},
@@ -142,7 +142,7 @@ index 2c93461..5a8a9ac 100644
  								Required:    true,
  								Description: `Requires replacement if changed. `,
  							},
-@@ -449,19 +444,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -448,19 +443,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  						Description: `Requires replacement if changed. `,
  					},
  					"s3_data_lake": schema.SingleNestedAttribute{
@@ -171,7 +171,7 @@ index 2c93461..5a8a9ac 100644
  							},
  							"connection_id": schema.StringAttribute{
  								PlanModifiers: []planmodifier.String{
-@@ -537,19 +530,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -536,19 +529,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  						Description: `Requires replacement if changed. `,
  					},
  					"snowflake": schema.SingleNestedAttribute{
@@ -200,7 +200,7 @@ index 2c93461..5a8a9ac 100644
  							},
  							"clustering_keys": schema.ListAttribute{
  								PlanModifiers: []planmodifier.List{
-@@ -594,16 +585,12 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -593,16 +584,12 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
  							},
  							"schema": schema.StringAttribute{
@@ -219,7 +219,7 @@ index 2c93461..5a8a9ac 100644
  								Required:    true,
  								Description: `Requires replacement if changed. `,
  							},
-@@ -9017,7 +9004,16 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
+@@ -9230,7 +9217,16 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
  	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  
@@ -237,7 +237,7 @@ index 2c93461..5a8a9ac 100644
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
  
-@@ -9065,7 +9061,16 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
+@@ -9278,7 +9274,16 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
  	}
  	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
  
@@ -255,7 +255,7 @@ index 2c93461..5a8a9ac 100644
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
  
-@@ -9085,6 +9090,39 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -9298,6 +9303,39 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  
  	id := data.ID.ValueString()
  	pipelineUpdate := *data.ToSharedPipelineUpdate()
@@ -295,7 +295,7 @@ index 2c93461..5a8a9ac 100644
  	request := operations.UpdatePipelineRequest{
  		ID:             id,
  		PipelineUpdate: pipelineUpdate,
-@@ -9109,6 +9147,31 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -9322,6 +9360,31 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
  		return
  	}
@@ -327,7 +327,7 @@ index 2c93461..5a8a9ac 100644
  	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  	id1 := data.ID.ValueString()
-@@ -9138,6 +9201,15 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -9351,6 +9414,15 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  
@@ -343,7 +343,7 @@ index 2c93461..5a8a9ac 100644
  	// Save updated data into Terraform state
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
-@@ -9188,3 +9260,75 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
+@@ -9401,3 +9473,75 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
  func (r *PipelineResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
  	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
  }
@@ -419,8 +419,74 @@ index 2c93461..5a8a9ac 100644
 +		return res, finalSchemaName + "." + finalTableName, nil
 +	}
 +}
+diff --git a/internal/provider/pipeline_resource_sdk.go b/internal/provider/pipeline_resource_sdk.go
+index 2002f0d..b34d7a7 100644
+--- a/internal/provider/pipeline_resource_sdk.go
++++ b/internal/provider/pipeline_resource_sdk.go
+@@ -3847,31 +3847,36 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
+ 	}
+ 	r.Paused = types.BoolValue(resp.Paused)
+ 	r.PipelineMode = types.StringValue(string(resp.PipelineMode))
+-	if resp.RefreshSchedule.RefreshScheduleModeDaily != nil {
+-		r.RefreshSchedule.Daily = &UpdateScheduleModeDaily{}
+-		r.RefreshSchedule.Daily.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeDaily.HourOfDay)
+-		r.RefreshSchedule.Daily.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeDaily.Mode))
+-	}
+-	if resp.RefreshSchedule.RefreshScheduleModeHourly != nil {
+-		r.RefreshSchedule.Hourly = &UpdateScheduleModeHourly{}
+-		r.RefreshSchedule.Hourly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeHourly.Mode))
+-	}
+-	if resp.RefreshSchedule.RefreshScheduleModeMonthly != nil {
+-		r.RefreshSchedule.Monthly = &UpdateScheduleModeMonthly{}
+-		r.RefreshSchedule.Monthly.DayOfMonth = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeMonthly.DayOfMonth)
+-		r.RefreshSchedule.Monthly.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeMonthly.HourOfDay)
+-		r.RefreshSchedule.Monthly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeMonthly.Mode))
+-	}
+-	if resp.RefreshSchedule.RefreshScheduleModeNever != nil {
+-		r.RefreshSchedule.Never = &RefreshScheduleModeNever{}
+-		r.RefreshSchedule.Never.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeNever.Mode))
+-	}
+-	if resp.RefreshSchedule.RefreshScheduleModeWeekly != nil {
+-		r.RefreshSchedule.Weekly = &UpdateScheduleModeWeekly{}
+-		r.RefreshSchedule.Weekly.DayOfWeek = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeWeekly.DayOfWeek)
+-		r.RefreshSchedule.Weekly.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeWeekly.HourOfDay)
+-		r.RefreshSchedule.Weekly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeWeekly.Mode))
+-	}
++	if resp.RefreshSchedule == shared.RefreshScheduleTypes{} {
++	    r.RefreshSchedule = nil
++	} else {
++	    r.refreshSchedule = &RefreshScheduleTypes{}
++        if resp.RefreshSchedule.RefreshScheduleModeDaily != nil {
++            r.RefreshSchedule.Daily = &UpdateScheduleModeDaily{}
++            r.RefreshSchedule.Daily.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeDaily.HourOfDay)
++            r.RefreshSchedule.Daily.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeDaily.Mode))
++        }
++        if resp.RefreshSchedule.RefreshScheduleModeHourly != nil {
++            r.RefreshSchedule.Hourly = &UpdateScheduleModeHourly{}
++            r.RefreshSchedule.Hourly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeHourly.Mode))
++        }
++        if resp.RefreshSchedule.RefreshScheduleModeMonthly != nil {
++            r.RefreshSchedule.Monthly = &UpdateScheduleModeMonthly{}
++            r.RefreshSchedule.Monthly.DayOfMonth = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeMonthly.DayOfMonth)
++            r.RefreshSchedule.Monthly.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeMonthly.HourOfDay)
++            r.RefreshSchedule.Monthly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeMonthly.Mode))
++        }
++        if resp.RefreshSchedule.RefreshScheduleModeNever != nil {
++            r.RefreshSchedule.Never = &RefreshScheduleModeNever{}
++            r.RefreshSchedule.Never.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeNever.Mode))
++        }
++        if resp.RefreshSchedule.RefreshScheduleModeWeekly != nil {
++            r.RefreshSchedule.Weekly = &UpdateScheduleModeWeekly{}
++            r.RefreshSchedule.Weekly.DayOfWeek = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeWeekly.DayOfWeek)
++            r.RefreshSchedule.Weekly.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeWeekly.HourOfDay)
++            r.RefreshSchedule.Weekly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeWeekly.Mode))
++        }
++    }
+ 	r.Shares = nil
+ 	for _, v := range resp.Shares {
+ 		r.Shares = append(r.Shares, types.StringValue(v))
 diff --git a/internal/provider/provider.go b/internal/provider/provider.go
-index 6a79939..0d80495 100644
+index b520761..1a0f8ae 100644
 --- a/internal/provider/provider.go
 +++ b/internal/provider/provider.go
 @@ -4,6 +4,9 @@ package provider
@@ -481,10 +547,10 @@ index 6a79939..0d80495 100644
  	client := sdk.New(opts...)
  
 diff --git a/internal/sdk/pkg/models/shared/destinationdeltalake.go b/internal/sdk/pkg/models/shared/destinationdeltalake.go
-index a0e219a..ee5dc16 100644
+index 82b99c4..d1a5f44 100644
 --- a/internal/sdk/pkg/models/shared/destinationdeltalake.go
 +++ b/internal/sdk/pkg/models/shared/destinationdeltalake.go
-@@ -66,7 +66,8 @@ func (d DestinationDeltaLake) MarshalJSON() ([]byte, error) {
+@@ -62,7 +62,8 @@ func (d DestinationDeltaLake) MarshalJSON() ([]byte, error) {
  }
  
  func (d *DestinationDeltaLake) UnmarshalJSON(data []byte) error {
