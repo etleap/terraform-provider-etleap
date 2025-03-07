@@ -14,7 +14,7 @@ type TestConstants struct {
 var Constants = &TestConstants{
 	MysqlConnectionId:    `A5p7oGO4`,
 	RedshiftConnectionId: `hvgjRKgo`,
-	PipelineId:           `qqkU5JdA`,
+	PipelineId:           `GpjQpWqW`,
 }
 
 func RunTemplate[T any](template *template.Template, config T) string {
