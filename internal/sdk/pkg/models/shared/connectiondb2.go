@@ -152,12 +152,14 @@ type ConnectionDb2 struct {
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema    *string    `json:"schema,omitempty"`
-	Address   string     `json:"address"`
-	Port      int64      `json:"port"`
-	Username  string     `json:"username"`
-	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
-	Database  string     `json:"database"`
+	Schema *string `json:"schema,omitempty"`
+	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
+	Certificate *string    `json:"certificate,omitempty"`
+	Address     string     `json:"address"`
+	Port        int64      `json:"port"`
+	Username    string     `json:"username"`
+	SSHConfig   *SSHConfig `json:"sshConfig,omitempty"`
+	Database    string     `json:"database"`
 }
 
 func (c ConnectionDb2) MarshalJSON() ([]byte, error) {
@@ -269,6 +271,13 @@ func (o *ConnectionDb2) GetSchema() *string {
 	return o.Schema
 }
 
+func (o *ConnectionDb2) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
+}
+
 func (o *ConnectionDb2) GetAddress() string {
 	if o == nil {
 		return ""
@@ -314,13 +323,15 @@ type ConnectionDb2Input struct {
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema    *string    `json:"schema,omitempty"`
-	Address   string     `json:"address"`
-	Port      int64      `json:"port"`
-	Username  string     `json:"username"`
-	Password  string     `json:"password"`
-	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
-	Database  string     `json:"database"`
+	Schema *string `json:"schema,omitempty"`
+	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
+	Certificate *string    `json:"certificate,omitempty"`
+	Address     string     `json:"address"`
+	Port        int64      `json:"port"`
+	Username    string     `json:"username"`
+	Password    string     `json:"password"`
+	SSHConfig   *SSHConfig `json:"sshConfig,omitempty"`
+	Database    string     `json:"database"`
 }
 
 func (o *ConnectionDb2Input) GetName() string {
@@ -384,6 +395,13 @@ func (o *ConnectionDb2Input) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *ConnectionDb2Input) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionDb2Input) GetAddress() string {

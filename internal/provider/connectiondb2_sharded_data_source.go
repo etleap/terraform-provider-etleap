@@ -29,6 +29,7 @@ type ConnectionDb2SHARDEDDataSource struct {
 // ConnectionDb2SHARDEDDataSourceModel describes the data model.
 type ConnectionDb2SHARDEDDataSourceModel struct {
 	Active                types.Bool              `tfsdk:"active"`
+	Certificate           types.String            `tfsdk:"certificate"`
 	CreateDate            types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	ID                    types.String            `tfsdk:"id"`
@@ -54,6 +55,10 @@ func (r *ConnectionDb2SHARDEDDataSource) Schema(ctx context.Context, req datasou
 			"active": schema.BoolAttribute{
 				Computed:    true,
 				Description: `Whether this connection has been marked as active.`,
+			},
+			"certificate": schema.StringAttribute{
+				Computed:    true,
+				Description: `Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed:    true,

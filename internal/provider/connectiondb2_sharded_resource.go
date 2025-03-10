@@ -43,6 +43,7 @@ type ConnectionDb2SHARDEDResource struct {
 // ConnectionDb2SHARDEDResourceModel describes the resource data model.
 type ConnectionDb2SHARDEDResourceModel struct {
 	Active                   types.Bool              `tfsdk:"active"`
+	Certificate              types.String            `tfsdk:"certificate"`
 	CreateDate               types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
@@ -70,6 +71,14 @@ func (r *ConnectionDb2SHARDEDResource) Schema(ctx context.Context, req resource.
 					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
 				},
 				Description: `Whether this connection has been marked as active.`,
+			},
+			"certificate": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,

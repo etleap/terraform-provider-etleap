@@ -24,6 +24,7 @@ data "etleap_connection_db2_sharded" "my_connectiondb2_sharded" {
 ### Read-Only
 
 - `active` (Boolean) Whether this connection has been marked as active.
+- `certificate` (String) Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `id` (String) The ID of this resource.

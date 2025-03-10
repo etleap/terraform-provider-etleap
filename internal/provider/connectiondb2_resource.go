@@ -43,6 +43,7 @@ type ConnectionDb2Resource struct {
 type ConnectionDb2ResourceModel struct {
 	Active                   types.Bool              `tfsdk:"active"`
 	Address                  types.String            `tfsdk:"address"`
+	Certificate              types.String            `tfsdk:"certificate"`
 	CreateDate               types.String            `tfsdk:"create_date"`
 	Database                 types.String            `tfsdk:"database"`
 	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
@@ -80,6 +81,14 @@ func (r *ConnectionDb2Resource) Schema(ctx context.Context, req resource.SchemaR
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
+			},
+			"certificate": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,

@@ -15,6 +15,7 @@ ConnectionDb2 Resource
 ```terraform
 resource "etleap_connection_db2" "my_connectiondb2" {
   address                     = "571 Hansen Unions"
+  certificate                 = "...my_certificate..."
   database                    = "...my_database..."
   deletion_of_export_products = true
   name                        = "Lela Bartoletti"
@@ -41,6 +42,7 @@ resource "etleap_connection_db2" "my_connectiondb2" {
 
 ### Optional
 
+- `certificate` (String) Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `schema` (String) If not specified, the default schema will be used.
 - `ssh_config` (Attributes) (see [below for nested schema](#nestedatt--ssh_config))

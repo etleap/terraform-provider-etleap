@@ -1,5 +1,6 @@
 resource "etleap_connection_db2" "my_connectiondb2" {
   address                     = "571 Hansen Unions"
+  certificate                 = "...my_certificate..."
   database                    = "...my_database..."
   deletion_of_export_products = true
   name                        = "Lela Bartoletti"

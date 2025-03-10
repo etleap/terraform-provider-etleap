@@ -92,6 +92,12 @@ func (r *ConnectionDb2SHARDEDResourceModel) ToSharedConnectionDb2ShardedInput() 
 	} else {
 		schema = nil
 	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
 		address := shardsItem.Address.ValueString()
@@ -124,6 +130,7 @@ func (r *ConnectionDb2SHARDEDResourceModel) ToSharedConnectionDb2ShardedInput() 
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
 		Schema:         schema,
+		Certificate:    certificate,
 		Shards:         shards,
 	}
 	return &out
@@ -131,6 +138,7 @@ func (r *ConnectionDb2SHARDEDResourceModel) ToSharedConnectionDb2ShardedInput() 
 
 func (r *ConnectionDb2SHARDEDResourceModel) RefreshFromSharedConnectionDb2Sharded(resp *shared.ConnectionDb2Sharded) {
 	r.Active = types.BoolValue(resp.Active)
+	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
@@ -341,6 +349,12 @@ func (r *ConnectionDb2SHARDEDResourceModel) ToSharedConnectionDb2ShardedUpdate()
 	} else {
 		schema = nil
 	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
 		address := shardsItem.Address.ValueString()
@@ -374,6 +388,7 @@ func (r *ConnectionDb2SHARDEDResourceModel) ToSharedConnectionDb2ShardedUpdate()
 		Active:         active,
 		UpdateSchedule: updateSchedule,
 		Schema:         schema,
+		Certificate:    certificate,
 		Shards:         shards,
 	}
 	return &out

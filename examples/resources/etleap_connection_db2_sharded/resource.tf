@@ -1,4 +1,5 @@
 resource "etleap_connection_db2_sharded" "my_connectiondb2_sharded" {
+  certificate                 = "...my_certificate..."
   deletion_of_export_products = true
   name                        = "Marilyn Abbott"
   schema                      = "...my_schema..."

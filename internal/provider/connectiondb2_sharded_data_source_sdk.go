@@ -10,6 +10,7 @@ import (
 
 func (r *ConnectionDb2SHARDEDDataSourceModel) RefreshFromSharedConnectionDb2Sharded(resp *shared.ConnectionDb2Sharded) {
 	r.Active = types.BoolValue(resp.Active)
+	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]

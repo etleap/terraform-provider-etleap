@@ -64,13 +64,15 @@ type ConnectionDb2Update struct {
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema    *string                 `json:"schema,omitempty"`
-	Address   *string                 `json:"address,omitempty"`
-	Port      *int64                  `json:"port,omitempty"`
-	Username  *string                 `json:"username,omitempty"`
-	Password  *string                 `json:"password,omitempty"`
-	SSHConfig *SSHConfigurationUpdate `json:"sshConfig,omitempty"`
-	Database  *string                 `json:"database,omitempty"`
+	Schema *string `json:"schema,omitempty"`
+	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
+	Certificate *string                 `json:"certificate,omitempty"`
+	Address     *string                 `json:"address,omitempty"`
+	Port        *int64                  `json:"port,omitempty"`
+	Username    *string                 `json:"username,omitempty"`
+	Password    *string                 `json:"password,omitempty"`
+	SSHConfig   *SSHConfigurationUpdate `json:"sshConfig,omitempty"`
+	Database    *string                 `json:"database,omitempty"`
 }
 
 func (o *ConnectionDb2Update) GetName() *string {
@@ -141,6 +143,13 @@ func (o *ConnectionDb2Update) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *ConnectionDb2Update) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionDb2Update) GetAddress() *string {

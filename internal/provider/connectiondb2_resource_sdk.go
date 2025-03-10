@@ -92,6 +92,12 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Input() *shared.Connec
 	} else {
 		schema = nil
 	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
 	username := r.Username.ValueString()
@@ -111,6 +117,7 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Input() *shared.Connec
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
 		Schema:         schema,
+		Certificate:    certificate,
 		Address:        address,
 		Port:           port,
 		Username:       username,
@@ -124,6 +131,7 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Input() *shared.Connec
 func (r *ConnectionDb2ResourceModel) RefreshFromSharedConnectionDb2(resp *shared.ConnectionDb2) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
+	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -316,6 +324,12 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Update() *shared.Conne
 	} else {
 		schema = nil
 	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
 	address := new(string)
 	if !r.Address.IsUnknown() && !r.Address.IsNull() {
 		*address = r.Address.ValueString()
@@ -371,6 +385,7 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Update() *shared.Conne
 		Active:         active,
 		UpdateSchedule: updateSchedule,
 		Schema:         schema,
+		Certificate:    certificate,
 		Address:        address,
 		Port:           port,
 		Username:       username,

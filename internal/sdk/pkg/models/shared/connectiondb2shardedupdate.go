@@ -42,8 +42,10 @@ type ConnectionDb2ShardedUpdate struct {
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string         `json:"schema,omitempty"`
-	Shards []DatabaseShard `json:"shards,omitempty"`
+	Schema *string `json:"schema,omitempty"`
+	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
+	Certificate *string         `json:"certificate,omitempty"`
+	Shards      []DatabaseShard `json:"shards,omitempty"`
 }
 
 func (o *ConnectionDb2ShardedUpdate) GetName() *string {
@@ -114,6 +116,13 @@ func (o *ConnectionDb2ShardedUpdate) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *ConnectionDb2ShardedUpdate) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionDb2ShardedUpdate) GetShards() []DatabaseShard {

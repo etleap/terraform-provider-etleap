@@ -14,6 +14,7 @@ ConnectionDb2SHARDED Resource
 
 ```terraform
 resource "etleap_connection_db2_sharded" "my_connectiondb2_sharded" {
+  certificate                 = "...my_certificate..."
   deletion_of_export_products = true
   name                        = "Marilyn Abbott"
   schema                      = "...my_schema..."
@@ -46,6 +47,7 @@ resource "etleap_connection_db2_sharded" "my_connectiondb2_sharded" {
 
 ### Optional
 
+- `certificate` (String) Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `schema` (String) If not specified, the default schema will be used.
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))

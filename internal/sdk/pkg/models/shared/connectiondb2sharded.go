@@ -151,8 +151,10 @@ type ConnectionDb2Sharded struct {
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string               `json:"schema,omitempty"`
-	Shards []DatabaseShardOutput `json:"shards"`
+	Schema *string `json:"schema,omitempty"`
+	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
+	Certificate *string               `json:"certificate,omitempty"`
+	Shards      []DatabaseShardOutput `json:"shards"`
 }
 
 func (c ConnectionDb2Sharded) MarshalJSON() ([]byte, error) {
@@ -264,6 +266,13 @@ func (o *ConnectionDb2Sharded) GetSchema() *string {
 	return o.Schema
 }
 
+func (o *ConnectionDb2Sharded) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
+}
+
 func (o *ConnectionDb2Sharded) GetShards() []DatabaseShardOutput {
 	if o == nil {
 		return []DatabaseShardOutput{}
@@ -280,8 +289,10 @@ type ConnectionDb2ShardedInput struct {
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string         `json:"schema,omitempty"`
-	Shards []DatabaseShard `json:"shards"`
+	Schema *string `json:"schema,omitempty"`
+	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
+	Certificate *string         `json:"certificate,omitempty"`
+	Shards      []DatabaseShard `json:"shards"`
 }
 
 func (o *ConnectionDb2ShardedInput) GetName() string {
@@ -345,6 +356,13 @@ func (o *ConnectionDb2ShardedInput) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *ConnectionDb2ShardedInput) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionDb2ShardedInput) GetShards() []DatabaseShard {
