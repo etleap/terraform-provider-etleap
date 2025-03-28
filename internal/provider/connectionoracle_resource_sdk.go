@@ -98,6 +98,18 @@ func (r *ConnectionORACLEResourceModel) ToSharedConnectionOracleInput() *shared.
 	} else {
 		cdcEnabled = nil
 	}
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
+	} else {
+		requireSslAndValidateCertificate = nil
+	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
 	username := r.Username.ValueString()
@@ -113,17 +125,19 @@ func (r *ConnectionORACLEResourceModel) ToSharedConnectionOracleInput() *shared.
 	}
 	database := r.Database.ValueString()
 	out := shared.ConnectionOracleInput{
-		Name:           name,
-		Type:           typeVar,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		CdcEnabled:     cdcEnabled,
-		Address:        address,
-		Port:           port,
-		Username:       username,
-		Password:       password,
-		SSHConfig:      sshConfig,
-		Database:       database,
+		Name:                             name,
+		Type:                             typeVar,
+		UpdateSchedule:                   updateSchedule,
+		Schema:                           schema,
+		CdcEnabled:                       cdcEnabled,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		Certificate:                      certificate,
+		Address:                          address,
+		Port:                             port,
+		Username:                         username,
+		Password:                         password,
+		SSHConfig:                        sshConfig,
+		Database:                         database,
 	}
 	return &out
 }
@@ -132,6 +146,7 @@ func (r *ConnectionORACLEResourceModel) RefreshFromSharedConnectionOracle(resp *
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -185,6 +200,7 @@ func (r *ConnectionORACLEResourceModel) RefreshFromSharedConnectionOracle(resp *
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.Port = types.Int64Value(resp.Port)
+	r.RequireSslAndValidateCertificate = types.BoolPointerValue(resp.RequireSslAndValidateCertificate)
 	r.Schema = types.StringPointerValue(resp.Schema)
 	if resp.SSHConfig == nil {
 		r.SSHConfig = nil
@@ -324,6 +340,18 @@ func (r *ConnectionORACLEResourceModel) ToSharedConnectionOracleUpdate() *shared
 	} else {
 		schema = nil
 	}
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
+	} else {
+		requireSslAndValidateCertificate = nil
+	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
 	address := new(string)
 	if !r.Address.IsUnknown() && !r.Address.IsNull() {
 		*address = r.Address.ValueString()
@@ -374,17 +402,19 @@ func (r *ConnectionORACLEResourceModel) ToSharedConnectionOracleUpdate() *shared
 		database = nil
 	}
 	out := shared.ConnectionOracleUpdate{
-		Name:           name,
-		Type:           typeVar,
-		Active:         active,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		Address:        address,
-		Port:           port,
-		Username:       username,
-		Password:       password,
-		SSHConfig:      sshConfig,
-		Database:       database,
+		Name:                             name,
+		Type:                             typeVar,
+		Active:                           active,
+		UpdateSchedule:                   updateSchedule,
+		Schema:                           schema,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		Certificate:                      certificate,
+		Address:                          address,
+		Port:                             port,
+		Username:                         username,
+		Password:                         password,
+		SSHConfig:                        sshConfig,
+		Database:                         database,
 	}
 	return &out
 }

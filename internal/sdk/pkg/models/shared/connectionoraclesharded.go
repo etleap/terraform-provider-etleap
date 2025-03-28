@@ -153,8 +153,11 @@ type ConnectionOracleSharded struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
-	CdcEnabled *bool                 `default:"false" json:"cdcEnabled"`
-	Shards     []DatabaseShardOutput `json:"shards"`
+	CdcEnabled                       *bool `default:"false" json:"cdcEnabled"`
+	RequireSslAndValidateCertificate *bool `default:"true" json:"requireSslAndValidateCertificate"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate *string               `json:"certificate,omitempty"`
+	Shards      []DatabaseShardOutput `json:"shards"`
 }
 
 func (c ConnectionOracleSharded) MarshalJSON() ([]byte, error) {
@@ -273,6 +276,20 @@ func (o *ConnectionOracleSharded) GetCdcEnabled() *bool {
 	return o.CdcEnabled
 }
 
+func (o *ConnectionOracleSharded) GetRequireSslAndValidateCertificate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireSslAndValidateCertificate
+}
+
+func (o *ConnectionOracleSharded) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
+}
+
 func (o *ConnectionOracleSharded) GetShards() []DatabaseShardOutput {
 	if o == nil {
 		return []DatabaseShardOutput{}
@@ -291,8 +308,11 @@ type ConnectionOracleShardedInput struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
-	CdcEnabled *bool           `default:"false" json:"cdcEnabled"`
-	Shards     []DatabaseShard `json:"shards"`
+	CdcEnabled                       *bool `default:"false" json:"cdcEnabled"`
+	RequireSslAndValidateCertificate *bool `default:"true" json:"requireSslAndValidateCertificate"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate *string         `json:"certificate,omitempty"`
+	Shards      []DatabaseShard `json:"shards"`
 }
 
 func (c ConnectionOracleShardedInput) MarshalJSON() ([]byte, error) {
@@ -374,6 +394,20 @@ func (o *ConnectionOracleShardedInput) GetCdcEnabled() *bool {
 		return nil
 	}
 	return o.CdcEnabled
+}
+
+func (o *ConnectionOracleShardedInput) GetRequireSslAndValidateCertificate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireSslAndValidateCertificate
+}
+
+func (o *ConnectionOracleShardedInput) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionOracleShardedInput) GetShards() []DatabaseShard {

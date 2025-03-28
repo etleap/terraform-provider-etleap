@@ -12,6 +12,7 @@ func (r *ConnectionORACLEDataSourceModel) RefreshFromSharedConnectionOracle(resp
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -65,6 +66,7 @@ func (r *ConnectionORACLEDataSourceModel) RefreshFromSharedConnectionOracle(resp
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.Port = types.Int64Value(resp.Port)
+	r.RequireSslAndValidateCertificate = types.BoolPointerValue(resp.RequireSslAndValidateCertificate)
 	r.Schema = types.StringPointerValue(resp.Schema)
 	if resp.SSHConfig == nil {
 		r.SSHConfig = nil

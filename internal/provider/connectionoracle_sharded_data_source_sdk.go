@@ -11,6 +11,7 @@ import (
 func (r *ConnectionORACLESHARDEDDataSourceModel) RefreshFromSharedConnectionOracleSharded(resp *shared.ConnectionOracleSharded) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
@@ -62,6 +63,7 @@ func (r *ConnectionORACLESHARDEDDataSourceModel) RefreshFromSharedConnectionOrac
 	}
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
+	r.RequireSslAndValidateCertificate = types.BoolPointerValue(resp.RequireSslAndValidateCertificate)
 	r.Schema = types.StringPointerValue(resp.Schema)
 	if len(r.Shards) > len(resp.Shards) {
 		r.Shards = r.Shards[:len(resp.Shards)]

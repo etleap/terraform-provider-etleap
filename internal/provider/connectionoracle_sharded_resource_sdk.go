@@ -98,6 +98,18 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 	} else {
 		cdcEnabled = nil
 	}
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
+	} else {
+		requireSslAndValidateCertificate = nil
+	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
 		address := shardsItem.Address.ValueString()
@@ -126,12 +138,14 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 		})
 	}
 	out := shared.ConnectionOracleShardedInput{
-		Name:           name,
-		Type:           typeVar,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		CdcEnabled:     cdcEnabled,
-		Shards:         shards,
+		Name:                             name,
+		Type:                             typeVar,
+		UpdateSchedule:                   updateSchedule,
+		Schema:                           schema,
+		CdcEnabled:                       cdcEnabled,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		Certificate:                      certificate,
+		Shards:                           shards,
 	}
 	return &out
 }
@@ -139,6 +153,7 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 func (r *ConnectionORACLESHARDEDResourceModel) RefreshFromSharedConnectionOracleSharded(resp *shared.ConnectionOracleSharded) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
@@ -190,6 +205,7 @@ func (r *ConnectionORACLESHARDEDResourceModel) RefreshFromSharedConnectionOracle
 	}
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
+	r.RequireSslAndValidateCertificate = types.BoolPointerValue(resp.RequireSslAndValidateCertificate)
 	r.Schema = types.StringPointerValue(resp.Schema)
 	if len(r.Shards) > len(resp.Shards) {
 		r.Shards = r.Shards[:len(resp.Shards)]
@@ -349,6 +365,18 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedUp
 	} else {
 		schema = nil
 	}
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
+	} else {
+		requireSslAndValidateCertificate = nil
+	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
 		address := shardsItem.Address.ValueString()
@@ -377,12 +405,14 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedUp
 		})
 	}
 	out := shared.ConnectionOracleShardedUpdate{
-		Name:           name,
-		Type:           typeVar,
-		Active:         active,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		Shards:         shards,
+		Name:                             name,
+		Type:                             typeVar,
+		Active:                           active,
+		UpdateSchedule:                   updateSchedule,
+		Schema:                           schema,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		Certificate:                      certificate,
+		Shards:                           shards,
 	}
 	return &out
 }

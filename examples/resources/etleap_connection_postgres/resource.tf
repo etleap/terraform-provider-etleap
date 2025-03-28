@@ -1,5 +1,5 @@
 resource "etleap_connection_postgres" "my_connectionpostgres" {
-  address                     = "58794 Lindsey Well"
+  address                     = "794 Lindsey Well"
   auto_replicate              = "...my_auto_replicate..."
   cdc_enabled                 = true
   database                    = "...my_database..."

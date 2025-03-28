@@ -43,18 +43,20 @@ type ConnectionORACLESHARDEDResource struct {
 
 // ConnectionORACLESHARDEDResourceModel describes the resource data model.
 type ConnectionORACLESHARDEDResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	CdcEnabled               types.Bool              `tfsdk:"cdc_enabled"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Schema                   types.String            `tfsdk:"schema"`
-	Shards                   []DatabaseShard         `tfsdk:"shards"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                           types.Bool              `tfsdk:"active"`
+	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
+	Certificate                      types.String            `tfsdk:"certificate"`
+	CreateDate                       types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts         types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                               types.String            `tfsdk:"id"`
+	Name                             types.String            `tfsdk:"name"`
+	RequireSslAndValidateCertificate types.Bool              `tfsdk:"require_ssl_and_validate_certificate"`
+	Schema                           types.String            `tfsdk:"schema"`
+	Shards                           []DatabaseShard         `tfsdk:"shards"`
+	Status                           types.String            `tfsdk:"status"`
+	Type                             types.String            `tfsdk:"type"`
+	UpdateSchedule                   *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionORACLESHARDEDResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -82,6 +84,14 @@ func (r *ConnectionORACLESHARDEDResource) Schema(ctx context.Context, req resour
 				Optional:    true,
 				Default:     booldefault.StaticBool(false),
 				Description: `Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later. Requires replacement if changed. ; Default: false`,
+			},
+			"certificate": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if ` + "`" + `requireSslAndValidateCertificate` + "`" + ` is set to ` + "`" + `true` + "`" + `.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,
@@ -295,6 +305,15 @@ func (r *ConnectionORACLESHARDEDResource) Schema(ctx context.Context, req resour
 				},
 				Required:    true,
 				Description: `The unique name of this connection.`,
+			},
+			"require_ssl_and_validate_certificate": schema.BoolAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Bool{
+					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Default:     booldefault.StaticBool(true),
+				Description: `Default: true`,
 			},
 			"schema": schema.StringAttribute{
 				Computed: true,

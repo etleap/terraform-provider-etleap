@@ -1,6 +1,6 @@
 resource "etleap_connection_outlook" "my_connectionoutlook" {
   code                        = "...my_code..."
   deletion_of_export_products = true
-  name                        = "Mrs. Rachael Grady DVM"
+  name                        = "Joanne Ankunding"
   type                        = "OUTLOOK"
 }

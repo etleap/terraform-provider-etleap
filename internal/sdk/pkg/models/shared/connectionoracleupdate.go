@@ -64,13 +64,16 @@ type ConnectionOracleUpdate struct {
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema    *string                                       `json:"schema,omitempty"`
-	Address   *string                                       `json:"address,omitempty"`
-	Port      *int64                                        `json:"port,omitempty"`
-	Username  *string                                       `json:"username,omitempty"`
-	Password  *string                                       `json:"password,omitempty"`
-	SSHConfig *ConnectionOracleUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
-	Database  *string                                       `json:"database,omitempty"`
+	Schema                           *string `json:"schema,omitempty"`
+	RequireSslAndValidateCertificate *bool   `json:"requireSslAndValidateCertificate,omitempty"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate *string                                       `json:"certificate,omitempty"`
+	Address     *string                                       `json:"address,omitempty"`
+	Port        *int64                                        `json:"port,omitempty"`
+	Username    *string                                       `json:"username,omitempty"`
+	Password    *string                                       `json:"password,omitempty"`
+	SSHConfig   *ConnectionOracleUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
+	Database    *string                                       `json:"database,omitempty"`
 }
 
 func (o *ConnectionOracleUpdate) GetName() *string {
@@ -141,6 +144,20 @@ func (o *ConnectionOracleUpdate) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *ConnectionOracleUpdate) GetRequireSslAndValidateCertificate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireSslAndValidateCertificate
+}
+
+func (o *ConnectionOracleUpdate) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionOracleUpdate) GetAddress() *string {

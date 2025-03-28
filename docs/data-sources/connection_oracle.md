@@ -26,12 +26,14 @@ data "etleap_connection_oracle" "my_connectionoracle" {
 - `active` (Boolean) Whether this connection has been marked as active.
 - `address` (String)
 - `cdc_enabled` (Boolean) Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
+- `certificate` (String) The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
 - `create_date` (String) The date and time when then the connection was created.
 - `database` (String)
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `id` (String) The ID of this resource.
 - `name` (String) The unique name of this connection.
 - `port` (Number)
+- `require_ssl_and_validate_certificate` (Boolean)
 - `schema` (String) If not specified, the default schema will be used.
 - `ssh_config` (Attributes) (see [below for nested schema](#nestedatt--ssh_config))
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]

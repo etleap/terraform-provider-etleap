@@ -42,8 +42,11 @@ type ConnectionOracleShardedUpdate struct {
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string         `json:"schema,omitempty"`
-	Shards []DatabaseShard `json:"shards,omitempty"`
+	Schema                           *string `json:"schema,omitempty"`
+	RequireSslAndValidateCertificate *bool   `json:"requireSslAndValidateCertificate,omitempty"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate *string         `json:"certificate,omitempty"`
+	Shards      []DatabaseShard `json:"shards,omitempty"`
 }
 
 func (o *ConnectionOracleShardedUpdate) GetName() *string {
@@ -114,6 +117,20 @@ func (o *ConnectionOracleShardedUpdate) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *ConnectionOracleShardedUpdate) GetRequireSslAndValidateCertificate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireSslAndValidateCertificate
+}
+
+func (o *ConnectionOracleShardedUpdate) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionOracleShardedUpdate) GetShards() []DatabaseShard {

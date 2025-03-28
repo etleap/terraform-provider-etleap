@@ -154,12 +154,15 @@ type ConnectionOracle struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
-	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
-	Address    string     `json:"address"`
-	Port       int64      `json:"port"`
-	Username   string     `json:"username"`
-	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
-	Database   string     `json:"database"`
+	CdcEnabled                       *bool `default:"false" json:"cdcEnabled"`
+	RequireSslAndValidateCertificate *bool `default:"true" json:"requireSslAndValidateCertificate"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate *string    `json:"certificate,omitempty"`
+	Address     string     `json:"address"`
+	Port        int64      `json:"port"`
+	Username    string     `json:"username"`
+	SSHConfig   *SSHConfig `json:"sshConfig,omitempty"`
+	Database    string     `json:"database"`
 }
 
 func (c ConnectionOracle) MarshalJSON() ([]byte, error) {
@@ -278,6 +281,20 @@ func (o *ConnectionOracle) GetCdcEnabled() *bool {
 	return o.CdcEnabled
 }
 
+func (o *ConnectionOracle) GetRequireSslAndValidateCertificate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireSslAndValidateCertificate
+}
+
+func (o *ConnectionOracle) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
+}
+
 func (o *ConnectionOracle) GetAddress() string {
 	if o == nil {
 		return ""
@@ -325,13 +342,16 @@ type ConnectionOracleInput struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
-	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
-	Address    string     `json:"address"`
-	Port       int64      `json:"port"`
-	Username   string     `json:"username"`
-	Password   string     `json:"password"`
-	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
-	Database   string     `json:"database"`
+	CdcEnabled                       *bool `default:"false" json:"cdcEnabled"`
+	RequireSslAndValidateCertificate *bool `default:"true" json:"requireSslAndValidateCertificate"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate *string    `json:"certificate,omitempty"`
+	Address     string     `json:"address"`
+	Port        int64      `json:"port"`
+	Username    string     `json:"username"`
+	Password    string     `json:"password"`
+	SSHConfig   *SSHConfig `json:"sshConfig,omitempty"`
+	Database    string     `json:"database"`
 }
 
 func (c ConnectionOracleInput) MarshalJSON() ([]byte, error) {
@@ -413,6 +433,20 @@ func (o *ConnectionOracleInput) GetCdcEnabled() *bool {
 		return nil
 	}
 	return o.CdcEnabled
+}
+
+func (o *ConnectionOracleInput) GetRequireSslAndValidateCertificate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireSslAndValidateCertificate
+}
+
+func (o *ConnectionOracleInput) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionOracleInput) GetAddress() string {

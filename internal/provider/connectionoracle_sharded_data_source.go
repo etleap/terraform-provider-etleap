@@ -28,17 +28,19 @@ type ConnectionORACLESHARDEDDataSource struct {
 
 // ConnectionORACLESHARDEDDataSourceModel describes the data model.
 type ConnectionORACLESHARDEDDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	CdcEnabled            types.Bool              `tfsdk:"cdc_enabled"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Schema                types.String            `tfsdk:"schema"`
-	Shards                []DatabaseShardOutput   `tfsdk:"shards"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                           types.Bool              `tfsdk:"active"`
+	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
+	Certificate                      types.String            `tfsdk:"certificate"`
+	CreateDate                       types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                               types.String            `tfsdk:"id"`
+	Name                             types.String            `tfsdk:"name"`
+	RequireSslAndValidateCertificate types.Bool              `tfsdk:"require_ssl_and_validate_certificate"`
+	Schema                           types.String            `tfsdk:"schema"`
+	Shards                           []DatabaseShardOutput   `tfsdk:"shards"`
+	Status                           types.String            `tfsdk:"status"`
+	Type                             types.String            `tfsdk:"type"`
+	UpdateSchedule                   *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -59,6 +61,10 @@ func (r *ConnectionORACLESHARDEDDataSource) Schema(ctx context.Context, req data
 			"cdc_enabled": schema.BoolAttribute{
 				Computed:    true,
 				Description: `Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.`,
+			},
+			"certificate": schema.StringAttribute{
+				Computed:    true,
+				Description: `The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if ` + "`" + `requireSslAndValidateCertificate` + "`" + ` is set to ` + "`" + `true` + "`" + `.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed:    true,
@@ -160,6 +166,9 @@ func (r *ConnectionORACLESHARDEDDataSource) Schema(ctx context.Context, req data
 			"name": schema.StringAttribute{
 				Computed:    true,
 				Description: `The unique name of this connection.`,
+			},
+			"require_ssl_and_validate_certificate": schema.BoolAttribute{
+				Computed: true,
 			},
 			"schema": schema.StringAttribute{
 				Computed:    true,

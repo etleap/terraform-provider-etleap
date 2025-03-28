@@ -14,16 +14,18 @@ ConnectionORACLE Resource
 
 ```terraform
 resource "etleap_connection_oracle" "my_connectionoracle" {
-  address                     = "5233 Emard Unions"
-  cdc_enabled                 = true
-  database                    = "...my_database..."
-  deletion_of_export_products = true
-  name                        = "Kristine Cormier"
-  password                    = "...my_password..."
-  port                        = 1
-  schema                      = "...my_schema..."
-  type                        = "ORACLE"
-  username                    = "Ralph80"
+  address                              = "5233 Emard Unions"
+  cdc_enabled                          = true
+  certificate                          = "...my_certificate..."
+  database                             = "...my_database..."
+  deletion_of_export_products          = true
+  name                                 = "Kristine Cormier"
+  password                             = "...my_password..."
+  port                                 = 1
+  require_ssl_and_validate_certificate = false
+  schema                               = "...my_schema..."
+  type                                 = "ORACLE"
+  username                             = "Loy.Bartoletti51"
 }
 ```
 
@@ -43,7 +45,9 @@ resource "etleap_connection_oracle" "my_connectionoracle" {
 ### Optional
 
 - `cdc_enabled` (Boolean) Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later. Requires replacement if changed. ; Default: false
+- `certificate` (String) The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
+- `require_ssl_and_validate_certificate` (Boolean) Default: true
 - `schema` (String) If not specified, the default schema will be used.
 - `ssh_config` (Attributes) (see [below for nested schema](#nestedatt--ssh_config))
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
