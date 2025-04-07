@@ -105,13 +105,42 @@ def remove_properties_not_in_from_objects_in_all_of(all_of, keep_properties):
                     new_properties[prop] = obj['properties'][prop]
             obj['properties'] = new_properties
 
+def remove_required_type_and_add_ignore(all_of, properties):
+    """
+    For each object block in the given allOf:
+    - Removes specified properties from 'required'
+    - Deletes 'required' if it becomes empty
+    - Adds 'x-speakeasy-terraform-ignore': True to each matching property in 'properties'
+    
+    Args:
+        all_of (list): The list of allOf schema blocks
+        properties (list): List of property names to remove from 'required' and to update
+    """
+    for block in all_of:
+        if isinstance(block, dict) and block.get("type") == "object":
+            # add speakeasy terraform ignore property
+            props = block.get("properties", {})
+            for prop in properties:
+                if prop in props and isinstance(props[prop], dict):
+                    props[prop]["x-speakeasy-terraform-ignore"] = True
+
+            # remove items from required list
+            required = block.get("required", [])
+            if isinstance(required, list):
+                block["required"] = [r for r in required if r not in properties]
+                if not block["required"]:
+                    del block["required"]
+
 schemas['source_types_update'] = copy.deepcopy(schemas['source_types'])
 schemas['source_types_update']['title'] += ' Update'
 
 source_types_update = schemas['source_types_update']
 
-for mapping_key in source_types_update['discriminator']['mapping']:
-    source_types_update['discriminator']['mapping'][mapping_key] += '_update'
+if 'source_type_enum' not in schemas:
+    schemas['source_type_enum'] = {
+        'type': 'string',
+        'enum': []
+    }
 
 for source_type in source_types_update['oneOf']:
     source_type_schema = schema_from_ref(source_type['$ref'])
@@ -120,14 +149,20 @@ for source_type in source_types_update['oneOf']:
 
     schemas[source_type_schema + '_update'] = copy.deepcopy(schemas[source_type_schema])
     schemas[source_type_schema + '_update']['title'] += ' Update'
+
     update_ref_in_all_of(schemas[source_type_schema + '_update']['allOf'], "#/components/schemas/source_update")
     remove_properties_not_in_from_objects_in_all_of(schemas[source_type_schema + '_update']['allOf'], ['type'])
+    remove_required_type_and_add_ignore(schemas[source_type_schema + '_update']['allOf'], ['type'])
+
+    # Add enum value if not already added
+    if enum_value not in schemas['source_type_enum']['enum']:
+        schemas['source_type_enum']['enum'].append(enum_value)
 
 schemas['pipeline_update']['properties']['source']['$ref'] = "#/components/schemas/source_types_update"
-# Can we remove this if we remove the property in the api definition
-# SNOWFLAKE type object needs to be added to components.schema.source_snowflake
-# This method adds a type property to the api call, will this cause problems on the backend? Could add type to source_update as a nullable field which is non modifiable
-del schemas['source_update']['x-speakeasy-name-override']
+schemas['source_update']['properties']['type'] = {
+    '$ref': '#/components/schemas/source_type_enum'
+}
+# del schemas['source_update']['x-speakeasy-name-override']
 
 
 with open(outputSchemaFile, 'w+') as f:
