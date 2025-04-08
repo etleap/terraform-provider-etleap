@@ -154,15 +154,26 @@ for source_type in source_types_update['oneOf']:
     remove_properties_not_in_from_objects_in_all_of(schemas[source_type_schema + '_update']['allOf'], ['type'])
     remove_required_type_and_add_ignore(schemas[source_type_schema + '_update']['allOf'], ['type'])
 
+    schemas[source_type_schema + '_update']["x-empty-superclass"] = True
+
     # Add enum value if not already added
     if enum_value not in schemas['source_type_enum']['enum']:
         schemas['source_type_enum']['enum'].append(enum_value)
+
+
+# Add _update to every reference in the discriminator mapping too
+source_types_update['discriminator']['mapping'] = {
+    k: v + '_update' for k, v in source_types_update['discriminator']['mapping'].items()
+}
 
 schemas['pipeline_update']['properties']['source']['$ref'] = "#/components/schemas/source_types_update"
 schemas['source_update']['properties']['type'] = {
     '$ref': '#/components/schemas/source_type_enum'
 }
-# del schemas['source_update']['x-speakeasy-name-override']
+schemas['source']['properties']['type'] = {
+    '$ref': '#/components/schemas/source_type_enum'
+}
+del schemas['source_update']['x-speakeasy-name-override']
 
 
 with open(outputSchemaFile, 'w+') as f:
