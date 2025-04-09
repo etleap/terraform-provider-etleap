@@ -112,7 +112,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
 		return nil
 	case "DELTA_LAKE":
 		destinationDeltaLake := new(DestinationDeltaLake)
-		if err := utils.UnmarshalJSON(data, &destinationDeltaLake, "", true, true); err != nil {
+		// [VIK-4496] Etleap monkey-patch: the unmarshal function allows unknown fields for ignoring schemaChangingTo and tableChangingTo
+		if err := utils.UnmarshalJSON(data, &destinationDeltaLake, "", true, false); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
