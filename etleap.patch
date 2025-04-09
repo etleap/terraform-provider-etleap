@@ -1,5 +1,5 @@
 diff --git a/internal/provider/pipeline_resource.go b/internal/provider/pipeline_resource.go
-index e75d23a..f9ec93a 100644
+index 5d38e6c..ca44e8f 100644
 --- a/internal/provider/pipeline_resource.go
 +++ b/internal/provider/pipeline_resource.go
 @@ -5,6 +5,9 @@ package provider
@@ -219,7 +219,7 @@ index e75d23a..f9ec93a 100644
  								Required:    true,
  								Description: `Requires replacement if changed. `,
  							},
-@@ -7554,7 +7541,16 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
+@@ -9230,7 +9217,16 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
  	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  
@@ -237,7 +237,7 @@ index e75d23a..f9ec93a 100644
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
  
-@@ -7602,7 +7598,16 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
+@@ -9278,7 +9274,16 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
  	}
  	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
  
@@ -255,7 +255,7 @@ index e75d23a..f9ec93a 100644
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
  
-@@ -7622,6 +7627,39 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -9298,6 +9303,39 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  
  	id := data.ID.ValueString()
  	pipelineUpdate := *data.ToSharedPipelineUpdate()
@@ -295,7 +295,7 @@ index e75d23a..f9ec93a 100644
  	request := operations.UpdatePipelineRequest{
  		ID:             id,
  		PipelineUpdate: pipelineUpdate,
-@@ -7646,6 +7684,31 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -9322,6 +9360,31 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
  		return
  	}
@@ -327,7 +327,7 @@ index e75d23a..f9ec93a 100644
  	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  	id1 := data.ID.ValueString()
-@@ -7675,6 +7738,15 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -9351,6 +9414,15 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  
@@ -343,7 +343,7 @@ index e75d23a..f9ec93a 100644
  	// Save updated data into Terraform state
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
-@@ -7725,3 +7797,75 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
+@@ -9401,3 +9473,75 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
  func (r *PipelineResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
  	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
  }
@@ -420,7 +420,7 @@ index e75d23a..f9ec93a 100644
 +	}
 +}
 diff --git a/internal/provider/provider.go b/internal/provider/provider.go
-index aac66b6..114ef28 100644
+index b520761..1a0f8ae 100644
 --- a/internal/provider/provider.go
 +++ b/internal/provider/provider.go
 @@ -4,6 +4,9 @@ package provider
@@ -481,7 +481,7 @@ index aac66b6..114ef28 100644
  	client := sdk.New(opts...)
  
 diff --git a/internal/sdk/pkg/models/shared/destinationdeltalake.go b/internal/sdk/pkg/models/shared/destinationdeltalake.go
-index a200188..172bd8f 100644
+index 82b99c4..d1a5f44 100644
 --- a/internal/sdk/pkg/models/shared/destinationdeltalake.go
 +++ b/internal/sdk/pkg/models/shared/destinationdeltalake.go
 @@ -62,7 +62,8 @@ func (d DestinationDeltaLake) MarshalJSON() ([]byte, error) {
@@ -495,7 +495,7 @@ index a200188..172bd8f 100644
  	}
  	return nil
 diff --git a/internal/sdk/pkg/models/shared/destinationredshift.go b/internal/sdk/pkg/models/shared/destinationredshift.go
-index 16e6157..433de3d 100644
+index f933d10..593286e 100644
 --- a/internal/sdk/pkg/models/shared/destinationredshift.go
 +++ b/internal/sdk/pkg/models/shared/destinationredshift.go
 @@ -64,7 +64,8 @@ func (d DestinationRedshift) MarshalJSON() ([]byte, error) {
@@ -509,7 +509,7 @@ index 16e6157..433de3d 100644
  	}
  	return nil
 diff --git a/internal/sdk/pkg/models/shared/destinationsnowflake.go b/internal/sdk/pkg/models/shared/destinationsnowflake.go
-index a37ad09..c1c83d5 100644
+index 72f1444..9f93273 100644
 --- a/internal/sdk/pkg/models/shared/destinationsnowflake.go
 +++ b/internal/sdk/pkg/models/shared/destinationsnowflake.go
 @@ -58,7 +58,8 @@ func (d DestinationSnowflake) MarshalJSON() ([]byte, error) {
@@ -523,10 +523,30 @@ index a37ad09..c1c83d5 100644
  	}
  	return nil
 diff --git a/internal/sdk/pkg/models/shared/destinationtypes.go b/internal/sdk/pkg/models/shared/destinationtypes.go
-index 074f815..62e56ca 100644
+index 1028d6c..5cbd7a3 100644
 --- a/internal/sdk/pkg/models/shared/destinationtypes.go
 +++ b/internal/sdk/pkg/models/shared/destinationtypes.go
-@@ -112,7 +112,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
+@@ -103,7 +103,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
+ 	switch dis.Type {
+ 	case "REDSHIFT":
+ 		destinationRedshift := new(DestinationRedshift)
+-		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, true); err != nil {
++		// [VIK-4496] Etleap monkey-patch: the unmarshal function allows unknown fields for ignoring schemaChangingTo and tableChangingTo
++		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, false); err != nil {
+ 			return fmt.Errorf("could not unmarshal expected type: %w", err)
+ 		}
+ 
+@@ -112,7 +113,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
+ 		return nil
+ 	case "SNOWFLAKE":
+ 		destinationSnowflake := new(DestinationSnowflake)
+-		if err := utils.UnmarshalJSON(data, &destinationSnowflake, "", true, true); err != nil {
++		// [VIK-4496] Etleap monkey-patch: the unmarshal function allows unknown fields for ignoring schemaChangingTo and tableChangingTo
++		if err := utils.UnmarshalJSON(data, &destinationSnowflake, "", true, false); err != nil {
+ 			return fmt.Errorf("could not unmarshal expected type: %w", err)
+ 		}
+ 
+@@ -121,7 +123,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
  		return nil
  	case "DELTA_LAKE":
  		destinationDeltaLake := new(DestinationDeltaLake)
@@ -536,41 +556,3 @@ index 074f815..62e56ca 100644
  			return fmt.Errorf("could not unmarshal expected type: %w", err)
  		}
  
-@@ -128,25 +129,26 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
- 		u.DestinationIceberg = destinationIceberg
- 		u.Type = DestinationTypesTypeIceberg
- 		return nil
--	case "SNOWFLAKE":
--		destinationSnowflake := new(DestinationSnowflake)
--		if err := utils.UnmarshalJSON(data, &destinationSnowflake, "", true, true); err != nil {
--			return fmt.Errorf("could not unmarshal expected type: %w", err)
--		}
--
--		u.DestinationSnowflake = destinationSnowflake
--		u.Type = DestinationTypesTypeSnowflake
--		return nil
- 	case "REDSHIFT":
- 		destinationRedshift := new(DestinationRedshift)
--		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, true); err != nil {
-+		// [VIK-4496] Etleap monkey-patch: the unmarshal function allows unknown fields for ignoring schemaChangingTo and tableChangingTo
-+		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, false); err != nil {
- 			return fmt.Errorf("could not unmarshal expected type: %w", err)
- 		}
- 
- 		u.DestinationRedshift = destinationRedshift
- 		u.Type = DestinationTypesTypeRedshift
- 		return nil
--	}
-+	case "SNOWFLAKE":
-+		destinationSnowflake := new(DestinationSnowflake)
-+		// [VIK-4496] Etleap monkey-patch: the unmarshal function allows unknown fields for ignoring schemaChangingTo and tableChangingTo
-+		if err := utils.UnmarshalJSON(data, &destinationSnowflake, "", true, false); err != nil {
-+			return fmt.Errorf("could not unmarshal expected type: %w", err)
-+		}
-+
-+		u.DestinationS3DataLake = destinationS3DataLake
-+		u.Type = DestinationTypesTypeS3DataLake
-+		return nil
- 
- 	return errors.New("could not unmarshal into supported union types")
- }
