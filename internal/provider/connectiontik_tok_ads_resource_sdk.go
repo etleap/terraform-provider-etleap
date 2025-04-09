@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionTIKTOKADSResourceModel) ToSharedConnectionTikTokAdsInput() *shared.ConnectionTikTokAdsInput {
+func (r *ConnectionTIKTOKADSResourceModel) ToSharedConnectionTikTokAds() *shared.ConnectionTikTokAds {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionTikTokAdsType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionTIKTOKADSResourceModel) ToSharedConnectionTikTokAdsInput() *s
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,7 +87,7 @@ func (r *ConnectionTIKTOKADSResourceModel) ToSharedConnectionTikTokAdsInput() *s
 		}
 	}
 	code := r.Code.ValueString()
-	out := shared.ConnectionTikTokAdsInput{
+	out := shared.ConnectionTikTokAds{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -96,14 +96,14 @@ func (r *ConnectionTIKTOKADSResourceModel) ToSharedConnectionTikTokAdsInput() *s
 	return &out
 }
 
-func (r *ConnectionTIKTOKADSResourceModel) RefreshFromSharedConnectionTikTokAds(resp *shared.ConnectionTikTokAds) {
+func (r *ConnectionTIKTOKADSResourceModel) RefreshFromSharedConnectionTikTokAdsOutput(resp *shared.ConnectionTikTokAdsOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -185,18 +185,18 @@ func (r *ConnectionTIKTOKADSResourceModel) RefreshFromSharedConnectionTikTokAds(
 }
 
 func (r *ConnectionTIKTOKADSResourceModel) ToSharedConnectionTikTokAdsUpdate() *shared.ConnectionTikTokAdsUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	typeVar := shared.ConnectionTikTokAdsUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
 	} else {
 		active = nil
+	}
+	typeVar := shared.ConnectionTikTokAdsUpdateType(r.Type.ValueString())
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -259,12 +259,12 @@ func (r *ConnectionTIKTOKADSResourceModel) ToSharedConnectionTikTokAdsUpdate() *
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -280,9 +280,9 @@ func (r *ConnectionTIKTOKADSResourceModel) ToSharedConnectionTikTokAdsUpdate() *
 		code = nil
 	}
 	out := shared.ConnectionTikTokAdsUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
 		Code:           code,
 	}

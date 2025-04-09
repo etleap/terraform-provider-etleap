@@ -9,14 +9,14 @@ import (
 
 // Script - Specifies a script based on an array of transforms. Not all transforms available in the Wrangler are supported yet for this script format.
 type Script struct {
+	// The date and time when then the script was created.
+	CreateDate time.Time `json:"createDate"`
+	// Defaults to UTF-8.
+	Charset *string `json:"charset,omitempty"`
 	// An array consisting of a single "To Rows" transform followed by any number of other transforms.
 	Transforms []TransformTypes `json:"transforms"`
 	// Maps output column names to types inferred from data.
 	InferredColumnTypes map[string]Type `json:"inferredColumnTypes,omitempty"`
-	// Defaults to UTF-8.
-	Charset *string `json:"charset,omitempty"`
-	// The date and time when then the script was created.
-	CreateDate time.Time `json:"createDate"`
 }
 
 func (s Script) MarshalJSON() ([]byte, error) {
@@ -28,6 +28,20 @@ func (s *Script) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *Script) GetCreateDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.CreateDate
+}
+
+func (o *Script) GetCharset() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Charset
 }
 
 func (o *Script) GetTransforms() []TransformTypes {
@@ -42,18 +56,4 @@ func (o *Script) GetInferredColumnTypes() map[string]Type {
 		return nil
 	}
 	return o.InferredColumnTypes
-}
-
-func (o *Script) GetCharset() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Charset
-}
-
-func (o *Script) GetCreateDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.CreateDate
 }

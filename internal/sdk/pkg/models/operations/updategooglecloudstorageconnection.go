@@ -35,7 +35,7 @@ type UpdateGOOGLECLOUDSTORAGEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionGoogleCloudStorage *shared.ConnectionGoogleCloudStorage
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

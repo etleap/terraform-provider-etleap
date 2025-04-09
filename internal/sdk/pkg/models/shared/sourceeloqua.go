@@ -32,20 +32,13 @@ func (e *SourceEloquaType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceEloqua struct {
-	Type SourceEloquaType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string           `json:"connectionId"`
+	Type         SourceEloquaType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Eloqua resource, spelled as it is shown in the Eloqua UI. Each ActivityType is a different entity and is spelled without spaces like EmailClickthrough and EmailSend.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceEloqua) GetType() SourceEloquaType {
-	if o == nil {
-		return SourceEloquaType("")
-	}
-	return o.Type
 }
 
 func (o *SourceEloqua) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceEloqua) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceEloqua) GetType() SourceEloquaType {
+	if o == nil {
+		return SourceEloquaType("")
+	}
+	return o.Type
 }
 
 func (o *SourceEloqua) GetLatencyThreshold() *int64 {

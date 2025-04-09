@@ -27,7 +27,7 @@ type GetELASTICSEARCHConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionElasticSearch *shared.ConnectionElasticSearch
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

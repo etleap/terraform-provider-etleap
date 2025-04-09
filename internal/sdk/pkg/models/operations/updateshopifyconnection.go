@@ -34,8 +34,8 @@ type UpdateSHOPIFYConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionShopify *shared.ConnectionShopify
-	// Bad Request
+	ConnectionShopify *shared.ConnectionShopifyOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateSHOPIFYConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateSHOPIFYConnectionResponse) GetConnectionShopify() *shared.ConnectionShopify {
+func (o *UpdateSHOPIFYConnectionResponse) GetConnectionShopify() *shared.ConnectionShopifyOutput {
 	if o == nil {
 		return nil
 	}

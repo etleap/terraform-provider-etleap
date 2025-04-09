@@ -28,18 +28,18 @@ type ConnectionERPXDataSource struct {
 
 // ConnectionERPXDataSourceModel describes the data model.
 type ConnectionERPXDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	APIURL                types.String            `tfsdk:"api_url"`
-	ClientID              types.String            `tfsdk:"client_id"`
-	CompanyIds            types.String            `tfsdk:"company_ids"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Status                types.String            `tfsdk:"status"`
-	TokenURL              types.String            `tfsdk:"token_url"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	APIURL                types.String                                    `tfsdk:"api_url"`
+	ClientID              types.String                                    `tfsdk:"client_id"`
+	CompanyIds            types.String                                    `tfsdk:"company_ids"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Status                types.String                                    `tfsdk:"status"`
+	TokenURL              types.String                                    `tfsdk:"token_url"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -326,7 +326,7 @@ func (r *ConnectionERPXDataSource) Read(ctx context.Context, req datasource.Read
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionErpx(res.ConnectionErpx)
+	data.RefreshFromSharedConnectionErpxOutput(res.ConnectionErpx)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

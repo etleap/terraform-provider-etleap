@@ -32,33 +32,19 @@ func (e *ConnectionIcebergUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionIcebergUpdate struct {
-	// The unique name of this connection.
-	Name *string                      `json:"name,omitempty"`
-	Type *ConnectionIcebergUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                        `json:"active,omitempty"`
+	Type   *ConnectionIcebergUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule      *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	IamRole             *string              `json:"iamRole,omitempty"`
-	DataBucket          *string              `json:"dataBucket,omitempty"`
-	BaseDirectory       *string              `json:"baseDirectory,omitempty"`
-	GlueDatabase        *string              `json:"glueDatabase,omitempty"`
-	GlueRegion          *string              `json:"glueRegion,omitempty"`
 	WarehouseConnection *string              `json:"warehouseConnection,omitempty"`
-}
-
-func (o *ConnectionIcebergUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionIcebergUpdate) GetType() *ConnectionIcebergUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	GlueDatabase        *string              `json:"glueDatabase,omitempty"`
+	BaseDirectory       *string              `json:"baseDirectory,omitempty"`
+	DataBucket          *string              `json:"dataBucket,omitempty"`
+	GlueRegion          *string              `json:"glueRegion,omitempty"`
 }
 
 func (o *ConnectionIcebergUpdate) GetActive() *bool {
@@ -68,6 +54,20 @@ func (o *ConnectionIcebergUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionIcebergUpdate) GetType() *ConnectionIcebergUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionIcebergUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionIcebergUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -75,9 +75,9 @@ func (o *ConnectionIcebergUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionIcebergUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionIcebergUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -85,6 +85,13 @@ func (o *ConnectionIcebergUpdate) GetUpdateScheduleInterval() *UpdateScheduleMod
 func (o *ConnectionIcebergUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionIcebergUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -103,13 +110,6 @@ func (o *ConnectionIcebergUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeW
 	return nil
 }
 
-func (o *ConnectionIcebergUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
 func (o *ConnectionIcebergUpdate) GetIamRole() *string {
 	if o == nil {
 		return nil
@@ -117,18 +117,11 @@ func (o *ConnectionIcebergUpdate) GetIamRole() *string {
 	return o.IamRole
 }
 
-func (o *ConnectionIcebergUpdate) GetDataBucket() *string {
+func (o *ConnectionIcebergUpdate) GetWarehouseConnection() *string {
 	if o == nil {
 		return nil
 	}
-	return o.DataBucket
-}
-
-func (o *ConnectionIcebergUpdate) GetBaseDirectory() *string {
-	if o == nil {
-		return nil
-	}
-	return o.BaseDirectory
+	return o.WarehouseConnection
 }
 
 func (o *ConnectionIcebergUpdate) GetGlueDatabase() *string {
@@ -138,16 +131,23 @@ func (o *ConnectionIcebergUpdate) GetGlueDatabase() *string {
 	return o.GlueDatabase
 }
 
+func (o *ConnectionIcebergUpdate) GetBaseDirectory() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BaseDirectory
+}
+
+func (o *ConnectionIcebergUpdate) GetDataBucket() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DataBucket
+}
+
 func (o *ConnectionIcebergUpdate) GetGlueRegion() *string {
 	if o == nil {
 		return nil
 	}
 	return o.GlueRegion
-}
-
-func (o *ConnectionIcebergUpdate) GetWarehouseConnection() *string {
-	if o == nil {
-		return nil
-	}
-	return o.WarehouseConnection
 }

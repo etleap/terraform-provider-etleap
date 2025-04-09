@@ -1,13 +1,13 @@
 resource "etleap_connection_snowflake" "my_connectionsnowflake" {
-  address                     = "2748 Halvorson Knolls"
+  address                     = "0702 Koelpin Park"
   database                    = "...my_database..."
-  deletion_of_export_products = true
-  name                        = "Ms. Gregory Howe"
+  deletion_of_export_products = false
+  name                        = "Lewis Hahn"
   password                    = "...my_password..."
   role                        = "...my_role..."
   schema                      = "...my_schema..."
-  source_only                 = true
+  source_only                 = false
   type                        = "SNOWFLAKE"
-  username                    = "Neva39"
+  username                    = "Wilfred_Streich96"
   warehouse                   = "...my_warehouse..."
 }

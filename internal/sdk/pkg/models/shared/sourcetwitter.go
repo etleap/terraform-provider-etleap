@@ -32,20 +32,13 @@ func (e *SourceTwitterType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTwitter struct {
-	Type SourceTwitterType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string            `json:"connectionId"`
+	Type         SourceTwitterType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Twitter entity. Example values: [Account, Campaign, Funding Instrument, Line Item, Media Creative, Promoted Tweet, Followers, Tweets Likes, Tweets Quotes, Retweets, Recent Mentions,Tweets, Account Report, Campaign Report, Funding Instrument Report, Line Item Report, Media Creative Report, Promoted Tweet Report]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceTwitter) GetType() SourceTwitterType {
-	if o == nil {
-		return SourceTwitterType("")
-	}
-	return o.Type
 }
 
 func (o *SourceTwitter) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceTwitter) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceTwitter) GetType() SourceTwitterType {
+	if o == nil {
+		return SourceTwitterType("")
+	}
+	return o.Type
 }
 
 func (o *SourceTwitter) GetLatencyThreshold() *int64 {

@@ -34,9 +34,9 @@ func (e *BearerAuthenticationType) UnmarshalJSON(data []byte) error {
 
 // BearerAuthentication - Authentication method that uses a Bearer token.
 type BearerAuthentication struct {
-	Type *BearerAuthenticationType `default:"BEARER" json:"type"`
 	// The Bearer token used for authentication. This property is stored as a secret in Etleap.
-	Token string `json:"token"`
+	Token string                    `json:"token"`
+	Type  *BearerAuthenticationType `default:"BEARER" json:"type"`
 }
 
 func (b BearerAuthentication) MarshalJSON() ([]byte, error) {
@@ -50,16 +50,16 @@ func (b *BearerAuthentication) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BearerAuthentication) GetType() *BearerAuthenticationType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
-}
-
 func (o *BearerAuthentication) GetToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.Token
+}
+
+func (o *BearerAuthentication) GetType() *BearerAuthenticationType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

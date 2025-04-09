@@ -34,8 +34,8 @@ type UpdateZUORAConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionZuora *shared.ConnectionZuora
-	// Bad Request
+	ConnectionZuora *shared.ConnectionZuoraOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateZUORAConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateZUORAConnectionResponse) GetConnectionZuora() *shared.ConnectionZuora {
+func (o *UpdateZUORAConnectionResponse) GetConnectionZuora() *shared.ConnectionZuoraOutput {
 	if o == nil {
 		return nil
 	}

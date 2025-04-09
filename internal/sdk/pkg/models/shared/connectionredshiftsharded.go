@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionRedshiftShardedType string
-
-const (
-	ConnectionRedshiftShardedTypeRedshiftSharded ConnectionRedshiftShardedType = "REDSHIFT_SHARDED"
-)
-
-func (e ConnectionRedshiftShardedType) ToPointer() *ConnectionRedshiftShardedType {
-	return &e
-}
-
-func (e *ConnectionRedshiftShardedType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "REDSHIFT_SHARDED":
-		*e = ConnectionRedshiftShardedType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionRedshiftShardedType: %v", v)
-	}
-}
-
 // ConnectionRedshiftShardedStatus - The current status of the connection.
 type ConnectionRedshiftShardedStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionRedshiftShardedDefaultUpdateSchedule) GetUpdateSchedule() *Up
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionRedshiftShardedDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionRedshiftShardedDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionRedshiftShardedDefaultUpdateSchedule) GetUpdateScheduleInterv
 func (o *ConnectionRedshiftShardedDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftShardedDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,44 +108,61 @@ func (o *ConnectionRedshiftShardedDefaultUpdateSchedule) GetUpdateScheduleWeekly
 	return nil
 }
 
-func (o *ConnectionRedshiftShardedDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionRedshiftShardedType string
+
+const (
+	ConnectionRedshiftShardedTypeRedshiftSharded ConnectionRedshiftShardedType = "REDSHIFT_SHARDED"
+)
+
+func (e ConnectionRedshiftShardedType) ToPointer() *ConnectionRedshiftShardedType {
+	return &e
+}
+
+func (e *ConnectionRedshiftShardedType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "REDSHIFT_SHARDED":
+		*e = ConnectionRedshiftShardedType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionRedshiftShardedType: %v", v)
+	}
 }
 
 type ConnectionRedshiftSharded struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                        `json:"name"`
-	Type ConnectionRedshiftShardedType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionRedshiftShardedStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionRedshiftShardedDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// If not specified, the default schema will be used.
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string `json:"schema,omitempty"`
+	// Whether this connection has been marked as active.
+	Active bool                          `json:"active"`
+	Type   ConnectionRedshiftShardedType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The id of another Etleap Redshift connection. If specified, Etleap will make the data loaded available to the other cluster via Redshift Data Sharing.
+	DataSharingDestinations []string `json:"dataSharingDestinations,omitempty"`
+	// Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#include-query-tags">here</a>.
+	QueryTagsEnabled *bool `default:"false" json:"queryTagsEnabled"`
 	// When Etleap creates Redshift tables, SELECT privileges will be granted to user groups specified here.
 	UserGroups []string `json:"userGroups,omitempty"`
 	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
 	SourceOnly *bool `default:"false" json:"sourceOnly"`
-	// Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#include-query-tags">here</a>.
-	QueryTagsEnabled *bool `default:"false" json:"queryTagsEnabled"`
-	// The id of another Etleap Redshift connection. If specified, Etleap will make the data loaded available to the other cluster via Redshift Data Sharing.
-	DataSharingDestinations []string `json:"dataSharingDestinations,omitempty"`
 	// Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`.
-	DynamicVarcharWidthEnabled *bool                 `default:"false" json:"dynamicVarcharWidthEnabled"`
-	Shards                     []DatabaseShardOutput `json:"shards"`
+	DynamicVarcharWidthEnabled *bool `default:"false" json:"dynamicVarcharWidthEnabled"`
+	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Schema *string               `json:"schema,omitempty"`
+	Shards []DatabaseShardOutput `json:"shards"`
 }
 
 func (c ConnectionRedshiftSharded) MarshalJSON() ([]byte, error) {
@@ -176,11 +176,11 @@ func (c *ConnectionRedshiftSharded) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionRedshiftSharded) GetID() string {
+func (o *ConnectionRedshiftSharded) GetStatus() ConnectionRedshiftShardedStatus {
 	if o == nil {
-		return ""
+		return ConnectionRedshiftShardedStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionRedshiftSharded) GetName() string {
@@ -190,11 +190,18 @@ func (o *ConnectionRedshiftSharded) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionRedshiftSharded) GetType() ConnectionRedshiftShardedType {
+func (o *ConnectionRedshiftSharded) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionRedshiftShardedType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionRedshiftSharded) GetDefaultUpdateSchedule() []ConnectionRedshiftShardedDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionRedshiftShardedDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionRedshiftSharded) GetActive() bool {
@@ -204,18 +211,18 @@ func (o *ConnectionRedshiftSharded) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionRedshiftSharded) GetStatus() ConnectionRedshiftShardedStatus {
+func (o *ConnectionRedshiftSharded) GetType() ConnectionRedshiftShardedType {
 	if o == nil {
-		return ConnectionRedshiftShardedStatus("")
+		return ConnectionRedshiftShardedType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionRedshiftSharded) GetCreateDate() time.Time {
+func (o *ConnectionRedshiftSharded) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionRedshiftSharded) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -225,9 +232,9 @@ func (o *ConnectionRedshiftSharded) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionRedshiftSharded) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionRedshiftSharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -235,6 +242,13 @@ func (o *ConnectionRedshiftSharded) GetUpdateScheduleInterval() *UpdateScheduleM
 func (o *ConnectionRedshiftSharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftSharded) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -253,25 +267,18 @@ func (o *ConnectionRedshiftSharded) GetUpdateScheduleWeekly() *UpdateScheduleMod
 	return nil
 }
 
-func (o *ConnectionRedshiftSharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionRedshiftSharded) GetDefaultUpdateSchedule() []ConnectionRedshiftShardedDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionRedshiftShardedDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
-}
-
-func (o *ConnectionRedshiftSharded) GetSchema() *string {
+func (o *ConnectionRedshiftSharded) GetDataSharingDestinations() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Schema
+	return o.DataSharingDestinations
+}
+
+func (o *ConnectionRedshiftSharded) GetQueryTagsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.QueryTagsEnabled
 }
 
 func (o *ConnectionRedshiftSharded) GetUserGroups() []string {
@@ -288,25 +295,18 @@ func (o *ConnectionRedshiftSharded) GetSourceOnly() *bool {
 	return o.SourceOnly
 }
 
-func (o *ConnectionRedshiftSharded) GetQueryTagsEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.QueryTagsEnabled
-}
-
-func (o *ConnectionRedshiftSharded) GetDataSharingDestinations() []string {
-	if o == nil {
-		return nil
-	}
-	return o.DataSharingDestinations
-}
-
 func (o *ConnectionRedshiftSharded) GetDynamicVarcharWidthEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DynamicVarcharWidthEnabled
+}
+
+func (o *ConnectionRedshiftSharded) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
 }
 
 func (o *ConnectionRedshiftSharded) GetShards() []DatabaseShardOutput {
@@ -322,21 +322,21 @@ type ConnectionRedshiftShardedInput struct {
 	Type ConnectionRedshiftShardedType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// If not specified, the default schema will be used.
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string `json:"schema,omitempty"`
+	// The id of another Etleap Redshift connection. If specified, Etleap will make the data loaded available to the other cluster via Redshift Data Sharing.
+	DataSharingDestinations []string `json:"dataSharingDestinations,omitempty"`
+	// Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#include-query-tags">here</a>.
+	QueryTagsEnabled *bool `default:"false" json:"queryTagsEnabled"`
 	// When Etleap creates Redshift tables, SELECT privileges will be granted to user groups specified here.
 	UserGroups []string `json:"userGroups,omitempty"`
 	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
 	SourceOnly *bool `default:"false" json:"sourceOnly"`
-	// Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#include-query-tags">here</a>.
-	QueryTagsEnabled *bool `default:"false" json:"queryTagsEnabled"`
-	// The id of another Etleap Redshift connection. If specified, Etleap will make the data loaded available to the other cluster via Redshift Data Sharing.
-	DataSharingDestinations []string `json:"dataSharingDestinations,omitempty"`
 	// Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`.
-	DynamicVarcharWidthEnabled *bool           `default:"false" json:"dynamicVarcharWidthEnabled"`
-	Shards                     []DatabaseShard `json:"shards"`
+	DynamicVarcharWidthEnabled *bool `default:"false" json:"dynamicVarcharWidthEnabled"`
+	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Schema *string         `json:"schema,omitempty"`
+	Shards []DatabaseShard `json:"shards"`
 }
 
 func (c ConnectionRedshiftShardedInput) MarshalJSON() ([]byte, error) {
@@ -371,9 +371,9 @@ func (o *ConnectionRedshiftShardedInput) GetUpdateSchedule() *UpdateScheduleType
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -381,6 +381,13 @@ func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleInterval() *UpdateSche
 func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -399,18 +406,18 @@ func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleWeekly() *UpdateSchedu
 	return nil
 }
 
-func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionRedshiftShardedInput) GetSchema() *string {
+func (o *ConnectionRedshiftShardedInput) GetDataSharingDestinations() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Schema
+	return o.DataSharingDestinations
+}
+
+func (o *ConnectionRedshiftShardedInput) GetQueryTagsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.QueryTagsEnabled
 }
 
 func (o *ConnectionRedshiftShardedInput) GetUserGroups() []string {
@@ -427,25 +434,18 @@ func (o *ConnectionRedshiftShardedInput) GetSourceOnly() *bool {
 	return o.SourceOnly
 }
 
-func (o *ConnectionRedshiftShardedInput) GetQueryTagsEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.QueryTagsEnabled
-}
-
-func (o *ConnectionRedshiftShardedInput) GetDataSharingDestinations() []string {
-	if o == nil {
-		return nil
-	}
-	return o.DataSharingDestinations
-}
-
 func (o *ConnectionRedshiftShardedInput) GetDynamicVarcharWidthEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DynamicVarcharWidthEnabled
+}
+
+func (o *ConnectionRedshiftShardedInput) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
 }
 
 func (o *ConnectionRedshiftShardedInput) GetShards() []DatabaseShard {

@@ -32,20 +32,13 @@ func (e *SourceElasticSearchType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceElasticSearch struct {
-	Type SourceElasticSearchType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string                  `json:"connectionId"`
+	Type         SourceElasticSearchType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The index name.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceElasticSearch) GetType() SourceElasticSearchType {
-	if o == nil {
-		return SourceElasticSearchType("")
-	}
-	return o.Type
 }
 
 func (o *SourceElasticSearch) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceElasticSearch) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceElasticSearch) GetType() SourceElasticSearchType {
+	if o == nil {
+		return SourceElasticSearchType("")
+	}
+	return o.Type
 }
 
 func (o *SourceElasticSearch) GetLatencyThreshold() *int64 {

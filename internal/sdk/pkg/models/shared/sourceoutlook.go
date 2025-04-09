@@ -32,20 +32,13 @@ func (e *SourceOutlookType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceOutlook struct {
-	Type SourceOutlookType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string            `json:"connectionId"`
+	Type         SourceOutlookType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Outlook entity. Example values: [Messages, Events].
 	Entity string `json:"entity"`
-}
-
-func (o *SourceOutlook) GetType() SourceOutlookType {
-	if o == nil {
-		return SourceOutlookType("")
-	}
-	return o.Type
 }
 
 func (o *SourceOutlook) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceOutlook) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceOutlook) GetType() SourceOutlookType {
+	if o == nil {
+		return SourceOutlookType("")
+	}
+	return o.Type
 }
 
 func (o *SourceOutlook) GetLatencyThreshold() *int64 {

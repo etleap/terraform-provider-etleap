@@ -32,11 +32,11 @@ func (e *ConnectionSapHanaShardedUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionSapHanaShardedUpdate struct {
-	// The unique name of this connection.
-	Name *string                            `json:"name,omitempty"`
-	Type ConnectionSapHanaShardedUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                              `json:"active,omitempty"`
+	Type   ConnectionSapHanaShardedUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
@@ -46,11 +46,11 @@ type ConnectionSapHanaShardedUpdate struct {
 	Shards []DatabaseShard `json:"shards,omitempty"`
 }
 
-func (o *ConnectionSapHanaShardedUpdate) GetName() *string {
+func (o *ConnectionSapHanaShardedUpdate) GetActive() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Name
+	return o.Active
 }
 
 func (o *ConnectionSapHanaShardedUpdate) GetType() ConnectionSapHanaShardedUpdateType {
@@ -60,11 +60,11 @@ func (o *ConnectionSapHanaShardedUpdate) GetType() ConnectionSapHanaShardedUpdat
 	return o.Type
 }
 
-func (o *ConnectionSapHanaShardedUpdate) GetActive() *bool {
+func (o *ConnectionSapHanaShardedUpdate) GetName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Active
+	return o.Name
 }
 
 func (o *ConnectionSapHanaShardedUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -74,9 +74,9 @@ func (o *ConnectionSapHanaShardedUpdate) GetUpdateSchedule() *UpdateScheduleType
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSapHanaShardedUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSapHanaShardedUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -84,6 +84,13 @@ func (o *ConnectionSapHanaShardedUpdate) GetUpdateScheduleInterval() *UpdateSche
 func (o *ConnectionSapHanaShardedUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSapHanaShardedUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -98,13 +105,6 @@ func (o *ConnectionSapHanaShardedUpdate) GetUpdateScheduleDaily() *UpdateSchedul
 func (o *ConnectionSapHanaShardedUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionSapHanaShardedUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

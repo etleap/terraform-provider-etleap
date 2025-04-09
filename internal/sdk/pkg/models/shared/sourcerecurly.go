@@ -32,20 +32,13 @@ func (e *SourceRecurlyType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceRecurly struct {
-	Type SourceRecurlyType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string            `json:"connectionId"`
+	Type         SourceRecurlyType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Recurly entity. Example values: [Account, Account Acquisition, Line Item, Coupon, Coupon Redemption, Credit Payment, Invoice, Measured Unit, Plan, Plan Add-On, Subscription, Transaction]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceRecurly) GetType() SourceRecurlyType {
-	if o == nil {
-		return SourceRecurlyType("")
-	}
-	return o.Type
 }
 
 func (o *SourceRecurly) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceRecurly) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceRecurly) GetType() SourceRecurlyType {
+	if o == nil {
+		return SourceRecurlyType("")
+	}
+	return o.Type
 }
 
 func (o *SourceRecurly) GetLatencyThreshold() *int64 {

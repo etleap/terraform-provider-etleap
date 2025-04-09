@@ -4,27 +4,13 @@ package shared
 
 // DatabaseShard - Use shards when the database is split amongst several physical machines, but should be treated as a single database. For performance reasons, only the first shard is validated.
 type DatabaseShard struct {
-	Address   string     `json:"address"`
-	Port      int64      `json:"port"`
 	Username  string     `json:"username"`
-	Password  string     `json:"password"`
 	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Password  string     `json:"password"`
+	Port      int64      `json:"port"`
+	Address   string     `json:"address"`
 	Database  string     `json:"database"`
 	ShardID   string     `json:"shardId"`
-}
-
-func (o *DatabaseShard) GetAddress() string {
-	if o == nil {
-		return ""
-	}
-	return o.Address
-}
-
-func (o *DatabaseShard) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
 }
 
 func (o *DatabaseShard) GetUsername() string {
@@ -34,6 +20,13 @@ func (o *DatabaseShard) GetUsername() string {
 	return o.Username
 }
 
+func (o *DatabaseShard) GetSSHConfig() *SSHConfig {
+	if o == nil {
+		return nil
+	}
+	return o.SSHConfig
+}
+
 func (o *DatabaseShard) GetPassword() string {
 	if o == nil {
 		return ""
@@ -41,11 +34,18 @@ func (o *DatabaseShard) GetPassword() string {
 	return o.Password
 }
 
-func (o *DatabaseShard) GetSSHConfig() *SSHConfig {
+func (o *DatabaseShard) GetPort() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
-	return o.SSHConfig
+	return o.Port
+}
+
+func (o *DatabaseShard) GetAddress() string {
+	if o == nil {
+		return ""
+	}
+	return o.Address
 }
 
 func (o *DatabaseShard) GetDatabase() string {

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionMONGODBDataSourceModel) RefreshFromSharedConnectionMongo(resp *shared.ConnectionMongo) {
+func (r *ConnectionMONGODBDataSourceModel) RefreshFromSharedConnectionMongoOutput(resp *shared.ConnectionMongoOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.AuthDatabaseName = types.StringPointerValue(resp.AuthDatabaseName)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -17,7 +17,7 @@ func (r *ConnectionMONGODBDataSourceModel) RefreshFromSharedConnectionMongo(resp
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

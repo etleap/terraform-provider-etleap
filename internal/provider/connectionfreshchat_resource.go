@@ -41,17 +41,17 @@ type ConnectionFRESHCHATResource struct {
 
 // ConnectionFRESHCHATResourceModel describes the resource data model.
 type ConnectionFRESHCHATResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	APIKey                   types.String            `tfsdk:"api_key"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	Domain                   types.String            `tfsdk:"domain"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	APIKey                   types.String                                    `tfsdk:"api_key"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	Domain                   types.String                                    `tfsdk:"domain"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionFRESHCHATResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -565,7 +565,7 @@ func (r *ConnectionFRESHCHATResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToSharedConnectionFreshchatInput()
+	request := *data.ToSharedConnectionFreshchat()
 	res, err := r.client.Connection.CreateFRESHCHATConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -586,7 +586,7 @@ func (r *ConnectionFRESHCHATResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshchat(res.ConnectionFreshchat)
+	data.RefreshFromSharedConnectionFreshchatOutput(res.ConnectionFreshchat)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetFRESHCHATConnectionRequest{
@@ -612,7 +612,7 @@ func (r *ConnectionFRESHCHATResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshchat(res1.ConnectionFreshchat)
+	data.RefreshFromSharedConnectionFreshchatOutput(res1.ConnectionFreshchat)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -661,7 +661,7 @@ func (r *ConnectionFRESHCHATResource) Read(ctx context.Context, req resource.Rea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshchat(res.ConnectionFreshchat)
+	data.RefreshFromSharedConnectionFreshchatOutput(res.ConnectionFreshchat)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -707,7 +707,7 @@ func (r *ConnectionFRESHCHATResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshchat(res.ConnectionFreshchat)
+	data.RefreshFromSharedConnectionFreshchatOutput(res.ConnectionFreshchat)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetFRESHCHATConnectionRequest{
@@ -733,7 +733,7 @@ func (r *ConnectionFRESHCHATResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshchat(res1.ConnectionFreshchat)
+	data.RefreshFromSharedConnectionFreshchatOutput(res1.ConnectionFreshchat)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

@@ -37,7 +37,7 @@ type GetTeamsResponse struct {
 	RawResponse *http.Response
 	// OK
 	TeamsOutput *shared.TeamsOutput
-	// Bad Request
+	// User does not have permission to list teams. Contact your organization admin.
 	Errors *shared.Errors
 }
 

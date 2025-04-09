@@ -41,17 +41,17 @@ type ConnectionGOOGLECLOUDSTORAGEResource struct {
 
 // ConnectionGOOGLECLOUDSTORAGEResourceModel describes the resource data model.
 type ConnectionGOOGLECLOUDSTORAGEResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	Bucket                   types.String            `tfsdk:"bucket"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	JSONCredentials          types.String            `tfsdk:"json_credentials"`
-	Name                     types.String            `tfsdk:"name"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	Bucket                   types.String                                    `tfsdk:"bucket"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	JSONCredentials          types.String                                    `tfsdk:"json_credentials"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionGOOGLECLOUDSTORAGEResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

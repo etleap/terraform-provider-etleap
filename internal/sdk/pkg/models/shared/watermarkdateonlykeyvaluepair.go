@@ -8,34 +8,34 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-type Format string
+type WatermarkDateonlyKeyValuePairFormat string
 
 const (
-	FormatYyyyMmDd Format = "yyyy-MM-dd"
+	WatermarkDateonlyKeyValuePairFormatYyyyMmDd WatermarkDateonlyKeyValuePairFormat = "yyyy-MM-dd"
 )
 
-func (e Format) ToPointer() *Format {
+func (e WatermarkDateonlyKeyValuePairFormat) ToPointer() *WatermarkDateonlyKeyValuePairFormat {
 	return &e
 }
 
-func (e *Format) UnmarshalJSON(data []byte) error {
+func (e *WatermarkDateonlyKeyValuePairFormat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "yyyy-MM-dd":
-		*e = Format(v)
+		*e = WatermarkDateonlyKeyValuePairFormat(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Format: %v", v)
+		return fmt.Errorf("invalid value for WatermarkDateonlyKeyValuePairFormat: %v", v)
 	}
 }
 
 type WatermarkDateonlyKeyValuePair struct {
-	Key    string  `json:"key"`
-	Value  string  `json:"value"`
-	Format *Format `default:"yyyy-MM-dd" json:"format"`
+	Value  string                               `json:"value"`
+	Key    string                               `json:"key"`
+	Format *WatermarkDateonlyKeyValuePairFormat `default:"yyyy-MM-dd" json:"format"`
 }
 
 func (w WatermarkDateonlyKeyValuePair) MarshalJSON() ([]byte, error) {
@@ -49,13 +49,6 @@ func (w *WatermarkDateonlyKeyValuePair) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WatermarkDateonlyKeyValuePair) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
 func (o *WatermarkDateonlyKeyValuePair) GetValue() string {
 	if o == nil {
 		return ""
@@ -63,7 +56,14 @@ func (o *WatermarkDateonlyKeyValuePair) GetValue() string {
 	return o.Value
 }
 
-func (o *WatermarkDateonlyKeyValuePair) GetFormat() *Format {
+func (o *WatermarkDateonlyKeyValuePair) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *WatermarkDateonlyKeyValuePair) GetFormat() *WatermarkDateonlyKeyValuePairFormat {
 	if o == nil {
 		return nil
 	}

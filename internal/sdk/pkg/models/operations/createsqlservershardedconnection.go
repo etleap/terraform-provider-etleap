@@ -15,7 +15,7 @@ type CreateSQLSERVERSHARDEDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSQLServerSharded *shared.ConnectionSQLServerSharded
+	ConnectionSQLServerSharded *shared.ConnectionSQLServerShardedOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateSQLSERVERSHARDEDConnectionResponse) GetRawResponse() *http.Respon
 	return o.RawResponse
 }
 
-func (o *CreateSQLSERVERSHARDEDConnectionResponse) GetConnectionSQLServerSharded() *shared.ConnectionSQLServerSharded {
+func (o *CreateSQLSERVERSHARDEDConnectionResponse) GetConnectionSQLServerSharded() *shared.ConnectionSQLServerShardedOutput {
 	if o == nil {
 		return nil
 	}

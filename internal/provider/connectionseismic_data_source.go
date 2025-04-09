@@ -28,16 +28,16 @@ type ConnectionSEISMICDataSource struct {
 
 // ConnectionSEISMICDataSourceModel describes the data model.
 type ConnectionSEISMICDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	ClientID              types.String            `tfsdk:"client_id"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Status                types.String            `tfsdk:"status"`
-	TenantName            types.String            `tfsdk:"tenant_name"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	ClientID              types.String                                    `tfsdk:"client_id"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Status                types.String                                    `tfsdk:"status"`
+	TenantName            types.String                                    `tfsdk:"tenant_name"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -315,7 +315,7 @@ func (r *ConnectionSEISMICDataSource) Read(ctx context.Context, req datasource.R
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSeismic(res.ConnectionSeismic)
+	data.RefreshFromSharedConnectionSeismicOutput(res.ConnectionSeismic)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

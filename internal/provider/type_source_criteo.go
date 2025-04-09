@@ -12,5 +12,4 @@ type SourceCriteo struct {
 	LatencyThreshold types.Int64    `tfsdk:"latency_threshold"`
 	Metrics          []types.String `tfsdk:"metrics"`
 	Timezone         []types.String `tfsdk:"timezone"`
-	Type             types.String   `tfsdk:"type"`
 }

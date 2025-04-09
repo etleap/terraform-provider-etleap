@@ -15,7 +15,7 @@ type CreateGONGConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionGong *shared.ConnectionGong
+	ConnectionGong *shared.ConnectionGongOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateGONGConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateGONGConnectionResponse) GetConnectionGong() *shared.ConnectionGong {
+func (o *CreateGONGConnectionResponse) GetConnectionGong() *shared.ConnectionGongOutput {
 	if o == nil {
 		return nil
 	}

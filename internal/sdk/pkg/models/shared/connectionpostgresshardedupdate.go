@@ -32,34 +32,20 @@ func (e *ConnectionPostgresShardedUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionPostgresShardedUpdate struct {
-	// The unique name of this connection.
-	Name *string                             `json:"name,omitempty"`
-	Type ConnectionPostgresShardedUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                               `json:"active,omitempty"`
+	Type   ConnectionPostgresShardedUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
+	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string `json:"schema,omitempty"`
-	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
-	AutoReplicate *string         `json:"autoReplicate,omitempty"`
-	Shards        []DatabaseShard `json:"shards,omitempty"`
-}
-
-func (o *ConnectionPostgresShardedUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionPostgresShardedUpdate) GetType() ConnectionPostgresShardedUpdateType {
-	if o == nil {
-		return ConnectionPostgresShardedUpdateType("")
-	}
-	return o.Type
+	Schema *string         `json:"schema,omitempty"`
+	Shards []DatabaseShard `json:"shards,omitempty"`
 }
 
 func (o *ConnectionPostgresShardedUpdate) GetActive() *bool {
@@ -69,6 +55,20 @@ func (o *ConnectionPostgresShardedUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionPostgresShardedUpdate) GetType() ConnectionPostgresShardedUpdateType {
+	if o == nil {
+		return ConnectionPostgresShardedUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionPostgresShardedUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionPostgresShardedUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -76,9 +76,9 @@ func (o *ConnectionPostgresShardedUpdate) GetUpdateSchedule() *UpdateScheduleTyp
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionPostgresShardedUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionPostgresShardedUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -86,6 +86,13 @@ func (o *ConnectionPostgresShardedUpdate) GetUpdateScheduleInterval() *UpdateSch
 func (o *ConnectionPostgresShardedUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionPostgresShardedUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -104,11 +111,11 @@ func (o *ConnectionPostgresShardedUpdate) GetUpdateScheduleWeekly() *UpdateSched
 	return nil
 }
 
-func (o *ConnectionPostgresShardedUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionPostgresShardedUpdate) GetAutoReplicate() *string {
+	if o == nil {
+		return nil
 	}
-	return nil
+	return o.AutoReplicate
 }
 
 func (o *ConnectionPostgresShardedUpdate) GetSchema() *string {
@@ -116,13 +123,6 @@ func (o *ConnectionPostgresShardedUpdate) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
-}
-
-func (o *ConnectionPostgresShardedUpdate) GetAutoReplicate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AutoReplicate
 }
 
 func (o *ConnectionPostgresShardedUpdate) GetShards() []DatabaseShard {

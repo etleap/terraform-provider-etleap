@@ -34,8 +34,8 @@ type UpdateTWILIOConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionTwilio *shared.ConnectionTwilio
-	// Bad Request
+	ConnectionTwilio *shared.ConnectionTwilioOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateTWILIOConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateTWILIOConnectionResponse) GetConnectionTwilio() *shared.ConnectionTwilio {
+func (o *UpdateTWILIOConnectionResponse) GetConnectionTwilio() *shared.ConnectionTwilioOutput {
 	if o == nil {
 		return nil
 	}

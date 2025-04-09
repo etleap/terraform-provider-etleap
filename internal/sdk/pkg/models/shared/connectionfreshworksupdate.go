@@ -32,31 +32,17 @@ func (e *ConnectionFreshworksUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionFreshworksUpdate struct {
-	// The unique name of this connection.
-	Name *string                         `json:"name,omitempty"`
-	Type *ConnectionFreshworksUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                           `json:"active,omitempty"`
+	Type   *ConnectionFreshworksUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule    *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	FreshcallerAPIKey *string              `json:"freshcallerApiKey,omitempty"`
 	FreshdeskDomain   *string              `json:"freshdeskDomain,omitempty"`
 	FreshdeskAPIKey   *string              `json:"freshdeskApiKey,omitempty"`
 	FreshcallerDomain *string              `json:"freshcallerDomain,omitempty"`
-	FreshcallerAPIKey *string              `json:"freshcallerApiKey,omitempty"`
-}
-
-func (o *ConnectionFreshworksUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionFreshworksUpdate) GetType() *ConnectionFreshworksUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionFreshworksUpdate) GetActive() *bool {
@@ -66,6 +52,20 @@ func (o *ConnectionFreshworksUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionFreshworksUpdate) GetType() *ConnectionFreshworksUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionFreshworksUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionFreshworksUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -73,9 +73,9 @@ func (o *ConnectionFreshworksUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionFreshworksUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionFreshworksUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -83,6 +83,13 @@ func (o *ConnectionFreshworksUpdate) GetUpdateScheduleInterval() *UpdateSchedule
 func (o *ConnectionFreshworksUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionFreshworksUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -101,11 +108,11 @@ func (o *ConnectionFreshworksUpdate) GetUpdateScheduleWeekly() *UpdateScheduleMo
 	return nil
 }
 
-func (o *ConnectionFreshworksUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionFreshworksUpdate) GetFreshcallerAPIKey() *string {
+	if o == nil {
+		return nil
 	}
-	return nil
+	return o.FreshcallerAPIKey
 }
 
 func (o *ConnectionFreshworksUpdate) GetFreshdeskDomain() *string {
@@ -127,11 +134,4 @@ func (o *ConnectionFreshworksUpdate) GetFreshcallerDomain() *string {
 		return nil
 	}
 	return o.FreshcallerDomain
-}
-
-func (o *ConnectionFreshworksUpdate) GetFreshcallerAPIKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.FreshcallerAPIKey
 }

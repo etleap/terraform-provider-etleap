@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionPostgresType string
-
-const (
-	ConnectionPostgresTypePostgres ConnectionPostgresType = "POSTGRES"
-)
-
-func (e ConnectionPostgresType) ToPointer() *ConnectionPostgresType {
-	return &e
-}
-
-func (e *ConnectionPostgresType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "POSTGRES":
-		*e = ConnectionPostgresType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionPostgresType: %v", v)
-	}
-}
-
 // ConnectionPostgresStatus - The current status of the connection.
 type ConnectionPostgresStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionPostgresDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSch
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionPostgresDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionPostgresDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionPostgresDefaultUpdateSchedule) GetUpdateScheduleInterval() *U
 func (o *ConnectionPostgresDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionPostgresDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,43 +108,60 @@ func (o *ConnectionPostgresDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Upd
 	return nil
 }
 
-func (o *ConnectionPostgresDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionPostgresType string
+
+const (
+	ConnectionPostgresTypePostgres ConnectionPostgresType = "POSTGRES"
+)
+
+func (e ConnectionPostgresType) ToPointer() *ConnectionPostgresType {
+	return &e
+}
+
+func (e *ConnectionPostgresType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "POSTGRES":
+		*e = ConnectionPostgresType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionPostgresType: %v", v)
+	}
 }
 
 // ConnectionPostgres - Specifies the location of a database.
 type ConnectionPostgres struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                 `json:"name"`
-	Type ConnectionPostgresType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionPostgresStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionPostgresDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// If not specified, the default schema will be used.
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string `json:"schema,omitempty"`
+	// Whether this connection has been marked as active.
+	Active bool                   `json:"active"`
+	Type   ConnectionPostgresType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/docs/documentation/ZG9jOjM3MjY3NzM5-postgres) and ensure that all requirements are met.
-	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
-	Address    string     `json:"address"`
-	Port       int64      `json:"port"`
-	Username   string     `json:"username"`
-	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
-	Database   string     `json:"database"`
+	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
+	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Schema    *string    `json:"schema,omitempty"`
+	Username  string     `json:"username"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Port      int64      `json:"port"`
+	Address   string     `json:"address"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionPostgres) MarshalJSON() ([]byte, error) {
@@ -175,11 +175,11 @@ func (c *ConnectionPostgres) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionPostgres) GetID() string {
+func (o *ConnectionPostgres) GetStatus() ConnectionPostgresStatus {
 	if o == nil {
-		return ""
+		return ConnectionPostgresStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionPostgres) GetName() string {
@@ -189,11 +189,18 @@ func (o *ConnectionPostgres) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionPostgres) GetType() ConnectionPostgresType {
+func (o *ConnectionPostgres) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionPostgresType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionPostgres) GetDefaultUpdateSchedule() []ConnectionPostgresDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionPostgresDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionPostgres) GetActive() bool {
@@ -203,18 +210,18 @@ func (o *ConnectionPostgres) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionPostgres) GetStatus() ConnectionPostgresStatus {
+func (o *ConnectionPostgres) GetType() ConnectionPostgresType {
 	if o == nil {
-		return ConnectionPostgresStatus("")
+		return ConnectionPostgresType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionPostgres) GetCreateDate() time.Time {
+func (o *ConnectionPostgres) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionPostgres) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -224,9 +231,9 @@ func (o *ConnectionPostgres) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionPostgres) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionPostgres) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -234,6 +241,13 @@ func (o *ConnectionPostgres) GetUpdateScheduleInterval() *UpdateScheduleModeInte
 func (o *ConnectionPostgres) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionPostgres) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -252,27 +266,6 @@ func (o *ConnectionPostgres) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly
 	return nil
 }
 
-func (o *ConnectionPostgres) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionPostgres) GetDefaultUpdateSchedule() []ConnectionPostgresDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionPostgresDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
-}
-
-func (o *ConnectionPostgres) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
 func (o *ConnectionPostgres) GetAutoReplicate() *string {
 	if o == nil {
 		return nil
@@ -287,18 +280,11 @@ func (o *ConnectionPostgres) GetCdcEnabled() *bool {
 	return o.CdcEnabled
 }
 
-func (o *ConnectionPostgres) GetAddress() string {
+func (o *ConnectionPostgres) GetSchema() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Address
-}
-
-func (o *ConnectionPostgres) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
+	return o.Schema
 }
 
 func (o *ConnectionPostgres) GetUsername() string {
@@ -315,6 +301,20 @@ func (o *ConnectionPostgres) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
+func (o *ConnectionPostgres) GetPort() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Port
+}
+
+func (o *ConnectionPostgres) GetAddress() string {
+	if o == nil {
+		return ""
+	}
+	return o.Address
+}
+
 func (o *ConnectionPostgres) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -329,20 +329,20 @@ type ConnectionPostgresInput struct {
 	Type ConnectionPostgresType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// If not specified, the default schema will be used.
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string `json:"schema,omitempty"`
 	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
 	// Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/docs/documentation/ZG9jOjM3MjY3NzM5-postgres) and ensure that all requirements are met.
-	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
-	Address    string     `json:"address"`
-	Port       int64      `json:"port"`
-	Username   string     `json:"username"`
-	Password   string     `json:"password"`
-	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
-	Database   string     `json:"database"`
+	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
+	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Schema    *string    `json:"schema,omitempty"`
+	Username  string     `json:"username"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Password  string     `json:"password"`
+	Port      int64      `json:"port"`
+	Address   string     `json:"address"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionPostgresInput) MarshalJSON() ([]byte, error) {
@@ -377,9 +377,9 @@ func (o *ConnectionPostgresInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionPostgresInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionPostgresInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -387,6 +387,13 @@ func (o *ConnectionPostgresInput) GetUpdateScheduleInterval() *UpdateScheduleMod
 func (o *ConnectionPostgresInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionPostgresInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -405,20 +412,6 @@ func (o *ConnectionPostgresInput) GetUpdateScheduleWeekly() *UpdateScheduleModeW
 	return nil
 }
 
-func (o *ConnectionPostgresInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionPostgresInput) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
 func (o *ConnectionPostgresInput) GetAutoReplicate() *string {
 	if o == nil {
 		return nil
@@ -433,18 +426,11 @@ func (o *ConnectionPostgresInput) GetCdcEnabled() *bool {
 	return o.CdcEnabled
 }
 
-func (o *ConnectionPostgresInput) GetAddress() string {
+func (o *ConnectionPostgresInput) GetSchema() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Address
-}
-
-func (o *ConnectionPostgresInput) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
+	return o.Schema
 }
 
 func (o *ConnectionPostgresInput) GetUsername() string {
@@ -454,6 +440,13 @@ func (o *ConnectionPostgresInput) GetUsername() string {
 	return o.Username
 }
 
+func (o *ConnectionPostgresInput) GetSSHConfig() *SSHConfig {
+	if o == nil {
+		return nil
+	}
+	return o.SSHConfig
+}
+
 func (o *ConnectionPostgresInput) GetPassword() string {
 	if o == nil {
 		return ""
@@ -461,11 +454,18 @@ func (o *ConnectionPostgresInput) GetPassword() string {
 	return o.Password
 }
 
-func (o *ConnectionPostgresInput) GetSSHConfig() *SSHConfig {
+func (o *ConnectionPostgresInput) GetPort() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
-	return o.SSHConfig
+	return o.Port
+}
+
+func (o *ConnectionPostgresInput) GetAddress() string {
+	if o == nil {
+		return ""
+	}
+	return o.Address
 }
 
 func (o *ConnectionPostgresInput) GetDatabase() string {

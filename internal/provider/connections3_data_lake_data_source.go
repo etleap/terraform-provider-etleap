@@ -28,21 +28,21 @@ type ConnectionS3DATALAKEDataSource struct {
 
 // ConnectionS3DATALAKEDataSourceModel describes the data model.
 type ConnectionS3DATALAKEDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	BaseDirectory         types.String            `tfsdk:"base_directory"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	GlueDatabase          types.String            `tfsdk:"glue_database"`
-	GlueRegion            types.String            `tfsdk:"glue_region"`
-	IamRole               types.String            `tfsdk:"iam_role"`
-	ID                    types.String            `tfsdk:"id"`
-	InputBucket           types.String            `tfsdk:"input_bucket"`
-	KmsKey                types.String            `tfsdk:"kms_key"`
-	Name                  types.String            `tfsdk:"name"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	WriteManifest         types.Bool              `tfsdk:"write_manifest"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	BaseDirectory         types.String                                    `tfsdk:"base_directory"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	GlueDatabase          types.String                                    `tfsdk:"glue_database"`
+	GlueRegion            types.String                                    `tfsdk:"glue_region"`
+	IamRole               types.String                                    `tfsdk:"iam_role"`
+	ID                    types.String                                    `tfsdk:"id"`
+	InputBucket           types.String                                    `tfsdk:"input_bucket"`
+	KmsKey                types.String                                    `tfsdk:"kms_key"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	WriteManifest         types.Bool                                      `tfsdk:"write_manifest"`
 }
 
 // Metadata returns the data source type name.

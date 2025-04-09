@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionQuoraType string
-
-const (
-	ConnectionQuoraTypeQuoraAds ConnectionQuoraType = "QUORA_ADS"
-)
-
-func (e ConnectionQuoraType) ToPointer() *ConnectionQuoraType {
-	return &e
-}
-
-func (e *ConnectionQuoraType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "QUORA_ADS":
-		*e = ConnectionQuoraType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionQuoraType: %v", v)
-	}
-}
-
 // ConnectionQuoraStatus - The current status of the connection.
 type ConnectionQuoraStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionQuoraDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSchedu
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionQuoraDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionQuoraDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionQuoraDefaultUpdateSchedule) GetUpdateScheduleInterval() *Upda
 func (o *ConnectionQuoraDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionQuoraDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,30 +108,47 @@ func (o *ConnectionQuoraDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Update
 	return nil
 }
 
-func (o *ConnectionQuoraDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionQuoraType string
+
+const (
+	ConnectionQuoraTypeQuoraAds ConnectionQuoraType = "QUORA_ADS"
+)
+
+func (e ConnectionQuoraType) ToPointer() *ConnectionQuoraType {
+	return &e
+}
+
+func (e *ConnectionQuoraType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "QUORA_ADS":
+		*e = ConnectionQuoraType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionQuoraType: %v", v)
+	}
 }
 
 type ConnectionQuora struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string              `json:"name"`
-	Type ConnectionQuoraType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionQuoraStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionQuoraDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	Username              string                                 `json:"username"`
+	// Whether this connection has been marked as active.
+	Active bool                `json:"active"`
+	Type   ConnectionQuoraType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	Username       string               `json:"username"`
 }
 
 func (c ConnectionQuora) MarshalJSON() ([]byte, error) {
@@ -162,11 +162,11 @@ func (c *ConnectionQuora) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionQuora) GetID() string {
+func (o *ConnectionQuora) GetStatus() ConnectionQuoraStatus {
 	if o == nil {
-		return ""
+		return ConnectionQuoraStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionQuora) GetName() string {
@@ -176,11 +176,18 @@ func (o *ConnectionQuora) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionQuora) GetType() ConnectionQuoraType {
+func (o *ConnectionQuora) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionQuoraType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionQuora) GetDefaultUpdateSchedule() []ConnectionQuoraDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionQuoraDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionQuora) GetActive() bool {
@@ -190,18 +197,18 @@ func (o *ConnectionQuora) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionQuora) GetStatus() ConnectionQuoraStatus {
+func (o *ConnectionQuora) GetType() ConnectionQuoraType {
 	if o == nil {
-		return ConnectionQuoraStatus("")
+		return ConnectionQuoraType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionQuora) GetCreateDate() time.Time {
+func (o *ConnectionQuora) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionQuora) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -211,9 +218,9 @@ func (o *ConnectionQuora) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionQuora) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionQuora) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -221,6 +228,13 @@ func (o *ConnectionQuora) GetUpdateScheduleInterval() *UpdateScheduleModeInterva
 func (o *ConnectionQuora) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionQuora) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -237,20 +251,6 @@ func (o *ConnectionQuora) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
-}
-
-func (o *ConnectionQuora) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionQuora) GetDefaultUpdateSchedule() []ConnectionQuoraDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionQuoraDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionQuora) GetUsername() string {
@@ -291,9 +291,9 @@ func (o *ConnectionQuoraInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionQuoraInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionQuoraInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -301,6 +301,13 @@ func (o *ConnectionQuoraInput) GetUpdateScheduleInterval() *UpdateScheduleModeIn
 func (o *ConnectionQuoraInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionQuoraInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -315,13 +322,6 @@ func (o *ConnectionQuoraInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily
 func (o *ConnectionQuoraInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionQuoraInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

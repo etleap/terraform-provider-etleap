@@ -32,11 +32,11 @@ func (e *ConnectionTwilioUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionTwilioUpdate struct {
-	// The unique name of this connection.
-	Name *string                     `json:"name,omitempty"`
-	Type *ConnectionTwilioUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                       `json:"active,omitempty"`
+	Type   *ConnectionTwilioUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// You can find your Account SID in your <a target="_blank" href="https://twilio.com/console">Account Dashboard</a>.
@@ -47,11 +47,11 @@ type ConnectionTwilioUpdate struct {
 	APIKeySecret *string `json:"apiKeySecret,omitempty"`
 }
 
-func (o *ConnectionTwilioUpdate) GetName() *string {
+func (o *ConnectionTwilioUpdate) GetActive() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Name
+	return o.Active
 }
 
 func (o *ConnectionTwilioUpdate) GetType() *ConnectionTwilioUpdateType {
@@ -61,11 +61,11 @@ func (o *ConnectionTwilioUpdate) GetType() *ConnectionTwilioUpdateType {
 	return o.Type
 }
 
-func (o *ConnectionTwilioUpdate) GetActive() *bool {
+func (o *ConnectionTwilioUpdate) GetName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Active
+	return o.Name
 }
 
 func (o *ConnectionTwilioUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -75,9 +75,9 @@ func (o *ConnectionTwilioUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTwilioUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionTwilioUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -85,6 +85,13 @@ func (o *ConnectionTwilioUpdate) GetUpdateScheduleInterval() *UpdateScheduleMode
 func (o *ConnectionTwilioUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionTwilioUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -99,13 +106,6 @@ func (o *ConnectionTwilioUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDai
 func (o *ConnectionTwilioUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionTwilioUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

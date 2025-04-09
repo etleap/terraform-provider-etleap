@@ -41,20 +41,20 @@ type ConnectionZUORAResource struct {
 
 // ConnectionZUORAResourceModel describes the resource data model.
 type ConnectionZUORAResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	ClientID                 types.String            `tfsdk:"client_id"`
-	ClientSecret             types.String            `tfsdk:"client_secret"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	Endpoint                 types.String            `tfsdk:"endpoint"`
-	EndpointHostname         types.String            `tfsdk:"endpoint_hostname"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Sandbox                  types.Bool              `tfsdk:"sandbox"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	ClientID                 types.String                                    `tfsdk:"client_id"`
+	ClientSecret             types.String                                    `tfsdk:"client_secret"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	Endpoint                 types.String                                    `tfsdk:"endpoint"`
+	EndpointHostname         types.String                                    `tfsdk:"endpoint_hostname"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Sandbox                  types.Bool                                      `tfsdk:"sandbox"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionZUORAResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -589,7 +589,7 @@ func (r *ConnectionZUORAResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToSharedConnectionZuoraInput()
+	request := *data.ToSharedConnectionZuora()
 	res, err := r.client.Connection.CreateZUORAConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -610,7 +610,7 @@ func (r *ConnectionZUORAResource) Create(ctx context.Context, req resource.Creat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionZuora(res.ConnectionZuora)
+	data.RefreshFromSharedConnectionZuoraOutput(res.ConnectionZuora)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetZUORAConnectionRequest{
@@ -636,7 +636,7 @@ func (r *ConnectionZUORAResource) Create(ctx context.Context, req resource.Creat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionZuora(res1.ConnectionZuora)
+	data.RefreshFromSharedConnectionZuoraOutput(res1.ConnectionZuora)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -685,7 +685,7 @@ func (r *ConnectionZUORAResource) Read(ctx context.Context, req resource.ReadReq
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionZuora(res.ConnectionZuora)
+	data.RefreshFromSharedConnectionZuoraOutput(res.ConnectionZuora)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -731,7 +731,7 @@ func (r *ConnectionZUORAResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionZuora(res.ConnectionZuora)
+	data.RefreshFromSharedConnectionZuoraOutput(res.ConnectionZuora)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetZUORAConnectionRequest{
@@ -757,7 +757,7 @@ func (r *ConnectionZUORAResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionZuora(res1.ConnectionZuora)
+	data.RefreshFromSharedConnectionZuoraOutput(res1.ConnectionZuora)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

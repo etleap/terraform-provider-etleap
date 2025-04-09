@@ -34,8 +34,8 @@ type UpdateCOUPAConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionCoupa *shared.ConnectionCoupa
-	// Bad Request
+	ConnectionCoupa *shared.ConnectionCoupaOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateCOUPAConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateCOUPAConnectionResponse) GetConnectionCoupa() *shared.ConnectionCoupa {
+func (o *UpdateCOUPAConnectionResponse) GetConnectionCoupa() *shared.ConnectionCoupaOutput {
 	if o == nil {
 		return nil
 	}

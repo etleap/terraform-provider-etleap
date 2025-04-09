@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSFTPDataSourceModel) RefreshFromSharedConnectionSftp(resp *shared.ConnectionSftp) {
+func (r *ConnectionSFTPDataSourceModel) RefreshFromSharedConnectionSftpOutput(resp *shared.ConnectionSftpOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.BaseDirectory = types.StringValue(resp.BaseDirectory)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -16,7 +16,7 @@ func (r *ConnectionSFTPDataSourceModel) RefreshFromSharedConnectionSftp(resp *sh
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

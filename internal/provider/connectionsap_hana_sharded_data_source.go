@@ -28,17 +28,17 @@ type ConnectionSAPHANASHARDEDDataSource struct {
 
 // ConnectionSAPHANASHARDEDDataSourceModel describes the data model.
 type ConnectionSAPHANASHARDEDDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	CdcEnabled            types.Bool              `tfsdk:"cdc_enabled"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Schema                types.String            `tfsdk:"schema"`
-	Shards                []DatabaseShardOutput   `tfsdk:"shards"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	CdcEnabled            types.Bool                                      `tfsdk:"cdc_enabled"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Schema                types.String                                    `tfsdk:"schema"`
+	Shards                []DatabaseShardOutput                           `tfsdk:"shards"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -356,7 +356,7 @@ func (r *ConnectionSAPHANASHARDEDDataSource) Read(ctx context.Context, req datas
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSapHanaSharded(res.ConnectionSapHanaSharded)
+	data.RefreshFromSharedConnectionSapHanaShardedOutput(res.ConnectionSapHanaSharded)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

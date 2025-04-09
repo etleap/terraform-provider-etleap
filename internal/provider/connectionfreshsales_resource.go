@@ -42,18 +42,18 @@ type ConnectionFRESHSALESResource struct {
 
 // ConnectionFRESHSALESResourceModel describes the resource data model.
 type ConnectionFRESHSALESResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	APIKey                   types.String            `tfsdk:"api_key"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	Domain                   types.String            `tfsdk:"domain"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	QuotaLimit               types.Number            `tfsdk:"quota_limit"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	APIKey                   types.String                                    `tfsdk:"api_key"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	Domain                   types.String                                    `tfsdk:"domain"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	QuotaLimit               types.Number                                    `tfsdk:"quota_limit"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionFRESHSALESResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -574,7 +574,7 @@ func (r *ConnectionFRESHSALESResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	request := *data.ToSharedConnectionFreshsalesInput()
+	request := *data.ToSharedConnectionFreshsales()
 	res, err := r.client.Connection.CreateFRESHSALESConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -595,7 +595,7 @@ func (r *ConnectionFRESHSALESResource) Create(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshsales(res.ConnectionFreshsales)
+	data.RefreshFromSharedConnectionFreshsalesOutput(res.ConnectionFreshsales)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetFRESHSALESConnectionRequest{
@@ -621,7 +621,7 @@ func (r *ConnectionFRESHSALESResource) Create(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshsales(res1.ConnectionFreshsales)
+	data.RefreshFromSharedConnectionFreshsalesOutput(res1.ConnectionFreshsales)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -670,7 +670,7 @@ func (r *ConnectionFRESHSALESResource) Read(ctx context.Context, req resource.Re
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshsales(res.ConnectionFreshsales)
+	data.RefreshFromSharedConnectionFreshsalesOutput(res.ConnectionFreshsales)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -716,7 +716,7 @@ func (r *ConnectionFRESHSALESResource) Update(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshsales(res.ConnectionFreshsales)
+	data.RefreshFromSharedConnectionFreshsalesOutput(res.ConnectionFreshsales)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetFRESHSALESConnectionRequest{
@@ -742,7 +742,7 @@ func (r *ConnectionFRESHSALESResource) Update(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshsales(res1.ConnectionFreshsales)
+	data.RefreshFromSharedConnectionFreshsalesOutput(res1.ConnectionFreshsales)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

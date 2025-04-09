@@ -15,7 +15,7 @@ type CreateBIGQUERYConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBigQuery *shared.ConnectionBigQuery
+	ConnectionBigQuery *shared.ConnectionBigQueryOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateBIGQUERYConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateBIGQUERYConnectionResponse) GetConnectionBigQuery() *shared.ConnectionBigQuery {
+func (o *CreateBIGQUERYConnectionResponse) GetConnectionBigQuery() *shared.ConnectionBigQueryOutput {
 	if o == nil {
 		return nil
 	}

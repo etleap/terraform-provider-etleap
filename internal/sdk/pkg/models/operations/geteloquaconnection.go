@@ -26,8 +26,8 @@ type GetELOQUAConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionEloqua *shared.ConnectionEloqua
-	// Forbidden. You don't have access to view this connection.
+	ConnectionEloqua *shared.ConnectionEloquaOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetELOQUAConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetELOQUAConnectionResponse) GetConnectionEloqua() *shared.ConnectionEloqua {
+func (o *GetELOQUAConnectionResponse) GetConnectionEloqua() *shared.ConnectionEloquaOutput {
 	if o == nil {
 		return nil
 	}

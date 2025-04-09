@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoInput() *shared.ConnectionMarketoInput {
+func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketo() *shared.ConnectionMarketo {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionMarketoType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoInput() *share
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,36 +86,36 @@ func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoInput() *share
 			}
 		}
 	}
+	quotaLimit := r.QuotaLimit.ValueInt64()
+	restClientID := r.RestClientID.ValueString()
 	soapEndpoint := r.SoapEndpoint.ValueString()
+	restEndpoint := r.RestEndpoint.ValueString()
+	restClientSecret := r.RestClientSecret.ValueString()
 	soapUserID := r.SoapUserID.ValueString()
 	soapEncryptionKey := r.SoapEncryptionKey.ValueString()
-	restEndpoint := r.RestEndpoint.ValueString()
-	restClientID := r.RestClientID.ValueString()
-	restClientSecret := r.RestClientSecret.ValueString()
-	quotaLimit := r.QuotaLimit.ValueInt64()
-	out := shared.ConnectionMarketoInput{
+	out := shared.ConnectionMarketo{
 		Name:              name,
 		Type:              typeVar,
 		UpdateSchedule:    updateSchedule,
+		QuotaLimit:        quotaLimit,
+		RestClientID:      restClientID,
 		SoapEndpoint:      soapEndpoint,
+		RestEndpoint:      restEndpoint,
+		RestClientSecret:  restClientSecret,
 		SoapUserID:        soapUserID,
 		SoapEncryptionKey: soapEncryptionKey,
-		RestEndpoint:      restEndpoint,
-		RestClientID:      restClientID,
-		RestClientSecret:  restClientSecret,
-		QuotaLimit:        quotaLimit,
 	}
 	return &out
 }
 
-func (r *ConnectionMARKETOResourceModel) RefreshFromSharedConnectionMarketo(resp *shared.ConnectionMarketo) {
+func (r *ConnectionMARKETOResourceModel) RefreshFromSharedConnectionMarketoOutput(resp *shared.ConnectionMarketoOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -202,11 +202,11 @@ func (r *ConnectionMARKETOResourceModel) RefreshFromSharedConnectionMarketo(resp
 }
 
 func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoUpdate() *shared.ConnectionMarketoUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionMarketoUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -214,11 +214,11 @@ func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoUpdate() *shar
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -281,12 +281,12 @@ func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoUpdate() *shar
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -295,11 +295,35 @@ func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoUpdate() *shar
 			}
 		}
 	}
+	quotaLimit := new(int64)
+	if !r.QuotaLimit.IsUnknown() && !r.QuotaLimit.IsNull() {
+		*quotaLimit = r.QuotaLimit.ValueInt64()
+	} else {
+		quotaLimit = nil
+	}
+	restClientID := new(string)
+	if !r.RestClientID.IsUnknown() && !r.RestClientID.IsNull() {
+		*restClientID = r.RestClientID.ValueString()
+	} else {
+		restClientID = nil
+	}
 	soapEndpoint := new(string)
 	if !r.SoapEndpoint.IsUnknown() && !r.SoapEndpoint.IsNull() {
 		*soapEndpoint = r.SoapEndpoint.ValueString()
 	} else {
 		soapEndpoint = nil
+	}
+	restEndpoint := new(string)
+	if !r.RestEndpoint.IsUnknown() && !r.RestEndpoint.IsNull() {
+		*restEndpoint = r.RestEndpoint.ValueString()
+	} else {
+		restEndpoint = nil
+	}
+	restClientSecret := new(string)
+	if !r.RestClientSecret.IsUnknown() && !r.RestClientSecret.IsNull() {
+		*restClientSecret = r.RestClientSecret.ValueString()
+	} else {
+		restClientSecret = nil
 	}
 	soapUserID := new(string)
 	if !r.SoapUserID.IsUnknown() && !r.SoapUserID.IsNull() {
@@ -313,42 +337,18 @@ func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoUpdate() *shar
 	} else {
 		soapEncryptionKey = nil
 	}
-	restEndpoint := new(string)
-	if !r.RestEndpoint.IsUnknown() && !r.RestEndpoint.IsNull() {
-		*restEndpoint = r.RestEndpoint.ValueString()
-	} else {
-		restEndpoint = nil
-	}
-	restClientID := new(string)
-	if !r.RestClientID.IsUnknown() && !r.RestClientID.IsNull() {
-		*restClientID = r.RestClientID.ValueString()
-	} else {
-		restClientID = nil
-	}
-	restClientSecret := new(string)
-	if !r.RestClientSecret.IsUnknown() && !r.RestClientSecret.IsNull() {
-		*restClientSecret = r.RestClientSecret.ValueString()
-	} else {
-		restClientSecret = nil
-	}
-	quotaLimit := new(int64)
-	if !r.QuotaLimit.IsUnknown() && !r.QuotaLimit.IsNull() {
-		*quotaLimit = r.QuotaLimit.ValueInt64()
-	} else {
-		quotaLimit = nil
-	}
 	out := shared.ConnectionMarketoUpdate{
-		Name:              name,
-		Type:              typeVar,
 		Active:            active,
+		Type:              typeVar,
+		Name:              name,
 		UpdateSchedule:    updateSchedule,
+		QuotaLimit:        quotaLimit,
+		RestClientID:      restClientID,
 		SoapEndpoint:      soapEndpoint,
+		RestEndpoint:      restEndpoint,
+		RestClientSecret:  restClientSecret,
 		SoapUserID:        soapUserID,
 		SoapEncryptionKey: soapEncryptionKey,
-		RestEndpoint:      restEndpoint,
-		RestClientID:      restClientID,
-		RestClientSecret:  restClientSecret,
-		QuotaLimit:        quotaLimit,
 	}
 	return &out
 }

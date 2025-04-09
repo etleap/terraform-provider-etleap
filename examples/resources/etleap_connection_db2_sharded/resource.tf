@@ -1,20 +1,20 @@
 resource "etleap_connection_db2_sharded" "my_connectiondb2_sharded" {
   certificate                 = "...my_certificate..."
   deletion_of_export_products = true
-  name                        = "Marilyn Abbott"
+  name                        = "Cary Monahan"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "08361 Buckridge Forks"
+      address  = "480 Isaiah Park"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 2
+      port     = 4
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "774 Maybell Hills"
-        username = "Lindsay80"
+        address  = "05761 Schaefer Place"
+        username = "Junius.Treutel71"
       }
-      username = "Marina65"
+      username = "Boris_Stoltenberg"
     },
   ]
   type = "DB2_SHARDED"

@@ -41,19 +41,19 @@ type ConnectionSEISMICResource struct {
 
 // ConnectionSEISMICResourceModel describes the resource data model.
 type ConnectionSEISMICResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	ClientID                 types.String            `tfsdk:"client_id"`
-	ClientSecret             types.String            `tfsdk:"client_secret"`
-	Code                     types.String            `tfsdk:"code"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Status                   types.String            `tfsdk:"status"`
-	TenantName               types.String            `tfsdk:"tenant_name"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	ClientID                 types.String                                    `tfsdk:"client_id"`
+	ClientSecret             types.String                                    `tfsdk:"client_secret"`
+	Code                     types.String                                    `tfsdk:"code"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Status                   types.String                                    `tfsdk:"status"`
+	TenantName               types.String                                    `tfsdk:"tenant_name"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionSEISMICResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -577,7 +577,7 @@ func (r *ConnectionSEISMICResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToSharedConnectionSeismicInput()
+	request := *data.ToSharedConnectionSeismic()
 	res, err := r.client.Connection.CreateSEISMICConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -598,7 +598,7 @@ func (r *ConnectionSEISMICResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSeismic(res.ConnectionSeismic)
+	data.RefreshFromSharedConnectionSeismicOutput(res.ConnectionSeismic)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetSEISMICConnectionRequest{
@@ -624,7 +624,7 @@ func (r *ConnectionSEISMICResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSeismic(res1.ConnectionSeismic)
+	data.RefreshFromSharedConnectionSeismicOutput(res1.ConnectionSeismic)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -673,7 +673,7 @@ func (r *ConnectionSEISMICResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSeismic(res.ConnectionSeismic)
+	data.RefreshFromSharedConnectionSeismicOutput(res.ConnectionSeismic)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -719,7 +719,7 @@ func (r *ConnectionSEISMICResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSeismic(res.ConnectionSeismic)
+	data.RefreshFromSharedConnectionSeismicOutput(res.ConnectionSeismic)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetSEISMICConnectionRequest{
@@ -745,7 +745,7 @@ func (r *ConnectionSEISMICResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSeismic(res1.ConnectionSeismic)
+	data.RefreshFromSharedConnectionSeismicOutput(res1.ConnectionSeismic)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

@@ -28,25 +28,25 @@ type ConnectionREDSHIFTDataSource struct {
 
 // ConnectionREDSHIFTDataSourceModel describes the data model.
 type ConnectionREDSHIFTDataSourceModel struct {
-	Active                     types.Bool              `tfsdk:"active"`
-	Address                    types.String            `tfsdk:"address"`
-	CreateDate                 types.String            `tfsdk:"create_date"`
-	Database                   types.String            `tfsdk:"database"`
-	DataSharingDestinations    []types.String          `tfsdk:"data_sharing_destinations"`
-	DefaultUpdateSchedule      []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DynamicVarcharWidthEnabled types.Bool              `tfsdk:"dynamic_varchar_width_enabled"`
-	ID                         types.String            `tfsdk:"id"`
-	Name                       types.String            `tfsdk:"name"`
-	Port                       types.Int64             `tfsdk:"port"`
-	QueryTagsEnabled           types.Bool              `tfsdk:"query_tags_enabled"`
-	Schema                     types.String            `tfsdk:"schema"`
-	SourceOnly                 types.Bool              `tfsdk:"source_only"`
-	SSHConfig                  *SSHConfig              `tfsdk:"ssh_config"`
-	Status                     types.String            `tfsdk:"status"`
-	Type                       types.String            `tfsdk:"type"`
-	UpdateSchedule             *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	UserGroups                 []types.String          `tfsdk:"user_groups"`
-	Username                   types.String            `tfsdk:"username"`
+	Active                     types.Bool                                      `tfsdk:"active"`
+	Address                    types.String                                    `tfsdk:"address"`
+	CreateDate                 types.String                                    `tfsdk:"create_date"`
+	Database                   types.String                                    `tfsdk:"database"`
+	DataSharingDestinations    []types.String                                  `tfsdk:"data_sharing_destinations"`
+	DefaultUpdateSchedule      []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DynamicVarcharWidthEnabled types.Bool                                      `tfsdk:"dynamic_varchar_width_enabled"`
+	ID                         types.String                                    `tfsdk:"id"`
+	Name                       types.String                                    `tfsdk:"name"`
+	Port                       types.Int64                                     `tfsdk:"port"`
+	QueryTagsEnabled           types.Bool                                      `tfsdk:"query_tags_enabled"`
+	Schema                     types.String                                    `tfsdk:"schema"`
+	SourceOnly                 types.Bool                                      `tfsdk:"source_only"`
+	SSHConfig                  *SSHConfig                                      `tfsdk:"ssh_config"`
+	Status                     types.String                                    `tfsdk:"status"`
+	Type                       types.String                                    `tfsdk:"type"`
+	UpdateSchedule             *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	UserGroups                 []types.String                                  `tfsdk:"user_groups"`
+	Username                   types.String                                    `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.

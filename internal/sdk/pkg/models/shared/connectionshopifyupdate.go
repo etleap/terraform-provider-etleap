@@ -32,33 +32,19 @@ func (e *ConnectionShopifyUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionShopifyUpdate struct {
-	// The unique name of this connection.
-	Name *string                      `json:"name,omitempty"`
-	Type *ConnectionShopifyUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                        `json:"active,omitempty"`
+	Type   *ConnectionShopifyUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// To find your API keys, or generate a new one, follow these instructions: <a target="_blank" href="https://shopify.dev/apps/auth/basic-http#2-generate-api-credentials">Generate Api Credentials</a>.
-	APIKey *string `json:"apiKey,omitempty"`
-	// To find your API keys, or generate a new one, follow these instructions: <a target="_blank" href="https://shopify.dev/apps/auth/basic-http#2-generate-api-credentials">Generate Api Credentials</a>.
 	Password *string `json:"password,omitempty"`
+	// To find your API keys, or generate a new one, follow these instructions: <a target="_blank" href="https://shopify.dev/apps/auth/basic-http#2-generate-api-credentials">Generate Api Credentials</a>.
+	APIKey *string `json:"apiKey,omitempty"`
 	// The store name for your account is the name of your development store. You can find it in the url of your Shopify store: <b>storename</b>.myshopify.com/
 	StoreName *string `json:"storeName,omitempty"`
-}
-
-func (o *ConnectionShopifyUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionShopifyUpdate) GetType() *ConnectionShopifyUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionShopifyUpdate) GetActive() *bool {
@@ -68,6 +54,20 @@ func (o *ConnectionShopifyUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionShopifyUpdate) GetType() *ConnectionShopifyUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionShopifyUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionShopifyUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -75,9 +75,9 @@ func (o *ConnectionShopifyUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionShopifyUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionShopifyUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -85,6 +85,13 @@ func (o *ConnectionShopifyUpdate) GetUpdateScheduleInterval() *UpdateScheduleMod
 func (o *ConnectionShopifyUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionShopifyUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -103,11 +110,11 @@ func (o *ConnectionShopifyUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeW
 	return nil
 }
 
-func (o *ConnectionShopifyUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionShopifyUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
 	}
-	return nil
+	return o.Password
 }
 
 func (o *ConnectionShopifyUpdate) GetAPIKey() *string {
@@ -115,13 +122,6 @@ func (o *ConnectionShopifyUpdate) GetAPIKey() *string {
 		return nil
 	}
 	return o.APIKey
-}
-
-func (o *ConnectionShopifyUpdate) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
 }
 
 func (o *ConnectionShopifyUpdate) GetStoreName() *string {

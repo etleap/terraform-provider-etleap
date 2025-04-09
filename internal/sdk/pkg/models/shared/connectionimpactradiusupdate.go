@@ -32,31 +32,17 @@ func (e *ConnectionImpactRadiusUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionImpactRadiusUpdate struct {
-	// The unique name of this connection.
-	Name *string                           `json:"name,omitempty"`
-	Type *ConnectionImpactRadiusUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                             `json:"active,omitempty"`
+	Type   *ConnectionImpactRadiusUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// To find the Account SID to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
-	AccountSid *string `json:"accountSid,omitempty"`
 	// To find the Auth Token to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
 	AuthToken *string `json:"authToken,omitempty"`
-}
-
-func (o *ConnectionImpactRadiusUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionImpactRadiusUpdate) GetType() *ConnectionImpactRadiusUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	// To find the Account SID to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
+	AccountSid *string `json:"accountSid,omitempty"`
 }
 
 func (o *ConnectionImpactRadiusUpdate) GetActive() *bool {
@@ -66,6 +52,20 @@ func (o *ConnectionImpactRadiusUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionImpactRadiusUpdate) GetType() *ConnectionImpactRadiusUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionImpactRadiusUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionImpactRadiusUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -73,9 +73,9 @@ func (o *ConnectionImpactRadiusUpdate) GetUpdateSchedule() *UpdateScheduleTypes 
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionImpactRadiusUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionImpactRadiusUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -83,6 +83,13 @@ func (o *ConnectionImpactRadiusUpdate) GetUpdateScheduleInterval() *UpdateSchedu
 func (o *ConnectionImpactRadiusUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionImpactRadiusUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -101,11 +108,11 @@ func (o *ConnectionImpactRadiusUpdate) GetUpdateScheduleWeekly() *UpdateSchedule
 	return nil
 }
 
-func (o *ConnectionImpactRadiusUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionImpactRadiusUpdate) GetAuthToken() *string {
+	if o == nil {
+		return nil
 	}
-	return nil
+	return o.AuthToken
 }
 
 func (o *ConnectionImpactRadiusUpdate) GetAccountSid() *string {
@@ -113,11 +120,4 @@ func (o *ConnectionImpactRadiusUpdate) GetAccountSid() *string {
 		return nil
 	}
 	return o.AccountSid
-}
-
-func (o *ConnectionImpactRadiusUpdate) GetAuthToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AuthToken
 }

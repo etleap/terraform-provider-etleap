@@ -32,20 +32,13 @@ func (e *SourceWorkdayReportType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWorkdayReport struct {
-	Type SourceWorkdayReportType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string                  `json:"connectionId"`
+	Type         SourceWorkdayReportType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Workday Report name. Spelled the same as Workday UI but all spaces are replaced with underscores.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceWorkdayReport) GetType() SourceWorkdayReportType {
-	if o == nil {
-		return SourceWorkdayReportType("")
-	}
-	return o.Type
 }
 
 func (o *SourceWorkdayReport) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceWorkdayReport) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceWorkdayReport) GetType() SourceWorkdayReportType {
+	if o == nil {
+		return SourceWorkdayReportType("")
+	}
+	return o.Type
 }
 
 func (o *SourceWorkdayReport) GetLatencyThreshold() *int64 {

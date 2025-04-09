@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSQLSERVERSHARDEDDataSourceModel) RefreshFromSharedConnectionSQLServerSharded(resp *shared.ConnectionSQLServerSharded) {
+func (r *ConnectionSQLSERVERSHARDEDDataSourceModel) RefreshFromSharedConnectionSQLServerShardedOutput(resp *shared.ConnectionSQLServerShardedOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -16,7 +16,7 @@ func (r *ConnectionSQLSERVERSHARDEDDataSourceModel) RefreshFromSharedConnectionS
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

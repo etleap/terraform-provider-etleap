@@ -36,7 +36,7 @@ type AddDestinationToPipelineResponse struct {
 	RawResponse *http.Response
 	// OK. The operation was successful.
 	DestinationAndPipelineVersions []shared.DestinationAndPipelineVersions
-	// Bad Request
+	// Not Found
 	Errors *shared.Errors
 }
 

@@ -4,17 +4,10 @@ package shared
 
 // RetentionPolicy - Policy for the automatic deletion of rows in the destination.
 type RetentionPolicy struct {
-	// Number of days before a row gets removed.
-	Period int64 `json:"period"`
 	// Name of the column that is used to calculate the interval. Must be a `date` or a `datetime` column.
 	Column string `json:"column"`
-}
-
-func (o *RetentionPolicy) GetPeriod() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Period
+	// Number of days before a row gets removed.
+	Period int64 `json:"period"`
 }
 
 func (o *RetentionPolicy) GetColumn() string {
@@ -22,4 +15,11 @@ func (o *RetentionPolicy) GetColumn() string {
 		return ""
 	}
 	return o.Column
+}
+
+func (o *RetentionPolicy) GetPeriod() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Period
 }

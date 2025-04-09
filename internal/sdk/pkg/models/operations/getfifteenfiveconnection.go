@@ -26,8 +26,8 @@ type GetFIFTEENFIVEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionFifteenFive *shared.ConnectionFifteenFive
-	// Forbidden. You don't have access to view this connection.
+	ConnectionFifteenFive *shared.ConnectionFifteenFiveOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetFIFTEENFIVEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetFIFTEENFIVEConnectionResponse) GetConnectionFifteenFive() *shared.ConnectionFifteenFive {
+func (o *GetFIFTEENFIVEConnectionResponse) GetConnectionFifteenFive() *shared.ConnectionFifteenFiveOutput {
 	if o == nil {
 		return nil
 	}

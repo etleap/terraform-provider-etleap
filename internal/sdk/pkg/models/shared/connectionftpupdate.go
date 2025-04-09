@@ -32,33 +32,19 @@ func (e *ConnectionFtpUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionFtpUpdate struct {
-	// The unique name of this connection.
-	Name *string                  `json:"name,omitempty"`
-	Type *ConnectionFtpUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                    `json:"active,omitempty"`
+	Type   *ConnectionFtpUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	Username       *string              `json:"username,omitempty"`
 	// E.g. 'ftp.etleap.com' or '10.0.0.2'.
 	Hostname    *string `json:"hostname,omitempty"`
-	Port        *int64  `json:"port,omitempty"`
-	Username    *string `json:"username,omitempty"`
-	Password    *string `json:"password,omitempty"`
 	PassiveMode *bool   `json:"passiveMode,omitempty"`
-}
-
-func (o *ConnectionFtpUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionFtpUpdate) GetType() *ConnectionFtpUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	Password    *string `json:"password,omitempty"`
+	Port        *int64  `json:"port,omitempty"`
 }
 
 func (o *ConnectionFtpUpdate) GetActive() *bool {
@@ -68,6 +54,20 @@ func (o *ConnectionFtpUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionFtpUpdate) GetType() *ConnectionFtpUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionFtpUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionFtpUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -75,9 +75,9 @@ func (o *ConnectionFtpUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionFtpUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionFtpUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -85,6 +85,13 @@ func (o *ConnectionFtpUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInt
 func (o *ConnectionFtpUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionFtpUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -103,11 +110,11 @@ func (o *ConnectionFtpUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekl
 	return nil
 }
 
-func (o *ConnectionFtpUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionFtpUpdate) GetUsername() *string {
+	if o == nil {
+		return nil
 	}
-	return nil
+	return o.Username
 }
 
 func (o *ConnectionFtpUpdate) GetHostname() *string {
@@ -117,18 +124,11 @@ func (o *ConnectionFtpUpdate) GetHostname() *string {
 	return o.Hostname
 }
 
-func (o *ConnectionFtpUpdate) GetPort() *int64 {
+func (o *ConnectionFtpUpdate) GetPassiveMode() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Port
-}
-
-func (o *ConnectionFtpUpdate) GetUsername() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Username
+	return o.PassiveMode
 }
 
 func (o *ConnectionFtpUpdate) GetPassword() *string {
@@ -138,9 +138,9 @@ func (o *ConnectionFtpUpdate) GetPassword() *string {
 	return o.Password
 }
 
-func (o *ConnectionFtpUpdate) GetPassiveMode() *bool {
+func (o *ConnectionFtpUpdate) GetPort() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.PassiveMode
+	return o.Port
 }

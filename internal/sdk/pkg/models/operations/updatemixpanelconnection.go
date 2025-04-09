@@ -35,7 +35,7 @@ type UpdateMIXPANELConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionMixpanel *shared.ConnectionMixpanel
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

@@ -28,7 +28,7 @@ type GetDbtScheduleResponse struct {
 	RawResponse *http.Response
 	// OK
 	DbtScheduleOutput *shared.DbtScheduleOutput
-	// Unauthorized
+	// Not Found
 	Errors *shared.Errors
 }
 

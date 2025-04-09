@@ -41,22 +41,22 @@ type ConnectionLDAPResource struct {
 
 // ConnectionLDAPResourceModel describes the resource data model.
 type ConnectionLDAPResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	BaseDn                   types.String            `tfsdk:"base_dn"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	Hostname                 types.String            `tfsdk:"hostname"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Password                 types.String            `tfsdk:"password"`
-	Pen                      types.Int64             `tfsdk:"pen"`
-	Port                     types.Int64             `tfsdk:"port"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	User                     types.String            `tfsdk:"user"`
-	UseSsl                   types.Bool              `tfsdk:"use_ssl"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	BaseDn                   types.String                                    `tfsdk:"base_dn"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	Hostname                 types.String                                    `tfsdk:"hostname"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Password                 types.String                                    `tfsdk:"password"`
+	Pen                      types.Int64                                     `tfsdk:"pen"`
+	Port                     types.Int64                                     `tfsdk:"port"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	User                     types.String                                    `tfsdk:"user"`
+	UseSsl                   types.Bool                                      `tfsdk:"use_ssl"`
 }
 
 func (r *ConnectionLDAPResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

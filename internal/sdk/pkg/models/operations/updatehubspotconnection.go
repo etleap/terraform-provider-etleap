@@ -34,8 +34,8 @@ type UpdateHUBSPOTConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionHubspot *shared.ConnectionHubspot
-	// Bad Request
+	ConnectionHubspot *shared.ConnectionHubspotOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateHUBSPOTConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateHUBSPOTConnectionResponse) GetConnectionHubspot() *shared.ConnectionHubspot {
+func (o *UpdateHUBSPOTConnectionResponse) GetConnectionHubspot() *shared.ConnectionHubspotOutput {
 	if o == nil {
 		return nil
 	}

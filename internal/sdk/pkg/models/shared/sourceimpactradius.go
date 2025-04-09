@@ -32,20 +32,13 @@ func (e *SourceImpactRadiusType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceImpactRadius struct {
-	Type SourceImpactRadiusType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string                 `json:"connectionId"`
+	Type         SourceImpactRadiusType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Impact Radius entity, spelled the same way as in the UI.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceImpactRadius) GetType() SourceImpactRadiusType {
-	if o == nil {
-		return SourceImpactRadiusType("")
-	}
-	return o.Type
 }
 
 func (o *SourceImpactRadius) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceImpactRadius) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceImpactRadius) GetType() SourceImpactRadiusType {
+	if o == nil {
+		return SourceImpactRadiusType("")
+	}
+	return o.Type
 }
 
 func (o *SourceImpactRadius) GetLatencyThreshold() *int64 {

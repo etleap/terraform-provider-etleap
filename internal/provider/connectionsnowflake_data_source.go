@@ -28,23 +28,23 @@ type ConnectionSNOWFLAKEDataSource struct {
 
 // ConnectionSNOWFLAKEDataSourceModel describes the data model.
 type ConnectionSNOWFLAKEDataSourceModel struct {
-	Active                types.Bool                          `tfsdk:"active"`
-	Address               types.String                        `tfsdk:"address"`
-	Authentication        *SnowflakeAuthenticationTypesOutput `tfsdk:"authentication"`
-	CreateDate            types.String                        `tfsdk:"create_date"`
-	Database              types.String                        `tfsdk:"database"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule             `tfsdk:"default_update_schedule"`
-	ID                    types.String                        `tfsdk:"id"`
-	Name                  types.String                        `tfsdk:"name"`
-	Role                  types.String                        `tfsdk:"role"`
-	Roles                 []types.String                      `tfsdk:"roles"`
-	Schema                types.String                        `tfsdk:"schema"`
-	SourceOnly            types.Bool                          `tfsdk:"source_only"`
-	Status                types.String                        `tfsdk:"status"`
-	Type                  types.String                        `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                `tfsdk:"update_schedule"`
-	Username              types.String                        `tfsdk:"username"`
-	Warehouse             types.String                        `tfsdk:"warehouse"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	Address               types.String                                    `tfsdk:"address"`
+	Authentication        *SnowflakeAuthenticationTypes                   `tfsdk:"authentication"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	Database              types.String                                    `tfsdk:"database"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Role                  types.String                                    `tfsdk:"role"`
+	Roles                 []types.String                                  `tfsdk:"roles"`
+	Schema                types.String                                    `tfsdk:"schema"`
+	SourceOnly            types.Bool                                      `tfsdk:"source_only"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Username              types.String                                    `tfsdk:"username"`
+	Warehouse             types.String                                    `tfsdk:"warehouse"`
 }
 
 // Metadata returns the data source type name.

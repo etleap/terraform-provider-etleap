@@ -35,7 +35,7 @@ type UpdateSQLSERVERConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSQLServer *shared.ConnectionSQLServer
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

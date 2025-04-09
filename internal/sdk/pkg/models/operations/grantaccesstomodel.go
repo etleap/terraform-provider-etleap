@@ -35,7 +35,7 @@ type GrantAccessToModelResponse struct {
 	RawResponse *http.Response
 	// The grants that were added to the model in this request are returned by a successful call.
 	GrantsWithoutPrivilegeList *shared.GrantsWithoutPrivilegeList
-	// Bad Request
+	// A model with the given id was not found.
 	Errors *shared.Errors
 }
 

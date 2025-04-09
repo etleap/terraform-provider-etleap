@@ -72,12 +72,12 @@ func (r *ConnectionEGNYTEResourceModel) ToSharedConnectionEgnyteInput() *shared.
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,15 +87,15 @@ func (r *ConnectionEGNYTEResourceModel) ToSharedConnectionEgnyteInput() *shared.
 		}
 	}
 	code := r.Code.ValueString()
-	domainName := r.DomainName.ValueString()
 	baseDirectory := r.BaseDirectory.ValueString()
+	domainName := r.DomainName.ValueString()
 	out := shared.ConnectionEgnyteInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
 		Code:           code,
-		DomainName:     domainName,
 		BaseDirectory:  baseDirectory,
+		DomainName:     domainName,
 	}
 	return &out
 }
@@ -108,7 +108,7 @@ func (r *ConnectionEGNYTEResourceModel) RefreshFromSharedConnectionEgnyte(resp *
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -191,11 +191,11 @@ func (r *ConnectionEGNYTEResourceModel) RefreshFromSharedConnectionEgnyte(resp *
 }
 
 func (r *ConnectionEGNYTEResourceModel) ToSharedConnectionEgnyteUpdate() *shared.ConnectionEgnyteUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionEgnyteUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -203,11 +203,11 @@ func (r *ConnectionEGNYTEResourceModel) ToSharedConnectionEgnyteUpdate() *shared
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -270,12 +270,12 @@ func (r *ConnectionEGNYTEResourceModel) ToSharedConnectionEgnyteUpdate() *shared
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -290,26 +290,26 @@ func (r *ConnectionEGNYTEResourceModel) ToSharedConnectionEgnyteUpdate() *shared
 	} else {
 		code = nil
 	}
-	domainName := new(string)
-	if !r.DomainName.IsUnknown() && !r.DomainName.IsNull() {
-		*domainName = r.DomainName.ValueString()
-	} else {
-		domainName = nil
-	}
 	baseDirectory := new(string)
 	if !r.BaseDirectory.IsUnknown() && !r.BaseDirectory.IsNull() {
 		*baseDirectory = r.BaseDirectory.ValueString()
 	} else {
 		baseDirectory = nil
 	}
+	domainName := new(string)
+	if !r.DomainName.IsUnknown() && !r.DomainName.IsNull() {
+		*domainName = r.DomainName.ValueString()
+	} else {
+		domainName = nil
+	}
 	out := shared.ConnectionEgnyteUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
 		Code:           code,
-		DomainName:     domainName,
 		BaseDirectory:  baseDirectory,
+		DomainName:     domainName,
 	}
 	return &out
 }

@@ -35,12 +35,12 @@ func (e *GrantTeamType) UnmarshalJSON(data []byte) error {
 
 // GrantTeam - A grant providing access to an object in Etleap for a team.
 type GrantTeam struct {
-	Type GrantTeamType `json:"type"`
-	ID   string        `json:"id"`
 	// The date and time when then the grant was created.
-	CreateDate time.Time `json:"createDate"`
-	TeamID     string    `json:"teamId"`
-	Name       string    `json:"name"`
+	CreateDate time.Time     `json:"createDate"`
+	Type       GrantTeamType `json:"type"`
+	ID         string        `json:"id"`
+	TeamID     string        `json:"teamId"`
+	Name       string        `json:"name"`
 }
 
 func (g GrantTeam) MarshalJSON() ([]byte, error) {
@@ -52,6 +52,13 @@ func (g *GrantTeam) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *GrantTeam) GetCreateDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.CreateDate
 }
 
 func (o *GrantTeam) GetType() GrantTeamType {
@@ -66,13 +73,6 @@ func (o *GrantTeam) GetID() string {
 		return ""
 	}
 	return o.ID
-}
-
-func (o *GrantTeam) GetCreateDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.CreateDate
 }
 
 func (o *GrantTeam) GetTeamID() string {

@@ -34,8 +34,8 @@ type UpdateSEISMICConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSeismic *shared.ConnectionSeismic
-	// Bad Request
+	ConnectionSeismic *shared.ConnectionSeismicOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateSEISMICConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateSEISMICConnectionResponse) GetConnectionSeismic() *shared.ConnectionSeismic {
+func (o *UpdateSEISMICConnectionResponse) GetConnectionSeismic() *shared.ConnectionSeismicOutput {
 	if o == nil {
 		return nil
 	}

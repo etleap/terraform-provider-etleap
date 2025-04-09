@@ -15,7 +15,7 @@ type CreateSTRIPEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionStripe *shared.ConnectionStripe
+	ConnectionStripe *shared.ConnectionStripeOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateSTRIPEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateSTRIPEConnectionResponse) GetConnectionStripe() *shared.ConnectionStripe {
+func (o *CreateSTRIPEConnectionResponse) GetConnectionStripe() *shared.ConnectionStripeOutput {
 	if o == nil {
 		return nil
 	}

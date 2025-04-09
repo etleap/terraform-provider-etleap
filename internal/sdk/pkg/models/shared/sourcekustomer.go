@@ -32,20 +32,13 @@ func (e *SourceKustomerType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceKustomer struct {
-	Type SourceKustomerType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string             `json:"connectionId"`
+	Type         SourceKustomerType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Kustomer entity. Example values: [AUDIT_LOGS, BRANDS, BUSINESS_SCHEDULES, CARDS, COMPANIES, CONVERSATION_ATTACHMENTS, CONVERSATION_EVENTS, CONVERSATION_FORWARDS, CONVERSATION_TIMES, CONVERSATIONS, CUSTOM_ATTRIBUTE_METADATA, CUSTOMER_DRAFTS, CUSTOMER_MERGES, CUSTOMERS, KOBJECTS, KLASSES, MESSAGES, NOTES, NOTIFICATIONS, OUTBOUND_ACCOUNTS, QUEUES, SLAS, SATISFACTIONS, SHORTCUTS, SNOOZES, SPAM_SENDERS, TEAM_ROUTING_SETTINGS, TEAMS, USERS]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceKustomer) GetType() SourceKustomerType {
-	if o == nil {
-		return SourceKustomerType("")
-	}
-	return o.Type
 }
 
 func (o *SourceKustomer) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceKustomer) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceKustomer) GetType() SourceKustomerType {
+	if o == nil {
+		return SourceKustomerType("")
+	}
+	return o.Type
 }
 
 func (o *SourceKustomer) GetLatencyThreshold() *int64 {

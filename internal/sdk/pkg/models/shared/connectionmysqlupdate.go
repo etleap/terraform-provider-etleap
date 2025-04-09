@@ -32,17 +32,10 @@ func (e *ConnectionMysqlUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionMysqlUpdateSSHConfigurationUpdate struct {
-	// The server address for the SSH connection.
-	Address *string `json:"address,omitempty"`
 	// The username for the SSH connection.
 	Username *string `json:"username,omitempty"`
-}
-
-func (o *ConnectionMysqlUpdateSSHConfigurationUpdate) GetAddress() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Address
+	// The server address for the SSH connection.
+	Address *string `json:"address,omitempty"`
 }
 
 func (o *ConnectionMysqlUpdateSSHConfigurationUpdate) GetUsername() *string {
@@ -52,43 +45,36 @@ func (o *ConnectionMysqlUpdateSSHConfigurationUpdate) GetUsername() *string {
 	return o.Username
 }
 
-// ConnectionMysqlUpdate - Specifies the properties of a database connection.
-type ConnectionMysqlUpdate struct {
-	// The unique name of this connection.
-	Name *string                   `json:"name,omitempty"`
-	Type ConnectionMysqlUpdateType `json:"type"`
-	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule                   *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	RequireSslAndValidateCertificate *bool                `json:"requireSslAndValidateCertificate,omitempty"`
-	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
-	Certificate *string `json:"certificate,omitempty"`
-	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
-	AutoReplicate *string `json:"autoReplicate,omitempty"`
-	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
-	TinyInt1IsBoolean *bool `json:"tinyInt1IsBoolean,omitempty"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Database  *string                                      `json:"database,omitempty"`
-	Address   *string                                      `json:"address,omitempty"`
-	Port      *int64                                       `json:"port,omitempty"`
-	Username  *string                                      `json:"username,omitempty"`
-	Password  *string                                      `json:"password,omitempty"`
-	SSHConfig *ConnectionMysqlUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
-}
-
-func (o *ConnectionMysqlUpdate) GetName() *string {
+func (o *ConnectionMysqlUpdateSSHConfigurationUpdate) GetAddress() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Name
+	return o.Address
 }
 
-func (o *ConnectionMysqlUpdate) GetType() ConnectionMysqlUpdateType {
-	if o == nil {
-		return ConnectionMysqlUpdateType("")
-	}
-	return o.Type
+// ConnectionMysqlUpdate - Specifies the properties of a database connection.
+type ConnectionMysqlUpdate struct {
+	// Whether this connection should be marked as active.
+	Active *bool                     `json:"active,omitempty"`
+	Type   ConnectionMysqlUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
+	TinyInt1IsBoolean *bool `json:"tinyInt1IsBoolean,omitempty"`
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Database *string `json:"database,omitempty"`
+	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
+	AutoReplicate *string `json:"autoReplicate,omitempty"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate                      *string                                      `json:"certificate,omitempty"`
+	RequireSslAndValidateCertificate *bool                                        `json:"requireSslAndValidateCertificate,omitempty"`
+	Username                         *string                                      `json:"username,omitempty"`
+	SSHConfig                        *ConnectionMysqlUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
+	Password                         *string                                      `json:"password,omitempty"`
+	Port                             *int64                                       `json:"port,omitempty"`
+	Address                          *string                                      `json:"address,omitempty"`
 }
 
 func (o *ConnectionMysqlUpdate) GetActive() *bool {
@@ -98,6 +84,20 @@ func (o *ConnectionMysqlUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionMysqlUpdate) GetType() ConnectionMysqlUpdateType {
+	if o == nil {
+		return ConnectionMysqlUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionMysqlUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionMysqlUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -105,9 +105,9 @@ func (o *ConnectionMysqlUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMysqlUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionMysqlUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -115,6 +115,13 @@ func (o *ConnectionMysqlUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeI
 func (o *ConnectionMysqlUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionMysqlUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -133,34 +140,6 @@ func (o *ConnectionMysqlUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWee
 	return nil
 }
 
-func (o *ConnectionMysqlUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionMysqlUpdate) GetRequireSslAndValidateCertificate() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.RequireSslAndValidateCertificate
-}
-
-func (o *ConnectionMysqlUpdate) GetCertificate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Certificate
-}
-
-func (o *ConnectionMysqlUpdate) GetAutoReplicate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AutoReplicate
-}
-
 func (o *ConnectionMysqlUpdate) GetTinyInt1IsBoolean() *bool {
 	if o == nil {
 		return nil
@@ -175,18 +154,25 @@ func (o *ConnectionMysqlUpdate) GetDatabase() *string {
 	return o.Database
 }
 
-func (o *ConnectionMysqlUpdate) GetAddress() *string {
+func (o *ConnectionMysqlUpdate) GetAutoReplicate() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Address
+	return o.AutoReplicate
 }
 
-func (o *ConnectionMysqlUpdate) GetPort() *int64 {
+func (o *ConnectionMysqlUpdate) GetCertificate() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Port
+	return o.Certificate
+}
+
+func (o *ConnectionMysqlUpdate) GetRequireSslAndValidateCertificate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireSslAndValidateCertificate
 }
 
 func (o *ConnectionMysqlUpdate) GetUsername() *string {
@@ -196,6 +182,13 @@ func (o *ConnectionMysqlUpdate) GetUsername() *string {
 	return o.Username
 }
 
+func (o *ConnectionMysqlUpdate) GetSSHConfig() *ConnectionMysqlUpdateSSHConfigurationUpdate {
+	if o == nil {
+		return nil
+	}
+	return o.SSHConfig
+}
+
 func (o *ConnectionMysqlUpdate) GetPassword() *string {
 	if o == nil {
 		return nil
@@ -203,9 +196,16 @@ func (o *ConnectionMysqlUpdate) GetPassword() *string {
 	return o.Password
 }
 
-func (o *ConnectionMysqlUpdate) GetSSHConfig() *ConnectionMysqlUpdateSSHConfigurationUpdate {
+func (o *ConnectionMysqlUpdate) GetPort() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.SSHConfig
+	return o.Port
+}
+
+func (o *ConnectionMysqlUpdate) GetAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Address
 }

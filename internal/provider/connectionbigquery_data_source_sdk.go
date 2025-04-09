@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionBIGQUERYDataSourceModel) RefreshFromSharedConnectionBigQuery(resp *shared.ConnectionBigQuery) {
+func (r *ConnectionBIGQUERYDataSourceModel) RefreshFromSharedConnectionBigQueryOutput(resp *shared.ConnectionBigQueryOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Dataset = types.StringPointerValue(resp.Dataset)
@@ -16,7 +16,7 @@ func (r *ConnectionBIGQUERYDataSourceModel) RefreshFromSharedConnectionBigQuery(
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

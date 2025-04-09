@@ -32,30 +32,16 @@ func (e *ConnectionWorkdayReportUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionWorkdayReportUpdate struct {
-	// The unique name of this connection.
-	Name *string                            `json:"name,omitempty"`
-	Type *ConnectionWorkdayReportUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                              `json:"active,omitempty"`
+	Type   *ConnectionWorkdayReportUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	ReportURL      *string              `json:"reportUrl,omitempty"`
 	Username       *string              `json:"username,omitempty"`
 	Password       *string              `json:"password,omitempty"`
-}
-
-func (o *ConnectionWorkdayReportUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionWorkdayReportUpdate) GetType() *ConnectionWorkdayReportUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionWorkdayReportUpdate) GetActive() *bool {
@@ -65,6 +51,20 @@ func (o *ConnectionWorkdayReportUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionWorkdayReportUpdate) GetType() *ConnectionWorkdayReportUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionWorkdayReportUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionWorkdayReportUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -72,9 +72,9 @@ func (o *ConnectionWorkdayReportUpdate) GetUpdateSchedule() *UpdateScheduleTypes
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionWorkdayReportUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionWorkdayReportUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -82,6 +82,13 @@ func (o *ConnectionWorkdayReportUpdate) GetUpdateScheduleInterval() *UpdateSched
 func (o *ConnectionWorkdayReportUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionWorkdayReportUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -96,13 +103,6 @@ func (o *ConnectionWorkdayReportUpdate) GetUpdateScheduleDaily() *UpdateSchedule
 func (o *ConnectionWorkdayReportUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionWorkdayReportUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

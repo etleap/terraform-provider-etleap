@@ -32,30 +32,16 @@ func (e *ConnectionFifteenFiveUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionFifteenFiveUpdate struct {
-	// The unique name of this connection.
-	Name *string                          `json:"name,omitempty"`
-	Type *ConnectionFifteenFiveUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                            `json:"active,omitempty"`
+	Type   *ConnectionFifteenFiveUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	AccessToken    *string              `json:"accessToken,omitempty"`
 	// You company 15Five's subdomain, only required if your 15Five instance has a subdomain that's not https://(my).15five.com. Example: https://(subdomain).15Five.com
-	Subdomain *string `json:"subdomain,omitempty"`
-}
-
-func (o *ConnectionFifteenFiveUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionFifteenFiveUpdate) GetType() *ConnectionFifteenFiveUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	Subdomain   *string `json:"subdomain,omitempty"`
+	AccessToken *string `json:"accessToken,omitempty"`
 }
 
 func (o *ConnectionFifteenFiveUpdate) GetActive() *bool {
@@ -65,6 +51,20 @@ func (o *ConnectionFifteenFiveUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionFifteenFiveUpdate) GetType() *ConnectionFifteenFiveUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionFifteenFiveUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionFifteenFiveUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -72,9 +72,9 @@ func (o *ConnectionFifteenFiveUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionFifteenFiveUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionFifteenFiveUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -82,6 +82,13 @@ func (o *ConnectionFifteenFiveUpdate) GetUpdateScheduleInterval() *UpdateSchedul
 func (o *ConnectionFifteenFiveUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionFifteenFiveUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -100,11 +107,11 @@ func (o *ConnectionFifteenFiveUpdate) GetUpdateScheduleWeekly() *UpdateScheduleM
 	return nil
 }
 
-func (o *ConnectionFifteenFiveUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionFifteenFiveUpdate) GetSubdomain() *string {
+	if o == nil {
+		return nil
 	}
-	return nil
+	return o.Subdomain
 }
 
 func (o *ConnectionFifteenFiveUpdate) GetAccessToken() *string {
@@ -112,11 +119,4 @@ func (o *ConnectionFifteenFiveUpdate) GetAccessToken() *string {
 		return nil
 	}
 	return o.AccessToken
-}
-
-func (o *ConnectionFifteenFiveUpdate) GetSubdomain() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Subdomain
 }

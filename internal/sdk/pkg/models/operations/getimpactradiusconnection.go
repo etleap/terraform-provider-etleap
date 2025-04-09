@@ -26,8 +26,8 @@ type GetIMPACTRADIUSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionImpactRadius *shared.ConnectionImpactRadius
-	// Forbidden. You don't have access to view this connection.
+	ConnectionImpactRadius *shared.ConnectionImpactRadiusOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetIMPACTRADIUSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetIMPACTRADIUSConnectionResponse) GetConnectionImpactRadius() *shared.ConnectionImpactRadius {
+func (o *GetIMPACTRADIUSConnectionResponse) GetConnectionImpactRadius() *shared.ConnectionImpactRadiusOutput {
 	if o == nil {
 		return nil
 	}

@@ -26,8 +26,8 @@ type GetTWILIOConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionTwilio *shared.ConnectionTwilio
-	// Forbidden. You don't have access to view this connection.
+	ConnectionTwilio *shared.ConnectionTwilioOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetTWILIOConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetTWILIOConnectionResponse) GetConnectionTwilio() *shared.ConnectionTwilio {
+func (o *GetTWILIOConnectionResponse) GetConnectionTwilio() *shared.ConnectionTwilioOutput {
 	if o == nil {
 		return nil
 	}

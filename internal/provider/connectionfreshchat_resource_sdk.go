@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionFRESHCHATResourceModel) ToSharedConnectionFreshchatInput() *shared.ConnectionFreshchatInput {
+func (r *ConnectionFRESHCHATResourceModel) ToSharedConnectionFreshchat() *shared.ConnectionFreshchat {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionFreshchatType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionFRESHCHATResourceModel) ToSharedConnectionFreshchatInput() *s
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -88,7 +88,7 @@ func (r *ConnectionFRESHCHATResourceModel) ToSharedConnectionFreshchatInput() *s
 	}
 	domain := r.Domain.ValueString()
 	apiKey := r.APIKey.ValueString()
-	out := shared.ConnectionFreshchatInput{
+	out := shared.ConnectionFreshchat{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -98,14 +98,14 @@ func (r *ConnectionFRESHCHATResourceModel) ToSharedConnectionFreshchatInput() *s
 	return &out
 }
 
-func (r *ConnectionFRESHCHATResourceModel) RefreshFromSharedConnectionFreshchat(resp *shared.ConnectionFreshchat) {
+func (r *ConnectionFRESHCHATResourceModel) RefreshFromSharedConnectionFreshchatOutput(resp *shared.ConnectionFreshchatOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -188,11 +188,11 @@ func (r *ConnectionFRESHCHATResourceModel) RefreshFromSharedConnectionFreshchat(
 }
 
 func (r *ConnectionFRESHCHATResourceModel) ToSharedConnectionFreshchatUpdate() *shared.ConnectionFreshchatUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionFreshchatUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -200,11 +200,11 @@ func (r *ConnectionFRESHCHATResourceModel) ToSharedConnectionFreshchatUpdate() *
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -267,12 +267,12 @@ func (r *ConnectionFRESHCHATResourceModel) ToSharedConnectionFreshchatUpdate() *
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -294,9 +294,9 @@ func (r *ConnectionFRESHCHATResourceModel) ToSharedConnectionFreshchatUpdate() *
 		apiKey = nil
 	}
 	out := shared.ConnectionFreshchatUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
 		Domain:         domain,
 		APIKey:         apiKey,

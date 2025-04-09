@@ -72,12 +72,12 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,34 +86,57 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 			}
 		}
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
-	} else {
-		schema = nil
-	}
-	var roles []string = nil
-	for _, rolesItem := range r.Roles {
-		roles = append(roles, rolesItem.ValueString())
-	}
 	sourceOnly := new(bool)
 	if !r.SourceOnly.IsUnknown() && !r.SourceOnly.IsNull() {
 		*sourceOnly = r.SourceOnly.ValueBool()
 	} else {
 		sourceOnly = nil
 	}
-	var shards []shared.SnowflakeShard = nil
+	var roles []string = nil
+	for _, rolesItem := range r.Roles {
+		roles = append(roles, rolesItem.ValueString())
+	}
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
+	} else {
+		schema = nil
+	}
+	var shards []shared.SnowflakeShardInput = nil
 	for _, shardsItem := range r.Shards {
 		shardID := shardsItem.ShardID.ValueString()
-		address := shardsItem.Address.ValueString()
-		database := shardsItem.Database.ValueString()
-		warehouse := shardsItem.Warehouse.ValueString()
 		username := shardsItem.Username.ValueString()
-		password := new(string)
-		if !shardsItem.Password.IsUnknown() && !shardsItem.Password.IsNull() {
-			*password = shardsItem.Password.ValueString()
-		} else {
-			password = nil
+		database := shardsItem.Database.ValueString()
+		var authentication *shared.SnowflakeAuthenticationTypesInput
+		if shardsItem.Authentication != nil {
+			var snowflakeAuthenticationKeyPairInput *shared.SnowflakeAuthenticationKeyPairInput
+			if shardsItem.Authentication.KeyPair != nil {
+				privateKey := shardsItem.Authentication.KeyPair.PrivateKey.ValueString()
+				typeVar1 := shared.SnowflakeAuthenticationKeyPairType(shardsItem.Authentication.KeyPair.Type.ValueString())
+				snowflakeAuthenticationKeyPairInput = &shared.SnowflakeAuthenticationKeyPairInput{
+					PrivateKey: privateKey,
+					Type:       typeVar1,
+				}
+			}
+			if snowflakeAuthenticationKeyPairInput != nil {
+				authentication = &shared.SnowflakeAuthenticationTypesInput{
+					SnowflakeAuthenticationKeyPairInput: snowflakeAuthenticationKeyPairInput,
+				}
+			}
+			var snowflakeAuthenticationPassword *shared.SnowflakeAuthenticationPassword
+			if shardsItem.Authentication.Password != nil {
+				password := shardsItem.Authentication.Password.Password.ValueString()
+				typeVar2 := shared.SnowflakeAuthenticationPasswordType(shardsItem.Authentication.Password.Type.ValueString())
+				snowflakeAuthenticationPassword = &shared.SnowflakeAuthenticationPassword{
+					Password: password,
+					Type:     typeVar2,
+				}
+			}
+			if snowflakeAuthenticationPassword != nil {
+				authentication = &shared.SnowflakeAuthenticationTypesInput{
+					SnowflakeAuthenticationPassword: snowflakeAuthenticationPassword,
+				}
+			}
 		}
 		role := new(string)
 		if !shardsItem.Role.IsUnknown() && !shardsItem.Role.IsNull() {
@@ -121,55 +144,32 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 		} else {
 			role = nil
 		}
-		var authentication *shared.SnowflakeAuthenticationTypes
-		if shardsItem.Authentication != nil {
-			var snowflakeAuthenticationKeyPair *shared.SnowflakeAuthenticationKeyPair
-			if shardsItem.Authentication.KeyPair != nil {
-				typeVar1 := shared.SnowflakeAuthenticationKeyPairType(shardsItem.Authentication.KeyPair.Type.ValueString())
-				privateKey := shardsItem.Authentication.KeyPair.PrivateKey.ValueString()
-				snowflakeAuthenticationKeyPair = &shared.SnowflakeAuthenticationKeyPair{
-					Type:       typeVar1,
-					PrivateKey: privateKey,
-				}
-			}
-			if snowflakeAuthenticationKeyPair != nil {
-				authentication = &shared.SnowflakeAuthenticationTypes{
-					SnowflakeAuthenticationKeyPair: snowflakeAuthenticationKeyPair,
-				}
-			}
-			var snowflakeAuthenticationPassword *shared.SnowflakeAuthenticationPassword
-			if shardsItem.Authentication.Password != nil {
-				typeVar2 := shared.SnowflakeAuthenticationPasswordType(shardsItem.Authentication.Password.Type.ValueString())
-				password1 := shardsItem.Authentication.Password.Password.ValueString()
-				snowflakeAuthenticationPassword = &shared.SnowflakeAuthenticationPassword{
-					Type:     typeVar2,
-					Password: password1,
-				}
-			}
-			if snowflakeAuthenticationPassword != nil {
-				authentication = &shared.SnowflakeAuthenticationTypes{
-					SnowflakeAuthenticationPassword: snowflakeAuthenticationPassword,
-				}
-			}
+		address := shardsItem.Address.ValueString()
+		warehouse := shardsItem.Warehouse.ValueString()
+		password1 := new(string)
+		if !shardsItem.Password.IsUnknown() && !shardsItem.Password.IsNull() {
+			*password1 = shardsItem.Password.ValueString()
+		} else {
+			password1 = nil
 		}
-		shards = append(shards, shared.SnowflakeShard{
+		shards = append(shards, shared.SnowflakeShardInput{
 			ShardID:        shardID,
-			Address:        address,
-			Database:       database,
-			Warehouse:      warehouse,
 			Username:       username,
-			Password:       password,
-			Role:           role,
+			Database:       database,
 			Authentication: authentication,
+			Role:           role,
+			Address:        address,
+			Warehouse:      warehouse,
+			Password:       password1,
 		})
 	}
 	out := shared.ConnectionSnowflakeShardedInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		Roles:          roles,
 		SourceOnly:     sourceOnly,
+		Roles:          roles,
+		Schema:         schema,
 		Shards:         shards,
 	}
 	return &out
@@ -182,7 +182,7 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) RefreshFromSharedConnectionSno
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -242,11 +242,11 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) RefreshFromSharedConnectionSno
 		if shardsItem.Authentication == nil {
 			shards1.Authentication = nil
 		} else {
-			shards1.Authentication = &SnowflakeAuthenticationTypes{}
-			if shardsItem.Authentication.SnowflakeAuthenticationKeyPairOutput != nil {
+			shards1.Authentication = &SnowflakeAuthenticationTypesInput{}
+			if shardsItem.Authentication.SnowflakeAuthenticationKeyPair != nil {
 				shards1.Authentication.KeyPair = &SnowflakeAuthenticationKeyPair{}
-				shards1.Authentication.KeyPair.PublicKey = types.StringValue(shardsItem.Authentication.SnowflakeAuthenticationKeyPairOutput.PublicKey)
-				shards1.Authentication.KeyPair.Type = types.StringValue(string(shardsItem.Authentication.SnowflakeAuthenticationKeyPairOutput.Type))
+				shards1.Authentication.KeyPair.PublicKey = types.StringValue(shardsItem.Authentication.SnowflakeAuthenticationKeyPair.PublicKey)
+				shards1.Authentication.KeyPair.Type = types.StringValue(string(shardsItem.Authentication.SnowflakeAuthenticationKeyPair.Type))
 			}
 			if shardsItem.Authentication.SnowflakeAuthenticationPasswordOutput != nil {
 				shards1.Authentication.Password = &SnowflakeAuthenticationPassword{}
@@ -307,18 +307,18 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) RefreshFromSharedConnectionSno
 }
 
 func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeShardedUpdate() *shared.ConnectionSnowflakeShardedUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	typeVar := shared.ConnectionSnowflakeShardedUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
 	} else {
 		active = nil
+	}
+	typeVar := shared.ConnectionSnowflakeShardedUpdateType(r.Type.ValueString())
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -381,12 +381,12 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -395,34 +395,57 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 			}
 		}
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
-	} else {
-		schema = nil
-	}
-	var roles []string = nil
-	for _, rolesItem := range r.Roles {
-		roles = append(roles, rolesItem.ValueString())
-	}
 	sourceOnly := new(bool)
 	if !r.SourceOnly.IsUnknown() && !r.SourceOnly.IsNull() {
 		*sourceOnly = r.SourceOnly.ValueBool()
 	} else {
 		sourceOnly = nil
 	}
-	var shards []shared.SnowflakeShard = nil
+	var roles []string = nil
+	for _, rolesItem := range r.Roles {
+		roles = append(roles, rolesItem.ValueString())
+	}
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
+	} else {
+		schema = nil
+	}
+	var shards []shared.SnowflakeShardInput = nil
 	for _, shardsItem := range r.Shards {
 		shardID := shardsItem.ShardID.ValueString()
-		address := shardsItem.Address.ValueString()
-		database := shardsItem.Database.ValueString()
-		warehouse := shardsItem.Warehouse.ValueString()
 		username := shardsItem.Username.ValueString()
-		password := new(string)
-		if !shardsItem.Password.IsUnknown() && !shardsItem.Password.IsNull() {
-			*password = shardsItem.Password.ValueString()
-		} else {
-			password = nil
+		database := shardsItem.Database.ValueString()
+		var authentication *shared.SnowflakeAuthenticationTypesInput
+		if shardsItem.Authentication != nil {
+			var snowflakeAuthenticationKeyPairInput *shared.SnowflakeAuthenticationKeyPairInput
+			if shardsItem.Authentication.KeyPair != nil {
+				privateKey := shardsItem.Authentication.KeyPair.PrivateKey.ValueString()
+				typeVar1 := shared.SnowflakeAuthenticationKeyPairType(shardsItem.Authentication.KeyPair.Type.ValueString())
+				snowflakeAuthenticationKeyPairInput = &shared.SnowflakeAuthenticationKeyPairInput{
+					PrivateKey: privateKey,
+					Type:       typeVar1,
+				}
+			}
+			if snowflakeAuthenticationKeyPairInput != nil {
+				authentication = &shared.SnowflakeAuthenticationTypesInput{
+					SnowflakeAuthenticationKeyPairInput: snowflakeAuthenticationKeyPairInput,
+				}
+			}
+			var snowflakeAuthenticationPassword *shared.SnowflakeAuthenticationPassword
+			if shardsItem.Authentication.Password != nil {
+				password := shardsItem.Authentication.Password.Password.ValueString()
+				typeVar2 := shared.SnowflakeAuthenticationPasswordType(shardsItem.Authentication.Password.Type.ValueString())
+				snowflakeAuthenticationPassword = &shared.SnowflakeAuthenticationPassword{
+					Password: password,
+					Type:     typeVar2,
+				}
+			}
+			if snowflakeAuthenticationPassword != nil {
+				authentication = &shared.SnowflakeAuthenticationTypesInput{
+					SnowflakeAuthenticationPassword: snowflakeAuthenticationPassword,
+				}
+			}
 		}
 		role := new(string)
 		if !shardsItem.Role.IsUnknown() && !shardsItem.Role.IsNull() {
@@ -430,56 +453,33 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 		} else {
 			role = nil
 		}
-		var authentication *shared.SnowflakeAuthenticationTypes
-		if shardsItem.Authentication != nil {
-			var snowflakeAuthenticationKeyPair *shared.SnowflakeAuthenticationKeyPair
-			if shardsItem.Authentication.KeyPair != nil {
-				typeVar1 := shared.SnowflakeAuthenticationKeyPairType(shardsItem.Authentication.KeyPair.Type.ValueString())
-				privateKey := shardsItem.Authentication.KeyPair.PrivateKey.ValueString()
-				snowflakeAuthenticationKeyPair = &shared.SnowflakeAuthenticationKeyPair{
-					Type:       typeVar1,
-					PrivateKey: privateKey,
-				}
-			}
-			if snowflakeAuthenticationKeyPair != nil {
-				authentication = &shared.SnowflakeAuthenticationTypes{
-					SnowflakeAuthenticationKeyPair: snowflakeAuthenticationKeyPair,
-				}
-			}
-			var snowflakeAuthenticationPassword *shared.SnowflakeAuthenticationPassword
-			if shardsItem.Authentication.Password != nil {
-				typeVar2 := shared.SnowflakeAuthenticationPasswordType(shardsItem.Authentication.Password.Type.ValueString())
-				password1 := shardsItem.Authentication.Password.Password.ValueString()
-				snowflakeAuthenticationPassword = &shared.SnowflakeAuthenticationPassword{
-					Type:     typeVar2,
-					Password: password1,
-				}
-			}
-			if snowflakeAuthenticationPassword != nil {
-				authentication = &shared.SnowflakeAuthenticationTypes{
-					SnowflakeAuthenticationPassword: snowflakeAuthenticationPassword,
-				}
-			}
+		address := shardsItem.Address.ValueString()
+		warehouse := shardsItem.Warehouse.ValueString()
+		password1 := new(string)
+		if !shardsItem.Password.IsUnknown() && !shardsItem.Password.IsNull() {
+			*password1 = shardsItem.Password.ValueString()
+		} else {
+			password1 = nil
 		}
-		shards = append(shards, shared.SnowflakeShard{
+		shards = append(shards, shared.SnowflakeShardInput{
 			ShardID:        shardID,
-			Address:        address,
-			Database:       database,
-			Warehouse:      warehouse,
 			Username:       username,
-			Password:       password,
-			Role:           role,
+			Database:       database,
 			Authentication: authentication,
+			Role:           role,
+			Address:        address,
+			Warehouse:      warehouse,
+			Password:       password1,
 		})
 	}
 	out := shared.ConnectionSnowflakeShardedUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		Roles:          roles,
 		SourceOnly:     sourceOnly,
+		Roles:          roles,
+		Schema:         schema,
 		Shards:         shards,
 	}
 	return &out

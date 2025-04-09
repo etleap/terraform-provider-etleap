@@ -32,20 +32,13 @@ func (e *SourceRaveMedidataType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceRaveMedidata struct {
-	Type SourceRaveMedidataType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string                 `json:"connectionId"`
+	Type         SourceRaveMedidataType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Rave Medidata entity. Example values: [dataset, study, <study-oid>@-@<form-oid>]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceRaveMedidata) GetType() SourceRaveMedidataType {
-	if o == nil {
-		return SourceRaveMedidataType("")
-	}
-	return o.Type
 }
 
 func (o *SourceRaveMedidata) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceRaveMedidata) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceRaveMedidata) GetType() SourceRaveMedidataType {
+	if o == nil {
+		return SourceRaveMedidataType("")
+	}
+	return o.Type
 }
 
 func (o *SourceRaveMedidata) GetLatencyThreshold() *int64 {

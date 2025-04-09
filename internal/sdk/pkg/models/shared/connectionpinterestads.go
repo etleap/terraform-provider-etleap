@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionPinterestAdsType string
-
-const (
-	ConnectionPinterestAdsTypePinterestAds ConnectionPinterestAdsType = "PINTEREST_ADS"
-)
-
-func (e ConnectionPinterestAdsType) ToPointer() *ConnectionPinterestAdsType {
-	return &e
-}
-
-func (e *ConnectionPinterestAdsType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "PINTEREST_ADS":
-		*e = ConnectionPinterestAdsType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionPinterestAdsType: %v", v)
-	}
-}
-
 // ConnectionPinterestAdsStatus - The current status of the connection.
 type ConnectionPinterestAdsStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionPinterestAdsDefaultUpdateSchedule) GetUpdateSchedule() *Updat
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionPinterestAdsDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionPinterestAdsDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionPinterestAdsDefaultUpdateSchedule) GetUpdateScheduleInterval(
 func (o *ConnectionPinterestAdsDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionPinterestAdsDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,29 +108,46 @@ func (o *ConnectionPinterestAdsDefaultUpdateSchedule) GetUpdateScheduleWeekly() 
 	return nil
 }
 
-func (o *ConnectionPinterestAdsDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionPinterestAdsType string
+
+const (
+	ConnectionPinterestAdsTypePinterestAds ConnectionPinterestAdsType = "PINTEREST_ADS"
+)
+
+func (e ConnectionPinterestAdsType) ToPointer() *ConnectionPinterestAdsType {
+	return &e
+}
+
+func (e *ConnectionPinterestAdsType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "PINTEREST_ADS":
+		*e = ConnectionPinterestAdsType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionPinterestAdsType: %v", v)
+	}
 }
 
 type ConnectionPinterestAds struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                     `json:"name"`
-	Type ConnectionPinterestAdsType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionPinterestAdsStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionPinterestAdsDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	// Whether this connection has been marked as active.
+	Active bool                       `json:"active"`
+	Type   ConnectionPinterestAdsType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
 func (c ConnectionPinterestAds) MarshalJSON() ([]byte, error) {
@@ -161,11 +161,11 @@ func (c *ConnectionPinterestAds) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionPinterestAds) GetID() string {
+func (o *ConnectionPinterestAds) GetStatus() ConnectionPinterestAdsStatus {
 	if o == nil {
-		return ""
+		return ConnectionPinterestAdsStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionPinterestAds) GetName() string {
@@ -175,11 +175,18 @@ func (o *ConnectionPinterestAds) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionPinterestAds) GetType() ConnectionPinterestAdsType {
+func (o *ConnectionPinterestAds) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionPinterestAdsType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionPinterestAds) GetDefaultUpdateSchedule() []ConnectionPinterestAdsDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionPinterestAdsDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionPinterestAds) GetActive() bool {
@@ -189,18 +196,18 @@ func (o *ConnectionPinterestAds) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionPinterestAds) GetStatus() ConnectionPinterestAdsStatus {
+func (o *ConnectionPinterestAds) GetType() ConnectionPinterestAdsType {
 	if o == nil {
-		return ConnectionPinterestAdsStatus("")
+		return ConnectionPinterestAdsType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionPinterestAds) GetCreateDate() time.Time {
+func (o *ConnectionPinterestAds) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionPinterestAds) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -210,9 +217,9 @@ func (o *ConnectionPinterestAds) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionPinterestAds) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionPinterestAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -220,6 +227,13 @@ func (o *ConnectionPinterestAds) GetUpdateScheduleInterval() *UpdateScheduleMode
 func (o *ConnectionPinterestAds) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionPinterestAds) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -236,20 +250,6 @@ func (o *ConnectionPinterestAds) GetUpdateScheduleWeekly() *UpdateScheduleModeWe
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
-}
-
-func (o *ConnectionPinterestAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionPinterestAds) GetDefaultUpdateSchedule() []ConnectionPinterestAdsDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionPinterestAdsDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
 }
 
 type ConnectionPinterestAdsInput struct {
@@ -283,9 +283,9 @@ func (o *ConnectionPinterestAdsInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionPinterestAdsInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionPinterestAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -293,6 +293,13 @@ func (o *ConnectionPinterestAdsInput) GetUpdateScheduleInterval() *UpdateSchedul
 func (o *ConnectionPinterestAdsInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionPinterestAdsInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -307,13 +314,6 @@ func (o *ConnectionPinterestAdsInput) GetUpdateScheduleDaily() *UpdateScheduleMo
 func (o *ConnectionPinterestAdsInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionPinterestAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

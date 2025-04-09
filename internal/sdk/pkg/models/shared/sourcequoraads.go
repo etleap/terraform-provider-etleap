@@ -32,20 +32,13 @@ func (e *SourceQuoraAdsType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceQuoraAds struct {
-	Type SourceQuoraAdsType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string             `json:"connectionId"`
+	Type         SourceQuoraAdsType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The level of aggregation for your Quora Ads data. Example values: [Account, Campaign, Ad Set, Ad]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceQuoraAds) GetType() SourceQuoraAdsType {
-	if o == nil {
-		return SourceQuoraAdsType("")
-	}
-	return o.Type
 }
 
 func (o *SourceQuoraAds) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceQuoraAds) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceQuoraAds) GetType() SourceQuoraAdsType {
+	if o == nil {
+		return SourceQuoraAdsType("")
+	}
+	return o.Type
 }
 
 func (o *SourceQuoraAds) GetLatencyThreshold() *int64 {

@@ -8,13 +8,13 @@ import (
 )
 
 type TeamOutput struct {
-	// The unique identifier of the team.
-	ID          string `json:"id"`
-	Name        string `json:"name"`
 	Description string `json:"description"`
-	Members     []User `json:"members"`
 	// The date and time when then the team was created.
 	CreateDate time.Time `json:"createDate"`
+	// The unique identifier of the team.
+	ID      string `json:"id"`
+	Members []User `json:"members"`
+	Name    string `json:"name"`
 }
 
 func (t TeamOutput) MarshalJSON() ([]byte, error) {
@@ -28,25 +28,25 @@ func (t *TeamOutput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TeamOutput) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *TeamOutput) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
 func (o *TeamOutput) GetDescription() string {
 	if o == nil {
 		return ""
 	}
 	return o.Description
+}
+
+func (o *TeamOutput) GetCreateDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.CreateDate
+}
+
+func (o *TeamOutput) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 func (o *TeamOutput) GetMembers() []User {
@@ -56,9 +56,9 @@ func (o *TeamOutput) GetMembers() []User {
 	return o.Members
 }
 
-func (o *TeamOutput) GetCreateDate() time.Time {
+func (o *TeamOutput) GetName() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.Name
 }

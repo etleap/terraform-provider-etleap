@@ -1,3 +1,3 @@
 data "etleap_connection_sap_concur" "my_connectionsap_concur" {
-  id = "e008b056-ee63-4ca8-9c6a-66008df1e39e"
+  id = "51fa0e7c-b6b8-446b-ad58-cdc28fea0867"
 }

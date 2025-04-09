@@ -28,19 +28,19 @@ type ConnectionORACLESHARDEDDataSource struct {
 
 // ConnectionORACLESHARDEDDataSourceModel describes the data model.
 type ConnectionORACLESHARDEDDataSourceModel struct {
-	Active                           types.Bool              `tfsdk:"active"`
-	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
-	Certificate                      types.String            `tfsdk:"certificate"`
-	CreateDate                       types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                               types.String            `tfsdk:"id"`
-	Name                             types.String            `tfsdk:"name"`
-	RequireSslAndValidateCertificate types.Bool              `tfsdk:"require_ssl_and_validate_certificate"`
-	Schema                           types.String            `tfsdk:"schema"`
-	Shards                           []DatabaseShardOutput   `tfsdk:"shards"`
-	Status                           types.String            `tfsdk:"status"`
-	Type                             types.String            `tfsdk:"type"`
-	UpdateSchedule                   *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                           types.Bool                                      `tfsdk:"active"`
+	CdcEnabled                       types.Bool                                      `tfsdk:"cdc_enabled"`
+	Certificate                      types.String                                    `tfsdk:"certificate"`
+	CreateDate                       types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule            []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                               types.String                                    `tfsdk:"id"`
+	Name                             types.String                                    `tfsdk:"name"`
+	RequireSslAndValidateCertificate types.Bool                                      `tfsdk:"require_ssl_and_validate_certificate"`
+	Schema                           types.String                                    `tfsdk:"schema"`
+	Shards                           []DatabaseShardOutput                           `tfsdk:"shards"`
+	Status                           types.String                                    `tfsdk:"status"`
+	Type                             types.String                                    `tfsdk:"type"`
+	UpdateSchedule                   *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.

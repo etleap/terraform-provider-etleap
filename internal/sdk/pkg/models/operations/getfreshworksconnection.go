@@ -27,7 +27,7 @@ type GetFRESHWORKSConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionFreshworks *shared.ConnectionFreshworks
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

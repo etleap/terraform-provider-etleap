@@ -32,35 +32,21 @@ func (e *ConnectionOracleShardedUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionOracleShardedUpdate struct {
-	// The unique name of this connection.
-	Name *string                           `json:"name,omitempty"`
-	Type ConnectionOracleShardedUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                             `json:"active,omitempty"`
+	Type   ConnectionOracleShardedUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	UpdateSchedule                   *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	RequireSslAndValidateCertificate *bool                `json:"requireSslAndValidateCertificate,omitempty"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate *string `json:"certificate,omitempty"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema                           *string `json:"schema,omitempty"`
-	RequireSslAndValidateCertificate *bool   `json:"requireSslAndValidateCertificate,omitempty"`
-	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
-	Certificate *string         `json:"certificate,omitempty"`
-	Shards      []DatabaseShard `json:"shards,omitempty"`
-}
-
-func (o *ConnectionOracleShardedUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionOracleShardedUpdate) GetType() ConnectionOracleShardedUpdateType {
-	if o == nil {
-		return ConnectionOracleShardedUpdateType("")
-	}
-	return o.Type
+	Schema *string         `json:"schema,omitempty"`
+	Shards []DatabaseShard `json:"shards,omitempty"`
 }
 
 func (o *ConnectionOracleShardedUpdate) GetActive() *bool {
@@ -70,6 +56,20 @@ func (o *ConnectionOracleShardedUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionOracleShardedUpdate) GetType() ConnectionOracleShardedUpdateType {
+	if o == nil {
+		return ConnectionOracleShardedUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionOracleShardedUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionOracleShardedUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -77,9 +77,9 @@ func (o *ConnectionOracleShardedUpdate) GetUpdateSchedule() *UpdateScheduleTypes
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionOracleShardedUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionOracleShardedUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -87,6 +87,13 @@ func (o *ConnectionOracleShardedUpdate) GetUpdateScheduleInterval() *UpdateSched
 func (o *ConnectionOracleShardedUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionOracleShardedUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -105,20 +112,6 @@ func (o *ConnectionOracleShardedUpdate) GetUpdateScheduleWeekly() *UpdateSchedul
 	return nil
 }
 
-func (o *ConnectionOracleShardedUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionOracleShardedUpdate) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
 func (o *ConnectionOracleShardedUpdate) GetRequireSslAndValidateCertificate() *bool {
 	if o == nil {
 		return nil
@@ -131,6 +124,13 @@ func (o *ConnectionOracleShardedUpdate) GetCertificate() *string {
 		return nil
 	}
 	return o.Certificate
+}
+
+func (o *ConnectionOracleShardedUpdate) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
 }
 
 func (o *ConnectionOracleShardedUpdate) GetShards() []DatabaseShard {

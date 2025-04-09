@@ -27,7 +27,7 @@ type GetSQLSERVERConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSQLServer *shared.ConnectionSQLServer
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 
