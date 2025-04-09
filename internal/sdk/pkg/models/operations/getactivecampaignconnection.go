@@ -26,8 +26,8 @@ type GetACTIVECAMPAIGNConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionActiveCampaign *shared.ConnectionActiveCampaignOutput
-	// Not Found.
+	ConnectionActiveCampaign *shared.ConnectionActiveCampaign
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetACTIVECAMPAIGNConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetACTIVECAMPAIGNConnectionResponse) GetConnectionActiveCampaign() *shared.ConnectionActiveCampaignOutput {
+func (o *GetACTIVECAMPAIGNConnectionResponse) GetConnectionActiveCampaign() *shared.ConnectionActiveCampaign {
 	if o == nil {
 		return nil
 	}

@@ -72,12 +72,12 @@ func (r *ConnectionOUTREACHResourceModel) ToSharedConnectionOutreachInput() *sha
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -103,7 +103,7 @@ func (r *ConnectionOUTREACHResourceModel) RefreshFromSharedConnectionOutreach(re
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -186,18 +186,18 @@ func (r *ConnectionOUTREACHResourceModel) RefreshFromSharedConnectionOutreach(re
 }
 
 func (r *ConnectionOUTREACHResourceModel) ToSharedConnectionOutreachUpdate() *shared.ConnectionOutreachUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
-	} else {
-		active = nil
-	}
-	typeVar := shared.ConnectionOutreachUpdateType(r.Type.ValueString())
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
+	}
+	typeVar := shared.ConnectionOutreachUpdateType(r.Type.ValueString())
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
+	} else {
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -260,12 +260,12 @@ func (r *ConnectionOUTREACHResourceModel) ToSharedConnectionOutreachUpdate() *sh
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -281,9 +281,9 @@ func (r *ConnectionOUTREACHResourceModel) ToSharedConnectionOutreachUpdate() *sh
 		code = nil
 	}
 	out := shared.ConnectionOutreachUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
 		Code:           code,
 	}

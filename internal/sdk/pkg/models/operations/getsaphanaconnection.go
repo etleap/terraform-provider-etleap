@@ -27,7 +27,7 @@ type GetSAPHANAConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSapHana *shared.ConnectionSapHana
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

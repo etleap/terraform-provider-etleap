@@ -42,18 +42,18 @@ type ConnectionDb2SHARDEDResource struct {
 
 // ConnectionDb2SHARDEDResourceModel describes the resource data model.
 type ConnectionDb2SHARDEDResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	Certificate              types.String                                    `tfsdk:"certificate"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Schema                   types.String                                    `tfsdk:"schema"`
-	Shards                   []DatabaseShard                                 `tfsdk:"shards"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	Certificate              types.String            `tfsdk:"certificate"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Schema                   types.String            `tfsdk:"schema"`
+	Shards                   []DatabaseShard         `tfsdk:"shards"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionDb2SHARDEDResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

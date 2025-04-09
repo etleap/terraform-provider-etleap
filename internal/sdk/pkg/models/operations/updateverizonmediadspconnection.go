@@ -35,7 +35,7 @@ type UpdateVERIZONMEDIADSPConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionVerizonMedia *shared.ConnectionVerizonMedia
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

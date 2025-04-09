@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionELOQUAResourceModel) ToSharedConnectionEloqua() *shared.ConnectionEloqua {
+func (r *ConnectionELOQUAResourceModel) ToSharedConnectionEloquaInput() *shared.ConnectionEloquaInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionEloquaType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionELOQUAResourceModel) ToSharedConnectionEloqua() *shared.Conne
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,21 +86,21 @@ func (r *ConnectionELOQUAResourceModel) ToSharedConnectionEloqua() *shared.Conne
 			}
 		}
 	}
-	username := r.Username.ValueString()
 	company := r.Company.ValueString()
+	username := r.Username.ValueString()
 	password := r.Password.ValueString()
-	out := shared.ConnectionEloqua{
+	out := shared.ConnectionEloquaInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		Username:       username,
 		Company:        company,
+		Username:       username,
 		Password:       password,
 	}
 	return &out
 }
 
-func (r *ConnectionELOQUAResourceModel) RefreshFromSharedConnectionEloquaOutput(resp *shared.ConnectionEloquaOutput) {
+func (r *ConnectionELOQUAResourceModel) RefreshFromSharedConnectionEloqua(resp *shared.ConnectionEloqua) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Company = types.StringValue(resp.Company)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -108,7 +108,7 @@ func (r *ConnectionELOQUAResourceModel) RefreshFromSharedConnectionEloquaOutput(
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -191,11 +191,11 @@ func (r *ConnectionELOQUAResourceModel) RefreshFromSharedConnectionEloquaOutput(
 }
 
 func (r *ConnectionELOQUAResourceModel) ToSharedConnectionEloquaUpdate() *shared.ConnectionEloquaUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionEloquaUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -203,11 +203,11 @@ func (r *ConnectionELOQUAResourceModel) ToSharedConnectionEloquaUpdate() *shared
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -270,12 +270,12 @@ func (r *ConnectionELOQUAResourceModel) ToSharedConnectionEloquaUpdate() *shared
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -284,17 +284,17 @@ func (r *ConnectionELOQUAResourceModel) ToSharedConnectionEloquaUpdate() *shared
 			}
 		}
 	}
-	username := new(string)
-	if !r.Username.IsUnknown() && !r.Username.IsNull() {
-		*username = r.Username.ValueString()
-	} else {
-		username = nil
-	}
 	company := new(string)
 	if !r.Company.IsUnknown() && !r.Company.IsNull() {
 		*company = r.Company.ValueString()
 	} else {
 		company = nil
+	}
+	username := new(string)
+	if !r.Username.IsUnknown() && !r.Username.IsNull() {
+		*username = r.Username.ValueString()
+	} else {
+		username = nil
 	}
 	password := new(string)
 	if !r.Password.IsUnknown() && !r.Password.IsNull() {
@@ -303,12 +303,12 @@ func (r *ConnectionELOQUAResourceModel) ToSharedConnectionEloquaUpdate() *shared
 		password = nil
 	}
 	out := shared.ConnectionEloquaUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
-		Username:       username,
 		Company:        company,
+		Username:       username,
 		Password:       password,
 	}
 	return &out

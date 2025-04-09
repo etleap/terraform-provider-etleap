@@ -35,7 +35,7 @@ type UpdateSNOWFLAKESHARDEDConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSnowflakeSharded *shared.ConnectionSnowflakeSharded
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

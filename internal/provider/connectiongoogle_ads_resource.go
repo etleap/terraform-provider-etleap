@@ -41,17 +41,17 @@ type ConnectionGOOGLEADSResource struct {
 
 // ConnectionGOOGLEADSResourceModel describes the resource data model.
 type ConnectionGOOGLEADSResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	Code                     types.String                                    `tfsdk:"code"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	CustomerID               types.String                                    `tfsdk:"customer_id"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	Code                     types.String            `tfsdk:"code"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	CustomerID               types.String            `tfsdk:"customer_id"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionGOOGLEADSResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

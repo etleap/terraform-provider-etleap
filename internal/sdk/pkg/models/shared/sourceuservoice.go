@@ -32,20 +32,13 @@ func (e *SourceUserVoiceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceUserVoice struct {
+	Type SourceUserVoiceType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string              `json:"connectionId"`
-	Type         SourceUserVoiceType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The UserVoice entity. Example values: [Category, Comment, Feature, Feature Status, Feedback Record, Forum, Forum Invitation, Internal Status, Label, NPS Rating, Note, Permission, Product Area, Score, Segment, Segmented Values, Status, Status Updates, Suggestion, Suggestion Activity Entry, Supporter, Supporter Message, Team, User, VSTS Work Item]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceUserVoice) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceUserVoice) GetType() SourceUserVoiceType {
@@ -53,6 +46,13 @@ func (o *SourceUserVoice) GetType() SourceUserVoiceType {
 		return SourceUserVoiceType("")
 	}
 	return o.Type
+}
+
+func (o *SourceUserVoice) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceUserVoice) GetLatencyThreshold() *int64 {

@@ -32,20 +32,13 @@ func (e *SourceIntercomType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceIntercom struct {
+	Type SourceIntercomType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string             `json:"connectionId"`
-	Type         SourceIntercomType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Intercom entity. Example values: [User, Lead, Contact, Company, Admin, Tag, Segment, Note, Event, Counts, Conversation Counts, Admin Conversation Counts, User Tags Counts, User Segments Counts, Company Tags Counts, Company Segments Counts, Conversation, Conversation Parts, Conversation Tags, Subscription]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceIntercom) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceIntercom) GetType() SourceIntercomType {
@@ -53,6 +46,13 @@ func (o *SourceIntercom) GetType() SourceIntercomType {
 		return SourceIntercomType("")
 	}
 	return o.Type
+}
+
+func (o *SourceIntercom) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceIntercom) GetLatencyThreshold() *int64 {

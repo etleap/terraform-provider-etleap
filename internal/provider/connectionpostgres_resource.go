@@ -42,24 +42,24 @@ type ConnectionPOSTGRESResource struct {
 
 // ConnectionPOSTGRESResourceModel describes the resource data model.
 type ConnectionPOSTGRESResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	Address                  types.String                                    `tfsdk:"address"`
-	AutoReplicate            types.String                                    `tfsdk:"auto_replicate"`
-	CdcEnabled               types.Bool                                      `tfsdk:"cdc_enabled"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	Database                 types.String                                    `tfsdk:"database"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Password                 types.String                                    `tfsdk:"password"`
-	Port                     types.Int64                                     `tfsdk:"port"`
-	Schema                   types.String                                    `tfsdk:"schema"`
-	SSHConfig                *SSHConfig                                      `tfsdk:"ssh_config"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	Username                 types.String                                    `tfsdk:"username"`
+	Active                   types.Bool              `tfsdk:"active"`
+	Address                  types.String            `tfsdk:"address"`
+	AutoReplicate            types.String            `tfsdk:"auto_replicate"`
+	CdcEnabled               types.Bool              `tfsdk:"cdc_enabled"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	Database                 types.String            `tfsdk:"database"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Password                 types.String            `tfsdk:"password"`
+	Port                     types.Int64             `tfsdk:"port"`
+	Schema                   types.String            `tfsdk:"schema"`
+	SSHConfig                *SSHConfig              `tfsdk:"ssh_config"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Username                 types.String            `tfsdk:"username"`
 }
 
 func (r *ConnectionPOSTGRESResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

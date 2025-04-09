@@ -72,12 +72,12 @@ func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterInput() *sh
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,24 +87,24 @@ func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterInput() *sh
 		}
 	}
 	appKey := r.AppKey.ValueString()
+	appSecretKey := r.AppSecretKey.ValueString()
 	accessToken := r.AccessToken.ValueString()
+	accessTokenSecret := r.AccessTokenSecret.ValueString()
 	twitterUsernames := new(string)
 	if !r.TwitterUsernames.IsUnknown() && !r.TwitterUsernames.IsNull() {
 		*twitterUsernames = r.TwitterUsernames.ValueString()
 	} else {
 		twitterUsernames = nil
 	}
-	accessTokenSecret := r.AccessTokenSecret.ValueString()
-	appSecretKey := r.AppSecretKey.ValueString()
 	out := shared.ConnectionTwitterInput{
 		Name:              name,
 		Type:              typeVar,
 		UpdateSchedule:    updateSchedule,
 		AppKey:            appKey,
-		AccessToken:       accessToken,
-		TwitterUsernames:  twitterUsernames,
-		AccessTokenSecret: accessTokenSecret,
 		AppSecretKey:      appSecretKey,
+		AccessToken:       accessToken,
+		AccessTokenSecret: accessTokenSecret,
+		TwitterUsernames:  twitterUsernames,
 	}
 	return &out
 }
@@ -117,7 +117,7 @@ func (r *ConnectionTWITTERADSResourceModel) RefreshFromSharedConnectionTwitter(r
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -200,11 +200,11 @@ func (r *ConnectionTWITTERADSResourceModel) RefreshFromSharedConnectionTwitter(r
 }
 
 func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterUpdate() *shared.ConnectionTwitterUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionTwitterUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -212,11 +212,11 @@ func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterUpdate() *s
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -279,12 +279,12 @@ func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterUpdate() *s
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -299,17 +299,17 @@ func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterUpdate() *s
 	} else {
 		appKey = nil
 	}
+	appSecretKey := new(string)
+	if !r.AppSecretKey.IsUnknown() && !r.AppSecretKey.IsNull() {
+		*appSecretKey = r.AppSecretKey.ValueString()
+	} else {
+		appSecretKey = nil
+	}
 	accessToken := new(string)
 	if !r.AccessToken.IsUnknown() && !r.AccessToken.IsNull() {
 		*accessToken = r.AccessToken.ValueString()
 	} else {
 		accessToken = nil
-	}
-	twitterUsernames := new(string)
-	if !r.TwitterUsernames.IsUnknown() && !r.TwitterUsernames.IsNull() {
-		*twitterUsernames = r.TwitterUsernames.ValueString()
-	} else {
-		twitterUsernames = nil
 	}
 	accessTokenSecret := new(string)
 	if !r.AccessTokenSecret.IsUnknown() && !r.AccessTokenSecret.IsNull() {
@@ -317,22 +317,22 @@ func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterUpdate() *s
 	} else {
 		accessTokenSecret = nil
 	}
-	appSecretKey := new(string)
-	if !r.AppSecretKey.IsUnknown() && !r.AppSecretKey.IsNull() {
-		*appSecretKey = r.AppSecretKey.ValueString()
+	twitterUsernames := new(string)
+	if !r.TwitterUsernames.IsUnknown() && !r.TwitterUsernames.IsNull() {
+		*twitterUsernames = r.TwitterUsernames.ValueString()
 	} else {
-		appSecretKey = nil
+		twitterUsernames = nil
 	}
 	out := shared.ConnectionTwitterUpdate{
-		Active:            active,
-		Type:              typeVar,
 		Name:              name,
+		Type:              typeVar,
+		Active:            active,
 		UpdateSchedule:    updateSchedule,
 		AppKey:            appKey,
-		AccessToken:       accessToken,
-		TwitterUsernames:  twitterUsernames,
-		AccessTokenSecret: accessTokenSecret,
 		AppSecretKey:      appSecretKey,
+		AccessToken:       accessToken,
+		AccessTokenSecret: accessTokenSecret,
+		TwitterUsernames:  twitterUsernames,
 	}
 	return &out
 }

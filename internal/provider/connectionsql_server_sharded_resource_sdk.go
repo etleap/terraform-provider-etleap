@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerSharded() *shared.ConnectionSQLServerSharded {
+func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerShardedInput() *shared.ConnectionSQLServerShardedInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionSQLServerShardedType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerSha
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,57 +86,57 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerSha
 			}
 		}
 	}
-	cdcEnabled := new(bool)
-	if !r.CdcEnabled.IsUnknown() && !r.CdcEnabled.IsNull() {
-		*cdcEnabled = r.CdcEnabled.ValueBool()
-	} else {
-		cdcEnabled = nil
-	}
 	schema := new(string)
 	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
 		*schema = r.Schema.ValueString()
 	} else {
 		schema = nil
 	}
+	cdcEnabled := new(bool)
+	if !r.CdcEnabled.IsUnknown() && !r.CdcEnabled.IsNull() {
+		*cdcEnabled = r.CdcEnabled.ValueBool()
+	} else {
+		cdcEnabled = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
+		address := shardsItem.Address.ValueString()
+		port := shardsItem.Port.ValueInt64()
 		username := shardsItem.Username.ValueString()
+		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
 		if shardsItem.SSHConfig != nil {
+			address1 := shardsItem.SSHConfig.Address.ValueString()
 			username1 := shardsItem.SSHConfig.Username.ValueString()
-			address := shardsItem.SSHConfig.Address.ValueString()
 			sshConfig = &shared.SSHConfig{
+				Address:  address1,
 				Username: username1,
-				Address:  address,
 			}
 		}
-		password := shardsItem.Password.ValueString()
-		port := shardsItem.Port.ValueInt64()
-		address1 := shardsItem.Address.ValueString()
 		database := shardsItem.Database.ValueString()
 		shardID := shardsItem.ShardID.ValueString()
 		shards = append(shards, shared.DatabaseShard{
-			Username:  username,
-			SSHConfig: sshConfig,
-			Password:  password,
+			Address:   address,
 			Port:      port,
-			Address:   address1,
+			Username:  username,
+			Password:  password,
+			SSHConfig: sshConfig,
 			Database:  database,
 			ShardID:   shardID,
 		})
 	}
-	out := shared.ConnectionSQLServerSharded{
+	out := shared.ConnectionSQLServerShardedInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		CdcEnabled:     cdcEnabled,
 		Schema:         schema,
+		CdcEnabled:     cdcEnabled,
 		Shards:         shards,
 	}
 	return &out
 }
 
-func (r *ConnectionSQLSERVERSHARDEDResourceModel) RefreshFromSharedConnectionSQLServerShardedOutput(resp *shared.ConnectionSQLServerShardedOutput) {
+func (r *ConnectionSQLSERVERSHARDEDResourceModel) RefreshFromSharedConnectionSQLServerSharded(resp *shared.ConnectionSQLServerSharded) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -144,7 +144,7 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) RefreshFromSharedConnectionSQL
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -255,18 +255,18 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) RefreshFromSharedConnectionSQL
 }
 
 func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerShardedUpdate() *shared.ConnectionSQLServerShardedUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
-	} else {
-		active = nil
-	}
-	typeVar := shared.ConnectionSQLServerShardedUpdateType(r.Type.ValueString())
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
+	}
+	typeVar := shared.ConnectionSQLServerShardedUpdateType(r.Type.ValueString())
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
+	} else {
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -329,12 +329,12 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerSha
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -351,35 +351,35 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerSha
 	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
+		address := shardsItem.Address.ValueString()
+		port := shardsItem.Port.ValueInt64()
 		username := shardsItem.Username.ValueString()
+		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
 		if shardsItem.SSHConfig != nil {
+			address1 := shardsItem.SSHConfig.Address.ValueString()
 			username1 := shardsItem.SSHConfig.Username.ValueString()
-			address := shardsItem.SSHConfig.Address.ValueString()
 			sshConfig = &shared.SSHConfig{
+				Address:  address1,
 				Username: username1,
-				Address:  address,
 			}
 		}
-		password := shardsItem.Password.ValueString()
-		port := shardsItem.Port.ValueInt64()
-		address1 := shardsItem.Address.ValueString()
 		database := shardsItem.Database.ValueString()
 		shardID := shardsItem.ShardID.ValueString()
 		shards = append(shards, shared.DatabaseShard{
-			Username:  username,
-			SSHConfig: sshConfig,
-			Password:  password,
+			Address:   address,
 			Port:      port,
-			Address:   address1,
+			Username:  username,
+			Password:  password,
+			SSHConfig: sshConfig,
 			Database:  database,
 			ShardID:   shardID,
 		})
 	}
 	out := shared.ConnectionSQLServerShardedUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
 		Schema:         schema,
 		Shards:         shards,

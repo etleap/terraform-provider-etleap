@@ -32,21 +32,21 @@ func (e *WarehouseSnowflakeType) UnmarshalJSON(data []byte) error {
 }
 
 type WarehouseSnowflake struct {
+	Type         WarehouseSnowflakeType `json:"type"`
+	ConnectionID string                 `json:"connectionId"`
+	Schema       *string                `json:"schema,omitempty"`
+	Table        string                 `json:"table"`
 	// Only set when a table rename was triggered but is not complete yet.
-	PendingRenamedTable      *string                `json:"pendingRenamedTable,omitempty"`
-	ConnectionID             string                 `json:"connectionId"`
-	MaterializedView         bool                   `json:"materializedView"`
-	WaitForUpdatePreparation bool                   `json:"waitForUpdatePreparation"`
-	Table                    string                 `json:"table"`
-	Type                     WarehouseSnowflakeType `json:"type"`
-	Schema                   *string                `json:"schema,omitempty"`
+	PendingRenamedTable      *string `json:"pendingRenamedTable,omitempty"`
+	MaterializedView         bool    `json:"materializedView"`
+	WaitForUpdatePreparation bool    `json:"waitForUpdatePreparation"`
 }
 
-func (o *WarehouseSnowflake) GetPendingRenamedTable() *string {
+func (o *WarehouseSnowflake) GetType() WarehouseSnowflakeType {
 	if o == nil {
-		return nil
+		return WarehouseSnowflakeType("")
 	}
-	return o.PendingRenamedTable
+	return o.Type
 }
 
 func (o *WarehouseSnowflake) GetConnectionID() string {
@@ -54,6 +54,27 @@ func (o *WarehouseSnowflake) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *WarehouseSnowflake) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *WarehouseSnowflake) GetTable() string {
+	if o == nil {
+		return ""
+	}
+	return o.Table
+}
+
+func (o *WarehouseSnowflake) GetPendingRenamedTable() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PendingRenamedTable
 }
 
 func (o *WarehouseSnowflake) GetMaterializedView() bool {
@@ -70,34 +91,20 @@ func (o *WarehouseSnowflake) GetWaitForUpdatePreparation() bool {
 	return o.WaitForUpdatePreparation
 }
 
-func (o *WarehouseSnowflake) GetTable() string {
-	if o == nil {
-		return ""
-	}
-	return o.Table
+type WarehouseSnowflakeInput struct {
+	Type                     WarehouseSnowflakeType `json:"type"`
+	ConnectionID             string                 `json:"connectionId"`
+	Schema                   *string                `json:"schema,omitempty"`
+	Table                    string                 `json:"table"`
+	MaterializedView         bool                   `json:"materializedView"`
+	WaitForUpdatePreparation bool                   `json:"waitForUpdatePreparation"`
 }
 
-func (o *WarehouseSnowflake) GetType() WarehouseSnowflakeType {
+func (o *WarehouseSnowflakeInput) GetType() WarehouseSnowflakeType {
 	if o == nil {
 		return WarehouseSnowflakeType("")
 	}
 	return o.Type
-}
-
-func (o *WarehouseSnowflake) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
-type WarehouseSnowflakeInput struct {
-	ConnectionID             string                 `json:"connectionId"`
-	MaterializedView         bool                   `json:"materializedView"`
-	WaitForUpdatePreparation bool                   `json:"waitForUpdatePreparation"`
-	Table                    string                 `json:"table"`
-	Type                     WarehouseSnowflakeType `json:"type"`
-	Schema                   *string                `json:"schema,omitempty"`
 }
 
 func (o *WarehouseSnowflakeInput) GetConnectionID() string {
@@ -105,6 +112,20 @@ func (o *WarehouseSnowflakeInput) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *WarehouseSnowflakeInput) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *WarehouseSnowflakeInput) GetTable() string {
+	if o == nil {
+		return ""
+	}
+	return o.Table
 }
 
 func (o *WarehouseSnowflakeInput) GetMaterializedView() bool {
@@ -119,25 +140,4 @@ func (o *WarehouseSnowflakeInput) GetWaitForUpdatePreparation() bool {
 		return false
 	}
 	return o.WaitForUpdatePreparation
-}
-
-func (o *WarehouseSnowflakeInput) GetTable() string {
-	if o == nil {
-		return ""
-	}
-	return o.Table
-}
-
-func (o *WarehouseSnowflakeInput) GetType() WarehouseSnowflakeType {
-	if o == nil {
-		return WarehouseSnowflakeType("")
-	}
-	return o.Type
-}
-
-func (o *WarehouseSnowflakeInput) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
 }

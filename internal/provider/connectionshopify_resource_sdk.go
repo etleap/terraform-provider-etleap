@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSHOPIFYResourceModel) ToSharedConnectionShopify() *shared.ConnectionShopify {
+func (r *ConnectionSHOPIFYResourceModel) ToSharedConnectionShopifyInput() *shared.ConnectionShopifyInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionShopifyType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionSHOPIFYResourceModel) ToSharedConnectionShopify() *shared.Con
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,21 +86,21 @@ func (r *ConnectionSHOPIFYResourceModel) ToSharedConnectionShopify() *shared.Con
 			}
 		}
 	}
-	password := r.Password.ValueString()
 	apiKey := r.APIKey.ValueString()
+	password := r.Password.ValueString()
 	storeName := r.StoreName.ValueString()
-	out := shared.ConnectionShopify{
+	out := shared.ConnectionShopifyInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		Password:       password,
 		APIKey:         apiKey,
+		Password:       password,
 		StoreName:      storeName,
 	}
 	return &out
 }
 
-func (r *ConnectionSHOPIFYResourceModel) RefreshFromSharedConnectionShopifyOutput(resp *shared.ConnectionShopifyOutput) {
+func (r *ConnectionSHOPIFYResourceModel) RefreshFromSharedConnectionShopify(resp *shared.ConnectionShopify) {
 	r.Active = types.BoolValue(resp.Active)
 	r.APIKey = types.StringValue(resp.APIKey)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -108,7 +108,7 @@ func (r *ConnectionSHOPIFYResourceModel) RefreshFromSharedConnectionShopifyOutpu
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -191,11 +191,11 @@ func (r *ConnectionSHOPIFYResourceModel) RefreshFromSharedConnectionShopifyOutpu
 }
 
 func (r *ConnectionSHOPIFYResourceModel) ToSharedConnectionShopifyUpdate() *shared.ConnectionShopifyUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionShopifyUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -203,11 +203,11 @@ func (r *ConnectionSHOPIFYResourceModel) ToSharedConnectionShopifyUpdate() *shar
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -270,12 +270,12 @@ func (r *ConnectionSHOPIFYResourceModel) ToSharedConnectionShopifyUpdate() *shar
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -284,17 +284,17 @@ func (r *ConnectionSHOPIFYResourceModel) ToSharedConnectionShopifyUpdate() *shar
 			}
 		}
 	}
-	password := new(string)
-	if !r.Password.IsUnknown() && !r.Password.IsNull() {
-		*password = r.Password.ValueString()
-	} else {
-		password = nil
-	}
 	apiKey := new(string)
 	if !r.APIKey.IsUnknown() && !r.APIKey.IsNull() {
 		*apiKey = r.APIKey.ValueString()
 	} else {
 		apiKey = nil
+	}
+	password := new(string)
+	if !r.Password.IsUnknown() && !r.Password.IsNull() {
+		*password = r.Password.ValueString()
+	} else {
+		password = nil
 	}
 	storeName := new(string)
 	if !r.StoreName.IsUnknown() && !r.StoreName.IsNull() {
@@ -303,12 +303,12 @@ func (r *ConnectionSHOPIFYResourceModel) ToSharedConnectionShopifyUpdate() *shar
 		storeName = nil
 	}
 	out := shared.ConnectionShopifyUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
-		Password:       password,
 		APIKey:         apiKey,
+		Password:       password,
 		StoreName:      storeName,
 	}
 	return &out

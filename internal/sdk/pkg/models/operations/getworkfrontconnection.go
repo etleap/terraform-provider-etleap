@@ -27,7 +27,7 @@ type GetWORKFRONTConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionWorkfront *shared.ConnectionWorkfront
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

@@ -28,21 +28,21 @@ type ConnectionDb2DataSource struct {
 
 // ConnectionDb2DataSourceModel describes the data model.
 type ConnectionDb2DataSourceModel struct {
-	Active                types.Bool                                      `tfsdk:"active"`
-	Address               types.String                                    `tfsdk:"address"`
-	Certificate           types.String                                    `tfsdk:"certificate"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	Database              types.String                                    `tfsdk:"database"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String                                    `tfsdk:"id"`
-	Name                  types.String                                    `tfsdk:"name"`
-	Port                  types.Int64                                     `tfsdk:"port"`
-	Schema                types.String                                    `tfsdk:"schema"`
-	SSHConfig             *SSHConfig                                      `tfsdk:"ssh_config"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	Username              types.String                                    `tfsdk:"username"`
+	Active                types.Bool              `tfsdk:"active"`
+	Address               types.String            `tfsdk:"address"`
+	Certificate           types.String            `tfsdk:"certificate"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	Database              types.String            `tfsdk:"database"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String            `tfsdk:"id"`
+	Name                  types.String            `tfsdk:"name"`
+	Port                  types.Int64             `tfsdk:"port"`
+	Schema                types.String            `tfsdk:"schema"`
+	SSHConfig             *SSHConfig              `tfsdk:"ssh_config"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Username              types.String            `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.

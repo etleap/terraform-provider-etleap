@@ -10,4 +10,5 @@ type SourceElluminate struct {
 	Entity           types.String   `tfsdk:"entity"`
 	LatencyThreshold types.Int64    `tfsdk:"latency_threshold"`
 	SchemaName       types.String   `tfsdk:"schema_name"`
+	Type             types.String   `tfsdk:"type"`
 }

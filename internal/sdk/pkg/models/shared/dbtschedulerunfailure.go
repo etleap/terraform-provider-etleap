@@ -42,10 +42,10 @@ type DbtScheduleRunFailure struct {
 	StartDate time.Time `json:"startDate"`
 	// The duration, in seconds, between the time this dbt run was triggered and the time the dbt build for this run completed.
 	Duration int64 `json:"duration"`
-	// The last time that a successful dbt build finished.
-	LastSuccessfulDbtBuildDate *time.Time `json:"lastSuccessfulDbtBuildDate,omitempty"`
 	// Timestamp for the next dbt schedule trigger.
 	NextTriggerDate time.Time `json:"nextTriggerDate"`
+	// The last time that a successful dbt build finished.
+	LastSuccessfulDbtBuildDate *time.Time `json:"lastSuccessfulDbtBuildDate,omitempty"`
 }
 
 func (d DbtScheduleRunFailure) MarshalJSON() ([]byte, error) {
@@ -80,16 +80,16 @@ func (o *DbtScheduleRunFailure) GetDuration() int64 {
 	return o.Duration
 }
 
-func (o *DbtScheduleRunFailure) GetLastSuccessfulDbtBuildDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.LastSuccessfulDbtBuildDate
-}
-
 func (o *DbtScheduleRunFailure) GetNextTriggerDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.NextTriggerDate
+}
+
+func (o *DbtScheduleRunFailure) GetLastSuccessfulDbtBuildDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.LastSuccessfulDbtBuildDate
 }

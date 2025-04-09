@@ -5,15 +5,16 @@ package shared
 // SnowflakeShard - Use shards when the database is split amongst several physical machines, but should be treated as a single database.
 type SnowflakeShard struct {
 	ShardID  string `json:"shardId"`
-	Username string `json:"username"`
+	Address  string `json:"address"`
 	Database string `json:"database"`
+	// The virtual warehouse to use once connected.
+	Warehouse string  `json:"warehouse"`
+	Username  string  `json:"username"`
+	Password  *string `json:"password,omitempty"`
+	// The role the user will use to connect
+	Role *string `json:"role,omitempty"`
 	// Snowflake Authentication Types
 	Authentication *SnowflakeAuthenticationTypes `json:"authentication,omitempty"`
-	// The role the user will use to connect
-	Role    *string `json:"role,omitempty"`
-	Address string  `json:"address"`
-	// The virtual warehouse to use once connected.
-	Warehouse string `json:"warehouse"`
 }
 
 func (o *SnowflakeShard) GetShardID() string {
@@ -23,11 +24,11 @@ func (o *SnowflakeShard) GetShardID() string {
 	return o.ShardID
 }
 
-func (o *SnowflakeShard) GetUsername() string {
+func (o *SnowflakeShard) GetAddress() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.Address
 }
 
 func (o *SnowflakeShard) GetDatabase() string {
@@ -37,25 +38,25 @@ func (o *SnowflakeShard) GetDatabase() string {
 	return o.Database
 }
 
-func (o *SnowflakeShard) GetAuthentication() *SnowflakeAuthenticationTypes {
+func (o *SnowflakeShard) GetWarehouse() string {
+	if o == nil {
+		return ""
+	}
+	return o.Warehouse
+}
+
+func (o *SnowflakeShard) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *SnowflakeShard) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Authentication
-}
-
-func (o *SnowflakeShard) GetAuthenticationPassword() *SnowflakeAuthenticationPasswordOutput {
-	if v := o.GetAuthentication(); v != nil {
-		return v.SnowflakeAuthenticationPasswordOutput
-	}
-	return nil
-}
-
-func (o *SnowflakeShard) GetAuthenticationKeyPair() *SnowflakeAuthenticationKeyPair {
-	if v := o.GetAuthentication(); v != nil {
-		return v.SnowflakeAuthenticationKeyPair
-	}
-	return nil
+	return o.Password
 }
 
 func (o *SnowflakeShard) GetRole() *string {
@@ -65,16 +66,23 @@ func (o *SnowflakeShard) GetRole() *string {
 	return o.Role
 }
 
-func (o *SnowflakeShard) GetAddress() string {
+func (o *SnowflakeShard) GetAuthentication() *SnowflakeAuthenticationTypes {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Address
+	return o.Authentication
 }
 
-func (o *SnowflakeShard) GetWarehouse() string {
-	if o == nil {
-		return ""
+func (o *SnowflakeShard) GetAuthenticationPassword() *SnowflakeAuthenticationPassword {
+	if v := o.GetAuthentication(); v != nil {
+		return v.SnowflakeAuthenticationPassword
 	}
-	return o.Warehouse
+	return nil
+}
+
+func (o *SnowflakeShard) GetAuthenticationKeyPair() *SnowflakeAuthenticationKeyPair {
+	if v := o.GetAuthentication(); v != nil {
+		return v.SnowflakeAuthenticationKeyPair
+	}
+	return nil
 }

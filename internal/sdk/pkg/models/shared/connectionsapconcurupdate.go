@@ -32,37 +32,23 @@ func (e *ConnectionSapConcurUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionSapConcurUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                          `json:"active,omitempty"`
-	Type   *ConnectionSapConcurUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                        `json:"name,omitempty"`
+	Type *ConnectionSapConcurUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Your application client secret.
-	ClientSecret *string `json:"clientSecret,omitempty"`
-	// Your company ID.
-	CompanyID *string `json:"companyId,omitempty"`
 	// Your SAP Concur region, e.g. us, eu, eu2.
 	Region *string `json:"region,omitempty"`
 	// Your application client ID.
 	ClientID *string `json:"clientId,omitempty"`
+	// Your application client secret.
+	ClientSecret *string `json:"clientSecret,omitempty"`
+	// Your company ID.
+	CompanyID *string `json:"companyId,omitempty"`
 	// Your Company Request Token.
 	RequestToken *string `json:"requestToken,omitempty"`
-}
-
-func (o *ConnectionSapConcurUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionSapConcurUpdate) GetType() *ConnectionSapConcurUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionSapConcurUpdate) GetName() *string {
@@ -72,6 +58,20 @@ func (o *ConnectionSapConcurUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionSapConcurUpdate) GetType() *ConnectionSapConcurUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionSapConcurUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionSapConcurUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -79,9 +79,9 @@ func (o *ConnectionSapConcurUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSapConcurUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSapConcurUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -89,13 +89,6 @@ func (o *ConnectionSapConcurUpdate) GetUpdateScheduleMonthly() *UpdateScheduleMo
 func (o *ConnectionSapConcurUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSapConcurUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -114,18 +107,11 @@ func (o *ConnectionSapConcurUpdate) GetUpdateScheduleWeekly() *UpdateScheduleMod
 	return nil
 }
 
-func (o *ConnectionSapConcurUpdate) GetClientSecret() *string {
-	if o == nil {
-		return nil
+func (o *ConnectionSapConcurUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.ClientSecret
-}
-
-func (o *ConnectionSapConcurUpdate) GetCompanyID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.CompanyID
+	return nil
 }
 
 func (o *ConnectionSapConcurUpdate) GetRegion() *string {
@@ -140,6 +126,20 @@ func (o *ConnectionSapConcurUpdate) GetClientID() *string {
 		return nil
 	}
 	return o.ClientID
+}
+
+func (o *ConnectionSapConcurUpdate) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}
+
+func (o *ConnectionSapConcurUpdate) GetCompanyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CompanyID
 }
 
 func (o *ConnectionSapConcurUpdate) GetRequestToken() *string {

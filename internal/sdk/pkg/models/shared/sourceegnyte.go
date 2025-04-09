@@ -32,20 +32,13 @@ func (e *SourceEgnyteType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceEgnyte struct {
+	Type SourceEgnyteType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string           `json:"connectionId"`
-	Type         SourceEgnyteType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Excel resource path on egnyte. e.g. "/Shared/Documents/data.xlsx" or  "/Shared/Documents/data.xlsx/sheet_1"
 	Entity string `json:"entity"`
-}
-
-func (o *SourceEgnyte) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceEgnyte) GetType() SourceEgnyteType {
@@ -53,6 +46,13 @@ func (o *SourceEgnyte) GetType() SourceEgnyteType {
 		return SourceEgnyteType("")
 	}
 	return o.Type
+}
+
+func (o *SourceEgnyte) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceEgnyte) GetLatencyThreshold() *int64 {

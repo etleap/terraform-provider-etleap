@@ -28,24 +28,24 @@ type ConnectionMYSQLDataSource struct {
 
 // ConnectionMYSQLDataSourceModel describes the data model.
 type ConnectionMYSQLDataSourceModel struct {
-	Active                           types.Bool                                      `tfsdk:"active"`
-	Address                          types.String                                    `tfsdk:"address"`
-	AutoReplicate                    types.String                                    `tfsdk:"auto_replicate"`
-	CdcEnabled                       types.Bool                                      `tfsdk:"cdc_enabled"`
-	Certificate                      types.String                                    `tfsdk:"certificate"`
-	CreateDate                       types.String                                    `tfsdk:"create_date"`
-	Database                         types.String                                    `tfsdk:"database"`
-	DefaultUpdateSchedule            []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                               types.String                                    `tfsdk:"id"`
-	Name                             types.String                                    `tfsdk:"name"`
-	Port                             types.Int64                                     `tfsdk:"port"`
-	RequireSslAndValidateCertificate types.Bool                                      `tfsdk:"require_ssl_and_validate_certificate"`
-	SSHConfig                        *SSHConfig                                      `tfsdk:"ssh_config"`
-	Status                           types.String                                    `tfsdk:"status"`
-	TinyInt1IsBoolean                types.Bool                                      `tfsdk:"tiny_int1_is_boolean"`
-	Type                             types.String                                    `tfsdk:"type"`
-	UpdateSchedule                   *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	Username                         types.String                                    `tfsdk:"username"`
+	Active                           types.Bool              `tfsdk:"active"`
+	Address                          types.String            `tfsdk:"address"`
+	AutoReplicate                    types.String            `tfsdk:"auto_replicate"`
+	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
+	Certificate                      types.String            `tfsdk:"certificate"`
+	CreateDate                       types.String            `tfsdk:"create_date"`
+	Database                         types.String            `tfsdk:"database"`
+	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                               types.String            `tfsdk:"id"`
+	Name                             types.String            `tfsdk:"name"`
+	Port                             types.Int64             `tfsdk:"port"`
+	RequireSslAndValidateCertificate types.Bool              `tfsdk:"require_ssl_and_validate_certificate"`
+	SSHConfig                        *SSHConfig              `tfsdk:"ssh_config"`
+	Status                           types.String            `tfsdk:"status"`
+	TinyInt1IsBoolean                types.Bool              `tfsdk:"tiny_int1_is_boolean"`
+	Type                             types.String            `tfsdk:"type"`
+	UpdateSchedule                   *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Username                         types.String            `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.
@@ -360,7 +360,7 @@ func (r *ConnectionMYSQLDataSource) Read(ctx context.Context, req datasource.Rea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMysqlOutput(res.ConnectionMysql)
+	data.RefreshFromSharedConnectionMysql(res.ConnectionMysql)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

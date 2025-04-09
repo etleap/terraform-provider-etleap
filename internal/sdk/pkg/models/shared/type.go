@@ -9,26 +9,26 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-// One - Note: JSON_OBJECT is deprecated and is a synonym of JSON.
-type One string
+// Type1 - Note: JSON_OBJECT is deprecated and is a synonym of JSON.
+type Type1 string
 
 const (
-	OneAuto       One = "AUTO"
-	OneBigint     One = "BIGINT"
-	OneBoolean    One = "BOOLEAN"
-	OneDate       One = "DATE"
-	OneDatetime   One = "DATETIME"
-	OneDouble     One = "DOUBLE"
-	OneString     One = "STRING"
-	OneJSONObject One = "JSON_OBJECT"
-	OneJSON       One = "JSON"
+	Type1Auto       Type1 = "AUTO"
+	Type1Bigint     Type1 = "BIGINT"
+	Type1Boolean    Type1 = "BOOLEAN"
+	Type1Date       Type1 = "DATE"
+	Type1Datetime   Type1 = "DATETIME"
+	Type1Double     Type1 = "DOUBLE"
+	Type1String     Type1 = "STRING"
+	Type1JSONObject Type1 = "JSON_OBJECT"
+	Type1JSON       Type1 = "JSON"
 )
 
-func (e One) ToPointer() *One {
+func (e Type1) ToPointer() *Type1 {
 	return &e
 }
 
-func (e *One) UnmarshalJSON(data []byte) error {
+func (e *Type1) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -51,35 +51,35 @@ func (e *One) UnmarshalJSON(data []byte) error {
 	case "JSON_OBJECT":
 		fallthrough
 	case "JSON":
-		*e = One(v)
+		*e = Type1(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for One: %v", v)
+		return fmt.Errorf("invalid value for Type1: %v", v)
 	}
 }
 
 type TypeType string
 
 const (
-	TypeTypeOne                     TypeType = "1"
+	TypeTypeType1                   TypeType = "type_1"
 	TypeTypeTypeDecimal             TypeType = "type_decimal"
 	TypeTypeTypeStringWithMaxLength TypeType = "type_string_with_max_length"
 )
 
 type Type struct {
-	One                     *One
+	Type1                   *Type1
 	TypeDecimal             *TypeDecimal
 	TypeStringWithMaxLength *TypeStringWithMaxLength
 
 	Type TypeType
 }
 
-func CreateTypeOne(one One) Type {
-	typ := TypeTypeOne
+func CreateTypeType1(type1 Type1) Type {
+	typ := TypeTypeType1
 
 	return Type{
-		One:  &one,
-		Type: typ,
+		Type1: &type1,
+		Type:  typ,
 	}
 }
 
@@ -117,10 +117,10 @@ func (u *Type) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	one := new(One)
-	if err := utils.UnmarshalJSON(data, &one, "", true, true); err == nil {
-		u.One = one
-		u.Type = TypeTypeOne
+	type1 := new(Type1)
+	if err := utils.UnmarshalJSON(data, &type1, "", true, true); err == nil {
+		u.Type1 = type1
+		u.Type = TypeTypeType1
 		return nil
 	}
 
@@ -128,8 +128,8 @@ func (u *Type) UnmarshalJSON(data []byte) error {
 }
 
 func (u Type) MarshalJSON() ([]byte, error) {
-	if u.One != nil {
-		return utils.MarshalJSON(u.One, "", true)
+	if u.Type1 != nil {
+		return utils.MarshalJSON(u.Type1, "", true)
 	}
 
 	if u.TypeDecimal != nil {

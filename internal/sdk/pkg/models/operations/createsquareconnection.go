@@ -15,7 +15,7 @@ type CreateSQUAREConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSquare *shared.ConnectionSquareOutput
+	ConnectionSquare *shared.ConnectionSquare
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateSQUAREConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateSQUAREConnectionResponse) GetConnectionSquare() *shared.ConnectionSquareOutput {
+func (o *CreateSQUAREConnectionResponse) GetConnectionSquare() *shared.ConnectionSquare {
 	if o == nil {
 		return nil
 	}

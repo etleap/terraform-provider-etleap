@@ -12,4 +12,5 @@ type SourceMysql struct {
 	PrimaryKeyColumns []types.String `tfsdk:"primary_key_columns"`
 	Table             types.String   `tfsdk:"table"`
 	TableNameFilter   types.String   `tfsdk:"table_name_filter"`
+	Type              types.String   `tfsdk:"type"`
 }

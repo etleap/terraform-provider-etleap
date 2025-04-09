@@ -72,12 +72,12 @@ func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaInput() *shared.Co
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,23 +86,23 @@ func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaInput() *shared.Co
 			}
 		}
 	}
-	username := r.Username.ValueString()
-	password := r.Password.ValueString()
-	vaultType := new(shared.VaultType)
+	vaultDomainName := r.VaultDomainName.ValueString()
+	vaultType := new(shared.ConnectionVeevaVaultType)
 	if !r.VaultType.IsUnknown() && !r.VaultType.IsNull() {
-		*vaultType = shared.VaultType(r.VaultType.ValueString())
+		*vaultType = shared.ConnectionVeevaVaultType(r.VaultType.ValueString())
 	} else {
 		vaultType = nil
 	}
-	vaultDomainName := r.VaultDomainName.ValueString()
+	username := r.Username.ValueString()
+	password := r.Password.ValueString()
 	out := shared.ConnectionVeevaInput{
 		Name:            name,
 		Type:            typeVar,
 		UpdateSchedule:  updateSchedule,
+		VaultDomainName: vaultDomainName,
+		VaultType:       vaultType,
 		Username:        username,
 		Password:        password,
-		VaultType:       vaultType,
-		VaultDomainName: vaultDomainName,
 	}
 	return &out
 }
@@ -114,7 +114,7 @@ func (r *ConnectionVEEVAResourceModel) RefreshFromSharedConnectionVeeva(resp *sh
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -203,11 +203,11 @@ func (r *ConnectionVEEVAResourceModel) RefreshFromSharedConnectionVeeva(resp *sh
 }
 
 func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaUpdate() *shared.ConnectionVeevaUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionVeevaUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -215,11 +215,11 @@ func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaUpdate() *shared.C
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -282,12 +282,12 @@ func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaUpdate() *shared.C
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -295,6 +295,18 @@ func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaUpdate() *shared.C
 				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
 			}
 		}
+	}
+	vaultDomainName := new(string)
+	if !r.VaultDomainName.IsUnknown() && !r.VaultDomainName.IsNull() {
+		*vaultDomainName = r.VaultDomainName.ValueString()
+	} else {
+		vaultDomainName = nil
+	}
+	vaultType := new(shared.VaultType)
+	if !r.VaultType.IsUnknown() && !r.VaultType.IsNull() {
+		*vaultType = shared.VaultType(r.VaultType.ValueString())
+	} else {
+		vaultType = nil
 	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
@@ -308,27 +320,15 @@ func (r *ConnectionVEEVAResourceModel) ToSharedConnectionVeevaUpdate() *shared.C
 	} else {
 		password = nil
 	}
-	vaultType := new(shared.ConnectionVeevaUpdateVaultType)
-	if !r.VaultType.IsUnknown() && !r.VaultType.IsNull() {
-		*vaultType = shared.ConnectionVeevaUpdateVaultType(r.VaultType.ValueString())
-	} else {
-		vaultType = nil
-	}
-	vaultDomainName := new(string)
-	if !r.VaultDomainName.IsUnknown() && !r.VaultDomainName.IsNull() {
-		*vaultDomainName = r.VaultDomainName.ValueString()
-	} else {
-		vaultDomainName = nil
-	}
 	out := shared.ConnectionVeevaUpdate{
-		Active:          active,
-		Type:            typeVar,
 		Name:            name,
+		Type:            typeVar,
+		Active:          active,
 		UpdateSchedule:  updateSchedule,
+		VaultDomainName: vaultDomainName,
+		VaultType:       vaultType,
 		Username:        username,
 		Password:        password,
-		VaultType:       vaultType,
-		VaultDomainName: vaultDomainName,
 	}
 	return &out
 }

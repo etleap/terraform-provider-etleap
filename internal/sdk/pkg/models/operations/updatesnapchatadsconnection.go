@@ -35,7 +35,7 @@ type UpdateSNAPCHATADSConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSnapchatAds *shared.ConnectionSnapchatAds
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

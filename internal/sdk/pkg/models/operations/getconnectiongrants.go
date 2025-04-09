@@ -45,7 +45,7 @@ type GetConnectionGrantsResponse struct {
 	RawResponse *http.Response
 	// OK
 	GrantsWithPrivilegeOutputPaginated *shared.GrantsWithPrivilegeOutputPaginated
-	// A connection with the given id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

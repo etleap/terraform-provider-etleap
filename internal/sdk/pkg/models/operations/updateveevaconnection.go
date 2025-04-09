@@ -35,7 +35,7 @@ type UpdateVEEVAConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionVeeva *shared.ConnectionVeeva
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

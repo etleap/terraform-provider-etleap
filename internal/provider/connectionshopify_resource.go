@@ -41,18 +41,18 @@ type ConnectionSHOPIFYResource struct {
 
 // ConnectionSHOPIFYResourceModel describes the resource data model.
 type ConnectionSHOPIFYResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	APIKey                   types.String                                    `tfsdk:"api_key"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Password                 types.String                                    `tfsdk:"password"`
-	Status                   types.String                                    `tfsdk:"status"`
-	StoreName                types.String                                    `tfsdk:"store_name"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	APIKey                   types.String            `tfsdk:"api_key"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Password                 types.String            `tfsdk:"password"`
+	Status                   types.String            `tfsdk:"status"`
+	StoreName                types.String            `tfsdk:"store_name"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionSHOPIFYResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -573,7 +573,7 @@ func (r *ConnectionSHOPIFYResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToSharedConnectionShopify()
+	request := *data.ToSharedConnectionShopifyInput()
 	res, err := r.client.Connection.CreateSHOPIFYConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -594,7 +594,7 @@ func (r *ConnectionSHOPIFYResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionShopifyOutput(res.ConnectionShopify)
+	data.RefreshFromSharedConnectionShopify(res.ConnectionShopify)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetSHOPIFYConnectionRequest{
@@ -620,7 +620,7 @@ func (r *ConnectionSHOPIFYResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionShopifyOutput(res1.ConnectionShopify)
+	data.RefreshFromSharedConnectionShopify(res1.ConnectionShopify)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -669,7 +669,7 @@ func (r *ConnectionSHOPIFYResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionShopifyOutput(res.ConnectionShopify)
+	data.RefreshFromSharedConnectionShopify(res.ConnectionShopify)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -715,7 +715,7 @@ func (r *ConnectionSHOPIFYResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionShopifyOutput(res.ConnectionShopify)
+	data.RefreshFromSharedConnectionShopify(res.ConnectionShopify)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetSHOPIFYConnectionRequest{
@@ -741,7 +741,7 @@ func (r *ConnectionSHOPIFYResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionShopifyOutput(res1.ConnectionShopify)
+	data.RefreshFromSharedConnectionShopify(res1.ConnectionShopify)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

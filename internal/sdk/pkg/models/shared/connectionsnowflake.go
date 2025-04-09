@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionSnowflakeType string
+
+const (
+	ConnectionSnowflakeTypeSnowflake ConnectionSnowflakeType = "SNOWFLAKE"
+)
+
+func (e ConnectionSnowflakeType) ToPointer() *ConnectionSnowflakeType {
+	return &e
+}
+
+func (e *ConnectionSnowflakeType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "SNOWFLAKE":
+		*e = ConnectionSnowflakeType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionSnowflakeType: %v", v)
+	}
+}
+
 // ConnectionSnowflakeStatus - The current status of the connection.
 type ConnectionSnowflakeStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionSnowflakeDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSc
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnowflakeDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSnowflakeDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionSnowflakeDefaultUpdateSchedule) GetUpdateScheduleMonthly() *U
 func (o *ConnectionSnowflakeDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSnowflakeDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,63 +125,46 @@ func (o *ConnectionSnowflakeDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Up
 	return nil
 }
 
-type ConnectionSnowflakeType string
-
-const (
-	ConnectionSnowflakeTypeSnowflake ConnectionSnowflakeType = "SNOWFLAKE"
-)
-
-func (e ConnectionSnowflakeType) ToPointer() *ConnectionSnowflakeType {
-	return &e
-}
-
-func (e *ConnectionSnowflakeType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionSnowflakeDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "SNOWFLAKE":
-		*e = ConnectionSnowflakeType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionSnowflakeType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionSnowflake struct {
-	// The current status of the connection.
-	Status ConnectionSnowflakeStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionSnowflakeDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                    `json:"active"`
-	Type   ConnectionSnowflakeType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                  `json:"name"`
+	Type ConnectionSnowflakeType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionSnowflakeStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
-	SourceOnly *bool `default:"false" json:"sourceOnly"`
-	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
-	Roles []string `json:"roles,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionSnowflakeDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Take into account that the schema is case sensitive
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema   *string `json:"schema,omitempty"`
-	Username string  `json:"username"`
-	Database string  `json:"database"`
-	// Snowflake Authentication Types
-	Authentication *SnowflakeAuthenticationTypes `json:"authentication,omitempty"`
-	// The role the user will use to connect
-	Role    *string `json:"role,omitempty"`
-	Address string  `json:"address"`
+	Schema *string `json:"schema,omitempty"`
+	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
+	Roles []string `json:"roles,omitempty"`
+	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
+	SourceOnly *bool  `default:"false" json:"sourceOnly"`
+	Address    string `json:"address"`
+	Database   string `json:"database"`
 	// The virtual warehouse to use once connected.
 	Warehouse string `json:"warehouse"`
+	Username  string `json:"username"`
+	// The role the user will use to connect
+	Role *string `json:"role,omitempty"`
+	// Snowflake Authentication Types
+	Authentication *SnowflakeAuthenticationTypesOutput `json:"authentication,omitempty"`
 }
 
 func (c ConnectionSnowflake) MarshalJSON() ([]byte, error) {
@@ -178,11 +178,11 @@ func (c *ConnectionSnowflake) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionSnowflake) GetStatus() ConnectionSnowflakeStatus {
+func (o *ConnectionSnowflake) GetID() string {
 	if o == nil {
-		return ConnectionSnowflakeStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionSnowflake) GetName() string {
@@ -192,18 +192,11 @@ func (o *ConnectionSnowflake) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionSnowflake) GetCreateDate() time.Time {
+func (o *ConnectionSnowflake) GetType() ConnectionSnowflakeType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionSnowflakeType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionSnowflake) GetDefaultUpdateSchedule() []ConnectionSnowflakeDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionSnowflakeDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionSnowflake) GetActive() bool {
@@ -213,18 +206,18 @@ func (o *ConnectionSnowflake) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionSnowflake) GetType() ConnectionSnowflakeType {
+func (o *ConnectionSnowflake) GetStatus() ConnectionSnowflakeStatus {
 	if o == nil {
-		return ConnectionSnowflakeType("")
+		return ConnectionSnowflakeStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionSnowflake) GetID() string {
+func (o *ConnectionSnowflake) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionSnowflake) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -234,9 +227,9 @@ func (o *ConnectionSnowflake) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnowflake) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSnowflake) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -244,13 +237,6 @@ func (o *ConnectionSnowflake) GetUpdateScheduleMonthly() *UpdateScheduleModeMont
 func (o *ConnectionSnowflake) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSnowflake) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -269,18 +255,18 @@ func (o *ConnectionSnowflake) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekl
 	return nil
 }
 
-func (o *ConnectionSnowflake) GetSourceOnly() *bool {
-	if o == nil {
-		return nil
+func (o *ConnectionSnowflake) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.SourceOnly
+	return nil
 }
 
-func (o *ConnectionSnowflake) GetRoles() []string {
+func (o *ConnectionSnowflake) GetDefaultUpdateSchedule() []ConnectionSnowflakeDefaultUpdateSchedule {
 	if o == nil {
-		return nil
+		return []ConnectionSnowflakeDefaultUpdateSchedule{}
 	}
-	return o.Roles
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionSnowflake) GetSchema() *string {
@@ -290,11 +276,25 @@ func (o *ConnectionSnowflake) GetSchema() *string {
 	return o.Schema
 }
 
-func (o *ConnectionSnowflake) GetUsername() string {
+func (o *ConnectionSnowflake) GetRoles() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Roles
+}
+
+func (o *ConnectionSnowflake) GetSourceOnly() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SourceOnly
+}
+
+func (o *ConnectionSnowflake) GetAddress() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.Address
 }
 
 func (o *ConnectionSnowflake) GetDatabase() string {
@@ -304,7 +304,28 @@ func (o *ConnectionSnowflake) GetDatabase() string {
 	return o.Database
 }
 
-func (o *ConnectionSnowflake) GetAuthentication() *SnowflakeAuthenticationTypes {
+func (o *ConnectionSnowflake) GetWarehouse() string {
+	if o == nil {
+		return ""
+	}
+	return o.Warehouse
+}
+
+func (o *ConnectionSnowflake) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *ConnectionSnowflake) GetRole() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Role
+}
+
+func (o *ConnectionSnowflake) GetAuthentication() *SnowflakeAuthenticationTypesOutput {
 	if o == nil {
 		return nil
 	}
@@ -318,32 +339,11 @@ func (o *ConnectionSnowflake) GetAuthenticationPassword() *SnowflakeAuthenticati
 	return nil
 }
 
-func (o *ConnectionSnowflake) GetAuthenticationKeyPair() *SnowflakeAuthenticationKeyPair {
+func (o *ConnectionSnowflake) GetAuthenticationKeyPair() *SnowflakeAuthenticationKeyPairOutput {
 	if v := o.GetAuthentication(); v != nil {
-		return v.SnowflakeAuthenticationKeyPair
+		return v.SnowflakeAuthenticationKeyPairOutput
 	}
 	return nil
-}
-
-func (o *ConnectionSnowflake) GetRole() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Role
-}
-
-func (o *ConnectionSnowflake) GetAddress() string {
-	if o == nil {
-		return ""
-	}
-	return o.Address
-}
-
-func (o *ConnectionSnowflake) GetWarehouse() string {
-	if o == nil {
-		return ""
-	}
-	return o.Warehouse
 }
 
 type ConnectionSnowflakeInput struct {
@@ -352,24 +352,24 @@ type ConnectionSnowflakeInput struct {
 	Type ConnectionSnowflakeType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
-	SourceOnly *bool `default:"false" json:"sourceOnly"`
-	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
-	Roles []string `json:"roles,omitempty"`
 	// Take into account that the schema is case sensitive
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema   *string `json:"schema,omitempty"`
-	Username string  `json:"username"`
-	Database string  `json:"database"`
-	// Snowflake Authentication Types
-	Authentication *SnowflakeAuthenticationTypesInput `json:"authentication,omitempty"`
-	// The role the user will use to connect
-	Role    *string `json:"role,omitempty"`
-	Address string  `json:"address"`
+	Schema *string `json:"schema,omitempty"`
+	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
+	Roles []string `json:"roles,omitempty"`
+	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
+	SourceOnly *bool  `default:"false" json:"sourceOnly"`
+	Address    string `json:"address"`
+	Database   string `json:"database"`
 	// The virtual warehouse to use once connected.
 	Warehouse string  `json:"warehouse"`
+	Username  string  `json:"username"`
 	Password  *string `json:"password,omitempty"`
+	// The role the user will use to connect
+	Role *string `json:"role,omitempty"`
+	// Snowflake Authentication Types
+	Authentication *SnowflakeAuthenticationTypes `json:"authentication,omitempty"`
 }
 
 func (c ConnectionSnowflakeInput) MarshalJSON() ([]byte, error) {
@@ -404,9 +404,9 @@ func (o *ConnectionSnowflakeInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnowflakeInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSnowflakeInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -414,13 +414,6 @@ func (o *ConnectionSnowflakeInput) GetUpdateScheduleMonthly() *UpdateScheduleMod
 func (o *ConnectionSnowflakeInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSnowflakeInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -439,18 +432,11 @@ func (o *ConnectionSnowflakeInput) GetUpdateScheduleWeekly() *UpdateScheduleMode
 	return nil
 }
 
-func (o *ConnectionSnowflakeInput) GetSourceOnly() *bool {
-	if o == nil {
-		return nil
+func (o *ConnectionSnowflakeInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.SourceOnly
-}
-
-func (o *ConnectionSnowflakeInput) GetRoles() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Roles
+	return nil
 }
 
 func (o *ConnectionSnowflakeInput) GetSchema() *string {
@@ -460,11 +446,25 @@ func (o *ConnectionSnowflakeInput) GetSchema() *string {
 	return o.Schema
 }
 
-func (o *ConnectionSnowflakeInput) GetUsername() string {
+func (o *ConnectionSnowflakeInput) GetRoles() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Roles
+}
+
+func (o *ConnectionSnowflakeInput) GetSourceOnly() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SourceOnly
+}
+
+func (o *ConnectionSnowflakeInput) GetAddress() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.Address
 }
 
 func (o *ConnectionSnowflakeInput) GetDatabase() string {
@@ -474,7 +474,35 @@ func (o *ConnectionSnowflakeInput) GetDatabase() string {
 	return o.Database
 }
 
-func (o *ConnectionSnowflakeInput) GetAuthentication() *SnowflakeAuthenticationTypesInput {
+func (o *ConnectionSnowflakeInput) GetWarehouse() string {
+	if o == nil {
+		return ""
+	}
+	return o.Warehouse
+}
+
+func (o *ConnectionSnowflakeInput) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *ConnectionSnowflakeInput) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *ConnectionSnowflakeInput) GetRole() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Role
+}
+
+func (o *ConnectionSnowflakeInput) GetAuthentication() *SnowflakeAuthenticationTypes {
 	if o == nil {
 		return nil
 	}
@@ -488,37 +516,9 @@ func (o *ConnectionSnowflakeInput) GetAuthenticationPassword() *SnowflakeAuthent
 	return nil
 }
 
-func (o *ConnectionSnowflakeInput) GetAuthenticationKeyPair() *SnowflakeAuthenticationKeyPairInput {
+func (o *ConnectionSnowflakeInput) GetAuthenticationKeyPair() *SnowflakeAuthenticationKeyPair {
 	if v := o.GetAuthentication(); v != nil {
-		return v.SnowflakeAuthenticationKeyPairInput
+		return v.SnowflakeAuthenticationKeyPair
 	}
 	return nil
-}
-
-func (o *ConnectionSnowflakeInput) GetRole() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Role
-}
-
-func (o *ConnectionSnowflakeInput) GetAddress() string {
-	if o == nil {
-		return ""
-	}
-	return o.Address
-}
-
-func (o *ConnectionSnowflakeInput) GetWarehouse() string {
-	if o == nil {
-		return ""
-	}
-	return o.Warehouse
-}
-
-func (o *ConnectionSnowflakeInput) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
 }

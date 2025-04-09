@@ -32,31 +32,17 @@ func (e *ConnectionZendeskUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionZendeskUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                       `json:"active,omitempty"`
-	Type   ConnectionZendeskUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                     `json:"name,omitempty"`
+	Type ConnectionZendeskUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code *string `json:"code,omitempty"`
 	// The name of the subdomain. This is in the URL when you use zendesk: [subdomain].zendesk.com
 	Subdomain *string `json:"subdomain,omitempty"`
-}
-
-func (o *ConnectionZendeskUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionZendeskUpdate) GetType() ConnectionZendeskUpdateType {
-	if o == nil {
-		return ConnectionZendeskUpdateType("")
-	}
-	return o.Type
 }
 
 func (o *ConnectionZendeskUpdate) GetName() *string {
@@ -66,6 +52,20 @@ func (o *ConnectionZendeskUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionZendeskUpdate) GetType() ConnectionZendeskUpdateType {
+	if o == nil {
+		return ConnectionZendeskUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionZendeskUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionZendeskUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -73,9 +73,9 @@ func (o *ConnectionZendeskUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionZendeskUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionZendeskUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +83,6 @@ func (o *ConnectionZendeskUpdate) GetUpdateScheduleMonthly() *UpdateScheduleMode
 func (o *ConnectionZendeskUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionZendeskUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -104,6 +97,13 @@ func (o *ConnectionZendeskUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDa
 func (o *ConnectionZendeskUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionZendeskUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

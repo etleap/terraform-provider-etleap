@@ -32,20 +32,13 @@ func (e *SourceSeismicType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSeismic struct {
+	Type SourceSeismicType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string            `json:"connectionId"`
-	Type         SourceSeismicType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Seismic entity. Example values: [Livesend Links, Livesend Link Contents, Livesend Link Members, Livesend Page Views, Users, User Activity]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceSeismic) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceSeismic) GetType() SourceSeismicType {
@@ -53,6 +46,13 @@ func (o *SourceSeismic) GetType() SourceSeismicType {
 		return SourceSeismicType("")
 	}
 	return o.Type
+}
+
+func (o *SourceSeismic) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceSeismic) GetLatencyThreshold() *int64 {

@@ -36,7 +36,7 @@ type UpdateDbtScheduleResponse struct {
 	RawResponse *http.Response
 	// OK
 	DbtScheduleOutput *shared.DbtScheduleOutput
-	// Not Found
+	// Bad Request
 	Errors *shared.Errors
 }
 

@@ -8,35 +8,35 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-type Format string
+type InclusiveOrExclusiveWatermarkDateonlyKeyValuePairFormat string
 
 const (
-	FormatYyyyMmDd Format = "yyyy-MM-dd"
+	InclusiveOrExclusiveWatermarkDateonlyKeyValuePairFormatYyyyMmDd InclusiveOrExclusiveWatermarkDateonlyKeyValuePairFormat = "yyyy-MM-dd"
 )
 
-func (e Format) ToPointer() *Format {
+func (e InclusiveOrExclusiveWatermarkDateonlyKeyValuePairFormat) ToPointer() *InclusiveOrExclusiveWatermarkDateonlyKeyValuePairFormat {
 	return &e
 }
 
-func (e *Format) UnmarshalJSON(data []byte) error {
+func (e *InclusiveOrExclusiveWatermarkDateonlyKeyValuePairFormat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "yyyy-MM-dd":
-		*e = Format(v)
+		*e = InclusiveOrExclusiveWatermarkDateonlyKeyValuePairFormat(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Format: %v", v)
+		return fmt.Errorf("invalid value for InclusiveOrExclusiveWatermarkDateonlyKeyValuePairFormat: %v", v)
 	}
 }
 
 type InclusiveOrExclusiveWatermarkDateonlyKeyValuePair struct {
-	Value     string  `json:"value"`
-	Key       string  `json:"key"`
-	Format    *Format `default:"yyyy-MM-dd" json:"format"`
-	Inclusive *bool   `default:"true" json:"inclusive"`
+	Key       string                                                   `json:"key"`
+	Value     string                                                   `json:"value"`
+	Format    *InclusiveOrExclusiveWatermarkDateonlyKeyValuePairFormat `default:"yyyy-MM-dd" json:"format"`
+	Inclusive *bool                                                    `default:"true" json:"inclusive"`
 }
 
 func (i InclusiveOrExclusiveWatermarkDateonlyKeyValuePair) MarshalJSON() ([]byte, error) {
@@ -50,13 +50,6 @@ func (i *InclusiveOrExclusiveWatermarkDateonlyKeyValuePair) UnmarshalJSON(data [
 	return nil
 }
 
-func (o *InclusiveOrExclusiveWatermarkDateonlyKeyValuePair) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
 func (o *InclusiveOrExclusiveWatermarkDateonlyKeyValuePair) GetKey() string {
 	if o == nil {
 		return ""
@@ -64,7 +57,14 @@ func (o *InclusiveOrExclusiveWatermarkDateonlyKeyValuePair) GetKey() string {
 	return o.Key
 }
 
-func (o *InclusiveOrExclusiveWatermarkDateonlyKeyValuePair) GetFormat() *Format {
+func (o *InclusiveOrExclusiveWatermarkDateonlyKeyValuePair) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
+func (o *InclusiveOrExclusiveWatermarkDateonlyKeyValuePair) GetFormat() *InclusiveOrExclusiveWatermarkDateonlyKeyValuePairFormat {
 	if o == nil {
 		return nil
 	}

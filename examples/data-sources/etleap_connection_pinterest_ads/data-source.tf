@@ -1,3 +1,3 @@
 data "etleap_connection_pinterest_ads" "my_connectionpinterest_ads" {
-  id = "d726a961-096a-4e3d-9322-c5001d9907d9"
+  id = "7fb63219-ed6f-436f-bd3d-340625eba4b5"
 }

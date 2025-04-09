@@ -41,10 +41,10 @@ type RemoveDestinationForPipelineResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+	// Bad Request
+	Errors *shared.Errors
 	// The pipeline with this id was not found, or the connection with this id is not a destination for this pipeline.
 	PipelineDelete *shared.PipelineDelete
-	// You don't have the required permission to remove destinations from this pipeline. Please contact your organization admin or the pipeline's owner.
-	Errors *shared.Errors
 }
 
 func (o *RemoveDestinationForPipelineResponse) GetContentType() string {
@@ -68,16 +68,16 @@ func (o *RemoveDestinationForPipelineResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *RemoveDestinationForPipelineResponse) GetPipelineDelete() *shared.PipelineDelete {
-	if o == nil {
-		return nil
-	}
-	return o.PipelineDelete
-}
-
 func (o *RemoveDestinationForPipelineResponse) GetErrors() *shared.Errors {
 	if o == nil {
 		return nil
 	}
 	return o.Errors
+}
+
+func (o *RemoveDestinationForPipelineResponse) GetPipelineDelete() *shared.PipelineDelete {
+	if o == nil {
+		return nil
+	}
+	return o.PipelineDelete
 }

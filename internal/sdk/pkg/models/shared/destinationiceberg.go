@@ -33,18 +33,18 @@ func (e *DestinationIcebergType) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationIceberg struct {
+	Type DestinationIcebergType `json:"type"`
 	// The universally unique identifier of the destination connection.
-	ConnectionID string                 `json:"connectionId"`
-	Type         DestinationIcebergType `json:"type"`
-	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-	PrimaryKey []string `json:"primaryKey,omitempty"`
+	ConnectionID string `json:"connectionId"`
 	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
 	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
+	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
+	PrimaryKey []string `json:"primaryKey,omitempty"`
 	// Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
-	AutomaticSchemaChanges *bool  `default:"true" json:"automaticSchemaChanges"`
-	Table                  string `json:"table"`
+	AutomaticSchemaChanges *bool `default:"true" json:"automaticSchemaChanges"`
 	// The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 	Schema *string `json:"schema,omitempty"`
+	Table  string  `json:"table"`
 }
 
 func (d DestinationIceberg) MarshalJSON() ([]byte, error) {
@@ -58,13 +58,6 @@ func (d *DestinationIceberg) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationIceberg) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
-}
-
 func (o *DestinationIceberg) GetType() DestinationIcebergType {
 	if o == nil {
 		return DestinationIcebergType("")
@@ -72,11 +65,11 @@ func (o *DestinationIceberg) GetType() DestinationIcebergType {
 	return o.Type
 }
 
-func (o *DestinationIceberg) GetPrimaryKey() []string {
+func (o *DestinationIceberg) GetConnectionID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.PrimaryKey
+	return o.ConnectionID
 }
 
 func (o *DestinationIceberg) GetWaitForQualityCheck() *bool {
@@ -86,6 +79,13 @@ func (o *DestinationIceberg) GetWaitForQualityCheck() *bool {
 	return o.WaitForQualityCheck
 }
 
+func (o *DestinationIceberg) GetPrimaryKey() []string {
+	if o == nil {
+		return nil
+	}
+	return o.PrimaryKey
+}
+
 func (o *DestinationIceberg) GetAutomaticSchemaChanges() *bool {
 	if o == nil {
 		return nil
@@ -93,16 +93,16 @@ func (o *DestinationIceberg) GetAutomaticSchemaChanges() *bool {
 	return o.AutomaticSchemaChanges
 }
 
-func (o *DestinationIceberg) GetTable() string {
-	if o == nil {
-		return ""
-	}
-	return o.Table
-}
-
 func (o *DestinationIceberg) GetSchema() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *DestinationIceberg) GetTable() string {
+	if o == nil {
+		return ""
+	}
+	return o.Table
 }

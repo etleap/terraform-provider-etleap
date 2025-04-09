@@ -32,20 +32,13 @@ func (e *SourceKafkaType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceKafka struct {
+	Type SourceKafkaType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string          `json:"connectionId"`
-	Type         SourceKafkaType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// You can ingest data from Kafka topics.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceKafka) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceKafka) GetType() SourceKafkaType {
@@ -53,6 +46,13 @@ func (o *SourceKafka) GetType() SourceKafkaType {
 		return SourceKafkaType("")
 	}
 	return o.Type
+}
+
+func (o *SourceKafka) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceKafka) GetLatencyThreshold() *int64 {

@@ -28,16 +28,16 @@ type ConnectionCRITEODataSource struct {
 
 // ConnectionCRITEODataSourceModel describes the data model.
 type ConnectionCRITEODataSourceModel struct {
-	Active                types.Bool                                      `tfsdk:"active"`
-	ClientID              types.String                                    `tfsdk:"client_id"`
-	ClientSecret          types.String                                    `tfsdk:"client_secret"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String                                    `tfsdk:"id"`
-	Name                  types.String                                    `tfsdk:"name"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                types.Bool              `tfsdk:"active"`
+	ClientID              types.String            `tfsdk:"client_id"`
+	ClientSecret          types.String            `tfsdk:"client_secret"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String            `tfsdk:"id"`
+	Name                  types.String            `tfsdk:"name"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.

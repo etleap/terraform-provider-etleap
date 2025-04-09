@@ -41,19 +41,19 @@ type ConnectionTHETRADEDESKResource struct {
 
 // ConnectionTHETRADEDESKResourceModel describes the resource data model.
 type ConnectionTHETRADEDESKResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	PartnerID                types.String                                    `tfsdk:"partner_id"`
-	Password                 types.String                                    `tfsdk:"password"`
-	Sandbox                  types.Bool                                      `tfsdk:"sandbox"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	Username                 types.String                                    `tfsdk:"username"`
+	Active                   types.Bool              `tfsdk:"active"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	PartnerID                types.String            `tfsdk:"partner_id"`
+	Password                 types.String            `tfsdk:"password"`
+	Sandbox                  types.Bool              `tfsdk:"sandbox"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Username                 types.String            `tfsdk:"username"`
 }
 
 func (r *ConnectionTHETRADEDESKResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

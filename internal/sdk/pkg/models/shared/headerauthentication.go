@@ -34,8 +34,8 @@ func (e *HeaderAuthenticationType) UnmarshalJSON(data []byte) error {
 
 // HeaderAuthentication - Authentication method that uses a header.
 type HeaderAuthentication struct {
-	Value string                    `json:"value"`
 	Key   string                    `json:"key"`
+	Value string                    `json:"value"`
 	Type  *HeaderAuthenticationType `default:"HEADER" json:"type"`
 }
 
@@ -50,18 +50,18 @@ func (h *HeaderAuthentication) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *HeaderAuthentication) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
 func (o *HeaderAuthentication) GetKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Key
+}
+
+func (o *HeaderAuthentication) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }
 
 func (o *HeaderAuthentication) GetType() *HeaderAuthenticationType {

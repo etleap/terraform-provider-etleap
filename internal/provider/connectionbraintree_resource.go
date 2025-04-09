@@ -41,19 +41,19 @@ type ConnectionBRAINTREEResource struct {
 
 // ConnectionBRAINTREEResourceModel describes the resource data model.
 type ConnectionBRAINTREEResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	MerchantID               types.String                                    `tfsdk:"merchant_id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	PrivateKey               types.String                                    `tfsdk:"private_key"`
-	PublicKey                types.String                                    `tfsdk:"public_key"`
-	Sandbox                  types.Bool                                      `tfsdk:"sandbox"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	MerchantID               types.String            `tfsdk:"merchant_id"`
+	Name                     types.String            `tfsdk:"name"`
+	PrivateKey               types.String            `tfsdk:"private_key"`
+	PublicKey                types.String            `tfsdk:"public_key"`
+	Sandbox                  types.Bool              `tfsdk:"sandbox"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionBRAINTREEResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -581,7 +581,7 @@ func (r *ConnectionBRAINTREEResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToSharedConnectionBraintree()
+	request := *data.ToSharedConnectionBraintreeInput()
 	res, err := r.client.Connection.CreateBRAINTREEConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -602,7 +602,7 @@ func (r *ConnectionBRAINTREEResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBraintreeOutput(res.ConnectionBraintree)
+	data.RefreshFromSharedConnectionBraintree(res.ConnectionBraintree)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetBRAINTREEConnectionRequest{
@@ -628,7 +628,7 @@ func (r *ConnectionBRAINTREEResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBraintreeOutput(res1.ConnectionBraintree)
+	data.RefreshFromSharedConnectionBraintree(res1.ConnectionBraintree)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -677,7 +677,7 @@ func (r *ConnectionBRAINTREEResource) Read(ctx context.Context, req resource.Rea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBraintreeOutput(res.ConnectionBraintree)
+	data.RefreshFromSharedConnectionBraintree(res.ConnectionBraintree)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -723,7 +723,7 @@ func (r *ConnectionBRAINTREEResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBraintreeOutput(res.ConnectionBraintree)
+	data.RefreshFromSharedConnectionBraintree(res.ConnectionBraintree)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetBRAINTREEConnectionRequest{
@@ -749,7 +749,7 @@ func (r *ConnectionBRAINTREEResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBraintreeOutput(res1.ConnectionBraintree)
+	data.RefreshFromSharedConnectionBraintree(res1.ConnectionBraintree)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

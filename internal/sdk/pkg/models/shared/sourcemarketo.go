@@ -32,9 +32,9 @@ func (e *SourceMarketoType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMarketo struct {
+	Type SourceMarketoType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string            `json:"connectionId"`
-	Type         SourceMarketoType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Marketo entity type. Example values: [Leads, Activities, Campaigns, Programs, Tags]
@@ -43,18 +43,18 @@ type SourceMarketo struct {
 	ActivityTypes []string `json:"activityTypes,omitempty"`
 }
 
-func (o *SourceMarketo) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
-}
-
 func (o *SourceMarketo) GetType() SourceMarketoType {
 	if o == nil {
 		return SourceMarketoType("")
 	}
 	return o.Type
+}
+
+func (o *SourceMarketo) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceMarketo) GetLatencyThreshold() *int64 {

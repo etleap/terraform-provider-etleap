@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionOracleType string
+
+const (
+	ConnectionOracleTypeOracle ConnectionOracleType = "ORACLE"
+)
+
+func (e ConnectionOracleType) ToPointer() *ConnectionOracleType {
+	return &e
+}
+
+func (e *ConnectionOracleType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ORACLE":
+		*e = ConnectionOracleType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionOracleType: %v", v)
+	}
+}
+
 // ConnectionOracleStatus - The current status of the connection.
 type ConnectionOracleStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionOracleDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSched
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionOracleDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionOracleDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionOracleDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upda
 func (o *ConnectionOracleDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionOracleDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,61 +125,44 @@ func (o *ConnectionOracleDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Updat
 	return nil
 }
 
-type ConnectionOracleType string
-
-const (
-	ConnectionOracleTypeOracle ConnectionOracleType = "ORACLE"
-)
-
-func (e ConnectionOracleType) ToPointer() *ConnectionOracleType {
-	return &e
-}
-
-func (e *ConnectionOracleType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionOracleDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "ORACLE":
-		*e = ConnectionOracleType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionOracleType: %v", v)
-	}
+	return nil
 }
 
 // ConnectionOracle - Specifies the location of a database.
 type ConnectionOracle struct {
-	// The current status of the connection.
-	Status ConnectionOracleStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionOracleDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                 `json:"active"`
-	Type   ConnectionOracleType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string               `json:"name"`
+	Type ConnectionOracleType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionOracleStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule                   *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	RequireSslAndValidateCertificate *bool                `default:"true" json:"requireSslAndValidateCertificate"`
-	// Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
-	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
-	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
-	Certificate *string `json:"certificate,omitempty"`
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionOracleDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema    *string    `json:"schema,omitempty"`
-	Username  string     `json:"username"`
-	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
-	Port      int64      `json:"port"`
-	Address   string     `json:"address"`
-	Database  string     `json:"database"`
+	Schema *string `json:"schema,omitempty"`
+	// Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
+	CdcEnabled                       *bool `default:"false" json:"cdcEnabled"`
+	RequireSslAndValidateCertificate *bool `default:"true" json:"requireSslAndValidateCertificate"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate *string    `json:"certificate,omitempty"`
+	Address     string     `json:"address"`
+	Port        int64      `json:"port"`
+	Username    string     `json:"username"`
+	SSHConfig   *SSHConfig `json:"sshConfig,omitempty"`
+	Database    string     `json:"database"`
 }
 
 func (c ConnectionOracle) MarshalJSON() ([]byte, error) {
@@ -176,11 +176,11 @@ func (c *ConnectionOracle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionOracle) GetStatus() ConnectionOracleStatus {
+func (o *ConnectionOracle) GetID() string {
 	if o == nil {
-		return ConnectionOracleStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionOracle) GetName() string {
@@ -190,18 +190,11 @@ func (o *ConnectionOracle) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionOracle) GetCreateDate() time.Time {
+func (o *ConnectionOracle) GetType() ConnectionOracleType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionOracleType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionOracle) GetDefaultUpdateSchedule() []ConnectionOracleDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionOracleDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionOracle) GetActive() bool {
@@ -211,18 +204,18 @@ func (o *ConnectionOracle) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionOracle) GetType() ConnectionOracleType {
+func (o *ConnectionOracle) GetStatus() ConnectionOracleStatus {
 	if o == nil {
-		return ConnectionOracleType("")
+		return ConnectionOracleStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionOracle) GetID() string {
+func (o *ConnectionOracle) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionOracle) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -232,9 +225,9 @@ func (o *ConnectionOracle) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionOracle) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionOracle) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -242,13 +235,6 @@ func (o *ConnectionOracle) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly
 func (o *ConnectionOracle) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionOracle) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -267,11 +253,25 @@ func (o *ConnectionOracle) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	return nil
 }
 
-func (o *ConnectionOracle) GetRequireSslAndValidateCertificate() *bool {
+func (o *ConnectionOracle) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionOracle) GetDefaultUpdateSchedule() []ConnectionOracleDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionOracleDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
+}
+
+func (o *ConnectionOracle) GetSchema() *string {
 	if o == nil {
 		return nil
 	}
-	return o.RequireSslAndValidateCertificate
+	return o.Schema
 }
 
 func (o *ConnectionOracle) GetCdcEnabled() *bool {
@@ -281,6 +281,13 @@ func (o *ConnectionOracle) GetCdcEnabled() *bool {
 	return o.CdcEnabled
 }
 
+func (o *ConnectionOracle) GetRequireSslAndValidateCertificate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireSslAndValidateCertificate
+}
+
 func (o *ConnectionOracle) GetCertificate() *string {
 	if o == nil {
 		return nil
@@ -288,11 +295,18 @@ func (o *ConnectionOracle) GetCertificate() *string {
 	return o.Certificate
 }
 
-func (o *ConnectionOracle) GetSchema() *string {
+func (o *ConnectionOracle) GetAddress() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Schema
+	return o.Address
+}
+
+func (o *ConnectionOracle) GetPort() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Port
 }
 
 func (o *ConnectionOracle) GetUsername() string {
@@ -309,20 +323,6 @@ func (o *ConnectionOracle) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
-func (o *ConnectionOracle) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
-}
-
-func (o *ConnectionOracle) GetAddress() string {
-	if o == nil {
-		return ""
-	}
-	return o.Address
-}
-
 func (o *ConnectionOracle) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -336,22 +336,22 @@ type ConnectionOracleInput struct {
 	Name string               `json:"name"`
 	Type ConnectionOracleType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule                   *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	RequireSslAndValidateCertificate *bool                `default:"true" json:"requireSslAndValidateCertificate"`
-	// Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
-	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
-	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
-	Certificate *string `json:"certificate,omitempty"`
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema    *string    `json:"schema,omitempty"`
-	Username  string     `json:"username"`
-	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
-	Password  string     `json:"password"`
-	Port      int64      `json:"port"`
-	Address   string     `json:"address"`
-	Database  string     `json:"database"`
+	Schema *string `json:"schema,omitempty"`
+	// Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
+	CdcEnabled                       *bool `default:"false" json:"cdcEnabled"`
+	RequireSslAndValidateCertificate *bool `default:"true" json:"requireSslAndValidateCertificate"`
+	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
+	Certificate *string    `json:"certificate,omitempty"`
+	Address     string     `json:"address"`
+	Port        int64      `json:"port"`
+	Username    string     `json:"username"`
+	Password    string     `json:"password"`
+	SSHConfig   *SSHConfig `json:"sshConfig,omitempty"`
+	Database    string     `json:"database"`
 }
 
 func (c ConnectionOracleInput) MarshalJSON() ([]byte, error) {
@@ -386,9 +386,9 @@ func (o *ConnectionOracleInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionOracleInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionOracleInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -396,13 +396,6 @@ func (o *ConnectionOracleInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMo
 func (o *ConnectionOracleInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionOracleInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -421,25 +414,11 @@ func (o *ConnectionOracleInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWee
 	return nil
 }
 
-func (o *ConnectionOracleInput) GetRequireSslAndValidateCertificate() *bool {
-	if o == nil {
-		return nil
+func (o *ConnectionOracleInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.RequireSslAndValidateCertificate
-}
-
-func (o *ConnectionOracleInput) GetCdcEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.CdcEnabled
-}
-
-func (o *ConnectionOracleInput) GetCertificate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Certificate
+	return nil
 }
 
 func (o *ConnectionOracleInput) GetSchema() *string {
@@ -449,25 +428,32 @@ func (o *ConnectionOracleInput) GetSchema() *string {
 	return o.Schema
 }
 
-func (o *ConnectionOracleInput) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *ConnectionOracleInput) GetSSHConfig() *SSHConfig {
+func (o *ConnectionOracleInput) GetCdcEnabled() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.SSHConfig
+	return o.CdcEnabled
 }
 
-func (o *ConnectionOracleInput) GetPassword() string {
+func (o *ConnectionOracleInput) GetRequireSslAndValidateCertificate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireSslAndValidateCertificate
+}
+
+func (o *ConnectionOracleInput) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
+}
+
+func (o *ConnectionOracleInput) GetAddress() string {
 	if o == nil {
 		return ""
 	}
-	return o.Password
+	return o.Address
 }
 
 func (o *ConnectionOracleInput) GetPort() int64 {
@@ -477,11 +463,25 @@ func (o *ConnectionOracleInput) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionOracleInput) GetAddress() string {
+func (o *ConnectionOracleInput) GetUsername() string {
 	if o == nil {
 		return ""
 	}
-	return o.Address
+	return o.Username
+}
+
+func (o *ConnectionOracleInput) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *ConnectionOracleInput) GetSSHConfig() *SSHConfig {
+	if o == nil {
+		return nil
+	}
+	return o.SSHConfig
 }
 
 func (o *ConnectionOracleInput) GetDatabase() string {

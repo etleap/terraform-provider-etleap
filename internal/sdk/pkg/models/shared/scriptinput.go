@@ -4,19 +4,12 @@ package shared
 
 // ScriptInput - Specifies a script based on an array of transforms. Not all transforms available in the Wrangler are supported yet for this script format.
 type ScriptInput struct {
-	// Defaults to UTF-8.
-	Charset *string `json:"charset,omitempty"`
 	// An array consisting of a single "To Rows" transform followed by any number of other transforms.
 	Transforms []TransformTypes `json:"transforms"`
 	// Maps output column names to types inferred from data.
 	InferredColumnTypes map[string]Type `json:"inferredColumnTypes,omitempty"`
-}
-
-func (o *ScriptInput) GetCharset() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Charset
+	// Defaults to UTF-8.
+	Charset *string `json:"charset,omitempty"`
 }
 
 func (o *ScriptInput) GetTransforms() []TransformTypes {
@@ -31,4 +24,11 @@ func (o *ScriptInput) GetInferredColumnTypes() map[string]Type {
 		return nil
 	}
 	return o.InferredColumnTypes
+}
+
+func (o *ScriptInput) GetCharset() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Charset
 }

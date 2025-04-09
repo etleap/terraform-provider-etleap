@@ -4,16 +4,23 @@ package shared
 
 // DbtScheduleUpdate - Request body for PATCH /dbtSchedules/{id}
 type DbtScheduleUpdate struct {
-	// `true` if the schedule is paused.
-	Paused *bool `json:"paused,omitempty"`
-	// The cron expression that defines triggers for this schedule. The maximum supported cron schedule precision is 1 minute.
-	Cron *string `json:"cron,omitempty"`
-	// The target schema for the dbt build. See [here](https://docs.getdbt.com/docs/build/custom-schemas) for details on how it's used.
-	TargetSchema *string `json:"targetSchema,omitempty"`
 	// The name of the dbt schedule.
 	Name *string `json:"name,omitempty"`
+	// `true` if the schedule is paused.
+	Paused *bool `json:"paused,omitempty"`
+	// The target schema for the dbt build. See [here](https://docs.getdbt.com/docs/build/custom-schemas) for details on how it's used.
+	TargetSchema *string `json:"targetSchema,omitempty"`
+	// The cron expression that defines triggers for this schedule. The maximum supported cron schedule precision is 1 minute.
+	Cron *string `json:"cron,omitempty"`
 	// Whether the dbt build is skipped if no new data has been ingested for any of the pipelines in the table above.
 	SkipBuildIfNoNewData *bool `json:"skipBuildIfNoNewData,omitempty"`
+}
+
+func (o *DbtScheduleUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
 }
 
 func (o *DbtScheduleUpdate) GetPaused() *bool {
@@ -23,13 +30,6 @@ func (o *DbtScheduleUpdate) GetPaused() *bool {
 	return o.Paused
 }
 
-func (o *DbtScheduleUpdate) GetCron() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Cron
-}
-
 func (o *DbtScheduleUpdate) GetTargetSchema() *string {
 	if o == nil {
 		return nil
@@ -37,11 +37,11 @@ func (o *DbtScheduleUpdate) GetTargetSchema() *string {
 	return o.TargetSchema
 }
 
-func (o *DbtScheduleUpdate) GetName() *string {
+func (o *DbtScheduleUpdate) GetCron() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Name
+	return o.Cron
 }
 
 func (o *DbtScheduleUpdate) GetSkipBuildIfNoNewData() *bool {

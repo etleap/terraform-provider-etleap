@@ -41,17 +41,17 @@ type ConnectionMIXPANELResource struct {
 
 // ConnectionMIXPANELResourceModel describes the resource data model.
 type ConnectionMIXPANELResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	APISecret                types.String                                    `tfsdk:"api_secret"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Timezone                 types.String                                    `tfsdk:"timezone"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	APISecret                types.String            `tfsdk:"api_secret"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	Timezone                 types.String            `tfsdk:"timezone"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionMIXPANELResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

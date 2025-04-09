@@ -34,7 +34,7 @@ type AddScriptToPipelineResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse       *http.Response
 	AddScriptResponse *shared.AddScriptResponse
-	// Unable to update the script as there is no functional difference between the current script and the new one sent in the request.
+	// Bad Request
 	Errors *shared.Errors
 }
 

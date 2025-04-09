@@ -26,8 +26,8 @@ type GetCONFLUENTCLOUDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionConfluentCloud *shared.ConnectionConfluentCloudOutput
-	// Not Found.
+	ConnectionConfluentCloud *shared.ConnectionConfluentCloud
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetCONFLUENTCLOUDConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetCONFLUENTCLOUDConnectionResponse) GetConnectionConfluentCloud() *shared.ConnectionConfluentCloudOutput {
+func (o *GetCONFLUENTCLOUDConnectionResponse) GetConnectionConfluentCloud() *shared.ConnectionConfluentCloud {
 	if o == nil {
 		return nil
 	}

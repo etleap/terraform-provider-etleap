@@ -32,20 +32,13 @@ func (e *SourceSalesforceType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSalesforce struct {
+	Type SourceSalesforceType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string               `json:"connectionId"`
-	Type         SourceSalesforceType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Salesforce table. Spelled capitalized without spaces, unless it is a custom table like `My_Table__c`.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceSalesforce) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceSalesforce) GetType() SourceSalesforceType {
@@ -53,6 +46,13 @@ func (o *SourceSalesforce) GetType() SourceSalesforceType {
 		return SourceSalesforceType("")
 	}
 	return o.Type
+}
+
+func (o *SourceSalesforce) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceSalesforce) GetLatencyThreshold() *int64 {

@@ -9,18 +9,18 @@ import (
 	"time"
 )
 
-type DbtScheduleRunSuccessStatus string
+type Status string
 
 const (
-	DbtScheduleRunSuccessStatusSuccess                DbtScheduleRunSuccessStatus = "SUCCESS"
-	DbtScheduleRunSuccessStatusSuccessWithDbtWarnings DbtScheduleRunSuccessStatus = "SUCCESS_WITH_DBT_WARNINGS"
+	StatusSuccess                Status = "SUCCESS"
+	StatusSuccessWithDbtWarnings Status = "SUCCESS_WITH_DBT_WARNINGS"
 )
 
-func (e DbtScheduleRunSuccessStatus) ToPointer() *DbtScheduleRunSuccessStatus {
+func (e Status) ToPointer() *Status {
 	return &e
 }
 
-func (e *DbtScheduleRunSuccessStatus) UnmarshalJSON(data []byte) error {
+func (e *Status) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -29,23 +29,23 @@ func (e *DbtScheduleRunSuccessStatus) UnmarshalJSON(data []byte) error {
 	case "SUCCESS":
 		fallthrough
 	case "SUCCESS_WITH_DBT_WARNINGS":
-		*e = DbtScheduleRunSuccessStatus(v)
+		*e = Status(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DbtScheduleRunSuccessStatus: %v", v)
+		return fmt.Errorf("invalid value for Status: %v", v)
 	}
 }
 
 type DbtScheduleRunSuccess struct {
-	Status DbtScheduleRunSuccessStatus `json:"status"`
+	Status Status `json:"status"`
 	// The time that this dbt run was triggered.
 	StartDate time.Time `json:"startDate"`
 	// The duration, in seconds, between the time this dbt run was triggered and the time the dbt build for this run completed.
 	Duration int64 `json:"duration"`
-	// The last time that a successful dbt build finished.
-	LastSuccessfulDbtBuildDate time.Time `json:"lastSuccessfulDbtBuildDate"`
 	// Timestamp for the next dbt schedule trigger.
 	NextTriggerDate time.Time `json:"nextTriggerDate"`
+	// The last time that a successful dbt build finished.
+	LastSuccessfulDbtBuildDate time.Time `json:"lastSuccessfulDbtBuildDate"`
 }
 
 func (d DbtScheduleRunSuccess) MarshalJSON() ([]byte, error) {
@@ -59,9 +59,9 @@ func (d *DbtScheduleRunSuccess) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DbtScheduleRunSuccess) GetStatus() DbtScheduleRunSuccessStatus {
+func (o *DbtScheduleRunSuccess) GetStatus() Status {
 	if o == nil {
-		return DbtScheduleRunSuccessStatus("")
+		return Status("")
 	}
 	return o.Status
 }
@@ -80,16 +80,16 @@ func (o *DbtScheduleRunSuccess) GetDuration() int64 {
 	return o.Duration
 }
 
-func (o *DbtScheduleRunSuccess) GetLastSuccessfulDbtBuildDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.LastSuccessfulDbtBuildDate
-}
-
 func (o *DbtScheduleRunSuccess) GetNextTriggerDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.NextTriggerDate
+}
+
+func (o *DbtScheduleRunSuccess) GetLastSuccessfulDbtBuildDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.LastSuccessfulDbtBuildDate
 }

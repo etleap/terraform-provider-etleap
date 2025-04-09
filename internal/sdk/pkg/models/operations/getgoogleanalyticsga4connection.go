@@ -27,7 +27,7 @@ type GetGOOGLEANALYTICSGa4ConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionGoogleAnalyticsGa4 *shared.ConnectionGoogleAnalyticsGa4
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

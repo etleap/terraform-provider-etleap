@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionNetsuiteV2Type string
+
+const (
+	ConnectionNetsuiteV2TypeNetsuiteV2 ConnectionNetsuiteV2Type = "NETSUITE_V2"
+)
+
+func (e ConnectionNetsuiteV2Type) ToPointer() *ConnectionNetsuiteV2Type {
+	return &e
+}
+
+func (e *ConnectionNetsuiteV2Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "NETSUITE_V2":
+		*e = ConnectionNetsuiteV2Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionNetsuiteV2Type: %v", v)
+	}
+}
+
 // ConnectionNetsuiteV2Status - The current status of the connection.
 type ConnectionNetsuiteV2Status string
 
@@ -73,9 +97,9 @@ func (o *ConnectionNetsuiteV2DefaultUpdateSchedule) GetUpdateSchedule() *UpdateS
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionNetsuiteV2DefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionNetsuiteV2DefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionNetsuiteV2DefaultUpdateSchedule) GetUpdateScheduleMonthly() *
 func (o *ConnectionNetsuiteV2DefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionNetsuiteV2DefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,52 +125,35 @@ func (o *ConnectionNetsuiteV2DefaultUpdateSchedule) GetUpdateScheduleWeekly() *U
 	return nil
 }
 
-type ConnectionNetsuiteV2Type string
-
-const (
-	ConnectionNetsuiteV2TypeNetsuiteV2 ConnectionNetsuiteV2Type = "NETSUITE_V2"
-)
-
-func (e ConnectionNetsuiteV2Type) ToPointer() *ConnectionNetsuiteV2Type {
-	return &e
-}
-
-func (e *ConnectionNetsuiteV2Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionNetsuiteV2DefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "NETSUITE_V2":
-		*e = ConnectionNetsuiteV2Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionNetsuiteV2Type: %v", v)
-	}
+	return nil
 }
 
 type ConnectionNetsuiteV2 struct {
-	// The current status of the connection.
-	Status ConnectionNetsuiteV2Status `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionNetsuiteV2DefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                     `json:"active"`
-	Type   ConnectionNetsuiteV2Type `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                   `json:"name"`
+	Type ConnectionNetsuiteV2Type `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionNetsuiteV2Status `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Token Id value displayed after creating a new access token.
-	TokenID string `json:"tokenId"`
-	// Consumer Key value displayed after creating a new integration.
-	ConsumerKey string `json:"consumerKey"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionNetsuiteV2DefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Under Setup > Company > Company Information
 	AccountID string `json:"accountId"`
+	// Consumer Key value displayed after creating a new integration.
+	ConsumerKey string `json:"consumerKey"`
+	// Token Id value displayed after creating a new access token.
+	TokenID string `json:"tokenId"`
 }
 
 func (c ConnectionNetsuiteV2) MarshalJSON() ([]byte, error) {
@@ -167,11 +167,11 @@ func (c *ConnectionNetsuiteV2) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2) GetStatus() ConnectionNetsuiteV2Status {
+func (o *ConnectionNetsuiteV2) GetID() string {
 	if o == nil {
-		return ConnectionNetsuiteV2Status("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionNetsuiteV2) GetName() string {
@@ -181,18 +181,11 @@ func (o *ConnectionNetsuiteV2) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionNetsuiteV2) GetCreateDate() time.Time {
+func (o *ConnectionNetsuiteV2) GetType() ConnectionNetsuiteV2Type {
 	if o == nil {
-		return time.Time{}
+		return ConnectionNetsuiteV2Type("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionNetsuiteV2) GetDefaultUpdateSchedule() []ConnectionNetsuiteV2DefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionNetsuiteV2DefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionNetsuiteV2) GetActive() bool {
@@ -202,18 +195,18 @@ func (o *ConnectionNetsuiteV2) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionNetsuiteV2) GetType() ConnectionNetsuiteV2Type {
+func (o *ConnectionNetsuiteV2) GetStatus() ConnectionNetsuiteV2Status {
 	if o == nil {
-		return ConnectionNetsuiteV2Type("")
+		return ConnectionNetsuiteV2Status("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionNetsuiteV2) GetID() string {
+func (o *ConnectionNetsuiteV2) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionNetsuiteV2) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -223,9 +216,9 @@ func (o *ConnectionNetsuiteV2) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionNetsuiteV2) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionNetsuiteV2) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -233,13 +226,6 @@ func (o *ConnectionNetsuiteV2) GetUpdateScheduleMonthly() *UpdateScheduleModeMon
 func (o *ConnectionNetsuiteV2) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionNetsuiteV2) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -258,18 +244,18 @@ func (o *ConnectionNetsuiteV2) GetUpdateScheduleWeekly() *UpdateScheduleModeWeek
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2) GetTokenID() string {
-	if o == nil {
-		return ""
+func (o *ConnectionNetsuiteV2) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.TokenID
+	return nil
 }
 
-func (o *ConnectionNetsuiteV2) GetConsumerKey() string {
+func (o *ConnectionNetsuiteV2) GetDefaultUpdateSchedule() []ConnectionNetsuiteV2DefaultUpdateSchedule {
 	if o == nil {
-		return ""
+		return []ConnectionNetsuiteV2DefaultUpdateSchedule{}
 	}
-	return o.ConsumerKey
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionNetsuiteV2) GetAccountID() string {
@@ -279,22 +265,36 @@ func (o *ConnectionNetsuiteV2) GetAccountID() string {
 	return o.AccountID
 }
 
+func (o *ConnectionNetsuiteV2) GetConsumerKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConsumerKey
+}
+
+func (o *ConnectionNetsuiteV2) GetTokenID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenID
+}
+
 type ConnectionNetsuiteV2Input struct {
 	// The unique name of this connection.
 	Name string                   `json:"name"`
 	Type ConnectionNetsuiteV2Type `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Token Secret value displayed after creating a new access token.
-	TokenSecret string `json:"tokenSecret"`
-	// Token Id value displayed after creating a new access token.
-	TokenID string `json:"tokenId"`
+	// Under Setup > Company > Company Information
+	AccountID string `json:"accountId"`
 	// Consumer Key value displayed after creating a new integration.
 	ConsumerKey string `json:"consumerKey"`
 	// Consumer Secret value displayed after creating a new integration.
 	ConsumerSecret string `json:"consumerSecret"`
-	// Under Setup > Company > Company Information
-	AccountID string `json:"accountId"`
+	// Token Id value displayed after creating a new access token.
+	TokenID string `json:"tokenId"`
+	// Token Secret value displayed after creating a new access token.
+	TokenSecret string `json:"tokenSecret"`
 }
 
 func (o *ConnectionNetsuiteV2Input) GetName() string {
@@ -318,9 +318,9 @@ func (o *ConnectionNetsuiteV2Input) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -328,13 +328,6 @@ func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleMonthly() *UpdateScheduleMo
 func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -353,18 +346,18 @@ func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleWeekly() *UpdateScheduleMod
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2Input) GetTokenSecret() string {
-	if o == nil {
-		return ""
+func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.TokenSecret
+	return nil
 }
 
-func (o *ConnectionNetsuiteV2Input) GetTokenID() string {
+func (o *ConnectionNetsuiteV2Input) GetAccountID() string {
 	if o == nil {
 		return ""
 	}
-	return o.TokenID
+	return o.AccountID
 }
 
 func (o *ConnectionNetsuiteV2Input) GetConsumerKey() string {
@@ -381,9 +374,16 @@ func (o *ConnectionNetsuiteV2Input) GetConsumerSecret() string {
 	return o.ConsumerSecret
 }
 
-func (o *ConnectionNetsuiteV2Input) GetAccountID() string {
+func (o *ConnectionNetsuiteV2Input) GetTokenID() string {
 	if o == nil {
 		return ""
 	}
-	return o.AccountID
+	return o.TokenID
+}
+
+func (o *ConnectionNetsuiteV2Input) GetTokenSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenSecret
 }

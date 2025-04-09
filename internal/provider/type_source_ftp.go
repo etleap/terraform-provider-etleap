@@ -12,4 +12,5 @@ type SourceFtp struct {
 	LowWatermark     types.String   `tfsdk:"low_watermark"`
 	NewFileBehavior  types.String   `tfsdk:"new_file_behavior"`
 	Paths            []types.String `tfsdk:"paths"`
+	Type             types.String   `tfsdk:"type"`
 }

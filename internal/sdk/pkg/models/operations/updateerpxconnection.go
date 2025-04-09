@@ -34,8 +34,8 @@ type UpdateERPXConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionErpx *shared.ConnectionErpxOutput
-	// Connection for this id was not found.
+	ConnectionErpx *shared.ConnectionErpx
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateERPXConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateERPXConnectionResponse) GetConnectionErpx() *shared.ConnectionErpxOutput {
+func (o *UpdateERPXConnectionResponse) GetConnectionErpx() *shared.ConnectionErpx {
 	if o == nil {
 		return nil
 	}

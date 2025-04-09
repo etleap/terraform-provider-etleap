@@ -45,7 +45,7 @@ type GetPipelineGrantsResponse struct {
 	RawResponse *http.Response
 	// OK
 	GrantsWithoutPrivilegeOutputPaginated *shared.GrantsWithoutPrivilegeOutputPaginated
-	// A pipeline with the given id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

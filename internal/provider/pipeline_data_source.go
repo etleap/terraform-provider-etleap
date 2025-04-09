@@ -42,7 +42,7 @@ type PipelineDataSourceModel struct {
 	PipelineMode          types.String                         `tfsdk:"pipeline_mode"`
 	RefreshSchedule       RefreshScheduleTypes                 `tfsdk:"refresh_schedule"`
 	Shares                []types.String                       `tfsdk:"shares"`
-	Source                SourceTypes1                         `tfsdk:"source"`
+	Source                SourceTypes                          `tfsdk:"source"`
 	StopReason            types.String                         `tfsdk:"stop_reason"`
 	UpdateSchedule        *UpdateScheduleTypes                 `tfsdk:"update_schedule"`
 }
@@ -1603,27 +1603,6 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
-					"microsoft_entra_id": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"connection_id": schema.StringAttribute{
-								Computed:    true,
-								Description: `The universally unique identifier for the source.`,
-							},
-							"entity": schema.StringAttribute{
-								Computed:    true,
-								Description: `The Microsoft Entra ID entity.`,
-							},
-							"latency_threshold": schema.Int64Attribute{
-								Computed:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
-							},
-							"type": schema.StringAttribute{
-								Computed:    true,
-								Description: `must be one of ["MICROSOFT_ENTRA_ID"]`,
-							},
-						},
-					},
 					"mixpanel": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -2567,7 +2546,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"type": schema.StringAttribute{
 								Computed:    true,
-								Description: `must be one of ["SNOWFLAKE"]`,
+								Description: `must be one of ["ACTIVE_CAMPAIGN", "BIGQUERY", "BING_ADS", "BLACKLINE", "BRAINTREE", "CONFLUENT_CLOUD", "COUPA", "CRITEO", "DB2", "DB2_SHARDED", "DELTA_LAKE", "EGNYTE", "ELASTICSEARCH", "ELLUMINATE", "ELOQUA", "ERPX", "FACEBOOK_ADS", "FIFTEEN_FIVE", "FRESHCHAT", "FRESHSALES", "FRESHWORKS", "FTP", "GONG", "GOOGLE_ANALYTICS_GA4", "GOOGLE_CLOUD_STORAGE", "GOOGLE_ADS", "GOOGLE_SHEETS", "HUBSPOT", "INTERCOM", "IMPACT_RADIUS", "JIRA", "JIRA_ALIGN", "JIRA_CLOUD", "KAFKA", "KUSTOMER", "LDAP", "LDAP_VIRTUAL_LIST_VIEW", "LINKED_IN_ADS", "MARKETO", "MIXPANEL", "MONGODB", "MYSQL", "MYSQL_SHARDED", "NETSUITE", "NETSUITE_V2", "ORACLE", "ORACLE_SHARDED", "OUTREACH", "OUTLOOK", "PINTEREST_ADS", "POSTGRES", "POSTGRES_SHARDED", "QUORA_ADS", "RAVE_MEDIDATA", "RECURLY", "REDSHIFT", "REDSHIFT_SHARDED", "S3_LEGACY", "S3_INPUT", "S3_DATA_LAKE", "SALESFORCE_MARKETING_CLOUD", "SAP_CONCUR", "SAP_HANA", "SAP_HANA_SHARDED", "SEISMIC", "SERVICE_NOW", "SHOPIFY", "SKYWARD", "SALESFORCE", "SFTP", "SQL_SERVER", "SQL_SERVER_SHARDED", "STREAMING", "SNOWFLAKE", "SNOWFLAKE_SHARDED", "SQUARE", "SNAPCHAT_ADS", "STRIPE", "SUMTOTAL", "THE_TRADE_DESK", "TIK_TOK_ADS", "TWILIO", "TWITTER_ADS", "USER_DEFINED_API", "USERVOICE", "VEEVA", "VERIZON_MEDIA_DSP", "WORKDAY_REPORT", "WORKFRONT", "ZENDESK", "ZOOM_PHONE", "ZUORA"]`,
 							},
 						},
 					},

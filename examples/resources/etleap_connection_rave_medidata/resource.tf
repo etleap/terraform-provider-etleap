@@ -1,8 +1,8 @@
 resource "etleap_connection_rave_medidata" "my_connectionrave_medidata" {
   deletion_of_export_products = true
-  hostname                    = "idolized-overhead.biz"
-  name                        = "Jeannie Lesch"
+  hostname                    = "offbeat-cleat.name"
+  name                        = "Patti Rowe"
   password                    = "...my_password..."
   type                        = "RAVE_MEDIDATA"
-  username                    = "Maeve25"
+  username                    = "Samson.Jerde31"
 }

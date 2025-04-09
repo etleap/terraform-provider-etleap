@@ -34,8 +34,8 @@ type UpdateGOOGLESHEETSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionGoogleSheets *shared.ConnectionGoogleSheetsOutput
-	// Connection for this id was not found.
+	ConnectionGoogleSheets *shared.ConnectionGoogleSheets
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateGOOGLESHEETSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateGOOGLESHEETSConnectionResponse) GetConnectionGoogleSheets() *shared.ConnectionGoogleSheetsOutput {
+func (o *UpdateGOOGLESHEETSConnectionResponse) GetConnectionGoogleSheets() *shared.ConnectionGoogleSheets {
 	if o == nil {
 		return nil
 	}

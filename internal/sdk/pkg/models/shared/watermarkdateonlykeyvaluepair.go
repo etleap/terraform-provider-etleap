@@ -8,34 +8,34 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-type WatermarkDateonlyKeyValuePairFormat string
+type Format string
 
 const (
-	WatermarkDateonlyKeyValuePairFormatYyyyMmDd WatermarkDateonlyKeyValuePairFormat = "yyyy-MM-dd"
+	FormatYyyyMmDd Format = "yyyy-MM-dd"
 )
 
-func (e WatermarkDateonlyKeyValuePairFormat) ToPointer() *WatermarkDateonlyKeyValuePairFormat {
+func (e Format) ToPointer() *Format {
 	return &e
 }
 
-func (e *WatermarkDateonlyKeyValuePairFormat) UnmarshalJSON(data []byte) error {
+func (e *Format) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "yyyy-MM-dd":
-		*e = WatermarkDateonlyKeyValuePairFormat(v)
+		*e = Format(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for WatermarkDateonlyKeyValuePairFormat: %v", v)
+		return fmt.Errorf("invalid value for Format: %v", v)
 	}
 }
 
 type WatermarkDateonlyKeyValuePair struct {
-	Value  string                               `json:"value"`
-	Key    string                               `json:"key"`
-	Format *WatermarkDateonlyKeyValuePairFormat `default:"yyyy-MM-dd" json:"format"`
+	Key    string  `json:"key"`
+	Value  string  `json:"value"`
+	Format *Format `default:"yyyy-MM-dd" json:"format"`
 }
 
 func (w WatermarkDateonlyKeyValuePair) MarshalJSON() ([]byte, error) {
@@ -49,13 +49,6 @@ func (w *WatermarkDateonlyKeyValuePair) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WatermarkDateonlyKeyValuePair) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
-}
-
 func (o *WatermarkDateonlyKeyValuePair) GetKey() string {
 	if o == nil {
 		return ""
@@ -63,7 +56,14 @@ func (o *WatermarkDateonlyKeyValuePair) GetKey() string {
 	return o.Key
 }
 
-func (o *WatermarkDateonlyKeyValuePair) GetFormat() *WatermarkDateonlyKeyValuePairFormat {
+func (o *WatermarkDateonlyKeyValuePair) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
+func (o *WatermarkDateonlyKeyValuePair) GetFormat() *Format {
 	if o == nil {
 		return nil
 	}

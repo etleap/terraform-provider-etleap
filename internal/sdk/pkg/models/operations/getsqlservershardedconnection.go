@@ -26,8 +26,8 @@ type GetSQLSERVERSHARDEDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSQLServerSharded *shared.ConnectionSQLServerShardedOutput
-	// Not Found.
+	ConnectionSQLServerSharded *shared.ConnectionSQLServerSharded
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetSQLSERVERSHARDEDConnectionResponse) GetRawResponse() *http.Response 
 	return o.RawResponse
 }
 
-func (o *GetSQLSERVERSHARDEDConnectionResponse) GetConnectionSQLServerSharded() *shared.ConnectionSQLServerShardedOutput {
+func (o *GetSQLSERVERSHARDEDConnectionResponse) GetConnectionSQLServerSharded() *shared.ConnectionSQLServerSharded {
 	if o == nil {
 		return nil
 	}

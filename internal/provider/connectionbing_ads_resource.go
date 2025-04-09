@@ -41,18 +41,18 @@ type ConnectionBINGADSResource struct {
 
 // ConnectionBINGADSResourceModel describes the resource data model.
 type ConnectionBINGADSResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	Code                     types.String                                    `tfsdk:"code"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	UserID                   types.Int64                                     `tfsdk:"user_id"`
-	Username                 types.String                                    `tfsdk:"username"`
+	Active                   types.Bool              `tfsdk:"active"`
+	Code                     types.String            `tfsdk:"code"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	UserID                   types.Int64             `tfsdk:"user_id"`
+	Username                 types.String            `tfsdk:"username"`
 }
 
 func (r *ConnectionBINGADSResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -571,7 +571,7 @@ func (r *ConnectionBINGADSResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToSharedConnectionBing()
+	request := *data.ToSharedConnectionBingInput()
 	res, err := r.client.Connection.CreateBINGADSConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -592,7 +592,7 @@ func (r *ConnectionBINGADSResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBingOutput(res.ConnectionBing)
+	data.RefreshFromSharedConnectionBing(res.ConnectionBing)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetBINGADSConnectionRequest{
@@ -618,7 +618,7 @@ func (r *ConnectionBINGADSResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBingOutput(res1.ConnectionBing)
+	data.RefreshFromSharedConnectionBing(res1.ConnectionBing)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -667,7 +667,7 @@ func (r *ConnectionBINGADSResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBingOutput(res.ConnectionBing)
+	data.RefreshFromSharedConnectionBing(res.ConnectionBing)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -713,7 +713,7 @@ func (r *ConnectionBINGADSResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBingOutput(res.ConnectionBing)
+	data.RefreshFromSharedConnectionBing(res.ConnectionBing)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetBINGADSConnectionRequest{
@@ -739,7 +739,7 @@ func (r *ConnectionBINGADSResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBingOutput(res1.ConnectionBing)
+	data.RefreshFromSharedConnectionBing(res1.ConnectionBing)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

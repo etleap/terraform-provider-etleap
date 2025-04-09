@@ -35,7 +35,7 @@ type UpdateZENDESKConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionZendesk *shared.ConnectionZendesk
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

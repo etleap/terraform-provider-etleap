@@ -32,11 +32,11 @@ func (e *ConnectionS3InputUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionS3InputUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                        `json:"active,omitempty"`
-	Type   *ConnectionS3InputUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                      `json:"name,omitempty"`
+	Type *ConnectionS3InputUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The AWS IAM Role ARN that Etleap can assume to access the input bucket.
@@ -47,11 +47,11 @@ type ConnectionS3InputUpdate struct {
 	BaseDirectory *string `json:"baseDirectory,omitempty"`
 }
 
-func (o *ConnectionS3InputUpdate) GetActive() *bool {
+func (o *ConnectionS3InputUpdate) GetName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Active
+	return o.Name
 }
 
 func (o *ConnectionS3InputUpdate) GetType() *ConnectionS3InputUpdateType {
@@ -61,11 +61,11 @@ func (o *ConnectionS3InputUpdate) GetType() *ConnectionS3InputUpdateType {
 	return o.Type
 }
 
-func (o *ConnectionS3InputUpdate) GetName() *string {
+func (o *ConnectionS3InputUpdate) GetActive() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Name
+	return o.Active
 }
 
 func (o *ConnectionS3InputUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -75,9 +75,9 @@ func (o *ConnectionS3InputUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionS3InputUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionS3InputUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -85,13 +85,6 @@ func (o *ConnectionS3InputUpdate) GetUpdateScheduleMonthly() *UpdateScheduleMode
 func (o *ConnectionS3InputUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionS3InputUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -106,6 +99,13 @@ func (o *ConnectionS3InputUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDa
 func (o *ConnectionS3InputUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionS3InputUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

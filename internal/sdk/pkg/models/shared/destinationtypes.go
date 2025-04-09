@@ -12,11 +12,11 @@ import (
 type DestinationTypesType string
 
 const (
-	DestinationTypesTypeS3DataLake DestinationTypesType = "S3_DATA_LAKE"
-	DestinationTypesTypeDeltaLake  DestinationTypesType = "DELTA_LAKE"
-	DestinationTypesTypeIceberg    DestinationTypesType = "ICEBERG"
-	DestinationTypesTypeSnowflake  DestinationTypesType = "SNOWFLAKE"
 	DestinationTypesTypeRedshift   DestinationTypesType = "REDSHIFT"
+	DestinationTypesTypeSnowflake  DestinationTypesType = "SNOWFLAKE"
+	DestinationTypesTypeDeltaLake  DestinationTypesType = "DELTA_LAKE"
+	DestinationTypesTypeS3DataLake DestinationTypesType = "S3_DATA_LAKE"
+	DestinationTypesTypeIceberg    DestinationTypesType = "ICEBERG"
 )
 
 type DestinationTypes struct {
@@ -29,39 +29,15 @@ type DestinationTypes struct {
 	Type DestinationTypesType
 }
 
-func CreateDestinationTypesS3DataLake(s3DataLake DestinationS3DataLake) DestinationTypes {
-	typ := DestinationTypesTypeS3DataLake
+func CreateDestinationTypesRedshift(redshift DestinationRedshift) DestinationTypes {
+	typ := DestinationTypesTypeRedshift
 
-	typStr := DestinationS3DataLakeType(typ)
-	s3DataLake.Type = typStr
-
-	return DestinationTypes{
-		DestinationS3DataLake: &s3DataLake,
-		Type:                  typ,
-	}
-}
-
-func CreateDestinationTypesDeltaLake(deltaLake DestinationDeltaLake) DestinationTypes {
-	typ := DestinationTypesTypeDeltaLake
-
-	typStr := DestinationDeltaLakeType(typ)
-	deltaLake.Type = typStr
+	typStr := DestinationRedshiftType(typ)
+	redshift.Type = typStr
 
 	return DestinationTypes{
-		DestinationDeltaLake: &deltaLake,
-		Type:                 typ,
-	}
-}
-
-func CreateDestinationTypesIceberg(iceberg DestinationIceberg) DestinationTypes {
-	typ := DestinationTypesTypeIceberg
-
-	typStr := DestinationIcebergType(typ)
-	iceberg.Type = typStr
-
-	return DestinationTypes{
-		DestinationIceberg: &iceberg,
-		Type:               typ,
+		DestinationRedshift: &redshift,
+		Type:                typ,
 	}
 }
 
@@ -77,15 +53,39 @@ func CreateDestinationTypesSnowflake(snowflake DestinationSnowflake) Destination
 	}
 }
 
-func CreateDestinationTypesRedshift(redshift DestinationRedshift) DestinationTypes {
-	typ := DestinationTypesTypeRedshift
+func CreateDestinationTypesDeltaLake(deltaLake DestinationDeltaLake) DestinationTypes {
+	typ := DestinationTypesTypeDeltaLake
 
-	typStr := DestinationRedshiftType(typ)
-	redshift.Type = typStr
+	typStr := DestinationDeltaLakeType(typ)
+	deltaLake.Type = typStr
 
 	return DestinationTypes{
-		DestinationRedshift: &redshift,
-		Type:                typ,
+		DestinationDeltaLake: &deltaLake,
+		Type:                 typ,
+	}
+}
+
+func CreateDestinationTypesS3DataLake(s3DataLake DestinationS3DataLake) DestinationTypes {
+	typ := DestinationTypesTypeS3DataLake
+
+	typStr := DestinationS3DataLakeType(typ)
+	s3DataLake.Type = typStr
+
+	return DestinationTypes{
+		DestinationS3DataLake: &s3DataLake,
+		Type:                  typ,
+	}
+}
+
+func CreateDestinationTypesIceberg(iceberg DestinationIceberg) DestinationTypes {
+	typ := DestinationTypesTypeIceberg
+
+	typStr := DestinationIcebergType(typ)
+	iceberg.Type = typStr
+
+	return DestinationTypes{
+		DestinationIceberg: &iceberg,
+		Type:               typ,
 	}
 }
 
@@ -101,32 +101,14 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Type {
-	case "S3_DATA_LAKE":
-		destinationS3DataLake := new(DestinationS3DataLake)
-		if err := utils.UnmarshalJSON(data, &destinationS3DataLake, "", true, true); err != nil {
+	case "REDSHIFT":
+		destinationRedshift := new(DestinationRedshift)
+		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.DestinationS3DataLake = destinationS3DataLake
-		u.Type = DestinationTypesTypeS3DataLake
-		return nil
-	case "DELTA_LAKE":
-		destinationDeltaLake := new(DestinationDeltaLake)
-		if err := utils.UnmarshalJSON(data, &destinationDeltaLake, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.DestinationDeltaLake = destinationDeltaLake
-		u.Type = DestinationTypesTypeDeltaLake
-		return nil
-	case "ICEBERG":
-		destinationIceberg := new(DestinationIceberg)
-		if err := utils.UnmarshalJSON(data, &destinationIceberg, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.DestinationIceberg = destinationIceberg
-		u.Type = DestinationTypesTypeIceberg
+		u.DestinationRedshift = destinationRedshift
+		u.Type = DestinationTypesTypeRedshift
 		return nil
 	case "SNOWFLAKE":
 		destinationSnowflake := new(DestinationSnowflake)
@@ -137,14 +119,32 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
 		u.DestinationSnowflake = destinationSnowflake
 		u.Type = DestinationTypesTypeSnowflake
 		return nil
-	case "REDSHIFT":
-		destinationRedshift := new(DestinationRedshift)
-		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, true); err != nil {
+	case "DELTA_LAKE":
+		destinationDeltaLake := new(DestinationDeltaLake)
+		if err := utils.UnmarshalJSON(data, &destinationDeltaLake, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.DestinationRedshift = destinationRedshift
-		u.Type = DestinationTypesTypeRedshift
+		u.DestinationDeltaLake = destinationDeltaLake
+		u.Type = DestinationTypesTypeDeltaLake
+		return nil
+	case "S3_DATA_LAKE":
+		destinationS3DataLake := new(DestinationS3DataLake)
+		if err := utils.UnmarshalJSON(data, &destinationS3DataLake, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.DestinationS3DataLake = destinationS3DataLake
+		u.Type = DestinationTypesTypeS3DataLake
+		return nil
+	case "ICEBERG":
+		destinationIceberg := new(DestinationIceberg)
+		if err := utils.UnmarshalJSON(data, &destinationIceberg, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.DestinationIceberg = destinationIceberg
+		u.Type = DestinationTypesTypeIceberg
 		return nil
 	}
 

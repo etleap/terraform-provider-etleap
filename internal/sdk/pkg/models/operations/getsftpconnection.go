@@ -26,8 +26,8 @@ type GetSFTPConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSftp *shared.ConnectionSftpOutput
-	// Not Found.
+	ConnectionSftp *shared.ConnectionSftp
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetSFTPConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetSFTPConnectionResponse) GetConnectionSftp() *shared.ConnectionSftpOutput {
+func (o *GetSFTPConnectionResponse) GetConnectionSftp() *shared.ConnectionSftp {
 	if o == nil {
 		return nil
 	}

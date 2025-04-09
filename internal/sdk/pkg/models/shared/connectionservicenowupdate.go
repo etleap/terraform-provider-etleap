@@ -32,33 +32,19 @@ func (e *ConnectionServiceNowUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionServiceNowUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                           `json:"active,omitempty"`
-	Type   *ConnectionServiceNowUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                         `json:"name,omitempty"`
+	Type *ConnectionServiceNowUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// E.g., 12345.service-now.com
+	SvnInstanceURL *string `json:"svnInstanceUrl,omitempty"`
 	// ServiceNow Instance Login
 	Username *string `json:"username,omitempty"`
 	// ServiceNow Instance Password
 	Password *string `json:"password,omitempty"`
-	// E.g., 12345.service-now.com
-	SvnInstanceURL *string `json:"svnInstanceUrl,omitempty"`
-}
-
-func (o *ConnectionServiceNowUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionServiceNowUpdate) GetType() *ConnectionServiceNowUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionServiceNowUpdate) GetName() *string {
@@ -68,6 +54,20 @@ func (o *ConnectionServiceNowUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionServiceNowUpdate) GetType() *ConnectionServiceNowUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionServiceNowUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionServiceNowUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -75,9 +75,9 @@ func (o *ConnectionServiceNowUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionServiceNowUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionServiceNowUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -85,13 +85,6 @@ func (o *ConnectionServiceNowUpdate) GetUpdateScheduleMonthly() *UpdateScheduleM
 func (o *ConnectionServiceNowUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionServiceNowUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -110,6 +103,20 @@ func (o *ConnectionServiceNowUpdate) GetUpdateScheduleWeekly() *UpdateScheduleMo
 	return nil
 }
 
+func (o *ConnectionServiceNowUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionServiceNowUpdate) GetSvnInstanceURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SvnInstanceURL
+}
+
 func (o *ConnectionServiceNowUpdate) GetUsername() *string {
 	if o == nil {
 		return nil
@@ -122,11 +129,4 @@ func (o *ConnectionServiceNowUpdate) GetPassword() *string {
 		return nil
 	}
 	return o.Password
-}
-
-func (o *ConnectionServiceNowUpdate) GetSvnInstanceURL() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SvnInstanceURL
 }

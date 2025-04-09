@@ -32,33 +32,19 @@ func (e *ConnectionElluminateUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionElluminateUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                           `json:"active,omitempty"`
-	Type   *ConnectionElluminateUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                         `json:"name,omitempty"`
+	Type *ConnectionElluminateUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Your Elluminate API key
-	APIKey *string `json:"apiKey,omitempty"`
 	// Your Elluminate URL.
 	BaseURL *string `json:"baseUrl,omitempty"`
+	// Your Elluminate API key
+	APIKey *string `json:"apiKey,omitempty"`
 	// Your Elluminate API secret
 	APISecret *string `json:"apiSecret,omitempty"`
-}
-
-func (o *ConnectionElluminateUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionElluminateUpdate) GetType() *ConnectionElluminateUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionElluminateUpdate) GetName() *string {
@@ -68,6 +54,20 @@ func (o *ConnectionElluminateUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionElluminateUpdate) GetType() *ConnectionElluminateUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionElluminateUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionElluminateUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -75,9 +75,9 @@ func (o *ConnectionElluminateUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionElluminateUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionElluminateUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -85,13 +85,6 @@ func (o *ConnectionElluminateUpdate) GetUpdateScheduleMonthly() *UpdateScheduleM
 func (o *ConnectionElluminateUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionElluminateUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -110,11 +103,11 @@ func (o *ConnectionElluminateUpdate) GetUpdateScheduleWeekly() *UpdateScheduleMo
 	return nil
 }
 
-func (o *ConnectionElluminateUpdate) GetAPIKey() *string {
-	if o == nil {
-		return nil
+func (o *ConnectionElluminateUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.APIKey
+	return nil
 }
 
 func (o *ConnectionElluminateUpdate) GetBaseURL() *string {
@@ -122,6 +115,13 @@ func (o *ConnectionElluminateUpdate) GetBaseURL() *string {
 		return nil
 	}
 	return o.BaseURL
+}
+
+func (o *ConnectionElluminateUpdate) GetAPIKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIKey
 }
 
 func (o *ConnectionElluminateUpdate) GetAPISecret() *string {

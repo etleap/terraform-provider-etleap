@@ -32,33 +32,19 @@ func (e *ConnectionRaveMedidataUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionRaveMedidataUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                             `json:"active,omitempty"`
-	Type   *ConnectionRaveMedidataUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                           `json:"name,omitempty"`
+	Type *ConnectionRaveMedidataUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// E.g., my-org.mdsol.com
+	Hostname *string `json:"hostname,omitempty"`
 	// Rave Account Login
 	Username *string `json:"username,omitempty"`
 	// Rave Account Password
 	Password *string `json:"password,omitempty"`
-	// E.g., my-org.mdsol.com
-	Hostname *string `json:"hostname,omitempty"`
-}
-
-func (o *ConnectionRaveMedidataUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionRaveMedidataUpdate) GetType() *ConnectionRaveMedidataUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionRaveMedidataUpdate) GetName() *string {
@@ -68,6 +54,20 @@ func (o *ConnectionRaveMedidataUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionRaveMedidataUpdate) GetType() *ConnectionRaveMedidataUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionRaveMedidataUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionRaveMedidataUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -75,9 +75,9 @@ func (o *ConnectionRaveMedidataUpdate) GetUpdateSchedule() *UpdateScheduleTypes 
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionRaveMedidataUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionRaveMedidataUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -85,13 +85,6 @@ func (o *ConnectionRaveMedidataUpdate) GetUpdateScheduleMonthly() *UpdateSchedul
 func (o *ConnectionRaveMedidataUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionRaveMedidataUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -110,6 +103,20 @@ func (o *ConnectionRaveMedidataUpdate) GetUpdateScheduleWeekly() *UpdateSchedule
 	return nil
 }
 
+func (o *ConnectionRaveMedidataUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionRaveMedidataUpdate) GetHostname() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Hostname
+}
+
 func (o *ConnectionRaveMedidataUpdate) GetUsername() *string {
 	if o == nil {
 		return nil
@@ -122,11 +129,4 @@ func (o *ConnectionRaveMedidataUpdate) GetPassword() *string {
 		return nil
 	}
 	return o.Password
-}
-
-func (o *ConnectionRaveMedidataUpdate) GetHostname() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Hostname
 }

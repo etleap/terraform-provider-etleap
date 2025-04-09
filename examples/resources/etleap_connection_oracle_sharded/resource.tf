@@ -1,22 +1,22 @@
 resource "etleap_connection_oracle_sharded" "my_connectionoracle_sharded" {
-  cdc_enabled                          = true
+  cdc_enabled                          = false
   certificate                          = "...my_certificate..."
   deletion_of_export_products          = true
-  name                                 = "Ms. Leona Cummerata"
-  require_ssl_and_validate_certificate = false
+  name                                 = "Leigh Metz"
+  require_ssl_and_validate_certificate = true
   schema                               = "...my_schema..."
   shards = [
     {
-      address  = "489 Ernser Square"
+      address  = "8550 Kathryn Overpass"
       database = "...my_database..."
       password = "...my_password..."
       port     = 4
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "805 Albertha Locks"
-        username = "Brennan_Greenfelder86"
+        address  = "4247 Yvonne Neck"
+        username = "Levi_Boyer14"
       }
-      username = "Bernita31"
+      username = "Damaris_McDermott"
     },
   ]
   type = "ORACLE_SHARDED"

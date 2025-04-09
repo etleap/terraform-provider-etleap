@@ -34,8 +34,8 @@ type UpdateUSERVOICEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionUserVoice *shared.ConnectionUserVoiceOutput
-	// Connection for this id was not found.
+	ConnectionUserVoice *shared.ConnectionUserVoice
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateUSERVOICEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateUSERVOICEConnectionResponse) GetConnectionUserVoice() *shared.ConnectionUserVoiceOutput {
+func (o *UpdateUSERVOICEConnectionResponse) GetConnectionUserVoice() *shared.ConnectionUserVoice {
 	if o == nil {
 		return nil
 	}

@@ -35,7 +35,7 @@ type UpdateSUMTOTALConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSumTotal *shared.ConnectionSumTotal
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

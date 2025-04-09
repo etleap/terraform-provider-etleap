@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsales() *shared.ConnectionFreshsales {
+func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsalesInput() *shared.ConnectionFreshsalesInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionFreshsalesType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -73,12 +73,12 @@ func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsales() *shar
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -90,7 +90,7 @@ func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsales() *shar
 	domain := r.Domain.ValueString()
 	apiKey := r.APIKey.ValueString()
 	quotaLimit, _ := r.QuotaLimit.ValueBigFloat().Float64()
-	out := shared.ConnectionFreshsales{
+	out := shared.ConnectionFreshsalesInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -101,14 +101,14 @@ func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsales() *shar
 	return &out
 }
 
-func (r *ConnectionFRESHSALESResourceModel) RefreshFromSharedConnectionFreshsalesOutput(resp *shared.ConnectionFreshsalesOutput) {
+func (r *ConnectionFRESHSALESResourceModel) RefreshFromSharedConnectionFreshsales(resp *shared.ConnectionFreshsales) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -192,11 +192,11 @@ func (r *ConnectionFRESHSALESResourceModel) RefreshFromSharedConnectionFreshsale
 }
 
 func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsalesUpdate() *shared.ConnectionFreshsalesUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionFreshsalesUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -204,11 +204,11 @@ func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsalesUpdate()
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -271,12 +271,12 @@ func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsalesUpdate()
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -304,9 +304,9 @@ func (r *ConnectionFRESHSALESResourceModel) ToSharedConnectionFreshsalesUpdate()
 		quotaLimit = nil
 	}
 	out := shared.ConnectionFreshsalesUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
 		Domain:         domain,
 		APIKey:         apiKey,

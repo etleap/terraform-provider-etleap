@@ -28,17 +28,17 @@ type ConnectionDELTALAKEDataSource struct {
 
 // ConnectionDELTALAKEDataSourceModel describes the data model.
 type ConnectionDELTALAKEDataSourceModel struct {
-	Active                types.Bool                                      `tfsdk:"active"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	Hostname              types.String                                    `tfsdk:"hostname"`
-	HTTPPath              types.String                                    `tfsdk:"http_path"`
-	ID                    types.String                                    `tfsdk:"id"`
-	Name                  types.String                                    `tfsdk:"name"`
-	Schema                types.String                                    `tfsdk:"schema"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                types.Bool              `tfsdk:"active"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	Hostname              types.String            `tfsdk:"hostname"`
+	HTTPPath              types.String            `tfsdk:"http_path"`
+	ID                    types.String            `tfsdk:"id"`
+	Name                  types.String            `tfsdk:"name"`
+	Schema                types.String            `tfsdk:"schema"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -320,7 +320,7 @@ func (r *ConnectionDELTALAKEDataSource) Read(ctx context.Context, req datasource
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionDeltaLakeOutput(res.ConnectionDeltaLake)
+	data.RefreshFromSharedConnectionDeltaLake(res.ConnectionDeltaLake)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

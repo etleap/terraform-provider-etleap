@@ -3,17 +3,10 @@
 package shared
 
 type SSHConfig struct {
-	// The username for the SSH connection.
-	Username string `json:"username"`
 	// The server address for the SSH connection.
 	Address string `json:"address"`
-}
-
-func (o *SSHConfig) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	// The username for the SSH connection.
+	Username string `json:"username"`
 }
 
 func (o *SSHConfig) GetAddress() string {
@@ -21,4 +14,11 @@ func (o *SSHConfig) GetAddress() string {
 		return ""
 	}
 	return o.Address
+}
+
+func (o *SSHConfig) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

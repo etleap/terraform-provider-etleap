@@ -32,30 +32,16 @@ func (e *ConnectionUserDefinedAPIUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionUserDefinedAPIUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                              `json:"active,omitempty"`
-	Type   ConnectionUserDefinedAPIUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                            `json:"name,omitempty"`
+	Type ConnectionUserDefinedAPIUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	Authentication *Authentication      `json:"authentication,omitempty"`
 	// Extends [Entity](entity-schema.v1.json) with properties required by the connector for extracting all its data, such as a paging strategy.
 	Entity *UserDefinedAPIEntity `json:"entity,omitempty"`
-}
-
-func (o *ConnectionUserDefinedAPIUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionUserDefinedAPIUpdate) GetType() ConnectionUserDefinedAPIUpdateType {
-	if o == nil {
-		return ConnectionUserDefinedAPIUpdateType("")
-	}
-	return o.Type
 }
 
 func (o *ConnectionUserDefinedAPIUpdate) GetName() *string {
@@ -65,6 +51,20 @@ func (o *ConnectionUserDefinedAPIUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionUserDefinedAPIUpdate) GetType() ConnectionUserDefinedAPIUpdateType {
+	if o == nil {
+		return ConnectionUserDefinedAPIUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionUserDefinedAPIUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionUserDefinedAPIUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -72,9 +72,9 @@ func (o *ConnectionUserDefinedAPIUpdate) GetUpdateSchedule() *UpdateScheduleType
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionUserDefinedAPIUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionUserDefinedAPIUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -82,13 +82,6 @@ func (o *ConnectionUserDefinedAPIUpdate) GetUpdateScheduleMonthly() *UpdateSched
 func (o *ConnectionUserDefinedAPIUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionUserDefinedAPIUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -107,6 +100,13 @@ func (o *ConnectionUserDefinedAPIUpdate) GetUpdateScheduleWeekly() *UpdateSchedu
 	return nil
 }
 
+func (o *ConnectionUserDefinedAPIUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 func (o *ConnectionUserDefinedAPIUpdate) GetAuthentication() *Authentication {
 	if o == nil {
 		return nil
@@ -114,9 +114,9 @@ func (o *ConnectionUserDefinedAPIUpdate) GetAuthentication() *Authentication {
 	return o.Authentication
 }
 
-func (o *ConnectionUserDefinedAPIUpdate) GetAuthenticationHeader() *HeaderAuthentication {
+func (o *ConnectionUserDefinedAPIUpdate) GetAuthenticationBasic() *BasicAuthentication {
 	if v := o.GetAuthentication(); v != nil {
-		return v.HeaderAuthentication
+		return v.BasicAuthentication
 	}
 	return nil
 }
@@ -128,9 +128,9 @@ func (o *ConnectionUserDefinedAPIUpdate) GetAuthenticationBearer() *BearerAuthen
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPIUpdate) GetAuthenticationBasic() *BasicAuthentication {
+func (o *ConnectionUserDefinedAPIUpdate) GetAuthenticationHeader() *HeaderAuthentication {
 	if v := o.GetAuthentication(); v != nil {
-		return v.BasicAuthentication
+		return v.HeaderAuthentication
 	}
 	return nil
 }

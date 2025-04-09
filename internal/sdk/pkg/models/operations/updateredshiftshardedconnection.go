@@ -35,7 +35,7 @@ type UpdateREDSHIFTSHARDEDConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionRedshiftSharded *shared.ConnectionRedshiftSharded
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

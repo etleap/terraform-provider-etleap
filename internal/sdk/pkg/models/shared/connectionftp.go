@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionFtpType string
+
+const (
+	ConnectionFtpTypeFtp ConnectionFtpType = "FTP"
+)
+
+func (e ConnectionFtpType) ToPointer() *ConnectionFtpType {
+	return &e
+}
+
+func (e *ConnectionFtpType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "FTP":
+		*e = ConnectionFtpType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionFtpType: %v", v)
+	}
+}
+
 // ConnectionFtpStatus - The current status of the connection.
 type ConnectionFtpStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionFtpDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSchedule
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionFtpDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionFtpDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionFtpDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateS
 func (o *ConnectionFtpDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionFtpDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,51 +125,34 @@ func (o *ConnectionFtpDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateSc
 	return nil
 }
 
-type ConnectionFtpType string
-
-const (
-	ConnectionFtpTypeFtp ConnectionFtpType = "FTP"
-)
-
-func (e ConnectionFtpType) ToPointer() *ConnectionFtpType {
-	return &e
-}
-
-func (e *ConnectionFtpType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionFtpDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "FTP":
-		*e = ConnectionFtpType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionFtpType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionFtp struct {
-	// The current status of the connection.
-	Status ConnectionFtpStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionFtpDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool              `json:"active"`
-	Type   ConnectionFtpType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string            `json:"name"`
+	Type ConnectionFtpType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionFtpStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Username       string               `json:"username"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionFtpDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// E.g. 'ftp.etleap.com' or '10.0.0.2'.
 	Hostname    string `json:"hostname"`
-	PassiveMode bool   `json:"passiveMode"`
 	Port        int64  `json:"port"`
+	Username    string `json:"username"`
+	PassiveMode bool   `json:"passiveMode"`
 }
 
 func (c ConnectionFtp) MarshalJSON() ([]byte, error) {
@@ -166,11 +166,11 @@ func (c *ConnectionFtp) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionFtp) GetStatus() ConnectionFtpStatus {
+func (o *ConnectionFtp) GetID() string {
 	if o == nil {
-		return ConnectionFtpStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionFtp) GetName() string {
@@ -180,18 +180,11 @@ func (o *ConnectionFtp) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionFtp) GetCreateDate() time.Time {
+func (o *ConnectionFtp) GetType() ConnectionFtpType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionFtpType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionFtp) GetDefaultUpdateSchedule() []ConnectionFtpDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionFtpDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionFtp) GetActive() bool {
@@ -201,18 +194,18 @@ func (o *ConnectionFtp) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionFtp) GetType() ConnectionFtpType {
+func (o *ConnectionFtp) GetStatus() ConnectionFtpStatus {
 	if o == nil {
-		return ConnectionFtpType("")
+		return ConnectionFtpStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionFtp) GetID() string {
+func (o *ConnectionFtp) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionFtp) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -222,9 +215,9 @@ func (o *ConnectionFtp) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionFtp) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionFtp) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -232,13 +225,6 @@ func (o *ConnectionFtp) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 func (o *ConnectionFtp) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionFtp) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -257,11 +243,18 @@ func (o *ConnectionFtp) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	return nil
 }
 
-func (o *ConnectionFtp) GetUsername() string {
-	if o == nil {
-		return ""
+func (o *ConnectionFtp) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.Username
+	return nil
+}
+
+func (o *ConnectionFtp) GetDefaultUpdateSchedule() []ConnectionFtpDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionFtpDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionFtp) GetHostname() string {
@@ -271,18 +264,25 @@ func (o *ConnectionFtp) GetHostname() string {
 	return o.Hostname
 }
 
-func (o *ConnectionFtp) GetPassiveMode() bool {
-	if o == nil {
-		return false
-	}
-	return o.PassiveMode
-}
-
 func (o *ConnectionFtp) GetPort() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Port
+}
+
+func (o *ConnectionFtp) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *ConnectionFtp) GetPassiveMode() bool {
+	if o == nil {
+		return false
+	}
+	return o.PassiveMode
 }
 
 type ConnectionFtpInput struct {
@@ -291,12 +291,12 @@ type ConnectionFtpInput struct {
 	Type ConnectionFtpType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Username       string               `json:"username"`
 	// E.g. 'ftp.etleap.com' or '10.0.0.2'.
 	Hostname    string `json:"hostname"`
-	PassiveMode bool   `json:"passiveMode"`
-	Password    string `json:"password"`
 	Port        int64  `json:"port"`
+	Username    string `json:"username"`
+	Password    string `json:"password"`
+	PassiveMode bool   `json:"passiveMode"`
 }
 
 func (o *ConnectionFtpInput) GetName() string {
@@ -320,9 +320,9 @@ func (o *ConnectionFtpInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionFtpInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionFtpInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -330,13 +330,6 @@ func (o *ConnectionFtpInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonth
 func (o *ConnectionFtpInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionFtpInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -355,11 +348,11 @@ func (o *ConnectionFtpInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly
 	return nil
 }
 
-func (o *ConnectionFtpInput) GetUsername() string {
-	if o == nil {
-		return ""
+func (o *ConnectionFtpInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.Username
+	return nil
 }
 
 func (o *ConnectionFtpInput) GetHostname() string {
@@ -369,11 +362,18 @@ func (o *ConnectionFtpInput) GetHostname() string {
 	return o.Hostname
 }
 
-func (o *ConnectionFtpInput) GetPassiveMode() bool {
+func (o *ConnectionFtpInput) GetPort() int64 {
 	if o == nil {
-		return false
+		return 0
 	}
-	return o.PassiveMode
+	return o.Port
+}
+
+func (o *ConnectionFtpInput) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *ConnectionFtpInput) GetPassword() string {
@@ -383,9 +383,9 @@ func (o *ConnectionFtpInput) GetPassword() string {
 	return o.Password
 }
 
-func (o *ConnectionFtpInput) GetPort() int64 {
+func (o *ConnectionFtpInput) GetPassiveMode() bool {
 	if o == nil {
-		return 0
+		return false
 	}
-	return o.Port
+	return o.PassiveMode
 }

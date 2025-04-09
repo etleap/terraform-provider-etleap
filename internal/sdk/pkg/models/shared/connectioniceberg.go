@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionIcebergType string
+
+const (
+	ConnectionIcebergTypeIceberg ConnectionIcebergType = "ICEBERG"
+)
+
+func (e ConnectionIcebergType) ToPointer() *ConnectionIcebergType {
+	return &e
+}
+
+func (e *ConnectionIcebergType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ICEBERG":
+		*e = ConnectionIcebergType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionIcebergType: %v", v)
+	}
+}
+
 // ConnectionIcebergStatus - The current status of the connection.
 type ConnectionIcebergStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionIcebergDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSche
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionIcebergDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionIcebergDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionIcebergDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upd
 func (o *ConnectionIcebergDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionIcebergDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,52 +125,35 @@ func (o *ConnectionIcebergDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Upda
 	return nil
 }
 
-type ConnectionIcebergType string
-
-const (
-	ConnectionIcebergTypeIceberg ConnectionIcebergType = "ICEBERG"
-)
-
-func (e ConnectionIcebergType) ToPointer() *ConnectionIcebergType {
-	return &e
-}
-
-func (e *ConnectionIcebergType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionIcebergDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "ICEBERG":
-		*e = ConnectionIcebergType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionIcebergType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionIceberg struct {
-	// The current status of the connection.
-	Status ConnectionIcebergStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionIcebergDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                  `json:"active"`
-	Type   ConnectionIcebergType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                `json:"name"`
+	Type ConnectionIcebergType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionIcebergStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule      *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	IamRole             string               `json:"iamRole"`
-	WarehouseConnection *string              `json:"warehouseConnection,omitempty"`
-	GlueDatabase        string               `json:"glueDatabase"`
-	BaseDirectory       string               `json:"baseDirectory"`
-	DataBucket          string               `json:"dataBucket"`
-	GlueRegion          string               `json:"glueRegion"`
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionIcebergDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	IamRole               string                                   `json:"iamRole"`
+	DataBucket            string                                   `json:"dataBucket"`
+	BaseDirectory         string                                   `json:"baseDirectory"`
+	GlueDatabase          string                                   `json:"glueDatabase"`
+	GlueRegion            string                                   `json:"glueRegion"`
+	WarehouseConnection   *string                                  `json:"warehouseConnection,omitempty"`
 }
 
 func (c ConnectionIceberg) MarshalJSON() ([]byte, error) {
@@ -167,11 +167,11 @@ func (c *ConnectionIceberg) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionIceberg) GetStatus() ConnectionIcebergStatus {
+func (o *ConnectionIceberg) GetID() string {
 	if o == nil {
-		return ConnectionIcebergStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionIceberg) GetName() string {
@@ -181,18 +181,11 @@ func (o *ConnectionIceberg) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionIceberg) GetCreateDate() time.Time {
+func (o *ConnectionIceberg) GetType() ConnectionIcebergType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionIcebergType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionIceberg) GetDefaultUpdateSchedule() []ConnectionIcebergDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionIcebergDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionIceberg) GetActive() bool {
@@ -202,18 +195,18 @@ func (o *ConnectionIceberg) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionIceberg) GetType() ConnectionIcebergType {
+func (o *ConnectionIceberg) GetStatus() ConnectionIcebergStatus {
 	if o == nil {
-		return ConnectionIcebergType("")
+		return ConnectionIcebergStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionIceberg) GetID() string {
+func (o *ConnectionIceberg) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionIceberg) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -223,9 +216,9 @@ func (o *ConnectionIceberg) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionIceberg) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionIceberg) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -233,13 +226,6 @@ func (o *ConnectionIceberg) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthl
 func (o *ConnectionIceberg) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionIceberg) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -258,32 +244,25 @@ func (o *ConnectionIceberg) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly 
 	return nil
 }
 
+func (o *ConnectionIceberg) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionIceberg) GetDefaultUpdateSchedule() []ConnectionIcebergDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionIcebergDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
+}
+
 func (o *ConnectionIceberg) GetIamRole() string {
 	if o == nil {
 		return ""
 	}
 	return o.IamRole
-}
-
-func (o *ConnectionIceberg) GetWarehouseConnection() *string {
-	if o == nil {
-		return nil
-	}
-	return o.WarehouseConnection
-}
-
-func (o *ConnectionIceberg) GetGlueDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.GlueDatabase
-}
-
-func (o *ConnectionIceberg) GetBaseDirectory() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseDirectory
 }
 
 func (o *ConnectionIceberg) GetDataBucket() string {
@@ -293,11 +272,32 @@ func (o *ConnectionIceberg) GetDataBucket() string {
 	return o.DataBucket
 }
 
+func (o *ConnectionIceberg) GetBaseDirectory() string {
+	if o == nil {
+		return ""
+	}
+	return o.BaseDirectory
+}
+
+func (o *ConnectionIceberg) GetGlueDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.GlueDatabase
+}
+
 func (o *ConnectionIceberg) GetGlueRegion() string {
 	if o == nil {
 		return ""
 	}
 	return o.GlueRegion
+}
+
+func (o *ConnectionIceberg) GetWarehouseConnection() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WarehouseConnection
 }
 
 type ConnectionIcebergInput struct {
@@ -307,11 +307,11 @@ type ConnectionIcebergInput struct {
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule      *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	IamRole             string               `json:"iamRole"`
-	WarehouseConnection *string              `json:"warehouseConnection,omitempty"`
-	GlueDatabase        string               `json:"glueDatabase"`
-	BaseDirectory       string               `json:"baseDirectory"`
 	DataBucket          string               `json:"dataBucket"`
+	BaseDirectory       string               `json:"baseDirectory"`
+	GlueDatabase        string               `json:"glueDatabase"`
 	GlueRegion          string               `json:"glueRegion"`
+	WarehouseConnection *string              `json:"warehouseConnection,omitempty"`
 }
 
 func (o *ConnectionIcebergInput) GetName() string {
@@ -335,9 +335,9 @@ func (o *ConnectionIcebergInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionIcebergInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionIcebergInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -345,13 +345,6 @@ func (o *ConnectionIcebergInput) GetUpdateScheduleMonthly() *UpdateScheduleModeM
 func (o *ConnectionIcebergInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionIcebergInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -370,32 +363,18 @@ func (o *ConnectionIcebergInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWe
 	return nil
 }
 
+func (o *ConnectionIcebergInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 func (o *ConnectionIcebergInput) GetIamRole() string {
 	if o == nil {
 		return ""
 	}
 	return o.IamRole
-}
-
-func (o *ConnectionIcebergInput) GetWarehouseConnection() *string {
-	if o == nil {
-		return nil
-	}
-	return o.WarehouseConnection
-}
-
-func (o *ConnectionIcebergInput) GetGlueDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.GlueDatabase
-}
-
-func (o *ConnectionIcebergInput) GetBaseDirectory() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseDirectory
 }
 
 func (o *ConnectionIcebergInput) GetDataBucket() string {
@@ -405,9 +384,30 @@ func (o *ConnectionIcebergInput) GetDataBucket() string {
 	return o.DataBucket
 }
 
+func (o *ConnectionIcebergInput) GetBaseDirectory() string {
+	if o == nil {
+		return ""
+	}
+	return o.BaseDirectory
+}
+
+func (o *ConnectionIcebergInput) GetGlueDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.GlueDatabase
+}
+
 func (o *ConnectionIcebergInput) GetGlueRegion() string {
 	if o == nil {
 		return ""
 	}
 	return o.GlueRegion
+}
+
+func (o *ConnectionIcebergInput) GetWarehouseConnection() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WarehouseConnection
 }

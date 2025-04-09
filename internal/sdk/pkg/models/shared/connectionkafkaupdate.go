@@ -31,20 +31,20 @@ func (e *ConnectionKafkaUpdateType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// ConnectionKafkaUpdateAuthMechanism - Kafka SASL authentication mechanism.
-type ConnectionKafkaUpdateAuthMechanism string
+// AuthMechanism - Kafka SASL authentication mechanism.
+type AuthMechanism string
 
 const (
-	ConnectionKafkaUpdateAuthMechanismSaslSsl      ConnectionKafkaUpdateAuthMechanism = "SASL_SSL"
-	ConnectionKafkaUpdateAuthMechanismSaslScram256 ConnectionKafkaUpdateAuthMechanism = "SASL_SCRAM_256"
-	ConnectionKafkaUpdateAuthMechanismSaslScram512 ConnectionKafkaUpdateAuthMechanism = "SASL_SCRAM_512"
+	AuthMechanismSaslSsl      AuthMechanism = "SASL_SSL"
+	AuthMechanismSaslScram256 AuthMechanism = "SASL_SCRAM_256"
+	AuthMechanismSaslScram512 AuthMechanism = "SASL_SCRAM_512"
 )
 
-func (e ConnectionKafkaUpdateAuthMechanism) ToPointer() *ConnectionKafkaUpdateAuthMechanism {
+func (e AuthMechanism) ToPointer() *AuthMechanism {
 	return &e
 }
 
-func (e *ConnectionKafkaUpdateAuthMechanism) UnmarshalJSON(data []byte) error {
+func (e *AuthMechanism) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -55,46 +55,32 @@ func (e *ConnectionKafkaUpdateAuthMechanism) UnmarshalJSON(data []byte) error {
 	case "SASL_SCRAM_256":
 		fallthrough
 	case "SASL_SCRAM_512":
-		*e = ConnectionKafkaUpdateAuthMechanism(v)
+		*e = AuthMechanism(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionKafkaUpdateAuthMechanism: %v", v)
+		return fmt.Errorf("invalid value for AuthMechanism: %v", v)
 	}
 }
 
 type ConnectionKafkaUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                      `json:"active,omitempty"`
-	Type   *ConnectionKafkaUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                    `json:"name,omitempty"`
+	Type *ConnectionKafkaUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The Kafka server list. The list should be in the form host1:port1,host2:port2,...
-	ServerList             *string `json:"serverList,omitempty"`
-	SchemaRegistryPassword *string `json:"schemaRegistryPassword,omitempty"`
-	TruststoreCertificate  *string `json:"truststoreCertificate,omitempty"`
+	ServerList *string `json:"serverList,omitempty"`
+	User       *string `json:"user,omitempty"`
+	Password   *string `json:"password,omitempty"`
 	// Kafka SASL authentication mechanism.
-	AuthMechanism *ConnectionKafkaUpdateAuthMechanism `json:"authMechanism,omitempty"`
+	AuthMechanism         *AuthMechanism `json:"authMechanism,omitempty"`
+	TruststoreCertificate *string        `json:"truststoreCertificate,omitempty"`
 	// The Schema Registry server: host:port
-	SchemaRegistryServer *string `json:"schemaRegistryServer,omitempty"`
-	User                 *string `json:"user,omitempty"`
-	SchemaRegistryUser   *string `json:"schemaRegistryUser,omitempty"`
-	Password             *string `json:"password,omitempty"`
-}
-
-func (o *ConnectionKafkaUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionKafkaUpdate) GetType() *ConnectionKafkaUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	SchemaRegistryServer   *string `json:"schemaRegistryServer,omitempty"`
+	SchemaRegistryUser     *string `json:"schemaRegistryUser,omitempty"`
+	SchemaRegistryPassword *string `json:"schemaRegistryPassword,omitempty"`
 }
 
 func (o *ConnectionKafkaUpdate) GetName() *string {
@@ -104,6 +90,20 @@ func (o *ConnectionKafkaUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionKafkaUpdate) GetType() *ConnectionKafkaUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionKafkaUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionKafkaUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -111,9 +111,9 @@ func (o *ConnectionKafkaUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionKafkaUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionKafkaUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -121,13 +121,6 @@ func (o *ConnectionKafkaUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMo
 func (o *ConnectionKafkaUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionKafkaUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -146,39 +139,18 @@ func (o *ConnectionKafkaUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWee
 	return nil
 }
 
+func (o *ConnectionKafkaUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 func (o *ConnectionKafkaUpdate) GetServerList() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ServerList
-}
-
-func (o *ConnectionKafkaUpdate) GetSchemaRegistryPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SchemaRegistryPassword
-}
-
-func (o *ConnectionKafkaUpdate) GetTruststoreCertificate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TruststoreCertificate
-}
-
-func (o *ConnectionKafkaUpdate) GetAuthMechanism() *ConnectionKafkaUpdateAuthMechanism {
-	if o == nil {
-		return nil
-	}
-	return o.AuthMechanism
-}
-
-func (o *ConnectionKafkaUpdate) GetSchemaRegistryServer() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SchemaRegistryServer
 }
 
 func (o *ConnectionKafkaUpdate) GetUser() *string {
@@ -188,6 +160,34 @@ func (o *ConnectionKafkaUpdate) GetUser() *string {
 	return o.User
 }
 
+func (o *ConnectionKafkaUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *ConnectionKafkaUpdate) GetAuthMechanism() *AuthMechanism {
+	if o == nil {
+		return nil
+	}
+	return o.AuthMechanism
+}
+
+func (o *ConnectionKafkaUpdate) GetTruststoreCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TruststoreCertificate
+}
+
+func (o *ConnectionKafkaUpdate) GetSchemaRegistryServer() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SchemaRegistryServer
+}
+
 func (o *ConnectionKafkaUpdate) GetSchemaRegistryUser() *string {
 	if o == nil {
 		return nil
@@ -195,9 +195,9 @@ func (o *ConnectionKafkaUpdate) GetSchemaRegistryUser() *string {
 	return o.SchemaRegistryUser
 }
 
-func (o *ConnectionKafkaUpdate) GetPassword() *string {
+func (o *ConnectionKafkaUpdate) GetSchemaRegistryPassword() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Password
+	return o.SchemaRegistryPassword
 }

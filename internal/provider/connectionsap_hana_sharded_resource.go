@@ -43,18 +43,18 @@ type ConnectionSAPHANASHARDEDResource struct {
 
 // ConnectionSAPHANASHARDEDResourceModel describes the resource data model.
 type ConnectionSAPHANASHARDEDResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	CdcEnabled               types.Bool                                      `tfsdk:"cdc_enabled"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Schema                   types.String                                    `tfsdk:"schema"`
-	Shards                   []DatabaseShard                                 `tfsdk:"shards"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	CdcEnabled               types.Bool              `tfsdk:"cdc_enabled"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Schema                   types.String            `tfsdk:"schema"`
+	Shards                   []DatabaseShard         `tfsdk:"shards"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionSAPHANASHARDEDResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -690,7 +690,7 @@ func (r *ConnectionSAPHANASHARDEDResource) Create(ctx context.Context, req resou
 		return
 	}
 
-	request := *data.ToSharedConnectionSapHanaSharded()
+	request := *data.ToSharedConnectionSapHanaShardedInput()
 	res, err := r.client.Connection.CreateSAPHANASHARDEDConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -711,7 +711,7 @@ func (r *ConnectionSAPHANASHARDEDResource) Create(ctx context.Context, req resou
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSapHanaShardedOutput(res.ConnectionSapHanaSharded)
+	data.RefreshFromSharedConnectionSapHanaSharded(res.ConnectionSapHanaSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetSAPHANASHARDEDConnectionRequest{
@@ -737,7 +737,7 @@ func (r *ConnectionSAPHANASHARDEDResource) Create(ctx context.Context, req resou
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSapHanaShardedOutput(res1.ConnectionSapHanaSharded)
+	data.RefreshFromSharedConnectionSapHanaSharded(res1.ConnectionSapHanaSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -786,7 +786,7 @@ func (r *ConnectionSAPHANASHARDEDResource) Read(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSapHanaShardedOutput(res.ConnectionSapHanaSharded)
+	data.RefreshFromSharedConnectionSapHanaSharded(res.ConnectionSapHanaSharded)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -832,7 +832,7 @@ func (r *ConnectionSAPHANASHARDEDResource) Update(ctx context.Context, req resou
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSapHanaShardedOutput(res.ConnectionSapHanaSharded)
+	data.RefreshFromSharedConnectionSapHanaSharded(res.ConnectionSapHanaSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetSAPHANASHARDEDConnectionRequest{
@@ -858,7 +858,7 @@ func (r *ConnectionSAPHANASHARDEDResource) Update(ctx context.Context, req resou
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSapHanaShardedOutput(res1.ConnectionSapHanaSharded)
+	data.RefreshFromSharedConnectionSapHanaSharded(res1.ConnectionSapHanaSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

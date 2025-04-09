@@ -41,16 +41,16 @@ type ConnectionTIKTOKADSResource struct {
 
 // ConnectionTIKTOKADSResourceModel describes the resource data model.
 type ConnectionTIKTOKADSResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	Code                     types.String                                    `tfsdk:"code"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	Code                     types.String            `tfsdk:"code"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionTIKTOKADSResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -557,7 +557,7 @@ func (r *ConnectionTIKTOKADSResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToSharedConnectionTikTokAds()
+	request := *data.ToSharedConnectionTikTokAdsInput()
 	res, err := r.client.Connection.CreateTIKTOKADSConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -578,7 +578,7 @@ func (r *ConnectionTIKTOKADSResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTikTokAdsOutput(res.ConnectionTikTokAds)
+	data.RefreshFromSharedConnectionTikTokAds(res.ConnectionTikTokAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetTIKTOKADSConnectionRequest{
@@ -604,7 +604,7 @@ func (r *ConnectionTIKTOKADSResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTikTokAdsOutput(res1.ConnectionTikTokAds)
+	data.RefreshFromSharedConnectionTikTokAds(res1.ConnectionTikTokAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -653,7 +653,7 @@ func (r *ConnectionTIKTOKADSResource) Read(ctx context.Context, req resource.Rea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTikTokAdsOutput(res.ConnectionTikTokAds)
+	data.RefreshFromSharedConnectionTikTokAds(res.ConnectionTikTokAds)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -699,7 +699,7 @@ func (r *ConnectionTIKTOKADSResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTikTokAdsOutput(res.ConnectionTikTokAds)
+	data.RefreshFromSharedConnectionTikTokAds(res.ConnectionTikTokAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetTIKTOKADSConnectionRequest{
@@ -725,7 +725,7 @@ func (r *ConnectionTIKTOKADSResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTikTokAdsOutput(res1.ConnectionTikTokAds)
+	data.RefreshFromSharedConnectionTikTokAds(res1.ConnectionTikTokAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

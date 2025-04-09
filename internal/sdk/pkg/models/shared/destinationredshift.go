@@ -33,30 +33,30 @@ func (e *DestinationRedshiftType) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationRedshift struct {
+	Type DestinationRedshiftType `json:"type"`
 	// The universally unique identifier of the destination connection.
-	ConnectionID string                  `json:"connectionId"`
-	Type         DestinationRedshiftType `json:"type"`
-	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-	PrimaryKey []string `json:"primaryKey,omitempty"`
+	ConnectionID string `json:"connectionId"`
 	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
 	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
+	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
+	PrimaryKey []string `json:"primaryKey,omitempty"`
 	// Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
-	AutomaticSchemaChanges *bool  `default:"true" json:"automaticSchemaChanges"`
-	Table                  string `json:"table"`
+	AutomaticSchemaChanges *bool `default:"true" json:"automaticSchemaChanges"`
 	// The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 	Schema *string `json:"schema,omitempty"`
-	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
-	RetainHistory *bool `default:"false" json:"retainHistory"`
-	// Whether columns should be compressed. Defaults to `true`.
-	CompressColumns *bool `default:"true" json:"compressColumns"`
+	Table  string  `json:"table"`
 	// The sort columns to use.
 	SortColumns []string `json:"sortColumns,omitempty"`
 	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
 	DistributionStyle *DistributionStyle `json:"distributionStyle,omitempty"`
-	// Name of a column that indicates the time the record was updated at the destination.
-	LastUpdatedColumn *string `json:"lastUpdatedColumn,omitempty"`
 	// Truncate strings to 64K characters, the max allowed by Redshift in a single column. Defaults to `false`.
 	TruncateStrings *bool `default:"false" json:"truncateStrings"`
+	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
+	RetainHistory *bool `default:"false" json:"retainHistory"`
+	// Whether columns should be compressed. Defaults to `true`.
+	CompressColumns *bool `default:"true" json:"compressColumns"`
+	// Name of a column that indicates the time the record was updated at the destination.
+	LastUpdatedColumn *string `json:"lastUpdatedColumn,omitempty"`
 }
 
 func (d DestinationRedshift) MarshalJSON() ([]byte, error) {
@@ -70,13 +70,6 @@ func (d *DestinationRedshift) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationRedshift) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
-}
-
 func (o *DestinationRedshift) GetType() DestinationRedshiftType {
 	if o == nil {
 		return DestinationRedshiftType("")
@@ -84,11 +77,11 @@ func (o *DestinationRedshift) GetType() DestinationRedshiftType {
 	return o.Type
 }
 
-func (o *DestinationRedshift) GetPrimaryKey() []string {
+func (o *DestinationRedshift) GetConnectionID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.PrimaryKey
+	return o.ConnectionID
 }
 
 func (o *DestinationRedshift) GetWaitForQualityCheck() *bool {
@@ -98,18 +91,18 @@ func (o *DestinationRedshift) GetWaitForQualityCheck() *bool {
 	return o.WaitForQualityCheck
 }
 
+func (o *DestinationRedshift) GetPrimaryKey() []string {
+	if o == nil {
+		return nil
+	}
+	return o.PrimaryKey
+}
+
 func (o *DestinationRedshift) GetAutomaticSchemaChanges() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.AutomaticSchemaChanges
-}
-
-func (o *DestinationRedshift) GetTable() string {
-	if o == nil {
-		return ""
-	}
-	return o.Table
 }
 
 func (o *DestinationRedshift) GetSchema() *string {
@@ -119,18 +112,11 @@ func (o *DestinationRedshift) GetSchema() *string {
 	return o.Schema
 }
 
-func (o *DestinationRedshift) GetRetainHistory() *bool {
+func (o *DestinationRedshift) GetTable() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.RetainHistory
-}
-
-func (o *DestinationRedshift) GetCompressColumns() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.CompressColumns
+	return o.Table
 }
 
 func (o *DestinationRedshift) GetSortColumns() []string {
@@ -147,16 +133,30 @@ func (o *DestinationRedshift) GetDistributionStyle() *DistributionStyle {
 	return o.DistributionStyle
 }
 
-func (o *DestinationRedshift) GetLastUpdatedColumn() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LastUpdatedColumn
-}
-
 func (o *DestinationRedshift) GetTruncateStrings() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.TruncateStrings
+}
+
+func (o *DestinationRedshift) GetRetainHistory() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RetainHistory
+}
+
+func (o *DestinationRedshift) GetCompressColumns() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CompressColumns
+}
+
+func (o *DestinationRedshift) GetLastUpdatedColumn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LastUpdatedColumn
 }

@@ -72,12 +72,12 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresInput() *sha
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -85,6 +85,12 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresInput() *sha
 				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
 			}
 		}
+	}
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
+	} else {
+		schema = nil
 	}
 	autoReplicate := new(string)
 	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
@@ -98,38 +104,32 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresInput() *sha
 	} else {
 		cdcEnabled = nil
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
-	} else {
-		schema = nil
-	}
+	address := r.Address.ValueString()
+	port := r.Port.ValueInt64()
 	username := r.Username.ValueString()
+	password := r.Password.ValueString()
 	var sshConfig *shared.SSHConfig
 	if r.SSHConfig != nil {
+		address1 := r.SSHConfig.Address.ValueString()
 		username1 := r.SSHConfig.Username.ValueString()
-		address := r.SSHConfig.Address.ValueString()
 		sshConfig = &shared.SSHConfig{
+			Address:  address1,
 			Username: username1,
-			Address:  address,
 		}
 	}
-	password := r.Password.ValueString()
-	port := r.Port.ValueInt64()
-	address1 := r.Address.ValueString()
 	database := r.Database.ValueString()
 	out := shared.ConnectionPostgresInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
+		Schema:         schema,
 		AutoReplicate:  autoReplicate,
 		CdcEnabled:     cdcEnabled,
-		Schema:         schema,
-		Username:       username,
-		SSHConfig:      sshConfig,
-		Password:       password,
+		Address:        address,
 		Port:           port,
-		Address:        address1,
+		Username:       username,
+		Password:       password,
+		SSHConfig:      sshConfig,
 		Database:       database,
 	}
 	return &out
@@ -146,7 +146,7 @@ func (r *ConnectionPOSTGRESResourceModel) RefreshFromSharedConnectionPostgres(re
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -238,18 +238,18 @@ func (r *ConnectionPOSTGRESResourceModel) RefreshFromSharedConnectionPostgres(re
 }
 
 func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *shared.ConnectionPostgresUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
-	} else {
-		active = nil
-	}
-	typeVar := shared.ConnectionPostgresUpdateType(r.Type.ValueString())
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
+	}
+	typeVar := shared.ConnectionPostgresUpdateType(r.Type.ValueString())
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
+	} else {
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -312,12 +312,12 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -326,48 +326,23 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 			}
 		}
 	}
-	autoReplicate := new(string)
-	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
-		*autoReplicate = r.AutoReplicate.ValueString()
-	} else {
-		autoReplicate = nil
-	}
 	schema := new(string)
 	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
 		*schema = r.Schema.ValueString()
 	} else {
 		schema = nil
 	}
-	username := new(string)
-	if !r.Username.IsUnknown() && !r.Username.IsNull() {
-		*username = r.Username.ValueString()
+	autoReplicate := new(string)
+	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
+		*autoReplicate = r.AutoReplicate.ValueString()
 	} else {
-		username = nil
+		autoReplicate = nil
 	}
-	var sshConfig *shared.ConnectionPostgresUpdateSSHConfigurationUpdate
-	if r.SSHConfig != nil {
-		username1 := new(string)
-		if !r.SSHConfig.Username.IsUnknown() && !r.SSHConfig.Username.IsNull() {
-			*username1 = r.SSHConfig.Username.ValueString()
-		} else {
-			username1 = nil
-		}
-		address := new(string)
-		if !r.SSHConfig.Address.IsUnknown() && !r.SSHConfig.Address.IsNull() {
-			*address = r.SSHConfig.Address.ValueString()
-		} else {
-			address = nil
-		}
-		sshConfig = &shared.ConnectionPostgresUpdateSSHConfigurationUpdate{
-			Username: username1,
-			Address:  address,
-		}
-	}
-	password := new(string)
-	if !r.Password.IsUnknown() && !r.Password.IsNull() {
-		*password = r.Password.ValueString()
+	address := new(string)
+	if !r.Address.IsUnknown() && !r.Address.IsNull() {
+		*address = r.Address.ValueString()
 	} else {
-		password = nil
+		address = nil
 	}
 	port := new(int64)
 	if !r.Port.IsUnknown() && !r.Port.IsNull() {
@@ -375,11 +350,36 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 	} else {
 		port = nil
 	}
-	address1 := new(string)
-	if !r.Address.IsUnknown() && !r.Address.IsNull() {
-		*address1 = r.Address.ValueString()
+	username := new(string)
+	if !r.Username.IsUnknown() && !r.Username.IsNull() {
+		*username = r.Username.ValueString()
 	} else {
-		address1 = nil
+		username = nil
+	}
+	password := new(string)
+	if !r.Password.IsUnknown() && !r.Password.IsNull() {
+		*password = r.Password.ValueString()
+	} else {
+		password = nil
+	}
+	var sshConfig *shared.ConnectionPostgresUpdateSSHConfigurationUpdate
+	if r.SSHConfig != nil {
+		address1 := new(string)
+		if !r.SSHConfig.Address.IsUnknown() && !r.SSHConfig.Address.IsNull() {
+			*address1 = r.SSHConfig.Address.ValueString()
+		} else {
+			address1 = nil
+		}
+		username1 := new(string)
+		if !r.SSHConfig.Username.IsUnknown() && !r.SSHConfig.Username.IsNull() {
+			*username1 = r.SSHConfig.Username.ValueString()
+		} else {
+			username1 = nil
+		}
+		sshConfig = &shared.ConnectionPostgresUpdateSSHConfigurationUpdate{
+			Address:  address1,
+			Username: username1,
+		}
 	}
 	database := new(string)
 	if !r.Database.IsUnknown() && !r.Database.IsNull() {
@@ -388,17 +388,17 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 		database = nil
 	}
 	out := shared.ConnectionPostgresUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
-		AutoReplicate:  autoReplicate,
 		Schema:         schema,
-		Username:       username,
-		SSHConfig:      sshConfig,
-		Password:       password,
+		AutoReplicate:  autoReplicate,
+		Address:        address,
 		Port:           port,
-		Address:        address1,
+		Username:       username,
+		Password:       password,
+		SSHConfig:      sshConfig,
 		Database:       database,
 	}
 	return &out

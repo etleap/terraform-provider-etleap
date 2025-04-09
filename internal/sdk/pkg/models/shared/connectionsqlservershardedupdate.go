@@ -32,11 +32,11 @@ func (e *ConnectionSQLServerShardedUpdateType) UnmarshalJSON(data []byte) error 
 }
 
 type ConnectionSQLServerShardedUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                                `json:"active,omitempty"`
-	Type   ConnectionSQLServerShardedUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                              `json:"name,omitempty"`
+	Type ConnectionSQLServerShardedUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
@@ -46,11 +46,11 @@ type ConnectionSQLServerShardedUpdate struct {
 	Shards []DatabaseShard `json:"shards,omitempty"`
 }
 
-func (o *ConnectionSQLServerShardedUpdate) GetActive() *bool {
+func (o *ConnectionSQLServerShardedUpdate) GetName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Active
+	return o.Name
 }
 
 func (o *ConnectionSQLServerShardedUpdate) GetType() ConnectionSQLServerShardedUpdateType {
@@ -60,11 +60,11 @@ func (o *ConnectionSQLServerShardedUpdate) GetType() ConnectionSQLServerShardedU
 	return o.Type
 }
 
-func (o *ConnectionSQLServerShardedUpdate) GetName() *string {
+func (o *ConnectionSQLServerShardedUpdate) GetActive() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Name
+	return o.Active
 }
 
 func (o *ConnectionSQLServerShardedUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -74,9 +74,9 @@ func (o *ConnectionSQLServerShardedUpdate) GetUpdateSchedule() *UpdateScheduleTy
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSQLServerShardedUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSQLServerShardedUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -84,13 +84,6 @@ func (o *ConnectionSQLServerShardedUpdate) GetUpdateScheduleMonthly() *UpdateSch
 func (o *ConnectionSQLServerShardedUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSQLServerShardedUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -105,6 +98,13 @@ func (o *ConnectionSQLServerShardedUpdate) GetUpdateScheduleDaily() *UpdateSched
 func (o *ConnectionSQLServerShardedUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionSQLServerShardedUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

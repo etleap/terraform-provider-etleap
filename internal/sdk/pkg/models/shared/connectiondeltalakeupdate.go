@@ -32,11 +32,11 @@ func (e *ConnectionDeltaLakeUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionDeltaLakeUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                          `json:"active,omitempty"`
-	Type   *ConnectionDeltaLakeUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                        `json:"name,omitempty"`
+	Type *ConnectionDeltaLakeUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	Hostname       *string              `json:"hostname,omitempty"`
@@ -50,11 +50,11 @@ type ConnectionDeltaLakeUpdate struct {
 	Schema *string `json:"schema,omitempty"`
 }
 
-func (o *ConnectionDeltaLakeUpdate) GetActive() *bool {
+func (o *ConnectionDeltaLakeUpdate) GetName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Active
+	return o.Name
 }
 
 func (o *ConnectionDeltaLakeUpdate) GetType() *ConnectionDeltaLakeUpdateType {
@@ -64,11 +64,11 @@ func (o *ConnectionDeltaLakeUpdate) GetType() *ConnectionDeltaLakeUpdateType {
 	return o.Type
 }
 
-func (o *ConnectionDeltaLakeUpdate) GetName() *string {
+func (o *ConnectionDeltaLakeUpdate) GetActive() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Name
+	return o.Active
 }
 
 func (o *ConnectionDeltaLakeUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -78,9 +78,9 @@ func (o *ConnectionDeltaLakeUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionDeltaLakeUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionDeltaLakeUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -88,13 +88,6 @@ func (o *ConnectionDeltaLakeUpdate) GetUpdateScheduleMonthly() *UpdateScheduleMo
 func (o *ConnectionDeltaLakeUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionDeltaLakeUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -109,6 +102,13 @@ func (o *ConnectionDeltaLakeUpdate) GetUpdateScheduleDaily() *UpdateScheduleMode
 func (o *ConnectionDeltaLakeUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionDeltaLakeUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

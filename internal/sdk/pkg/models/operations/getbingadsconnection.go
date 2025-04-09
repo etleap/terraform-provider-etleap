@@ -26,8 +26,8 @@ type GetBINGADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBing *shared.ConnectionBingOutput
-	// Not Found.
+	ConnectionBing *shared.ConnectionBing
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetBINGADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetBINGADSConnectionResponse) GetConnectionBing() *shared.ConnectionBingOutput {
+func (o *GetBINGADSConnectionResponse) GetConnectionBing() *shared.ConnectionBing {
 	if o == nil {
 		return nil
 	}

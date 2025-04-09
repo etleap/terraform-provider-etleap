@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionVeevaType string
+
+const (
+	ConnectionVeevaTypeVeeva ConnectionVeevaType = "VEEVA"
+)
+
+func (e ConnectionVeevaType) ToPointer() *ConnectionVeevaType {
+	return &e
+}
+
+func (e *ConnectionVeevaType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "VEEVA":
+		*e = ConnectionVeevaType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionVeevaType: %v", v)
+	}
+}
+
 // ConnectionVeevaStatus - The current status of the connection.
 type ConnectionVeevaStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSchedu
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Updat
 func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,45 +125,28 @@ func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Update
 	return nil
 }
 
-type ConnectionVeevaType string
+func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+// ConnectionVeevaVaultType - Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
+type ConnectionVeevaVaultType string
 
 const (
-	ConnectionVeevaTypeVeeva ConnectionVeevaType = "VEEVA"
+	ConnectionVeevaVaultTypeQuality   ConnectionVeevaVaultType = "QUALITY"
+	ConnectionVeevaVaultTypeCtms      ConnectionVeevaVaultType = "CTMS"
+	ConnectionVeevaVaultTypeRim       ConnectionVeevaVaultType = "RIM"
+	ConnectionVeevaVaultTypePromomats ConnectionVeevaVaultType = "PROMOMATS"
 )
 
-func (e ConnectionVeevaType) ToPointer() *ConnectionVeevaType {
+func (e ConnectionVeevaVaultType) ToPointer() *ConnectionVeevaVaultType {
 	return &e
 }
 
-func (e *ConnectionVeevaType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "VEEVA":
-		*e = ConnectionVeevaType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionVeevaType: %v", v)
-	}
-}
-
-// VaultType - Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
-type VaultType string
-
-const (
-	VaultTypeQuality   VaultType = "QUALITY"
-	VaultTypeCtms      VaultType = "CTMS"
-	VaultTypeRim       VaultType = "RIM"
-	VaultTypePromomats VaultType = "PROMOMATS"
-)
-
-func (e VaultType) ToPointer() *VaultType {
-	return &e
-}
-
-func (e *VaultType) UnmarshalJSON(data []byte) error {
+func (e *ConnectionVeevaVaultType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -159,34 +159,34 @@ func (e *VaultType) UnmarshalJSON(data []byte) error {
 	case "RIM":
 		fallthrough
 	case "PROMOMATS":
-		*e = VaultType(v)
+		*e = ConnectionVeevaVaultType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for VaultType: %v", v)
+		return fmt.Errorf("invalid value for ConnectionVeevaVaultType: %v", v)
 	}
 }
 
 type ConnectionVeeva struct {
-	// The current status of the connection.
-	Status ConnectionVeevaStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionVeevaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                `json:"active"`
-	Type   ConnectionVeevaType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string              `json:"name"`
+	Type ConnectionVeevaType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionVeevaStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Username       string               `json:"username"`
-	// Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
-	VaultType *VaultType `default:"QUALITY" json:"vaultType"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionVeevaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The vault domain name is part of the URL that you use to access your Veeva Vault. You can follow the<a target="_blank" href="https://developer.veevavault.com/docs/#authentication">'Structuring the Endpoint'</a> instructions to find the URL.
 	VaultDomainName string `json:"vaultDomainName"`
+	// Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
+	VaultType *ConnectionVeevaVaultType `default:"QUALITY" json:"vaultType"`
+	Username  string                    `json:"username"`
 }
 
 func (c ConnectionVeeva) MarshalJSON() ([]byte, error) {
@@ -200,11 +200,11 @@ func (c *ConnectionVeeva) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionVeeva) GetStatus() ConnectionVeevaStatus {
+func (o *ConnectionVeeva) GetID() string {
 	if o == nil {
-		return ConnectionVeevaStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionVeeva) GetName() string {
@@ -214,18 +214,11 @@ func (o *ConnectionVeeva) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionVeeva) GetCreateDate() time.Time {
+func (o *ConnectionVeeva) GetType() ConnectionVeevaType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionVeevaType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionVeeva) GetDefaultUpdateSchedule() []ConnectionVeevaDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionVeevaDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionVeeva) GetActive() bool {
@@ -235,18 +228,18 @@ func (o *ConnectionVeeva) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionVeeva) GetType() ConnectionVeevaType {
+func (o *ConnectionVeeva) GetStatus() ConnectionVeevaStatus {
 	if o == nil {
-		return ConnectionVeevaType("")
+		return ConnectionVeevaStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionVeeva) GetID() string {
+func (o *ConnectionVeeva) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionVeeva) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -256,9 +249,9 @@ func (o *ConnectionVeeva) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionVeeva) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionVeeva) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -266,13 +259,6 @@ func (o *ConnectionVeeva) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly 
 func (o *ConnectionVeeva) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionVeeva) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -291,18 +277,18 @@ func (o *ConnectionVeeva) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	return nil
 }
 
-func (o *ConnectionVeeva) GetUsername() string {
-	if o == nil {
-		return ""
+func (o *ConnectionVeeva) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.Username
+	return nil
 }
 
-func (o *ConnectionVeeva) GetVaultType() *VaultType {
+func (o *ConnectionVeeva) GetDefaultUpdateSchedule() []ConnectionVeevaDefaultUpdateSchedule {
 	if o == nil {
-		return nil
+		return []ConnectionVeevaDefaultUpdateSchedule{}
 	}
-	return o.VaultType
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionVeeva) GetVaultDomainName() string {
@@ -312,18 +298,32 @@ func (o *ConnectionVeeva) GetVaultDomainName() string {
 	return o.VaultDomainName
 }
 
+func (o *ConnectionVeeva) GetVaultType() *ConnectionVeevaVaultType {
+	if o == nil {
+		return nil
+	}
+	return o.VaultType
+}
+
+func (o *ConnectionVeeva) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
 type ConnectionVeevaInput struct {
 	// The unique name of this connection.
 	Name string              `json:"name"`
 	Type ConnectionVeevaType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Username       string               `json:"username"`
-	Password       string               `json:"password"`
-	// Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
-	VaultType *VaultType `default:"QUALITY" json:"vaultType"`
 	// The vault domain name is part of the URL that you use to access your Veeva Vault. You can follow the<a target="_blank" href="https://developer.veevavault.com/docs/#authentication">'Structuring the Endpoint'</a> instructions to find the URL.
 	VaultDomainName string `json:"vaultDomainName"`
+	// Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
+	VaultType *ConnectionVeevaVaultType `default:"QUALITY" json:"vaultType"`
+	Username  string                    `json:"username"`
+	Password  string                    `json:"password"`
 }
 
 func (c ConnectionVeevaInput) MarshalJSON() ([]byte, error) {
@@ -358,9 +358,9 @@ func (o *ConnectionVeevaInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionVeevaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionVeevaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -368,13 +368,6 @@ func (o *ConnectionVeevaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMon
 func (o *ConnectionVeevaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionVeevaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -393,6 +386,27 @@ func (o *ConnectionVeevaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeek
 	return nil
 }
 
+func (o *ConnectionVeevaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionVeevaInput) GetVaultDomainName() string {
+	if o == nil {
+		return ""
+	}
+	return o.VaultDomainName
+}
+
+func (o *ConnectionVeevaInput) GetVaultType() *ConnectionVeevaVaultType {
+	if o == nil {
+		return nil
+	}
+	return o.VaultType
+}
+
 func (o *ConnectionVeevaInput) GetUsername() string {
 	if o == nil {
 		return ""
@@ -405,18 +419,4 @@ func (o *ConnectionVeevaInput) GetPassword() string {
 		return ""
 	}
 	return o.Password
-}
-
-func (o *ConnectionVeevaInput) GetVaultType() *VaultType {
-	if o == nil {
-		return nil
-	}
-	return o.VaultType
-}
-
-func (o *ConnectionVeevaInput) GetVaultDomainName() string {
-	if o == nil {
-		return ""
-	}
-	return o.VaultDomainName
 }

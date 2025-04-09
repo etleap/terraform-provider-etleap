@@ -26,8 +26,8 @@ type GetERPXConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionErpx *shared.ConnectionErpxOutput
-	// Not Found.
+	ConnectionErpx *shared.ConnectionErpx
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetERPXConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetERPXConnectionResponse) GetConnectionErpx() *shared.ConnectionErpxOutput {
+func (o *GetERPXConnectionResponse) GetConnectionErpx() *shared.ConnectionErpx {
 	if o == nil {
 		return nil
 	}

@@ -35,7 +35,7 @@ type UpdateDb2SHARDEDConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionDb2Sharded *shared.ConnectionDb2Sharded
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

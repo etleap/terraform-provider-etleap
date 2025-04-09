@@ -33,7 +33,7 @@ type DeletePipelineResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-	// Pipeline for this id was not found.
+	// Bad Request.
 	Errors *shared.Errors
 }
 

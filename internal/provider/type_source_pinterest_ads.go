@@ -11,4 +11,5 @@ type SourcePinterestAds struct {
 	LatencyThreshold types.Int64    `tfsdk:"latency_threshold"`
 	Level            []types.String `tfsdk:"level"`
 	TargetingTypes   []types.String `tfsdk:"targeting_types"`
+	Type             types.String   `tfsdk:"type"`
 }

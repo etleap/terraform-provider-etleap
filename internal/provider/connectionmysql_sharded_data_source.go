@@ -28,21 +28,21 @@ type ConnectionMYSQLSHARDEDDataSource struct {
 
 // ConnectionMYSQLSHARDEDDataSourceModel describes the data model.
 type ConnectionMYSQLSHARDEDDataSourceModel struct {
-	Active                           types.Bool                                      `tfsdk:"active"`
-	AutoReplicate                    types.String                                    `tfsdk:"auto_replicate"`
-	CdcEnabled                       types.Bool                                      `tfsdk:"cdc_enabled"`
-	Certificate                      types.String                                    `tfsdk:"certificate"`
-	CreateDate                       types.String                                    `tfsdk:"create_date"`
-	Database                         types.String                                    `tfsdk:"database"`
-	DefaultUpdateSchedule            []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                               types.String                                    `tfsdk:"id"`
-	Name                             types.String                                    `tfsdk:"name"`
-	RequireSslAndValidateCertificate types.Bool                                      `tfsdk:"require_ssl_and_validate_certificate"`
-	Shards                           []MysqlShardOutput                              `tfsdk:"shards"`
-	Status                           types.String                                    `tfsdk:"status"`
-	TinyInt1IsBoolean                types.Bool                                      `tfsdk:"tiny_int1_is_boolean"`
-	Type                             types.String                                    `tfsdk:"type"`
-	UpdateSchedule                   *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                           types.Bool              `tfsdk:"active"`
+	AutoReplicate                    types.String            `tfsdk:"auto_replicate"`
+	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
+	Certificate                      types.String            `tfsdk:"certificate"`
+	CreateDate                       types.String            `tfsdk:"create_date"`
+	Database                         types.String            `tfsdk:"database"`
+	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                               types.String            `tfsdk:"id"`
+	Name                             types.String            `tfsdk:"name"`
+	RequireSslAndValidateCertificate types.Bool              `tfsdk:"require_ssl_and_validate_certificate"`
+	Shards                           []MysqlShardOutput      `tfsdk:"shards"`
+	Status                           types.String            `tfsdk:"status"`
+	TinyInt1IsBoolean                types.Bool              `tfsdk:"tiny_int1_is_boolean"`
+	Type                             types.String            `tfsdk:"type"`
+	UpdateSchedule                   *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -371,7 +371,7 @@ func (r *ConnectionMYSQLSHARDEDDataSource) Read(ctx context.Context, req datasou
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMysqlShardedOutput(res.ConnectionMysqlSharded)
+	data.RefreshFromSharedConnectionMysqlSharded(res.ConnectionMysqlSharded)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

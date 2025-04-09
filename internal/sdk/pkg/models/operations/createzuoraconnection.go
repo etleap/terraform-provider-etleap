@@ -15,7 +15,7 @@ type CreateZUORAConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionZuora *shared.ConnectionZuoraOutput
+	ConnectionZuora *shared.ConnectionZuora
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateZUORAConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateZUORAConnectionResponse) GetConnectionZuora() *shared.ConnectionZuoraOutput {
+func (o *CreateZUORAConnectionResponse) GetConnectionZuora() *shared.ConnectionZuora {
 	if o == nil {
 		return nil
 	}

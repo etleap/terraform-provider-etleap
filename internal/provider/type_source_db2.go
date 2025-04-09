@@ -12,4 +12,5 @@ type SourceDb2 struct {
 	Schema            types.String   `tfsdk:"schema"`
 	Table             types.String   `tfsdk:"table"`
 	TableNameFilter   types.String   `tfsdk:"table_name_filter"`
+	Type              types.String   `tfsdk:"type"`
 }

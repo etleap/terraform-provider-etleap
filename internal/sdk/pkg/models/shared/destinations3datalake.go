@@ -61,19 +61,19 @@ func (e *OutputFormat) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationS3DataLake struct {
+	Type DestinationS3DataLakeType `json:"type"`
 	// The universally unique identifier of the destination connection.
-	ConnectionID string                    `json:"connectionId"`
-	Type         DestinationS3DataLakeType `json:"type"`
-	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-	PrimaryKey []string `json:"primaryKey,omitempty"`
+	ConnectionID string `json:"connectionId"`
 	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
 	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
+	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
+	PrimaryKey []string `json:"primaryKey,omitempty"`
 	// Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
 	AutomaticSchemaChanges *bool `default:"true" json:"automaticSchemaChanges"`
-	// Format for output files. Defaults to `PARQUET`. For Glue-enabled destinations, only `PARQUET` is a valid format.
-	OutputFormat *OutputFormat `default:"PARQUET" json:"outputFormat"`
 	// The S3 path prefix to use for this pipeline. The data key in the destination bucket starts with `{connection.pathPrefix}/{pathPrefix}/v{version.pipeline}/`.
 	PathPrefix string `json:"pathPrefix"`
+	// Format for output files. Defaults to `PARQUET`. For Glue-enabled destinations, only `PARQUET` is a valid format.
+	OutputFormat *OutputFormat `default:"PARQUET" json:"outputFormat"`
 	// Defaults to 'false'.
 	GenerateSnapshots *bool `default:"false" json:"generateSnapshots"`
 }
@@ -89,13 +89,6 @@ func (d *DestinationS3DataLake) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationS3DataLake) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
-}
-
 func (o *DestinationS3DataLake) GetType() DestinationS3DataLakeType {
 	if o == nil {
 		return DestinationS3DataLakeType("")
@@ -103,11 +96,11 @@ func (o *DestinationS3DataLake) GetType() DestinationS3DataLakeType {
 	return o.Type
 }
 
-func (o *DestinationS3DataLake) GetPrimaryKey() []string {
+func (o *DestinationS3DataLake) GetConnectionID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.PrimaryKey
+	return o.ConnectionID
 }
 
 func (o *DestinationS3DataLake) GetWaitForQualityCheck() *bool {
@@ -117,6 +110,13 @@ func (o *DestinationS3DataLake) GetWaitForQualityCheck() *bool {
 	return o.WaitForQualityCheck
 }
 
+func (o *DestinationS3DataLake) GetPrimaryKey() []string {
+	if o == nil {
+		return nil
+	}
+	return o.PrimaryKey
+}
+
 func (o *DestinationS3DataLake) GetAutomaticSchemaChanges() *bool {
 	if o == nil {
 		return nil
@@ -124,18 +124,18 @@ func (o *DestinationS3DataLake) GetAutomaticSchemaChanges() *bool {
 	return o.AutomaticSchemaChanges
 }
 
-func (o *DestinationS3DataLake) GetOutputFormat() *OutputFormat {
-	if o == nil {
-		return nil
-	}
-	return o.OutputFormat
-}
-
 func (o *DestinationS3DataLake) GetPathPrefix() string {
 	if o == nil {
 		return ""
 	}
 	return o.PathPrefix
+}
+
+func (o *DestinationS3DataLake) GetOutputFormat() *OutputFormat {
+	if o == nil {
+		return nil
+	}
+	return o.OutputFormat
 }
 
 func (o *DestinationS3DataLake) GetGenerateSnapshots() *bool {

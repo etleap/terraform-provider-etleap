@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionBRAINTREEResourceModel) ToSharedConnectionBraintree() *shared.ConnectionBraintree {
+func (r *ConnectionBRAINTREEResourceModel) ToSharedConnectionBraintreeInput() *shared.ConnectionBraintreeInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionBraintreeType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionBRAINTREEResourceModel) ToSharedConnectionBraintree() *shared
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,30 +86,30 @@ func (r *ConnectionBRAINTREEResourceModel) ToSharedConnectionBraintree() *shared
 			}
 		}
 	}
-	privateKey := r.PrivateKey.ValueString()
-	publicKey := r.PublicKey.ValueString()
-	sandbox := r.Sandbox.ValueBool()
 	merchantID := r.MerchantID.ValueString()
-	out := shared.ConnectionBraintree{
+	publicKey := r.PublicKey.ValueString()
+	privateKey := r.PrivateKey.ValueString()
+	sandbox := r.Sandbox.ValueBool()
+	out := shared.ConnectionBraintreeInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		PrivateKey:     privateKey,
-		PublicKey:      publicKey,
-		Sandbox:        sandbox,
 		MerchantID:     merchantID,
+		PublicKey:      publicKey,
+		PrivateKey:     privateKey,
+		Sandbox:        sandbox,
 	}
 	return &out
 }
 
-func (r *ConnectionBRAINTREEResourceModel) RefreshFromSharedConnectionBraintreeOutput(resp *shared.ConnectionBraintreeOutput) {
+func (r *ConnectionBRAINTREEResourceModel) RefreshFromSharedConnectionBraintree(resp *shared.ConnectionBraintree) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -194,11 +194,11 @@ func (r *ConnectionBRAINTREEResourceModel) RefreshFromSharedConnectionBraintreeO
 }
 
 func (r *ConnectionBRAINTREEResourceModel) ToSharedConnectionBraintreeUpdate() *shared.ConnectionBraintreeUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionBraintreeUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -206,11 +206,11 @@ func (r *ConnectionBRAINTREEResourceModel) ToSharedConnectionBraintreeUpdate() *
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -273,12 +273,12 @@ func (r *ConnectionBRAINTREEResourceModel) ToSharedConnectionBraintreeUpdate() *
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -287,11 +287,11 @@ func (r *ConnectionBRAINTREEResourceModel) ToSharedConnectionBraintreeUpdate() *
 			}
 		}
 	}
-	privateKey := new(string)
-	if !r.PrivateKey.IsUnknown() && !r.PrivateKey.IsNull() {
-		*privateKey = r.PrivateKey.ValueString()
+	merchantID := new(string)
+	if !r.MerchantID.IsUnknown() && !r.MerchantID.IsNull() {
+		*merchantID = r.MerchantID.ValueString()
 	} else {
-		privateKey = nil
+		merchantID = nil
 	}
 	publicKey := new(string)
 	if !r.PublicKey.IsUnknown() && !r.PublicKey.IsNull() {
@@ -299,27 +299,27 @@ func (r *ConnectionBRAINTREEResourceModel) ToSharedConnectionBraintreeUpdate() *
 	} else {
 		publicKey = nil
 	}
+	privateKey := new(string)
+	if !r.PrivateKey.IsUnknown() && !r.PrivateKey.IsNull() {
+		*privateKey = r.PrivateKey.ValueString()
+	} else {
+		privateKey = nil
+	}
 	sandbox := new(bool)
 	if !r.Sandbox.IsUnknown() && !r.Sandbox.IsNull() {
 		*sandbox = r.Sandbox.ValueBool()
 	} else {
 		sandbox = nil
 	}
-	merchantID := new(string)
-	if !r.MerchantID.IsUnknown() && !r.MerchantID.IsNull() {
-		*merchantID = r.MerchantID.ValueString()
-	} else {
-		merchantID = nil
-	}
 	out := shared.ConnectionBraintreeUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
-		PrivateKey:     privateKey,
-		PublicKey:      publicKey,
-		Sandbox:        sandbox,
 		MerchantID:     merchantID,
+		PublicKey:      publicKey,
+		PrivateKey:     privateKey,
+		Sandbox:        sandbox,
 	}
 	return &out
 }

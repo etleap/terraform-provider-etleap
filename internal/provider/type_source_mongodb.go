@@ -9,4 +9,5 @@ type SourceMongodb struct {
 	LatencyThreshold types.Int64  `tfsdk:"latency_threshold"`
 	Table            types.String `tfsdk:"table"`
 	TableNameFilter  types.String `tfsdk:"table_name_filter"`
+	Type             types.String `tfsdk:"type"`
 }

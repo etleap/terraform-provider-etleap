@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionKustomerType string
+
+const (
+	ConnectionKustomerTypeKustomer ConnectionKustomerType = "KUSTOMER"
+)
+
+func (e ConnectionKustomerType) ToPointer() *ConnectionKustomerType {
+	return &e
+}
+
+func (e *ConnectionKustomerType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "KUSTOMER":
+		*e = ConnectionKustomerType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionKustomerType: %v", v)
+	}
+}
+
 // ConnectionKustomerStatus - The current status of the connection.
 type ConnectionKustomerStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionKustomerDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSch
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionKustomerDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionKustomerDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionKustomerDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Up
 func (o *ConnectionKustomerDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionKustomerDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,46 +125,29 @@ func (o *ConnectionKustomerDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Upd
 	return nil
 }
 
-type ConnectionKustomerType string
-
-const (
-	ConnectionKustomerTypeKustomer ConnectionKustomerType = "KUSTOMER"
-)
-
-func (e ConnectionKustomerType) ToPointer() *ConnectionKustomerType {
-	return &e
-}
-
-func (e *ConnectionKustomerType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionKustomerDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "KUSTOMER":
-		*e = ConnectionKustomerType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionKustomerType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionKustomer struct {
-	// The current status of the connection.
-	Status ConnectionKustomerStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionKustomerDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                   `json:"active"`
-	Type   ConnectionKustomerType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                 `json:"name"`
+	Type ConnectionKustomerType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionKustomerStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionKustomerDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 }
 
 func (c ConnectionKustomer) MarshalJSON() ([]byte, error) {
@@ -161,11 +161,11 @@ func (c *ConnectionKustomer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionKustomer) GetStatus() ConnectionKustomerStatus {
+func (o *ConnectionKustomer) GetID() string {
 	if o == nil {
-		return ConnectionKustomerStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionKustomer) GetName() string {
@@ -175,18 +175,11 @@ func (o *ConnectionKustomer) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionKustomer) GetCreateDate() time.Time {
+func (o *ConnectionKustomer) GetType() ConnectionKustomerType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionKustomerType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionKustomer) GetDefaultUpdateSchedule() []ConnectionKustomerDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionKustomerDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionKustomer) GetActive() bool {
@@ -196,18 +189,18 @@ func (o *ConnectionKustomer) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionKustomer) GetType() ConnectionKustomerType {
+func (o *ConnectionKustomer) GetStatus() ConnectionKustomerStatus {
 	if o == nil {
-		return ConnectionKustomerType("")
+		return ConnectionKustomerStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionKustomer) GetID() string {
+func (o *ConnectionKustomer) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionKustomer) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -217,9 +210,9 @@ func (o *ConnectionKustomer) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionKustomer) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionKustomer) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -227,13 +220,6 @@ func (o *ConnectionKustomer) GetUpdateScheduleMonthly() *UpdateScheduleModeMonth
 func (o *ConnectionKustomer) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionKustomer) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -250,6 +236,20 @@ func (o *ConnectionKustomer) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
+}
+
+func (o *ConnectionKustomer) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionKustomer) GetDefaultUpdateSchedule() []ConnectionKustomerDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionKustomerDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 type ConnectionKustomerInput struct {
@@ -282,9 +282,9 @@ func (o *ConnectionKustomerInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionKustomerInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionKustomerInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -292,13 +292,6 @@ func (o *ConnectionKustomerInput) GetUpdateScheduleMonthly() *UpdateScheduleMode
 func (o *ConnectionKustomerInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionKustomerInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -313,6 +306,13 @@ func (o *ConnectionKustomerInput) GetUpdateScheduleDaily() *UpdateScheduleModeDa
 func (o *ConnectionKustomerInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionKustomerInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

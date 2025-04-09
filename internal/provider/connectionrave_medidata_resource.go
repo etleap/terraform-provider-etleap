@@ -41,18 +41,18 @@ type ConnectionRAVEMEDIDATAResource struct {
 
 // ConnectionRAVEMEDIDATAResourceModel describes the resource data model.
 type ConnectionRAVEMEDIDATAResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	Hostname                 types.String                                    `tfsdk:"hostname"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Password                 types.String                                    `tfsdk:"password"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	Username                 types.String                                    `tfsdk:"username"`
+	Active                   types.Bool              `tfsdk:"active"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	Hostname                 types.String            `tfsdk:"hostname"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Password                 types.String            `tfsdk:"password"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Username                 types.String            `tfsdk:"username"`
 }
 
 func (r *ConnectionRAVEMEDIDATAResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -567,7 +567,7 @@ func (r *ConnectionRAVEMEDIDATAResource) Create(ctx context.Context, req resourc
 		return
 	}
 
-	request := *data.ToSharedConnectionRaveMedidata()
+	request := *data.ToSharedConnectionRaveMedidataInput()
 	res, err := r.client.Connection.CreateRAVEMEDIDATAConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -588,7 +588,7 @@ func (r *ConnectionRAVEMEDIDATAResource) Create(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionRaveMedidataOutput(res.ConnectionRaveMedidata)
+	data.RefreshFromSharedConnectionRaveMedidata(res.ConnectionRaveMedidata)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetRAVEMEDIDATAConnectionRequest{
@@ -614,7 +614,7 @@ func (r *ConnectionRAVEMEDIDATAResource) Create(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionRaveMedidataOutput(res1.ConnectionRaveMedidata)
+	data.RefreshFromSharedConnectionRaveMedidata(res1.ConnectionRaveMedidata)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -663,7 +663,7 @@ func (r *ConnectionRAVEMEDIDATAResource) Read(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionRaveMedidataOutput(res.ConnectionRaveMedidata)
+	data.RefreshFromSharedConnectionRaveMedidata(res.ConnectionRaveMedidata)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -709,7 +709,7 @@ func (r *ConnectionRAVEMEDIDATAResource) Update(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionRaveMedidataOutput(res.ConnectionRaveMedidata)
+	data.RefreshFromSharedConnectionRaveMedidata(res.ConnectionRaveMedidata)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetRAVEMEDIDATAConnectionRequest{
@@ -735,7 +735,7 @@ func (r *ConnectionRAVEMEDIDATAResource) Update(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionRaveMedidataOutput(res1.ConnectionRaveMedidata)
+	data.RefreshFromSharedConnectionRaveMedidata(res1.ConnectionRaveMedidata)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

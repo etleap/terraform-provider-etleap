@@ -41,24 +41,24 @@ type ConnectionLDAPVIRTUALLISTVIEWResource struct {
 
 // ConnectionLDAPVIRTUALLISTVIEWResourceModel describes the resource data model.
 type ConnectionLDAPVIRTUALLISTVIEWResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	BaseDn                   types.String                                    `tfsdk:"base_dn"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	Filter                   types.String                                    `tfsdk:"filter"`
-	Hostname                 types.String                                    `tfsdk:"hostname"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Password                 types.String                                    `tfsdk:"password"`
-	Port                     types.Int64                                     `tfsdk:"port"`
-	Scope                    types.String                                    `tfsdk:"scope"`
-	SortOrder                types.String                                    `tfsdk:"sort_order"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	User                     types.String                                    `tfsdk:"user"`
-	UseSsl                   types.Bool                                      `tfsdk:"use_ssl"`
+	Active                   types.Bool              `tfsdk:"active"`
+	BaseDn                   types.String            `tfsdk:"base_dn"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	Filter                   types.String            `tfsdk:"filter"`
+	Hostname                 types.String            `tfsdk:"hostname"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Password                 types.String            `tfsdk:"password"`
+	Port                     types.Int64             `tfsdk:"port"`
+	Scope                    types.String            `tfsdk:"scope"`
+	SortOrder                types.String            `tfsdk:"sort_order"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	User                     types.String            `tfsdk:"user"`
+	UseSsl                   types.Bool              `tfsdk:"use_ssl"`
 }
 
 func (r *ConnectionLDAPVIRTUALLISTVIEWResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

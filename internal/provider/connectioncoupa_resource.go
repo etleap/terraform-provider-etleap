@@ -41,18 +41,18 @@ type ConnectionCOUPAResource struct {
 
 // ConnectionCOUPAResourceModel describes the resource data model.
 type ConnectionCOUPAResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	ClientID                 types.String                                    `tfsdk:"client_id"`
-	ClientSecret             types.String                                    `tfsdk:"client_secret"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Subdomain                types.String                                    `tfsdk:"subdomain"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	ClientID                 types.String            `tfsdk:"client_id"`
+	ClientSecret             types.String            `tfsdk:"client_secret"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	Subdomain                types.String            `tfsdk:"subdomain"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionCOUPAResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -573,7 +573,7 @@ func (r *ConnectionCOUPAResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := *data.ToSharedConnectionCoupa()
+	request := *data.ToSharedConnectionCoupaInput()
 	res, err := r.client.Connection.CreateCOUPAConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -594,7 +594,7 @@ func (r *ConnectionCOUPAResource) Create(ctx context.Context, req resource.Creat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionCoupaOutput(res.ConnectionCoupa)
+	data.RefreshFromSharedConnectionCoupa(res.ConnectionCoupa)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetCOUPAConnectionRequest{
@@ -620,7 +620,7 @@ func (r *ConnectionCOUPAResource) Create(ctx context.Context, req resource.Creat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionCoupaOutput(res1.ConnectionCoupa)
+	data.RefreshFromSharedConnectionCoupa(res1.ConnectionCoupa)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -669,7 +669,7 @@ func (r *ConnectionCOUPAResource) Read(ctx context.Context, req resource.ReadReq
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionCoupaOutput(res.ConnectionCoupa)
+	data.RefreshFromSharedConnectionCoupa(res.ConnectionCoupa)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -715,7 +715,7 @@ func (r *ConnectionCOUPAResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionCoupaOutput(res.ConnectionCoupa)
+	data.RefreshFromSharedConnectionCoupa(res.ConnectionCoupa)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetCOUPAConnectionRequest{
@@ -741,7 +741,7 @@ func (r *ConnectionCOUPAResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionCoupaOutput(res1.ConnectionCoupa)
+	data.RefreshFromSharedConnectionCoupa(res1.ConnectionCoupa)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

@@ -37,10 +37,10 @@ func (e *ErrorType) UnmarshalJSON(data []byte) error {
 }
 
 type ParsingErrorPerDay struct {
-	RowCount  int64     `json:"rowCount"`
 	ErrorType ErrorType `json:"errorType"`
 	// Format of the timestamp: 'yyyy-MM-dd'
-	Day types.Date `json:"day"`
+	Day      types.Date `json:"day"`
+	RowCount int64      `json:"rowCount"`
 }
 
 func (p ParsingErrorPerDay) MarshalJSON() ([]byte, error) {
@@ -52,13 +52,6 @@ func (p *ParsingErrorPerDay) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *ParsingErrorPerDay) GetRowCount() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.RowCount
 }
 
 func (o *ParsingErrorPerDay) GetErrorType() ErrorType {
@@ -73,4 +66,11 @@ func (o *ParsingErrorPerDay) GetDay() types.Date {
 		return types.Date{}
 	}
 	return o.Day
+}
+
+func (o *ParsingErrorPerDay) GetRowCount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RowCount
 }

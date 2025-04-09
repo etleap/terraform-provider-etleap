@@ -32,20 +32,13 @@ func (e *SourceSumTotalType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSumTotal struct {
+	Type SourceSumTotalType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string             `json:"connectionId"`
-	Type         SourceSumTotalType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The SumTotal entity. Example values: [Activities, Audiences, Competencies, Domains, Grades, Jobs, Organizations, Skills, Social, Topics, User Activities, User Activities Progress, User Courses, Users]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceSumTotal) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceSumTotal) GetType() SourceSumTotalType {
@@ -53,6 +46,13 @@ func (o *SourceSumTotal) GetType() SourceSumTotalType {
 		return SourceSumTotalType("")
 	}
 	return o.Type
+}
+
+func (o *SourceSumTotal) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceSumTotal) GetLatencyThreshold() *int64 {

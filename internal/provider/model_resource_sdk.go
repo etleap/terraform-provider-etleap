@@ -9,39 +9,44 @@ import (
 )
 
 func (r *ModelResourceModel) ToSharedModelInput() *shared.ModelInput {
+	name := r.Name.ValueString()
 	var warehouse shared.WarehouseTypesInput
 	var warehouseRedshiftInput *shared.WarehouseRedshiftInput
 	if r.Warehouse.Redshift != nil {
-		connectionID := r.Warehouse.Redshift.ConnectionID.ValueString()
-		materializedView := r.Warehouse.Redshift.MaterializedView.ValueBool()
-		waitForUpdatePreparation := r.Warehouse.Redshift.WaitForUpdatePreparation.ValueBool()
-		table := r.Warehouse.Redshift.Table.ValueString()
 		typeVar := shared.WarehouseRedshiftType(r.Warehouse.Redshift.Type.ValueString())
+		connectionID := r.Warehouse.Redshift.ConnectionID.ValueString()
 		schema := new(string)
 		if !r.Warehouse.Redshift.Schema.IsUnknown() && !r.Warehouse.Redshift.Schema.IsNull() {
 			*schema = r.Warehouse.Redshift.Schema.ValueString()
 		} else {
 			schema = nil
 		}
-		var distributionStyle shared.DistributionStyle
-		distributionStyle1 := new(shared.DistributionStyle1)
-		if !r.Warehouse.Redshift.DistributionStyle.One.IsUnknown() && !r.Warehouse.Redshift.DistributionStyle.One.IsNull() {
-			*distributionStyle1 = shared.DistributionStyle1(r.Warehouse.Redshift.DistributionStyle.One.ValueString())
-		} else {
-			distributionStyle1 = nil
+		table := r.Warehouse.Redshift.Table.ValueString()
+		materializedView := r.Warehouse.Redshift.MaterializedView.ValueBool()
+		waitForUpdatePreparation := r.Warehouse.Redshift.WaitForUpdatePreparation.ValueBool()
+		var sortColumns []string = nil
+		for _, sortColumnsItem := range r.Warehouse.Redshift.SortColumns {
+			sortColumns = append(sortColumns, sortColumnsItem.ValueString())
 		}
-		if distributionStyle1 != nil {
+		var distributionStyle shared.DistributionStyle
+		one := new(shared.One)
+		if !r.Warehouse.Redshift.DistributionStyle.One.IsUnknown() && !r.Warehouse.Redshift.DistributionStyle.One.IsNull() {
+			*one = shared.One(r.Warehouse.Redshift.DistributionStyle.One.ValueString())
+		} else {
+			one = nil
+		}
+		if one != nil {
 			distributionStyle = shared.DistributionStyle{
-				DistributionStyle1: distributionStyle1,
+				One: one,
 			}
 		}
 		var distributionStyleKey *shared.DistributionStyleKey
 		if r.Warehouse.Redshift.DistributionStyle.DistributionStyleKey != nil {
-			column := r.Warehouse.Redshift.DistributionStyle.DistributionStyleKey.Column.ValueString()
 			typeVar1 := shared.DistributionStyleKeyType(r.Warehouse.Redshift.DistributionStyle.DistributionStyleKey.Type.ValueString())
+			column := r.Warehouse.Redshift.DistributionStyle.DistributionStyleKey.Column.ValueString()
 			distributionStyleKey = &shared.DistributionStyleKey{
-				Column: column,
 				Type:   typeVar1,
+				Column: column,
 			}
 		}
 		if distributionStyleKey != nil {
@@ -49,19 +54,15 @@ func (r *ModelResourceModel) ToSharedModelInput() *shared.ModelInput {
 				DistributionStyleKey: distributionStyleKey,
 			}
 		}
-		var sortColumns []string = nil
-		for _, sortColumnsItem := range r.Warehouse.Redshift.SortColumns {
-			sortColumns = append(sortColumns, sortColumnsItem.ValueString())
-		}
 		warehouseRedshiftInput = &shared.WarehouseRedshiftInput{
+			Type:                     typeVar,
 			ConnectionID:             connectionID,
+			Schema:                   schema,
+			Table:                    table,
 			MaterializedView:         materializedView,
 			WaitForUpdatePreparation: waitForUpdatePreparation,
-			Table:                    table,
-			Type:                     typeVar,
-			Schema:                   schema,
-			DistributionStyle:        distributionStyle,
 			SortColumns:              sortColumns,
+			DistributionStyle:        distributionStyle,
 		}
 	}
 	if warehouseRedshiftInput != nil {
@@ -71,24 +72,24 @@ func (r *ModelResourceModel) ToSharedModelInput() *shared.ModelInput {
 	}
 	var warehouseSnowflakeInput *shared.WarehouseSnowflakeInput
 	if r.Warehouse.Snowflake != nil {
-		connectionId1 := r.Warehouse.Snowflake.ConnectionID.ValueString()
-		materializedView1 := r.Warehouse.Snowflake.MaterializedView.ValueBool()
-		waitForUpdatePreparation1 := r.Warehouse.Snowflake.WaitForUpdatePreparation.ValueBool()
-		table1 := r.Warehouse.Snowflake.Table.ValueString()
 		typeVar2 := shared.WarehouseSnowflakeType(r.Warehouse.Snowflake.Type.ValueString())
+		connectionId1 := r.Warehouse.Snowflake.ConnectionID.ValueString()
 		schema1 := new(string)
 		if !r.Warehouse.Snowflake.Schema.IsUnknown() && !r.Warehouse.Snowflake.Schema.IsNull() {
 			*schema1 = r.Warehouse.Snowflake.Schema.ValueString()
 		} else {
 			schema1 = nil
 		}
+		table1 := r.Warehouse.Snowflake.Table.ValueString()
+		materializedView1 := r.Warehouse.Snowflake.MaterializedView.ValueBool()
+		waitForUpdatePreparation1 := r.Warehouse.Snowflake.WaitForUpdatePreparation.ValueBool()
 		warehouseSnowflakeInput = &shared.WarehouseSnowflakeInput{
+			Type:                     typeVar2,
 			ConnectionID:             connectionId1,
+			Schema:                   schema1,
+			Table:                    table1,
 			MaterializedView:         materializedView1,
 			WaitForUpdatePreparation: waitForUpdatePreparation1,
-			Table:                    table1,
-			Type:                     typeVar2,
-			Schema:                   schema1,
 		}
 	}
 	if warehouseSnowflakeInput != nil {
@@ -105,7 +106,6 @@ func (r *ModelResourceModel) ToSharedModelInput() *shared.ModelInput {
 		Query:    query,
 		Triggers: triggers,
 	}
-	name := r.Name.ValueString()
 	var updateSchedule shared.RefreshScheduleTypes
 	var refreshScheduleModeNever *shared.RefreshScheduleModeNever
 	if r.UpdateSchedule.Never != nil {
@@ -164,12 +164,12 @@ func (r *ModelResourceModel) ToSharedModelInput() *shared.ModelInput {
 	var refreshScheduleModeMonthly *shared.RefreshScheduleModeMonthly
 	if r.UpdateSchedule.Monthly != nil {
 		mode4 := shared.RefreshScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-		hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 		dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+		hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 		refreshScheduleModeMonthly = &shared.RefreshScheduleModeMonthly{
 			Mode:       mode4,
-			HourOfDay:  hourOfDay2,
 			DayOfMonth: dayOfMonth,
+			HourOfDay:  hourOfDay2,
 		}
 	}
 	if refreshScheduleModeMonthly != nil {
@@ -182,9 +182,9 @@ func (r *ModelResourceModel) ToSharedModelInput() *shared.ModelInput {
 		shares = append(shares, sharesItem.ValueString())
 	}
 	out := shared.ModelInput{
+		Name:             name,
 		Warehouse:        warehouse,
 		QueryAndTriggers: queryAndTriggers,
-		Name:             name,
 		UpdateSchedule:   updateSchedule,
 		Shares:           shares,
 	}
@@ -263,9 +263,9 @@ func (r *ModelResourceModel) RefreshFromSharedModelOutput(resp *shared.ModelOutp
 	if resp.Warehouse.WarehouseRedshift != nil {
 		r.Warehouse.Redshift = &WarehouseRedshift{}
 		r.Warehouse.Redshift.ConnectionID = types.StringValue(resp.Warehouse.WarehouseRedshift.ConnectionID)
-		if resp.Warehouse.WarehouseRedshift.DistributionStyle.DistributionStyle1 != nil {
-			if resp.Warehouse.WarehouseRedshift.DistributionStyle.DistributionStyle1 != nil {
-				r.Warehouse.Redshift.DistributionStyle.One = types.StringValue(string(*resp.Warehouse.WarehouseRedshift.DistributionStyle.DistributionStyle1))
+		if resp.Warehouse.WarehouseRedshift.DistributionStyle.One != nil {
+			if resp.Warehouse.WarehouseRedshift.DistributionStyle.One != nil {
+				r.Warehouse.Redshift.DistributionStyle.One = types.StringValue(string(*resp.Warehouse.WarehouseRedshift.DistributionStyle.One))
 			} else {
 				r.Warehouse.Redshift.DistributionStyle.One = types.StringNull()
 			}
@@ -299,25 +299,11 @@ func (r *ModelResourceModel) RefreshFromSharedModelOutput(resp *shared.ModelOutp
 }
 
 func (r *ModelResourceModel) ToSharedModelUpdate() *shared.ModelUpdate {
-	var queryAndTriggers *shared.ModelQueryAndTriggers
-	query := r.QueryAndTriggers.Query.ValueString()
-	var triggers []string = nil
-	for _, triggersItem := range r.QueryAndTriggers.Triggers {
-		triggers = append(triggers, triggersItem.ValueString())
-	}
-	queryAndTriggers = &shared.ModelQueryAndTriggers{
-		Query:    query,
-		Triggers: triggers,
-	}
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
-	}
-	var shares []string = nil
-	for _, sharesItem := range r.Shares {
-		shares = append(shares, sharesItem.ValueString())
 	}
 	paused := new(bool)
 	if !r.Paused.IsUnknown() && !r.Paused.IsNull() {
@@ -328,32 +314,36 @@ func (r *ModelResourceModel) ToSharedModelUpdate() *shared.ModelUpdate {
 	var warehouse *shared.WarehouseUpdateTypes
 	var warehouseRedshiftUpdate *shared.WarehouseRedshiftUpdate
 	if r.Warehouse.Redshift != nil {
+		typeVar := shared.WarehouseRedshiftUpdateType(r.Warehouse.Redshift.Type.ValueString())
 		table := new(string)
 		if !r.Warehouse.Redshift.Table.IsUnknown() && !r.Warehouse.Redshift.Table.IsNull() {
 			*table = r.Warehouse.Redshift.Table.ValueString()
 		} else {
 			table = nil
 		}
-		typeVar := shared.WarehouseRedshiftUpdateType(r.Warehouse.Redshift.Type.ValueString())
-		var distributionStyle *shared.DistributionStyle
-		distributionStyle1 := new(shared.DistributionStyle1)
-		if !r.Warehouse.Redshift.DistributionStyle.One.IsUnknown() && !r.Warehouse.Redshift.DistributionStyle.One.IsNull() {
-			*distributionStyle1 = shared.DistributionStyle1(r.Warehouse.Redshift.DistributionStyle.One.ValueString())
-		} else {
-			distributionStyle1 = nil
+		var sortColumns []string = nil
+		for _, sortColumnsItem := range r.Warehouse.Redshift.SortColumns {
+			sortColumns = append(sortColumns, sortColumnsItem.ValueString())
 		}
-		if distributionStyle1 != nil {
+		var distributionStyle *shared.DistributionStyle
+		one := new(shared.One)
+		if !r.Warehouse.Redshift.DistributionStyle.One.IsUnknown() && !r.Warehouse.Redshift.DistributionStyle.One.IsNull() {
+			*one = shared.One(r.Warehouse.Redshift.DistributionStyle.One.ValueString())
+		} else {
+			one = nil
+		}
+		if one != nil {
 			distributionStyle = &shared.DistributionStyle{
-				DistributionStyle1: distributionStyle1,
+				One: one,
 			}
 		}
 		var distributionStyleKey *shared.DistributionStyleKey
 		if r.Warehouse.Redshift.DistributionStyle.DistributionStyleKey != nil {
-			column := r.Warehouse.Redshift.DistributionStyle.DistributionStyleKey.Column.ValueString()
 			typeVar1 := shared.DistributionStyleKeyType(r.Warehouse.Redshift.DistributionStyle.DistributionStyleKey.Type.ValueString())
+			column := r.Warehouse.Redshift.DistributionStyle.DistributionStyleKey.Column.ValueString()
 			distributionStyleKey = &shared.DistributionStyleKey{
-				Column: column,
 				Type:   typeVar1,
+				Column: column,
 			}
 		}
 		if distributionStyleKey != nil {
@@ -361,15 +351,11 @@ func (r *ModelResourceModel) ToSharedModelUpdate() *shared.ModelUpdate {
 				DistributionStyleKey: distributionStyleKey,
 			}
 		}
-		var sortColumns []string = nil
-		for _, sortColumnsItem := range r.Warehouse.Redshift.SortColumns {
-			sortColumns = append(sortColumns, sortColumnsItem.ValueString())
-		}
 		warehouseRedshiftUpdate = &shared.WarehouseRedshiftUpdate{
-			Table:             table,
 			Type:              typeVar,
-			DistributionStyle: distributionStyle,
+			Table:             table,
 			SortColumns:       sortColumns,
+			DistributionStyle: distributionStyle,
 		}
 	}
 	if warehouseRedshiftUpdate != nil {
@@ -379,16 +365,16 @@ func (r *ModelResourceModel) ToSharedModelUpdate() *shared.ModelUpdate {
 	}
 	var warehouseSnowflakeUpdate *shared.WarehouseSnowflakeUpdate
 	if r.Warehouse.Snowflake != nil {
+		typeVar2 := shared.WarehouseSnowflakeUpdateType(r.Warehouse.Snowflake.Type.ValueString())
 		table1 := new(string)
 		if !r.Warehouse.Snowflake.Table.IsUnknown() && !r.Warehouse.Snowflake.Table.IsNull() {
 			*table1 = r.Warehouse.Snowflake.Table.ValueString()
 		} else {
 			table1 = nil
 		}
-		typeVar2 := shared.WarehouseSnowflakeUpdateType(r.Warehouse.Snowflake.Type.ValueString())
 		warehouseSnowflakeUpdate = &shared.WarehouseSnowflakeUpdate{
-			Table: table1,
 			Type:  typeVar2,
+			Table: table1,
 		}
 	}
 	if warehouseSnowflakeUpdate != nil {
@@ -396,84 +382,98 @@ func (r *ModelResourceModel) ToSharedModelUpdate() *shared.ModelUpdate {
 			WarehouseSnowflakeUpdate: warehouseSnowflakeUpdate,
 		}
 	}
+	var queryAndTriggers *shared.ModelQueryAndTriggers
+	query := r.QueryAndTriggers.Query.ValueString()
+	var triggers []string = nil
+	for _, triggersItem := range r.QueryAndTriggers.Triggers {
+		triggers = append(triggers, triggersItem.ValueString())
+	}
+	queryAndTriggers = &shared.ModelQueryAndTriggers{
+		Query:    query,
+		Triggers: triggers,
+	}
 	var updateSchedule *shared.ModelUpdateScheduleTypes
-	var scheduleTypesNeverScheduleMode *shared.ScheduleTypesNeverScheduleMode
+	var refreshScheduleModeNeverScheduleTypesNeverScheduleMode *shared.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode
 	if r.UpdateSchedule.Never != nil {
-		mode := shared.RefreshScheduleModeNeverScheduleTypesMode(r.UpdateSchedule.Never.Mode.ValueString())
-		scheduleTypesNeverScheduleMode = &shared.ScheduleTypesNeverScheduleMode{
+		mode := shared.RefreshScheduleModeNeverScheduleTypesModelUpdateMode(r.UpdateSchedule.Never.Mode.ValueString())
+		refreshScheduleModeNeverScheduleTypesNeverScheduleMode = &shared.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode{
 			Mode: mode,
 		}
 	}
-	if scheduleTypesNeverScheduleMode != nil {
+	if refreshScheduleModeNeverScheduleTypesNeverScheduleMode != nil {
 		updateSchedule = &shared.ModelUpdateScheduleTypes{
-			ScheduleTypesNeverScheduleMode: scheduleTypesNeverScheduleMode,
+			RefreshScheduleModeNeverScheduleTypesNeverScheduleMode: refreshScheduleModeNeverScheduleTypesNeverScheduleMode,
 		}
 	}
-	var scheduleTypesHourlyScheduleMode *shared.ScheduleTypesHourlyScheduleMode
+	var refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode *shared.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode
 	if r.UpdateSchedule.Hourly != nil {
 		mode1 := shared.RefreshScheduleModeHourlyScheduleTypesModelUpdateMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-		scheduleTypesHourlyScheduleMode = &shared.ScheduleTypesHourlyScheduleMode{
+		refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode = &shared.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode{
 			Mode: mode1,
 		}
 	}
-	if scheduleTypesHourlyScheduleMode != nil {
+	if refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode != nil {
 		updateSchedule = &shared.ModelUpdateScheduleTypes{
-			ScheduleTypesHourlyScheduleMode: scheduleTypesHourlyScheduleMode,
+			RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode: refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode,
 		}
 	}
-	var scheduleTypesDailyScheduleMode *shared.ScheduleTypesDailyScheduleMode
+	var refreshScheduleModeDailyScheduleTypesDailyScheduleMode *shared.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode
 	if r.UpdateSchedule.Daily != nil {
 		mode2 := shared.RefreshScheduleModeDailyScheduleTypesModelUpdateMode(r.UpdateSchedule.Daily.Mode.ValueString())
 		hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-		scheduleTypesDailyScheduleMode = &shared.ScheduleTypesDailyScheduleMode{
+		refreshScheduleModeDailyScheduleTypesDailyScheduleMode = &shared.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode{
 			Mode:      mode2,
 			HourOfDay: hourOfDay,
 		}
 	}
-	if scheduleTypesDailyScheduleMode != nil {
+	if refreshScheduleModeDailyScheduleTypesDailyScheduleMode != nil {
 		updateSchedule = &shared.ModelUpdateScheduleTypes{
-			ScheduleTypesDailyScheduleMode: scheduleTypesDailyScheduleMode,
+			RefreshScheduleModeDailyScheduleTypesDailyScheduleMode: refreshScheduleModeDailyScheduleTypesDailyScheduleMode,
 		}
 	}
-	var scheduleTypesWeeklyScheduleMode *shared.ScheduleTypesWeeklyScheduleMode
+	var refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode *shared.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode
 	if r.UpdateSchedule.Weekly != nil {
 		mode3 := shared.RefreshScheduleModeWeeklyScheduleTypesModelUpdateMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 		dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 		hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-		scheduleTypesWeeklyScheduleMode = &shared.ScheduleTypesWeeklyScheduleMode{
+		refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode = &shared.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode{
 			Mode:      mode3,
 			DayOfWeek: dayOfWeek,
 			HourOfDay: hourOfDay1,
 		}
 	}
-	if scheduleTypesWeeklyScheduleMode != nil {
+	if refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode != nil {
 		updateSchedule = &shared.ModelUpdateScheduleTypes{
-			ScheduleTypesWeeklyScheduleMode: scheduleTypesWeeklyScheduleMode,
+			RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode: refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode,
 		}
 	}
-	var scheduleTypesMonthlyScheduleMode *shared.ScheduleTypesMonthlyScheduleMode
+	var refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode *shared.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode
 	if r.UpdateSchedule.Monthly != nil {
 		mode4 := shared.RefreshScheduleModeMonthlyScheduleTypesModelUpdateMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-		hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 		dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
-		scheduleTypesMonthlyScheduleMode = &shared.ScheduleTypesMonthlyScheduleMode{
+		hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+		refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode = &shared.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode{
 			Mode:       mode4,
-			HourOfDay:  hourOfDay2,
 			DayOfMonth: dayOfMonth,
+			HourOfDay:  hourOfDay2,
 		}
 	}
-	if scheduleTypesMonthlyScheduleMode != nil {
+	if refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode != nil {
 		updateSchedule = &shared.ModelUpdateScheduleTypes{
-			ScheduleTypesMonthlyScheduleMode: scheduleTypesMonthlyScheduleMode,
+			RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode: refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode,
 		}
+	}
+	var shares []string = nil
+	for _, sharesItem := range r.Shares {
+		shares = append(shares, sharesItem.ValueString())
 	}
 	out := shared.ModelUpdate{
-		QueryAndTriggers: queryAndTriggers,
 		Name:             name,
-		Shares:           shares,
 		Paused:           paused,
 		Warehouse:        warehouse,
+		QueryAndTriggers: queryAndTriggers,
 		UpdateSchedule:   updateSchedule,
+		Shares:           shares,
 	}
 	return &out
 }

@@ -32,15 +32,8 @@ func (e *ExtractedDataStrategyType) UnmarshalJSON(data []byte) error {
 }
 
 type KeyValuePair struct {
-	Value string `json:"value"`
 	Key   string `json:"key"`
-}
-
-func (o *KeyValuePair) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
+	Value string `json:"value"`
 }
 
 func (o *KeyValuePair) GetKey() string {
@@ -50,13 +43,20 @@ func (o *KeyValuePair) GetKey() string {
 	return o.Key
 }
 
+func (o *KeyValuePair) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
 type ExtractedDataStrategy struct {
-	Type             ExtractedDataStrategyType      `json:"type"`
-	EndTimeParameter *WatermarkDatetimeKeyValuePair `json:"endTimeParameter,omitempty"`
+	Type              ExtractedDataStrategyType `json:"type"`
+	LastUpdatedColumn string                    `json:"lastUpdatedColumn"`
 	// Defines the query parameters to be included when fetching the most recently updated record. E.g., [{"key": "sort", "value": "updated_at"}, {"key": "order", "value": "desc"}]
-	HighWatermarkQueryParameters []KeyValuePair                `json:"highWatermarkQueryParameters"`
-	BeginTimeParameter           WatermarkDatetimeKeyValuePair `json:"beginTimeParameter"`
-	LastUpdatedColumn            string                        `json:"lastUpdatedColumn"`
+	HighWatermarkQueryParameters []KeyValuePair                 `json:"highWatermarkQueryParameters"`
+	BeginTimeParameter           WatermarkDatetimeKeyValuePair  `json:"beginTimeParameter"`
+	EndTimeParameter             *WatermarkDatetimeKeyValuePair `json:"endTimeParameter,omitempty"`
 }
 
 func (o *ExtractedDataStrategy) GetType() ExtractedDataStrategyType {
@@ -66,11 +66,11 @@ func (o *ExtractedDataStrategy) GetType() ExtractedDataStrategyType {
 	return o.Type
 }
 
-func (o *ExtractedDataStrategy) GetEndTimeParameter() *WatermarkDatetimeKeyValuePair {
+func (o *ExtractedDataStrategy) GetLastUpdatedColumn() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.EndTimeParameter
+	return o.LastUpdatedColumn
 }
 
 func (o *ExtractedDataStrategy) GetHighWatermarkQueryParameters() []KeyValuePair {
@@ -87,9 +87,9 @@ func (o *ExtractedDataStrategy) GetBeginTimeParameter() WatermarkDatetimeKeyValu
 	return o.BeginTimeParameter
 }
 
-func (o *ExtractedDataStrategy) GetLastUpdatedColumn() string {
+func (o *ExtractedDataStrategy) GetEndTimeParameter() *WatermarkDatetimeKeyValuePair {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.LastUpdatedColumn
+	return o.EndTimeParameter
 }

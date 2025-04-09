@@ -26,8 +26,8 @@ type GetRAVEMEDIDATAConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionRaveMedidata *shared.ConnectionRaveMedidataOutput
-	// Not Found.
+	ConnectionRaveMedidata *shared.ConnectionRaveMedidata
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetRAVEMEDIDATAConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetRAVEMEDIDATAConnectionResponse) GetConnectionRaveMedidata() *shared.ConnectionRaveMedidataOutput {
+func (o *GetRAVEMEDIDATAConnectionResponse) GetConnectionRaveMedidata() *shared.ConnectionRaveMedidata {
 	if o == nil {
 		return nil
 	}

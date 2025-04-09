@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSEISMICResourceModel) ToSharedConnectionSeismic() *shared.ConnectionSeismic {
+func (r *ConnectionSEISMICResourceModel) ToSharedConnectionSeismicInput() *shared.ConnectionSeismicInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionSeismicType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionSEISMICResourceModel) ToSharedConnectionSeismic() *shared.Con
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,22 +87,22 @@ func (r *ConnectionSEISMICResourceModel) ToSharedConnectionSeismic() *shared.Con
 		}
 	}
 	code := r.Code.ValueString()
-	clientSecret := r.ClientSecret.ValueString()
 	tenantName := r.TenantName.ValueString()
 	clientID := r.ClientID.ValueString()
-	out := shared.ConnectionSeismic{
+	clientSecret := r.ClientSecret.ValueString()
+	out := shared.ConnectionSeismicInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
 		Code:           code,
-		ClientSecret:   clientSecret,
 		TenantName:     tenantName,
 		ClientID:       clientID,
+		ClientSecret:   clientSecret,
 	}
 	return &out
 }
 
-func (r *ConnectionSEISMICResourceModel) RefreshFromSharedConnectionSeismicOutput(resp *shared.ConnectionSeismicOutput) {
+func (r *ConnectionSEISMICResourceModel) RefreshFromSharedConnectionSeismic(resp *shared.ConnectionSeismic) {
 	r.Active = types.BoolValue(resp.Active)
 	r.ClientID = types.StringValue(resp.ClientID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -110,7 +110,7 @@ func (r *ConnectionSEISMICResourceModel) RefreshFromSharedConnectionSeismicOutpu
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -193,18 +193,18 @@ func (r *ConnectionSEISMICResourceModel) RefreshFromSharedConnectionSeismicOutpu
 }
 
 func (r *ConnectionSEISMICResourceModel) ToSharedConnectionSeismicUpdate() *shared.ConnectionSeismicUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
-	} else {
-		active = nil
-	}
-	typeVar := shared.ConnectionSeismicUpdateType(r.Type.ValueString())
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
+	}
+	typeVar := shared.ConnectionSeismicUpdateType(r.Type.ValueString())
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
+	} else {
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -267,12 +267,12 @@ func (r *ConnectionSEISMICResourceModel) ToSharedConnectionSeismicUpdate() *shar
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -287,12 +287,6 @@ func (r *ConnectionSEISMICResourceModel) ToSharedConnectionSeismicUpdate() *shar
 	} else {
 		code = nil
 	}
-	clientSecret := new(string)
-	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
-		*clientSecret = r.ClientSecret.ValueString()
-	} else {
-		clientSecret = nil
-	}
 	tenantName := new(string)
 	if !r.TenantName.IsUnknown() && !r.TenantName.IsNull() {
 		*tenantName = r.TenantName.ValueString()
@@ -305,15 +299,21 @@ func (r *ConnectionSEISMICResourceModel) ToSharedConnectionSeismicUpdate() *shar
 	} else {
 		clientID = nil
 	}
+	clientSecret := new(string)
+	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
+		*clientSecret = r.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
 	out := shared.ConnectionSeismicUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
 		Code:           code,
-		ClientSecret:   clientSecret,
 		TenantName:     tenantName,
 		ClientID:       clientID,
+		ClientSecret:   clientSecret,
 	}
 	return &out
 }

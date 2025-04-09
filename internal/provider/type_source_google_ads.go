@@ -12,4 +12,5 @@ type SourceGoogleAds struct {
 	LatencyThreshold    types.Int64    `tfsdk:"latency_threshold"`
 	Metrics             []types.String `tfsdk:"metrics"`
 	Segments            []types.String `tfsdk:"segments"`
+	Type                types.String   `tfsdk:"type"`
 }

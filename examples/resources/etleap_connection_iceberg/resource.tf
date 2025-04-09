@@ -5,7 +5,7 @@ resource "etleap_connection_iceberg" "my_connectioniceberg" {
   glue_database               = "...my_glue_database..."
   glue_region                 = "...my_glue_region..."
   iam_role                    = "...my_iam_role..."
-  name                        = "Nichole Runolfsdottir"
+  name                        = "Mr. Christine Schiller V"
   type                        = "ICEBERG"
   warehouse_connection        = "...my_warehouse_connection..."
 }

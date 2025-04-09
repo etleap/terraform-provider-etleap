@@ -15,7 +15,7 @@ type CreateLINKEDINADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionLinkedInAds *shared.ConnectionLinkedInAdsOutput
+	ConnectionLinkedInAds *shared.ConnectionLinkedInAds
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateLINKEDINADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateLINKEDINADSConnectionResponse) GetConnectionLinkedInAds() *shared.ConnectionLinkedInAdsOutput {
+func (o *CreateLINKEDINADSConnectionResponse) GetConnectionLinkedInAds() *shared.ConnectionLinkedInAds {
 	if o == nil {
 		return nil
 	}

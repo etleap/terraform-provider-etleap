@@ -3,15 +3,8 @@
 package shared
 
 type QueryParameters struct {
-	Value string `json:"value"`
 	Key   string `json:"key"`
-}
-
-func (o *QueryParameters) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
+	Value string `json:"value"`
 }
 
 func (o *QueryParameters) GetKey() string {
@@ -19,4 +12,11 @@ func (o *QueryParameters) GetKey() string {
 		return ""
 	}
 	return o.Key
+}
+
+func (o *QueryParameters) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }

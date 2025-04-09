@@ -28,20 +28,20 @@ type ConnectionBLACKLINEDataSource struct {
 
 // ConnectionBLACKLINEDataSourceModel describes the data model.
 type ConnectionBLACKLINEDataSourceModel struct {
-	Active                types.Bool                                      `tfsdk:"active"`
-	APIKey                types.String                                    `tfsdk:"api_key"`
-	BaseURL               types.String                                    `tfsdk:"base_url"`
-	ClientID              types.String                                    `tfsdk:"client_id"`
-	ClientSecret          types.String                                    `tfsdk:"client_secret"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String                                    `tfsdk:"id"`
-	InstanceScope         types.String                                    `tfsdk:"instance_scope"`
-	Name                  types.String                                    `tfsdk:"name"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	Username              types.String                                    `tfsdk:"username"`
+	Active                types.Bool              `tfsdk:"active"`
+	APIKey                types.String            `tfsdk:"api_key"`
+	BaseURL               types.String            `tfsdk:"base_url"`
+	ClientID              types.String            `tfsdk:"client_id"`
+	ClientSecret          types.String            `tfsdk:"client_secret"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String            `tfsdk:"id"`
+	InstanceScope         types.String            `tfsdk:"instance_scope"`
+	Name                  types.String            `tfsdk:"name"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Username              types.String            `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.

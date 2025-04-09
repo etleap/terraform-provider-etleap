@@ -32,26 +32,19 @@ func (e *SourceTikTokAdsType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTikTokAds struct {
+	Type SourceTikTokAdsType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string              `json:"connectionId"`
-	Type         SourceTikTokAdsType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The TikTok Ads resource. Example values: [AD, ADGROUP, ADVERTISER, CAMPAIGN and REPORT]
 	Entity string `json:"entity"`
-	// Specify the report `metrics` if and only if the entity is 'REPORT'. Example values: [ad_name, clicks, conversion]
-	Metrics []string `json:"metrics,omitempty"`
 	// Specify the report `data level` if and only if the entity is 'REPORT'. Example values: [AUCTION_AD, AUCTION_CAMPAIGN, RESERVATION_AD]
 	DataLevel *string `json:"dataLevel,omitempty"`
 	// Specify the report `dimension` groups if and only if the entity is 'REPORT'. Example values: [start_time_day, start_time_hour, campaign_id]
 	Dimensions []string `json:"dimensions,omitempty"`
-}
-
-func (o *SourceTikTokAds) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
+	// Specify the report `metrics` if and only if the entity is 'REPORT'. Example values: [ad_name, clicks, conversion]
+	Metrics []string `json:"metrics,omitempty"`
 }
 
 func (o *SourceTikTokAds) GetType() SourceTikTokAdsType {
@@ -59,6 +52,13 @@ func (o *SourceTikTokAds) GetType() SourceTikTokAdsType {
 		return SourceTikTokAdsType("")
 	}
 	return o.Type
+}
+
+func (o *SourceTikTokAds) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceTikTokAds) GetLatencyThreshold() *int64 {
@@ -75,13 +75,6 @@ func (o *SourceTikTokAds) GetEntity() string {
 	return o.Entity
 }
 
-func (o *SourceTikTokAds) GetMetrics() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Metrics
-}
-
 func (o *SourceTikTokAds) GetDataLevel() *string {
 	if o == nil {
 		return nil
@@ -94,4 +87,11 @@ func (o *SourceTikTokAds) GetDimensions() []string {
 		return nil
 	}
 	return o.Dimensions
+}
+
+func (o *SourceTikTokAds) GetMetrics() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Metrics
 }

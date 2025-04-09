@@ -10,4 +10,5 @@ type SourceGoogleAnalyticsGa4 struct {
 	Entity           types.String   `tfsdk:"entity"`
 	LatencyThreshold types.Int64    `tfsdk:"latency_threshold"`
 	Metrics          []types.String `tfsdk:"metrics"`
+	Type             types.String   `tfsdk:"type"`
 }

@@ -42,23 +42,23 @@ type ConnectionKAFKAResource struct {
 
 // ConnectionKAFKAResourceModel describes the resource data model.
 type ConnectionKAFKAResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	AuthMechanism            types.String                                    `tfsdk:"auth_mechanism"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Password                 types.String                                    `tfsdk:"password"`
-	SchemaRegistryPassword   types.String                                    `tfsdk:"schema_registry_password"`
-	SchemaRegistryServer     types.String                                    `tfsdk:"schema_registry_server"`
-	SchemaRegistryUser       types.String                                    `tfsdk:"schema_registry_user"`
-	ServerList               types.String                                    `tfsdk:"server_list"`
-	Status                   types.String                                    `tfsdk:"status"`
-	TruststoreCertificate    types.String                                    `tfsdk:"truststore_certificate"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	User                     types.String                                    `tfsdk:"user"`
+	Active                   types.Bool              `tfsdk:"active"`
+	AuthMechanism            types.String            `tfsdk:"auth_mechanism"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Password                 types.String            `tfsdk:"password"`
+	SchemaRegistryPassword   types.String            `tfsdk:"schema_registry_password"`
+	SchemaRegistryServer     types.String            `tfsdk:"schema_registry_server"`
+	SchemaRegistryUser       types.String            `tfsdk:"schema_registry_user"`
+	ServerList               types.String            `tfsdk:"server_list"`
+	Status                   types.String            `tfsdk:"status"`
+	TruststoreCertificate    types.String            `tfsdk:"truststore_certificate"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	User                     types.String            `tfsdk:"user"`
 }
 
 func (r *ConnectionKAFKAResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

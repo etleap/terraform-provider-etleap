@@ -35,7 +35,7 @@ type UpdateLDAPConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionLdap *shared.ConnectionLdap
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

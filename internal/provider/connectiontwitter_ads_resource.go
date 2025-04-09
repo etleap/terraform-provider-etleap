@@ -41,20 +41,20 @@ type ConnectionTWITTERADSResource struct {
 
 // ConnectionTWITTERADSResourceModel describes the resource data model.
 type ConnectionTWITTERADSResourceModel struct {
-	AccessToken              types.String                                    `tfsdk:"access_token"`
-	AccessTokenSecret        types.String                                    `tfsdk:"access_token_secret"`
-	Active                   types.Bool                                      `tfsdk:"active"`
-	AppKey                   types.String                                    `tfsdk:"app_key"`
-	AppSecretKey             types.String                                    `tfsdk:"app_secret_key"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	TwitterUsernames         types.String                                    `tfsdk:"twitter_usernames"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	AccessToken              types.String            `tfsdk:"access_token"`
+	AccessTokenSecret        types.String            `tfsdk:"access_token_secret"`
+	Active                   types.Bool              `tfsdk:"active"`
+	AppKey                   types.String            `tfsdk:"app_key"`
+	AppSecretKey             types.String            `tfsdk:"app_secret_key"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	TwitterUsernames         types.String            `tfsdk:"twitter_usernames"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionTWITTERADSResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

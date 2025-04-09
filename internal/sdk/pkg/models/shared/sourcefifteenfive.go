@@ -32,20 +32,13 @@ func (e *SourceFifteenFiveType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFifteenFive struct {
+	Type SourceFifteenFiveType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string                `json:"connectionId"`
-	Type         SourceFifteenFiveType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The 15Five entity. Example values: [answer, report, department, feature-status, group-type, group, high-five, objective_objective_id_history, objective, attribute_value, attribute, priority, question, security-audit, vacation, user]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceFifteenFive) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceFifteenFive) GetType() SourceFifteenFiveType {
@@ -53,6 +46,13 @@ func (o *SourceFifteenFive) GetType() SourceFifteenFiveType {
 		return SourceFifteenFiveType("")
 	}
 	return o.Type
+}
+
+func (o *SourceFifteenFive) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceFifteenFive) GetLatencyThreshold() *int64 {

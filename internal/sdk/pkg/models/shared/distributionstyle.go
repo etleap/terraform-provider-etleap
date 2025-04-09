@@ -9,19 +9,19 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-type DistributionStyle1 string
+type One string
 
 const (
-	DistributionStyle1All  DistributionStyle1 = "ALL"
-	DistributionStyle1Auto DistributionStyle1 = "AUTO"
-	DistributionStyle1Even DistributionStyle1 = "EVEN"
+	OneAll  One = "ALL"
+	OneAuto One = "AUTO"
+	OneEven One = "EVEN"
 )
 
-func (e DistributionStyle1) ToPointer() *DistributionStyle1 {
+func (e One) ToPointer() *One {
 	return &e
 }
 
-func (e *DistributionStyle1) UnmarshalJSON(data []byte) error {
+func (e *One) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -32,34 +32,34 @@ func (e *DistributionStyle1) UnmarshalJSON(data []byte) error {
 	case "AUTO":
 		fallthrough
 	case "EVEN":
-		*e = DistributionStyle1(v)
+		*e = One(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DistributionStyle1: %v", v)
+		return fmt.Errorf("invalid value for One: %v", v)
 	}
 }
 
 type DistributionStyleType string
 
 const (
-	DistributionStyleTypeDistributionStyle1   DistributionStyleType = "distribution_style_1"
+	DistributionStyleTypeOne                  DistributionStyleType = "1"
 	DistributionStyleTypeDistributionStyleKey DistributionStyleType = "distribution_style_key"
 )
 
 // DistributionStyle - Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
 type DistributionStyle struct {
-	DistributionStyle1   *DistributionStyle1
+	One                  *One
 	DistributionStyleKey *DistributionStyleKey
 
 	Type DistributionStyleType
 }
 
-func CreateDistributionStyleDistributionStyle1(distributionStyle1 DistributionStyle1) DistributionStyle {
-	typ := DistributionStyleTypeDistributionStyle1
+func CreateDistributionStyleOne(one One) DistributionStyle {
+	typ := DistributionStyleTypeOne
 
 	return DistributionStyle{
-		DistributionStyle1: &distributionStyle1,
-		Type:               typ,
+		One:  &one,
+		Type: typ,
 	}
 }
 
@@ -81,10 +81,10 @@ func (u *DistributionStyle) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	distributionStyle1 := new(DistributionStyle1)
-	if err := utils.UnmarshalJSON(data, &distributionStyle1, "", true, true); err == nil {
-		u.DistributionStyle1 = distributionStyle1
-		u.Type = DistributionStyleTypeDistributionStyle1
+	one := new(One)
+	if err := utils.UnmarshalJSON(data, &one, "", true, true); err == nil {
+		u.One = one
+		u.Type = DistributionStyleTypeOne
 		return nil
 	}
 
@@ -92,8 +92,8 @@ func (u *DistributionStyle) UnmarshalJSON(data []byte) error {
 }
 
 func (u DistributionStyle) MarshalJSON() ([]byte, error) {
-	if u.DistributionStyle1 != nil {
-		return utils.MarshalJSON(u.DistributionStyle1, "", true)
+	if u.One != nil {
+		return utils.MarshalJSON(u.One, "", true)
 	}
 
 	if u.DistributionStyleKey != nil {

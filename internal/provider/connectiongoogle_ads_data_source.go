@@ -28,15 +28,15 @@ type ConnectionGOOGLEADSDataSource struct {
 
 // ConnectionGOOGLEADSDataSourceModel describes the data model.
 type ConnectionGOOGLEADSDataSourceModel struct {
-	Active                types.Bool                                      `tfsdk:"active"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	CustomerID            types.String                                    `tfsdk:"customer_id"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String                                    `tfsdk:"id"`
-	Name                  types.String                                    `tfsdk:"name"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                types.Bool              `tfsdk:"active"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	CustomerID            types.String            `tfsdk:"customer_id"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String            `tfsdk:"id"`
+	Name                  types.String            `tfsdk:"name"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.

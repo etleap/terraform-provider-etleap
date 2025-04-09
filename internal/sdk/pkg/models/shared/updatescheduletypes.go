@@ -12,11 +12,11 @@ import (
 type UpdateScheduleTypesType string
 
 const (
-	UpdateScheduleTypesTypeMonthly  UpdateScheduleTypesType = "MONTHLY"
-	UpdateScheduleTypesTypeHourly   UpdateScheduleTypesType = "HOURLY"
 	UpdateScheduleTypesTypeInterval UpdateScheduleTypesType = "INTERVAL"
+	UpdateScheduleTypesTypeHourly   UpdateScheduleTypesType = "HOURLY"
 	UpdateScheduleTypesTypeDaily    UpdateScheduleTypesType = "DAILY"
 	UpdateScheduleTypesTypeWeekly   UpdateScheduleTypesType = "WEEKLY"
+	UpdateScheduleTypesTypeMonthly  UpdateScheduleTypesType = "MONTHLY"
 )
 
 // UpdateScheduleTypes - The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
@@ -30,15 +30,15 @@ type UpdateScheduleTypes struct {
 	Type UpdateScheduleTypesType
 }
 
-func CreateUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthly) UpdateScheduleTypes {
-	typ := UpdateScheduleTypesTypeMonthly
+func CreateUpdateScheduleTypesInterval(interval UpdateScheduleModeInterval) UpdateScheduleTypes {
+	typ := UpdateScheduleTypesTypeInterval
 
-	typStr := UpdateScheduleModeMonthlyMode(typ)
-	monthly.Mode = typStr
+	typStr := Mode(typ)
+	interval.Mode = typStr
 
 	return UpdateScheduleTypes{
-		UpdateScheduleModeMonthly: &monthly,
-		Type:                      typ,
+		UpdateScheduleModeInterval: &interval,
+		Type:                       typ,
 	}
 }
 
@@ -51,18 +51,6 @@ func CreateUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourly) UpdateSche
 	return UpdateScheduleTypes{
 		UpdateScheduleModeHourly: &hourly,
 		Type:                     typ,
-	}
-}
-
-func CreateUpdateScheduleTypesInterval(interval UpdateScheduleModeInterval) UpdateScheduleTypes {
-	typ := UpdateScheduleTypesTypeInterval
-
-	typStr := Mode(typ)
-	interval.Mode = typStr
-
-	return UpdateScheduleTypes{
-		UpdateScheduleModeInterval: &interval,
-		Type:                       typ,
 	}
 }
 
@@ -90,6 +78,18 @@ func CreateUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeekly) UpdateSche
 	}
 }
 
+func CreateUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthly) UpdateScheduleTypes {
+	typ := UpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyMode(typ)
+	monthly.Mode = typStr
+
+	return UpdateScheduleTypes{
+		UpdateScheduleModeMonthly: &monthly,
+		Type:                      typ,
+	}
+}
+
 func (u *UpdateScheduleTypes) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
@@ -102,14 +102,14 @@ func (u *UpdateScheduleTypes) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Mode {
-	case "MONTHLY":
-		updateScheduleModeMonthly := new(UpdateScheduleModeMonthly)
-		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthly, "", true, true); err != nil {
+	case "INTERVAL":
+		updateScheduleModeInterval := new(UpdateScheduleModeInterval)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeInterval, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.UpdateScheduleModeMonthly = updateScheduleModeMonthly
-		u.Type = UpdateScheduleTypesTypeMonthly
+		u.UpdateScheduleModeInterval = updateScheduleModeInterval
+		u.Type = UpdateScheduleTypesTypeInterval
 		return nil
 	case "HOURLY":
 		updateScheduleModeHourly := new(UpdateScheduleModeHourly)
@@ -119,15 +119,6 @@ func (u *UpdateScheduleTypes) UnmarshalJSON(data []byte) error {
 
 		u.UpdateScheduleModeHourly = updateScheduleModeHourly
 		u.Type = UpdateScheduleTypesTypeHourly
-		return nil
-	case "INTERVAL":
-		updateScheduleModeInterval := new(UpdateScheduleModeInterval)
-		if err := utils.UnmarshalJSON(data, &updateScheduleModeInterval, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.UpdateScheduleModeInterval = updateScheduleModeInterval
-		u.Type = UpdateScheduleTypesTypeInterval
 		return nil
 	case "DAILY":
 		updateScheduleModeDaily := new(UpdateScheduleModeDaily)
@@ -146,6 +137,15 @@ func (u *UpdateScheduleTypes) UnmarshalJSON(data []byte) error {
 
 		u.UpdateScheduleModeWeekly = updateScheduleModeWeekly
 		u.Type = UpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthly := new(UpdateScheduleModeMonthly)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthly, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthly = updateScheduleModeMonthly
+		u.Type = UpdateScheduleTypesTypeMonthly
 		return nil
 	}
 

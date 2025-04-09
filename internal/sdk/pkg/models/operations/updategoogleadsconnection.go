@@ -35,7 +35,7 @@ type UpdateGOOGLEADSConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionGoogleAds *shared.ConnectionGoogleAds
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

@@ -26,8 +26,8 @@ type GetSKYWARDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSkyward *shared.ConnectionSkywardOutput
-	// Not Found.
+	ConnectionSkyward *shared.ConnectionSkyward
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetSKYWARDConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetSKYWARDConnectionResponse) GetConnectionSkyward() *shared.ConnectionSkywardOutput {
+func (o *GetSKYWARDConnectionResponse) GetConnectionSkyward() *shared.ConnectionSkyward {
 	if o == nil {
 		return nil
 	}

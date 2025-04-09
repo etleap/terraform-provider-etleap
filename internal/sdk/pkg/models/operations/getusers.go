@@ -37,7 +37,7 @@ type GetUsersResponse struct {
 	RawResponse *http.Response
 	// OK
 	UsersOutput *shared.UsersOutput
-	// Forbidden
+	// Bad Request
 	Errors *shared.Errors
 }
 

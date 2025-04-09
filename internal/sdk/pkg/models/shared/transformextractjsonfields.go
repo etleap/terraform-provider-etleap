@@ -32,15 +32,8 @@ func (e *TransformExtractJSONFieldsType) UnmarshalJSON(data []byte) error {
 }
 
 type Keys struct {
-	Type Type   `json:"type"`
 	Name string `json:"name"`
-}
-
-func (o *Keys) GetType() Type {
-	if o == nil {
-		return Type{}
-	}
-	return o.Type
+	Type Type   `json:"type"`
 }
 
 func (o *Keys) GetName() string {
@@ -48,6 +41,13 @@ func (o *Keys) GetName() string {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *Keys) GetType() Type {
+	if o == nil {
+		return Type{}
+	}
+	return o.Type
 }
 
 // TransformExtractJSONFields - Flattens a JSON object into columns.

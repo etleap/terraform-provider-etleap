@@ -65,15 +65,15 @@ type DbtScheduleRunInProgress struct {
 	Status DbtScheduleRunInProgressStatus `json:"status"`
 	// The time that this dbt run was triggered.
 	StartDate time.Time `json:"startDate"`
+	// The phase that this dbt run is currently in. dbt runs consist of an `INGEST` phase where source pipelines ingest data into the warehouse, followed by a `BUILD` phase where the dbt models are built.
+	Phase Phase `json:"phase"`
+	// Whether the dbt build phase is taking too long.
+	BuildIsTakingTooLong bool `json:"buildIsTakingTooLong"`
 	// The duration, in seconds, between the time the previous run was triggered and the time it completed. This will be `null` if this is the first time this schedule has run.
 	PreviousRunDuration *int64        `json:"previousRunDuration,omitempty"`
 	PreviousRunStatus   *DbtRunStatus `json:"previousRunStatus,omitempty"`
 	// The last time that a successful dbt build finished.
 	LastSuccessfulDbtBuildDate *time.Time `json:"lastSuccessfulDbtBuildDate,omitempty"`
-	// The phase that this dbt run is currently in. dbt runs consist of an `INGEST` phase where source pipelines ingest data into the warehouse, followed by a `BUILD` phase where the dbt models are built.
-	Phase Phase `json:"phase"`
-	// Whether the dbt build phase is taking too long.
-	BuildIsTakingTooLong bool `json:"buildIsTakingTooLong"`
 }
 
 func (d DbtScheduleRunInProgress) MarshalJSON() ([]byte, error) {
@@ -101,6 +101,20 @@ func (o *DbtScheduleRunInProgress) GetStartDate() time.Time {
 	return o.StartDate
 }
 
+func (o *DbtScheduleRunInProgress) GetPhase() Phase {
+	if o == nil {
+		return Phase("")
+	}
+	return o.Phase
+}
+
+func (o *DbtScheduleRunInProgress) GetBuildIsTakingTooLong() bool {
+	if o == nil {
+		return false
+	}
+	return o.BuildIsTakingTooLong
+}
+
 func (o *DbtScheduleRunInProgress) GetPreviousRunDuration() *int64 {
 	if o == nil {
 		return nil
@@ -120,18 +134,4 @@ func (o *DbtScheduleRunInProgress) GetLastSuccessfulDbtBuildDate() *time.Time {
 		return nil
 	}
 	return o.LastSuccessfulDbtBuildDate
-}
-
-func (o *DbtScheduleRunInProgress) GetPhase() Phase {
-	if o == nil {
-		return Phase("")
-	}
-	return o.Phase
-}
-
-func (o *DbtScheduleRunInProgress) GetBuildIsTakingTooLong() bool {
-	if o == nil {
-		return false
-	}
-	return o.BuildIsTakingTooLong
 }

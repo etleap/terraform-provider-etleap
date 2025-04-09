@@ -3,17 +3,10 @@
 package shared
 
 type OperationErrorsByOperation struct {
-	OperationDescription string `json:"operationDescription"`
 	// Index of step in the script of this pipeline that caused this error.
-	OperationIndex int64 `json:"operationIndex"`
-	RowCount       int64 `json:"rowCount"`
-}
-
-func (o *OperationErrorsByOperation) GetOperationDescription() string {
-	if o == nil {
-		return ""
-	}
-	return o.OperationDescription
+	OperationIndex       int64  `json:"operationIndex"`
+	OperationDescription string `json:"operationDescription"`
+	RowCount             int64  `json:"rowCount"`
 }
 
 func (o *OperationErrorsByOperation) GetOperationIndex() int64 {
@@ -21,6 +14,13 @@ func (o *OperationErrorsByOperation) GetOperationIndex() int64 {
 		return 0
 	}
 	return o.OperationIndex
+}
+
+func (o *OperationErrorsByOperation) GetOperationDescription() string {
+	if o == nil {
+		return ""
+	}
+	return o.OperationDescription
 }
 
 func (o *OperationErrorsByOperation) GetRowCount() int64 {

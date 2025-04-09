@@ -32,37 +32,23 @@ func (e *ConnectionTwitterUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionTwitterUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                        `json:"active,omitempty"`
-	Type   *ConnectionTwitterUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                      `json:"name,omitempty"`
+	Type *ConnectionTwitterUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// This represents your Twitter developer app when making API requests. Generated under 'Consumer API keys'.
 	AppKey *string `json:"appKey,omitempty"`
-	// This identifies your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.
-	AccessToken *string `json:"accessToken,omitempty"`
-	// If you want to create pipelines from entities that uses Twitter API V2 endpoints you need to specify which Twitter accounts you want to retrieve data from. The usernames must be separated by comma and without the @
-	TwitterUsernames *string `json:"twitterUsernames,omitempty"`
-	// This authenticates your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.
-	AccessTokenSecret *string `json:"accessTokenSecret,omitempty"`
 	// This authenticates your Twitter developer app when making API requests. Generated under 'Consumer API keys'.
 	AppSecretKey *string `json:"appSecretKey,omitempty"`
-}
-
-func (o *ConnectionTwitterUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionTwitterUpdate) GetType() *ConnectionTwitterUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	// This identifies your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.
+	AccessToken *string `json:"accessToken,omitempty"`
+	// This authenticates your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.
+	AccessTokenSecret *string `json:"accessTokenSecret,omitempty"`
+	// If you want to create pipelines from entities that uses Twitter API V2 endpoints you need to specify which Twitter accounts you want to retrieve data from. The usernames must be separated by comma and without the @
+	TwitterUsernames *string `json:"twitterUsernames,omitempty"`
 }
 
 func (o *ConnectionTwitterUpdate) GetName() *string {
@@ -72,6 +58,20 @@ func (o *ConnectionTwitterUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionTwitterUpdate) GetType() *ConnectionTwitterUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionTwitterUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionTwitterUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -79,9 +79,9 @@ func (o *ConnectionTwitterUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTwitterUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionTwitterUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -89,13 +89,6 @@ func (o *ConnectionTwitterUpdate) GetUpdateScheduleMonthly() *UpdateScheduleMode
 func (o *ConnectionTwitterUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionTwitterUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -114,11 +107,25 @@ func (o *ConnectionTwitterUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeW
 	return nil
 }
 
+func (o *ConnectionTwitterUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 func (o *ConnectionTwitterUpdate) GetAppKey() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AppKey
+}
+
+func (o *ConnectionTwitterUpdate) GetAppSecretKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppSecretKey
 }
 
 func (o *ConnectionTwitterUpdate) GetAccessToken() *string {
@@ -128,13 +135,6 @@ func (o *ConnectionTwitterUpdate) GetAccessToken() *string {
 	return o.AccessToken
 }
 
-func (o *ConnectionTwitterUpdate) GetTwitterUsernames() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TwitterUsernames
-}
-
 func (o *ConnectionTwitterUpdate) GetAccessTokenSecret() *string {
 	if o == nil {
 		return nil
@@ -142,9 +142,9 @@ func (o *ConnectionTwitterUpdate) GetAccessTokenSecret() *string {
 	return o.AccessTokenSecret
 }
 
-func (o *ConnectionTwitterUpdate) GetAppSecretKey() *string {
+func (o *ConnectionTwitterUpdate) GetTwitterUsernames() *string {
 	if o == nil {
 		return nil
 	}
-	return o.AppSecretKey
+	return o.TwitterUsernames
 }

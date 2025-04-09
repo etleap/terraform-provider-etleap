@@ -55,9 +55,9 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 				destinations1.Destination.Redshift.DistributionStyle = nil
 			} else {
 				destinations1.Destination.Redshift.DistributionStyle = &DistributionStyle{}
-				if destinationsItem.Destination.DestinationRedshift.DistributionStyle.DistributionStyle1 != nil {
-					if destinationsItem.Destination.DestinationRedshift.DistributionStyle.DistributionStyle1 != nil {
-						destinations1.Destination.Redshift.DistributionStyle.One = types.StringValue(string(*destinationsItem.Destination.DestinationRedshift.DistributionStyle.DistributionStyle1))
+				if destinationsItem.Destination.DestinationRedshift.DistributionStyle.One != nil {
+					if destinationsItem.Destination.DestinationRedshift.DistributionStyle.One != nil {
+						destinations1.Destination.Redshift.DistributionStyle.One = types.StringValue(string(*destinationsItem.Destination.DestinationRedshift.DistributionStyle.One))
 					} else {
 						destinations1.Destination.Redshift.DistributionStyle.One = types.StringNull()
 					}
@@ -281,14 +281,14 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Shares = append(r.Shares, types.StringValue(v))
 	}
 	if resp.Source.SourceActiveCampaign != nil {
-		r.Source.ActiveCampaign = &SourceActiveCampaign1{}
+		r.Source.ActiveCampaign = &SourceActiveCampaign{}
 		r.Source.ActiveCampaign.ConnectionID = types.StringValue(resp.Source.SourceActiveCampaign.ConnectionID)
 		r.Source.ActiveCampaign.Entity = types.StringValue(resp.Source.SourceActiveCampaign.Entity)
 		r.Source.ActiveCampaign.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceActiveCampaign.LatencyThreshold)
 		r.Source.ActiveCampaign.Type = types.StringValue(string(resp.Source.SourceActiveCampaign.Type))
 	}
 	if resp.Source.SourceBigQuery != nil {
-		r.Source.Bigquery = &SourceBigQuery1{}
+		r.Source.Bigquery = &SourceBigQuery{}
 		r.Source.Bigquery.ConnectionID = types.StringValue(resp.Source.SourceBigQuery.ConnectionID)
 		r.Source.Bigquery.Dataset = types.StringPointerValue(resp.Source.SourceBigQuery.Dataset)
 		r.Source.Bigquery.LastUpdatedColumn = types.StringPointerValue(resp.Source.SourceBigQuery.LastUpdatedColumn)
@@ -302,7 +302,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Bigquery.Type = types.StringValue(string(resp.Source.SourceBigQuery.Type))
 	}
 	if resp.Source.SourceBingAds != nil {
-		r.Source.BingAds = &SourceBingAds1{}
+		r.Source.BingAds = &SourceBingAds{}
 		r.Source.BingAds.ConnectionID = types.StringValue(resp.Source.SourceBingAds.ConnectionID)
 		r.Source.BingAds.Entity = types.StringValue(resp.Source.SourceBingAds.Entity)
 		r.Source.BingAds.Fields = nil
@@ -341,7 +341,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Coupa.Type = types.StringValue(string(resp.Source.SourceCoupa.Type))
 	}
 	if resp.Source.SourceCriteo != nil {
-		r.Source.Criteo = &SourceCriteo1{}
+		r.Source.Criteo = &SourceCriteo{}
 		r.Source.Criteo.ConnectionID = types.StringValue(resp.Source.SourceCriteo.ConnectionID)
 		r.Source.Criteo.Currency = nil
 		for _, v := range resp.Source.SourceCriteo.Currency {
@@ -364,7 +364,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Criteo.Type = types.StringValue(string(resp.Source.SourceCriteo.Type))
 	}
 	if resp.Source.SourceDb2 != nil {
-		r.Source.Db2 = &SourceDb21{}
+		r.Source.Db2 = &SourceDb2{}
 		r.Source.Db2.ConnectionID = types.StringValue(resp.Source.SourceDb2.ConnectionID)
 		r.Source.Db2.LastUpdatedColumn = types.StringPointerValue(resp.Source.SourceDb2.LastUpdatedColumn)
 		r.Source.Db2.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceDb2.LatencyThreshold)
@@ -420,7 +420,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Elasticsearch.Type = types.StringValue(string(resp.Source.SourceElasticSearch.Type))
 	}
 	if resp.Source.SourceElluminate != nil {
-		r.Source.Elluminate = &SourceElluminate1{}
+		r.Source.Elluminate = &SourceElluminate{}
 		r.Source.Elluminate.ConnectionID = types.StringValue(resp.Source.SourceElluminate.ConnectionID)
 		r.Source.Elluminate.DomainName = nil
 		for _, v := range resp.Source.SourceElluminate.DomainName {
@@ -446,7 +446,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Erpx.Type = types.StringValue(string(resp.Source.SourceErpx.Type))
 	}
 	if resp.Source.SourceFacebookAds != nil {
-		r.Source.FacebookAds = &SourceFacebookAds1{}
+		r.Source.FacebookAds = &SourceFacebookAds{}
 		r.Source.FacebookAds.Breakdowns = nil
 		for _, v := range resp.Source.SourceFacebookAds.Breakdowns {
 			r.Source.FacebookAds.Breakdowns = append(r.Source.FacebookAds.Breakdowns, types.StringValue(v))
@@ -464,7 +464,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.FifteenFive.Type = types.StringValue(string(resp.Source.SourceFifteenFive.Type))
 	}
 	if resp.Source.SourceFreshchat != nil {
-		r.Source.Freshchat = &SourceFreshchat1{}
+		r.Source.Freshchat = &SourceFreshchat{}
 		r.Source.Freshchat.ConnectionID = types.StringValue(resp.Source.SourceFreshchat.ConnectionID)
 		r.Source.Freshchat.Entity = types.StringValue(resp.Source.SourceFreshchat.Entity)
 		r.Source.Freshchat.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFreshchat.LatencyThreshold)
@@ -493,7 +493,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Freshworks.Type = types.StringValue(string(resp.Source.SourceFreshworks.Type))
 	}
 	if resp.Source.SourceFtp != nil {
-		r.Source.Ftp = &SourceFtp1{}
+		r.Source.Ftp = &SourceFtp{}
 		r.Source.Ftp.ConnectionID = types.StringValue(resp.Source.SourceFtp.ConnectionID)
 		r.Source.Ftp.FileNameFilter = types.StringPointerValue(resp.Source.SourceFtp.FileNameFilter)
 		r.Source.Ftp.GlobPattern = types.StringPointerValue(resp.Source.SourceFtp.GlobPattern)
@@ -518,7 +518,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Gong.Type = types.StringValue(string(resp.Source.SourceGong.Type))
 	}
 	if resp.Source.SourceGoogleAds != nil {
-		r.Source.GoogleAds = &SourceGoogleAds1{}
+		r.Source.GoogleAds = &SourceGoogleAds{}
 		r.Source.GoogleAds.AttributedResources = nil
 		for _, v := range resp.Source.SourceGoogleAds.AttributedResources {
 			r.Source.GoogleAds.AttributedResources = append(r.Source.GoogleAds.AttributedResources, types.StringValue(v))
@@ -541,7 +541,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.GoogleAds.Type = types.StringValue(string(resp.Source.SourceGoogleAds.Type))
 	}
 	if resp.Source.SourceGoogleAnalyticsGa4 != nil {
-		r.Source.GoogleAnalyticsGa4 = &SourceGoogleAnalyticsGa41{}
+		r.Source.GoogleAnalyticsGa4 = &SourceGoogleAnalyticsGa4{}
 		r.Source.GoogleAnalyticsGa4.ConnectionID = types.StringValue(resp.Source.SourceGoogleAnalyticsGa4.ConnectionID)
 		r.Source.GoogleAnalyticsGa4.Dimensions = nil
 		for _, v := range resp.Source.SourceGoogleAnalyticsGa4.Dimensions {
@@ -651,7 +651,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.LdapVirtualListView.Type = types.StringValue(string(resp.Source.SourceLdapVirtualListView.Type))
 	}
 	if resp.Source.SourceLinkedInAds != nil {
-		r.Source.LinkedInAds = &SourceLinkedInAds1{}
+		r.Source.LinkedInAds = &SourceLinkedInAds{}
 		r.Source.LinkedInAds.ConnectionID = types.StringValue(resp.Source.SourceLinkedInAds.ConnectionID)
 		r.Source.LinkedInAds.Entity = types.StringValue(resp.Source.SourceLinkedInAds.Entity)
 		r.Source.LinkedInAds.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceLinkedInAds.LatencyThreshold)
@@ -666,7 +666,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.LinkedInAds.Type = types.StringValue(string(resp.Source.SourceLinkedInAds.Type))
 	}
 	if resp.Source.SourceMarketo != nil {
-		r.Source.Marketo = &SourceMarketo1{}
+		r.Source.Marketo = &SourceMarketo{}
 		r.Source.Marketo.ActivityTypes = nil
 		for _, v := range resp.Source.SourceMarketo.ActivityTypes {
 			r.Source.Marketo.ActivityTypes = append(r.Source.Marketo.ActivityTypes, types.StringValue(v))
@@ -676,13 +676,6 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Marketo.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceMarketo.LatencyThreshold)
 		r.Source.Marketo.Type = types.StringValue(string(resp.Source.SourceMarketo.Type))
 	}
-	if resp.Source.SourceMicrosoftEntraID != nil {
-		r.Source.MicrosoftEntraID = &SourceMicrosoftEntraID{}
-		r.Source.MicrosoftEntraID.ConnectionID = types.StringValue(resp.Source.SourceMicrosoftEntraID.ConnectionID)
-		r.Source.MicrosoftEntraID.Entity = types.StringValue(resp.Source.SourceMicrosoftEntraID.Entity)
-		r.Source.MicrosoftEntraID.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceMicrosoftEntraID.LatencyThreshold)
-		r.Source.MicrosoftEntraID.Type = types.StringValue(string(resp.Source.SourceMicrosoftEntraID.Type))
-	}
 	if resp.Source.SourceMixpanel != nil {
 		r.Source.Mixpanel = &SourceMixpanel{}
 		r.Source.Mixpanel.ConnectionID = types.StringValue(resp.Source.SourceMixpanel.ConnectionID)
@@ -691,7 +684,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Mixpanel.Type = types.StringValue(string(resp.Source.SourceMixpanel.Type))
 	}
 	if resp.Source.SourceMongodb != nil {
-		r.Source.Mongodb = &SourceMongodb1{}
+		r.Source.Mongodb = &SourceMongodb{}
 		r.Source.Mongodb.ConnectionID = types.StringValue(resp.Source.SourceMongodb.ConnectionID)
 		r.Source.Mongodb.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceMongodb.LatencyThreshold)
 		r.Source.Mongodb.Table = types.StringPointerValue(resp.Source.SourceMongodb.Table)
@@ -699,7 +692,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Mongodb.Type = types.StringValue(string(resp.Source.SourceMongodb.Type))
 	}
 	if resp.Source.SourceMysql != nil {
-		r.Source.Mysql = &SourceMysql1{}
+		r.Source.Mysql = &SourceMysql{}
 		r.Source.Mysql.ConnectionID = types.StringValue(resp.Source.SourceMysql.ConnectionID)
 		r.Source.Mysql.Database = types.StringPointerValue(resp.Source.SourceMysql.Database)
 		r.Source.Mysql.LastUpdatedColumn = types.StringPointerValue(resp.Source.SourceMysql.LastUpdatedColumn)
@@ -783,7 +776,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Outreach.Type = types.StringValue(string(resp.Source.SourceOutreach.Type))
 	}
 	if resp.Source.SourcePinterestAds != nil {
-		r.Source.PinterestAds = &SourcePinterestAds1{}
+		r.Source.PinterestAds = &SourcePinterestAds{}
 		r.Source.PinterestAds.Columns = nil
 		for _, v := range resp.Source.SourcePinterestAds.Columns {
 			r.Source.PinterestAds.Columns = append(r.Source.PinterestAds.Columns, types.StringValue(v))
@@ -879,7 +872,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.RedshiftSharded.Type = types.StringValue(string(resp.Source.SourceRedshiftSharded.Type))
 	}
 	if resp.Source.SourceS3Input != nil {
-		r.Source.S3Input = &SourceS3Input1{}
+		r.Source.S3Input = &SourceS3Input{}
 		r.Source.S3Input.ConnectionID = types.StringValue(resp.Source.SourceS3Input.ConnectionID)
 		r.Source.S3Input.FileNameFilter = types.StringPointerValue(resp.Source.SourceS3Input.FileNameFilter)
 		r.Source.S3Input.FilesCanChange = types.BoolPointerValue(resp.Source.SourceS3Input.FilesCanChange)
@@ -898,7 +891,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.S3Input.Type = types.StringValue(string(resp.Source.SourceS3Input.Type))
 	}
 	if resp.Source.SourceS3Legacy != nil {
-		r.Source.S3Legacy = &SourceS3Legacy1{}
+		r.Source.S3Legacy = &SourceS3Legacy{}
 		r.Source.S3Legacy.ConnectionID = types.StringValue(resp.Source.SourceS3Legacy.ConnectionID)
 		r.Source.S3Legacy.FileNameFilter = types.StringPointerValue(resp.Source.SourceS3Legacy.FileNameFilter)
 		r.Source.S3Legacy.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceS3Legacy.LatencyThreshold)
@@ -1010,7 +1003,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Skyward.Type = types.StringValue(string(resp.Source.SourceSkyward.Type))
 	}
 	if resp.Source.SourceSnapchatAds != nil {
-		r.Source.SnapchatAds = &SourceSnapchatAds1{}
+		r.Source.SnapchatAds = &SourceSnapchatAds{}
 		r.Source.SnapchatAds.AdditionalMetrics = nil
 		for _, v := range resp.Source.SourceSnapchatAds.AdditionalMetrics {
 			r.Source.SnapchatAds.AdditionalMetrics = append(r.Source.SnapchatAds.AdditionalMetrics, types.StringValue(v))
@@ -1131,7 +1124,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.TheTradeDesk.Type = types.StringValue(string(resp.Source.SourceTheTradeDesk.Type))
 	}
 	if resp.Source.SourceTikTokAds != nil {
-		r.Source.TikTokAds = &SourceTikTokAds1{}
+		r.Source.TikTokAds = &SourceTikTokAds{}
 		r.Source.TikTokAds.ConnectionID = types.StringValue(resp.Source.SourceTikTokAds.ConnectionID)
 		r.Source.TikTokAds.DataLevel = types.StringPointerValue(resp.Source.SourceTikTokAds.DataLevel)
 		r.Source.TikTokAds.Dimensions = nil

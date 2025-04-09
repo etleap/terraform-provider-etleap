@@ -27,7 +27,7 @@ type GetQUORAADSConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionQuora *shared.ConnectionQuora
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

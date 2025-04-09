@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionDb2ShardedType string
+
+const (
+	ConnectionDb2ShardedTypeDb2Sharded ConnectionDb2ShardedType = "DB2_SHARDED"
+)
+
+func (e ConnectionDb2ShardedType) ToPointer() *ConnectionDb2ShardedType {
+	return &e
+}
+
+func (e *ConnectionDb2ShardedType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DB2_SHARDED":
+		*e = ConnectionDb2ShardedType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionDb2ShardedType: %v", v)
+	}
+}
+
 // ConnectionDb2ShardedStatus - The current status of the connection.
 type ConnectionDb2ShardedStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionDb2ShardedDefaultUpdateSchedule) GetUpdateSchedule() *UpdateS
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionDb2ShardedDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionDb2ShardedDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionDb2ShardedDefaultUpdateSchedule) GetUpdateScheduleMonthly() *
 func (o *ConnectionDb2ShardedDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionDb2ShardedDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,53 +125,36 @@ func (o *ConnectionDb2ShardedDefaultUpdateSchedule) GetUpdateScheduleWeekly() *U
 	return nil
 }
 
-type ConnectionDb2ShardedType string
-
-const (
-	ConnectionDb2ShardedTypeDb2Sharded ConnectionDb2ShardedType = "DB2_SHARDED"
-)
-
-func (e ConnectionDb2ShardedType) ToPointer() *ConnectionDb2ShardedType {
-	return &e
-}
-
-func (e *ConnectionDb2ShardedType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionDb2ShardedDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "DB2_SHARDED":
-		*e = ConnectionDb2ShardedType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionDb2ShardedType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionDb2Sharded struct {
-	// The current status of the connection.
-	Status ConnectionDb2ShardedStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionDb2ShardedDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                     `json:"active"`
-	Type   ConnectionDb2ShardedType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                   `json:"name"`
+	Type ConnectionDb2ShardedType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionDb2ShardedStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
-	Certificate *string `json:"certificate,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionDb2ShardedDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string               `json:"schema,omitempty"`
-	Shards []DatabaseShardOutput `json:"shards"`
+	Schema *string `json:"schema,omitempty"`
+	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
+	Certificate *string               `json:"certificate,omitempty"`
+	Shards      []DatabaseShardOutput `json:"shards"`
 }
 
 func (c ConnectionDb2Sharded) MarshalJSON() ([]byte, error) {
@@ -168,11 +168,11 @@ func (c *ConnectionDb2Sharded) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionDb2Sharded) GetStatus() ConnectionDb2ShardedStatus {
+func (o *ConnectionDb2Sharded) GetID() string {
 	if o == nil {
-		return ConnectionDb2ShardedStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionDb2Sharded) GetName() string {
@@ -182,18 +182,11 @@ func (o *ConnectionDb2Sharded) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionDb2Sharded) GetCreateDate() time.Time {
+func (o *ConnectionDb2Sharded) GetType() ConnectionDb2ShardedType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionDb2ShardedType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionDb2Sharded) GetDefaultUpdateSchedule() []ConnectionDb2ShardedDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionDb2ShardedDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionDb2Sharded) GetActive() bool {
@@ -203,18 +196,18 @@ func (o *ConnectionDb2Sharded) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionDb2Sharded) GetType() ConnectionDb2ShardedType {
+func (o *ConnectionDb2Sharded) GetStatus() ConnectionDb2ShardedStatus {
 	if o == nil {
-		return ConnectionDb2ShardedType("")
+		return ConnectionDb2ShardedStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionDb2Sharded) GetID() string {
+func (o *ConnectionDb2Sharded) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionDb2Sharded) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -224,9 +217,9 @@ func (o *ConnectionDb2Sharded) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionDb2Sharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionDb2Sharded) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -234,13 +227,6 @@ func (o *ConnectionDb2Sharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMon
 func (o *ConnectionDb2Sharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionDb2Sharded) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -259,11 +245,18 @@ func (o *ConnectionDb2Sharded) GetUpdateScheduleWeekly() *UpdateScheduleModeWeek
 	return nil
 }
 
-func (o *ConnectionDb2Sharded) GetCertificate() *string {
-	if o == nil {
-		return nil
+func (o *ConnectionDb2Sharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.Certificate
+	return nil
+}
+
+func (o *ConnectionDb2Sharded) GetDefaultUpdateSchedule() []ConnectionDb2ShardedDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionDb2ShardedDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionDb2Sharded) GetSchema() *string {
@@ -271,6 +264,13 @@ func (o *ConnectionDb2Sharded) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *ConnectionDb2Sharded) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionDb2Sharded) GetShards() []DatabaseShardOutput {
@@ -286,13 +286,13 @@ type ConnectionDb2ShardedInput struct {
 	Type ConnectionDb2ShardedType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
-	Certificate *string `json:"certificate,omitempty"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string         `json:"schema,omitempty"`
-	Shards []DatabaseShard `json:"shards"`
+	Schema *string `json:"schema,omitempty"`
+	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
+	Certificate *string         `json:"certificate,omitempty"`
+	Shards      []DatabaseShard `json:"shards"`
 }
 
 func (o *ConnectionDb2ShardedInput) GetName() string {
@@ -316,9 +316,9 @@ func (o *ConnectionDb2ShardedInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionDb2ShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionDb2ShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -326,13 +326,6 @@ func (o *ConnectionDb2ShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleMo
 func (o *ConnectionDb2ShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionDb2ShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -351,11 +344,11 @@ func (o *ConnectionDb2ShardedInput) GetUpdateScheduleWeekly() *UpdateScheduleMod
 	return nil
 }
 
-func (o *ConnectionDb2ShardedInput) GetCertificate() *string {
-	if o == nil {
-		return nil
+func (o *ConnectionDb2ShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.Certificate
+	return nil
 }
 
 func (o *ConnectionDb2ShardedInput) GetSchema() *string {
@@ -363,6 +356,13 @@ func (o *ConnectionDb2ShardedInput) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *ConnectionDb2ShardedInput) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *ConnectionDb2ShardedInput) GetShards() []DatabaseShard {

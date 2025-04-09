@@ -32,9 +32,9 @@ func (e *SourceFreshchatType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFreshchat struct {
+	Type SourceFreshchatType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string              `json:"connectionId"`
-	Type         SourceFreshchatType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Freshchat resource. Example values: [Agents, Channels, Conversations, Conversation Messages]
@@ -43,18 +43,18 @@ type SourceFreshchat struct {
 	View []string `json:"view,omitempty"`
 }
 
-func (o *SourceFreshchat) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
-}
-
 func (o *SourceFreshchat) GetType() SourceFreshchatType {
 	if o == nil {
 		return SourceFreshchatType("")
 	}
 	return o.Type
+}
+
+func (o *SourceFreshchat) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceFreshchat) GetLatencyThreshold() *int64 {

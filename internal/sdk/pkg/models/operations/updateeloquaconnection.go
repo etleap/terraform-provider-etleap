@@ -34,8 +34,8 @@ type UpdateELOQUAConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionEloqua *shared.ConnectionEloquaOutput
-	// Connection for this id was not found.
+	ConnectionEloqua *shared.ConnectionEloqua
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateELOQUAConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateELOQUAConnectionResponse) GetConnectionEloqua() *shared.ConnectionEloquaOutput {
+func (o *UpdateELOQUAConnectionResponse) GetConnectionEloqua() *shared.ConnectionEloqua {
 	if o == nil {
 		return nil
 	}

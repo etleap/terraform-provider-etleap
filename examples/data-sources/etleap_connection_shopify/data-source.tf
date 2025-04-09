@@ -1,3 +1,3 @@
 data "etleap_connection_shopify" "my_connectionshopify" {
-  id = "50333958-a96b-465a-97f3-b58e0e59f896"
+  id = "3a79fac9-7692-4965-8a06-ff78202f5539"
 }

@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionOutreachType string
+
+const (
+	ConnectionOutreachTypeOutreach ConnectionOutreachType = "OUTREACH"
+)
+
+func (e ConnectionOutreachType) ToPointer() *ConnectionOutreachType {
+	return &e
+}
+
+func (e *ConnectionOutreachType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "OUTREACH":
+		*e = ConnectionOutreachType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionOutreachType: %v", v)
+	}
+}
+
 // ConnectionOutreachStatus - The current status of the connection.
 type ConnectionOutreachStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionOutreachDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSch
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionOutreachDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionOutreachDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionOutreachDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Up
 func (o *ConnectionOutreachDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionOutreachDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,47 +125,30 @@ func (o *ConnectionOutreachDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Upd
 	return nil
 }
 
-type ConnectionOutreachType string
-
-const (
-	ConnectionOutreachTypeOutreach ConnectionOutreachType = "OUTREACH"
-)
-
-func (e ConnectionOutreachType) ToPointer() *ConnectionOutreachType {
-	return &e
-}
-
-func (e *ConnectionOutreachType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionOutreachDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "OUTREACH":
-		*e = ConnectionOutreachType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionOutreachType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionOutreach struct {
-	// The current status of the connection.
-	Status ConnectionOutreachStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionOutreachDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                   `json:"active"`
-	Type   ConnectionOutreachType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                 `json:"name"`
+	Type ConnectionOutreachType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionOutreachStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Username       string               `json:"username"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionOutreachDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	Username              string                                    `json:"username"`
 }
 
 func (c ConnectionOutreach) MarshalJSON() ([]byte, error) {
@@ -162,11 +162,11 @@ func (c *ConnectionOutreach) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionOutreach) GetStatus() ConnectionOutreachStatus {
+func (o *ConnectionOutreach) GetID() string {
 	if o == nil {
-		return ConnectionOutreachStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionOutreach) GetName() string {
@@ -176,18 +176,11 @@ func (o *ConnectionOutreach) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionOutreach) GetCreateDate() time.Time {
+func (o *ConnectionOutreach) GetType() ConnectionOutreachType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionOutreachType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionOutreach) GetDefaultUpdateSchedule() []ConnectionOutreachDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionOutreachDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionOutreach) GetActive() bool {
@@ -197,18 +190,18 @@ func (o *ConnectionOutreach) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionOutreach) GetType() ConnectionOutreachType {
+func (o *ConnectionOutreach) GetStatus() ConnectionOutreachStatus {
 	if o == nil {
-		return ConnectionOutreachType("")
+		return ConnectionOutreachStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionOutreach) GetID() string {
+func (o *ConnectionOutreach) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionOutreach) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -218,9 +211,9 @@ func (o *ConnectionOutreach) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionOutreach) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionOutreach) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -228,13 +221,6 @@ func (o *ConnectionOutreach) GetUpdateScheduleMonthly() *UpdateScheduleModeMonth
 func (o *ConnectionOutreach) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionOutreach) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -251,6 +237,20 @@ func (o *ConnectionOutreach) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
+}
+
+func (o *ConnectionOutreach) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionOutreach) GetDefaultUpdateSchedule() []ConnectionOutreachDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionOutreachDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionOutreach) GetUsername() string {
@@ -291,9 +291,9 @@ func (o *ConnectionOutreachInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionOutreachInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionOutreachInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -301,13 +301,6 @@ func (o *ConnectionOutreachInput) GetUpdateScheduleMonthly() *UpdateScheduleMode
 func (o *ConnectionOutreachInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionOutreachInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -322,6 +315,13 @@ func (o *ConnectionOutreachInput) GetUpdateScheduleDaily() *UpdateScheduleModeDa
 func (o *ConnectionOutreachInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionOutreachInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

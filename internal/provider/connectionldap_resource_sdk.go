@@ -72,12 +72,12 @@ func (r *ConnectionLDAPResourceModel) ToSharedConnectionLdapInput() *shared.Conn
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,29 +86,29 @@ func (r *ConnectionLDAPResourceModel) ToSharedConnectionLdapInput() *shared.Conn
 			}
 		}
 	}
-	baseDn := r.BaseDn.ValueString()
+	hostname := r.Hostname.ValueString()
+	port := r.Port.ValueInt64()
 	useSsl := new(bool)
 	if !r.UseSsl.IsUnknown() && !r.UseSsl.IsNull() {
 		*useSsl = r.UseSsl.ValueBool()
 	} else {
 		useSsl = nil
 	}
-	hostname := r.Hostname.ValueString()
-	pen := r.Pen.ValueInt64()
 	user := r.User.ValueString()
 	password := r.Password.ValueString()
-	port := r.Port.ValueInt64()
+	pen := r.Pen.ValueInt64()
+	baseDn := r.BaseDn.ValueString()
 	out := shared.ConnectionLdapInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		BaseDn:         baseDn,
-		UseSsl:         useSsl,
 		Hostname:       hostname,
-		Pen:            pen,
+		Port:           port,
+		UseSsl:         useSsl,
 		User:           user,
 		Password:       password,
-		Port:           port,
+		Pen:            pen,
+		BaseDn:         baseDn,
 	}
 	return &out
 }
@@ -121,7 +121,7 @@ func (r *ConnectionLDAPResourceModel) RefreshFromSharedConnectionLdap(resp *shar
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -208,11 +208,11 @@ func (r *ConnectionLDAPResourceModel) RefreshFromSharedConnectionLdap(resp *shar
 }
 
 func (r *ConnectionLDAPResourceModel) ToSharedConnectionLdapUpdate() *shared.ConnectionLdapUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionLdapUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -220,11 +220,11 @@ func (r *ConnectionLDAPResourceModel) ToSharedConnectionLdapUpdate() *shared.Con
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -287,12 +287,12 @@ func (r *ConnectionLDAPResourceModel) ToSharedConnectionLdapUpdate() *shared.Con
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -301,29 +301,23 @@ func (r *ConnectionLDAPResourceModel) ToSharedConnectionLdapUpdate() *shared.Con
 			}
 		}
 	}
-	baseDn := new(string)
-	if !r.BaseDn.IsUnknown() && !r.BaseDn.IsNull() {
-		*baseDn = r.BaseDn.ValueString()
-	} else {
-		baseDn = nil
-	}
-	useSsl := new(bool)
-	if !r.UseSsl.IsUnknown() && !r.UseSsl.IsNull() {
-		*useSsl = r.UseSsl.ValueBool()
-	} else {
-		useSsl = nil
-	}
 	hostname := new(string)
 	if !r.Hostname.IsUnknown() && !r.Hostname.IsNull() {
 		*hostname = r.Hostname.ValueString()
 	} else {
 		hostname = nil
 	}
-	pen := new(int64)
-	if !r.Pen.IsUnknown() && !r.Pen.IsNull() {
-		*pen = r.Pen.ValueInt64()
+	port := new(int64)
+	if !r.Port.IsUnknown() && !r.Port.IsNull() {
+		*port = r.Port.ValueInt64()
 	} else {
-		pen = nil
+		port = nil
+	}
+	useSsl := new(bool)
+	if !r.UseSsl.IsUnknown() && !r.UseSsl.IsNull() {
+		*useSsl = r.UseSsl.ValueBool()
+	} else {
+		useSsl = nil
 	}
 	user := new(string)
 	if !r.User.IsUnknown() && !r.User.IsNull() {
@@ -337,24 +331,30 @@ func (r *ConnectionLDAPResourceModel) ToSharedConnectionLdapUpdate() *shared.Con
 	} else {
 		password = nil
 	}
-	port := new(int64)
-	if !r.Port.IsUnknown() && !r.Port.IsNull() {
-		*port = r.Port.ValueInt64()
+	pen := new(int64)
+	if !r.Pen.IsUnknown() && !r.Pen.IsNull() {
+		*pen = r.Pen.ValueInt64()
 	} else {
-		port = nil
+		pen = nil
+	}
+	baseDn := new(string)
+	if !r.BaseDn.IsUnknown() && !r.BaseDn.IsNull() {
+		*baseDn = r.BaseDn.ValueString()
+	} else {
+		baseDn = nil
 	}
 	out := shared.ConnectionLdapUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
-		BaseDn:         baseDn,
-		UseSsl:         useSsl,
 		Hostname:       hostname,
-		Pen:            pen,
+		Port:           port,
+		UseSsl:         useSsl,
 		User:           user,
 		Password:       password,
-		Port:           port,
+		Pen:            pen,
+		BaseDn:         baseDn,
 	}
 	return &out
 }

@@ -32,31 +32,17 @@ func (e *ConnectionActiveCampaignUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionActiveCampaignUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                              `json:"active,omitempty"`
-	Type   ConnectionActiveCampaignUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                            `json:"name,omitempty"`
+	Type ConnectionActiveCampaignUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Your API key can be found in your account on the Settings page under the "Developer" tab. Each user in your ActiveCampaign account has their own unique API key.
-	APIKey *string `json:"apiKey,omitempty"`
 	// The base URL is specific to your account. Your API URL can be found in your account on the My Settings page under the "Developer" tab.
 	BaseURL *string `json:"baseUrl,omitempty"`
-}
-
-func (o *ConnectionActiveCampaignUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionActiveCampaignUpdate) GetType() ConnectionActiveCampaignUpdateType {
-	if o == nil {
-		return ConnectionActiveCampaignUpdateType("")
-	}
-	return o.Type
+	// Your API key can be found in your account on the Settings page under the "Developer" tab. Each user in your ActiveCampaign account has their own unique API key.
+	APIKey *string `json:"apiKey,omitempty"`
 }
 
 func (o *ConnectionActiveCampaignUpdate) GetName() *string {
@@ -66,6 +52,20 @@ func (o *ConnectionActiveCampaignUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionActiveCampaignUpdate) GetType() ConnectionActiveCampaignUpdateType {
+	if o == nil {
+		return ConnectionActiveCampaignUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionActiveCampaignUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionActiveCampaignUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -73,9 +73,9 @@ func (o *ConnectionActiveCampaignUpdate) GetUpdateSchedule() *UpdateScheduleType
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionActiveCampaignUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionActiveCampaignUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +83,6 @@ func (o *ConnectionActiveCampaignUpdate) GetUpdateScheduleMonthly() *UpdateSched
 func (o *ConnectionActiveCampaignUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionActiveCampaignUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,11 +101,11 @@ func (o *ConnectionActiveCampaignUpdate) GetUpdateScheduleWeekly() *UpdateSchedu
 	return nil
 }
 
-func (o *ConnectionActiveCampaignUpdate) GetAPIKey() *string {
-	if o == nil {
-		return nil
+func (o *ConnectionActiveCampaignUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.APIKey
+	return nil
 }
 
 func (o *ConnectionActiveCampaignUpdate) GetBaseURL() *string {
@@ -120,4 +113,11 @@ func (o *ConnectionActiveCampaignUpdate) GetBaseURL() *string {
 		return nil
 	}
 	return o.BaseURL
+}
+
+func (o *ConnectionActiveCampaignUpdate) GetAPIKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIKey
 }

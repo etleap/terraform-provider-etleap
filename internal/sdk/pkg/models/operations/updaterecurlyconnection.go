@@ -34,8 +34,8 @@ type UpdateRECURLYConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionRecurly *shared.ConnectionRecurlyOutput
-	// Connection for this id was not found.
+	ConnectionRecurly *shared.ConnectionRecurly
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateRECURLYConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateRECURLYConnectionResponse) GetConnectionRecurly() *shared.ConnectionRecurlyOutput {
+func (o *UpdateRECURLYConnectionResponse) GetConnectionRecurly() *shared.ConnectionRecurly {
 	if o == nil {
 		return nil
 	}

@@ -12,4 +12,5 @@ type SourceSnapchatAds struct {
 	LatencyThreshold  types.Int64    `tfsdk:"latency_threshold"`
 	Metrics           []types.String `tfsdk:"metrics"`
 	ReportDimension   []types.String `tfsdk:"report_dimension"`
+	Type              types.String   `tfsdk:"type"`
 }

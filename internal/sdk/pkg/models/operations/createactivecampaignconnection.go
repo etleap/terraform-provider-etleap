@@ -15,7 +15,7 @@ type CreateACTIVECAMPAIGNConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionActiveCampaign *shared.ConnectionActiveCampaignOutput
+	ConnectionActiveCampaign *shared.ConnectionActiveCampaign
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateACTIVECAMPAIGNConnectionResponse) GetRawResponse() *http.Response
 	return o.RawResponse
 }
 
-func (o *CreateACTIVECAMPAIGNConnectionResponse) GetConnectionActiveCampaign() *shared.ConnectionActiveCampaignOutput {
+func (o *CreateACTIVECAMPAIGNConnectionResponse) GetConnectionActiveCampaign() *shared.ConnectionActiveCampaign {
 	if o == nil {
 		return nil
 	}
