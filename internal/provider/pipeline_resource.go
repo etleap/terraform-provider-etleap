@@ -5,9 +5,6 @@ package provider
 import (
 	"context"
 	"fmt"
-	"slices"
-	"time"
-
 	speakeasy_boolplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/boolplanmodifier"
 	speakeasy_int64planmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/int64planmodifier"
 	speakeasy_listplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/listplanmodifier"
@@ -16,7 +13,6 @@ import (
 	speakeasy_stringplanmodifier "github.com/etleap/terraform-provider-etleap/internal/planmodifiers/stringplanmodifier"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/operations"
-	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/shared"
 	"github.com/etleap/terraform-provider-etleap/internal/validators"
 	speakeasy_int64validators "github.com/etleap/terraform-provider-etleap/internal/validators/int64validators"
 	speakeasy_listvalidators "github.com/etleap/terraform-provider-etleap/internal/validators/listvalidators"
@@ -39,7 +35,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -105,21 +100,25 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 				Description: `Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
 			},
 			"destination": schema.SingleNestedAttribute{
-				// [ICE-364] Prevents TF from recreating a resource if certain destination properties are changed
-				// e.g. automatic schema changes
-				PlanModifiers: []planmodifier.Object{},
-				Required:      true,
+				PlanModifiers: []planmodifier.Object{
+					objectplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"delta_lake": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{},
-						Optional:      true,
+						PlanModifiers: []planmodifier.Object{
+							objectplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"automatic_schema_changes": schema.BoolAttribute{
-								Computed:      true,
-								PlanModifiers: []planmodifier.Bool{},
-								Optional:      true,
-								Default:       booldefault.StaticBool(true),
-								Description:   `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
+								Computed: true,
+								PlanModifiers: []planmodifier.Bool{
+									boolplanmodifier.RequiresReplaceIfConfigured(),
+								},
+								Optional:    true,
+								Default:     booldefault.StaticBool(true),
+								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
 							},
 							"connection_id": schema.StringAttribute{
 								PlanModifiers: []planmodifier.String{
@@ -169,15 +168,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Default:     booldefault.StaticBool(false),
 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
-							// [VIK-4496] Add support for schema and table renames
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{},
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+								},
 								Required:    true,
 								Description: `The schema in the destination that the tables will be created in. Requires replacement if changed. `,
 							},
-							// [VIK-4496] Add support for schema and table renames
 							"table": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{},
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+								},
 								Required:    true,
 								Description: `Requires replacement if changed. `,
 							},
@@ -277,17 +278,19 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						Description: `Requires replacement if changed. `,
 					},
 					"redshift": schema.SingleNestedAttribute{
-						// [ICE-364] Prevents TF from recreating a resource if certain destination properties are changed
-						// e.g. automatic schema changes
-						PlanModifiers: []planmodifier.Object{},
-						Optional:      true,
+						PlanModifiers: []planmodifier.Object{
+							objectplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"automatic_schema_changes": schema.BoolAttribute{
-								Computed:      true,
-								PlanModifiers: []planmodifier.Bool{},
-								Optional:      true,
-								Default:       booldefault.StaticBool(true),
-								Description:   `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
+								Computed: true,
+								PlanModifiers: []planmodifier.Bool{
+									boolplanmodifier.RequiresReplaceIfConfigured(),
+								},
+								Optional:    true,
+								Default:     booldefault.StaticBool(true),
+								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
 							},
 							"compress_columns": schema.BoolAttribute{
 								Computed: true,
@@ -386,9 +389,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Default:     booldefault.StaticBool(false),
 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
-							// [VIK-4496] Add support for schema and table renames
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{},
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+								},
 								Optional:    true,
 								Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used. Requires replacement if changed. `,
 							},
@@ -403,9 +407,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									listvalidator.SizeAtLeast(1),
 								},
 							},
-							// [VIK-4496] Add support for schema and table renames
 							"table": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{},
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+								},
 								Required:    true,
 								Description: `Requires replacement if changed. `,
 							},
@@ -443,17 +448,19 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						Description: `Requires replacement if changed. `,
 					},
 					"s3_data_lake": schema.SingleNestedAttribute{
-						// [ICE-364] Prevents TF from recreating a resource if certain destination properties are changed
-						// e.g. automatic schema changes
-						PlanModifiers: []planmodifier.Object{},
-						Optional:      true,
+						PlanModifiers: []planmodifier.Object{
+							objectplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"automatic_schema_changes": schema.BoolAttribute{
-								Computed:      true,
-								PlanModifiers: []planmodifier.Bool{},
-								Optional:      true,
-								Default:       booldefault.StaticBool(true),
-								Description:   `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
+								Computed: true,
+								PlanModifiers: []planmodifier.Bool{
+									boolplanmodifier.RequiresReplaceIfConfigured(),
+								},
+								Optional:    true,
+								Default:     booldefault.StaticBool(true),
+								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
 							},
 							"connection_id": schema.StringAttribute{
 								PlanModifiers: []planmodifier.String{
@@ -529,17 +536,19 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						Description: `Requires replacement if changed. `,
 					},
 					"snowflake": schema.SingleNestedAttribute{
-						// [ICE-364] Prevents TF from recreating a resource if certain destination properties are changed
-						// e.g. automatic schema changes
-						PlanModifiers: []planmodifier.Object{},
-						Optional:      true,
+						PlanModifiers: []planmodifier.Object{
+							objectplanmodifier.RequiresReplaceIfConfigured(),
+						},
+						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"automatic_schema_changes": schema.BoolAttribute{
-								Computed:      true,
-								PlanModifiers: []planmodifier.Bool{},
-								Optional:      true,
-								Default:       booldefault.StaticBool(true),
-								Description:   `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
+								Computed: true,
+								PlanModifiers: []planmodifier.Bool{
+									boolplanmodifier.RequiresReplaceIfConfigured(),
+								},
+								Optional:    true,
+								Default:     booldefault.StaticBool(true),
+								Description: `Whether schema changes detected during transformation should be handled automatically or not. Defaults to ` + "`" + `true` + "`" + `. Requires replacement if changed. ; Default: true`,
 							},
 							"clustering_keys": schema.ListAttribute{
 								PlanModifiers: []planmodifier.List{
@@ -584,12 +593,16 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{},
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+								},
 								Optional:    true,
 								Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used. Requires replacement if changed. `,
 							},
 							"table": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{},
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+								},
 								Required:    true,
 								Description: `Requires replacement if changed. `,
 							},
@@ -7541,16 +7554,7 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
 	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
-	// [ICE-364] Etleap monkey-patch; unwrapping the first destination of the response into the TF state.
-	existingDestination := data.Destination.Redshift
-	if existingDestination == nil {
-		data.Destination.Redshift = data.Destinations[0].Destination.Redshift
-		data.Destination.Snowflake = data.Destinations[0].Destination.Snowflake
-		data.Destination.DeltaLake = data.Destinations[0].Destination.DeltaLake
-		data.Destination.S3DataLake = data.Destinations[0].Destination.S3DataLake
-	}
-
-	// [ICE-364] Save updated data into Terraform state
+	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -7598,16 +7602,7 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
 	}
 	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
 
-	// [ICE-364] Etleap monkey-patch; unwrapping the first destination of the response into the TF state.
-	existingDestination := data.Destination.Redshift
-	if existingDestination == nil {
-		data.Destination.Redshift = data.Destinations[0].Destination.Redshift
-		data.Destination.Snowflake = data.Destinations[0].Destination.Snowflake
-		data.Destination.DeltaLake = data.Destinations[0].Destination.DeltaLake
-		data.Destination.S3DataLake = data.Destinations[0].Destination.S3DataLake
-	}
-
-	// [ICE-364] Save updated data into Terraform state
+	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
@@ -7627,39 +7622,6 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 
 	id := data.ID.ValueString()
 	pipelineUpdate := *data.ToSharedPipelineUpdate()
-
-	// [ICE-364] Etleap monkey-patch for allowing certain properties to be changed without replacing the pipeline
-	var schemaChanges bool
-	var connectionId string
-	// [VIK-4496] Support for table and schema renames
-	var schema string
-	var table string
-	if data.Destination.Redshift != nil {
-		schemaChanges = data.Destination.Redshift.AutomaticSchemaChanges.ValueBool()
-		connectionId = data.Destination.Redshift.ConnectionID.ValueString()
-		schema = data.Destination.Redshift.Schema.ValueString()
-		table = data.Destination.Redshift.Table.ValueString()
-	} else if data.Destination.Snowflake != nil {
-		schemaChanges = data.Destination.Snowflake.AutomaticSchemaChanges.ValueBool()
-		connectionId = data.Destination.Snowflake.ConnectionID.ValueString()
-		schema = data.Destination.Snowflake.Schema.ValueString()
-		table = data.Destination.Snowflake.Table.ValueString()
-	} else if data.Destination.DeltaLake != nil {
-		schemaChanges = data.Destination.DeltaLake.AutomaticSchemaChanges.ValueBool()
-		connectionId = data.Destination.DeltaLake.ConnectionID.ValueString()
-		schema = data.Destination.DeltaLake.Schema.ValueString()
-		table = data.Destination.DeltaLake.Table.ValueString()
-	}
-
-	var destUpdate *shared.DestinationUpdate = &shared.DestinationUpdate{
-		ConnectionID:           connectionId,
-		AutomaticSchemaChanges: &schemaChanges,
-		Schema:                 &schema,
-		Table:                  &table,
-	}
-	pipelineUpdate.DestinationUpdate = []shared.DestinationUpdate{*destUpdate}
-	// Etleap monkey-patch end
-
 	request := operations.UpdatePipelineRequest{
 		ID:             id,
 		PipelineUpdate: pipelineUpdate,
@@ -7684,31 +7646,6 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-
-	// [VIK-4496] Support for table and schema renames
-	// Waiting for rename to complete
-	if destUpdate.Schema != nil || destUpdate.Table != nil {
-		var originalSchema string
-		var originalTable string
-		if data.Destination.Redshift != nil {
-			originalSchema = data.Destination.Redshift.Schema.String()
-			originalTable = data.Destination.Redshift.Table.String()
-		} else if data.Destination.Snowflake != nil {
-			originalSchema = data.Destination.Snowflake.Schema.String()
-			originalTable = data.Destination.Snowflake.Table.String()
-		} else if data.Destination.DeltaLake != nil {
-			originalSchema = data.Destination.DeltaLake.Schema.String()
-			originalTable = data.Destination.DeltaLake.Table.String()
-		}
-
-		_, err = waitPipelineRenamed(ctx, r, id, connectionId, originalSchema, originalTable, *destUpdate.Schema, *destUpdate.Table)
-		if err != nil {
-			resp.Diagnostics.AddError("failed while waiting for pipeline rename", err.Error())
-			return
-		}
-	}
-	// Etleap monkey-patch end
-
 	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
@@ -7737,15 +7674,6 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
 	}
 	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-
-	// [ICE-364] Etleap monkey-patch; unwrapping the first destination of the response into the TF state.
-	existingDestination := data.Destination.Redshift
-	if existingDestination == nil {
-		data.Destination.Redshift = data.Destinations[0].Destination.Redshift
-		data.Destination.Snowflake = data.Destinations[0].Destination.Snowflake
-		data.Destination.DeltaLake = data.Destinations[0].Destination.DeltaLake
-		data.Destination.S3DataLake = data.Destinations[0].Destination.S3DataLake
-	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -7796,76 +7724,4 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
 
 func (r *PipelineResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
-}
-
-// [VIK-4496] Etleap monkey-patch functions for shchema and table rename
-func waitPipelineRenamed(ctx context.Context, r *PipelineResource, pipelineId string, destinationId string, originalSchema string, originalTable string, newSchema string, newTable string) (*operations.GetPipelineRequest, error) {
-	const (
-		timeout = 15 * time.Minute
-	)
-
-	stateConf := &retry.StateChangeConf{
-		Pending:    []string{originalSchema + "." + originalTable},
-		Target:     []string{newSchema + "." + newTable},
-		Refresh:    getPipelineSchemaAndTable(ctx, r, pipelineId, destinationId),
-		Timeout:    timeout,
-		MinTimeout: 10 * time.Second,
-		Delay:      30 * time.Second,
-	}
-
-	outputRaw, err := stateConf.WaitForStateContext(ctx)
-
-	if output, ok := outputRaw.(*operations.GetPipelineRequest); ok {
-		return output, err
-	}
-
-	return nil, err
-}
-
-func getPipelineSchemaAndTable(ctx context.Context, r *PipelineResource, pipelineId string, destinationId string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
-
-		request := operations.GetPipelineRequest{
-			ID: pipelineId,
-		}
-		res, err := r.client.Pipeline.Get(ctx, request)
-
-		if err != nil {
-			return nil, "", fmt.Errorf("failed to get pipeline %s: %w", pipelineId, err)
-		}
-
-		if res == nil || res.PipelineOutput == nil || res.PipelineOutput.Destinations == nil {
-			return nil, "", fmt.Errorf("missing expected body for pipeline %s, response: %s", pipelineId, debugResponse(res.RawResponse))
-		}
-
-		destinationIndex := slices.IndexFunc(res.PipelineOutput.Destinations, func(destination shared.DestinationInfoAndPipelineVersions) bool {
-			return destination.Destination.DestinationRedshift.ConnectionID == destinationId
-		})
-
-		if destinationIndex == -1 {
-			return nil, "", fmt.Errorf("missing expected destination %s for pipeline %s, response: %s", destinationId, pipelineId, debugResponse(res.RawResponse))
-		}
-
-		var finalSchemaName string
-		var finalTableName string
-		for _, destination := range res.PipelineOutput.Destinations {
-			if destination.Destination.DestinationRedshift != nil && destination.Destination.DestinationRedshift.ConnectionID == destinationId {
-				finalSchemaName = *destination.Destination.DestinationRedshift.Schema
-				finalTableName = destination.Destination.DestinationRedshift.Table
-			} else if destination.Destination.DestinationSnowflake != nil && destination.Destination.DestinationSnowflake.ConnectionID == destinationId {
-				finalSchemaName = *destination.Destination.DestinationSnowflake.Schema
-				finalTableName = destination.Destination.DestinationSnowflake.Table
-			} else if destination.Destination.DestinationDeltaLake != nil && destination.Destination.DestinationDeltaLake.ConnectionID == destinationId {
-				finalSchemaName = destination.Destination.DestinationDeltaLake.Schema
-				finalTableName = destination.Destination.DestinationDeltaLake.Table
-			}
-
-			if finalTableName != "" {
-				// Found the lucky one
-				break
-			}
-		}
-
-		return res, finalSchemaName + "." + finalTableName, nil
-	}
 }

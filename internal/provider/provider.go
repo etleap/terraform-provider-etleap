@@ -4,9 +4,6 @@ package provider
 
 import (
 	"context"
-	"crypto/tls"
-	"net/http"
-
 	"github.com/etleap/terraform-provider-etleap/internal/sdk"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -26,12 +23,10 @@ type EtleapProvider struct {
 }
 
 // EtleapProviderModel describes the provider data model.
-// [VIK-6259] Adding support for self-signed certificates
 type EtleapProviderModel struct {
-	ServerURL                 types.String `tfsdk:"server_url"`
-	Username                  types.String `tfsdk:"username"`
-	Password                  types.String `tfsdk:"password"`
-	SkipCertificateValidation types.Bool   `tfsdk:"skip_certificate_validation"`
+	ServerURL types.String `tfsdk:"server_url"`
+	Username  types.String `tfsdk:"username"`
+	Password  types.String `tfsdk:"password"`
 }
 
 func (p *EtleapProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -55,10 +50,6 @@ func (p *EtleapProvider) Schema(ctx context.Context, req provider.SchemaRequest,
 			"password": schema.StringAttribute{
 				Optional:  true,
 				Sensitive: true,
-			},
-			// [VIK-6259] Adding support for self-signed certificates
-			"skip_certificate_validation": schema.BoolAttribute{
-				Optional: true,
 			},
 		},
 	}
@@ -86,19 +77,9 @@ func (p *EtleapProvider) Configure(ctx context.Context, req provider.ConfigureRe
 		Password: password,
 	}
 
-	// [VIK-6259] Adding support for self-signed certificates
-	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: data.SkipCertificateValidation.ValueBool(),
-		},
-	}
-
 	opts := []sdk.SDKOption{
 		sdk.WithServerURL(ServerURL),
 		sdk.WithSecurity(security),
-		sdk.WithClient(&http.Client{
-			Transport: transport,
-		}),
 	}
 	client := sdk.New(opts...)
 
