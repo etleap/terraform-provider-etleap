@@ -749,6 +749,64 @@ index 91c53af..eb7b2b8 100644
 +		return res, finalSchemaName + "." + finalTableName, nil
 +	}
 +}
+diff --git a/internal/provider/pipeline_resource_sdk.go b/internal/provider/pipeline_resource_sdk.go
+index 1acd729..8c62cbe 100644
+--- a/internal/provider/pipeline_resource_sdk.go
++++ b/internal/provider/pipeline_resource_sdk.go
+@@ -8,6 +8,7 @@ import (
+ 	"github.com/hashicorp/terraform-plugin-framework/types"
+ 	"math/big"
+ 	"time"
++	"reflect"
+ )
+ 
+ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
+@@ -7114,6 +7115,12 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate
+ 			SourceZuoraUpdate: sourceZuoraUpdate,
+ 		}
+ 	}
++
++	// [VIK-6413] set the 'type' field to Nil to exclude it in the update pipeline request
++	if source != nil {
++		nilOutTypeField(source)
++	}
++
+ 	var refreshSchedule *shared.PipelineUpdateScheduleTypes
+ 	if r.RefreshSchedule != nil {
+ 		var refreshScheduleModeNeverScheduleTypesNeverScheduleMode *shared.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode
+@@ -7295,3 +7302,31 @@ func (r *PipelineResourceModel) ToSharedPipelineDelete() *shared.PipelineDelete
+ 	}
+ 	return &out
+ }
++
++// [VIK-6413] Function to set the 'type' field to Nil to exclude it in the update pipeline request
++func nilOutTypeField(s *shared.SourceTypesUpdate) {
++	val := reflect.ValueOf(s).Elem() // Get value of the struct
++
++	for i := 0; i < val.NumField(); i++ {
++		field := val.Field(i)
++
++		// Only process pointer fields that are not nil
++		if field.Kind() == reflect.Ptr && !field.IsNil() {
++			inner := field.Elem()
++			innerType := inner.Type()
++
++			for j := 0; j < inner.NumField(); j++ {
++				innerField := inner.Field(j)
++				fieldName := innerType.Field(j).Name
++
++				// Look for "Type" field
++				if fieldName == "Type" && innerField.CanSet() {
++					if innerField.Kind() == reflect.Ptr {
++						innerField.Set(reflect.Zero(innerField.Type()))
++						return
++					}
++				}
++			}
++		}
++	}
++}
+\ No newline at end of file
 diff --git a/internal/provider/provider.go b/internal/provider/provider.go
 index aac66b6..114ef28 100644
 --- a/internal/provider/provider.go
