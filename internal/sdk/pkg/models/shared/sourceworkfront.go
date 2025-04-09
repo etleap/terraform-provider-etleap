@@ -32,20 +32,13 @@ func (e *SourceWorkfrontType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWorkfront struct {
-	Type SourceWorkfrontType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string              `json:"connectionId"`
+	Type         SourceWorkfrontType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Workfront entity. Spelled capitalized without spaces. For the full list, start creating a pipeline in the Etleap UI.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceWorkfront) GetType() SourceWorkfrontType {
-	if o == nil {
-		return SourceWorkfrontType("")
-	}
-	return o.Type
 }
 
 func (o *SourceWorkfront) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceWorkfront) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceWorkfront) GetType() SourceWorkfrontType {
+	if o == nil {
+		return SourceWorkfrontType("")
+	}
+	return o.Type
 }
 
 func (o *SourceWorkfront) GetLatencyThreshold() *int64 {

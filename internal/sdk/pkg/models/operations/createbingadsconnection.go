@@ -15,7 +15,7 @@ type CreateBINGADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBing *shared.ConnectionBing
+	ConnectionBing *shared.ConnectionBingOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateBINGADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateBINGADSConnectionResponse) GetConnectionBing() *shared.ConnectionBing {
+func (o *CreateBINGADSConnectionResponse) GetConnectionBing() *shared.ConnectionBingOutput {
 	if o == nil {
 		return nil
 	}

@@ -36,7 +36,7 @@ type UpdateModelResponse struct {
 	RawResponse *http.Response
 	// OK
 	ModelOutput *shared.ModelOutput
-	// Bad Request
+	// Model for this id was not found.
 	Errors *shared.Errors
 }
 

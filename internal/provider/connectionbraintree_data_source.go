@@ -28,17 +28,17 @@ type ConnectionBRAINTREEDataSource struct {
 
 // ConnectionBRAINTREEDataSourceModel describes the data model.
 type ConnectionBRAINTREEDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	MerchantID            types.String            `tfsdk:"merchant_id"`
-	Name                  types.String            `tfsdk:"name"`
-	PublicKey             types.String            `tfsdk:"public_key"`
-	Sandbox               types.Bool              `tfsdk:"sandbox"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String                                    `tfsdk:"id"`
+	MerchantID            types.String                                    `tfsdk:"merchant_id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	PublicKey             types.String                                    `tfsdk:"public_key"`
+	Sandbox               types.Bool                                      `tfsdk:"sandbox"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -321,7 +321,7 @@ func (r *ConnectionBRAINTREEDataSource) Read(ctx context.Context, req datasource
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBraintree(res.ConnectionBraintree)
+	data.RefreshFromSharedConnectionBraintreeOutput(res.ConnectionBraintree)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

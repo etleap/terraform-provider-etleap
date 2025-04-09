@@ -28,18 +28,18 @@ type ConnectionPOSTGRESSHARDEDDataSource struct {
 
 // ConnectionPOSTGRESSHARDEDDataSourceModel describes the data model.
 type ConnectionPOSTGRESSHARDEDDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	AutoReplicate         types.String            `tfsdk:"auto_replicate"`
-	CdcEnabled            types.Bool              `tfsdk:"cdc_enabled"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Schema                types.String            `tfsdk:"schema"`
-	Shards                []DatabaseShardOutput   `tfsdk:"shards"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	AutoReplicate         types.String                                    `tfsdk:"auto_replicate"`
+	CdcEnabled            types.Bool                                      `tfsdk:"cdc_enabled"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Schema                types.String                                    `tfsdk:"schema"`
+	Shards                []DatabaseShardOutput                           `tfsdk:"shards"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.

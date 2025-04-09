@@ -28,20 +28,20 @@ type ConnectionMONGODBDataSource struct {
 
 // ConnectionMONGODBDataSourceModel describes the data model.
 type ConnectionMONGODBDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	AuthDatabaseName      types.String            `tfsdk:"auth_database_name"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DatabaseName          types.String            `tfsdk:"database_name"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	ReplicaSet            []ReplicaSet            `tfsdk:"replica_set"`
-	SSHConfig             *SSHConfig              `tfsdk:"ssh_config"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	Username              types.String            `tfsdk:"username"`
-	UseSsl                types.Bool              `tfsdk:"use_ssl"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	AuthDatabaseName      types.String                                    `tfsdk:"auth_database_name"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DatabaseName          types.String                                    `tfsdk:"database_name"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	ReplicaSet            []ReplicaSet                                    `tfsdk:"replica_set"`
+	SSHConfig             *SSHConfig                                      `tfsdk:"ssh_config"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Username              types.String                                    `tfsdk:"username"`
+	UseSsl                types.Bool                                      `tfsdk:"use_ssl"`
 }
 
 // Metadata returns the data source type name.
@@ -353,7 +353,7 @@ func (r *ConnectionMONGODBDataSource) Read(ctx context.Context, req datasource.R
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongoOutput(res.ConnectionMongo)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

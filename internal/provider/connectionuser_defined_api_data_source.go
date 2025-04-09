@@ -28,16 +28,16 @@ type ConnectionUSERDEFINEDAPIDataSource struct {
 
 // ConnectionUSERDEFINEDAPIDataSourceModel describes the data model.
 type ConnectionUSERDEFINEDAPIDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	Authentication        Authentication          `tfsdk:"authentication"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	Entities              []UserDefinedAPIEntity  `tfsdk:"entities"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	Authentication        Authentication                                  `tfsdk:"authentication"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	Entities              []UserDefinedAPIEntity                          `tfsdk:"entities"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.

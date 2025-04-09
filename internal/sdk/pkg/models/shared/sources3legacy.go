@@ -65,15 +65,15 @@ func (e *SourceS3LegacyNewFileBehavior) UnmarshalJSON(data []byte) error {
 }
 
 type SourceS3Legacy struct {
-	Type SourceS3LegacyType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string             `json:"connectionId"`
+	Type         SourceS3LegacyType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-	// Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
-	FileNameFilter *string `json:"fileNameFilter,omitempty"`
 	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
 	NewFileBehavior SourceS3LegacyNewFileBehavior `json:"newFileBehavior"`
+	// Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
+	FileNameFilter *string `json:"fileNameFilter,omitempty"`
 	// Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
 	LowWatermark *types.Date `json:"lowWatermark,omitempty"`
 	// File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here.
@@ -91,18 +91,18 @@ func (s *SourceS3Legacy) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceS3Legacy) GetType() SourceS3LegacyType {
-	if o == nil {
-		return SourceS3LegacyType("")
-	}
-	return o.Type
-}
-
 func (o *SourceS3Legacy) GetConnectionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceS3Legacy) GetType() SourceS3LegacyType {
+	if o == nil {
+		return SourceS3LegacyType("")
+	}
+	return o.Type
 }
 
 func (o *SourceS3Legacy) GetLatencyThreshold() *int64 {
@@ -112,18 +112,18 @@ func (o *SourceS3Legacy) GetLatencyThreshold() *int64 {
 	return o.LatencyThreshold
 }
 
-func (o *SourceS3Legacy) GetFileNameFilter() *string {
-	if o == nil {
-		return nil
-	}
-	return o.FileNameFilter
-}
-
 func (o *SourceS3Legacy) GetNewFileBehavior() SourceS3LegacyNewFileBehavior {
 	if o == nil {
 		return SourceS3LegacyNewFileBehavior("")
 	}
 	return o.NewFileBehavior
+}
+
+func (o *SourceS3Legacy) GetFileNameFilter() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FileNameFilter
 }
 
 func (o *SourceS3Legacy) GetLowWatermark() *types.Date {

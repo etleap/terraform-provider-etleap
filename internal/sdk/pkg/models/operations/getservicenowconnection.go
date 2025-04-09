@@ -27,7 +27,7 @@ type GetSERVICENOWConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionServiceNow *shared.ConnectionServiceNow
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

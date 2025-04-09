@@ -39,8 +39,8 @@ func (e *WatermarkDatetimeKeyValuePairFormat) UnmarshalJSON(data []byte) error {
 }
 
 type WatermarkDatetimeKeyValuePair struct {
-	Key    string                               `json:"key"`
 	Value  string                               `json:"value"`
+	Key    string                               `json:"key"`
 	Format *WatermarkDatetimeKeyValuePairFormat `default:"yyyy-MM-ddTHH:mm:ssX" json:"format"`
 }
 
@@ -55,18 +55,18 @@ func (w *WatermarkDatetimeKeyValuePair) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WatermarkDatetimeKeyValuePair) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
 func (o *WatermarkDatetimeKeyValuePair) GetValue() string {
 	if o == nil {
 		return ""
 	}
 	return o.Value
+}
+
+func (o *WatermarkDatetimeKeyValuePair) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
 }
 
 func (o *WatermarkDatetimeKeyValuePair) GetFormat() *WatermarkDatetimeKeyValuePairFormat {

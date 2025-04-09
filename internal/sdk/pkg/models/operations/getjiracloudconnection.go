@@ -26,8 +26,8 @@ type GetJIRACLOUDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionJiraCloud *shared.ConnectionJiraCloud
-	// Forbidden. You don't have access to view this connection.
+	ConnectionJiraCloud *shared.ConnectionJiraCloudOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetJIRACLOUDConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetJIRACLOUDConnectionResponse) GetConnectionJiraCloud() *shared.ConnectionJiraCloud {
+func (o *GetJIRACLOUDConnectionResponse) GetConnectionJiraCloud() *shared.ConnectionJiraCloudOutput {
 	if o == nil {
 		return nil
 	}

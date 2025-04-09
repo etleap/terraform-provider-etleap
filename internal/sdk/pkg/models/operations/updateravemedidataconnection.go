@@ -34,8 +34,8 @@ type UpdateRAVEMEDIDATAConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionRaveMedidata *shared.ConnectionRaveMedidata
-	// Bad Request
+	ConnectionRaveMedidata *shared.ConnectionRaveMedidataOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateRAVEMEDIDATAConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateRAVEMEDIDATAConnectionResponse) GetConnectionRaveMedidata() *shared.ConnectionRaveMedidata {
+func (o *UpdateRAVEMEDIDATAConnectionResponse) GetConnectionRaveMedidata() *shared.ConnectionRaveMedidataOutput {
 	if o == nil {
 		return nil
 	}

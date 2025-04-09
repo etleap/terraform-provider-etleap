@@ -32,31 +32,17 @@ func (e *ConnectionFreshchatUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionFreshchatUpdate struct {
-	// The unique name of this connection.
-	Name *string                        `json:"name,omitempty"`
-	Type *ConnectionFreshchatUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                          `json:"active,omitempty"`
+	Type   *ConnectionFreshchatUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your Freshchat domain. Can be found under Admin Settings -> Marketplace and Integrations -> API Settings under the "Your chat URL" label.
 	Domain *string `json:"domain,omitempty"`
 	// Your Freshchat API key. Can be found under Admin Settings -> Marketplace and Integrations -> API Settings under the "Your API Key" label.
 	APIKey *string `json:"apiKey,omitempty"`
-}
-
-func (o *ConnectionFreshchatUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionFreshchatUpdate) GetType() *ConnectionFreshchatUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionFreshchatUpdate) GetActive() *bool {
@@ -66,6 +52,20 @@ func (o *ConnectionFreshchatUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionFreshchatUpdate) GetType() *ConnectionFreshchatUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionFreshchatUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionFreshchatUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -73,9 +73,9 @@ func (o *ConnectionFreshchatUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionFreshchatUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionFreshchatUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -83,6 +83,13 @@ func (o *ConnectionFreshchatUpdate) GetUpdateScheduleInterval() *UpdateScheduleM
 func (o *ConnectionFreshchatUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionFreshchatUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -97,13 +104,6 @@ func (o *ConnectionFreshchatUpdate) GetUpdateScheduleDaily() *UpdateScheduleMode
 func (o *ConnectionFreshchatUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionFreshchatUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

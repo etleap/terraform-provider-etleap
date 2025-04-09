@@ -15,7 +15,7 @@ type CreateDELTALAKEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionDeltaLake *shared.ConnectionDeltaLake
+	ConnectionDeltaLake *shared.ConnectionDeltaLakeOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateDELTALAKEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateDELTALAKEConnectionResponse) GetConnectionDeltaLake() *shared.ConnectionDeltaLake {
+func (o *CreateDELTALAKEConnectionResponse) GetConnectionDeltaLake() *shared.ConnectionDeltaLakeOutput {
 	if o == nil {
 		return nil
 	}

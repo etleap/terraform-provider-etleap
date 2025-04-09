@@ -41,17 +41,17 @@ type ConnectionGOOGLESHEETSResource struct {
 
 // ConnectionGOOGLESHEETSResourceModel describes the resource data model.
 type ConnectionGOOGLESHEETSResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	Code                     types.String            `tfsdk:"code"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	Username                 types.String            `tfsdk:"username"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	Code                     types.String                                    `tfsdk:"code"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Username                 types.String                                    `tfsdk:"username"`
 }
 
 func (r *ConnectionGOOGLESHEETSResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -564,7 +564,7 @@ func (r *ConnectionGOOGLESHEETSResource) Create(ctx context.Context, req resourc
 		return
 	}
 
-	request := *data.ToSharedConnectionGoogleSheetsInput()
+	request := *data.ToSharedConnectionGoogleSheets()
 	res, err := r.client.Connection.CreateGOOGLESHEETSConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -585,7 +585,7 @@ func (r *ConnectionGOOGLESHEETSResource) Create(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionGoogleSheets(res.ConnectionGoogleSheets)
+	data.RefreshFromSharedConnectionGoogleSheetsOutput(res.ConnectionGoogleSheets)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetGOOGLESHEETSConnectionRequest{
@@ -611,7 +611,7 @@ func (r *ConnectionGOOGLESHEETSResource) Create(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionGoogleSheets(res1.ConnectionGoogleSheets)
+	data.RefreshFromSharedConnectionGoogleSheetsOutput(res1.ConnectionGoogleSheets)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -660,7 +660,7 @@ func (r *ConnectionGOOGLESHEETSResource) Read(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionGoogleSheets(res.ConnectionGoogleSheets)
+	data.RefreshFromSharedConnectionGoogleSheetsOutput(res.ConnectionGoogleSheets)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -706,7 +706,7 @@ func (r *ConnectionGOOGLESHEETSResource) Update(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionGoogleSheets(res.ConnectionGoogleSheets)
+	data.RefreshFromSharedConnectionGoogleSheetsOutput(res.ConnectionGoogleSheets)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetGOOGLESHEETSConnectionRequest{
@@ -732,7 +732,7 @@ func (r *ConnectionGOOGLESHEETSResource) Update(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionGoogleSheets(res1.ConnectionGoogleSheets)
+	data.RefreshFromSharedConnectionGoogleSheetsOutput(res1.ConnectionGoogleSheets)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionGoogleAnalyticsGa4Type string
-
-const (
-	ConnectionGoogleAnalyticsGa4TypeGoogleAnalyticsGa4 ConnectionGoogleAnalyticsGa4Type = "GOOGLE_ANALYTICS_GA4"
-)
-
-func (e ConnectionGoogleAnalyticsGa4Type) ToPointer() *ConnectionGoogleAnalyticsGa4Type {
-	return &e
-}
-
-func (e *ConnectionGoogleAnalyticsGa4Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "GOOGLE_ANALYTICS_GA4":
-		*e = ConnectionGoogleAnalyticsGa4Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionGoogleAnalyticsGa4Type: %v", v)
-	}
-}
-
 // ConnectionGoogleAnalyticsGa4Status - The current status of the connection.
 type ConnectionGoogleAnalyticsGa4Status string
 
@@ -97,9 +73,9 @@ func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateSchedule() 
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleInt
 func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,29 +108,46 @@ func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleWee
 	return nil
 }
 
-func (o *ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionGoogleAnalyticsGa4Type string
+
+const (
+	ConnectionGoogleAnalyticsGa4TypeGoogleAnalyticsGa4 ConnectionGoogleAnalyticsGa4Type = "GOOGLE_ANALYTICS_GA4"
+)
+
+func (e ConnectionGoogleAnalyticsGa4Type) ToPointer() *ConnectionGoogleAnalyticsGa4Type {
+	return &e
+}
+
+func (e *ConnectionGoogleAnalyticsGa4Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "GOOGLE_ANALYTICS_GA4":
+		*e = ConnectionGoogleAnalyticsGa4Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionGoogleAnalyticsGa4Type: %v", v)
+	}
 }
 
 type ConnectionGoogleAnalyticsGa4 struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                           `json:"name"`
-	Type ConnectionGoogleAnalyticsGa4Type `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionGoogleAnalyticsGa4Status `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	// Whether this connection has been marked as active.
+	Active bool                             `json:"active"`
+	Type   ConnectionGoogleAnalyticsGa4Type `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
 func (c ConnectionGoogleAnalyticsGa4) MarshalJSON() ([]byte, error) {
@@ -161,11 +161,11 @@ func (c *ConnectionGoogleAnalyticsGa4) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionGoogleAnalyticsGa4) GetID() string {
+func (o *ConnectionGoogleAnalyticsGa4) GetStatus() ConnectionGoogleAnalyticsGa4Status {
 	if o == nil {
-		return ""
+		return ConnectionGoogleAnalyticsGa4Status("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionGoogleAnalyticsGa4) GetName() string {
@@ -175,11 +175,18 @@ func (o *ConnectionGoogleAnalyticsGa4) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionGoogleAnalyticsGa4) GetType() ConnectionGoogleAnalyticsGa4Type {
+func (o *ConnectionGoogleAnalyticsGa4) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionGoogleAnalyticsGa4Type("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionGoogleAnalyticsGa4) GetDefaultUpdateSchedule() []ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionGoogleAnalyticsGa4) GetActive() bool {
@@ -189,18 +196,18 @@ func (o *ConnectionGoogleAnalyticsGa4) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionGoogleAnalyticsGa4) GetStatus() ConnectionGoogleAnalyticsGa4Status {
+func (o *ConnectionGoogleAnalyticsGa4) GetType() ConnectionGoogleAnalyticsGa4Type {
 	if o == nil {
-		return ConnectionGoogleAnalyticsGa4Status("")
+		return ConnectionGoogleAnalyticsGa4Type("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionGoogleAnalyticsGa4) GetCreateDate() time.Time {
+func (o *ConnectionGoogleAnalyticsGa4) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionGoogleAnalyticsGa4) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -210,9 +217,9 @@ func (o *ConnectionGoogleAnalyticsGa4) GetUpdateSchedule() *UpdateScheduleTypes 
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -220,6 +227,13 @@ func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleInterval() *UpdateSchedu
 func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -236,20 +250,6 @@ func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleWeekly() *UpdateSchedule
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
-}
-
-func (o *ConnectionGoogleAnalyticsGa4) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionGoogleAnalyticsGa4) GetDefaultUpdateSchedule() []ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionGoogleAnalyticsGa4DefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
 }
 
 type ConnectionGoogleAnalyticsGa4Input struct {
@@ -283,9 +283,9 @@ func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateSchedule() *UpdateScheduleT
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -293,6 +293,13 @@ func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleInterval() *UpdateS
 func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -307,13 +314,6 @@ func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleDaily() *UpdateSche
 func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionGoogleAnalyticsGa4Input) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

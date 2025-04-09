@@ -26,8 +26,8 @@ type GetOUTLOOKConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionOutlook *shared.ConnectionOutlook
-	// Forbidden. You don't have access to view this connection.
+	ConnectionOutlook *shared.ConnectionOutlookOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetOUTLOOKConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetOUTLOOKConnectionResponse) GetConnectionOutlook() *shared.ConnectionOutlook {
+func (o *GetOUTLOOKConnectionResponse) GetConnectionOutlook() *shared.ConnectionOutlookOutput {
 	if o == nil {
 		return nil
 	}

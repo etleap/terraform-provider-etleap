@@ -27,7 +27,7 @@ type GetWORKDAYREPORTConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionWorkdayReport *shared.ConnectionWorkdayReport
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

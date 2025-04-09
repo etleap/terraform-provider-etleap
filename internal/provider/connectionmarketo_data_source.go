@@ -28,19 +28,19 @@ type ConnectionMARKETODataSource struct {
 
 // ConnectionMARKETODataSourceModel describes the data model.
 type ConnectionMARKETODataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	QuotaLimit            types.Int64             `tfsdk:"quota_limit"`
-	RestClientID          types.String            `tfsdk:"rest_client_id"`
-	RestEndpoint          types.String            `tfsdk:"rest_endpoint"`
-	SoapEndpoint          types.String            `tfsdk:"soap_endpoint"`
-	SoapUserID            types.String            `tfsdk:"soap_user_id"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	QuotaLimit            types.Int64                                     `tfsdk:"quota_limit"`
+	RestClientID          types.String                                    `tfsdk:"rest_client_id"`
+	RestEndpoint          types.String                                    `tfsdk:"rest_endpoint"`
+	SoapEndpoint          types.String                                    `tfsdk:"soap_endpoint"`
+	SoapUserID            types.String                                    `tfsdk:"soap_user_id"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -331,7 +331,7 @@ func (r *ConnectionMARKETODataSource) Read(ctx context.Context, req datasource.R
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMarketo(res.ConnectionMarketo)
+	data.RefreshFromSharedConnectionMarketoOutput(res.ConnectionMarketo)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -35,7 +35,7 @@ type UpdatePINTERESTADSConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionPinterestAds *shared.ConnectionPinterestAds
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

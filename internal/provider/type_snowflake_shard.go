@@ -5,12 +5,12 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SnowflakeShard struct {
-	Address        types.String                  `tfsdk:"address"`
-	Authentication *SnowflakeAuthenticationTypes `tfsdk:"authentication"`
-	Database       types.String                  `tfsdk:"database"`
-	Password       types.String                  `tfsdk:"password"`
-	Role           types.String                  `tfsdk:"role"`
-	ShardID        types.String                  `tfsdk:"shard_id"`
-	Username       types.String                  `tfsdk:"username"`
-	Warehouse      types.String                  `tfsdk:"warehouse"`
+	Address        types.String                       `tfsdk:"address"`
+	Authentication *SnowflakeAuthenticationTypesInput `tfsdk:"authentication"`
+	Database       types.String                       `tfsdk:"database"`
+	Password       types.String                       `tfsdk:"password"`
+	Role           types.String                       `tfsdk:"role"`
+	ShardID        types.String                       `tfsdk:"shard_id"`
+	Username       types.String                       `tfsdk:"username"`
+	Warehouse      types.String                       `tfsdk:"warehouse"`
 }

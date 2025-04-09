@@ -15,7 +15,7 @@ type CreateZOOMPHONEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionZoomPhone *shared.ConnectionZoomPhone
+	ConnectionZoomPhone *shared.ConnectionZoomPhoneOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateZOOMPHONEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateZOOMPHONEConnectionResponse) GetConnectionZoomPhone() *shared.ConnectionZoomPhone {
+func (o *CreateZOOMPHONEConnectionResponse) GetConnectionZoomPhone() *shared.ConnectionZoomPhoneOutput {
 	if o == nil {
 		return nil
 	}

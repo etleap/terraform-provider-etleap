@@ -35,7 +35,7 @@ type UpdateWORKDAYREPORTConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionWorkdayReport *shared.ConnectionWorkdayReport
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

@@ -42,6 +42,7 @@ type SourceTypes struct {
 	LdapVirtualListView      *SourceLdapVirtualListView      `tfsdk:"ldap_virtual_list_view"`
 	LinkedInAds              *SourceLinkedInAds              `tfsdk:"linked_in_ads"`
 	Marketo                  *SourceMarketo                  `tfsdk:"marketo"`
+	MicrosoftEntraID         *SourceMicrosoftEntraID         `tfsdk:"microsoft_entra_id"`
 	Mixpanel                 *SourceMixpanel                 `tfsdk:"mixpanel"`
 	Mongodb                  *SourceMongodb                  `tfsdk:"mongodb"`
 	Mysql                    *SourceMysql                    `tfsdk:"mysql"`

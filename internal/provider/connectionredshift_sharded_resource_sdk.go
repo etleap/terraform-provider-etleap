@@ -72,12 +72,12 @@ func (r *ConnectionREDSHIFTSHARDEDResourceModel) ToSharedConnectionRedshiftShard
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,11 +86,15 @@ func (r *ConnectionREDSHIFTSHARDEDResourceModel) ToSharedConnectionRedshiftShard
 			}
 		}
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
+	var dataSharingDestinations []string = nil
+	for _, dataSharingDestinationsItem := range r.DataSharingDestinations {
+		dataSharingDestinations = append(dataSharingDestinations, dataSharingDestinationsItem.ValueString())
+	}
+	queryTagsEnabled := new(bool)
+	if !r.QueryTagsEnabled.IsUnknown() && !r.QueryTagsEnabled.IsNull() {
+		*queryTagsEnabled = r.QueryTagsEnabled.ValueBool()
 	} else {
-		schema = nil
+		queryTagsEnabled = nil
 	}
 	var userGroups []string = nil
 	for _, userGroupsItem := range r.UserGroups {
@@ -102,45 +106,41 @@ func (r *ConnectionREDSHIFTSHARDEDResourceModel) ToSharedConnectionRedshiftShard
 	} else {
 		sourceOnly = nil
 	}
-	queryTagsEnabled := new(bool)
-	if !r.QueryTagsEnabled.IsUnknown() && !r.QueryTagsEnabled.IsNull() {
-		*queryTagsEnabled = r.QueryTagsEnabled.ValueBool()
-	} else {
-		queryTagsEnabled = nil
-	}
-	var dataSharingDestinations []string = nil
-	for _, dataSharingDestinationsItem := range r.DataSharingDestinations {
-		dataSharingDestinations = append(dataSharingDestinations, dataSharingDestinationsItem.ValueString())
-	}
 	dynamicVarcharWidthEnabled := new(bool)
 	if !r.DynamicVarcharWidthEnabled.IsUnknown() && !r.DynamicVarcharWidthEnabled.IsNull() {
 		*dynamicVarcharWidthEnabled = r.DynamicVarcharWidthEnabled.ValueBool()
 	} else {
 		dynamicVarcharWidthEnabled = nil
 	}
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
+	} else {
+		schema = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
-		address := shardsItem.Address.ValueString()
-		port := shardsItem.Port.ValueInt64()
 		username := shardsItem.Username.ValueString()
-		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
 		if shardsItem.SSHConfig != nil {
-			address1 := shardsItem.SSHConfig.Address.ValueString()
 			username1 := shardsItem.SSHConfig.Username.ValueString()
+			address := shardsItem.SSHConfig.Address.ValueString()
 			sshConfig = &shared.SSHConfig{
-				Address:  address1,
 				Username: username1,
+				Address:  address,
 			}
 		}
+		password := shardsItem.Password.ValueString()
+		port := shardsItem.Port.ValueInt64()
+		address1 := shardsItem.Address.ValueString()
 		database := shardsItem.Database.ValueString()
 		shardID := shardsItem.ShardID.ValueString()
 		shards = append(shards, shared.DatabaseShard{
-			Address:   address,
-			Port:      port,
 			Username:  username,
-			Password:  password,
 			SSHConfig: sshConfig,
+			Password:  password,
+			Port:      port,
+			Address:   address1,
 			Database:  database,
 			ShardID:   shardID,
 		})
@@ -149,12 +149,12 @@ func (r *ConnectionREDSHIFTSHARDEDResourceModel) ToSharedConnectionRedshiftShard
 		Name:                       name,
 		Type:                       typeVar,
 		UpdateSchedule:             updateSchedule,
-		Schema:                     schema,
+		DataSharingDestinations:    dataSharingDestinations,
+		QueryTagsEnabled:           queryTagsEnabled,
 		UserGroups:                 userGroups,
 		SourceOnly:                 sourceOnly,
-		QueryTagsEnabled:           queryTagsEnabled,
-		DataSharingDestinations:    dataSharingDestinations,
 		DynamicVarcharWidthEnabled: dynamicVarcharWidthEnabled,
+		Schema:                     schema,
 		Shards:                     shards,
 	}
 	return &out
@@ -171,7 +171,7 @@ func (r *ConnectionREDSHIFTSHARDEDResourceModel) RefreshFromSharedConnectionReds
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -289,18 +289,18 @@ func (r *ConnectionREDSHIFTSHARDEDResourceModel) RefreshFromSharedConnectionReds
 }
 
 func (r *ConnectionREDSHIFTSHARDEDResourceModel) ToSharedConnectionRedshiftShardedUpdate() *shared.ConnectionRedshiftShardedUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	typeVar := shared.ConnectionRedshiftShardedUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
 	} else {
 		active = nil
+	}
+	typeVar := shared.ConnectionRedshiftShardedUpdateType(r.Type.ValueString())
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -363,12 +363,12 @@ func (r *ConnectionREDSHIFTSHARDEDResourceModel) ToSharedConnectionRedshiftShard
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -377,11 +377,15 @@ func (r *ConnectionREDSHIFTSHARDEDResourceModel) ToSharedConnectionRedshiftShard
 			}
 		}
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
+	var dataSharingDestinations []string = nil
+	for _, dataSharingDestinationsItem := range r.DataSharingDestinations {
+		dataSharingDestinations = append(dataSharingDestinations, dataSharingDestinationsItem.ValueString())
+	}
+	queryTagsEnabled := new(bool)
+	if !r.QueryTagsEnabled.IsUnknown() && !r.QueryTagsEnabled.IsNull() {
+		*queryTagsEnabled = r.QueryTagsEnabled.ValueBool()
 	} else {
-		schema = nil
+		queryTagsEnabled = nil
 	}
 	var userGroups []string = nil
 	for _, userGroupsItem := range r.UserGroups {
@@ -393,60 +397,56 @@ func (r *ConnectionREDSHIFTSHARDEDResourceModel) ToSharedConnectionRedshiftShard
 	} else {
 		sourceOnly = nil
 	}
-	queryTagsEnabled := new(bool)
-	if !r.QueryTagsEnabled.IsUnknown() && !r.QueryTagsEnabled.IsNull() {
-		*queryTagsEnabled = r.QueryTagsEnabled.ValueBool()
-	} else {
-		queryTagsEnabled = nil
-	}
-	var dataSharingDestinations []string = nil
-	for _, dataSharingDestinationsItem := range r.DataSharingDestinations {
-		dataSharingDestinations = append(dataSharingDestinations, dataSharingDestinationsItem.ValueString())
-	}
 	dynamicVarcharWidthEnabled := new(bool)
 	if !r.DynamicVarcharWidthEnabled.IsUnknown() && !r.DynamicVarcharWidthEnabled.IsNull() {
 		*dynamicVarcharWidthEnabled = r.DynamicVarcharWidthEnabled.ValueBool()
 	} else {
 		dynamicVarcharWidthEnabled = nil
 	}
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
+	} else {
+		schema = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
-		address := shardsItem.Address.ValueString()
-		port := shardsItem.Port.ValueInt64()
 		username := shardsItem.Username.ValueString()
-		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
 		if shardsItem.SSHConfig != nil {
-			address1 := shardsItem.SSHConfig.Address.ValueString()
 			username1 := shardsItem.SSHConfig.Username.ValueString()
+			address := shardsItem.SSHConfig.Address.ValueString()
 			sshConfig = &shared.SSHConfig{
-				Address:  address1,
 				Username: username1,
+				Address:  address,
 			}
 		}
+		password := shardsItem.Password.ValueString()
+		port := shardsItem.Port.ValueInt64()
+		address1 := shardsItem.Address.ValueString()
 		database := shardsItem.Database.ValueString()
 		shardID := shardsItem.ShardID.ValueString()
 		shards = append(shards, shared.DatabaseShard{
-			Address:   address,
-			Port:      port,
 			Username:  username,
-			Password:  password,
 			SSHConfig: sshConfig,
+			Password:  password,
+			Port:      port,
+			Address:   address1,
 			Database:  database,
 			ShardID:   shardID,
 		})
 	}
 	out := shared.ConnectionRedshiftShardedUpdate{
-		Name:                       name,
-		Type:                       typeVar,
 		Active:                     active,
+		Type:                       typeVar,
+		Name:                       name,
 		UpdateSchedule:             updateSchedule,
-		Schema:                     schema,
+		DataSharingDestinations:    dataSharingDestinations,
+		QueryTagsEnabled:           queryTagsEnabled,
 		UserGroups:                 userGroups,
 		SourceOnly:                 sourceOnly,
-		QueryTagsEnabled:           queryTagsEnabled,
-		DataSharingDestinations:    dataSharingDestinations,
 		DynamicVarcharWidthEnabled: dynamicVarcharWidthEnabled,
+		Schema:                     schema,
 		Shards:                     shards,
 	}
 	return &out

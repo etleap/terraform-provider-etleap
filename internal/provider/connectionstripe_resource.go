@@ -41,16 +41,16 @@ type ConnectionSTRIPEResource struct {
 
 // ConnectionSTRIPEResourceModel describes the resource data model.
 type ConnectionSTRIPEResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	APISecretKey             types.String            `tfsdk:"api_secret_key"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	APISecretKey             types.String                                    `tfsdk:"api_secret_key"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionSTRIPEResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -557,7 +557,7 @@ func (r *ConnectionSTRIPEResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToSharedConnectionStripeInput()
+	request := *data.ToSharedConnectionStripe()
 	res, err := r.client.Connection.CreateSTRIPEConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -578,7 +578,7 @@ func (r *ConnectionSTRIPEResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionStripe(res.ConnectionStripe)
+	data.RefreshFromSharedConnectionStripeOutput(res.ConnectionStripe)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetSTRIPEConnectionRequest{
@@ -604,7 +604,7 @@ func (r *ConnectionSTRIPEResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionStripe(res1.ConnectionStripe)
+	data.RefreshFromSharedConnectionStripeOutput(res1.ConnectionStripe)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -653,7 +653,7 @@ func (r *ConnectionSTRIPEResource) Read(ctx context.Context, req resource.ReadRe
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionStripe(res.ConnectionStripe)
+	data.RefreshFromSharedConnectionStripeOutput(res.ConnectionStripe)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -699,7 +699,7 @@ func (r *ConnectionSTRIPEResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionStripe(res.ConnectionStripe)
+	data.RefreshFromSharedConnectionStripeOutput(res.ConnectionStripe)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetSTRIPEConnectionRequest{
@@ -725,7 +725,7 @@ func (r *ConnectionSTRIPEResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionStripe(res1.ConnectionStripe)
+	data.RefreshFromSharedConnectionStripeOutput(res1.ConnectionStripe)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

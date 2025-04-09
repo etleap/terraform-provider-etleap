@@ -35,7 +35,7 @@ type UpdateELASTICSEARCHConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionElasticSearch *shared.ConnectionElasticSearch
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

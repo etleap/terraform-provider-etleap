@@ -15,7 +15,7 @@ type CreateFACEBOOKADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionFb *shared.ConnectionFb
+	ConnectionFb *shared.ConnectionFbOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateFACEBOOKADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateFACEBOOKADSConnectionResponse) GetConnectionFb() *shared.ConnectionFb {
+func (o *CreateFACEBOOKADSConnectionResponse) GetConnectionFb() *shared.ConnectionFbOutput {
 	if o == nil {
 		return nil
 	}

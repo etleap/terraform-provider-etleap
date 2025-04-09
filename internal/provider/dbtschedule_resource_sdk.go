@@ -9,31 +9,31 @@ import (
 )
 
 func (r *DbtScheduleResourceModel) ToSharedDbtScheduleInput() *shared.DbtScheduleInput {
-	name := r.Name.ValueString()
-	paused := new(bool)
-	if !r.Paused.IsUnknown() && !r.Paused.IsNull() {
-		*paused = r.Paused.ValueBool()
-	} else {
-		paused = nil
-	}
-	selector := r.Selector.ValueString()
-	targetSchema := r.TargetSchema.ValueString()
 	cron := r.Cron.ValueString()
-	connectionID := r.ConnectionID.ValueString()
+	name := r.Name.ValueString()
 	skipBuildIfNoNewData := new(bool)
 	if !r.SkipBuildIfNoNewData.IsUnknown() && !r.SkipBuildIfNoNewData.IsNull() {
 		*skipBuildIfNoNewData = r.SkipBuildIfNoNewData.ValueBool()
 	} else {
 		skipBuildIfNoNewData = nil
 	}
+	connectionID := r.ConnectionID.ValueString()
+	selector := r.Selector.ValueString()
+	paused := new(bool)
+	if !r.Paused.IsUnknown() && !r.Paused.IsNull() {
+		*paused = r.Paused.ValueBool()
+	} else {
+		paused = nil
+	}
+	targetSchema := r.TargetSchema.ValueString()
 	out := shared.DbtScheduleInput{
-		Name:                 name,
-		Paused:               paused,
-		Selector:             selector,
-		TargetSchema:         targetSchema,
 		Cron:                 cron,
-		ConnectionID:         connectionID,
+		Name:                 name,
 		SkipBuildIfNoNewData: skipBuildIfNoNewData,
+		ConnectionID:         connectionID,
+		Selector:             selector,
+		Paused:               paused,
+		TargetSchema:         targetSchema,
 	}
 	return &out
 }
@@ -98,17 +98,17 @@ func (r *DbtScheduleResourceModel) RefreshFromSharedDbtScheduleOutput(resp *shar
 }
 
 func (r *DbtScheduleResourceModel) ToSharedDbtScheduleUpdate() *shared.DbtScheduleUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
 	paused := new(bool)
 	if !r.Paused.IsUnknown() && !r.Paused.IsNull() {
 		*paused = r.Paused.ValueBool()
 	} else {
 		paused = nil
+	}
+	cron := new(string)
+	if !r.Cron.IsUnknown() && !r.Cron.IsNull() {
+		*cron = r.Cron.ValueString()
+	} else {
+		cron = nil
 	}
 	targetSchema := new(string)
 	if !r.TargetSchema.IsUnknown() && !r.TargetSchema.IsNull() {
@@ -116,11 +116,11 @@ func (r *DbtScheduleResourceModel) ToSharedDbtScheduleUpdate() *shared.DbtSchedu
 	} else {
 		targetSchema = nil
 	}
-	cron := new(string)
-	if !r.Cron.IsUnknown() && !r.Cron.IsNull() {
-		*cron = r.Cron.ValueString()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		cron = nil
+		name = nil
 	}
 	skipBuildIfNoNewData := new(bool)
 	if !r.SkipBuildIfNoNewData.IsUnknown() && !r.SkipBuildIfNoNewData.IsNull() {
@@ -129,10 +129,10 @@ func (r *DbtScheduleResourceModel) ToSharedDbtScheduleUpdate() *shared.DbtSchedu
 		skipBuildIfNoNewData = nil
 	}
 	out := shared.DbtScheduleUpdate{
-		Name:                 name,
 		Paused:               paused,
-		TargetSchema:         targetSchema,
 		Cron:                 cron,
+		TargetSchema:         targetSchema,
+		Name:                 name,
 		SkipBuildIfNoNewData: skipBuildIfNoNewData,
 	}
 	return &out

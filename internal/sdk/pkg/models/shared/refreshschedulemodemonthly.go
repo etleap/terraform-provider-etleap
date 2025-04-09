@@ -33,10 +33,10 @@ func (e *RefreshScheduleModeMonthlyMode) UnmarshalJSON(data []byte) error {
 
 type RefreshScheduleModeMonthly struct {
 	Mode RefreshScheduleModeMonthlyMode `json:"mode"`
-	// Day of the month this schedule should trigger at (in UTC).
-	DayOfMonth int64 `json:"dayOfMonth"`
 	// Hour of day this schedule should trigger at (in UTC).
 	HourOfDay int64 `json:"hourOfDay"`
+	// Day of the month this schedule should trigger at (in UTC).
+	DayOfMonth int64 `json:"dayOfMonth"`
 }
 
 func (o *RefreshScheduleModeMonthly) GetMode() RefreshScheduleModeMonthlyMode {
@@ -46,16 +46,16 @@ func (o *RefreshScheduleModeMonthly) GetMode() RefreshScheduleModeMonthlyMode {
 	return o.Mode
 }
 
-func (o *RefreshScheduleModeMonthly) GetDayOfMonth() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.DayOfMonth
-}
-
 func (o *RefreshScheduleModeMonthly) GetHourOfDay() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.HourOfDay
+}
+
+func (o *RefreshScheduleModeMonthly) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
 }

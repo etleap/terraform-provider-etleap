@@ -42,22 +42,22 @@ type ConnectionMONGODBResource struct {
 
 // ConnectionMONGODBResourceModel describes the resource data model.
 type ConnectionMONGODBResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	AuthDatabaseName         types.String            `tfsdk:"auth_database_name"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DatabaseName             types.String            `tfsdk:"database_name"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Password                 types.String            `tfsdk:"password"`
-	ReplicaSet               []ReplicaSet            `tfsdk:"replica_set"`
-	SSHConfig                *SSHConfig              `tfsdk:"ssh_config"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	Username                 types.String            `tfsdk:"username"`
-	UseSsl                   types.Bool              `tfsdk:"use_ssl"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	AuthDatabaseName         types.String                                    `tfsdk:"auth_database_name"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DatabaseName             types.String                                    `tfsdk:"database_name"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Password                 types.String                                    `tfsdk:"password"`
+	ReplicaSet               []ReplicaSet                                    `tfsdk:"replica_set"`
+	SSHConfig                *SSHConfig                                      `tfsdk:"ssh_config"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Username                 types.String                                    `tfsdk:"username"`
+	UseSsl                   types.Bool                                      `tfsdk:"use_ssl"`
 }
 
 func (r *ConnectionMONGODBResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -659,7 +659,7 @@ func (r *ConnectionMONGODBResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToSharedConnectionMongoInput()
+	request := *data.ToSharedConnectionMongo()
 	res, err := r.client.Connection.CreateMONGODBConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -680,7 +680,7 @@ func (r *ConnectionMONGODBResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongoOutput(res.ConnectionMongo)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetMONGODBConnectionRequest{
@@ -706,7 +706,7 @@ func (r *ConnectionMONGODBResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res1.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongoOutput(res1.ConnectionMongo)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -755,7 +755,7 @@ func (r *ConnectionMONGODBResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongoOutput(res.ConnectionMongo)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -801,7 +801,7 @@ func (r *ConnectionMONGODBResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongoOutput(res.ConnectionMongo)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetMONGODBConnectionRequest{
@@ -827,7 +827,7 @@ func (r *ConnectionMONGODBResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res1.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongoOutput(res1.ConnectionMongo)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

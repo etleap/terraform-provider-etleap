@@ -35,7 +35,7 @@ type UpdateINTERCOMConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionIntercom *shared.ConnectionIntercom
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

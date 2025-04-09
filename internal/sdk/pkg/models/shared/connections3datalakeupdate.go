@@ -32,39 +32,25 @@ func (e *ConnectionS3DataLakeUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionS3DataLakeUpdate struct {
-	// The unique name of this connection.
-	Name *string                         `json:"name,omitempty"`
-	Type *ConnectionS3DataLakeUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                           `json:"active,omitempty"`
+	Type   *ConnectionS3DataLakeUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// An IAM Role ARN looks like 'arn:aws:iam::account_id:role/role-name'. Etleap will assume this role to access this bucket.
 	IamRole *string `json:"iamRole,omitempty"`
-	// The S3 bucket where your data will be stored.
-	InputBucket *string `json:"inputBucket,omitempty"`
-	// The base directory in the data bucket. Any data written by Etleap will be under this directory.
-	BaseDirectory *string `json:"baseDirectory,omitempty"`
 	// Customer KMS key used to encrypt all files written to the S3 bucket.
-	KmsKey       *string `json:"kmsKey,omitempty"`
-	GlueDatabase *string `json:"glueDatabase,omitempty"`
-	GlueRegion   *string `json:"glueRegion,omitempty"`
+	KmsKey *string `json:"kmsKey,omitempty"`
 	// If this is set to 'true', Etleap will write a manifest file containing the metadata along with each load. More info <a target="_blank" href="https://support.etleap.com/hc/en-us/articles/360007751614-Generating-load-manifests-for-data-loaded-into-S3">here</a>.
 	WriteManifest *bool `json:"writeManifest,omitempty"`
-}
-
-func (o *ConnectionS3DataLakeUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionS3DataLakeUpdate) GetType() *ConnectionS3DataLakeUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	// The S3 bucket where your data will be stored.
+	InputBucket  *string `json:"inputBucket,omitempty"`
+	GlueDatabase *string `json:"glueDatabase,omitempty"`
+	GlueRegion   *string `json:"glueRegion,omitempty"`
+	// The base directory in the data bucket. Any data written by Etleap will be under this directory.
+	BaseDirectory *string `json:"baseDirectory,omitempty"`
 }
 
 func (o *ConnectionS3DataLakeUpdate) GetActive() *bool {
@@ -74,6 +60,20 @@ func (o *ConnectionS3DataLakeUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionS3DataLakeUpdate) GetType() *ConnectionS3DataLakeUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionS3DataLakeUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionS3DataLakeUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -81,9 +81,9 @@ func (o *ConnectionS3DataLakeUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionS3DataLakeUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionS3DataLakeUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -91,6 +91,13 @@ func (o *ConnectionS3DataLakeUpdate) GetUpdateScheduleInterval() *UpdateSchedule
 func (o *ConnectionS3DataLakeUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionS3DataLakeUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -109,13 +116,6 @@ func (o *ConnectionS3DataLakeUpdate) GetUpdateScheduleWeekly() *UpdateScheduleMo
 	return nil
 }
 
-func (o *ConnectionS3DataLakeUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
 func (o *ConnectionS3DataLakeUpdate) GetIamRole() *string {
 	if o == nil {
 		return nil
@@ -123,25 +123,25 @@ func (o *ConnectionS3DataLakeUpdate) GetIamRole() *string {
 	return o.IamRole
 }
 
-func (o *ConnectionS3DataLakeUpdate) GetInputBucket() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InputBucket
-}
-
-func (o *ConnectionS3DataLakeUpdate) GetBaseDirectory() *string {
-	if o == nil {
-		return nil
-	}
-	return o.BaseDirectory
-}
-
 func (o *ConnectionS3DataLakeUpdate) GetKmsKey() *string {
 	if o == nil {
 		return nil
 	}
 	return o.KmsKey
+}
+
+func (o *ConnectionS3DataLakeUpdate) GetWriteManifest() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.WriteManifest
+}
+
+func (o *ConnectionS3DataLakeUpdate) GetInputBucket() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InputBucket
 }
 
 func (o *ConnectionS3DataLakeUpdate) GetGlueDatabase() *string {
@@ -158,9 +158,9 @@ func (o *ConnectionS3DataLakeUpdate) GetGlueRegion() *string {
 	return o.GlueRegion
 }
 
-func (o *ConnectionS3DataLakeUpdate) GetWriteManifest() *bool {
+func (o *ConnectionS3DataLakeUpdate) GetBaseDirectory() *string {
 	if o == nil {
 		return nil
 	}
-	return o.WriteManifest
+	return o.BaseDirectory
 }

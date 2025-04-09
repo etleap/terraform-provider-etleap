@@ -32,34 +32,20 @@ func (e *ConnectionSquareUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionSquareUpdate struct {
-	// The unique name of this connection.
-	Name *string                    `json:"name,omitempty"`
-	Type ConnectionSquareUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                      `json:"active,omitempty"`
+	Type   ConnectionSquareUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
-	Code *string `json:"code,omitempty"`
-	// Under Developer Dashboard > OAuth
-	ApplicationID *string `json:"applicationId,omitempty"`
+	Code           *string `json:"code,omitempty"`
+	SandboxAccount *bool   `json:"sandboxAccount,omitempty"`
 	// Under Developer Dashboard > OAuth
 	ApplicationSecret *string `json:"applicationSecret,omitempty"`
-	SandboxAccount    *bool   `json:"sandboxAccount,omitempty"`
-}
-
-func (o *ConnectionSquareUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionSquareUpdate) GetType() ConnectionSquareUpdateType {
-	if o == nil {
-		return ConnectionSquareUpdateType("")
-	}
-	return o.Type
+	// Under Developer Dashboard > OAuth
+	ApplicationID *string `json:"applicationId,omitempty"`
 }
 
 func (o *ConnectionSquareUpdate) GetActive() *bool {
@@ -69,6 +55,20 @@ func (o *ConnectionSquareUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionSquareUpdate) GetType() ConnectionSquareUpdateType {
+	if o == nil {
+		return ConnectionSquareUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionSquareUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionSquareUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -76,9 +76,9 @@ func (o *ConnectionSquareUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSquareUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSquareUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -86,6 +86,13 @@ func (o *ConnectionSquareUpdate) GetUpdateScheduleInterval() *UpdateScheduleMode
 func (o *ConnectionSquareUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSquareUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -104,13 +111,6 @@ func (o *ConnectionSquareUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWe
 	return nil
 }
 
-func (o *ConnectionSquareUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
 func (o *ConnectionSquareUpdate) GetCode() *string {
 	if o == nil {
 		return nil
@@ -118,11 +118,11 @@ func (o *ConnectionSquareUpdate) GetCode() *string {
 	return o.Code
 }
 
-func (o *ConnectionSquareUpdate) GetApplicationID() *string {
+func (o *ConnectionSquareUpdate) GetSandboxAccount() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.ApplicationID
+	return o.SandboxAccount
 }
 
 func (o *ConnectionSquareUpdate) GetApplicationSecret() *string {
@@ -132,9 +132,9 @@ func (o *ConnectionSquareUpdate) GetApplicationSecret() *string {
 	return o.ApplicationSecret
 }
 
-func (o *ConnectionSquareUpdate) GetSandboxAccount() *bool {
+func (o *ConnectionSquareUpdate) GetApplicationID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SandboxAccount
+	return o.ApplicationID
 }

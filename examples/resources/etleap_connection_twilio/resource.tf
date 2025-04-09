@@ -3,6 +3,6 @@ resource "etleap_connection_twilio" "my_connectiontwilio" {
   api_key_secret              = "...my_api_key_secret..."
   api_key_sid                 = "...my_api_key_sid..."
   deletion_of_export_products = false
-  name                        = "Katrina Tillman"
+  name                        = "Francis Marks"
   type                        = "TWILIO"
 }

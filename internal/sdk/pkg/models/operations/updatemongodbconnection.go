@@ -34,8 +34,8 @@ type UpdateMONGODBConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionMongo *shared.ConnectionMongo
-	// Bad Request
+	ConnectionMongo *shared.ConnectionMongoOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateMONGODBConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateMONGODBConnectionResponse) GetConnectionMongo() *shared.ConnectionMongo {
+func (o *UpdateMONGODBConnectionResponse) GetConnectionMongo() *shared.ConnectionMongoOutput {
 	if o == nil {
 		return nil
 	}

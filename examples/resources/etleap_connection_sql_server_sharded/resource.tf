@@ -1,20 +1,20 @@
 resource "etleap_connection_sql_server_sharded" "my_connectionsql_server_sharded" {
   cdc_enabled                 = false
   deletion_of_export_products = false
-  name                        = "Lewis Batz"
+  name                        = "Wilson Pollich"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "7178 Schaden Ridge"
+      address  = "9376 Torp Key"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 2
+      port     = 3
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "433 Lonzo Valleys"
-        username = "Lelia_Gorczany51"
+        address  = "410 Joey Falls"
+        username = "Cassandre.Kautzer64"
       }
-      username = "Lauryn_Will6"
+      username = "Sam.Marvin"
     },
   ]
   type = "SQL_SERVER_SHARDED"

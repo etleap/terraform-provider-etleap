@@ -32,17 +32,10 @@ func (e *WarehouseSnowflakeUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type WarehouseSnowflakeUpdate struct {
-	Type WarehouseSnowflakeUpdateType `json:"type"`
 	// <!-- theme: warning -->
 	// > Changing the table name is not currently supported for Snowflake Models.
-	Table *string `json:"table,omitempty"`
-}
-
-func (o *WarehouseSnowflakeUpdate) GetType() WarehouseSnowflakeUpdateType {
-	if o == nil {
-		return WarehouseSnowflakeUpdateType("")
-	}
-	return o.Type
+	Table *string                      `json:"table,omitempty"`
+	Type  WarehouseSnowflakeUpdateType `json:"type"`
 }
 
 func (o *WarehouseSnowflakeUpdate) GetTable() *string {
@@ -50,4 +43,11 @@ func (o *WarehouseSnowflakeUpdate) GetTable() *string {
 		return nil
 	}
 	return o.Table
+}
+
+func (o *WarehouseSnowflakeUpdate) GetType() WarehouseSnowflakeUpdateType {
+	if o == nil {
+		return WarehouseSnowflakeUpdateType("")
+	}
+	return o.Type
 }

@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionCriteoType string
-
-const (
-	ConnectionCriteoTypeCriteo ConnectionCriteoType = "CRITEO"
-)
-
-func (e ConnectionCriteoType) ToPointer() *ConnectionCriteoType {
-	return &e
-}
-
-func (e *ConnectionCriteoType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CRITEO":
-		*e = ConnectionCriteoType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionCriteoType: %v", v)
-	}
-}
-
 // ConnectionCriteoStatus - The current status of the connection.
 type ConnectionCriteoStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionCriteoDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSched
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionCriteoDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionCriteoDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionCriteoDefaultUpdateSchedule) GetUpdateScheduleInterval() *Upd
 func (o *ConnectionCriteoDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionCriteoDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,33 +108,50 @@ func (o *ConnectionCriteoDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Updat
 	return nil
 }
 
-func (o *ConnectionCriteoDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionCriteoType string
+
+const (
+	ConnectionCriteoTypeCriteo ConnectionCriteoType = "CRITEO"
+)
+
+func (e ConnectionCriteoType) ToPointer() *ConnectionCriteoType {
+	return &e
+}
+
+func (e *ConnectionCriteoType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "CRITEO":
+		*e = ConnectionCriteoType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionCriteoType: %v", v)
+	}
 }
 
 type ConnectionCriteo struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string               `json:"name"`
-	Type ConnectionCriteoType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionCriteoStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionCriteoDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Your Client Id can be found under 'Developer Dashboard' > 'My apps'
-	ClientID string `json:"clientId"`
+	// Whether this connection has been marked as active.
+	Active bool                 `json:"active"`
+	Type   ConnectionCriteoType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your Client Secret can be found under 'Developer Dashboard' > 'My apps'
 	ClientSecret string `json:"clientSecret"`
+	// Your Client Id can be found under 'Developer Dashboard' > 'My apps'
+	ClientID string `json:"clientId"`
 }
 
 func (c ConnectionCriteo) MarshalJSON() ([]byte, error) {
@@ -165,11 +165,11 @@ func (c *ConnectionCriteo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionCriteo) GetID() string {
+func (o *ConnectionCriteo) GetStatus() ConnectionCriteoStatus {
 	if o == nil {
-		return ""
+		return ConnectionCriteoStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionCriteo) GetName() string {
@@ -179,11 +179,18 @@ func (o *ConnectionCriteo) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionCriteo) GetType() ConnectionCriteoType {
+func (o *ConnectionCriteo) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionCriteoType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionCriteo) GetDefaultUpdateSchedule() []ConnectionCriteoDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionCriteoDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionCriteo) GetActive() bool {
@@ -193,18 +200,18 @@ func (o *ConnectionCriteo) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionCriteo) GetStatus() ConnectionCriteoStatus {
+func (o *ConnectionCriteo) GetType() ConnectionCriteoType {
 	if o == nil {
-		return ConnectionCriteoStatus("")
+		return ConnectionCriteoType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionCriteo) GetCreateDate() time.Time {
+func (o *ConnectionCriteo) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionCriteo) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -214,9 +221,9 @@ func (o *ConnectionCriteo) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionCriteo) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionCriteo) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -224,6 +231,13 @@ func (o *ConnectionCriteo) GetUpdateScheduleInterval() *UpdateScheduleModeInterv
 func (o *ConnectionCriteo) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionCriteo) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -242,18 +256,11 @@ func (o *ConnectionCriteo) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	return nil
 }
 
-func (o *ConnectionCriteo) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionCriteo) GetDefaultUpdateSchedule() []ConnectionCriteoDefaultUpdateSchedule {
+func (o *ConnectionCriteo) GetClientSecret() string {
 	if o == nil {
-		return []ConnectionCriteoDefaultUpdateSchedule{}
+		return ""
 	}
-	return o.DefaultUpdateSchedule
+	return o.ClientSecret
 }
 
 func (o *ConnectionCriteo) GetClientID() string {
@@ -263,23 +270,16 @@ func (o *ConnectionCriteo) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *ConnectionCriteo) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 type ConnectionCriteoInput struct {
 	// The unique name of this connection.
 	Name string               `json:"name"`
 	Type ConnectionCriteoType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Your Client Id can be found under 'Developer Dashboard' > 'My apps'
-	ClientID string `json:"clientId"`
 	// Your Client Secret can be found under 'Developer Dashboard' > 'My apps'
 	ClientSecret string `json:"clientSecret"`
+	// Your Client Id can be found under 'Developer Dashboard' > 'My apps'
+	ClientID string `json:"clientId"`
 }
 
 func (o *ConnectionCriteoInput) GetName() string {
@@ -303,9 +303,9 @@ func (o *ConnectionCriteoInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionCriteoInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionCriteoInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -313,6 +313,13 @@ func (o *ConnectionCriteoInput) GetUpdateScheduleInterval() *UpdateScheduleModeI
 func (o *ConnectionCriteoInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionCriteoInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -331,11 +338,11 @@ func (o *ConnectionCriteoInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWee
 	return nil
 }
 
-func (o *ConnectionCriteoInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionCriteoInput) GetClientSecret() string {
+	if o == nil {
+		return ""
 	}
-	return nil
+	return o.ClientSecret
 }
 
 func (o *ConnectionCriteoInput) GetClientID() string {
@@ -343,11 +350,4 @@ func (o *ConnectionCriteoInput) GetClientID() string {
 		return ""
 	}
 	return o.ClientID
-}
-
-func (o *ConnectionCriteoInput) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
 }

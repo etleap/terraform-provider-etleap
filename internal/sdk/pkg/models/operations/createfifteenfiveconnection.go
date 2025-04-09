@@ -15,7 +15,7 @@ type CreateFIFTEENFIVEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionFifteenFive *shared.ConnectionFifteenFive
+	ConnectionFifteenFive *shared.ConnectionFifteenFiveOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateFIFTEENFIVEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateFIFTEENFIVEConnectionResponse) GetConnectionFifteenFive() *shared.ConnectionFifteenFive {
+func (o *CreateFIFTEENFIVEConnectionResponse) GetConnectionFifteenFive() *shared.ConnectionFifteenFiveOutput {
 	if o == nil {
 		return nil
 	}

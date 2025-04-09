@@ -34,8 +34,8 @@ type UpdateMARKETOConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionMarketo *shared.ConnectionMarketo
-	// Bad Request
+	ConnectionMarketo *shared.ConnectionMarketoOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateMARKETOConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateMARKETOConnectionResponse) GetConnectionMarketo() *shared.ConnectionMarketo {
+func (o *UpdateMARKETOConnectionResponse) GetConnectionMarketo() *shared.ConnectionMarketoOutput {
 	if o == nil {
 		return nil
 	}

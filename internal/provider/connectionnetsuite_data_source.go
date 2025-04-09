@@ -28,16 +28,16 @@ type ConnectionNETSUITEDataSource struct {
 
 // ConnectionNETSUITEDataSourceModel describes the data model.
 type ConnectionNETSUITEDataSourceModel struct {
-	AccountID             types.String            `tfsdk:"account_id"`
-	Active                types.Bool              `tfsdk:"active"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	Email                 types.String            `tfsdk:"email"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	AccountID             types.String                                    `tfsdk:"account_id"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	Email                 types.String                                    `tfsdk:"email"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.

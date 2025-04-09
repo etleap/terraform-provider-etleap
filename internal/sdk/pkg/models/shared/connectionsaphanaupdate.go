@@ -32,17 +32,10 @@ func (e *ConnectionSapHanaUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionSapHanaUpdateSSHConfigurationUpdate struct {
-	// The server address for the SSH connection.
-	Address *string `json:"address,omitempty"`
 	// The username for the SSH connection.
 	Username *string `json:"username,omitempty"`
-}
-
-func (o *ConnectionSapHanaUpdateSSHConfigurationUpdate) GetAddress() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Address
+	// The server address for the SSH connection.
+	Address *string `json:"address,omitempty"`
 }
 
 func (o *ConnectionSapHanaUpdateSSHConfigurationUpdate) GetUsername() *string {
@@ -52,39 +45,32 @@ func (o *ConnectionSapHanaUpdateSSHConfigurationUpdate) GetUsername() *string {
 	return o.Username
 }
 
+func (o *ConnectionSapHanaUpdateSSHConfigurationUpdate) GetAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Address
+}
+
 // ConnectionSapHanaUpdate - Specifies the location of a database.
 type ConnectionSapHanaUpdate struct {
-	// The unique name of this connection.
-	Name *string                     `json:"name,omitempty"`
-	Type ConnectionSapHanaUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                       `json:"active,omitempty"`
+	Type   ConnectionSapHanaUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema    *string                                        `json:"schema,omitempty"`
-	Address   *string                                        `json:"address,omitempty"`
-	Port      *int64                                         `json:"port,omitempty"`
 	Username  *string                                        `json:"username,omitempty"`
-	Password  *string                                        `json:"password,omitempty"`
 	SSHConfig *ConnectionSapHanaUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
+	Password  *string                                        `json:"password,omitempty"`
+	Port      *int64                                         `json:"port,omitempty"`
+	Address   *string                                        `json:"address,omitempty"`
 	Database  *string                                        `json:"database,omitempty"`
-}
-
-func (o *ConnectionSapHanaUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionSapHanaUpdate) GetType() ConnectionSapHanaUpdateType {
-	if o == nil {
-		return ConnectionSapHanaUpdateType("")
-	}
-	return o.Type
 }
 
 func (o *ConnectionSapHanaUpdate) GetActive() *bool {
@@ -94,6 +80,20 @@ func (o *ConnectionSapHanaUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionSapHanaUpdate) GetType() ConnectionSapHanaUpdateType {
+	if o == nil {
+		return ConnectionSapHanaUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionSapHanaUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionSapHanaUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -101,9 +101,9 @@ func (o *ConnectionSapHanaUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSapHanaUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSapHanaUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -111,6 +111,13 @@ func (o *ConnectionSapHanaUpdate) GetUpdateScheduleInterval() *UpdateScheduleMod
 func (o *ConnectionSapHanaUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSapHanaUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -129,32 +136,11 @@ func (o *ConnectionSapHanaUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeW
 	return nil
 }
 
-func (o *ConnectionSapHanaUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
 func (o *ConnectionSapHanaUpdate) GetSchema() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Schema
-}
-
-func (o *ConnectionSapHanaUpdate) GetAddress() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Address
-}
-
-func (o *ConnectionSapHanaUpdate) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
 }
 
 func (o *ConnectionSapHanaUpdate) GetUsername() *string {
@@ -164,6 +150,13 @@ func (o *ConnectionSapHanaUpdate) GetUsername() *string {
 	return o.Username
 }
 
+func (o *ConnectionSapHanaUpdate) GetSSHConfig() *ConnectionSapHanaUpdateSSHConfigurationUpdate {
+	if o == nil {
+		return nil
+	}
+	return o.SSHConfig
+}
+
 func (o *ConnectionSapHanaUpdate) GetPassword() *string {
 	if o == nil {
 		return nil
@@ -171,11 +164,18 @@ func (o *ConnectionSapHanaUpdate) GetPassword() *string {
 	return o.Password
 }
 
-func (o *ConnectionSapHanaUpdate) GetSSHConfig() *ConnectionSapHanaUpdateSSHConfigurationUpdate {
+func (o *ConnectionSapHanaUpdate) GetPort() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.SSHConfig
+	return o.Port
+}
+
+func (o *ConnectionSapHanaUpdate) GetAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Address
 }
 
 func (o *ConnectionSapHanaUpdate) GetDatabase() *string {

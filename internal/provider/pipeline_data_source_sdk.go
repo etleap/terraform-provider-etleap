@@ -55,9 +55,9 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 				destinations1.Destination.Redshift.DistributionStyle = nil
 			} else {
 				destinations1.Destination.Redshift.DistributionStyle = &DistributionStyle{}
-				if destinationsItem.Destination.DestinationRedshift.DistributionStyle.One != nil {
-					if destinationsItem.Destination.DestinationRedshift.DistributionStyle.One != nil {
-						destinations1.Destination.Redshift.DistributionStyle.One = types.StringValue(string(*destinationsItem.Destination.DestinationRedshift.DistributionStyle.One))
+				if destinationsItem.Destination.DestinationRedshift.DistributionStyle.DistributionStyle1 != nil {
+					if destinationsItem.Destination.DestinationRedshift.DistributionStyle.DistributionStyle1 != nil {
+						destinations1.Destination.Redshift.DistributionStyle.One = types.StringValue(string(*destinationsItem.Destination.DestinationRedshift.DistributionStyle.DistributionStyle1))
 					} else {
 						destinations1.Destination.Redshift.DistributionStyle.One = types.StringNull()
 					}
@@ -675,6 +675,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Marketo.Entity = types.StringValue(resp.Source.SourceMarketo.Entity)
 		r.Source.Marketo.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceMarketo.LatencyThreshold)
 		r.Source.Marketo.Type = types.StringValue(string(resp.Source.SourceMarketo.Type))
+	}
+	if resp.Source.SourceMicrosoftEntraID != nil {
+		r.Source.MicrosoftEntraID = &SourceMicrosoftEntraID{}
+		r.Source.MicrosoftEntraID.ConnectionID = types.StringValue(resp.Source.SourceMicrosoftEntraID.ConnectionID)
+		r.Source.MicrosoftEntraID.Entity = types.StringValue(resp.Source.SourceMicrosoftEntraID.Entity)
+		r.Source.MicrosoftEntraID.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceMicrosoftEntraID.LatencyThreshold)
+		r.Source.MicrosoftEntraID.Type = types.StringValue(string(resp.Source.SourceMicrosoftEntraID.Type))
 	}
 	if resp.Source.SourceMixpanel != nil {
 		r.Source.Mixpanel = &SourceMixpanel{}

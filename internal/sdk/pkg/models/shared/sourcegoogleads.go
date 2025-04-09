@@ -32,28 +32,21 @@ func (e *SourceGoogleAdsType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleAds struct {
-	Type SourceGoogleAdsType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string              `json:"connectionId"`
+	Type         SourceGoogleAdsType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Google Ads report type, capitalized and spelled with spaces between words.
 	Entity string `json:"entity"`
+	// Specify the report `attributed resources`. Example values: [campaign_budget.id, campaign_budget.name, bidding_strategy.type]
+	AttributedResources []string `json:"attributedResources,omitempty"`
 	// Specify the report `fields`. Example values: [campaign.resource_name, campaign.campaign_budget, campaign.advertising_channel_type]
 	Fields []string `json:"fields,omitempty"`
 	// Specify the report `segmentation` groups. Example values: [segments.date, segments.click_type, segments.geo_target_county]
 	Segments []string `json:"segments,omitempty"`
-	// Specify the report `attributed resources`. Example values: [campaign_budget.id, campaign_budget.name, bidding_strategy.type]
-	AttributedResources []string `json:"attributedResources,omitempty"`
 	// Specify the report `metrics`. Example values: [metrics.clicks, metrics.all_conversions, metrics.average_cost]
 	Metrics []string `json:"metrics,omitempty"`
-}
-
-func (o *SourceGoogleAds) GetType() SourceGoogleAdsType {
-	if o == nil {
-		return SourceGoogleAdsType("")
-	}
-	return o.Type
 }
 
 func (o *SourceGoogleAds) GetConnectionID() string {
@@ -61,6 +54,13 @@ func (o *SourceGoogleAds) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceGoogleAds) GetType() SourceGoogleAdsType {
+	if o == nil {
+		return SourceGoogleAdsType("")
+	}
+	return o.Type
 }
 
 func (o *SourceGoogleAds) GetLatencyThreshold() *int64 {
@@ -77,6 +77,13 @@ func (o *SourceGoogleAds) GetEntity() string {
 	return o.Entity
 }
 
+func (o *SourceGoogleAds) GetAttributedResources() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AttributedResources
+}
+
 func (o *SourceGoogleAds) GetFields() []string {
 	if o == nil {
 		return nil
@@ -89,13 +96,6 @@ func (o *SourceGoogleAds) GetSegments() []string {
 		return nil
 	}
 	return o.Segments
-}
-
-func (o *SourceGoogleAds) GetAttributedResources() []string {
-	if o == nil {
-		return nil
-	}
-	return o.AttributedResources
 }
 
 func (o *SourceGoogleAds) GetMetrics() []string {

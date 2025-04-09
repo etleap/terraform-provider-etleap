@@ -34,8 +34,8 @@ type UpdateACTIVECAMPAIGNConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionActiveCampaign *shared.ConnectionActiveCampaign
-	// Bad Request
+	ConnectionActiveCampaign *shared.ConnectionActiveCampaignOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateACTIVECAMPAIGNConnectionResponse) GetRawResponse() *http.Response
 	return o.RawResponse
 }
 
-func (o *UpdateACTIVECAMPAIGNConnectionResponse) GetConnectionActiveCampaign() *shared.ConnectionActiveCampaign {
+func (o *UpdateACTIVECAMPAIGNConnectionResponse) GetConnectionActiveCampaign() *shared.ConnectionActiveCampaignOutput {
 	if o == nil {
 		return nil
 	}

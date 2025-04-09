@@ -26,8 +26,8 @@ type GetZOOMPHONEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionZoomPhone *shared.ConnectionZoomPhone
-	// Forbidden. You don't have access to view this connection.
+	ConnectionZoomPhone *shared.ConnectionZoomPhoneOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetZOOMPHONEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetZOOMPHONEConnectionResponse) GetConnectionZoomPhone() *shared.ConnectionZoomPhone {
+func (o *GetZOOMPHONEConnectionResponse) GetConnectionZoomPhone() *shared.ConnectionZoomPhoneOutput {
 	if o == nil {
 		return nil
 	}

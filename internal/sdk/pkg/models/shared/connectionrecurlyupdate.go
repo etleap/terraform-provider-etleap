@@ -32,30 +32,16 @@ func (e *ConnectionRecurlyUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionRecurlyUpdate struct {
-	// The unique name of this connection.
-	Name *string                      `json:"name,omitempty"`
-	Type *ConnectionRecurlyUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                        `json:"active,omitempty"`
+	Type   *ConnectionRecurlyUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your site subdomain at Recurly.
 	Subdomain *string `json:"subdomain,omitempty"`
 	APIKey    *string `json:"apiKey,omitempty"`
-}
-
-func (o *ConnectionRecurlyUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionRecurlyUpdate) GetType() *ConnectionRecurlyUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionRecurlyUpdate) GetActive() *bool {
@@ -65,6 +51,20 @@ func (o *ConnectionRecurlyUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionRecurlyUpdate) GetType() *ConnectionRecurlyUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionRecurlyUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionRecurlyUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -72,9 +72,9 @@ func (o *ConnectionRecurlyUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionRecurlyUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionRecurlyUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -82,6 +82,13 @@ func (o *ConnectionRecurlyUpdate) GetUpdateScheduleInterval() *UpdateScheduleMod
 func (o *ConnectionRecurlyUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionRecurlyUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -96,13 +103,6 @@ func (o *ConnectionRecurlyUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDa
 func (o *ConnectionRecurlyUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionRecurlyUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

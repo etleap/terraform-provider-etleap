@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSKYWARDResourceModel) ToSharedConnectionSkywardInput() *shared.ConnectionSkywardInput {
+func (r *ConnectionSKYWARDResourceModel) ToSharedConnectionSkyward() *shared.ConnectionSkyward {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionSkywardType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionSKYWARDResourceModel) ToSharedConnectionSkywardInput() *share
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,19 +86,19 @@ func (r *ConnectionSKYWARDResourceModel) ToSharedConnectionSkywardInput() *share
 			}
 		}
 	}
-	clientID := r.ClientID.ValueString()
 	clientSecret := r.ClientSecret.ValueString()
-	out := shared.ConnectionSkywardInput{
+	clientID := r.ClientID.ValueString()
+	out := shared.ConnectionSkyward{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		ClientID:       clientID,
 		ClientSecret:   clientSecret,
+		ClientID:       clientID,
 	}
 	return &out
 }
 
-func (r *ConnectionSKYWARDResourceModel) RefreshFromSharedConnectionSkyward(resp *shared.ConnectionSkyward) {
+func (r *ConnectionSKYWARDResourceModel) RefreshFromSharedConnectionSkywardOutput(resp *shared.ConnectionSkywardOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.ClientID = types.StringValue(resp.ClientID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -106,7 +106,7 @@ func (r *ConnectionSKYWARDResourceModel) RefreshFromSharedConnectionSkyward(resp
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -188,11 +188,11 @@ func (r *ConnectionSKYWARDResourceModel) RefreshFromSharedConnectionSkyward(resp
 }
 
 func (r *ConnectionSKYWARDResourceModel) ToSharedConnectionSkywardUpdate() *shared.ConnectionSkywardUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionSkywardUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -200,11 +200,11 @@ func (r *ConnectionSKYWARDResourceModel) ToSharedConnectionSkywardUpdate() *shar
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -267,12 +267,12 @@ func (r *ConnectionSKYWARDResourceModel) ToSharedConnectionSkywardUpdate() *shar
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -281,25 +281,25 @@ func (r *ConnectionSKYWARDResourceModel) ToSharedConnectionSkywardUpdate() *shar
 			}
 		}
 	}
-	clientID := new(string)
-	if !r.ClientID.IsUnknown() && !r.ClientID.IsNull() {
-		*clientID = r.ClientID.ValueString()
-	} else {
-		clientID = nil
-	}
 	clientSecret := new(string)
 	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
 		*clientSecret = r.ClientSecret.ValueString()
 	} else {
 		clientSecret = nil
 	}
+	clientID := new(string)
+	if !r.ClientID.IsUnknown() && !r.ClientID.IsNull() {
+		*clientID = r.ClientID.ValueString()
+	} else {
+		clientID = nil
+	}
 	out := shared.ConnectionSkywardUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
-		ClientID:       clientID,
 		ClientSecret:   clientSecret,
+		ClientID:       clientID,
 	}
 	return &out
 }

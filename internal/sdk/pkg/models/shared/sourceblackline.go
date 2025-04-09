@@ -32,20 +32,13 @@ func (e *SourceBlacklineType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBlackline struct {
-	Type SourceBlacklineType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string              `json:"connectionId"`
+	Type         SourceBlacklineType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Blackline report name. Example: Account Details Extract Template
 	Entity string `json:"entity"`
-}
-
-func (o *SourceBlackline) GetType() SourceBlacklineType {
-	if o == nil {
-		return SourceBlacklineType("")
-	}
-	return o.Type
 }
 
 func (o *SourceBlackline) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceBlackline) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceBlackline) GetType() SourceBlacklineType {
+	if o == nil {
+		return SourceBlacklineType("")
+	}
+	return o.Type
 }
 
 func (o *SourceBlackline) GetLatencyThreshold() *int64 {

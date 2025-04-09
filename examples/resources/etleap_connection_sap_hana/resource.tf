@@ -1,12 +1,12 @@
 resource "etleap_connection_sap_hana" "my_connectionsap_hana" {
-  address                     = "577 Dallin Center"
+  address                     = "129 Gusikowski Inlet"
   cdc_enabled                 = true
   database                    = "...my_database..."
-  deletion_of_export_products = false
-  name                        = "Ms. Nancy McDermott"
+  deletion_of_export_products = true
+  name                        = "Lynne Veum"
   password                    = "...my_password..."
-  port                        = 9
+  port                        = 0
   schema                      = "...my_schema..."
   type                        = "SAP_HANA"
-  username                    = "Richmond22"
+  username                    = "Orrin.Muller31"
 }

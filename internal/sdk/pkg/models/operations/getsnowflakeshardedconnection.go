@@ -27,7 +27,7 @@ type GetSNOWFLAKESHARDEDConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSnowflakeSharded *shared.ConnectionSnowflakeSharded
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

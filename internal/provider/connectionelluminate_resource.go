@@ -41,18 +41,18 @@ type ConnectionELLUMINATEResource struct {
 
 // ConnectionELLUMINATEResourceModel describes the resource data model.
 type ConnectionELLUMINATEResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	APIKey                   types.String            `tfsdk:"api_key"`
-	APISecret                types.String            `tfsdk:"api_secret"`
-	BaseURL                  types.String            `tfsdk:"base_url"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	APIKey                   types.String                                    `tfsdk:"api_key"`
+	APISecret                types.String                                    `tfsdk:"api_secret"`
+	BaseURL                  types.String                                    `tfsdk:"base_url"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionELLUMINATEResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

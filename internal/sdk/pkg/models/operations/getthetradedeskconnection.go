@@ -27,7 +27,7 @@ type GetTHETRADEDESKConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionTheTradeDesk *shared.ConnectionTheTradeDesk
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

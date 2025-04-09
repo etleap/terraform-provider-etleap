@@ -35,7 +35,7 @@ type UpdateUSERDEFINEDAPIConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionUserDefinedAPI *shared.ConnectionUserDefinedAPI
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

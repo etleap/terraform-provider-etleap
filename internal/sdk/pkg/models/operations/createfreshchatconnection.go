@@ -15,7 +15,7 @@ type CreateFRESHCHATConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionFreshchat *shared.ConnectionFreshchat
+	ConnectionFreshchat *shared.ConnectionFreshchatOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateFRESHCHATConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateFRESHCHATConnectionResponse) GetConnectionFreshchat() *shared.ConnectionFreshchat {
+func (o *CreateFRESHCHATConnectionResponse) GetConnectionFreshchat() *shared.ConnectionFreshchatOutput {
 	if o == nil {
 		return nil
 	}

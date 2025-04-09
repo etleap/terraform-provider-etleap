@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingInput() *shared.ConnectionBingInput {
+func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBing() *shared.ConnectionBing {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionBingType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingInput() *shared.C
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,7 +87,7 @@ func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingInput() *shared.C
 		}
 	}
 	code := r.Code.ValueString()
-	out := shared.ConnectionBingInput{
+	out := shared.ConnectionBing{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -96,14 +96,14 @@ func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingInput() *shared.C
 	return &out
 }
 
-func (r *ConnectionBINGADSResourceModel) RefreshFromSharedConnectionBing(resp *shared.ConnectionBing) {
+func (r *ConnectionBINGADSResourceModel) RefreshFromSharedConnectionBingOutput(resp *shared.ConnectionBingOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -187,18 +187,18 @@ func (r *ConnectionBINGADSResourceModel) RefreshFromSharedConnectionBing(resp *s
 }
 
 func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingUpdate() *shared.ConnectionBingUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	typeVar := shared.ConnectionBingUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
 	} else {
 		active = nil
+	}
+	typeVar := shared.ConnectionBingUpdateType(r.Type.ValueString())
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -261,12 +261,12 @@ func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingUpdate() *shared.
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -282,9 +282,9 @@ func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingUpdate() *shared.
 		code = nil
 	}
 	out := shared.ConnectionBingUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
 		Code:           code,
 	}

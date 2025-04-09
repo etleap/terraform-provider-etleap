@@ -32,11 +32,11 @@ func (e *WallClockStrategyType) UnmarshalJSON(data []byte) error {
 }
 
 type WallClockStrategy struct {
-	Type               WallClockStrategyType                              `json:"type"`
-	BeginDateParameter WatermarkDateonlyKeyValuePair                      `json:"beginDateParameter"`
-	EndDateParameter   *InclusiveOrExclusiveWatermarkDateonlyKeyValuePair `json:"endDateParameter,omitempty"`
+	Type             WallClockStrategyType                              `json:"type"`
+	EndDateParameter *InclusiveOrExclusiveWatermarkDateonlyKeyValuePair `json:"endDateParameter,omitempty"`
 	// The number of days we look back during each delta extraction.
-	LookbackWindow int64 `json:"lookbackWindow"`
+	LookbackWindow     int64                         `json:"lookbackWindow"`
+	BeginDateParameter WatermarkDateonlyKeyValuePair `json:"beginDateParameter"`
 }
 
 func (o *WallClockStrategy) GetType() WallClockStrategyType {
@@ -44,13 +44,6 @@ func (o *WallClockStrategy) GetType() WallClockStrategyType {
 		return WallClockStrategyType("")
 	}
 	return o.Type
-}
-
-func (o *WallClockStrategy) GetBeginDateParameter() WatermarkDateonlyKeyValuePair {
-	if o == nil {
-		return WatermarkDateonlyKeyValuePair{}
-	}
-	return o.BeginDateParameter
 }
 
 func (o *WallClockStrategy) GetEndDateParameter() *InclusiveOrExclusiveWatermarkDateonlyKeyValuePair {
@@ -65,4 +58,11 @@ func (o *WallClockStrategy) GetLookbackWindow() int64 {
 		return 0
 	}
 	return o.LookbackWindow
+}
+
+func (o *WallClockStrategy) GetBeginDateParameter() WatermarkDateonlyKeyValuePair {
+	if o == nil {
+		return WatermarkDateonlyKeyValuePair{}
+	}
+	return o.BeginDateParameter
 }

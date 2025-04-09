@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionTheTradeDeskType string
-
-const (
-	ConnectionTheTradeDeskTypeTheTradeDesk ConnectionTheTradeDeskType = "THE_TRADE_DESK"
-)
-
-func (e ConnectionTheTradeDeskType) ToPointer() *ConnectionTheTradeDeskType {
-	return &e
-}
-
-func (e *ConnectionTheTradeDeskType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "THE_TRADE_DESK":
-		*e = ConnectionTheTradeDeskType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionTheTradeDeskType: %v", v)
-	}
-}
-
 // ConnectionTheTradeDeskStatus - The current status of the connection.
 type ConnectionTheTradeDeskStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionTheTradeDeskDefaultUpdateSchedule) GetUpdateSchedule() *Updat
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTheTradeDeskDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionTheTradeDeskDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionTheTradeDeskDefaultUpdateSchedule) GetUpdateScheduleInterval(
 func (o *ConnectionTheTradeDeskDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionTheTradeDeskDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,29 +108,46 @@ func (o *ConnectionTheTradeDeskDefaultUpdateSchedule) GetUpdateScheduleWeekly() 
 	return nil
 }
 
-func (o *ConnectionTheTradeDeskDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionTheTradeDeskType string
+
+const (
+	ConnectionTheTradeDeskTypeTheTradeDesk ConnectionTheTradeDeskType = "THE_TRADE_DESK"
+)
+
+func (e ConnectionTheTradeDeskType) ToPointer() *ConnectionTheTradeDeskType {
+	return &e
+}
+
+func (e *ConnectionTheTradeDeskType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "THE_TRADE_DESK":
+		*e = ConnectionTheTradeDeskType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionTheTradeDeskType: %v", v)
+	}
 }
 
 type ConnectionTheTradeDesk struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                     `json:"name"`
-	Type ConnectionTheTradeDeskType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionTheTradeDeskStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionTheTradeDeskDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	// Whether this connection has been marked as active.
+	Active bool                       `json:"active"`
+	Type   ConnectionTheTradeDeskType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Typically an email address.
 	Username string `json:"username"`
 	// Your Partner ID at The Trade Desk.
@@ -167,11 +167,11 @@ func (c *ConnectionTheTradeDesk) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionTheTradeDesk) GetID() string {
+func (o *ConnectionTheTradeDesk) GetStatus() ConnectionTheTradeDeskStatus {
 	if o == nil {
-		return ""
+		return ConnectionTheTradeDeskStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionTheTradeDesk) GetName() string {
@@ -181,11 +181,18 @@ func (o *ConnectionTheTradeDesk) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionTheTradeDesk) GetType() ConnectionTheTradeDeskType {
+func (o *ConnectionTheTradeDesk) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionTheTradeDeskType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionTheTradeDesk) GetDefaultUpdateSchedule() []ConnectionTheTradeDeskDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionTheTradeDeskDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionTheTradeDesk) GetActive() bool {
@@ -195,18 +202,18 @@ func (o *ConnectionTheTradeDesk) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionTheTradeDesk) GetStatus() ConnectionTheTradeDeskStatus {
+func (o *ConnectionTheTradeDesk) GetType() ConnectionTheTradeDeskType {
 	if o == nil {
-		return ConnectionTheTradeDeskStatus("")
+		return ConnectionTheTradeDeskType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionTheTradeDesk) GetCreateDate() time.Time {
+func (o *ConnectionTheTradeDesk) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionTheTradeDesk) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -216,9 +223,9 @@ func (o *ConnectionTheTradeDesk) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTheTradeDesk) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionTheTradeDesk) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -226,6 +233,13 @@ func (o *ConnectionTheTradeDesk) GetUpdateScheduleInterval() *UpdateScheduleMode
 func (o *ConnectionTheTradeDesk) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionTheTradeDesk) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -242,20 +256,6 @@ func (o *ConnectionTheTradeDesk) GetUpdateScheduleWeekly() *UpdateScheduleModeWe
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
-}
-
-func (o *ConnectionTheTradeDesk) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionTheTradeDesk) GetDefaultUpdateSchedule() []ConnectionTheTradeDeskDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionTheTradeDeskDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionTheTradeDesk) GetUsername() string {
@@ -287,11 +287,11 @@ type ConnectionTheTradeDeskInput struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Typically an email address.
 	Username string `json:"username"`
-	Password string `json:"password"`
 	// Your Partner ID at The Trade Desk.
 	PartnerID string `json:"partnerId"`
 	// Whether this is a sandbox account.
-	Sandbox bool `json:"sandbox"`
+	Sandbox  bool   `json:"sandbox"`
+	Password string `json:"password"`
 }
 
 func (o *ConnectionTheTradeDeskInput) GetName() string {
@@ -315,9 +315,9 @@ func (o *ConnectionTheTradeDeskInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -325,6 +325,13 @@ func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleInterval() *UpdateSchedul
 func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -343,25 +350,11 @@ func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleWeekly() *UpdateScheduleM
 	return nil
 }
 
-func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
 func (o *ConnectionTheTradeDeskInput) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
-}
-
-func (o *ConnectionTheTradeDeskInput) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
 }
 
 func (o *ConnectionTheTradeDeskInput) GetPartnerID() string {
@@ -376,4 +369,11 @@ func (o *ConnectionTheTradeDeskInput) GetSandbox() bool {
 		return false
 	}
 	return o.Sandbox
+}
+
+func (o *ConnectionTheTradeDeskInput) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
 }

@@ -34,8 +34,8 @@ type UpdateTIKTOKADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionTikTokAds *shared.ConnectionTikTokAds
-	// Bad Request
+	ConnectionTikTokAds *shared.ConnectionTikTokAdsOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateTIKTOKADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateTIKTOKADSConnectionResponse) GetConnectionTikTokAds() *shared.ConnectionTikTokAds {
+func (o *UpdateTIKTOKADSConnectionResponse) GetConnectionTikTokAds() *shared.ConnectionTikTokAdsOutput {
 	if o == nil {
 		return nil
 	}

@@ -35,7 +35,7 @@ type UpdateKAFKAConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionKafka *shared.ConnectionKafka
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

@@ -32,34 +32,20 @@ func (e *ConnectionSeismicUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionSeismicUpdate struct {
-	// The unique name of this connection.
-	Name *string                     `json:"name,omitempty"`
-	Type ConnectionSeismicUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                       `json:"active,omitempty"`
+	Type   ConnectionSeismicUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code *string `json:"code,omitempty"`
+	// If you don't have a Client ID or Secret, see <a target="_blank" href="https://support.etleap.com/hc/en-us/articles/360045382574-Getting-Seismic-Credentials">the instructions here</a> for getting it.
+	ClientSecret *string `json:"clientSecret,omitempty"`
 	// The name of the tenant. This is in the URL when you use seismic: [tenant].seismic.com
 	TenantName *string `json:"tenantName,omitempty"`
 	ClientID   *string `json:"clientId,omitempty"`
-	// If you don't have a Client ID or Secret, see <a target="_blank" href="https://support.etleap.com/hc/en-us/articles/360045382574-Getting-Seismic-Credentials">the instructions here</a> for getting it.
-	ClientSecret *string `json:"clientSecret,omitempty"`
-}
-
-func (o *ConnectionSeismicUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionSeismicUpdate) GetType() ConnectionSeismicUpdateType {
-	if o == nil {
-		return ConnectionSeismicUpdateType("")
-	}
-	return o.Type
 }
 
 func (o *ConnectionSeismicUpdate) GetActive() *bool {
@@ -69,6 +55,20 @@ func (o *ConnectionSeismicUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionSeismicUpdate) GetType() ConnectionSeismicUpdateType {
+	if o == nil {
+		return ConnectionSeismicUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionSeismicUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionSeismicUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -76,9 +76,9 @@ func (o *ConnectionSeismicUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSeismicUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSeismicUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -86,6 +86,13 @@ func (o *ConnectionSeismicUpdate) GetUpdateScheduleInterval() *UpdateScheduleMod
 func (o *ConnectionSeismicUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSeismicUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -104,18 +111,18 @@ func (o *ConnectionSeismicUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeW
 	return nil
 }
 
-func (o *ConnectionSeismicUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
 func (o *ConnectionSeismicUpdate) GetCode() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Code
+}
+
+func (o *ConnectionSeismicUpdate) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
 }
 
 func (o *ConnectionSeismicUpdate) GetTenantName() *string {
@@ -130,11 +137,4 @@ func (o *ConnectionSeismicUpdate) GetClientID() *string {
 		return nil
 	}
 	return o.ClientID
-}
-
-func (o *ConnectionSeismicUpdate) GetClientSecret() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientSecret
 }

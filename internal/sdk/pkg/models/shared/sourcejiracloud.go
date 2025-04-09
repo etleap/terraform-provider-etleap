@@ -32,20 +32,13 @@ func (e *SourceJiraCloudType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceJiraCloud struct {
-	Type SourceJiraCloudType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string              `json:"connectionId"`
+	Type         SourceJiraCloudType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The JIRA Software Cloud entity.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceJiraCloud) GetType() SourceJiraCloudType {
-	if o == nil {
-		return SourceJiraCloudType("")
-	}
-	return o.Type
 }
 
 func (o *SourceJiraCloud) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceJiraCloud) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceJiraCloud) GetType() SourceJiraCloudType {
+	if o == nil {
+		return SourceJiraCloudType("")
+	}
+	return o.Type
 }
 
 func (o *SourceJiraCloud) GetLatencyThreshold() *int64 {

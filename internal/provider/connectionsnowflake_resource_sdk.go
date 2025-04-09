@@ -72,12 +72,12 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeInput() *s
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,31 +86,54 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeInput() *s
 			}
 		}
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
-	} else {
-		schema = nil
-	}
-	var roles []string = nil
-	for _, rolesItem := range r.Roles {
-		roles = append(roles, rolesItem.ValueString())
-	}
 	sourceOnly := new(bool)
 	if !r.SourceOnly.IsUnknown() && !r.SourceOnly.IsNull() {
 		*sourceOnly = r.SourceOnly.ValueBool()
 	} else {
 		sourceOnly = nil
 	}
-	address := r.Address.ValueString()
-	database := r.Database.ValueString()
-	warehouse := r.Warehouse.ValueString()
-	username := r.Username.ValueString()
-	password := new(string)
-	if !r.Password.IsUnknown() && !r.Password.IsNull() {
-		*password = r.Password.ValueString()
+	var roles []string = nil
+	for _, rolesItem := range r.Roles {
+		roles = append(roles, rolesItem.ValueString())
+	}
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
 	} else {
-		password = nil
+		schema = nil
+	}
+	username := r.Username.ValueString()
+	database := r.Database.ValueString()
+	var authentication *shared.SnowflakeAuthenticationTypesInput
+	if r.Authentication != nil {
+		var snowflakeAuthenticationKeyPairInput *shared.SnowflakeAuthenticationKeyPairInput
+		if r.Authentication.KeyPair != nil {
+			privateKey := r.Authentication.KeyPair.PrivateKey.ValueString()
+			typeVar1 := shared.SnowflakeAuthenticationKeyPairType(r.Authentication.KeyPair.Type.ValueString())
+			snowflakeAuthenticationKeyPairInput = &shared.SnowflakeAuthenticationKeyPairInput{
+				PrivateKey: privateKey,
+				Type:       typeVar1,
+			}
+		}
+		if snowflakeAuthenticationKeyPairInput != nil {
+			authentication = &shared.SnowflakeAuthenticationTypesInput{
+				SnowflakeAuthenticationKeyPairInput: snowflakeAuthenticationKeyPairInput,
+			}
+		}
+		var snowflakeAuthenticationPassword *shared.SnowflakeAuthenticationPassword
+		if r.Authentication.Password != nil {
+			password := r.Authentication.Password.Password.ValueString()
+			typeVar2 := shared.SnowflakeAuthenticationPasswordType(r.Authentication.Password.Type.ValueString())
+			snowflakeAuthenticationPassword = &shared.SnowflakeAuthenticationPassword{
+				Password: password,
+				Type:     typeVar2,
+			}
+		}
+		if snowflakeAuthenticationPassword != nil {
+			authentication = &shared.SnowflakeAuthenticationTypesInput{
+				SnowflakeAuthenticationPassword: snowflakeAuthenticationPassword,
+			}
+		}
 	}
 	role := new(string)
 	if !r.Role.IsUnknown() && !r.Role.IsNull() {
@@ -118,51 +141,28 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeInput() *s
 	} else {
 		role = nil
 	}
-	var authentication *shared.SnowflakeAuthenticationTypes
-	if r.Authentication != nil {
-		var snowflakeAuthenticationKeyPair *shared.SnowflakeAuthenticationKeyPair
-		if r.Authentication.KeyPair != nil {
-			typeVar1 := shared.SnowflakeAuthenticationKeyPairType(r.Authentication.KeyPair.Type.ValueString())
-			privateKey := r.Authentication.KeyPair.PrivateKey.ValueString()
-			snowflakeAuthenticationKeyPair = &shared.SnowflakeAuthenticationKeyPair{
-				Type:       typeVar1,
-				PrivateKey: privateKey,
-			}
-		}
-		if snowflakeAuthenticationKeyPair != nil {
-			authentication = &shared.SnowflakeAuthenticationTypes{
-				SnowflakeAuthenticationKeyPair: snowflakeAuthenticationKeyPair,
-			}
-		}
-		var snowflakeAuthenticationPassword *shared.SnowflakeAuthenticationPassword
-		if r.Authentication.Password != nil {
-			typeVar2 := shared.SnowflakeAuthenticationPasswordType(r.Authentication.Password.Type.ValueString())
-			password1 := r.Authentication.Password.Password.ValueString()
-			snowflakeAuthenticationPassword = &shared.SnowflakeAuthenticationPassword{
-				Type:     typeVar2,
-				Password: password1,
-			}
-		}
-		if snowflakeAuthenticationPassword != nil {
-			authentication = &shared.SnowflakeAuthenticationTypes{
-				SnowflakeAuthenticationPassword: snowflakeAuthenticationPassword,
-			}
-		}
+	address := r.Address.ValueString()
+	warehouse := r.Warehouse.ValueString()
+	password1 := new(string)
+	if !r.Password.IsUnknown() && !r.Password.IsNull() {
+		*password1 = r.Password.ValueString()
+	} else {
+		password1 = nil
 	}
 	out := shared.ConnectionSnowflakeInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		Roles:          roles,
 		SourceOnly:     sourceOnly,
-		Address:        address,
-		Database:       database,
-		Warehouse:      warehouse,
+		Roles:          roles,
+		Schema:         schema,
 		Username:       username,
-		Password:       password,
-		Role:           role,
+		Database:       database,
 		Authentication: authentication,
+		Role:           role,
+		Address:        address,
+		Warehouse:      warehouse,
+		Password:       password1,
 	}
 	return &out
 }
@@ -173,11 +173,11 @@ func (r *ConnectionSNOWFLAKEResourceModel) RefreshFromSharedConnectionSnowflake(
 	if resp.Authentication == nil {
 		r.Authentication = nil
 	} else {
-		r.Authentication = &SnowflakeAuthenticationTypes{}
-		if resp.Authentication.SnowflakeAuthenticationKeyPairOutput != nil {
+		r.Authentication = &SnowflakeAuthenticationTypesInput{}
+		if resp.Authentication.SnowflakeAuthenticationKeyPair != nil {
 			r.Authentication.KeyPair = &SnowflakeAuthenticationKeyPair{}
-			r.Authentication.KeyPair.PublicKey = types.StringValue(resp.Authentication.SnowflakeAuthenticationKeyPairOutput.PublicKey)
-			r.Authentication.KeyPair.Type = types.StringValue(string(resp.Authentication.SnowflakeAuthenticationKeyPairOutput.Type))
+			r.Authentication.KeyPair.PublicKey = types.StringValue(resp.Authentication.SnowflakeAuthenticationKeyPair.PublicKey)
+			r.Authentication.KeyPair.Type = types.StringValue(string(resp.Authentication.SnowflakeAuthenticationKeyPair.Type))
 		}
 		if resp.Authentication.SnowflakeAuthenticationPasswordOutput != nil {
 			r.Authentication.Password = &SnowflakeAuthenticationPassword{}
@@ -190,7 +190,7 @@ func (r *ConnectionSNOWFLAKEResourceModel) RefreshFromSharedConnectionSnowflake(
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -281,18 +281,18 @@ func (r *ConnectionSNOWFLAKEResourceModel) RefreshFromSharedConnectionSnowflake(
 }
 
 func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeUpdate() *shared.ConnectionSnowflakeUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	typeVar := shared.ConnectionSnowflakeUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
 	} else {
 		active = nil
+	}
+	typeVar := shared.ConnectionSnowflakeUpdateType(r.Type.ValueString())
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -355,12 +355,12 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeUpdate() *
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -369,39 +369,21 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeUpdate() *
 			}
 		}
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
-	} else {
-		schema = nil
-	}
-	var roles []string = nil
-	for _, rolesItem := range r.Roles {
-		roles = append(roles, rolesItem.ValueString())
-	}
 	sourceOnly := new(bool)
 	if !r.SourceOnly.IsUnknown() && !r.SourceOnly.IsNull() {
 		*sourceOnly = r.SourceOnly.ValueBool()
 	} else {
 		sourceOnly = nil
 	}
-	address := new(string)
-	if !r.Address.IsUnknown() && !r.Address.IsNull() {
-		*address = r.Address.ValueString()
-	} else {
-		address = nil
+	var roles []string = nil
+	for _, rolesItem := range r.Roles {
+		roles = append(roles, rolesItem.ValueString())
 	}
-	database := new(string)
-	if !r.Database.IsUnknown() && !r.Database.IsNull() {
-		*database = r.Database.ValueString()
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
 	} else {
-		database = nil
-	}
-	warehouse := new(string)
-	if !r.Warehouse.IsUnknown() && !r.Warehouse.IsNull() {
-		*warehouse = r.Warehouse.ValueString()
-	} else {
-		warehouse = nil
+		schema = nil
 	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
@@ -409,11 +391,42 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeUpdate() *
 	} else {
 		username = nil
 	}
-	password := new(string)
-	if !r.Password.IsUnknown() && !r.Password.IsNull() {
-		*password = r.Password.ValueString()
+	database := new(string)
+	if !r.Database.IsUnknown() && !r.Database.IsNull() {
+		*database = r.Database.ValueString()
 	} else {
-		password = nil
+		database = nil
+	}
+	var authentication *shared.SnowflakeAuthenticationTypesInput
+	if r.Authentication != nil {
+		var snowflakeAuthenticationKeyPairInput *shared.SnowflakeAuthenticationKeyPairInput
+		if r.Authentication.KeyPair != nil {
+			privateKey := r.Authentication.KeyPair.PrivateKey.ValueString()
+			typeVar1 := shared.SnowflakeAuthenticationKeyPairType(r.Authentication.KeyPair.Type.ValueString())
+			snowflakeAuthenticationKeyPairInput = &shared.SnowflakeAuthenticationKeyPairInput{
+				PrivateKey: privateKey,
+				Type:       typeVar1,
+			}
+		}
+		if snowflakeAuthenticationKeyPairInput != nil {
+			authentication = &shared.SnowflakeAuthenticationTypesInput{
+				SnowflakeAuthenticationKeyPairInput: snowflakeAuthenticationKeyPairInput,
+			}
+		}
+		var snowflakeAuthenticationPassword *shared.SnowflakeAuthenticationPassword
+		if r.Authentication.Password != nil {
+			password := r.Authentication.Password.Password.ValueString()
+			typeVar2 := shared.SnowflakeAuthenticationPasswordType(r.Authentication.Password.Type.ValueString())
+			snowflakeAuthenticationPassword = &shared.SnowflakeAuthenticationPassword{
+				Password: password,
+				Type:     typeVar2,
+			}
+		}
+		if snowflakeAuthenticationPassword != nil {
+			authentication = &shared.SnowflakeAuthenticationTypesInput{
+				SnowflakeAuthenticationPassword: snowflakeAuthenticationPassword,
+			}
+		}
 	}
 	role := new(string)
 	if !r.Role.IsUnknown() && !r.Role.IsNull() {
@@ -421,52 +434,39 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeUpdate() *
 	} else {
 		role = nil
 	}
-	var authentication *shared.SnowflakeAuthenticationTypes
-	if r.Authentication != nil {
-		var snowflakeAuthenticationKeyPair *shared.SnowflakeAuthenticationKeyPair
-		if r.Authentication.KeyPair != nil {
-			typeVar1 := shared.SnowflakeAuthenticationKeyPairType(r.Authentication.KeyPair.Type.ValueString())
-			privateKey := r.Authentication.KeyPair.PrivateKey.ValueString()
-			snowflakeAuthenticationKeyPair = &shared.SnowflakeAuthenticationKeyPair{
-				Type:       typeVar1,
-				PrivateKey: privateKey,
-			}
-		}
-		if snowflakeAuthenticationKeyPair != nil {
-			authentication = &shared.SnowflakeAuthenticationTypes{
-				SnowflakeAuthenticationKeyPair: snowflakeAuthenticationKeyPair,
-			}
-		}
-		var snowflakeAuthenticationPassword *shared.SnowflakeAuthenticationPassword
-		if r.Authentication.Password != nil {
-			typeVar2 := shared.SnowflakeAuthenticationPasswordType(r.Authentication.Password.Type.ValueString())
-			password1 := r.Authentication.Password.Password.ValueString()
-			snowflakeAuthenticationPassword = &shared.SnowflakeAuthenticationPassword{
-				Type:     typeVar2,
-				Password: password1,
-			}
-		}
-		if snowflakeAuthenticationPassword != nil {
-			authentication = &shared.SnowflakeAuthenticationTypes{
-				SnowflakeAuthenticationPassword: snowflakeAuthenticationPassword,
-			}
-		}
+	address := new(string)
+	if !r.Address.IsUnknown() && !r.Address.IsNull() {
+		*address = r.Address.ValueString()
+	} else {
+		address = nil
+	}
+	warehouse := new(string)
+	if !r.Warehouse.IsUnknown() && !r.Warehouse.IsNull() {
+		*warehouse = r.Warehouse.ValueString()
+	} else {
+		warehouse = nil
+	}
+	password1 := new(string)
+	if !r.Password.IsUnknown() && !r.Password.IsNull() {
+		*password1 = r.Password.ValueString()
+	} else {
+		password1 = nil
 	}
 	out := shared.ConnectionSnowflakeUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		Roles:          roles,
 		SourceOnly:     sourceOnly,
-		Address:        address,
-		Database:       database,
-		Warehouse:      warehouse,
+		Roles:          roles,
+		Schema:         schema,
 		Username:       username,
-		Password:       password,
-		Role:           role,
+		Database:       database,
 		Authentication: authentication,
+		Role:           role,
+		Address:        address,
+		Warehouse:      warehouse,
+		Password:       password1,
 	}
 	return &out
 }

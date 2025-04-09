@@ -28,19 +28,19 @@ type ConnectionSFTPDataSource struct {
 
 // ConnectionSFTPDataSourceModel describes the data model.
 type ConnectionSFTPDataSourceModel struct {
-	Active                     types.Bool              `tfsdk:"active"`
-	BaseDirectory              types.String            `tfsdk:"base_directory"`
-	CreateDate                 types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule      []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	Hostname                   types.String            `tfsdk:"hostname"`
-	ID                         types.String            `tfsdk:"id"`
-	Name                       types.String            `tfsdk:"name"`
-	Port                       types.Int64             `tfsdk:"port"`
-	Status                     types.String            `tfsdk:"status"`
-	Type                       types.String            `tfsdk:"type"`
-	UpdateSchedule             *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	UsePublicKeyAuthentication types.Bool              `tfsdk:"use_public_key_authentication"`
-	Username                   types.String            `tfsdk:"username"`
+	Active                     types.Bool                                      `tfsdk:"active"`
+	BaseDirectory              types.String                                    `tfsdk:"base_directory"`
+	CreateDate                 types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule      []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	Hostname                   types.String                                    `tfsdk:"hostname"`
+	ID                         types.String                                    `tfsdk:"id"`
+	Name                       types.String                                    `tfsdk:"name"`
+	Port                       types.Int64                                     `tfsdk:"port"`
+	Status                     types.String                                    `tfsdk:"status"`
+	Type                       types.String                                    `tfsdk:"type"`
+	UpdateSchedule             *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	UsePublicKeyAuthentication types.Bool                                      `tfsdk:"use_public_key_authentication"`
+	Username                   types.String                                    `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.
@@ -329,7 +329,7 @@ func (r *ConnectionSFTPDataSource) Read(ctx context.Context, req datasource.Read
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSftp(res.ConnectionSftp)
+	data.RefreshFromSharedConnectionSftpOutput(res.ConnectionSftp)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

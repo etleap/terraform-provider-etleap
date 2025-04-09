@@ -27,7 +27,7 @@ type GetCRITEOConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionCriteo *shared.ConnectionCriteo
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

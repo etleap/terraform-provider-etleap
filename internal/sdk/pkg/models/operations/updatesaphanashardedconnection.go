@@ -34,8 +34,8 @@ type UpdateSAPHANASHARDEDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSapHanaSharded *shared.ConnectionSapHanaSharded
-	// Bad Request
+	ConnectionSapHanaSharded *shared.ConnectionSapHanaShardedOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateSAPHANASHARDEDConnectionResponse) GetRawResponse() *http.Response
 	return o.RawResponse
 }
 
-func (o *UpdateSAPHANASHARDEDConnectionResponse) GetConnectionSapHanaSharded() *shared.ConnectionSapHanaSharded {
+func (o *UpdateSAPHANASHARDEDConnectionResponse) GetConnectionSapHanaSharded() *shared.ConnectionSapHanaShardedOutput {
 	if o == nil {
 		return nil
 	}

@@ -27,7 +27,7 @@ type GetUSERDEFINEDAPIConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionUserDefinedAPI *shared.ConnectionUserDefinedAPI
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

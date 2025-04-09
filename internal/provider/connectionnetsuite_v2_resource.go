@@ -41,20 +41,20 @@ type ConnectionNETSUITEV2Resource struct {
 
 // ConnectionNETSUITEV2ResourceModel describes the resource data model.
 type ConnectionNETSUITEV2ResourceModel struct {
-	AccountID                types.String            `tfsdk:"account_id"`
-	Active                   types.Bool              `tfsdk:"active"`
-	ConsumerKey              types.String            `tfsdk:"consumer_key"`
-	ConsumerSecret           types.String            `tfsdk:"consumer_secret"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Status                   types.String            `tfsdk:"status"`
-	TokenID                  types.String            `tfsdk:"token_id"`
-	TokenSecret              types.String            `tfsdk:"token_secret"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	AccountID                types.String                                    `tfsdk:"account_id"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	ConsumerKey              types.String                                    `tfsdk:"consumer_key"`
+	ConsumerSecret           types.String                                    `tfsdk:"consumer_secret"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Status                   types.String                                    `tfsdk:"status"`
+	TokenID                  types.String                                    `tfsdk:"token_id"`
+	TokenSecret              types.String                                    `tfsdk:"token_secret"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionNETSUITEV2Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

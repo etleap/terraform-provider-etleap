@@ -32,28 +32,21 @@ func (e *SourceSnapchatAdsType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSnapchatAds struct {
-	Type SourceSnapchatAdsType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string                `json:"connectionId"`
+	Type         SourceSnapchatAdsType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Snapchat Ads entity. Example values: [ad, adaccount, ad_account_report_hourly, ad_account_report_daily]
 	Entity string `json:"entity"`
 	// Specify the report `breakdown` if and only if the entity is 'ad_account_report_hourly' or 'ad_account_report_daily'. Example values: [ad, adsquad, campaign]
 	Breakdown *string `json:"breakdown,omitempty"`
+	// Specify the report `dimension` groups if and only if the entity is 'ad_account_report_hourly' or 'ad_account_report_daily'. Example values: [country, region, gender]
+	ReportDimension []string `json:"report_dimension,omitempty"`
 	// Specify the report `metrics` if and only if the entity is 'ad_account_report_hourly' or 'ad_account_report_daily'. Example values: [impressions, swipes, screen_time_millis]
 	Metrics []string `json:"metrics,omitempty"`
 	// Specify the report `additional metrics` if and only if the entity is 'ad_account_report_hourly' or 'ad_account_report_daily'. Example values: [android_installs, attachment_avg_view_time_millis, attachment_frequency]
 	AdditionalMetrics []string `json:"additional_metrics,omitempty"`
-	// Specify the report `dimension` groups if and only if the entity is 'ad_account_report_hourly' or 'ad_account_report_daily'. Example values: [country, region, gender]
-	ReportDimension []string `json:"report_dimension,omitempty"`
-}
-
-func (o *SourceSnapchatAds) GetType() SourceSnapchatAdsType {
-	if o == nil {
-		return SourceSnapchatAdsType("")
-	}
-	return o.Type
 }
 
 func (o *SourceSnapchatAds) GetConnectionID() string {
@@ -61,6 +54,13 @@ func (o *SourceSnapchatAds) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceSnapchatAds) GetType() SourceSnapchatAdsType {
+	if o == nil {
+		return SourceSnapchatAdsType("")
+	}
+	return o.Type
 }
 
 func (o *SourceSnapchatAds) GetLatencyThreshold() *int64 {
@@ -84,6 +84,13 @@ func (o *SourceSnapchatAds) GetBreakdown() *string {
 	return o.Breakdown
 }
 
+func (o *SourceSnapchatAds) GetReportDimension() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ReportDimension
+}
+
 func (o *SourceSnapchatAds) GetMetrics() []string {
 	if o == nil {
 		return nil
@@ -96,11 +103,4 @@ func (o *SourceSnapchatAds) GetAdditionalMetrics() []string {
 		return nil
 	}
 	return o.AdditionalMetrics
-}
-
-func (o *SourceSnapchatAds) GetReportDimension() []string {
-	if o == nil {
-		return nil
-	}
-	return o.ReportDimension
 }

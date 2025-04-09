@@ -42,7 +42,7 @@ type RetractEventResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-	// Bad Request
+	// The specified externalBatchId cannot be retracted.
 	Errors *shared.Errors
 }
 

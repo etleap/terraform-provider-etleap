@@ -32,19 +32,12 @@ func (e *SourceOutreachType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceOutreach struct {
-	Type SourceOutreachType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string             `json:"connectionId"`
+	Type         SourceOutreachType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	Entity           string `json:"entity"`
-}
-
-func (o *SourceOutreach) GetType() SourceOutreachType {
-	if o == nil {
-		return SourceOutreachType("")
-	}
-	return o.Type
 }
 
 func (o *SourceOutreach) GetConnectionID() string {
@@ -52,6 +45,13 @@ func (o *SourceOutreach) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceOutreach) GetType() SourceOutreachType {
+	if o == nil {
+		return SourceOutreachType("")
+	}
+	return o.Type
 }
 
 func (o *SourceOutreach) GetLatencyThreshold() *int64 {

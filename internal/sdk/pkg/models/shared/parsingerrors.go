@@ -4,16 +4,9 @@ package shared
 
 // ParsingErrors - Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline.
 type ParsingErrors struct {
-	ParsingErrorsPerDay        []ParsingErrorPerDay         `json:"parsingErrorsPerDay"`
 	TypeErrorsByColumn         []TypeErrorsByColumn         `json:"typeErrorsByColumn"`
 	OperationErrorsByOperation []OperationErrorsByOperation `json:"operationErrorsByOperation"`
-}
-
-func (o *ParsingErrors) GetParsingErrorsPerDay() []ParsingErrorPerDay {
-	if o == nil {
-		return []ParsingErrorPerDay{}
-	}
-	return o.ParsingErrorsPerDay
+	ParsingErrorsPerDay        []ParsingErrorPerDay         `json:"parsingErrorsPerDay"`
 }
 
 func (o *ParsingErrors) GetTypeErrorsByColumn() []TypeErrorsByColumn {
@@ -28,4 +21,11 @@ func (o *ParsingErrors) GetOperationErrorsByOperation() []OperationErrorsByOpera
 		return []OperationErrorsByOperation{}
 	}
 	return o.OperationErrorsByOperation
+}
+
+func (o *ParsingErrors) GetParsingErrorsPerDay() []ParsingErrorPerDay {
+	if o == nil {
+		return []ParsingErrorPerDay{}
+	}
+	return o.ParsingErrorsPerDay
 }

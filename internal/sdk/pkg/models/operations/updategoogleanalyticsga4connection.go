@@ -35,7 +35,7 @@ type UpdateGOOGLEANALYTICSGa4ConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionGoogleAnalyticsGa4 *shared.ConnectionGoogleAnalyticsGa4
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

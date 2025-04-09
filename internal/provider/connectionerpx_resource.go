@@ -42,20 +42,20 @@ type ConnectionERPXResource struct {
 
 // ConnectionERPXResourceModel describes the resource data model.
 type ConnectionERPXResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	APIURL                   types.String            `tfsdk:"api_url"`
-	ClientID                 types.String            `tfsdk:"client_id"`
-	ClientSecret             types.String            `tfsdk:"client_secret"`
-	CompanyIds               types.String            `tfsdk:"company_ids"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Status                   types.String            `tfsdk:"status"`
-	TokenURL                 types.String            `tfsdk:"token_url"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	APIURL                   types.String                                    `tfsdk:"api_url"`
+	ClientID                 types.String                                    `tfsdk:"client_id"`
+	ClientSecret             types.String                                    `tfsdk:"client_secret"`
+	CompanyIds               types.String                                    `tfsdk:"company_ids"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Status                   types.String                                    `tfsdk:"status"`
+	TokenURL                 types.String                                    `tfsdk:"token_url"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionERPXResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -593,7 +593,7 @@ func (r *ConnectionERPXResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToSharedConnectionErpxInput()
+	request := *data.ToSharedConnectionErpx()
 	res, err := r.client.Connection.CreateERPXConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -614,7 +614,7 @@ func (r *ConnectionERPXResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionErpx(res.ConnectionErpx)
+	data.RefreshFromSharedConnectionErpxOutput(res.ConnectionErpx)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetERPXConnectionRequest{
@@ -640,7 +640,7 @@ func (r *ConnectionERPXResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionErpx(res1.ConnectionErpx)
+	data.RefreshFromSharedConnectionErpxOutput(res1.ConnectionErpx)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -689,7 +689,7 @@ func (r *ConnectionERPXResource) Read(ctx context.Context, req resource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionErpx(res.ConnectionErpx)
+	data.RefreshFromSharedConnectionErpxOutput(res.ConnectionErpx)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -735,7 +735,7 @@ func (r *ConnectionERPXResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionErpx(res.ConnectionErpx)
+	data.RefreshFromSharedConnectionErpxOutput(res.ConnectionErpx)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetERPXConnectionRequest{
@@ -761,7 +761,7 @@ func (r *ConnectionERPXResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionErpx(res1.ConnectionErpx)
+	data.RefreshFromSharedConnectionErpxOutput(res1.ConnectionErpx)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

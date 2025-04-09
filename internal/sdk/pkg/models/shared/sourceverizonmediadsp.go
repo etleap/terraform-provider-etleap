@@ -32,21 +32,14 @@ func (e *SourceVerizonMediaDspType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceVerizonMediaDsp struct {
-	Type SourceVerizonMediaDspType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string                    `json:"connectionId"`
+	Type         SourceVerizonMediaDspType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64   `json:"latencyThreshold,omitempty"`
 	Entity           string   `json:"entity"`
-	Dimensions       []string `json:"dimensions"`
 	Metrics          []string `json:"metrics"`
-}
-
-func (o *SourceVerizonMediaDsp) GetType() SourceVerizonMediaDspType {
-	if o == nil {
-		return SourceVerizonMediaDspType("")
-	}
-	return o.Type
+	Dimensions       []string `json:"dimensions"`
 }
 
 func (o *SourceVerizonMediaDsp) GetConnectionID() string {
@@ -54,6 +47,13 @@ func (o *SourceVerizonMediaDsp) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceVerizonMediaDsp) GetType() SourceVerizonMediaDspType {
+	if o == nil {
+		return SourceVerizonMediaDspType("")
+	}
+	return o.Type
 }
 
 func (o *SourceVerizonMediaDsp) GetLatencyThreshold() *int64 {
@@ -70,16 +70,16 @@ func (o *SourceVerizonMediaDsp) GetEntity() string {
 	return o.Entity
 }
 
-func (o *SourceVerizonMediaDsp) GetDimensions() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Dimensions
-}
-
 func (o *SourceVerizonMediaDsp) GetMetrics() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Metrics
+}
+
+func (o *SourceVerizonMediaDsp) GetDimensions() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Dimensions
 }

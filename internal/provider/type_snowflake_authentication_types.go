@@ -3,6 +3,6 @@
 package provider
 
 type SnowflakeAuthenticationTypes struct {
-	KeyPair  *SnowflakeAuthenticationKeyPair  `tfsdk:"key_pair"`
-	Password *SnowflakeAuthenticationPassword `tfsdk:"password"`
+	KeyPair  *SnowflakeAuthenticationKeyPair1       `tfsdk:"key_pair"`
+	Password *SnowflakeAuthenticationPasswordOutput `tfsdk:"password"`
 }

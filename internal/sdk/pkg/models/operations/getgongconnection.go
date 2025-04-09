@@ -26,8 +26,8 @@ type GetGONGConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionGong *shared.ConnectionGong
-	// Forbidden. You don't have access to view this connection.
+	ConnectionGong *shared.ConnectionGongOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetGONGConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetGONGConnectionResponse) GetConnectionGong() *shared.ConnectionGong {
+func (o *GetGONGConnectionResponse) GetConnectionGong() *shared.ConnectionGongOutput {
 	if o == nil {
 		return nil
 	}

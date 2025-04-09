@@ -35,7 +35,7 @@ type UpdateSAPHANAConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSapHana *shared.ConnectionSapHana
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
