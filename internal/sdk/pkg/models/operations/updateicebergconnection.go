@@ -35,7 +35,7 @@ type UpdateICEBERGConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionIceberg *shared.ConnectionIceberg
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

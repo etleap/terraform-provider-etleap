@@ -26,8 +26,8 @@ type GetSEISMICConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSeismic *shared.ConnectionSeismic
-	// Forbidden. You don't have access to view this connection.
+	ConnectionSeismic *shared.ConnectionSeismicOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetSEISMICConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetSEISMICConnectionResponse) GetConnectionSeismic() *shared.ConnectionSeismic {
+func (o *GetSEISMICConnectionResponse) GetConnectionSeismic() *shared.ConnectionSeismicOutput {
 	if o == nil {
 		return nil
 	}

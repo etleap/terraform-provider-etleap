@@ -12,9 +12,9 @@ import (
 type AuthenticationType string
 
 const (
-	AuthenticationTypeBasic  AuthenticationType = "BASIC"
-	AuthenticationTypeBearer AuthenticationType = "BEARER"
 	AuthenticationTypeHeader AuthenticationType = "HEADER"
+	AuthenticationTypeBearer AuthenticationType = "BEARER"
+	AuthenticationTypeBasic  AuthenticationType = "BASIC"
 )
 
 type Authentication struct {
@@ -25,15 +25,15 @@ type Authentication struct {
 	Type AuthenticationType
 }
 
-func CreateAuthenticationBasic(basic BasicAuthentication) Authentication {
-	typ := AuthenticationTypeBasic
+func CreateAuthenticationHeader(header HeaderAuthentication) Authentication {
+	typ := AuthenticationTypeHeader
 
-	typStr := BasicAuthenticationType(typ)
-	basic.Type = &typStr
+	typStr := HeaderAuthenticationType(typ)
+	header.Type = &typStr
 
 	return Authentication{
-		BasicAuthentication: &basic,
-		Type:                typ,
+		HeaderAuthentication: &header,
+		Type:                 typ,
 	}
 }
 
@@ -49,15 +49,15 @@ func CreateAuthenticationBearer(bearer BearerAuthentication) Authentication {
 	}
 }
 
-func CreateAuthenticationHeader(header HeaderAuthentication) Authentication {
-	typ := AuthenticationTypeHeader
+func CreateAuthenticationBasic(basic BasicAuthentication) Authentication {
+	typ := AuthenticationTypeBasic
 
-	typStr := HeaderAuthenticationType(typ)
-	header.Type = &typStr
+	typStr := BasicAuthenticationType(typ)
+	basic.Type = &typStr
 
 	return Authentication{
-		HeaderAuthentication: &header,
-		Type:                 typ,
+		BasicAuthentication: &basic,
+		Type:                typ,
 	}
 }
 
@@ -73,14 +73,14 @@ func (u *Authentication) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Type {
-	case "BASIC":
-		basicAuthentication := new(BasicAuthentication)
-		if err := utils.UnmarshalJSON(data, &basicAuthentication, "", true, true); err != nil {
+	case "HEADER":
+		headerAuthentication := new(HeaderAuthentication)
+		if err := utils.UnmarshalJSON(data, &headerAuthentication, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.BasicAuthentication = basicAuthentication
-		u.Type = AuthenticationTypeBasic
+		u.HeaderAuthentication = headerAuthentication
+		u.Type = AuthenticationTypeHeader
 		return nil
 	case "BEARER":
 		bearerAuthentication := new(BearerAuthentication)
@@ -91,14 +91,14 @@ func (u *Authentication) UnmarshalJSON(data []byte) error {
 		u.BearerAuthentication = bearerAuthentication
 		u.Type = AuthenticationTypeBearer
 		return nil
-	case "HEADER":
-		headerAuthentication := new(HeaderAuthentication)
-		if err := utils.UnmarshalJSON(data, &headerAuthentication, "", true, true); err != nil {
+	case "BASIC":
+		basicAuthentication := new(BasicAuthentication)
+		if err := utils.UnmarshalJSON(data, &basicAuthentication, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.HeaderAuthentication = headerAuthentication
-		u.Type = AuthenticationTypeHeader
+		u.BasicAuthentication = basicAuthentication
+		u.Type = AuthenticationTypeBasic
 		return nil
 	}
 

@@ -34,8 +34,8 @@ type UpdateOUTLOOKConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionOutlook *shared.ConnectionOutlook
-	// Bad Request
+	ConnectionOutlook *shared.ConnectionOutlookOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateOUTLOOKConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateOUTLOOKConnectionResponse) GetConnectionOutlook() *shared.ConnectionOutlook {
+func (o *UpdateOUTLOOKConnectionResponse) GetConnectionOutlook() *shared.ConnectionOutlookOutput {
 	if o == nil {
 		return nil
 	}

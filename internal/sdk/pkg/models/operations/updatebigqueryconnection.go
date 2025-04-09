@@ -34,8 +34,8 @@ type UpdateBIGQUERYConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBigQuery *shared.ConnectionBigQuery
-	// Bad Request
+	ConnectionBigQuery *shared.ConnectionBigQueryOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateBIGQUERYConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateBIGQUERYConnectionResponse) GetConnectionBigQuery() *shared.ConnectionBigQuery {
+func (o *UpdateBIGQUERYConnectionResponse) GetConnectionBigQuery() *shared.ConnectionBigQueryOutput {
 	if o == nil {
 		return nil
 	}

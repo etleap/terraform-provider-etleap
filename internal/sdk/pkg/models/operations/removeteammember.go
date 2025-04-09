@@ -35,7 +35,7 @@ type RemoveTeamMemberResponse struct {
 	RawResponse *http.Response
 	// OK. The member was successfully removed.
 	TeamOutput *shared.TeamOutput
-	// Bad Request
+	// A team with this id was not found, or there was no member with the given id in the team.
 	Errors *shared.Errors
 }
 

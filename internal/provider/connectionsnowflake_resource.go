@@ -41,25 +41,25 @@ type ConnectionSNOWFLAKEResource struct {
 
 // ConnectionSNOWFLAKEResourceModel describes the resource data model.
 type ConnectionSNOWFLAKEResourceModel struct {
-	Active                   types.Bool                    `tfsdk:"active"`
-	Address                  types.String                  `tfsdk:"address"`
-	Authentication           *SnowflakeAuthenticationTypes `tfsdk:"authentication"`
-	CreateDate               types.String                  `tfsdk:"create_date"`
-	Database                 types.String                  `tfsdk:"database"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule       `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                    `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                  `tfsdk:"id"`
-	Name                     types.String                  `tfsdk:"name"`
-	Password                 types.String                  `tfsdk:"password"`
-	Role                     types.String                  `tfsdk:"role"`
-	Roles                    []types.String                `tfsdk:"roles"`
-	Schema                   types.String                  `tfsdk:"schema"`
-	SourceOnly               types.Bool                    `tfsdk:"source_only"`
-	Status                   types.String                  `tfsdk:"status"`
-	Type                     types.String                  `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes          `tfsdk:"update_schedule"`
-	Username                 types.String                  `tfsdk:"username"`
-	Warehouse                types.String                  `tfsdk:"warehouse"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	Address                  types.String                                    `tfsdk:"address"`
+	Authentication           *SnowflakeAuthenticationTypesInput              `tfsdk:"authentication"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	Database                 types.String                                    `tfsdk:"database"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Password                 types.String                                    `tfsdk:"password"`
+	Role                     types.String                                    `tfsdk:"role"`
+	Roles                    []types.String                                  `tfsdk:"roles"`
+	Schema                   types.String                                    `tfsdk:"schema"`
+	SourceOnly               types.Bool                                      `tfsdk:"source_only"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Username                 types.String                                    `tfsdk:"username"`
+	Warehouse                types.String                                    `tfsdk:"warehouse"`
 }
 
 func (r *ConnectionSNOWFLAKEResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

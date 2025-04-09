@@ -32,20 +32,13 @@ func (e *SourceZendeskType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZendesk struct {
-	Type SourceZendeskType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string            `json:"connectionId"`
+	Type         SourceZendeskType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Zendesk entity. Example values: [Group Memberships, Groups, Macros, Organizations, Satisfaction Ratings, SLA Policies, Tags, Ticket Audits, Ticket Comments, Ticket Fields, Ticket Forms, Tickets, Ticket Metrics, Users]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceZendesk) GetType() SourceZendeskType {
-	if o == nil {
-		return SourceZendeskType("")
-	}
-	return o.Type
 }
 
 func (o *SourceZendesk) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceZendesk) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceZendesk) GetType() SourceZendeskType {
+	if o == nil {
+		return SourceZendeskType("")
+	}
+	return o.Type
 }
 
 func (o *SourceZendesk) GetLatencyThreshold() *int64 {

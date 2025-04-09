@@ -42,7 +42,7 @@ type PipelineDataSourceModel struct {
 	PipelineMode          types.String                         `tfsdk:"pipeline_mode"`
 	RefreshSchedule       RefreshScheduleTypes                 `tfsdk:"refresh_schedule"`
 	Shares                []types.String                       `tfsdk:"shares"`
-	Source                SourceTypes                          `tfsdk:"source"`
+	Source                SourceTypes1                         `tfsdk:"source"`
 	StopReason            types.String                         `tfsdk:"stop_reason"`
 	UpdateSchedule        *UpdateScheduleTypes                 `tfsdk:"update_schedule"`
 }
@@ -1600,6 +1600,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"type": schema.StringAttribute{
 								Computed:    true,
 								Description: `must be one of ["MARKETO"]`,
+							},
+						},
+					},
+					"microsoft_entra_id": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The Microsoft Entra ID entity.`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["MICROSOFT_ENTRA_ID"]`,
 							},
 						},
 					},

@@ -41,21 +41,21 @@ type ConnectionSFTPResource struct {
 
 // ConnectionSFTPResourceModel describes the resource data model.
 type ConnectionSFTPResourceModel struct {
-	Active                     types.Bool              `tfsdk:"active"`
-	BaseDirectory              types.String            `tfsdk:"base_directory"`
-	CreateDate                 types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule      []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts   types.Bool              `tfsdk:"deletion_of_export_products"`
-	Hostname                   types.String            `tfsdk:"hostname"`
-	ID                         types.String            `tfsdk:"id"`
-	Name                       types.String            `tfsdk:"name"`
-	Password                   types.String            `tfsdk:"password"`
-	Port                       types.Int64             `tfsdk:"port"`
-	Status                     types.String            `tfsdk:"status"`
-	Type                       types.String            `tfsdk:"type"`
-	UpdateSchedule             *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	UsePublicKeyAuthentication types.Bool              `tfsdk:"use_public_key_authentication"`
-	Username                   types.String            `tfsdk:"username"`
+	Active                     types.Bool                                      `tfsdk:"active"`
+	BaseDirectory              types.String                                    `tfsdk:"base_directory"`
+	CreateDate                 types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule      []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts   types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	Hostname                   types.String                                    `tfsdk:"hostname"`
+	ID                         types.String                                    `tfsdk:"id"`
+	Name                       types.String                                    `tfsdk:"name"`
+	Password                   types.String                                    `tfsdk:"password"`
+	Port                       types.Int64                                     `tfsdk:"port"`
+	Status                     types.String                                    `tfsdk:"status"`
+	Type                       types.String                                    `tfsdk:"type"`
+	UpdateSchedule             *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	UsePublicKeyAuthentication types.Bool                                      `tfsdk:"use_public_key_authentication"`
+	Username                   types.String                                    `tfsdk:"username"`
 }
 
 func (r *ConnectionSFTPResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -595,7 +595,7 @@ func (r *ConnectionSFTPResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToSharedConnectionSftpInput()
+	request := *data.ToSharedConnectionSftp()
 	res, err := r.client.Connection.CreateSFTPConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -616,7 +616,7 @@ func (r *ConnectionSFTPResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSftp(res.ConnectionSftp)
+	data.RefreshFromSharedConnectionSftpOutput(res.ConnectionSftp)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetSFTPConnectionRequest{
@@ -642,7 +642,7 @@ func (r *ConnectionSFTPResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSftp(res1.ConnectionSftp)
+	data.RefreshFromSharedConnectionSftpOutput(res1.ConnectionSftp)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -691,7 +691,7 @@ func (r *ConnectionSFTPResource) Read(ctx context.Context, req resource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSftp(res.ConnectionSftp)
+	data.RefreshFromSharedConnectionSftpOutput(res.ConnectionSftp)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -737,7 +737,7 @@ func (r *ConnectionSFTPResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSftp(res.ConnectionSftp)
+	data.RefreshFromSharedConnectionSftpOutput(res.ConnectionSftp)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetSFTPConnectionRequest{
@@ -763,7 +763,7 @@ func (r *ConnectionSFTPResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSftp(res1.ConnectionSftp)
+	data.RefreshFromSharedConnectionSftpOutput(res1.ConnectionSftp)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

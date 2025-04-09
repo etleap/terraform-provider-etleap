@@ -28,16 +28,16 @@ type ConnectionSUMTOTALDataSource struct {
 
 // ConnectionSUMTOTALDataSourceModel describes the data model.
 type ConnectionSUMTOTALDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	ClientID              types.String            `tfsdk:"client_id"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Status                types.String            `tfsdk:"status"`
-	TenantURL             types.String            `tfsdk:"tenant_url"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	ClientID              types.String                                    `tfsdk:"client_id"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Status                types.String                                    `tfsdk:"status"`
+	TenantURL             types.String                                    `tfsdk:"tenant_url"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.

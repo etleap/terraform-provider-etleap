@@ -9,5 +9,4 @@ type SourceBingAds struct {
 	Entity           types.String   `tfsdk:"entity"`
 	Fields           []types.String `tfsdk:"fields"`
 	LatencyThreshold types.Int64    `tfsdk:"latency_threshold"`
-	Type             types.String   `tfsdk:"type"`
 }

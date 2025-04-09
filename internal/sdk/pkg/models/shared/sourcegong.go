@@ -32,20 +32,13 @@ func (e *SourceGongType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGong struct {
-	Type SourceGongType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string         `json:"connectionId"`
+	Type         SourceGongType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Gong resource. Example values: [Answered Scorecards, Call Transcripts, Calls, Calls Extensive, Folders, Interactions, Scorecards, Users, Users Activity, Users Extensive, Workspaces]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceGong) GetType() SourceGongType {
-	if o == nil {
-		return SourceGongType("")
-	}
-	return o.Type
 }
 
 func (o *SourceGong) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceGong) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceGong) GetType() SourceGongType {
+	if o == nil {
+		return SourceGongType("")
+	}
+	return o.Type
 }
 
 func (o *SourceGong) GetLatencyThreshold() *int64 {

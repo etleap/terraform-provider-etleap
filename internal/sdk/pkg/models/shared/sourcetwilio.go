@@ -32,20 +32,13 @@ func (e *SourceTwilioType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTwilio struct {
-	Type SourceTwilioType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string           `json:"connectionId"`
+	Type         SourceTwilioType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Twilio entity. Example values: [Calls, Calls summary, Messages, Usage records]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceTwilio) GetType() SourceTwilioType {
-	if o == nil {
-		return SourceTwilioType("")
-	}
-	return o.Type
 }
 
 func (o *SourceTwilio) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceTwilio) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceTwilio) GetType() SourceTwilioType {
+	if o == nil {
+		return SourceTwilioType("")
+	}
+	return o.Type
 }
 
 func (o *SourceTwilio) GetLatencyThreshold() *int64 {

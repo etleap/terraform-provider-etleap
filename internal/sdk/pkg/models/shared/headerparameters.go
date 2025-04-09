@@ -3,15 +3,8 @@
 package shared
 
 type HeaderParameters struct {
-	Key   string `json:"key"`
 	Value string `json:"value"`
-}
-
-func (o *HeaderParameters) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
+	Key   string `json:"key"`
 }
 
 func (o *HeaderParameters) GetValue() string {
@@ -19,4 +12,11 @@ func (o *HeaderParameters) GetValue() string {
 		return ""
 	}
 	return o.Value
+}
+
+func (o *HeaderParameters) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
 }

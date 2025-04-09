@@ -26,8 +26,8 @@ type GetZUORAConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionZuora *shared.ConnectionZuora
-	// Forbidden. You don't have access to view this connection.
+	ConnectionZuora *shared.ConnectionZuoraOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetZUORAConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetZUORAConnectionResponse) GetConnectionZuora() *shared.ConnectionZuora {
+func (o *GetZUORAConnectionResponse) GetConnectionZuora() *shared.ConnectionZuoraOutput {
 	if o == nil {
 		return nil
 	}

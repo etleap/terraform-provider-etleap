@@ -27,7 +27,7 @@ type GetS3DATALAKEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionS3DataLake *shared.ConnectionS3DataLake
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

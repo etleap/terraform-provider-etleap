@@ -32,20 +32,13 @@ func (e *SourceSapConcurType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSapConcur struct {
-	Type SourceSapConcurType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string              `json:"connectionId"`
+	Type         SourceSapConcurType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The SAP Concur entity. Example Values: [ExpenseEntries, Reports, Users]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceSapConcur) GetType() SourceSapConcurType {
-	if o == nil {
-		return SourceSapConcurType("")
-	}
-	return o.Type
 }
 
 func (o *SourceSapConcur) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceSapConcur) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceSapConcur) GetType() SourceSapConcurType {
+	if o == nil {
+		return SourceSapConcurType("")
+	}
+	return o.Type
 }
 
 func (o *SourceSapConcur) GetLatencyThreshold() *int64 {

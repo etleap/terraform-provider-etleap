@@ -3,7 +3,7 @@ resource "etleap_connection_netsuite_v2" "my_connectionnetsuite_v2" {
   consumer_key                = "...my_consumer_key..."
   consumer_secret             = "...my_consumer_secret..."
   deletion_of_export_products = false
-  name                        = "Ross Gibson I"
+  name                        = "Faye Wisozk"
   token_id                    = "...my_token_id..."
   token_secret                = "...my_token_secret..."
   type                        = "NETSUITE_V2"

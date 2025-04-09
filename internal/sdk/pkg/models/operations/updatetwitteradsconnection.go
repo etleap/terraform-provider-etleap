@@ -35,7 +35,7 @@ type UpdateTWITTERADSConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionTwitter *shared.ConnectionTwitter
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

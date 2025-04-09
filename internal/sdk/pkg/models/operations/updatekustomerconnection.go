@@ -35,7 +35,7 @@ type UpdateKUSTOMERConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionKustomer *shared.ConnectionKustomer
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

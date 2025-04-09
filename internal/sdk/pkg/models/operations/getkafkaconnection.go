@@ -27,7 +27,7 @@ type GetKAFKAConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionKafka *shared.ConnectionKafka
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

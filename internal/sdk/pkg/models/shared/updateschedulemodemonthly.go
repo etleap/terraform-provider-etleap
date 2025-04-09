@@ -33,10 +33,10 @@ func (e *UpdateScheduleModeMonthlyMode) UnmarshalJSON(data []byte) error {
 
 // UpdateScheduleModeMonthly - The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
 type UpdateScheduleModeMonthly struct {
-	Mode       UpdateScheduleModeMonthlyMode `json:"mode"`
-	DayOfMonth int64                         `json:"dayOfMonth"`
+	Mode UpdateScheduleModeMonthlyMode `json:"mode"`
 	// Hour of day the  pipeline update should be started at (in UTC).
-	HourOfDay int64 `json:"hourOfDay"`
+	HourOfDay  int64 `json:"hourOfDay"`
+	DayOfMonth int64 `json:"dayOfMonth"`
 }
 
 func (o *UpdateScheduleModeMonthly) GetMode() UpdateScheduleModeMonthlyMode {
@@ -46,16 +46,16 @@ func (o *UpdateScheduleModeMonthly) GetMode() UpdateScheduleModeMonthlyMode {
 	return o.Mode
 }
 
-func (o *UpdateScheduleModeMonthly) GetDayOfMonth() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.DayOfMonth
-}
-
 func (o *UpdateScheduleModeMonthly) GetHourOfDay() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.HourOfDay
+}
+
+func (o *UpdateScheduleModeMonthly) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
 }

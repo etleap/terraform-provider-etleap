@@ -32,29 +32,15 @@ func (e *ConnectionSkywardUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionSkywardUpdate struct {
-	// The unique name of this connection.
-	Name *string                      `json:"name,omitempty"`
-	Type *ConnectionSkywardUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                        `json:"active,omitempty"`
+	Type   *ConnectionSkywardUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	ClientID       *string              `json:"clientId,omitempty"`
 	ClientSecret   *string              `json:"clientSecret,omitempty"`
-}
-
-func (o *ConnectionSkywardUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionSkywardUpdate) GetType() *ConnectionSkywardUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	ClientID       *string              `json:"clientId,omitempty"`
 }
 
 func (o *ConnectionSkywardUpdate) GetActive() *bool {
@@ -64,6 +50,20 @@ func (o *ConnectionSkywardUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionSkywardUpdate) GetType() *ConnectionSkywardUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionSkywardUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionSkywardUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -71,9 +71,9 @@ func (o *ConnectionSkywardUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSkywardUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSkywardUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -81,6 +81,13 @@ func (o *ConnectionSkywardUpdate) GetUpdateScheduleInterval() *UpdateScheduleMod
 func (o *ConnectionSkywardUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSkywardUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -99,11 +106,11 @@ func (o *ConnectionSkywardUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeW
 	return nil
 }
 
-func (o *ConnectionSkywardUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionSkywardUpdate) GetClientSecret() *string {
+	if o == nil {
+		return nil
 	}
-	return nil
+	return o.ClientSecret
 }
 
 func (o *ConnectionSkywardUpdate) GetClientID() *string {
@@ -111,11 +118,4 @@ func (o *ConnectionSkywardUpdate) GetClientID() *string {
 		return nil
 	}
 	return o.ClientID
-}
-
-func (o *ConnectionSkywardUpdate) GetClientSecret() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientSecret
 }

@@ -15,7 +15,7 @@ type CreateSALESFORCEMARKETINGCLOUDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSalesforceMarketingCloud *shared.ConnectionSalesforceMarketingCloud
+	ConnectionSalesforceMarketingCloud *shared.ConnectionSalesforceMarketingCloudOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateSALESFORCEMARKETINGCLOUDConnectionResponse) GetRawResponse() *htt
 	return o.RawResponse
 }
 
-func (o *CreateSALESFORCEMARKETINGCLOUDConnectionResponse) GetConnectionSalesforceMarketingCloud() *shared.ConnectionSalesforceMarketingCloud {
+func (o *CreateSALESFORCEMARKETINGCLOUDConnectionResponse) GetConnectionSalesforceMarketingCloud() *shared.ConnectionSalesforceMarketingCloudOutput {
 	if o == nil {
 		return nil
 	}

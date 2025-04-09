@@ -72,12 +72,12 @@ func (r *ConnectionNETSUITEResourceModel) ToSharedConnectionNetsuiteInput() *sha
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,15 +86,15 @@ func (r *ConnectionNETSUITEResourceModel) ToSharedConnectionNetsuiteInput() *sha
 			}
 		}
 	}
-	email := r.Email.ValueString()
 	password := r.Password.ValueString()
+	email := r.Email.ValueString()
 	accountID := r.AccountID.ValueString()
 	out := shared.ConnectionNetsuiteInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		Email:          email,
 		Password:       password,
+		Email:          email,
 		AccountID:      accountID,
 	}
 	return &out
@@ -108,7 +108,7 @@ func (r *ConnectionNETSUITEResourceModel) RefreshFromSharedConnectionNetsuite(re
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -191,11 +191,11 @@ func (r *ConnectionNETSUITEResourceModel) RefreshFromSharedConnectionNetsuite(re
 }
 
 func (r *ConnectionNETSUITEResourceModel) ToSharedConnectionNetsuiteUpdate() *shared.ConnectionNetsuiteUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionNetsuiteUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -203,11 +203,11 @@ func (r *ConnectionNETSUITEResourceModel) ToSharedConnectionNetsuiteUpdate() *sh
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -270,12 +270,12 @@ func (r *ConnectionNETSUITEResourceModel) ToSharedConnectionNetsuiteUpdate() *sh
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -284,17 +284,17 @@ func (r *ConnectionNETSUITEResourceModel) ToSharedConnectionNetsuiteUpdate() *sh
 			}
 		}
 	}
-	email := new(string)
-	if !r.Email.IsUnknown() && !r.Email.IsNull() {
-		*email = r.Email.ValueString()
-	} else {
-		email = nil
-	}
 	password := new(string)
 	if !r.Password.IsUnknown() && !r.Password.IsNull() {
 		*password = r.Password.ValueString()
 	} else {
 		password = nil
+	}
+	email := new(string)
+	if !r.Email.IsUnknown() && !r.Email.IsNull() {
+		*email = r.Email.ValueString()
+	} else {
+		email = nil
 	}
 	accountID := new(string)
 	if !r.AccountID.IsUnknown() && !r.AccountID.IsNull() {
@@ -303,12 +303,12 @@ func (r *ConnectionNETSUITEResourceModel) ToSharedConnectionNetsuiteUpdate() *sh
 		accountID = nil
 	}
 	out := shared.ConnectionNetsuiteUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
-		Email:          email,
 		Password:       password,
+		Email:          email,
 		AccountID:      accountID,
 	}
 	return &out

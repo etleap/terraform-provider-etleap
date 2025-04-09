@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) ToSharedConnectionSalesforceMarketingCloudInput() *shared.ConnectionSalesforceMarketingCloudInput {
+func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) ToSharedConnectionSalesforceMarketingCloud() *shared.ConnectionSalesforceMarketingCloud {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionSalesforceMarketingCloudType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) ToSharedConnectionSale
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,21 +86,21 @@ func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) ToSharedConnectionSale
 			}
 		}
 	}
+	clientSecret := r.ClientSecret.ValueString()
 	subdomain := r.Subdomain.ValueString()
 	clientID := r.ClientID.ValueString()
-	clientSecret := r.ClientSecret.ValueString()
-	out := shared.ConnectionSalesforceMarketingCloudInput{
+	out := shared.ConnectionSalesforceMarketingCloud{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
+		ClientSecret:   clientSecret,
 		Subdomain:      subdomain,
 		ClientID:       clientID,
-		ClientSecret:   clientSecret,
 	}
 	return &out
 }
 
-func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) RefreshFromSharedConnectionSalesforceMarketingCloud(resp *shared.ConnectionSalesforceMarketingCloud) {
+func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) RefreshFromSharedConnectionSalesforceMarketingCloudOutput(resp *shared.ConnectionSalesforceMarketingCloudOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.ClientID = types.StringValue(resp.ClientID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -108,7 +108,7 @@ func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) RefreshFromSharedConne
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -191,11 +191,11 @@ func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) RefreshFromSharedConne
 }
 
 func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) ToSharedConnectionSalesforceMarketingCloudUpdate() *shared.ConnectionSalesforceMarketingCloudUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionSalesforceMarketingCloudUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -203,11 +203,11 @@ func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) ToSharedConnectionSale
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -270,12 +270,12 @@ func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) ToSharedConnectionSale
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -283,6 +283,12 @@ func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) ToSharedConnectionSale
 				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
 			}
 		}
+	}
+	clientSecret := new(string)
+	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
+		*clientSecret = r.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
 	}
 	subdomain := new(string)
 	if !r.Subdomain.IsUnknown() && !r.Subdomain.IsNull() {
@@ -296,20 +302,14 @@ func (r *ConnectionSALESFORCEMARKETINGCLOUDResourceModel) ToSharedConnectionSale
 	} else {
 		clientID = nil
 	}
-	clientSecret := new(string)
-	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
-		*clientSecret = r.ClientSecret.ValueString()
-	} else {
-		clientSecret = nil
-	}
 	out := shared.ConnectionSalesforceMarketingCloudUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
+		ClientSecret:   clientSecret,
 		Subdomain:      subdomain,
 		ClientID:       clientID,
-		ClientSecret:   clientSecret,
 	}
 	return &out
 }

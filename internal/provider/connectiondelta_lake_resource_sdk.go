@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeInput() *shared.ConnectionDeltaLakeInput {
+func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLake() *shared.ConnectionDeltaLake {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionDeltaLakeType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeInput() *s
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -95,7 +95,7 @@ func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeInput() *s
 	} else {
 		schema = nil
 	}
-	out := shared.ConnectionDeltaLakeInput{
+	out := shared.ConnectionDeltaLake{
 		Name:                name,
 		Type:                typeVar,
 		UpdateSchedule:      updateSchedule,
@@ -107,14 +107,14 @@ func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeInput() *s
 	return &out
 }
 
-func (r *ConnectionDELTALAKEResourceModel) RefreshFromSharedConnectionDeltaLake(resp *shared.ConnectionDeltaLake) {
+func (r *ConnectionDELTALAKEResourceModel) RefreshFromSharedConnectionDeltaLakeOutput(resp *shared.ConnectionDeltaLakeOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -199,11 +199,11 @@ func (r *ConnectionDELTALAKEResourceModel) RefreshFromSharedConnectionDeltaLake(
 }
 
 func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeUpdate() *shared.ConnectionDeltaLakeUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionDeltaLakeUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -211,11 +211,11 @@ func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeUpdate() *
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -278,12 +278,12 @@ func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeUpdate() *
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -317,9 +317,9 @@ func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeUpdate() *
 		schema = nil
 	}
 	out := shared.ConnectionDeltaLakeUpdate{
-		Name:                name,
-		Type:                typeVar,
 		Active:              active,
+		Type:                typeVar,
+		Name:                name,
 		UpdateSchedule:      updateSchedule,
 		Hostname:            hostname,
 		HTTPPath:            httpPath,

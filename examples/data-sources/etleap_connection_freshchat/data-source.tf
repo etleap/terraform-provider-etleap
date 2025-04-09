@@ -1,3 +1,3 @@
 data "etleap_connection_freshchat" "my_connectionfreshchat" {
-  id = "5fefbfba-9da3-4ac7-aa69-8985c24c74d0"
+  id = "0ce13bed-ae57-4250-84db-83dbbf0ab1f6"
 }

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionHUBSPOTResourceModel) ToSharedConnectionHubspotInput() *shared.ConnectionHubspotInput {
+func (r *ConnectionHUBSPOTResourceModel) ToSharedConnectionHubspot() *shared.ConnectionHubspot {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionHubspotType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionHUBSPOTResourceModel) ToSharedConnectionHubspotInput() *share
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,7 +87,7 @@ func (r *ConnectionHUBSPOTResourceModel) ToSharedConnectionHubspotInput() *share
 		}
 	}
 	code := r.Code.ValueString()
-	out := shared.ConnectionHubspotInput{
+	out := shared.ConnectionHubspot{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -96,14 +96,14 @@ func (r *ConnectionHUBSPOTResourceModel) ToSharedConnectionHubspotInput() *share
 	return &out
 }
 
-func (r *ConnectionHUBSPOTResourceModel) RefreshFromSharedConnectionHubspot(resp *shared.ConnectionHubspot) {
+func (r *ConnectionHUBSPOTResourceModel) RefreshFromSharedConnectionHubspotOutput(resp *shared.ConnectionHubspotOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -187,18 +187,18 @@ func (r *ConnectionHUBSPOTResourceModel) RefreshFromSharedConnectionHubspot(resp
 }
 
 func (r *ConnectionHUBSPOTResourceModel) ToSharedConnectionHubspotUpdate() *shared.ConnectionHubspotUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	typeVar := shared.ConnectionHubspotUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
 	} else {
 		active = nil
+	}
+	typeVar := shared.ConnectionHubspotUpdateType(r.Type.ValueString())
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -261,12 +261,12 @@ func (r *ConnectionHUBSPOTResourceModel) ToSharedConnectionHubspotUpdate() *shar
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -282,9 +282,9 @@ func (r *ConnectionHUBSPOTResourceModel) ToSharedConnectionHubspotUpdate() *shar
 		code = nil
 	}
 	out := shared.ConnectionHubspotUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
 		Code:           code,
 	}

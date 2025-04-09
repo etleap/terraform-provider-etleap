@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionWorkfrontType string
-
-const (
-	ConnectionWorkfrontTypeWorkfront ConnectionWorkfrontType = "WORKFRONT"
-)
-
-func (e ConnectionWorkfrontType) ToPointer() *ConnectionWorkfrontType {
-	return &e
-}
-
-func (e *ConnectionWorkfrontType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "WORKFRONT":
-		*e = ConnectionWorkfrontType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionWorkfrontType: %v", v)
-	}
-}
-
 // ConnectionWorkfrontStatus - The current status of the connection.
 type ConnectionWorkfrontStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionWorkfrontDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSc
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionWorkfrontDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionWorkfrontDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionWorkfrontDefaultUpdateSchedule) GetUpdateScheduleInterval() *
 func (o *ConnectionWorkfrontDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionWorkfrontDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,29 +108,46 @@ func (o *ConnectionWorkfrontDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Up
 	return nil
 }
 
-func (o *ConnectionWorkfrontDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionWorkfrontType string
+
+const (
+	ConnectionWorkfrontTypeWorkfront ConnectionWorkfrontType = "WORKFRONT"
+)
+
+func (e ConnectionWorkfrontType) ToPointer() *ConnectionWorkfrontType {
+	return &e
+}
+
+func (e *ConnectionWorkfrontType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "WORKFRONT":
+		*e = ConnectionWorkfrontType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionWorkfrontType: %v", v)
+	}
 }
 
 type ConnectionWorkfront struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                  `json:"name"`
-	Type ConnectionWorkfrontType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionWorkfrontStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionWorkfrontDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	// Whether this connection has been marked as active.
+	Active bool                    `json:"active"`
+	Type   ConnectionWorkfrontType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your Workfront subdomain (i.e. SUBDOMAIN.my.workfront.com)
 	Subdomain string `json:"subdomain"`
 }
@@ -163,11 +163,11 @@ func (c *ConnectionWorkfront) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionWorkfront) GetID() string {
+func (o *ConnectionWorkfront) GetStatus() ConnectionWorkfrontStatus {
 	if o == nil {
-		return ""
+		return ConnectionWorkfrontStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionWorkfront) GetName() string {
@@ -177,11 +177,18 @@ func (o *ConnectionWorkfront) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionWorkfront) GetType() ConnectionWorkfrontType {
+func (o *ConnectionWorkfront) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionWorkfrontType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionWorkfront) GetDefaultUpdateSchedule() []ConnectionWorkfrontDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionWorkfrontDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionWorkfront) GetActive() bool {
@@ -191,18 +198,18 @@ func (o *ConnectionWorkfront) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionWorkfront) GetStatus() ConnectionWorkfrontStatus {
+func (o *ConnectionWorkfront) GetType() ConnectionWorkfrontType {
 	if o == nil {
-		return ConnectionWorkfrontStatus("")
+		return ConnectionWorkfrontType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionWorkfront) GetCreateDate() time.Time {
+func (o *ConnectionWorkfront) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionWorkfront) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -212,9 +219,9 @@ func (o *ConnectionWorkfront) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionWorkfront) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionWorkfront) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -222,6 +229,13 @@ func (o *ConnectionWorkfront) GetUpdateScheduleInterval() *UpdateScheduleModeInt
 func (o *ConnectionWorkfront) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionWorkfront) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -238,20 +252,6 @@ func (o *ConnectionWorkfront) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekl
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
-}
-
-func (o *ConnectionWorkfront) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionWorkfront) GetDefaultUpdateSchedule() []ConnectionWorkfrontDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionWorkfrontDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionWorkfront) GetSubdomain() string {
@@ -294,9 +294,9 @@ func (o *ConnectionWorkfrontInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionWorkfrontInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionWorkfrontInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -304,6 +304,13 @@ func (o *ConnectionWorkfrontInput) GetUpdateScheduleInterval() *UpdateScheduleMo
 func (o *ConnectionWorkfrontInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionWorkfrontInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -318,13 +325,6 @@ func (o *ConnectionWorkfrontInput) GetUpdateScheduleDaily() *UpdateScheduleModeD
 func (o *ConnectionWorkfrontInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionWorkfrontInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

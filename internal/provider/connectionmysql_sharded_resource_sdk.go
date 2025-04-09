@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInput() *shared.ConnectionMysqlShardedInput {
+func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlSharded() *shared.ConnectionMysqlSharded {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionMysqlShardedType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,23 +86,17 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 			}
 		}
 	}
-	requireSslAndValidateCertificate := new(bool)
-	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
-		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
-	} else {
-		requireSslAndValidateCertificate = nil
-	}
 	certificate := new(string)
 	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
 		*certificate = r.Certificate.ValueString()
 	} else {
 		certificate = nil
 	}
-	cdcEnabled := new(bool)
-	if !r.CdcEnabled.IsUnknown() && !r.CdcEnabled.IsNull() {
-		*cdcEnabled = r.CdcEnabled.ValueBool()
+	database := new(string)
+	if !r.Database.IsUnknown() && !r.Database.IsNull() {
+		*database = r.Database.ValueString()
 	} else {
-		cdcEnabled = nil
+		database = nil
 	}
 	autoReplicate := new(string)
 	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
@@ -110,17 +104,23 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 	} else {
 		autoReplicate = nil
 	}
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
+	} else {
+		requireSslAndValidateCertificate = nil
+	}
 	tinyInt1IsBoolean := new(bool)
 	if !r.TinyInt1IsBoolean.IsUnknown() && !r.TinyInt1IsBoolean.IsNull() {
 		*tinyInt1IsBoolean = r.TinyInt1IsBoolean.ValueBool()
 	} else {
 		tinyInt1IsBoolean = nil
 	}
-	database := new(string)
-	if !r.Database.IsUnknown() && !r.Database.IsNull() {
-		*database = r.Database.ValueString()
+	cdcEnabled := new(bool)
+	if !r.CdcEnabled.IsUnknown() && !r.CdcEnabled.IsNull() {
+		*cdcEnabled = r.CdcEnabled.ValueBool()
 	} else {
-		database = nil
+		cdcEnabled = nil
 	}
 	var shards []shared.MysqlShard = nil
 	for _, shardsItem := range r.Shards {
@@ -131,45 +131,45 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 		} else {
 			database1 = nil
 		}
-		address := shardsItem.Address.ValueString()
-		port := shardsItem.Port.ValueInt64()
 		username := shardsItem.Username.ValueString()
-		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
 		if shardsItem.SSHConfig != nil {
-			address1 := shardsItem.SSHConfig.Address.ValueString()
 			username1 := shardsItem.SSHConfig.Username.ValueString()
+			address := shardsItem.SSHConfig.Address.ValueString()
 			sshConfig = &shared.SSHConfig{
-				Address:  address1,
 				Username: username1,
+				Address:  address,
 			}
 		}
+		password := shardsItem.Password.ValueString()
+		port := shardsItem.Port.ValueInt64()
+		address1 := shardsItem.Address.ValueString()
 		shards = append(shards, shared.MysqlShard{
 			ShardID:   shardID,
 			Database:  database1,
-			Address:   address,
-			Port:      port,
 			Username:  username,
-			Password:  password,
 			SSHConfig: sshConfig,
+			Password:  password,
+			Port:      port,
+			Address:   address1,
 		})
 	}
-	out := shared.ConnectionMysqlShardedInput{
+	out := shared.ConnectionMysqlSharded{
 		Name:                             name,
 		Type:                             typeVar,
 		UpdateSchedule:                   updateSchedule,
-		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
 		Certificate:                      certificate,
-		CdcEnabled:                       cdcEnabled,
-		AutoReplicate:                    autoReplicate,
-		TinyInt1IsBoolean:                tinyInt1IsBoolean,
 		Database:                         database,
+		AutoReplicate:                    autoReplicate,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		TinyInt1IsBoolean:                tinyInt1IsBoolean,
+		CdcEnabled:                       cdcEnabled,
 		Shards:                           shards,
 	}
 	return &out
 }
 
-func (r *ConnectionMYSQLSHARDEDResourceModel) RefreshFromSharedConnectionMysqlSharded(resp *shared.ConnectionMysqlSharded) {
+func (r *ConnectionMYSQLSHARDEDResourceModel) RefreshFromSharedConnectionMysqlShardedOutput(resp *shared.ConnectionMysqlShardedOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
@@ -180,7 +180,7 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) RefreshFromSharedConnectionMysqlSh
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -292,18 +292,18 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) RefreshFromSharedConnectionMysqlSh
 }
 
 func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpdate() *shared.ConnectionMysqlShardedUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	typeVar := shared.ConnectionMysqlShardedUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
 	} else {
 		active = nil
+	}
+	typeVar := shared.ConnectionMysqlShardedUpdateType(r.Type.ValueString())
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -366,12 +366,12 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -379,24 +379,6 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
 			}
 		}
-	}
-	requireSslAndValidateCertificate := new(bool)
-	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
-		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
-	} else {
-		requireSslAndValidateCertificate = nil
-	}
-	certificate := new(string)
-	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
-		*certificate = r.Certificate.ValueString()
-	} else {
-		certificate = nil
-	}
-	autoReplicate := new(string)
-	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
-		*autoReplicate = r.AutoReplicate.ValueString()
-	} else {
-		autoReplicate = nil
 	}
 	tinyInt1IsBoolean := new(bool)
 	if !r.TinyInt1IsBoolean.IsUnknown() && !r.TinyInt1IsBoolean.IsNull() {
@@ -410,6 +392,24 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 	} else {
 		database = nil
 	}
+	autoReplicate := new(string)
+	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
+		*autoReplicate = r.AutoReplicate.ValueString()
+	} else {
+		autoReplicate = nil
+	}
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
+	} else {
+		certificate = nil
+	}
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
+	} else {
+		requireSslAndValidateCertificate = nil
+	}
 	var shards []shared.MysqlShard = nil
 	for _, shardsItem := range r.Shards {
 		shardID := shardsItem.ShardID.ValueString()
@@ -419,39 +419,39 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 		} else {
 			database1 = nil
 		}
-		address := shardsItem.Address.ValueString()
-		port := shardsItem.Port.ValueInt64()
 		username := shardsItem.Username.ValueString()
-		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
 		if shardsItem.SSHConfig != nil {
-			address1 := shardsItem.SSHConfig.Address.ValueString()
 			username1 := shardsItem.SSHConfig.Username.ValueString()
+			address := shardsItem.SSHConfig.Address.ValueString()
 			sshConfig = &shared.SSHConfig{
-				Address:  address1,
 				Username: username1,
+				Address:  address,
 			}
 		}
+		password := shardsItem.Password.ValueString()
+		port := shardsItem.Port.ValueInt64()
+		address1 := shardsItem.Address.ValueString()
 		shards = append(shards, shared.MysqlShard{
 			ShardID:   shardID,
 			Database:  database1,
-			Address:   address,
-			Port:      port,
 			Username:  username,
-			Password:  password,
 			SSHConfig: sshConfig,
+			Password:  password,
+			Port:      port,
+			Address:   address1,
 		})
 	}
 	out := shared.ConnectionMysqlShardedUpdate{
-		Name:                             name,
-		Type:                             typeVar,
 		Active:                           active,
+		Type:                             typeVar,
+		Name:                             name,
 		UpdateSchedule:                   updateSchedule,
-		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
-		Certificate:                      certificate,
-		AutoReplicate:                    autoReplicate,
 		TinyInt1IsBoolean:                tinyInt1IsBoolean,
 		Database:                         database,
+		AutoReplicate:                    autoReplicate,
+		Certificate:                      certificate,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
 		Shards:                           shards,
 	}
 	return &out

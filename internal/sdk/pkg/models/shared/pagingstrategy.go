@@ -12,8 +12,8 @@ import (
 type PagingStrategyType string
 
 const (
-	PagingStrategyTypeCursorURI PagingStrategyType = "CURSOR_URI"
 	PagingStrategyTypeOffset    PagingStrategyType = "OFFSET"
+	PagingStrategyTypeCursorURI PagingStrategyType = "CURSOR_URI"
 )
 
 // PagingStrategy - The paging strategy.
@@ -22,18 +22,6 @@ type PagingStrategy struct {
 	OffsetPagingStrategy    *OffsetPagingStrategy
 
 	Type PagingStrategyType
-}
-
-func CreatePagingStrategyCursorURI(cursorURI CursorURIPagingStrategy) PagingStrategy {
-	typ := PagingStrategyTypeCursorURI
-
-	typStr := CursorURIPagingStrategyType(typ)
-	cursorURI.Type = &typStr
-
-	return PagingStrategy{
-		CursorURIPagingStrategy: &cursorURI,
-		Type:                    typ,
-	}
 }
 
 func CreatePagingStrategyOffset(offset OffsetPagingStrategy) PagingStrategy {
@@ -45,6 +33,18 @@ func CreatePagingStrategyOffset(offset OffsetPagingStrategy) PagingStrategy {
 	return PagingStrategy{
 		OffsetPagingStrategy: &offset,
 		Type:                 typ,
+	}
+}
+
+func CreatePagingStrategyCursorURI(cursorURI CursorURIPagingStrategy) PagingStrategy {
+	typ := PagingStrategyTypeCursorURI
+
+	typStr := CursorURIPagingStrategyType(typ)
+	cursorURI.Type = &typStr
+
+	return PagingStrategy{
+		CursorURIPagingStrategy: &cursorURI,
+		Type:                    typ,
 	}
 }
 
@@ -60,15 +60,6 @@ func (u *PagingStrategy) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Type {
-	case "CURSOR_URI":
-		cursorURIPagingStrategy := new(CursorURIPagingStrategy)
-		if err := utils.UnmarshalJSON(data, &cursorURIPagingStrategy, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.CursorURIPagingStrategy = cursorURIPagingStrategy
-		u.Type = PagingStrategyTypeCursorURI
-		return nil
 	case "OFFSET":
 		offsetPagingStrategy := new(OffsetPagingStrategy)
 		if err := utils.UnmarshalJSON(data, &offsetPagingStrategy, "", true, true); err != nil {
@@ -77,6 +68,15 @@ func (u *PagingStrategy) UnmarshalJSON(data []byte) error {
 
 		u.OffsetPagingStrategy = offsetPagingStrategy
 		u.Type = PagingStrategyTypeOffset
+		return nil
+	case "CURSOR_URI":
+		cursorURIPagingStrategy := new(CursorURIPagingStrategy)
+		if err := utils.UnmarshalJSON(data, &cursorURIPagingStrategy, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.CursorURIPagingStrategy = cursorURIPagingStrategy
+		u.Type = PagingStrategyTypeCursorURI
 		return nil
 	}
 

@@ -41,16 +41,16 @@ type ConnectionGONGResource struct {
 
 // ConnectionGONGResourceModel describes the resource data model.
 type ConnectionGONGResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	Code                     types.String            `tfsdk:"code"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	Code                     types.String                                    `tfsdk:"code"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionGONGResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -557,7 +557,7 @@ func (r *ConnectionGONGResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	request := *data.ToSharedConnectionGongInput()
+	request := *data.ToSharedConnectionGong()
 	res, err := r.client.Connection.CreateGONGConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -578,7 +578,7 @@ func (r *ConnectionGONGResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionGong(res.ConnectionGong)
+	data.RefreshFromSharedConnectionGongOutput(res.ConnectionGong)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetGONGConnectionRequest{
@@ -604,7 +604,7 @@ func (r *ConnectionGONGResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionGong(res1.ConnectionGong)
+	data.RefreshFromSharedConnectionGongOutput(res1.ConnectionGong)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -653,7 +653,7 @@ func (r *ConnectionGONGResource) Read(ctx context.Context, req resource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionGong(res.ConnectionGong)
+	data.RefreshFromSharedConnectionGongOutput(res.ConnectionGong)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -699,7 +699,7 @@ func (r *ConnectionGONGResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionGong(res.ConnectionGong)
+	data.RefreshFromSharedConnectionGongOutput(res.ConnectionGong)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetGONGConnectionRequest{
@@ -725,7 +725,7 @@ func (r *ConnectionGONGResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionGong(res1.ConnectionGong)
+	data.RefreshFromSharedConnectionGongOutput(res1.ConnectionGong)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

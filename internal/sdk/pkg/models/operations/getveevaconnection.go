@@ -27,7 +27,7 @@ type GetVEEVAConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionVeeva *shared.ConnectionVeeva
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

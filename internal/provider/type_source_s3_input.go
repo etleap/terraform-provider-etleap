@@ -13,5 +13,4 @@ type SourceS3Input struct {
 	NewFileBehavior  types.String   `tfsdk:"new_file_behavior"`
 	Paths            []types.String `tfsdk:"paths"`
 	TriggeredByEvent types.Bool     `tfsdk:"triggered_by_event"`
-	Type             types.String   `tfsdk:"type"`
 }

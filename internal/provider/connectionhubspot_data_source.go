@@ -28,16 +28,16 @@ type ConnectionHUBSPOTDataSource struct {
 
 // ConnectionHUBSPOTDataSourceModel describes the data model.
 type ConnectionHUBSPOTDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	HubID                 types.Int64             `tfsdk:"hub_id"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	Username              types.String            `tfsdk:"username"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	HubID                 types.Int64                                     `tfsdk:"hub_id"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Username              types.String                                    `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.
@@ -314,7 +314,7 @@ func (r *ConnectionHUBSPOTDataSource) Read(ctx context.Context, req datasource.R
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionHubspot(res.ConnectionHubspot)
+	data.RefreshFromSharedConnectionHubspotOutput(res.ConnectionHubspot)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

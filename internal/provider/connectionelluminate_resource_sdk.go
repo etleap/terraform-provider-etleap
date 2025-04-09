@@ -72,12 +72,12 @@ func (r *ConnectionELLUMINATEResourceModel) ToSharedConnectionElluminateInput() 
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,15 +86,15 @@ func (r *ConnectionELLUMINATEResourceModel) ToSharedConnectionElluminateInput() 
 			}
 		}
 	}
-	baseURL := r.BaseURL.ValueString()
 	apiKey := r.APIKey.ValueString()
+	baseURL := r.BaseURL.ValueString()
 	apiSecret := r.APISecret.ValueString()
 	out := shared.ConnectionElluminateInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		BaseURL:        baseURL,
 		APIKey:         apiKey,
+		BaseURL:        baseURL,
 		APISecret:      apiSecret,
 	}
 	return &out
@@ -109,7 +109,7 @@ func (r *ConnectionELLUMINATEResourceModel) RefreshFromSharedConnectionElluminat
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -191,11 +191,11 @@ func (r *ConnectionELLUMINATEResourceModel) RefreshFromSharedConnectionElluminat
 }
 
 func (r *ConnectionELLUMINATEResourceModel) ToSharedConnectionElluminateUpdate() *shared.ConnectionElluminateUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionElluminateUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -203,11 +203,11 @@ func (r *ConnectionELLUMINATEResourceModel) ToSharedConnectionElluminateUpdate()
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -270,12 +270,12 @@ func (r *ConnectionELLUMINATEResourceModel) ToSharedConnectionElluminateUpdate()
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -284,17 +284,17 @@ func (r *ConnectionELLUMINATEResourceModel) ToSharedConnectionElluminateUpdate()
 			}
 		}
 	}
-	baseURL := new(string)
-	if !r.BaseURL.IsUnknown() && !r.BaseURL.IsNull() {
-		*baseURL = r.BaseURL.ValueString()
-	} else {
-		baseURL = nil
-	}
 	apiKey := new(string)
 	if !r.APIKey.IsUnknown() && !r.APIKey.IsNull() {
 		*apiKey = r.APIKey.ValueString()
 	} else {
 		apiKey = nil
+	}
+	baseURL := new(string)
+	if !r.BaseURL.IsUnknown() && !r.BaseURL.IsNull() {
+		*baseURL = r.BaseURL.ValueString()
+	} else {
+		baseURL = nil
 	}
 	apiSecret := new(string)
 	if !r.APISecret.IsUnknown() && !r.APISecret.IsNull() {
@@ -303,12 +303,12 @@ func (r *ConnectionELLUMINATEResourceModel) ToSharedConnectionElluminateUpdate()
 		apiSecret = nil
 	}
 	out := shared.ConnectionElluminateUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
-		BaseURL:        baseURL,
 		APIKey:         apiKey,
+		BaseURL:        baseURL,
 		APISecret:      apiSecret,
 	}
 	return &out

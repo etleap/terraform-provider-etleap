@@ -14,11 +14,11 @@ func (r *ConnectionSNOWFLAKEDataSourceModel) RefreshFromSharedConnectionSnowflak
 	if resp.Authentication == nil {
 		r.Authentication = nil
 	} else {
-		r.Authentication = &SnowflakeAuthenticationTypesOutput{}
-		if resp.Authentication.SnowflakeAuthenticationKeyPairOutput != nil {
-			r.Authentication.KeyPair = &SnowflakeAuthenticationKeyPairOutput{}
-			r.Authentication.KeyPair.PublicKey = types.StringValue(resp.Authentication.SnowflakeAuthenticationKeyPairOutput.PublicKey)
-			r.Authentication.KeyPair.Type = types.StringValue(string(resp.Authentication.SnowflakeAuthenticationKeyPairOutput.Type))
+		r.Authentication = &SnowflakeAuthenticationTypes{}
+		if resp.Authentication.SnowflakeAuthenticationKeyPair != nil {
+			r.Authentication.KeyPair = &SnowflakeAuthenticationKeyPair1{}
+			r.Authentication.KeyPair.PublicKey = types.StringValue(resp.Authentication.SnowflakeAuthenticationKeyPair.PublicKey)
+			r.Authentication.KeyPair.Type = types.StringValue(string(resp.Authentication.SnowflakeAuthenticationKeyPair.Type))
 		}
 		if resp.Authentication.SnowflakeAuthenticationPasswordOutput != nil {
 			r.Authentication.Password = &SnowflakeAuthenticationPasswordOutput{}
@@ -31,7 +31,7 @@ func (r *ConnectionSNOWFLAKEDataSourceModel) RefreshFromSharedConnectionSnowflak
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

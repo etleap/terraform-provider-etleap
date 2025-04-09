@@ -72,12 +72,12 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Input() *shared.Connec
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,43 +86,43 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Input() *shared.Connec
 			}
 		}
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
-	} else {
-		schema = nil
-	}
 	certificate := new(string)
 	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
 		*certificate = r.Certificate.ValueString()
 	} else {
 		certificate = nil
 	}
-	address := r.Address.ValueString()
-	port := r.Port.ValueInt64()
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
+	} else {
+		schema = nil
+	}
 	username := r.Username.ValueString()
-	password := r.Password.ValueString()
 	var sshConfig *shared.SSHConfig
 	if r.SSHConfig != nil {
-		address1 := r.SSHConfig.Address.ValueString()
 		username1 := r.SSHConfig.Username.ValueString()
+		address := r.SSHConfig.Address.ValueString()
 		sshConfig = &shared.SSHConfig{
-			Address:  address1,
 			Username: username1,
+			Address:  address,
 		}
 	}
+	password := r.Password.ValueString()
+	port := r.Port.ValueInt64()
+	address1 := r.Address.ValueString()
 	database := r.Database.ValueString()
 	out := shared.ConnectionDb2Input{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		Schema:         schema,
 		Certificate:    certificate,
-		Address:        address,
-		Port:           port,
+		Schema:         schema,
 		Username:       username,
-		Password:       password,
 		SSHConfig:      sshConfig,
+		Password:       password,
+		Port:           port,
+		Address:        address1,
 		Database:       database,
 	}
 	return &out
@@ -138,7 +138,7 @@ func (r *ConnectionDb2ResourceModel) RefreshFromSharedConnectionDb2(resp *shared
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -230,18 +230,18 @@ func (r *ConnectionDb2ResourceModel) RefreshFromSharedConnectionDb2(resp *shared
 }
 
 func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Update() *shared.ConnectionDb2Update {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	typeVar := shared.ConnectionDb2UpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
 	} else {
 		active = nil
+	}
+	typeVar := shared.ConnectionDb2UpdateType(r.Type.ValueString())
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -304,12 +304,12 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Update() *shared.Conne
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -318,29 +318,17 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Update() *shared.Conne
 			}
 		}
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
-	} else {
-		schema = nil
-	}
 	certificate := new(string)
 	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
 		*certificate = r.Certificate.ValueString()
 	} else {
 		certificate = nil
 	}
-	address := new(string)
-	if !r.Address.IsUnknown() && !r.Address.IsNull() {
-		*address = r.Address.ValueString()
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
 	} else {
-		address = nil
-	}
-	port := new(int64)
-	if !r.Port.IsUnknown() && !r.Port.IsNull() {
-		*port = r.Port.ValueInt64()
-	} else {
-		port = nil
+		schema = nil
 	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
@@ -348,30 +336,42 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Update() *shared.Conne
 	} else {
 		username = nil
 	}
-	password := new(string)
-	if !r.Password.IsUnknown() && !r.Password.IsNull() {
-		*password = r.Password.ValueString()
-	} else {
-		password = nil
-	}
-	var sshConfig *shared.SSHConfigurationUpdate
+	var sshConfig *shared.ConnectionDb2UpdateSSHConfigurationUpdate
 	if r.SSHConfig != nil {
-		address1 := new(string)
-		if !r.SSHConfig.Address.IsUnknown() && !r.SSHConfig.Address.IsNull() {
-			*address1 = r.SSHConfig.Address.ValueString()
-		} else {
-			address1 = nil
-		}
 		username1 := new(string)
 		if !r.SSHConfig.Username.IsUnknown() && !r.SSHConfig.Username.IsNull() {
 			*username1 = r.SSHConfig.Username.ValueString()
 		} else {
 			username1 = nil
 		}
-		sshConfig = &shared.SSHConfigurationUpdate{
-			Address:  address1,
-			Username: username1,
+		address := new(string)
+		if !r.SSHConfig.Address.IsUnknown() && !r.SSHConfig.Address.IsNull() {
+			*address = r.SSHConfig.Address.ValueString()
+		} else {
+			address = nil
 		}
+		sshConfig = &shared.ConnectionDb2UpdateSSHConfigurationUpdate{
+			Username: username1,
+			Address:  address,
+		}
+	}
+	password := new(string)
+	if !r.Password.IsUnknown() && !r.Password.IsNull() {
+		*password = r.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := new(int64)
+	if !r.Port.IsUnknown() && !r.Port.IsNull() {
+		*port = r.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	address1 := new(string)
+	if !r.Address.IsUnknown() && !r.Address.IsNull() {
+		*address1 = r.Address.ValueString()
+	} else {
+		address1 = nil
 	}
 	database := new(string)
 	if !r.Database.IsUnknown() && !r.Database.IsNull() {
@@ -380,17 +380,17 @@ func (r *ConnectionDb2ResourceModel) ToSharedConnectionDb2Update() *shared.Conne
 		database = nil
 	}
 	out := shared.ConnectionDb2Update{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
-		Schema:         schema,
 		Certificate:    certificate,
-		Address:        address,
-		Port:           port,
+		Schema:         schema,
 		Username:       username,
-		Password:       password,
 		SSHConfig:      sshConfig,
+		Password:       password,
+		Port:           port,
+		Address:        address1,
 		Database:       database,
 	}
 	return &out

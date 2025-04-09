@@ -32,19 +32,12 @@ func (e *SourceFreshworksType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFreshworks struct {
-	Type SourceFreshworksType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string               `json:"connectionId"`
+	Type         SourceFreshworksType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	Entity           string `json:"entity"`
-}
-
-func (o *SourceFreshworks) GetType() SourceFreshworksType {
-	if o == nil {
-		return SourceFreshworksType("")
-	}
-	return o.Type
 }
 
 func (o *SourceFreshworks) GetConnectionID() string {
@@ -52,6 +45,13 @@ func (o *SourceFreshworks) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceFreshworks) GetType() SourceFreshworksType {
+	if o == nil {
+		return SourceFreshworksType("")
+	}
+	return o.Type
 }
 
 func (o *SourceFreshworks) GetLatencyThreshold() *int64 {

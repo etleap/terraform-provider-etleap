@@ -27,7 +27,7 @@ type GetORACLEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionOracle *shared.ConnectionOracle
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

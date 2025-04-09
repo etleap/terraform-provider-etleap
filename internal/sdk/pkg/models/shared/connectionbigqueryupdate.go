@@ -32,31 +32,17 @@ func (e *ConnectionBigQueryUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionBigQueryUpdate struct {
-	// The unique name of this connection.
-	Name *string                       `json:"name,omitempty"`
-	Type *ConnectionBigQueryUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                         `json:"active,omitempty"`
+	Type   *ConnectionBigQueryUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Dataset *string `json:"dataset,omitempty"`
 	// To generate new JSON Credentials, go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials/), make sure you are on the correct project, and create or select an existing service account. Select the service account, and under "Keys" create a new key in JSON format. Paste the JSON object into the "JSON Credentials" fields.
 	JSONCredentials *string `json:"jsonCredentials,omitempty"`
-}
-
-func (o *ConnectionBigQueryUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionBigQueryUpdate) GetType() *ConnectionBigQueryUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Dataset *string `json:"dataset,omitempty"`
 }
 
 func (o *ConnectionBigQueryUpdate) GetActive() *bool {
@@ -66,6 +52,20 @@ func (o *ConnectionBigQueryUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionBigQueryUpdate) GetType() *ConnectionBigQueryUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionBigQueryUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionBigQueryUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -73,9 +73,9 @@ func (o *ConnectionBigQueryUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBigQueryUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBigQueryUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -83,6 +83,13 @@ func (o *ConnectionBigQueryUpdate) GetUpdateScheduleInterval() *UpdateScheduleMo
 func (o *ConnectionBigQueryUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionBigQueryUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -101,11 +108,11 @@ func (o *ConnectionBigQueryUpdate) GetUpdateScheduleWeekly() *UpdateScheduleMode
 	return nil
 }
 
-func (o *ConnectionBigQueryUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionBigQueryUpdate) GetJSONCredentials() *string {
+	if o == nil {
+		return nil
 	}
-	return nil
+	return o.JSONCredentials
 }
 
 func (o *ConnectionBigQueryUpdate) GetDataset() *string {
@@ -113,11 +120,4 @@ func (o *ConnectionBigQueryUpdate) GetDataset() *string {
 		return nil
 	}
 	return o.Dataset
-}
-
-func (o *ConnectionBigQueryUpdate) GetJSONCredentials() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JSONCredentials
 }

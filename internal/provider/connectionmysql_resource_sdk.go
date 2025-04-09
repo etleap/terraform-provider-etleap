@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlInput() *shared.ConnectionMysqlInput {
+func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysql() *shared.ConnectionMysql {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionMysqlType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlInput() *shared.Co
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,35 +86,11 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlInput() *shared.Co
 			}
 		}
 	}
-	requireSslAndValidateCertificate := new(bool)
-	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
-		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
-	} else {
-		requireSslAndValidateCertificate = nil
-	}
 	certificate := new(string)
 	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
 		*certificate = r.Certificate.ValueString()
 	} else {
 		certificate = nil
-	}
-	cdcEnabled := new(bool)
-	if !r.CdcEnabled.IsUnknown() && !r.CdcEnabled.IsNull() {
-		*cdcEnabled = r.CdcEnabled.ValueBool()
-	} else {
-		cdcEnabled = nil
-	}
-	autoReplicate := new(string)
-	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
-		*autoReplicate = r.AutoReplicate.ValueString()
-	} else {
-		autoReplicate = nil
-	}
-	tinyInt1IsBoolean := new(bool)
-	if !r.TinyInt1IsBoolean.IsUnknown() && !r.TinyInt1IsBoolean.IsNull() {
-		*tinyInt1IsBoolean = r.TinyInt1IsBoolean.ValueBool()
-	} else {
-		tinyInt1IsBoolean = nil
 	}
 	database := new(string)
 	if !r.Database.IsUnknown() && !r.Database.IsNull() {
@@ -122,39 +98,63 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlInput() *shared.Co
 	} else {
 		database = nil
 	}
-	address := r.Address.ValueString()
-	port := r.Port.ValueInt64()
+	autoReplicate := new(string)
+	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
+		*autoReplicate = r.AutoReplicate.ValueString()
+	} else {
+		autoReplicate = nil
+	}
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
+	} else {
+		requireSslAndValidateCertificate = nil
+	}
+	tinyInt1IsBoolean := new(bool)
+	if !r.TinyInt1IsBoolean.IsUnknown() && !r.TinyInt1IsBoolean.IsNull() {
+		*tinyInt1IsBoolean = r.TinyInt1IsBoolean.ValueBool()
+	} else {
+		tinyInt1IsBoolean = nil
+	}
+	cdcEnabled := new(bool)
+	if !r.CdcEnabled.IsUnknown() && !r.CdcEnabled.IsNull() {
+		*cdcEnabled = r.CdcEnabled.ValueBool()
+	} else {
+		cdcEnabled = nil
+	}
 	username := r.Username.ValueString()
-	password := r.Password.ValueString()
 	var sshConfig *shared.SSHConfig
 	if r.SSHConfig != nil {
-		address1 := r.SSHConfig.Address.ValueString()
 		username1 := r.SSHConfig.Username.ValueString()
+		address := r.SSHConfig.Address.ValueString()
 		sshConfig = &shared.SSHConfig{
-			Address:  address1,
 			Username: username1,
+			Address:  address,
 		}
 	}
-	out := shared.ConnectionMysqlInput{
+	password := r.Password.ValueString()
+	port := r.Port.ValueInt64()
+	address1 := r.Address.ValueString()
+	out := shared.ConnectionMysql{
 		Name:                             name,
 		Type:                             typeVar,
 		UpdateSchedule:                   updateSchedule,
-		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
 		Certificate:                      certificate,
-		CdcEnabled:                       cdcEnabled,
-		AutoReplicate:                    autoReplicate,
-		TinyInt1IsBoolean:                tinyInt1IsBoolean,
 		Database:                         database,
-		Address:                          address,
-		Port:                             port,
+		AutoReplicate:                    autoReplicate,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		TinyInt1IsBoolean:                tinyInt1IsBoolean,
+		CdcEnabled:                       cdcEnabled,
 		Username:                         username,
-		Password:                         password,
 		SSHConfig:                        sshConfig,
+		Password:                         password,
+		Port:                             port,
+		Address:                          address1,
 	}
 	return &out
 }
 
-func (r *ConnectionMYSQLResourceModel) RefreshFromSharedConnectionMysql(resp *shared.ConnectionMysql) {
+func (r *ConnectionMYSQLResourceModel) RefreshFromSharedConnectionMysqlOutput(resp *shared.ConnectionMysqlOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
@@ -166,7 +166,7 @@ func (r *ConnectionMYSQLResourceModel) RefreshFromSharedConnectionMysql(resp *sh
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -259,18 +259,18 @@ func (r *ConnectionMYSQLResourceModel) RefreshFromSharedConnectionMysql(resp *sh
 }
 
 func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.ConnectionMysqlUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	typeVar := shared.ConnectionMysqlUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
 	} else {
 		active = nil
+	}
+	typeVar := shared.ConnectionMysqlUpdateType(r.Type.ValueString())
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -333,12 +333,12 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -346,24 +346,6 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
 			}
 		}
-	}
-	requireSslAndValidateCertificate := new(bool)
-	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
-		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
-	} else {
-		requireSslAndValidateCertificate = nil
-	}
-	certificate := new(string)
-	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
-		*certificate = r.Certificate.ValueString()
-	} else {
-		certificate = nil
-	}
-	autoReplicate := new(string)
-	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
-		*autoReplicate = r.AutoReplicate.ValueString()
-	} else {
-		autoReplicate = nil
 	}
 	tinyInt1IsBoolean := new(bool)
 	if !r.TinyInt1IsBoolean.IsUnknown() && !r.TinyInt1IsBoolean.IsNull() {
@@ -377,17 +359,23 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 	} else {
 		database = nil
 	}
-	address := new(string)
-	if !r.Address.IsUnknown() && !r.Address.IsNull() {
-		*address = r.Address.ValueString()
+	autoReplicate := new(string)
+	if !r.AutoReplicate.IsUnknown() && !r.AutoReplicate.IsNull() {
+		*autoReplicate = r.AutoReplicate.ValueString()
 	} else {
-		address = nil
+		autoReplicate = nil
 	}
-	port := new(int64)
-	if !r.Port.IsUnknown() && !r.Port.IsNull() {
-		*port = r.Port.ValueInt64()
+	certificate := new(string)
+	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
+		*certificate = r.Certificate.ValueString()
 	} else {
-		port = nil
+		certificate = nil
+	}
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
+	} else {
+		requireSslAndValidateCertificate = nil
 	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
@@ -395,46 +383,58 @@ func (r *ConnectionMYSQLResourceModel) ToSharedConnectionMysqlUpdate() *shared.C
 	} else {
 		username = nil
 	}
-	password := new(string)
-	if !r.Password.IsUnknown() && !r.Password.IsNull() {
-		*password = r.Password.ValueString()
-	} else {
-		password = nil
-	}
 	var sshConfig *shared.ConnectionMysqlUpdateSSHConfigurationUpdate
 	if r.SSHConfig != nil {
-		address1 := new(string)
-		if !r.SSHConfig.Address.IsUnknown() && !r.SSHConfig.Address.IsNull() {
-			*address1 = r.SSHConfig.Address.ValueString()
-		} else {
-			address1 = nil
-		}
 		username1 := new(string)
 		if !r.SSHConfig.Username.IsUnknown() && !r.SSHConfig.Username.IsNull() {
 			*username1 = r.SSHConfig.Username.ValueString()
 		} else {
 			username1 = nil
 		}
+		address := new(string)
+		if !r.SSHConfig.Address.IsUnknown() && !r.SSHConfig.Address.IsNull() {
+			*address = r.SSHConfig.Address.ValueString()
+		} else {
+			address = nil
+		}
 		sshConfig = &shared.ConnectionMysqlUpdateSSHConfigurationUpdate{
-			Address:  address1,
 			Username: username1,
+			Address:  address,
 		}
 	}
+	password := new(string)
+	if !r.Password.IsUnknown() && !r.Password.IsNull() {
+		*password = r.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := new(int64)
+	if !r.Port.IsUnknown() && !r.Port.IsNull() {
+		*port = r.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	address1 := new(string)
+	if !r.Address.IsUnknown() && !r.Address.IsNull() {
+		*address1 = r.Address.ValueString()
+	} else {
+		address1 = nil
+	}
 	out := shared.ConnectionMysqlUpdate{
-		Name:                             name,
-		Type:                             typeVar,
 		Active:                           active,
+		Type:                             typeVar,
+		Name:                             name,
 		UpdateSchedule:                   updateSchedule,
-		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
-		Certificate:                      certificate,
-		AutoReplicate:                    autoReplicate,
 		TinyInt1IsBoolean:                tinyInt1IsBoolean,
 		Database:                         database,
-		Address:                          address,
-		Port:                             port,
+		AutoReplicate:                    autoReplicate,
+		Certificate:                      certificate,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
 		Username:                         username,
-		Password:                         password,
 		SSHConfig:                        sshConfig,
+		Password:                         password,
+		Port:                             port,
+		Address:                          address1,
 	}
 	return &out
 }

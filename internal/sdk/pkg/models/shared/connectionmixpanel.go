@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionMixpanelType string
-
-const (
-	ConnectionMixpanelTypeMixpanel ConnectionMixpanelType = "MIXPANEL"
-)
-
-func (e ConnectionMixpanelType) ToPointer() *ConnectionMixpanelType {
-	return &e
-}
-
-func (e *ConnectionMixpanelType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "MIXPANEL":
-		*e = ConnectionMixpanelType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionMixpanelType: %v", v)
-	}
-}
-
 // ConnectionMixpanelStatus - The current status of the connection.
 type ConnectionMixpanelStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionMixpanelDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSch
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMixpanelDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionMixpanelDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionMixpanelDefaultUpdateSchedule) GetUpdateScheduleInterval() *U
 func (o *ConnectionMixpanelDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionMixpanelDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,29 +108,46 @@ func (o *ConnectionMixpanelDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Upd
 	return nil
 }
 
-func (o *ConnectionMixpanelDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionMixpanelType string
+
+const (
+	ConnectionMixpanelTypeMixpanel ConnectionMixpanelType = "MIXPANEL"
+)
+
+func (e ConnectionMixpanelType) ToPointer() *ConnectionMixpanelType {
+	return &e
+}
+
+func (e *ConnectionMixpanelType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "MIXPANEL":
+		*e = ConnectionMixpanelType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionMixpanelType: %v", v)
+	}
 }
 
 type ConnectionMixpanel struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                 `json:"name"`
-	Type ConnectionMixpanelType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionMixpanelStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionMixpanelDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	// Whether this connection has been marked as active.
+	Active bool                   `json:"active"`
+	Type   ConnectionMixpanelType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Mixpanel project timezone. Default: 'US/Pacific'
 	Timezone string `json:"timezone"`
 }
@@ -163,11 +163,11 @@ func (c *ConnectionMixpanel) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionMixpanel) GetID() string {
+func (o *ConnectionMixpanel) GetStatus() ConnectionMixpanelStatus {
 	if o == nil {
-		return ""
+		return ConnectionMixpanelStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionMixpanel) GetName() string {
@@ -177,11 +177,18 @@ func (o *ConnectionMixpanel) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionMixpanel) GetType() ConnectionMixpanelType {
+func (o *ConnectionMixpanel) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionMixpanelType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionMixpanel) GetDefaultUpdateSchedule() []ConnectionMixpanelDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionMixpanelDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionMixpanel) GetActive() bool {
@@ -191,18 +198,18 @@ func (o *ConnectionMixpanel) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionMixpanel) GetStatus() ConnectionMixpanelStatus {
+func (o *ConnectionMixpanel) GetType() ConnectionMixpanelType {
 	if o == nil {
-		return ConnectionMixpanelStatus("")
+		return ConnectionMixpanelType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionMixpanel) GetCreateDate() time.Time {
+func (o *ConnectionMixpanel) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionMixpanel) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -212,9 +219,9 @@ func (o *ConnectionMixpanel) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMixpanel) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionMixpanel) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -222,6 +229,13 @@ func (o *ConnectionMixpanel) GetUpdateScheduleInterval() *UpdateScheduleModeInte
 func (o *ConnectionMixpanel) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionMixpanel) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -238,20 +252,6 @@ func (o *ConnectionMixpanel) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
-}
-
-func (o *ConnectionMixpanel) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionMixpanel) GetDefaultUpdateSchedule() []ConnectionMixpanelDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionMixpanelDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionMixpanel) GetTimezone() string {
@@ -294,9 +294,9 @@ func (o *ConnectionMixpanelInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMixpanelInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionMixpanelInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -304,6 +304,13 @@ func (o *ConnectionMixpanelInput) GetUpdateScheduleInterval() *UpdateScheduleMod
 func (o *ConnectionMixpanelInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionMixpanelInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -318,13 +325,6 @@ func (o *ConnectionMixpanelInput) GetUpdateScheduleDaily() *UpdateScheduleModeDa
 func (o *ConnectionMixpanelInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionMixpanelInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

@@ -35,7 +35,7 @@ type UpdateWORKFRONTConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionWorkfront *shared.ConnectionWorkfront
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

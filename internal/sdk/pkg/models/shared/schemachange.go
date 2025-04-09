@@ -8,9 +8,9 @@ import (
 )
 
 type SchemaChange struct {
+	SchemaChangeDescription *string `json:"schemaChangeDescription,omitempty"`
 	// The date and time of the schema change. `null` if schema change has not yet been applied.
-	DateTime                *time.Time `json:"dateTime,omitempty"`
-	SchemaChangeDescription *string    `json:"schemaChangeDescription,omitempty"`
+	DateTime *time.Time `json:"dateTime,omitempty"`
 }
 
 func (s SchemaChange) MarshalJSON() ([]byte, error) {
@@ -24,16 +24,16 @@ func (s *SchemaChange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SchemaChange) GetDateTime() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.DateTime
-}
-
 func (o *SchemaChange) GetSchemaChangeDescription() *string {
 	if o == nil {
 		return nil
 	}
 	return o.SchemaChangeDescription
+}
+
+func (o *SchemaChange) GetDateTime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DateTime
 }

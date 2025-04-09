@@ -72,12 +72,12 @@ func (r *ConnectionBLACKLINEResourceModel) ToSharedConnectionBlacklineInput() *s
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,21 +86,21 @@ func (r *ConnectionBLACKLINEResourceModel) ToSharedConnectionBlacklineInput() *s
 			}
 		}
 	}
+	username := r.Username.ValueString()
 	clientID := r.ClientID.ValueString()
-	clientSecret := r.ClientSecret.ValueString()
 	baseURL := r.BaseURL.ValueString()
 	instanceScope := r.InstanceScope.ValueString()
-	username := r.Username.ValueString()
+	clientSecret := r.ClientSecret.ValueString()
 	apiKey := r.APIKey.ValueString()
 	out := shared.ConnectionBlacklineInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
+		Username:       username,
 		ClientID:       clientID,
-		ClientSecret:   clientSecret,
 		BaseURL:        baseURL,
 		InstanceScope:  instanceScope,
-		Username:       username,
+		ClientSecret:   clientSecret,
 		APIKey:         apiKey,
 	}
 	return &out
@@ -117,7 +117,7 @@ func (r *ConnectionBLACKLINEResourceModel) RefreshFromSharedConnectionBlackline(
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -201,11 +201,11 @@ func (r *ConnectionBLACKLINEResourceModel) RefreshFromSharedConnectionBlackline(
 }
 
 func (r *ConnectionBLACKLINEResourceModel) ToSharedConnectionBlacklineUpdate() *shared.ConnectionBlacklineUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionBlacklineUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -213,11 +213,11 @@ func (r *ConnectionBLACKLINEResourceModel) ToSharedConnectionBlacklineUpdate() *
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -280,12 +280,12 @@ func (r *ConnectionBLACKLINEResourceModel) ToSharedConnectionBlacklineUpdate() *
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -294,17 +294,17 @@ func (r *ConnectionBLACKLINEResourceModel) ToSharedConnectionBlacklineUpdate() *
 			}
 		}
 	}
+	username := new(string)
+	if !r.Username.IsUnknown() && !r.Username.IsNull() {
+		*username = r.Username.ValueString()
+	} else {
+		username = nil
+	}
 	clientID := new(string)
 	if !r.ClientID.IsUnknown() && !r.ClientID.IsNull() {
 		*clientID = r.ClientID.ValueString()
 	} else {
 		clientID = nil
-	}
-	clientSecret := new(string)
-	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
-		*clientSecret = r.ClientSecret.ValueString()
-	} else {
-		clientSecret = nil
 	}
 	baseURL := new(string)
 	if !r.BaseURL.IsUnknown() && !r.BaseURL.IsNull() {
@@ -318,11 +318,11 @@ func (r *ConnectionBLACKLINEResourceModel) ToSharedConnectionBlacklineUpdate() *
 	} else {
 		instanceScope = nil
 	}
-	username := new(string)
-	if !r.Username.IsUnknown() && !r.Username.IsNull() {
-		*username = r.Username.ValueString()
+	clientSecret := new(string)
+	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
+		*clientSecret = r.ClientSecret.ValueString()
 	} else {
-		username = nil
+		clientSecret = nil
 	}
 	apiKey := new(string)
 	if !r.APIKey.IsUnknown() && !r.APIKey.IsNull() {
@@ -331,15 +331,15 @@ func (r *ConnectionBLACKLINEResourceModel) ToSharedConnectionBlacklineUpdate() *
 		apiKey = nil
 	}
 	out := shared.ConnectionBlacklineUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
+		Username:       username,
 		ClientID:       clientID,
-		ClientSecret:   clientSecret,
 		BaseURL:        baseURL,
 		InstanceScope:  instanceScope,
-		Username:       username,
+		ClientSecret:   clientSecret,
 		APIKey:         apiKey,
 	}
 	return &out

@@ -45,7 +45,7 @@ type GetModelGrantsResponse struct {
 	RawResponse *http.Response
 	// OK
 	GrantsWithoutPrivilegeOutputPaginated *shared.GrantsWithoutPrivilegeOutputPaginated
-	// Bad Request
+	// A model with the given id was not found.
 	Errors *shared.Errors
 }
 

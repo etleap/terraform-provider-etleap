@@ -1,14 +1,14 @@
 resource "etleap_connection_oracle" "my_connectionoracle" {
-  address                              = "5233 Emard Unions"
+  address                              = "1868 Arielle Extension"
   cdc_enabled                          = true
   certificate                          = "...my_certificate..."
   database                             = "...my_database..."
-  deletion_of_export_products          = true
-  name                                 = "Kristine Cormier"
+  deletion_of_export_products          = false
+  name                                 = "Gregg Legros DVM"
   password                             = "...my_password..."
-  port                                 = 1
-  require_ssl_and_validate_certificate = false
+  port                                 = 8
+  require_ssl_and_validate_certificate = true
   schema                               = "...my_schema..."
   type                                 = "ORACLE"
-  username                             = "Loy.Bartoletti51"
+  username                             = "Domenic.Tremblay"
 }

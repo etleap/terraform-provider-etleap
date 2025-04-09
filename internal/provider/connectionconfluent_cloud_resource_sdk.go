@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionCONFLUENTCLOUDResourceModel) ToSharedConnectionConfluentCloudInput() *shared.ConnectionConfluentCloudInput {
+func (r *ConnectionCONFLUENTCLOUDResourceModel) ToSharedConnectionConfluentCloud() *shared.ConnectionConfluentCloud {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionConfluentCloudType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionCONFLUENTCLOUDResourceModel) ToSharedConnectionConfluentCloud
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,14 +86,11 @@ func (r *ConnectionCONFLUENTCLOUDResourceModel) ToSharedConnectionConfluentCloud
 			}
 		}
 	}
-	serverURL := r.ServerURL.ValueString()
-	key := r.Key.ValueString()
-	secret := r.Secret.ValueString()
-	schemaRegistryServer := new(string)
-	if !r.SchemaRegistryServer.IsUnknown() && !r.SchemaRegistryServer.IsNull() {
-		*schemaRegistryServer = r.SchemaRegistryServer.ValueString()
+	schemaRegistrySecret := new(string)
+	if !r.SchemaRegistrySecret.IsUnknown() && !r.SchemaRegistrySecret.IsNull() {
+		*schemaRegistrySecret = r.SchemaRegistrySecret.ValueString()
 	} else {
-		schemaRegistryServer = nil
+		schemaRegistrySecret = nil
 	}
 	schemaRegistryKey := new(string)
 	if !r.SchemaRegistryKey.IsUnknown() && !r.SchemaRegistryKey.IsNull() {
@@ -101,34 +98,37 @@ func (r *ConnectionCONFLUENTCLOUDResourceModel) ToSharedConnectionConfluentCloud
 	} else {
 		schemaRegistryKey = nil
 	}
-	schemaRegistrySecret := new(string)
-	if !r.SchemaRegistrySecret.IsUnknown() && !r.SchemaRegistrySecret.IsNull() {
-		*schemaRegistrySecret = r.SchemaRegistrySecret.ValueString()
+	serverURL := r.ServerURL.ValueString()
+	schemaRegistryServer := new(string)
+	if !r.SchemaRegistryServer.IsUnknown() && !r.SchemaRegistryServer.IsNull() {
+		*schemaRegistryServer = r.SchemaRegistryServer.ValueString()
 	} else {
-		schemaRegistrySecret = nil
+		schemaRegistryServer = nil
 	}
-	out := shared.ConnectionConfluentCloudInput{
+	secret := r.Secret.ValueString()
+	key := r.Key.ValueString()
+	out := shared.ConnectionConfluentCloud{
 		Name:                 name,
 		Type:                 typeVar,
 		UpdateSchedule:       updateSchedule,
-		ServerURL:            serverURL,
-		Key:                  key,
-		Secret:               secret,
-		SchemaRegistryServer: schemaRegistryServer,
-		SchemaRegistryKey:    schemaRegistryKey,
 		SchemaRegistrySecret: schemaRegistrySecret,
+		SchemaRegistryKey:    schemaRegistryKey,
+		ServerURL:            serverURL,
+		SchemaRegistryServer: schemaRegistryServer,
+		Secret:               secret,
+		Key:                  key,
 	}
 	return &out
 }
 
-func (r *ConnectionCONFLUENTCLOUDResourceModel) RefreshFromSharedConnectionConfluentCloud(resp *shared.ConnectionConfluentCloud) {
+func (r *ConnectionCONFLUENTCLOUDResourceModel) RefreshFromSharedConnectionConfluentCloudOutput(resp *shared.ConnectionConfluentCloudOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -214,11 +214,11 @@ func (r *ConnectionCONFLUENTCLOUDResourceModel) RefreshFromSharedConnectionConfl
 }
 
 func (r *ConnectionCONFLUENTCLOUDResourceModel) ToSharedConnectionConfluentCloudUpdate() *shared.ConnectionConfluentCloudUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionConfluentCloudUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -226,11 +226,11 @@ func (r *ConnectionCONFLUENTCLOUDResourceModel) ToSharedConnectionConfluentCloud
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -293,12 +293,12 @@ func (r *ConnectionCONFLUENTCLOUDResourceModel) ToSharedConnectionConfluentCloud
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -307,29 +307,11 @@ func (r *ConnectionCONFLUENTCLOUDResourceModel) ToSharedConnectionConfluentCloud
 			}
 		}
 	}
-	serverURL := new(string)
-	if !r.ServerURL.IsUnknown() && !r.ServerURL.IsNull() {
-		*serverURL = r.ServerURL.ValueString()
+	schemaRegistrySecret := new(string)
+	if !r.SchemaRegistrySecret.IsUnknown() && !r.SchemaRegistrySecret.IsNull() {
+		*schemaRegistrySecret = r.SchemaRegistrySecret.ValueString()
 	} else {
-		serverURL = nil
-	}
-	key := new(string)
-	if !r.Key.IsUnknown() && !r.Key.IsNull() {
-		*key = r.Key.ValueString()
-	} else {
-		key = nil
-	}
-	secret := new(string)
-	if !r.Secret.IsUnknown() && !r.Secret.IsNull() {
-		*secret = r.Secret.ValueString()
-	} else {
-		secret = nil
-	}
-	schemaRegistryServer := new(string)
-	if !r.SchemaRegistryServer.IsUnknown() && !r.SchemaRegistryServer.IsNull() {
-		*schemaRegistryServer = r.SchemaRegistryServer.ValueString()
-	} else {
-		schemaRegistryServer = nil
+		schemaRegistrySecret = nil
 	}
 	schemaRegistryKey := new(string)
 	if !r.SchemaRegistryKey.IsUnknown() && !r.SchemaRegistryKey.IsNull() {
@@ -337,23 +319,41 @@ func (r *ConnectionCONFLUENTCLOUDResourceModel) ToSharedConnectionConfluentCloud
 	} else {
 		schemaRegistryKey = nil
 	}
-	schemaRegistrySecret := new(string)
-	if !r.SchemaRegistrySecret.IsUnknown() && !r.SchemaRegistrySecret.IsNull() {
-		*schemaRegistrySecret = r.SchemaRegistrySecret.ValueString()
+	serverURL := new(string)
+	if !r.ServerURL.IsUnknown() && !r.ServerURL.IsNull() {
+		*serverURL = r.ServerURL.ValueString()
 	} else {
-		schemaRegistrySecret = nil
+		serverURL = nil
+	}
+	schemaRegistryServer := new(string)
+	if !r.SchemaRegistryServer.IsUnknown() && !r.SchemaRegistryServer.IsNull() {
+		*schemaRegistryServer = r.SchemaRegistryServer.ValueString()
+	} else {
+		schemaRegistryServer = nil
+	}
+	secret := new(string)
+	if !r.Secret.IsUnknown() && !r.Secret.IsNull() {
+		*secret = r.Secret.ValueString()
+	} else {
+		secret = nil
+	}
+	key := new(string)
+	if !r.Key.IsUnknown() && !r.Key.IsNull() {
+		*key = r.Key.ValueString()
+	} else {
+		key = nil
 	}
 	out := shared.ConnectionConfluentCloudUpdate{
-		Name:                 name,
-		Type:                 typeVar,
 		Active:               active,
+		Type:                 typeVar,
+		Name:                 name,
 		UpdateSchedule:       updateSchedule,
-		ServerURL:            serverURL,
-		Key:                  key,
-		Secret:               secret,
-		SchemaRegistryServer: schemaRegistryServer,
-		SchemaRegistryKey:    schemaRegistryKey,
 		SchemaRegistrySecret: schemaRegistrySecret,
+		SchemaRegistryKey:    schemaRegistryKey,
+		ServerURL:            serverURL,
+		SchemaRegistryServer: schemaRegistryServer,
+		Secret:               secret,
+		Key:                  key,
 	}
 	return &out
 }

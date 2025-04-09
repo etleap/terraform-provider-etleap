@@ -10,9 +10,9 @@ import (
 // UserListItem - This model is returned in a list by the /users endpoint
 type UserListItem struct {
 	ID           string `json:"id"`
-	FirstName    string `json:"firstName"`
 	LastName     string `json:"lastName"`
 	EmailAddress string `json:"emailAddress"`
+	FirstName    string `json:"firstName"`
 	// The date and time when then the user was created.
 	CreateDate time.Time `json:"createDate"`
 }
@@ -35,13 +35,6 @@ func (o *UserListItem) GetID() string {
 	return o.ID
 }
 
-func (o *UserListItem) GetFirstName() string {
-	if o == nil {
-		return ""
-	}
-	return o.FirstName
-}
-
 func (o *UserListItem) GetLastName() string {
 	if o == nil {
 		return ""
@@ -54,6 +47,13 @@ func (o *UserListItem) GetEmailAddress() string {
 		return ""
 	}
 	return o.EmailAddress
+}
+
+func (o *UserListItem) GetFirstName() string {
+	if o == nil {
+		return ""
+	}
+	return o.FirstName
 }
 
 func (o *UserListItem) GetCreateDate() time.Time {

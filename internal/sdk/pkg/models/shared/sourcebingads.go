@@ -32,9 +32,9 @@ func (e *SourceBingAdsType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBingAds struct {
-	Type SourceBingAdsType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string            `json:"connectionId"`
+	Type         SourceBingAdsType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The report type.
@@ -43,18 +43,18 @@ type SourceBingAds struct {
 	Fields []string `json:"fields"`
 }
 
-func (o *SourceBingAds) GetType() SourceBingAdsType {
-	if o == nil {
-		return SourceBingAdsType("")
-	}
-	return o.Type
-}
-
 func (o *SourceBingAds) GetConnectionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceBingAds) GetType() SourceBingAdsType {
+	if o == nil {
+		return SourceBingAdsType("")
+	}
+	return o.Type
 }
 
 func (o *SourceBingAds) GetLatencyThreshold() *int64 {

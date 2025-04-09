@@ -35,7 +35,7 @@ type UpdateEGNYTEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionEgnyte *shared.ConnectionEgnyte
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

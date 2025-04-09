@@ -34,8 +34,8 @@ type UpdateBRAINTREEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBraintree *shared.ConnectionBraintree
-	// Bad Request
+	ConnectionBraintree *shared.ConnectionBraintreeOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateBRAINTREEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateBRAINTREEConnectionResponse) GetConnectionBraintree() *shared.ConnectionBraintree {
+func (o *UpdateBRAINTREEConnectionResponse) GetConnectionBraintree() *shared.ConnectionBraintreeOutput {
 	if o == nil {
 		return nil
 	}

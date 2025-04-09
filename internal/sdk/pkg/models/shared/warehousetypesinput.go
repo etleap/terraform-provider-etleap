@@ -12,8 +12,8 @@ import (
 type WarehouseTypesInputType string
 
 const (
-	WarehouseTypesInputTypeRedshift  WarehouseTypesInputType = "REDSHIFT"
 	WarehouseTypesInputTypeSnowflake WarehouseTypesInputType = "SNOWFLAKE"
+	WarehouseTypesInputTypeRedshift  WarehouseTypesInputType = "REDSHIFT"
 )
 
 type WarehouseTypesInput struct {
@@ -21,18 +21,6 @@ type WarehouseTypesInput struct {
 	WarehouseSnowflakeInput *WarehouseSnowflakeInput
 
 	Type WarehouseTypesInputType
-}
-
-func CreateWarehouseTypesInputRedshift(redshift WarehouseRedshiftInput) WarehouseTypesInput {
-	typ := WarehouseTypesInputTypeRedshift
-
-	typStr := WarehouseRedshiftType(typ)
-	redshift.Type = typStr
-
-	return WarehouseTypesInput{
-		WarehouseRedshiftInput: &redshift,
-		Type:                   typ,
-	}
 }
 
 func CreateWarehouseTypesInputSnowflake(snowflake WarehouseSnowflakeInput) WarehouseTypesInput {
@@ -44,6 +32,18 @@ func CreateWarehouseTypesInputSnowflake(snowflake WarehouseSnowflakeInput) Wareh
 	return WarehouseTypesInput{
 		WarehouseSnowflakeInput: &snowflake,
 		Type:                    typ,
+	}
+}
+
+func CreateWarehouseTypesInputRedshift(redshift WarehouseRedshiftInput) WarehouseTypesInput {
+	typ := WarehouseTypesInputTypeRedshift
+
+	typStr := WarehouseRedshiftType(typ)
+	redshift.Type = typStr
+
+	return WarehouseTypesInput{
+		WarehouseRedshiftInput: &redshift,
+		Type:                   typ,
 	}
 }
 
@@ -59,15 +59,6 @@ func (u *WarehouseTypesInput) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Type {
-	case "REDSHIFT":
-		warehouseRedshiftInput := new(WarehouseRedshiftInput)
-		if err := utils.UnmarshalJSON(data, &warehouseRedshiftInput, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.WarehouseRedshiftInput = warehouseRedshiftInput
-		u.Type = WarehouseTypesInputTypeRedshift
-		return nil
 	case "SNOWFLAKE":
 		warehouseSnowflakeInput := new(WarehouseSnowflakeInput)
 		if err := utils.UnmarshalJSON(data, &warehouseSnowflakeInput, "", true, true); err != nil {
@@ -76,6 +67,15 @@ func (u *WarehouseTypesInput) UnmarshalJSON(data []byte) error {
 
 		u.WarehouseSnowflakeInput = warehouseSnowflakeInput
 		u.Type = WarehouseTypesInputTypeSnowflake
+		return nil
+	case "REDSHIFT":
+		warehouseRedshiftInput := new(WarehouseRedshiftInput)
+		if err := utils.UnmarshalJSON(data, &warehouseRedshiftInput, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.WarehouseRedshiftInput = warehouseRedshiftInput
+		u.Type = WarehouseTypesInputTypeRedshift
 		return nil
 	}
 

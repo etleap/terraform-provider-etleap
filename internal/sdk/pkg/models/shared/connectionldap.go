@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionLdapType string
-
-const (
-	ConnectionLdapTypeLdap ConnectionLdapType = "LDAP"
-)
-
-func (e ConnectionLdapType) ToPointer() *ConnectionLdapType {
-	return &e
-}
-
-func (e *ConnectionLdapType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "LDAP":
-		*e = ConnectionLdapType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionLdapType: %v", v)
-	}
-}
-
 // ConnectionLdapStatus - The current status of the connection.
 type ConnectionLdapStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionLdapDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSchedul
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionLdapDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionLdapDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionLdapDefaultUpdateSchedule) GetUpdateScheduleInterval() *Updat
 func (o *ConnectionLdapDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionLdapDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,40 +108,57 @@ func (o *ConnectionLdapDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateS
 	return nil
 }
 
-func (o *ConnectionLdapDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionLdapType string
+
+const (
+	ConnectionLdapTypeLdap ConnectionLdapType = "LDAP"
+)
+
+func (e ConnectionLdapType) ToPointer() *ConnectionLdapType {
+	return &e
+}
+
+func (e *ConnectionLdapType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "LDAP":
+		*e = ConnectionLdapType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionLdapType: %v", v)
+	}
 }
 
 type ConnectionLdap struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string             `json:"name"`
-	Type ConnectionLdapType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionLdapStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionLdapDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// LDAP server name or ip address
-	Hostname string `json:"hostname"`
-	Port     int64  `json:"port"`
-	// Enable this if you are using a secure port to connect to LDAP. Usually, this should be enabled if you are connecting via port 636.
-	UseSsl *bool `default:"false" json:"useSsl"`
-	// The login string to use, similar to 'uid=admin,ou=system'
-	User string `json:"user"`
-	// The IANA-assigned number for your custom schema entities
-	Pen int64 `json:"pen"`
+	// Whether this connection has been marked as active.
+	Active bool               `json:"active"`
+	Type   ConnectionLdapType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The path of your DIT, typically a DC, OU, or O entry
 	BaseDn string `json:"baseDn"`
+	// Enable this if you are using a secure port to connect to LDAP. Usually, this should be enabled if you are connecting via port 636.
+	UseSsl *bool `default:"false" json:"useSsl"`
+	// LDAP server name or ip address
+	Hostname string `json:"hostname"`
+	// The IANA-assigned number for your custom schema entities
+	Pen int64 `json:"pen"`
+	// The login string to use, similar to 'uid=admin,ou=system'
+	User string `json:"user"`
+	Port int64  `json:"port"`
 }
 
 func (c ConnectionLdap) MarshalJSON() ([]byte, error) {
@@ -172,11 +172,11 @@ func (c *ConnectionLdap) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionLdap) GetID() string {
+func (o *ConnectionLdap) GetStatus() ConnectionLdapStatus {
 	if o == nil {
-		return ""
+		return ConnectionLdapStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionLdap) GetName() string {
@@ -186,11 +186,18 @@ func (o *ConnectionLdap) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionLdap) GetType() ConnectionLdapType {
+func (o *ConnectionLdap) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionLdapType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionLdap) GetDefaultUpdateSchedule() []ConnectionLdapDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionLdapDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionLdap) GetActive() bool {
@@ -200,18 +207,18 @@ func (o *ConnectionLdap) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionLdap) GetStatus() ConnectionLdapStatus {
+func (o *ConnectionLdap) GetType() ConnectionLdapType {
 	if o == nil {
-		return ConnectionLdapStatus("")
+		return ConnectionLdapType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionLdap) GetCreateDate() time.Time {
+func (o *ConnectionLdap) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionLdap) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -221,9 +228,9 @@ func (o *ConnectionLdap) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionLdap) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionLdap) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -231,6 +238,13 @@ func (o *ConnectionLdap) GetUpdateScheduleInterval() *UpdateScheduleModeInterval
 func (o *ConnectionLdap) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionLdap) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -249,32 +263,11 @@ func (o *ConnectionLdap) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	return nil
 }
 
-func (o *ConnectionLdap) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionLdap) GetDefaultUpdateSchedule() []ConnectionLdapDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionLdapDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
-}
-
-func (o *ConnectionLdap) GetHostname() string {
+func (o *ConnectionLdap) GetBaseDn() string {
 	if o == nil {
 		return ""
 	}
-	return o.Hostname
-}
-
-func (o *ConnectionLdap) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
+	return o.BaseDn
 }
 
 func (o *ConnectionLdap) GetUseSsl() *bool {
@@ -284,11 +277,11 @@ func (o *ConnectionLdap) GetUseSsl() *bool {
 	return o.UseSsl
 }
 
-func (o *ConnectionLdap) GetUser() string {
+func (o *ConnectionLdap) GetHostname() string {
 	if o == nil {
 		return ""
 	}
-	return o.User
+	return o.Hostname
 }
 
 func (o *ConnectionLdap) GetPen() int64 {
@@ -298,11 +291,18 @@ func (o *ConnectionLdap) GetPen() int64 {
 	return o.Pen
 }
 
-func (o *ConnectionLdap) GetBaseDn() string {
+func (o *ConnectionLdap) GetUser() string {
 	if o == nil {
 		return ""
 	}
-	return o.BaseDn
+	return o.User
+}
+
+func (o *ConnectionLdap) GetPort() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Port
 }
 
 type ConnectionLdapInput struct {
@@ -311,18 +311,18 @@ type ConnectionLdapInput struct {
 	Type ConnectionLdapType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// LDAP server name or ip address
-	Hostname string `json:"hostname"`
-	Port     int64  `json:"port"`
+	// The path of your DIT, typically a DC, OU, or O entry
+	BaseDn string `json:"baseDn"`
 	// Enable this if you are using a secure port to connect to LDAP. Usually, this should be enabled if you are connecting via port 636.
 	UseSsl *bool `default:"false" json:"useSsl"`
+	// LDAP server name or ip address
+	Hostname string `json:"hostname"`
+	// The IANA-assigned number for your custom schema entities
+	Pen int64 `json:"pen"`
 	// The login string to use, similar to 'uid=admin,ou=system'
 	User     string `json:"user"`
 	Password string `json:"password"`
-	// The IANA-assigned number for your custom schema entities
-	Pen int64 `json:"pen"`
-	// The path of your DIT, typically a DC, OU, or O entry
-	BaseDn string `json:"baseDn"`
+	Port     int64  `json:"port"`
 }
 
 func (c ConnectionLdapInput) MarshalJSON() ([]byte, error) {
@@ -357,9 +357,9 @@ func (o *ConnectionLdapInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionLdapInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionLdapInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -367,6 +367,13 @@ func (o *ConnectionLdapInput) GetUpdateScheduleInterval() *UpdateScheduleModeInt
 func (o *ConnectionLdapInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionLdapInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -385,11 +392,18 @@ func (o *ConnectionLdapInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekl
 	return nil
 }
 
-func (o *ConnectionLdapInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionLdapInput) GetBaseDn() string {
+	if o == nil {
+		return ""
 	}
-	return nil
+	return o.BaseDn
+}
+
+func (o *ConnectionLdapInput) GetUseSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.UseSsl
 }
 
 func (o *ConnectionLdapInput) GetHostname() string {
@@ -399,18 +413,11 @@ func (o *ConnectionLdapInput) GetHostname() string {
 	return o.Hostname
 }
 
-func (o *ConnectionLdapInput) GetPort() int64 {
+func (o *ConnectionLdapInput) GetPen() int64 {
 	if o == nil {
 		return 0
 	}
-	return o.Port
-}
-
-func (o *ConnectionLdapInput) GetUseSsl() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.UseSsl
+	return o.Pen
 }
 
 func (o *ConnectionLdapInput) GetUser() string {
@@ -427,16 +434,9 @@ func (o *ConnectionLdapInput) GetPassword() string {
 	return o.Password
 }
 
-func (o *ConnectionLdapInput) GetPen() int64 {
+func (o *ConnectionLdapInput) GetPort() int64 {
 	if o == nil {
 		return 0
 	}
-	return o.Pen
-}
-
-func (o *ConnectionLdapInput) GetBaseDn() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseDn
+	return o.Port
 }

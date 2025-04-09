@@ -27,7 +27,7 @@ type GetPOSTGRESConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionPostgres *shared.ConnectionPostgres
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

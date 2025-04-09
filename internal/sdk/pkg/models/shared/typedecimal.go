@@ -32,9 +32,16 @@ func (e *TypeDecimalType) UnmarshalJSON(data []byte) error {
 }
 
 type TypeDecimal struct {
+	Scale     int64           `json:"scale"`
 	Type      TypeDecimalType `json:"type"`
 	Precision int64           `json:"precision"`
-	Scale     int64           `json:"scale"`
+}
+
+func (o *TypeDecimal) GetScale() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Scale
 }
 
 func (o *TypeDecimal) GetType() TypeDecimalType {
@@ -49,11 +56,4 @@ func (o *TypeDecimal) GetPrecision() int64 {
 		return 0
 	}
 	return o.Precision
-}
-
-func (o *TypeDecimal) GetScale() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Scale
 }

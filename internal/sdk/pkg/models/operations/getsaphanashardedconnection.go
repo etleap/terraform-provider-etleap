@@ -26,8 +26,8 @@ type GetSAPHANASHARDEDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSapHanaSharded *shared.ConnectionSapHanaSharded
-	// Forbidden. You don't have access to view this connection.
+	ConnectionSapHanaSharded *shared.ConnectionSapHanaShardedOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetSAPHANASHARDEDConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetSAPHANASHARDEDConnectionResponse) GetConnectionSapHanaSharded() *shared.ConnectionSapHanaSharded {
+func (o *GetSAPHANASHARDEDConnectionResponse) GetConnectionSapHanaSharded() *shared.ConnectionSapHanaShardedOutput {
 	if o == nil {
 		return nil
 	}

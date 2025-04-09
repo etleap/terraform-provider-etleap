@@ -35,7 +35,7 @@ type UpdateFRESHWORKSConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionFreshworks *shared.ConnectionFreshworks
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

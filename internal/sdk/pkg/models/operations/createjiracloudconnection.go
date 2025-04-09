@@ -15,7 +15,7 @@ type CreateJIRACLOUDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionJiraCloud *shared.ConnectionJiraCloud
+	ConnectionJiraCloud *shared.ConnectionJiraCloudOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateJIRACLOUDConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateJIRACLOUDConnectionResponse) GetConnectionJiraCloud() *shared.ConnectionJiraCloud {
+func (o *CreateJIRACLOUDConnectionResponse) GetConnectionJiraCloud() *shared.ConnectionJiraCloudOutput {
 	if o == nil {
 		return nil
 	}

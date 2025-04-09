@@ -35,7 +35,7 @@ type UpdateTHETRADEDESKConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionTheTradeDesk *shared.ConnectionTheTradeDesk
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

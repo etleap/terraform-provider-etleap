@@ -35,7 +35,7 @@ type UpdateCRITEOConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionCriteo *shared.ConnectionCriteo
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

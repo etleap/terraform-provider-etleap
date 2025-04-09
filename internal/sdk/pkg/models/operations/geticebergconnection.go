@@ -27,7 +27,7 @@ type GetICEBERGConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionIceberg *shared.ConnectionIceberg
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

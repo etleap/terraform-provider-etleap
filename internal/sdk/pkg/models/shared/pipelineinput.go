@@ -9,310 +9,310 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-type RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode string
+type RefreshScheduleModeMonthlyScheduleTypesMode string
 
 const (
-	RefreshScheduleModeMonthlyScheduleTypesPipelineInputModeMonthly RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode = "MONTHLY"
+	RefreshScheduleModeMonthlyScheduleTypesModeMonthly RefreshScheduleModeMonthlyScheduleTypesMode = "MONTHLY"
 )
 
-func (e RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode) ToPointer() *RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode {
+func (e RefreshScheduleModeMonthlyScheduleTypesMode) ToPointer() *RefreshScheduleModeMonthlyScheduleTypesMode {
 	return &e
 }
 
-func (e *RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode) UnmarshalJSON(data []byte) error {
+func (e *RefreshScheduleModeMonthlyScheduleTypesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "MONTHLY":
-		*e = RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode(v)
+		*e = RefreshScheduleModeMonthlyScheduleTypesMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode: %v", v)
+		return fmt.Errorf("invalid value for RefreshScheduleModeMonthlyScheduleTypesMode: %v", v)
 	}
 }
 
-type ScheduleTypesMonthlyScheduleMode struct {
-	Mode RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode `json:"mode"`
-	// Day of the month this schedule should trigger at (in UTC).
-	DayOfMonth int64 `json:"dayOfMonth"`
+type MonthlyScheduleMode struct {
+	Mode RefreshScheduleModeMonthlyScheduleTypesMode `json:"mode"`
 	// Hour of day this schedule should trigger at (in UTC).
 	HourOfDay int64 `json:"hourOfDay"`
+	// Day of the month this schedule should trigger at (in UTC).
+	DayOfMonth int64 `json:"dayOfMonth"`
 }
 
-func (o *ScheduleTypesMonthlyScheduleMode) GetMode() RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode {
+func (o *MonthlyScheduleMode) GetMode() RefreshScheduleModeMonthlyScheduleTypesMode {
 	if o == nil {
-		return RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode("")
+		return RefreshScheduleModeMonthlyScheduleTypesMode("")
 	}
 	return o.Mode
 }
 
-func (o *ScheduleTypesMonthlyScheduleMode) GetDayOfMonth() int64 {
+func (o *MonthlyScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+func (o *MonthlyScheduleMode) GetDayOfMonth() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.DayOfMonth
 }
 
-func (o *ScheduleTypesMonthlyScheduleMode) GetHourOfDay() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.HourOfDay
-}
-
-type RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode string
+type RefreshScheduleModeWeeklyScheduleTypesMode string
 
 const (
-	RefreshScheduleModeWeeklyScheduleTypesPipelineInputModeWeekly RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode = "WEEKLY"
+	RefreshScheduleModeWeeklyScheduleTypesModeWeekly RefreshScheduleModeWeeklyScheduleTypesMode = "WEEKLY"
 )
 
-func (e RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode) ToPointer() *RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode {
+func (e RefreshScheduleModeWeeklyScheduleTypesMode) ToPointer() *RefreshScheduleModeWeeklyScheduleTypesMode {
 	return &e
 }
 
-func (e *RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode) UnmarshalJSON(data []byte) error {
+func (e *RefreshScheduleModeWeeklyScheduleTypesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "WEEKLY":
-		*e = RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode(v)
+		*e = RefreshScheduleModeWeeklyScheduleTypesMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode: %v", v)
+		return fmt.Errorf("invalid value for RefreshScheduleModeWeeklyScheduleTypesMode: %v", v)
 	}
 }
 
-type ScheduleTypesWeeklyScheduleMode struct {
-	Mode RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode `json:"mode"`
+type WeeklyScheduleMode struct {
+	Mode RefreshScheduleModeWeeklyScheduleTypesMode `json:"mode"`
 	// The day of the week this schedule should trigger at (in UTC).
 	DayOfWeek int64 `json:"dayOfWeek"`
 	// Hour of day this schedule should trigger at (in UTC).
 	HourOfDay int64 `json:"hourOfDay"`
 }
 
-func (o *ScheduleTypesWeeklyScheduleMode) GetMode() RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode {
+func (o *WeeklyScheduleMode) GetMode() RefreshScheduleModeWeeklyScheduleTypesMode {
 	if o == nil {
-		return RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode("")
+		return RefreshScheduleModeWeeklyScheduleTypesMode("")
 	}
 	return o.Mode
 }
 
-func (o *ScheduleTypesWeeklyScheduleMode) GetDayOfWeek() int64 {
+func (o *WeeklyScheduleMode) GetDayOfWeek() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.DayOfWeek
 }
 
-func (o *ScheduleTypesWeeklyScheduleMode) GetHourOfDay() int64 {
+func (o *WeeklyScheduleMode) GetHourOfDay() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.HourOfDay
 }
 
-type RefreshScheduleModeDailyScheduleTypesPipelineInputMode string
+type RefreshScheduleModeDailyScheduleTypesMode string
 
 const (
-	RefreshScheduleModeDailyScheduleTypesPipelineInputModeDaily RefreshScheduleModeDailyScheduleTypesPipelineInputMode = "DAILY"
+	RefreshScheduleModeDailyScheduleTypesModeDaily RefreshScheduleModeDailyScheduleTypesMode = "DAILY"
 )
 
-func (e RefreshScheduleModeDailyScheduleTypesPipelineInputMode) ToPointer() *RefreshScheduleModeDailyScheduleTypesPipelineInputMode {
+func (e RefreshScheduleModeDailyScheduleTypesMode) ToPointer() *RefreshScheduleModeDailyScheduleTypesMode {
 	return &e
 }
 
-func (e *RefreshScheduleModeDailyScheduleTypesPipelineInputMode) UnmarshalJSON(data []byte) error {
+func (e *RefreshScheduleModeDailyScheduleTypesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "DAILY":
-		*e = RefreshScheduleModeDailyScheduleTypesPipelineInputMode(v)
+		*e = RefreshScheduleModeDailyScheduleTypesMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeDailyScheduleTypesPipelineInputMode: %v", v)
+		return fmt.Errorf("invalid value for RefreshScheduleModeDailyScheduleTypesMode: %v", v)
 	}
 }
 
-type ScheduleTypesDailyScheduleMode struct {
-	Mode RefreshScheduleModeDailyScheduleTypesPipelineInputMode `json:"mode"`
+type DailyScheduleMode struct {
+	Mode RefreshScheduleModeDailyScheduleTypesMode `json:"mode"`
 	// Hour of day this schedule should trigger at (in UTC).
 	HourOfDay int64 `json:"hourOfDay"`
 }
 
-func (o *ScheduleTypesDailyScheduleMode) GetMode() RefreshScheduleModeDailyScheduleTypesPipelineInputMode {
+func (o *DailyScheduleMode) GetMode() RefreshScheduleModeDailyScheduleTypesMode {
 	if o == nil {
-		return RefreshScheduleModeDailyScheduleTypesPipelineInputMode("")
+		return RefreshScheduleModeDailyScheduleTypesMode("")
 	}
 	return o.Mode
 }
 
-func (o *ScheduleTypesDailyScheduleMode) GetHourOfDay() int64 {
+func (o *DailyScheduleMode) GetHourOfDay() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.HourOfDay
 }
 
-type RefreshScheduleModeHourlyScheduleTypesPipelineInputMode string
+type RefreshScheduleModeHourlyScheduleTypesMode string
 
 const (
-	RefreshScheduleModeHourlyScheduleTypesPipelineInputModeHourly RefreshScheduleModeHourlyScheduleTypesPipelineInputMode = "HOURLY"
+	RefreshScheduleModeHourlyScheduleTypesModeHourly RefreshScheduleModeHourlyScheduleTypesMode = "HOURLY"
 )
 
-func (e RefreshScheduleModeHourlyScheduleTypesPipelineInputMode) ToPointer() *RefreshScheduleModeHourlyScheduleTypesPipelineInputMode {
+func (e RefreshScheduleModeHourlyScheduleTypesMode) ToPointer() *RefreshScheduleModeHourlyScheduleTypesMode {
 	return &e
 }
 
-func (e *RefreshScheduleModeHourlyScheduleTypesPipelineInputMode) UnmarshalJSON(data []byte) error {
+func (e *RefreshScheduleModeHourlyScheduleTypesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "HOURLY":
-		*e = RefreshScheduleModeHourlyScheduleTypesPipelineInputMode(v)
+		*e = RefreshScheduleModeHourlyScheduleTypesMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeHourlyScheduleTypesPipelineInputMode: %v", v)
+		return fmt.Errorf("invalid value for RefreshScheduleModeHourlyScheduleTypesMode: %v", v)
 	}
 }
 
-type ScheduleTypesHourlyScheduleMode struct {
-	Mode RefreshScheduleModeHourlyScheduleTypesPipelineInputMode `json:"mode"`
+type HourlyScheduleMode struct {
+	Mode RefreshScheduleModeHourlyScheduleTypesMode `json:"mode"`
 }
 
-func (o *ScheduleTypesHourlyScheduleMode) GetMode() RefreshScheduleModeHourlyScheduleTypesPipelineInputMode {
+func (o *HourlyScheduleMode) GetMode() RefreshScheduleModeHourlyScheduleTypesMode {
 	if o == nil {
-		return RefreshScheduleModeHourlyScheduleTypesPipelineInputMode("")
+		return RefreshScheduleModeHourlyScheduleTypesMode("")
 	}
 	return o.Mode
 }
 
-type RefreshScheduleModeNeverScheduleTypesMode string
+type ScheduleTypesMode string
 
 const (
-	RefreshScheduleModeNeverScheduleTypesModeNever RefreshScheduleModeNeverScheduleTypesMode = "NEVER"
+	ScheduleTypesModeNever ScheduleTypesMode = "NEVER"
 )
 
-func (e RefreshScheduleModeNeverScheduleTypesMode) ToPointer() *RefreshScheduleModeNeverScheduleTypesMode {
+func (e ScheduleTypesMode) ToPointer() *ScheduleTypesMode {
 	return &e
 }
 
-func (e *RefreshScheduleModeNeverScheduleTypesMode) UnmarshalJSON(data []byte) error {
+func (e *ScheduleTypesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NEVER":
-		*e = RefreshScheduleModeNeverScheduleTypesMode(v)
+		*e = ScheduleTypesMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeNeverScheduleTypesMode: %v", v)
+		return fmt.Errorf("invalid value for ScheduleTypesMode: %v", v)
 	}
 }
 
-type ScheduleTypesNeverScheduleMode struct {
-	Mode RefreshScheduleModeNeverScheduleTypesMode `json:"mode"`
+type NeverScheduleMode struct {
+	Mode ScheduleTypesMode `json:"mode"`
 }
 
-func (o *ScheduleTypesNeverScheduleMode) GetMode() RefreshScheduleModeNeverScheduleTypesMode {
+func (o *NeverScheduleMode) GetMode() ScheduleTypesMode {
 	if o == nil {
-		return RefreshScheduleModeNeverScheduleTypesMode("")
+		return ScheduleTypesMode("")
 	}
 	return o.Mode
 }
 
-type PipelineInputScheduleTypesType string
+type ScheduleTypesType string
 
 const (
-	PipelineInputScheduleTypesTypeNever   PipelineInputScheduleTypesType = "NEVER"
-	PipelineInputScheduleTypesTypeHourly  PipelineInputScheduleTypesType = "HOURLY"
-	PipelineInputScheduleTypesTypeDaily   PipelineInputScheduleTypesType = "DAILY"
-	PipelineInputScheduleTypesTypeWeekly  PipelineInputScheduleTypesType = "WEEKLY"
-	PipelineInputScheduleTypesTypeMonthly PipelineInputScheduleTypesType = "MONTHLY"
+	ScheduleTypesTypeMonthly ScheduleTypesType = "MONTHLY"
+	ScheduleTypesTypeHourly  ScheduleTypesType = "HOURLY"
+	ScheduleTypesTypeNever   ScheduleTypesType = "NEVER"
+	ScheduleTypesTypeDaily   ScheduleTypesType = "DAILY"
+	ScheduleTypesTypeWeekly  ScheduleTypesType = "WEEKLY"
 )
 
-// PipelineInputScheduleTypes - A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
+// ScheduleTypes - A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
 //
 // Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`.
-type PipelineInputScheduleTypes struct {
-	ScheduleTypesNeverScheduleMode   *ScheduleTypesNeverScheduleMode
-	ScheduleTypesHourlyScheduleMode  *ScheduleTypesHourlyScheduleMode
-	ScheduleTypesDailyScheduleMode   *ScheduleTypesDailyScheduleMode
-	ScheduleTypesWeeklyScheduleMode  *ScheduleTypesWeeklyScheduleMode
-	ScheduleTypesMonthlyScheduleMode *ScheduleTypesMonthlyScheduleMode
+type ScheduleTypes struct {
+	NeverScheduleMode   *NeverScheduleMode
+	HourlyScheduleMode  *HourlyScheduleMode
+	DailyScheduleMode   *DailyScheduleMode
+	WeeklyScheduleMode  *WeeklyScheduleMode
+	MonthlyScheduleMode *MonthlyScheduleMode
 
-	Type PipelineInputScheduleTypesType
+	Type ScheduleTypesType
 }
 
-func CreatePipelineInputScheduleTypesNever(never ScheduleTypesNeverScheduleMode) PipelineInputScheduleTypes {
-	typ := PipelineInputScheduleTypesTypeNever
+func CreateScheduleTypesMonthly(monthly MonthlyScheduleMode) ScheduleTypes {
+	typ := ScheduleTypesTypeMonthly
 
-	typStr := RefreshScheduleModeNeverScheduleTypesMode(typ)
-	never.Mode = typStr
-
-	return PipelineInputScheduleTypes{
-		ScheduleTypesNeverScheduleMode: &never,
-		Type:                           typ,
-	}
-}
-
-func CreatePipelineInputScheduleTypesHourly(hourly ScheduleTypesHourlyScheduleMode) PipelineInputScheduleTypes {
-	typ := PipelineInputScheduleTypesTypeHourly
-
-	typStr := RefreshScheduleModeHourlyScheduleTypesPipelineInputMode(typ)
-	hourly.Mode = typStr
-
-	return PipelineInputScheduleTypes{
-		ScheduleTypesHourlyScheduleMode: &hourly,
-		Type:                            typ,
-	}
-}
-
-func CreatePipelineInputScheduleTypesDaily(daily ScheduleTypesDailyScheduleMode) PipelineInputScheduleTypes {
-	typ := PipelineInputScheduleTypesTypeDaily
-
-	typStr := RefreshScheduleModeDailyScheduleTypesPipelineInputMode(typ)
-	daily.Mode = typStr
-
-	return PipelineInputScheduleTypes{
-		ScheduleTypesDailyScheduleMode: &daily,
-		Type:                           typ,
-	}
-}
-
-func CreatePipelineInputScheduleTypesWeekly(weekly ScheduleTypesWeeklyScheduleMode) PipelineInputScheduleTypes {
-	typ := PipelineInputScheduleTypesTypeWeekly
-
-	typStr := RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode(typ)
-	weekly.Mode = typStr
-
-	return PipelineInputScheduleTypes{
-		ScheduleTypesWeeklyScheduleMode: &weekly,
-		Type:                            typ,
-	}
-}
-
-func CreatePipelineInputScheduleTypesMonthly(monthly ScheduleTypesMonthlyScheduleMode) PipelineInputScheduleTypes {
-	typ := PipelineInputScheduleTypesTypeMonthly
-
-	typStr := RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode(typ)
+	typStr := RefreshScheduleModeMonthlyScheduleTypesMode(typ)
 	monthly.Mode = typStr
 
-	return PipelineInputScheduleTypes{
-		ScheduleTypesMonthlyScheduleMode: &monthly,
-		Type:                             typ,
+	return ScheduleTypes{
+		MonthlyScheduleMode: &monthly,
+		Type:                typ,
 	}
 }
 
-func (u *PipelineInputScheduleTypes) UnmarshalJSON(data []byte) error {
+func CreateScheduleTypesHourly(hourly HourlyScheduleMode) ScheduleTypes {
+	typ := ScheduleTypesTypeHourly
+
+	typStr := RefreshScheduleModeHourlyScheduleTypesMode(typ)
+	hourly.Mode = typStr
+
+	return ScheduleTypes{
+		HourlyScheduleMode: &hourly,
+		Type:               typ,
+	}
+}
+
+func CreateScheduleTypesNever(never NeverScheduleMode) ScheduleTypes {
+	typ := ScheduleTypesTypeNever
+
+	typStr := ScheduleTypesMode(typ)
+	never.Mode = typStr
+
+	return ScheduleTypes{
+		NeverScheduleMode: &never,
+		Type:              typ,
+	}
+}
+
+func CreateScheduleTypesDaily(daily DailyScheduleMode) ScheduleTypes {
+	typ := ScheduleTypesTypeDaily
+
+	typStr := RefreshScheduleModeDailyScheduleTypesMode(typ)
+	daily.Mode = typStr
+
+	return ScheduleTypes{
+		DailyScheduleMode: &daily,
+		Type:              typ,
+	}
+}
+
+func CreateScheduleTypesWeekly(weekly WeeklyScheduleMode) ScheduleTypes {
+	typ := ScheduleTypesTypeWeekly
+
+	typStr := RefreshScheduleModeWeeklyScheduleTypesMode(typ)
+	weekly.Mode = typStr
+
+	return ScheduleTypes{
+		WeeklyScheduleMode: &weekly,
+		Type:               typ,
+	}
+}
+
+func (u *ScheduleTypes) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
 		Mode string
@@ -324,75 +324,75 @@ func (u *PipelineInputScheduleTypes) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Mode {
-	case "NEVER":
-		scheduleTypesNeverScheduleMode := new(ScheduleTypesNeverScheduleMode)
-		if err := utils.UnmarshalJSON(data, &scheduleTypesNeverScheduleMode, "", true, true); err != nil {
+	case "MONTHLY":
+		monthlyScheduleMode := new(MonthlyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &monthlyScheduleMode, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.ScheduleTypesNeverScheduleMode = scheduleTypesNeverScheduleMode
-		u.Type = PipelineInputScheduleTypesTypeNever
+		u.MonthlyScheduleMode = monthlyScheduleMode
+		u.Type = ScheduleTypesTypeMonthly
 		return nil
 	case "HOURLY":
-		scheduleTypesHourlyScheduleMode := new(ScheduleTypesHourlyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &scheduleTypesHourlyScheduleMode, "", true, true); err != nil {
+		hourlyScheduleMode := new(HourlyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &hourlyScheduleMode, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.ScheduleTypesHourlyScheduleMode = scheduleTypesHourlyScheduleMode
-		u.Type = PipelineInputScheduleTypesTypeHourly
+		u.HourlyScheduleMode = hourlyScheduleMode
+		u.Type = ScheduleTypesTypeHourly
+		return nil
+	case "NEVER":
+		neverScheduleMode := new(NeverScheduleMode)
+		if err := utils.UnmarshalJSON(data, &neverScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.NeverScheduleMode = neverScheduleMode
+		u.Type = ScheduleTypesTypeNever
 		return nil
 	case "DAILY":
-		scheduleTypesDailyScheduleMode := new(ScheduleTypesDailyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &scheduleTypesDailyScheduleMode, "", true, true); err != nil {
+		dailyScheduleMode := new(DailyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &dailyScheduleMode, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.ScheduleTypesDailyScheduleMode = scheduleTypesDailyScheduleMode
-		u.Type = PipelineInputScheduleTypesTypeDaily
+		u.DailyScheduleMode = dailyScheduleMode
+		u.Type = ScheduleTypesTypeDaily
 		return nil
 	case "WEEKLY":
-		scheduleTypesWeeklyScheduleMode := new(ScheduleTypesWeeklyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &scheduleTypesWeeklyScheduleMode, "", true, true); err != nil {
+		weeklyScheduleMode := new(WeeklyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &weeklyScheduleMode, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.ScheduleTypesWeeklyScheduleMode = scheduleTypesWeeklyScheduleMode
-		u.Type = PipelineInputScheduleTypesTypeWeekly
-		return nil
-	case "MONTHLY":
-		scheduleTypesMonthlyScheduleMode := new(ScheduleTypesMonthlyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &scheduleTypesMonthlyScheduleMode, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.ScheduleTypesMonthlyScheduleMode = scheduleTypesMonthlyScheduleMode
-		u.Type = PipelineInputScheduleTypesTypeMonthly
+		u.WeeklyScheduleMode = weeklyScheduleMode
+		u.Type = ScheduleTypesTypeWeekly
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u PipelineInputScheduleTypes) MarshalJSON() ([]byte, error) {
-	if u.ScheduleTypesNeverScheduleMode != nil {
-		return utils.MarshalJSON(u.ScheduleTypesNeverScheduleMode, "", true)
+func (u ScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.NeverScheduleMode != nil {
+		return utils.MarshalJSON(u.NeverScheduleMode, "", true)
 	}
 
-	if u.ScheduleTypesHourlyScheduleMode != nil {
-		return utils.MarshalJSON(u.ScheduleTypesHourlyScheduleMode, "", true)
+	if u.HourlyScheduleMode != nil {
+		return utils.MarshalJSON(u.HourlyScheduleMode, "", true)
 	}
 
-	if u.ScheduleTypesDailyScheduleMode != nil {
-		return utils.MarshalJSON(u.ScheduleTypesDailyScheduleMode, "", true)
+	if u.DailyScheduleMode != nil {
+		return utils.MarshalJSON(u.DailyScheduleMode, "", true)
 	}
 
-	if u.ScheduleTypesWeeklyScheduleMode != nil {
-		return utils.MarshalJSON(u.ScheduleTypesWeeklyScheduleMode, "", true)
+	if u.WeeklyScheduleMode != nil {
+		return utils.MarshalJSON(u.WeeklyScheduleMode, "", true)
 	}
 
-	if u.ScheduleTypesMonthlyScheduleMode != nil {
-		return utils.MarshalJSON(u.ScheduleTypesMonthlyScheduleMode, "", true)
+	if u.MonthlyScheduleMode != nil {
+		return utils.MarshalJSON(u.MonthlyScheduleMode, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -400,24 +400,24 @@ func (u PipelineInputScheduleTypes) MarshalJSON() ([]byte, error) {
 
 // PipelineInput - The script returned by `GET /pipelines/{id}/scripts/{version}` can be used as the `script` input. If `script` is not specified, the default script is used.
 type PipelineInput struct {
-	Name        string           `json:"name"`
-	Source      SourceTypes      `json:"source"`
-	Destination DestinationTypes `json:"destination"`
+	Name string `json:"name"`
 	// Whenever a script is required, we accept and/or return two types of scripts: a Script or Legacy Script. We return a Script object if all transforms specified in that script are supported by this API. Otherwise it will return a Legacy Script. Either Script or Legacy Script can be used when adding a script to a pipeline.
-	Script *ScriptOrLegacyScriptInput `json:"script,omitempty"`
-	// If the pipeline is paused. Defaults to `false`.
-	Paused               *bool                 `default:"false" json:"paused"`
-	ParsingErrorSettings *ParsingErrorSettings `json:"parsingErrorSettings,omitempty"`
+	Script      *ScriptOrLegacyScriptInput `json:"script,omitempty"`
+	Destination DestinationTypes           `json:"destination"`
 	// An array of user email's to share the pipeline with.
 	//
 	// Once shared, a pipeline cannot be unshared. Future call to `PATCH` on a pipeline can only add to this list.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Shares []string `json:"shares,omitempty"`
+	// If the pipeline is paused. Defaults to `false`.
+	Paused *bool       `default:"false" json:"paused"`
+	Source SourceTypes `json:"source"`
 	// A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
 	//
 	// Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`.
-	RefreshSchedule *PipelineInputScheduleTypes `json:"refreshSchedule,omitempty"`
+	RefreshSchedule      *ScheduleTypes        `json:"refreshSchedule,omitempty"`
+	ParsingErrorSettings *ParsingErrorSettings `json:"parsingErrorSettings,omitempty"`
 }
 
 func (p PipelineInput) MarshalJSON() ([]byte, error) {
@@ -438,6 +438,54 @@ func (o *PipelineInput) GetName() string {
 	return o.Name
 }
 
+func (o *PipelineInput) GetScript() *ScriptOrLegacyScriptInput {
+	if o == nil {
+		return nil
+	}
+	return o.Script
+}
+
+func (o *PipelineInput) GetDestination() DestinationTypes {
+	if o == nil {
+		return DestinationTypes{}
+	}
+	return o.Destination
+}
+
+func (o *PipelineInput) GetDestinationS3DataLake() *DestinationS3DataLake {
+	return o.GetDestination().DestinationS3DataLake
+}
+
+func (o *PipelineInput) GetDestinationDeltaLake() *DestinationDeltaLake {
+	return o.GetDestination().DestinationDeltaLake
+}
+
+func (o *PipelineInput) GetDestinationIceberg() *DestinationIceberg {
+	return o.GetDestination().DestinationIceberg
+}
+
+func (o *PipelineInput) GetDestinationSnowflake() *DestinationSnowflake {
+	return o.GetDestination().DestinationSnowflake
+}
+
+func (o *PipelineInput) GetDestinationRedshift() *DestinationRedshift {
+	return o.GetDestination().DestinationRedshift
+}
+
+func (o *PipelineInput) GetShares() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Shares
+}
+
+func (o *PipelineInput) GetPaused() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Paused
+}
+
 func (o *PipelineInput) GetSource() SourceTypes {
 	if o == nil {
 		return SourceTypes{}
@@ -445,120 +493,96 @@ func (o *PipelineInput) GetSource() SourceTypes {
 	return o.Source
 }
 
-func (o *PipelineInput) GetSourceActiveCampaign() *SourceActiveCampaign {
-	return o.GetSource().SourceActiveCampaign
+func (o *PipelineInput) GetSourceGoogleCloudStorage() *SourceGoogleCloudStorage {
+	return o.GetSource().SourceGoogleCloudStorage
 }
 
-func (o *PipelineInput) GetSourceBigquery() *SourceBigQuery {
-	return o.GetSource().SourceBigQuery
-}
-
-func (o *PipelineInput) GetSourceBingAds() *SourceBingAds {
-	return o.GetSource().SourceBingAds
-}
-
-func (o *PipelineInput) GetSourceBlackline() *SourceBlackline {
-	return o.GetSource().SourceBlackline
-}
-
-func (o *PipelineInput) GetSourceBraintree() *SourceBraintree {
-	return o.GetSource().SourceBraintree
-}
-
-func (o *PipelineInput) GetSourceConfluentCloud() *SourceConfluentCloud {
-	return o.GetSource().SourceConfluentCloud
-}
-
-func (o *PipelineInput) GetSourceCoupa() *SourceCoupa {
-	return o.GetSource().SourceCoupa
-}
-
-func (o *PipelineInput) GetSourceCriteo() *SourceCriteo {
-	return o.GetSource().SourceCriteo
-}
-
-func (o *PipelineInput) GetSourceDb2() *SourceDb2 {
-	return o.GetSource().SourceDb2
-}
-
-func (o *PipelineInput) GetSourceDb2Sharded() *SourceDb2Sharded {
-	return o.GetSource().SourceDb2Sharded
-}
-
-func (o *PipelineInput) GetSourceDeltaLake() *SourceDeltaLake {
-	return o.GetSource().SourceDeltaLake
-}
-
-func (o *PipelineInput) GetSourceEgnyte() *SourceEgnyte {
-	return o.GetSource().SourceEgnyte
-}
-
-func (o *PipelineInput) GetSourceElasticsearch() *SourceElasticSearch {
-	return o.GetSource().SourceElasticSearch
-}
-
-func (o *PipelineInput) GetSourceElluminate() *SourceElluminate {
-	return o.GetSource().SourceElluminate
-}
-
-func (o *PipelineInput) GetSourceEloqua() *SourceEloqua {
-	return o.GetSource().SourceEloqua
+func (o *PipelineInput) GetSourceJiraCloud() *SourceJiraCloud {
+	return o.GetSource().SourceJiraCloud
 }
 
 func (o *PipelineInput) GetSourceErpx() *SourceErpx {
 	return o.GetSource().SourceErpx
 }
 
-func (o *PipelineInput) GetSourceFacebookAds() *SourceFacebookAds {
-	return o.GetSource().SourceFacebookAds
+func (o *PipelineInput) GetSourceRaveMedidata() *SourceRaveMedidata {
+	return o.GetSource().SourceRaveMedidata
 }
 
-func (o *PipelineInput) GetSourceFifteenFive() *SourceFifteenFive {
-	return o.GetSource().SourceFifteenFive
+func (o *PipelineInput) GetSourceDeltaLake() *SourceDeltaLake {
+	return o.GetSource().SourceDeltaLake
+}
+
+func (o *PipelineInput) GetSourceDb2() *SourceDb2 {
+	return o.GetSource().SourceDb2
+}
+
+func (o *PipelineInput) GetSourceSnowflake() *SourceSnowflake {
+	return o.GetSource().SourceSnowflake
+}
+
+func (o *PipelineInput) GetSourceTikTokAds() *SourceTikTokAds {
+	return o.GetSource().SourceTikTokAds
+}
+
+func (o *PipelineInput) GetSourceOutlook() *SourceOutlook {
+	return o.GetSource().SourceOutlook
+}
+
+func (o *PipelineInput) GetSourceSnowflakeSharded() *SourceSnowflakeSharded {
+	return o.GetSource().SourceSnowflakeSharded
 }
 
 func (o *PipelineInput) GetSourceFreshchat() *SourceFreshchat {
 	return o.GetSource().SourceFreshchat
 }
 
-func (o *PipelineInput) GetSourceFreshsales() *SourceFreshsales {
-	return o.GetSource().SourceFreshsales
+func (o *PipelineInput) GetSourceVeeva() *SourceVeeva {
+	return o.GetSource().SourceVeeva
 }
 
-func (o *PipelineInput) GetSourceFreshworks() *SourceFreshworks {
-	return o.GetSource().SourceFreshworks
+func (o *PipelineInput) GetSourceWorkdayReport() *SourceWorkdayReport {
+	return o.GetSource().SourceWorkdayReport
 }
 
-func (o *PipelineInput) GetSourceFtp() *SourceFtp {
-	return o.GetSource().SourceFtp
+func (o *PipelineInput) GetSourceS3Input() *SourceS3Input {
+	return o.GetSource().SourceS3Input
 }
 
-func (o *PipelineInput) GetSourceGong() *SourceGong {
-	return o.GetSource().SourceGong
+func (o *PipelineInput) GetSourceOutreach() *SourceOutreach {
+	return o.GetSource().SourceOutreach
 }
 
-func (o *PipelineInput) GetSourceGoogleAnalyticsGa4() *SourceGoogleAnalyticsGa4 {
-	return o.GetSource().SourceGoogleAnalyticsGa4
-}
-
-func (o *PipelineInput) GetSourceGoogleCloudStorage() *SourceGoogleCloudStorage {
-	return o.GetSource().SourceGoogleCloudStorage
+func (o *PipelineInput) GetSourceRecurly() *SourceRecurly {
+	return o.GetSource().SourceRecurly
 }
 
 func (o *PipelineInput) GetSourceGoogleAds() *SourceGoogleAds {
 	return o.GetSource().SourceGoogleAds
 }
 
-func (o *PipelineInput) GetSourceGoogleSheets() *SourceGoogleSheets {
-	return o.GetSource().SourceGoogleSheets
+func (o *PipelineInput) GetSourceQuoraAds() *SourceQuoraAds {
+	return o.GetSource().SourceQuoraAds
 }
 
-func (o *PipelineInput) GetSourceHubspot() *SourceHubspot {
-	return o.GetSource().SourceHubspot
+func (o *PipelineInput) GetSourceElluminate() *SourceElluminate {
+	return o.GetSource().SourceElluminate
 }
 
-func (o *PipelineInput) GetSourceIntercom() *SourceIntercom {
-	return o.GetSource().SourceIntercom
+func (o *PipelineInput) GetSourceStreaming() *SourceStreaming {
+	return o.GetSource().SourceStreaming
+}
+
+func (o *PipelineInput) GetSourceDb2Sharded() *SourceDb2Sharded {
+	return o.GetSource().SourceDb2Sharded
+}
+
+func (o *PipelineInput) GetSourceLdap() *SourceLdap {
+	return o.GetSource().SourceLdap
+}
+
+func (o *PipelineInput) GetSourceMysqlSharded() *SourceMysqlSharded {
+	return o.GetSource().SourceMysqlSharded
 }
 
 func (o *PipelineInput) GetSourceImpactRadius() *SourceImpactRadius {
@@ -569,285 +593,314 @@ func (o *PipelineInput) GetSourceJira() *SourceJira {
 	return o.GetSource().SourceJira
 }
 
-func (o *PipelineInput) GetSourceJiraAlign() *SourceJiraAlign {
-	return o.GetSource().SourceJiraAlign
-}
-
-func (o *PipelineInput) GetSourceJiraCloud() *SourceJiraCloud {
-	return o.GetSource().SourceJiraCloud
-}
-
-func (o *PipelineInput) GetSourceKafka() *SourceKafka {
-	return o.GetSource().SourceKafka
-}
-
-func (o *PipelineInput) GetSourceKustomer() *SourceKustomer {
-	return o.GetSource().SourceKustomer
-}
-
-func (o *PipelineInput) GetSourceLdap() *SourceLdap {
-	return o.GetSource().SourceLdap
-}
-
-func (o *PipelineInput) GetSourceLdapVirtualListView() *SourceLdapVirtualListView {
-	return o.GetSource().SourceLdapVirtualListView
-}
-
-func (o *PipelineInput) GetSourceLinkedInAds() *SourceLinkedInAds {
-	return o.GetSource().SourceLinkedInAds
-}
-
-func (o *PipelineInput) GetSourceMarketo() *SourceMarketo {
-	return o.GetSource().SourceMarketo
-}
-
-func (o *PipelineInput) GetSourceMixpanel() *SourceMixpanel {
-	return o.GetSource().SourceMixpanel
-}
-
-func (o *PipelineInput) GetSourceMongodb() *SourceMongodb {
-	return o.GetSource().SourceMongodb
-}
-
-func (o *PipelineInput) GetSourceMysqlSharded() *SourceMysqlSharded {
-	return o.GetSource().SourceMysqlSharded
-}
-
-func (o *PipelineInput) GetSourceMysql() *SourceMysql {
-	return o.GetSource().SourceMysql
-}
-
-func (o *PipelineInput) GetSourceNetsuite() *SourceNetsuite {
-	return o.GetSource().SourceNetsuite
-}
-
-func (o *PipelineInput) GetSourceNetsuiteV2() *SourceNetsuiteV2 {
-	return o.GetSource().SourceNetsuiteV2
-}
-
-func (o *PipelineInput) GetSourceOracle() *SourceOracle {
-	return o.GetSource().SourceOracle
-}
-
-func (o *PipelineInput) GetSourceOracleSharded() *SourceOracleSharded {
-	return o.GetSource().SourceOracleSharded
-}
-
-func (o *PipelineInput) GetSourceOutreach() *SourceOutreach {
-	return o.GetSource().SourceOutreach
-}
-
-func (o *PipelineInput) GetSourceOutlook() *SourceOutlook {
-	return o.GetSource().SourceOutlook
-}
-
-func (o *PipelineInput) GetSourcePinterestAds() *SourcePinterestAds {
-	return o.GetSource().SourcePinterestAds
-}
-
-func (o *PipelineInput) GetSourcePostgres() *SourcePostgres {
-	return o.GetSource().SourcePostgres
-}
-
-func (o *PipelineInput) GetSourcePostgresSharded() *SourcePostgresSharded {
-	return o.GetSource().SourcePostgresSharded
-}
-
-func (o *PipelineInput) GetSourceQuoraAds() *SourceQuoraAds {
-	return o.GetSource().SourceQuoraAds
-}
-
-func (o *PipelineInput) GetSourceRaveMedidata() *SourceRaveMedidata {
-	return o.GetSource().SourceRaveMedidata
-}
-
-func (o *PipelineInput) GetSourceRecurly() *SourceRecurly {
-	return o.GetSource().SourceRecurly
-}
-
-func (o *PipelineInput) GetSourceRedshift() *SourceRedshift {
-	return o.GetSource().SourceRedshift
-}
-
-func (o *PipelineInput) GetSourceRedshiftSharded() *SourceRedshiftSharded {
-	return o.GetSource().SourceRedshiftSharded
-}
-
-func (o *PipelineInput) GetSourceS3Legacy() *SourceS3Legacy {
-	return o.GetSource().SourceS3Legacy
-}
-
-func (o *PipelineInput) GetSourceS3Input() *SourceS3Input {
-	return o.GetSource().SourceS3Input
-}
-
-func (o *PipelineInput) GetSourceSalesforceMarketingCloud() *SourceSalesforceMarketingCloud {
-	return o.GetSource().SourceSalesforceMarketingCloud
-}
-
-func (o *PipelineInput) GetSourceSapConcur() *SourceSapConcur {
-	return o.GetSource().SourceSapConcur
-}
-
-func (o *PipelineInput) GetSourceSapHana() *SourceSapHana {
-	return o.GetSource().SourceSapHana
-}
-
-func (o *PipelineInput) GetSourceSapHanaSharded() *SourceSapHanaSharded {
-	return o.GetSource().SourceSapHanaSharded
-}
-
-func (o *PipelineInput) GetSourceSeismic() *SourceSeismic {
-	return o.GetSource().SourceSeismic
-}
-
-func (o *PipelineInput) GetSourceServiceNow() *SourceServiceNow {
-	return o.GetSource().SourceServiceNow
-}
-
-func (o *PipelineInput) GetSourceShopify() *SourceShopify {
-	return o.GetSource().SourceShopify
-}
-
-func (o *PipelineInput) GetSourceSkyward() *SourceSkyward {
-	return o.GetSource().SourceSkyward
-}
-
-func (o *PipelineInput) GetSourceSalesforce() *SourceSalesforce {
-	return o.GetSource().SourceSalesforce
-}
-
-func (o *PipelineInput) GetSourceSftp() *SourceSftp {
-	return o.GetSource().SourceSftp
-}
-
-func (o *PipelineInput) GetSourceSQLServer() *SourceSQLServer {
-	return o.GetSource().SourceSQLServer
-}
-
-func (o *PipelineInput) GetSourceSQLServerSharded() *SourceSQLServerSharded {
-	return o.GetSource().SourceSQLServerSharded
-}
-
-func (o *PipelineInput) GetSourceStreaming() *SourceStreaming {
-	return o.GetSource().SourceStreaming
-}
-
-func (o *PipelineInput) GetSourceSnowflake() *SourceSnowflake {
-	return o.GetSource().SourceSnowflake
-}
-
-func (o *PipelineInput) GetSourceSnowflakeSharded() *SourceSnowflakeSharded {
-	return o.GetSource().SourceSnowflakeSharded
-}
-
-func (o *PipelineInput) GetSourceSquare() *SourceSquare {
-	return o.GetSource().SourceSquare
-}
-
-func (o *PipelineInput) GetSourceSnapchatAds() *SourceSnapchatAds {
-	return o.GetSource().SourceSnapchatAds
-}
-
-func (o *PipelineInput) GetSourceStripe() *SourceStripe {
-	return o.GetSource().SourceStripe
-}
-
-func (o *PipelineInput) GetSourceSumtotal() *SourceSumTotal {
-	return o.GetSource().SourceSumTotal
-}
-
-func (o *PipelineInput) GetSourceTheTradeDesk() *SourceTheTradeDesk {
-	return o.GetSource().SourceTheTradeDesk
-}
-
-func (o *PipelineInput) GetSourceTikTokAds() *SourceTikTokAds {
-	return o.GetSource().SourceTikTokAds
-}
-
-func (o *PipelineInput) GetSourceTwilio() *SourceTwilio {
-	return o.GetSource().SourceTwilio
+func (o *PipelineInput) GetSourceVerizonMediaDsp() *SourceVerizonMediaDsp {
+	return o.GetSource().SourceVerizonMediaDsp
 }
 
 func (o *PipelineInput) GetSourceTwitterAds() *SourceTwitter {
 	return o.GetSource().SourceTwitter
 }
 
+func (o *PipelineInput) GetSourceIntercom() *SourceIntercom {
+	return o.GetSource().SourceIntercom
+}
+
+func (o *PipelineInput) GetSourceCoupa() *SourceCoupa {
+	return o.GetSource().SourceCoupa
+}
+
+func (o *PipelineInput) GetSourceTwilio() *SourceTwilio {
+	return o.GetSource().SourceTwilio
+}
+
+func (o *PipelineInput) GetSourceBingAds() *SourceBingAds {
+	return o.GetSource().SourceBingAds
+}
+
+func (o *PipelineInput) GetSourceSalesforce() *SourceSalesforce {
+	return o.GetSource().SourceSalesforce
+}
+
+func (o *PipelineInput) GetSourceSapHana() *SourceSapHana {
+	return o.GetSource().SourceSapHana
+}
+
+func (o *PipelineInput) GetSourceCriteo() *SourceCriteo {
+	return o.GetSource().SourceCriteo
+}
+
+func (o *PipelineInput) GetSourceFtp() *SourceFtp {
+	return o.GetSource().SourceFtp
+}
+
+func (o *PipelineInput) GetSourceSquare() *SourceSquare {
+	return o.GetSource().SourceSquare
+}
+
+func (o *PipelineInput) GetSourceEgnyte() *SourceEgnyte {
+	return o.GetSource().SourceEgnyte
+}
+
 func (o *PipelineInput) GetSourceUserDefinedAPI() *SourceUserDefinedAPI {
 	return o.GetSource().SourceUserDefinedAPI
+}
+
+func (o *PipelineInput) GetSourceSapConcur() *SourceSapConcur {
+	return o.GetSource().SourceSapConcur
 }
 
 func (o *PipelineInput) GetSourceUservoice() *SourceUserVoice {
 	return o.GetSource().SourceUserVoice
 }
 
-func (o *PipelineInput) GetSourceVeeva() *SourceVeeva {
-	return o.GetSource().SourceVeeva
+func (o *PipelineInput) GetSourceNetsuite() *SourceNetsuite {
+	return o.GetSource().SourceNetsuite
 }
 
-func (o *PipelineInput) GetSourceVerizonMediaDsp() *SourceVerizonMediaDsp {
-	return o.GetSource().SourceVerizonMediaDsp
+func (o *PipelineInput) GetSourceTheTradeDesk() *SourceTheTradeDesk {
+	return o.GetSource().SourceTheTradeDesk
 }
 
-func (o *PipelineInput) GetSourceWorkdayReport() *SourceWorkdayReport {
-	return o.GetSource().SourceWorkdayReport
+func (o *PipelineInput) GetSourceMongodb() *SourceMongodb {
+	return o.GetSource().SourceMongodb
 }
 
-func (o *PipelineInput) GetSourceWorkfront() *SourceWorkfront {
-	return o.GetSource().SourceWorkfront
+func (o *PipelineInput) GetSourceJiraAlign() *SourceJiraAlign {
+	return o.GetSource().SourceJiraAlign
 }
 
-func (o *PipelineInput) GetSourceZendesk() *SourceZendesk {
-	return o.GetSource().SourceZendesk
+func (o *PipelineInput) GetSourceGong() *SourceGong {
+	return o.GetSource().SourceGong
+}
+
+func (o *PipelineInput) GetSourcePinterestAds() *SourcePinterestAds {
+	return o.GetSource().SourcePinterestAds
+}
+
+func (o *PipelineInput) GetSourceShopify() *SourceShopify {
+	return o.GetSource().SourceShopify
+}
+
+func (o *PipelineInput) GetSourceNetsuiteV2() *SourceNetsuiteV2 {
+	return o.GetSource().SourceNetsuiteV2
+}
+
+func (o *PipelineInput) GetSourceBraintree() *SourceBraintree {
+	return o.GetSource().SourceBraintree
+}
+
+func (o *PipelineInput) GetSourceSQLServer() *SourceSQLServer {
+	return o.GetSource().SourceSQLServer
+}
+
+func (o *PipelineInput) GetSourceSalesforceMarketingCloud() *SourceSalesforceMarketingCloud {
+	return o.GetSource().SourceSalesforceMarketingCloud
+}
+
+func (o *PipelineInput) GetSourceSftp() *SourceSftp {
+	return o.GetSource().SourceSftp
+}
+
+func (o *PipelineInput) GetSourceS3Legacy() *SourceS3Legacy {
+	return o.GetSource().SourceS3Legacy
+}
+
+func (o *PipelineInput) GetSourceBlackline() *SourceBlackline {
+	return o.GetSource().SourceBlackline
+}
+
+func (o *PipelineInput) GetSourceRedshift() *SourceRedshift {
+	return o.GetSource().SourceRedshift
+}
+
+func (o *PipelineInput) GetSourceStripe() *SourceStripe {
+	return o.GetSource().SourceStripe
+}
+
+func (o *PipelineInput) GetSourceFifteenFive() *SourceFifteenFive {
+	return o.GetSource().SourceFifteenFive
+}
+
+func (o *PipelineInput) GetSourceSQLServerSharded() *SourceSQLServerSharded {
+	return o.GetSource().SourceSQLServerSharded
+}
+
+func (o *PipelineInput) GetSourceKustomer() *SourceKustomer {
+	return o.GetSource().SourceKustomer
+}
+
+func (o *PipelineInput) GetSourceKafka() *SourceKafka {
+	return o.GetSource().SourceKafka
 }
 
 func (o *PipelineInput) GetSourceZoomPhone() *SourceZoomPhone {
 	return o.GetSource().SourceZoomPhone
 }
 
+func (o *PipelineInput) GetSourceFacebookAds() *SourceFacebookAds {
+	return o.GetSource().SourceFacebookAds
+}
+
+func (o *PipelineInput) GetSourceLinkedInAds() *SourceLinkedInAds {
+	return o.GetSource().SourceLinkedInAds
+}
+
+func (o *PipelineInput) GetSourceMysql() *SourceMysql {
+	return o.GetSource().SourceMysql
+}
+
+func (o *PipelineInput) GetSourceFreshworks() *SourceFreshworks {
+	return o.GetSource().SourceFreshworks
+}
+
+func (o *PipelineInput) GetSourceWorkfront() *SourceWorkfront {
+	return o.GetSource().SourceWorkfront
+}
+
+func (o *PipelineInput) GetSourceHubspot() *SourceHubspot {
+	return o.GetSource().SourceHubspot
+}
+
+func (o *PipelineInput) GetSourceMarketo() *SourceMarketo {
+	return o.GetSource().SourceMarketo
+}
+
+func (o *PipelineInput) GetSourceSumtotal() *SourceSumTotal {
+	return o.GetSource().SourceSumTotal
+}
+
+func (o *PipelineInput) GetSourceSapHanaSharded() *SourceSapHanaSharded {
+	return o.GetSource().SourceSapHanaSharded
+}
+
+func (o *PipelineInput) GetSourceGoogleAnalyticsGa4() *SourceGoogleAnalyticsGa4 {
+	return o.GetSource().SourceGoogleAnalyticsGa4
+}
+
+func (o *PipelineInput) GetSourceGoogleSheets() *SourceGoogleSheets {
+	return o.GetSource().SourceGoogleSheets
+}
+
+func (o *PipelineInput) GetSourceBigquery() *SourceBigQuery {
+	return o.GetSource().SourceBigQuery
+}
+
+func (o *PipelineInput) GetSourceConfluentCloud() *SourceConfluentCloud {
+	return o.GetSource().SourceConfluentCloud
+}
+
+func (o *PipelineInput) GetSourceEloqua() *SourceEloqua {
+	return o.GetSource().SourceEloqua
+}
+
+func (o *PipelineInput) GetSourceLdapVirtualListView() *SourceLdapVirtualListView {
+	return o.GetSource().SourceLdapVirtualListView
+}
+
+func (o *PipelineInput) GetSourcePostgresSharded() *SourcePostgresSharded {
+	return o.GetSource().SourcePostgresSharded
+}
+
+func (o *PipelineInput) GetSourceMicrosoftEntraID() *SourceMicrosoftEntraID {
+	return o.GetSource().SourceMicrosoftEntraID
+}
+
+func (o *PipelineInput) GetSourceSkyward() *SourceSkyward {
+	return o.GetSource().SourceSkyward
+}
+
+func (o *PipelineInput) GetSourceServiceNow() *SourceServiceNow {
+	return o.GetSource().SourceServiceNow
+}
+
+func (o *PipelineInput) GetSourceActiveCampaign() *SourceActiveCampaign {
+	return o.GetSource().SourceActiveCampaign
+}
+
+func (o *PipelineInput) GetSourceMixpanel() *SourceMixpanel {
+	return o.GetSource().SourceMixpanel
+}
+
+func (o *PipelineInput) GetSourcePostgres() *SourcePostgres {
+	return o.GetSource().SourcePostgres
+}
+
+func (o *PipelineInput) GetSourceOracleSharded() *SourceOracleSharded {
+	return o.GetSource().SourceOracleSharded
+}
+
+func (o *PipelineInput) GetSourceElasticsearch() *SourceElasticSearch {
+	return o.GetSource().SourceElasticSearch
+}
+
+func (o *PipelineInput) GetSourceZendesk() *SourceZendesk {
+	return o.GetSource().SourceZendesk
+}
+
+func (o *PipelineInput) GetSourceRedshiftSharded() *SourceRedshiftSharded {
+	return o.GetSource().SourceRedshiftSharded
+}
+
 func (o *PipelineInput) GetSourceZuora() *SourceZuora {
 	return o.GetSource().SourceZuora
 }
 
-func (o *PipelineInput) GetDestination() DestinationTypes {
-	if o == nil {
-		return DestinationTypes{}
-	}
-	return o.Destination
+func (o *PipelineInput) GetSourceFreshsales() *SourceFreshsales {
+	return o.GetSource().SourceFreshsales
 }
 
-func (o *PipelineInput) GetDestinationRedshift() *DestinationRedshift {
-	return o.GetDestination().DestinationRedshift
+func (o *PipelineInput) GetSourceOracle() *SourceOracle {
+	return o.GetSource().SourceOracle
 }
 
-func (o *PipelineInput) GetDestinationSnowflake() *DestinationSnowflake {
-	return o.GetDestination().DestinationSnowflake
+func (o *PipelineInput) GetSourceSeismic() *SourceSeismic {
+	return o.GetSource().SourceSeismic
 }
 
-func (o *PipelineInput) GetDestinationDeltaLake() *DestinationDeltaLake {
-	return o.GetDestination().DestinationDeltaLake
+func (o *PipelineInput) GetSourceSnapchatAds() *SourceSnapchatAds {
+	return o.GetSource().SourceSnapchatAds
 }
 
-func (o *PipelineInput) GetDestinationS3DataLake() *DestinationS3DataLake {
-	return o.GetDestination().DestinationS3DataLake
-}
-
-func (o *PipelineInput) GetDestinationIceberg() *DestinationIceberg {
-	return o.GetDestination().DestinationIceberg
-}
-
-func (o *PipelineInput) GetScript() *ScriptOrLegacyScriptInput {
+func (o *PipelineInput) GetRefreshSchedule() *ScheduleTypes {
 	if o == nil {
 		return nil
 	}
-	return o.Script
+	return o.RefreshSchedule
 }
 
-func (o *PipelineInput) GetPaused() *bool {
-	if o == nil {
-		return nil
+func (o *PipelineInput) GetRefreshScheduleMonthly() *MonthlyScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.MonthlyScheduleMode
 	}
-	return o.Paused
+	return nil
+}
+
+func (o *PipelineInput) GetRefreshScheduleHourly() *HourlyScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.HourlyScheduleMode
+	}
+	return nil
+}
+
+func (o *PipelineInput) GetRefreshScheduleNever() *NeverScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.NeverScheduleMode
+	}
+	return nil
+}
+
+func (o *PipelineInput) GetRefreshScheduleDaily() *DailyScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.DailyScheduleMode
+	}
+	return nil
+}
+
+func (o *PipelineInput) GetRefreshScheduleWeekly() *WeeklyScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.WeeklyScheduleMode
+	}
+	return nil
 }
 
 func (o *PipelineInput) GetParsingErrorSettings() *ParsingErrorSettings {
@@ -855,53 +908,4 @@ func (o *PipelineInput) GetParsingErrorSettings() *ParsingErrorSettings {
 		return nil
 	}
 	return o.ParsingErrorSettings
-}
-
-func (o *PipelineInput) GetShares() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Shares
-}
-
-func (o *PipelineInput) GetRefreshSchedule() *PipelineInputScheduleTypes {
-	if o == nil {
-		return nil
-	}
-	return o.RefreshSchedule
-}
-
-func (o *PipelineInput) GetRefreshScheduleNever() *ScheduleTypesNeverScheduleMode {
-	if v := o.GetRefreshSchedule(); v != nil {
-		return v.ScheduleTypesNeverScheduleMode
-	}
-	return nil
-}
-
-func (o *PipelineInput) GetRefreshScheduleHourly() *ScheduleTypesHourlyScheduleMode {
-	if v := o.GetRefreshSchedule(); v != nil {
-		return v.ScheduleTypesHourlyScheduleMode
-	}
-	return nil
-}
-
-func (o *PipelineInput) GetRefreshScheduleDaily() *ScheduleTypesDailyScheduleMode {
-	if v := o.GetRefreshSchedule(); v != nil {
-		return v.ScheduleTypesDailyScheduleMode
-	}
-	return nil
-}
-
-func (o *PipelineInput) GetRefreshScheduleWeekly() *ScheduleTypesWeeklyScheduleMode {
-	if v := o.GetRefreshSchedule(); v != nil {
-		return v.ScheduleTypesWeeklyScheduleMode
-	}
-	return nil
-}
-
-func (o *PipelineInput) GetRefreshScheduleMonthly() *ScheduleTypesMonthlyScheduleMode {
-	if v := o.GetRefreshSchedule(); v != nil {
-		return v.ScheduleTypesMonthlyScheduleMode
-	}
-	return nil
 }

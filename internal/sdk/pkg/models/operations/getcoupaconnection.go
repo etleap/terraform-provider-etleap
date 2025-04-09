@@ -26,8 +26,8 @@ type GetCOUPAConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionCoupa *shared.ConnectionCoupa
-	// Forbidden. You don't have access to view this connection.
+	ConnectionCoupa *shared.ConnectionCoupaOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetCOUPAConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetCOUPAConnectionResponse) GetConnectionCoupa() *shared.ConnectionCoupa {
+func (o *GetCOUPAConnectionResponse) GetConnectionCoupa() *shared.ConnectionCoupaOutput {
 	if o == nil {
 		return nil
 	}

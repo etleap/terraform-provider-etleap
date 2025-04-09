@@ -72,12 +72,12 @@ func (r *ConnectionKAFKAResourceModel) ToSharedConnectionKafkaInput() *shared.Co
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,45 +87,45 @@ func (r *ConnectionKAFKAResourceModel) ToSharedConnectionKafkaInput() *shared.Co
 		}
 	}
 	serverList := r.ServerList.ValueString()
-	user := r.User.ValueString()
-	password := r.Password.ValueString()
-	authMechanism := new(shared.ConnectionKafkaAuthMechanism)
-	if !r.AuthMechanism.IsUnknown() && !r.AuthMechanism.IsNull() {
-		*authMechanism = shared.ConnectionKafkaAuthMechanism(r.AuthMechanism.ValueString())
-	} else {
-		authMechanism = nil
-	}
-	truststoreCertificate := r.TruststoreCertificate.ValueString()
-	schemaRegistryServer := new(string)
-	if !r.SchemaRegistryServer.IsUnknown() && !r.SchemaRegistryServer.IsNull() {
-		*schemaRegistryServer = r.SchemaRegistryServer.ValueString()
-	} else {
-		schemaRegistryServer = nil
-	}
-	schemaRegistryUser := new(string)
-	if !r.SchemaRegistryUser.IsUnknown() && !r.SchemaRegistryUser.IsNull() {
-		*schemaRegistryUser = r.SchemaRegistryUser.ValueString()
-	} else {
-		schemaRegistryUser = nil
-	}
 	schemaRegistryPassword := new(string)
 	if !r.SchemaRegistryPassword.IsUnknown() && !r.SchemaRegistryPassword.IsNull() {
 		*schemaRegistryPassword = r.SchemaRegistryPassword.ValueString()
 	} else {
 		schemaRegistryPassword = nil
 	}
+	truststoreCertificate := r.TruststoreCertificate.ValueString()
+	authMechanism := new(shared.AuthMechanism)
+	if !r.AuthMechanism.IsUnknown() && !r.AuthMechanism.IsNull() {
+		*authMechanism = shared.AuthMechanism(r.AuthMechanism.ValueString())
+	} else {
+		authMechanism = nil
+	}
+	schemaRegistryServer := new(string)
+	if !r.SchemaRegistryServer.IsUnknown() && !r.SchemaRegistryServer.IsNull() {
+		*schemaRegistryServer = r.SchemaRegistryServer.ValueString()
+	} else {
+		schemaRegistryServer = nil
+	}
+	user := r.User.ValueString()
+	schemaRegistryUser := new(string)
+	if !r.SchemaRegistryUser.IsUnknown() && !r.SchemaRegistryUser.IsNull() {
+		*schemaRegistryUser = r.SchemaRegistryUser.ValueString()
+	} else {
+		schemaRegistryUser = nil
+	}
+	password := r.Password.ValueString()
 	out := shared.ConnectionKafkaInput{
 		Name:                   name,
 		Type:                   typeVar,
 		UpdateSchedule:         updateSchedule,
 		ServerList:             serverList,
-		User:                   user,
-		Password:               password,
-		AuthMechanism:          authMechanism,
-		TruststoreCertificate:  truststoreCertificate,
-		SchemaRegistryServer:   schemaRegistryServer,
-		SchemaRegistryUser:     schemaRegistryUser,
 		SchemaRegistryPassword: schemaRegistryPassword,
+		TruststoreCertificate:  truststoreCertificate,
+		AuthMechanism:          authMechanism,
+		SchemaRegistryServer:   schemaRegistryServer,
+		User:                   user,
+		SchemaRegistryUser:     schemaRegistryUser,
+		Password:               password,
 	}
 	return &out
 }
@@ -142,7 +142,7 @@ func (r *ConnectionKAFKAResourceModel) RefreshFromSharedConnectionKafka(resp *sh
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -229,11 +229,11 @@ func (r *ConnectionKAFKAResourceModel) RefreshFromSharedConnectionKafka(resp *sh
 }
 
 func (r *ConnectionKAFKAResourceModel) ToSharedConnectionKafkaUpdate() *shared.ConnectionKafkaUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionKafkaUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -241,11 +241,11 @@ func (r *ConnectionKAFKAResourceModel) ToSharedConnectionKafkaUpdate() *shared.C
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -308,12 +308,12 @@ func (r *ConnectionKAFKAResourceModel) ToSharedConnectionKafkaUpdate() *shared.C
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -328,23 +328,11 @@ func (r *ConnectionKAFKAResourceModel) ToSharedConnectionKafkaUpdate() *shared.C
 	} else {
 		serverList = nil
 	}
-	user := new(string)
-	if !r.User.IsUnknown() && !r.User.IsNull() {
-		*user = r.User.ValueString()
+	schemaRegistryPassword := new(string)
+	if !r.SchemaRegistryPassword.IsUnknown() && !r.SchemaRegistryPassword.IsNull() {
+		*schemaRegistryPassword = r.SchemaRegistryPassword.ValueString()
 	} else {
-		user = nil
-	}
-	password := new(string)
-	if !r.Password.IsUnknown() && !r.Password.IsNull() {
-		*password = r.Password.ValueString()
-	} else {
-		password = nil
-	}
-	authMechanism := new(shared.AuthMechanism)
-	if !r.AuthMechanism.IsUnknown() && !r.AuthMechanism.IsNull() {
-		*authMechanism = shared.AuthMechanism(r.AuthMechanism.ValueString())
-	} else {
-		authMechanism = nil
+		schemaRegistryPassword = nil
 	}
 	truststoreCertificate := new(string)
 	if !r.TruststoreCertificate.IsUnknown() && !r.TruststoreCertificate.IsNull() {
@@ -352,11 +340,23 @@ func (r *ConnectionKAFKAResourceModel) ToSharedConnectionKafkaUpdate() *shared.C
 	} else {
 		truststoreCertificate = nil
 	}
+	authMechanism := new(shared.ConnectionKafkaUpdateAuthMechanism)
+	if !r.AuthMechanism.IsUnknown() && !r.AuthMechanism.IsNull() {
+		*authMechanism = shared.ConnectionKafkaUpdateAuthMechanism(r.AuthMechanism.ValueString())
+	} else {
+		authMechanism = nil
+	}
 	schemaRegistryServer := new(string)
 	if !r.SchemaRegistryServer.IsUnknown() && !r.SchemaRegistryServer.IsNull() {
 		*schemaRegistryServer = r.SchemaRegistryServer.ValueString()
 	} else {
 		schemaRegistryServer = nil
+	}
+	user := new(string)
+	if !r.User.IsUnknown() && !r.User.IsNull() {
+		*user = r.User.ValueString()
+	} else {
+		user = nil
 	}
 	schemaRegistryUser := new(string)
 	if !r.SchemaRegistryUser.IsUnknown() && !r.SchemaRegistryUser.IsNull() {
@@ -364,25 +364,25 @@ func (r *ConnectionKAFKAResourceModel) ToSharedConnectionKafkaUpdate() *shared.C
 	} else {
 		schemaRegistryUser = nil
 	}
-	schemaRegistryPassword := new(string)
-	if !r.SchemaRegistryPassword.IsUnknown() && !r.SchemaRegistryPassword.IsNull() {
-		*schemaRegistryPassword = r.SchemaRegistryPassword.ValueString()
+	password := new(string)
+	if !r.Password.IsUnknown() && !r.Password.IsNull() {
+		*password = r.Password.ValueString()
 	} else {
-		schemaRegistryPassword = nil
+		password = nil
 	}
 	out := shared.ConnectionKafkaUpdate{
-		Name:                   name,
-		Type:                   typeVar,
 		Active:                 active,
+		Type:                   typeVar,
+		Name:                   name,
 		UpdateSchedule:         updateSchedule,
 		ServerList:             serverList,
-		User:                   user,
-		Password:               password,
-		AuthMechanism:          authMechanism,
-		TruststoreCertificate:  truststoreCertificate,
-		SchemaRegistryServer:   schemaRegistryServer,
-		SchemaRegistryUser:     schemaRegistryUser,
 		SchemaRegistryPassword: schemaRegistryPassword,
+		TruststoreCertificate:  truststoreCertificate,
+		AuthMechanism:          authMechanism,
+		SchemaRegistryServer:   schemaRegistryServer,
+		User:                   user,
+		SchemaRegistryUser:     schemaRegistryUser,
+		Password:               password,
 	}
 	return &out
 }

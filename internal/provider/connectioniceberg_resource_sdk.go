@@ -72,12 +72,12 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergInput() *share
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,26 +87,26 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergInput() *share
 		}
 	}
 	iamRole := r.IamRole.ValueString()
-	dataBucket := r.DataBucket.ValueString()
-	baseDirectory := r.BaseDirectory.ValueString()
-	glueDatabase := r.GlueDatabase.ValueString()
-	glueRegion := r.GlueRegion.ValueString()
 	warehouseConnection := new(string)
 	if !r.WarehouseConnection.IsUnknown() && !r.WarehouseConnection.IsNull() {
 		*warehouseConnection = r.WarehouseConnection.ValueString()
 	} else {
 		warehouseConnection = nil
 	}
+	glueDatabase := r.GlueDatabase.ValueString()
+	baseDirectory := r.BaseDirectory.ValueString()
+	dataBucket := r.DataBucket.ValueString()
+	glueRegion := r.GlueRegion.ValueString()
 	out := shared.ConnectionIcebergInput{
 		Name:                name,
 		Type:                typeVar,
 		UpdateSchedule:      updateSchedule,
 		IamRole:             iamRole,
-		DataBucket:          dataBucket,
-		BaseDirectory:       baseDirectory,
-		GlueDatabase:        glueDatabase,
-		GlueRegion:          glueRegion,
 		WarehouseConnection: warehouseConnection,
+		GlueDatabase:        glueDatabase,
+		BaseDirectory:       baseDirectory,
+		DataBucket:          dataBucket,
+		GlueRegion:          glueRegion,
 	}
 	return &out
 }
@@ -120,7 +120,7 @@ func (r *ConnectionICEBERGResourceModel) RefreshFromSharedConnectionIceberg(resp
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -206,11 +206,11 @@ func (r *ConnectionICEBERGResourceModel) RefreshFromSharedConnectionIceberg(resp
 }
 
 func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergUpdate() *shared.ConnectionIcebergUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionIcebergUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -218,11 +218,11 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergUpdate() *shar
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -285,12 +285,12 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergUpdate() *shar
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -305,17 +305,11 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergUpdate() *shar
 	} else {
 		iamRole = nil
 	}
-	dataBucket := new(string)
-	if !r.DataBucket.IsUnknown() && !r.DataBucket.IsNull() {
-		*dataBucket = r.DataBucket.ValueString()
+	warehouseConnection := new(string)
+	if !r.WarehouseConnection.IsUnknown() && !r.WarehouseConnection.IsNull() {
+		*warehouseConnection = r.WarehouseConnection.ValueString()
 	} else {
-		dataBucket = nil
-	}
-	baseDirectory := new(string)
-	if !r.BaseDirectory.IsUnknown() && !r.BaseDirectory.IsNull() {
-		*baseDirectory = r.BaseDirectory.ValueString()
-	} else {
-		baseDirectory = nil
+		warehouseConnection = nil
 	}
 	glueDatabase := new(string)
 	if !r.GlueDatabase.IsUnknown() && !r.GlueDatabase.IsNull() {
@@ -323,29 +317,35 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergUpdate() *shar
 	} else {
 		glueDatabase = nil
 	}
+	baseDirectory := new(string)
+	if !r.BaseDirectory.IsUnknown() && !r.BaseDirectory.IsNull() {
+		*baseDirectory = r.BaseDirectory.ValueString()
+	} else {
+		baseDirectory = nil
+	}
+	dataBucket := new(string)
+	if !r.DataBucket.IsUnknown() && !r.DataBucket.IsNull() {
+		*dataBucket = r.DataBucket.ValueString()
+	} else {
+		dataBucket = nil
+	}
 	glueRegion := new(string)
 	if !r.GlueRegion.IsUnknown() && !r.GlueRegion.IsNull() {
 		*glueRegion = r.GlueRegion.ValueString()
 	} else {
 		glueRegion = nil
 	}
-	warehouseConnection := new(string)
-	if !r.WarehouseConnection.IsUnknown() && !r.WarehouseConnection.IsNull() {
-		*warehouseConnection = r.WarehouseConnection.ValueString()
-	} else {
-		warehouseConnection = nil
-	}
 	out := shared.ConnectionIcebergUpdate{
-		Name:                name,
-		Type:                typeVar,
 		Active:              active,
+		Type:                typeVar,
+		Name:                name,
 		UpdateSchedule:      updateSchedule,
 		IamRole:             iamRole,
-		DataBucket:          dataBucket,
-		BaseDirectory:       baseDirectory,
-		GlueDatabase:        glueDatabase,
-		GlueRegion:          glueRegion,
 		WarehouseConnection: warehouseConnection,
+		GlueDatabase:        glueDatabase,
+		BaseDirectory:       baseDirectory,
+		DataBucket:          dataBucket,
+		GlueRegion:          glueRegion,
 	}
 	return &out
 }

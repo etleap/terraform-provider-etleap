@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionBlacklineType string
-
-const (
-	ConnectionBlacklineTypeBlackline ConnectionBlacklineType = "BLACKLINE"
-)
-
-func (e ConnectionBlacklineType) ToPointer() *ConnectionBlacklineType {
-	return &e
-}
-
-func (e *ConnectionBlacklineType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "BLACKLINE":
-		*e = ConnectionBlacklineType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionBlacklineType: %v", v)
-	}
-}
-
 // ConnectionBlacklineStatus - The current status of the connection.
 type ConnectionBlacklineStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionBlacklineDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSc
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBlacklineDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBlacklineDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionBlacklineDefaultUpdateSchedule) GetUpdateScheduleInterval() *
 func (o *ConnectionBlacklineDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionBlacklineDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,39 +108,56 @@ func (o *ConnectionBlacklineDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Up
 	return nil
 }
 
-func (o *ConnectionBlacklineDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionBlacklineType string
+
+const (
+	ConnectionBlacklineTypeBlackline ConnectionBlacklineType = "BLACKLINE"
+)
+
+func (e ConnectionBlacklineType) ToPointer() *ConnectionBlacklineType {
+	return &e
+}
+
+func (e *ConnectionBlacklineType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "BLACKLINE":
+		*e = ConnectionBlacklineType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionBlacklineType: %v", v)
+	}
 }
 
 type ConnectionBlackline struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                  `json:"name"`
-	Type ConnectionBlacklineType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionBlacklineStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionBlacklineDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	// Whether this connection has been marked as active.
+	Active bool                    `json:"active"`
+	Type   ConnectionBlacklineType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// Your Blackline username
+	Username string `json:"username"`
 	// Your Blackline instance Client ID
 	ClientID string `json:"client_id"`
-	// Your Blackline instance Client Secret
-	ClientSecret string `json:"client_secret"`
 	// Your Blackline instance base URL, i.e, https://<BASE_URL>.api.blackline.com
 	BaseURL string `json:"base_url"`
 	// Your Blackline instance authorization scope.
 	InstanceScope string `json:"instance_scope"`
-	// Your Blackline username
-	Username string `json:"username"`
+	// Your Blackline instance Client Secret
+	ClientSecret string `json:"client_secret"`
 	// The Blackline API Key generated for your user
 	APIKey string `json:"api_key"`
 }
@@ -173,11 +173,11 @@ func (c *ConnectionBlackline) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionBlackline) GetID() string {
+func (o *ConnectionBlackline) GetStatus() ConnectionBlacklineStatus {
 	if o == nil {
-		return ""
+		return ConnectionBlacklineStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionBlackline) GetName() string {
@@ -187,11 +187,18 @@ func (o *ConnectionBlackline) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionBlackline) GetType() ConnectionBlacklineType {
+func (o *ConnectionBlackline) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionBlacklineType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionBlackline) GetDefaultUpdateSchedule() []ConnectionBlacklineDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionBlacklineDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionBlackline) GetActive() bool {
@@ -201,18 +208,18 @@ func (o *ConnectionBlackline) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionBlackline) GetStatus() ConnectionBlacklineStatus {
+func (o *ConnectionBlackline) GetType() ConnectionBlacklineType {
 	if o == nil {
-		return ConnectionBlacklineStatus("")
+		return ConnectionBlacklineType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionBlackline) GetCreateDate() time.Time {
+func (o *ConnectionBlackline) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionBlackline) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -222,9 +229,9 @@ func (o *ConnectionBlackline) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBlackline) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBlackline) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -232,6 +239,13 @@ func (o *ConnectionBlackline) GetUpdateScheduleInterval() *UpdateScheduleModeInt
 func (o *ConnectionBlackline) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionBlackline) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -250,18 +264,11 @@ func (o *ConnectionBlackline) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekl
 	return nil
 }
 
-func (o *ConnectionBlackline) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionBlackline) GetDefaultUpdateSchedule() []ConnectionBlacklineDefaultUpdateSchedule {
+func (o *ConnectionBlackline) GetUsername() string {
 	if o == nil {
-		return []ConnectionBlacklineDefaultUpdateSchedule{}
+		return ""
 	}
-	return o.DefaultUpdateSchedule
+	return o.Username
 }
 
 func (o *ConnectionBlackline) GetClientID() string {
@@ -269,13 +276,6 @@ func (o *ConnectionBlackline) GetClientID() string {
 		return ""
 	}
 	return o.ClientID
-}
-
-func (o *ConnectionBlackline) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
 }
 
 func (o *ConnectionBlackline) GetBaseURL() string {
@@ -292,11 +292,11 @@ func (o *ConnectionBlackline) GetInstanceScope() string {
 	return o.InstanceScope
 }
 
-func (o *ConnectionBlackline) GetUsername() string {
+func (o *ConnectionBlackline) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.ClientSecret
 }
 
 func (o *ConnectionBlackline) GetAPIKey() string {
@@ -312,16 +312,16 @@ type ConnectionBlacklineInput struct {
 	Type ConnectionBlacklineType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// Your Blackline username
+	Username string `json:"username"`
 	// Your Blackline instance Client ID
 	ClientID string `json:"client_id"`
-	// Your Blackline instance Client Secret
-	ClientSecret string `json:"client_secret"`
 	// Your Blackline instance base URL, i.e, https://<BASE_URL>.api.blackline.com
 	BaseURL string `json:"base_url"`
 	// Your Blackline instance authorization scope.
 	InstanceScope string `json:"instance_scope"`
-	// Your Blackline username
-	Username string `json:"username"`
+	// Your Blackline instance Client Secret
+	ClientSecret string `json:"client_secret"`
 	// The Blackline API Key generated for your user
 	APIKey string `json:"api_key"`
 }
@@ -347,9 +347,9 @@ func (o *ConnectionBlacklineInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBlacklineInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBlacklineInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -357,6 +357,13 @@ func (o *ConnectionBlacklineInput) GetUpdateScheduleInterval() *UpdateScheduleMo
 func (o *ConnectionBlacklineInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionBlacklineInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -375,11 +382,11 @@ func (o *ConnectionBlacklineInput) GetUpdateScheduleWeekly() *UpdateScheduleMode
 	return nil
 }
 
-func (o *ConnectionBlacklineInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionBlacklineInput) GetUsername() string {
+	if o == nil {
+		return ""
 	}
-	return nil
+	return o.Username
 }
 
 func (o *ConnectionBlacklineInput) GetClientID() string {
@@ -387,13 +394,6 @@ func (o *ConnectionBlacklineInput) GetClientID() string {
 		return ""
 	}
 	return o.ClientID
-}
-
-func (o *ConnectionBlacklineInput) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
 }
 
 func (o *ConnectionBlacklineInput) GetBaseURL() string {
@@ -410,11 +410,11 @@ func (o *ConnectionBlacklineInput) GetInstanceScope() string {
 	return o.InstanceScope
 }
 
-func (o *ConnectionBlacklineInput) GetUsername() string {
+func (o *ConnectionBlacklineInput) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.ClientSecret
 }
 
 func (o *ConnectionBlacklineInput) GetAPIKey() string {

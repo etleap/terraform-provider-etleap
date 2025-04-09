@@ -72,12 +72,12 @@ func (r *ConnectionNETSUITEV2ResourceModel) ToSharedConnectionNetsuiteV2Input() 
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,20 +86,20 @@ func (r *ConnectionNETSUITEV2ResourceModel) ToSharedConnectionNetsuiteV2Input() 
 			}
 		}
 	}
-	accountID := r.AccountID.ValueString()
+	tokenSecret := r.TokenSecret.ValueString()
+	tokenID := r.TokenID.ValueString()
 	consumerKey := r.ConsumerKey.ValueString()
 	consumerSecret := r.ConsumerSecret.ValueString()
-	tokenID := r.TokenID.ValueString()
-	tokenSecret := r.TokenSecret.ValueString()
+	accountID := r.AccountID.ValueString()
 	out := shared.ConnectionNetsuiteV2Input{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		AccountID:      accountID,
+		TokenSecret:    tokenSecret,
+		TokenID:        tokenID,
 		ConsumerKey:    consumerKey,
 		ConsumerSecret: consumerSecret,
-		TokenID:        tokenID,
-		TokenSecret:    tokenSecret,
+		AccountID:      accountID,
 	}
 	return &out
 }
@@ -113,7 +113,7 @@ func (r *ConnectionNETSUITEV2ResourceModel) RefreshFromSharedConnectionNetsuiteV
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -196,11 +196,11 @@ func (r *ConnectionNETSUITEV2ResourceModel) RefreshFromSharedConnectionNetsuiteV
 }
 
 func (r *ConnectionNETSUITEV2ResourceModel) ToSharedConnectionNetsuiteV2Update() *shared.ConnectionNetsuiteV2Update {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionNetsuiteV2UpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -208,11 +208,11 @@ func (r *ConnectionNETSUITEV2ResourceModel) ToSharedConnectionNetsuiteV2Update()
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -275,12 +275,12 @@ func (r *ConnectionNETSUITEV2ResourceModel) ToSharedConnectionNetsuiteV2Update()
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -289,11 +289,17 @@ func (r *ConnectionNETSUITEV2ResourceModel) ToSharedConnectionNetsuiteV2Update()
 			}
 		}
 	}
-	accountID := new(string)
-	if !r.AccountID.IsUnknown() && !r.AccountID.IsNull() {
-		*accountID = r.AccountID.ValueString()
+	tokenSecret := new(string)
+	if !r.TokenSecret.IsUnknown() && !r.TokenSecret.IsNull() {
+		*tokenSecret = r.TokenSecret.ValueString()
 	} else {
-		accountID = nil
+		tokenSecret = nil
+	}
+	tokenID := new(string)
+	if !r.TokenID.IsUnknown() && !r.TokenID.IsNull() {
+		*tokenID = r.TokenID.ValueString()
+	} else {
+		tokenID = nil
 	}
 	consumerKey := new(string)
 	if !r.ConsumerKey.IsUnknown() && !r.ConsumerKey.IsNull() {
@@ -307,28 +313,22 @@ func (r *ConnectionNETSUITEV2ResourceModel) ToSharedConnectionNetsuiteV2Update()
 	} else {
 		consumerSecret = nil
 	}
-	tokenID := new(string)
-	if !r.TokenID.IsUnknown() && !r.TokenID.IsNull() {
-		*tokenID = r.TokenID.ValueString()
+	accountID := new(string)
+	if !r.AccountID.IsUnknown() && !r.AccountID.IsNull() {
+		*accountID = r.AccountID.ValueString()
 	} else {
-		tokenID = nil
-	}
-	tokenSecret := new(string)
-	if !r.TokenSecret.IsUnknown() && !r.TokenSecret.IsNull() {
-		*tokenSecret = r.TokenSecret.ValueString()
-	} else {
-		tokenSecret = nil
+		accountID = nil
 	}
 	out := shared.ConnectionNetsuiteV2Update{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
-		AccountID:      accountID,
+		TokenSecret:    tokenSecret,
+		TokenID:        tokenID,
 		ConsumerKey:    consumerKey,
 		ConsumerSecret: consumerSecret,
-		TokenID:        tokenID,
-		TokenSecret:    tokenSecret,
+		AccountID:      accountID,
 	}
 	return &out
 }

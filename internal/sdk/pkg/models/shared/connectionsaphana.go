@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionSapHanaType string
-
-const (
-	ConnectionSapHanaTypeSapHana ConnectionSapHanaType = "SAP_HANA"
-)
-
-func (e ConnectionSapHanaType) ToPointer() *ConnectionSapHanaType {
-	return &e
-}
-
-func (e *ConnectionSapHanaType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "SAP_HANA":
-		*e = ConnectionSapHanaType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionSapHanaType: %v", v)
-	}
-}
-
 // ConnectionSapHanaStatus - The current status of the connection.
 type ConnectionSapHanaStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionSapHanaDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSche
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSapHanaDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSapHanaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionSapHanaDefaultUpdateSchedule) GetUpdateScheduleInterval() *Up
 func (o *ConnectionSapHanaDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSapHanaDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,45 +108,62 @@ func (o *ConnectionSapHanaDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Upda
 	return nil
 }
 
-func (o *ConnectionSapHanaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionSapHanaType string
+
+const (
+	ConnectionSapHanaTypeSapHana ConnectionSapHanaType = "SAP_HANA"
+)
+
+func (e ConnectionSapHanaType) ToPointer() *ConnectionSapHanaType {
+	return &e
+}
+
+func (e *ConnectionSapHanaType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "SAP_HANA":
+		*e = ConnectionSapHanaType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionSapHanaType: %v", v)
+	}
 }
 
 // ConnectionSapHana - Specifies the location of a database.
 type ConnectionSapHana struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                `json:"name"`
-	Type ConnectionSapHanaType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionSapHanaStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionSapHanaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// If not specified, the default schema will be used.
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string `json:"schema,omitempty"`
+	// Whether this connection has been marked as active.
+	Active bool                  `json:"active"`
+	Type   ConnectionSapHanaType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Should Etleap use a change-tracking table and triggers defined on the source tables to capture changes from this database?
 	//
 	// For this setting to be enabled, the `ETLEAP_CTT` schema must be present in the source database, with the following privileges granted to the authenticating user: `SELECT`, `TRIGGER`, `CREATE ANY`, and `EXECUTE`.
 	//
 	// When enabled, Etleap will create a table and procedure in the `ETLEAP_CTT` schema and define triggers on any source table that has an Etleap pipeline. This setting cannot be changed later.
-	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
-	Address    string     `json:"address"`
-	Port       int64      `json:"port"`
-	Username   string     `json:"username"`
-	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
-	Database   string     `json:"database"`
+	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
+	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Schema    *string    `json:"schema,omitempty"`
+	Username  string     `json:"username"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Port      int64      `json:"port"`
+	Address   string     `json:"address"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionSapHana) MarshalJSON() ([]byte, error) {
@@ -177,11 +177,11 @@ func (c *ConnectionSapHana) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionSapHana) GetID() string {
+func (o *ConnectionSapHana) GetStatus() ConnectionSapHanaStatus {
 	if o == nil {
-		return ""
+		return ConnectionSapHanaStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionSapHana) GetName() string {
@@ -191,11 +191,18 @@ func (o *ConnectionSapHana) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionSapHana) GetType() ConnectionSapHanaType {
+func (o *ConnectionSapHana) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionSapHanaType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionSapHana) GetDefaultUpdateSchedule() []ConnectionSapHanaDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionSapHanaDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionSapHana) GetActive() bool {
@@ -205,18 +212,18 @@ func (o *ConnectionSapHana) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionSapHana) GetStatus() ConnectionSapHanaStatus {
+func (o *ConnectionSapHana) GetType() ConnectionSapHanaType {
 	if o == nil {
-		return ConnectionSapHanaStatus("")
+		return ConnectionSapHanaType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionSapHana) GetCreateDate() time.Time {
+func (o *ConnectionSapHana) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionSapHana) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -226,9 +233,9 @@ func (o *ConnectionSapHana) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSapHana) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSapHana) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -236,6 +243,13 @@ func (o *ConnectionSapHana) GetUpdateScheduleInterval() *UpdateScheduleModeInter
 func (o *ConnectionSapHana) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSapHana) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -254,27 +268,6 @@ func (o *ConnectionSapHana) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly 
 	return nil
 }
 
-func (o *ConnectionSapHana) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionSapHana) GetDefaultUpdateSchedule() []ConnectionSapHanaDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionSapHanaDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
-}
-
-func (o *ConnectionSapHana) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
 func (o *ConnectionSapHana) GetCdcEnabled() *bool {
 	if o == nil {
 		return nil
@@ -282,18 +275,11 @@ func (o *ConnectionSapHana) GetCdcEnabled() *bool {
 	return o.CdcEnabled
 }
 
-func (o *ConnectionSapHana) GetAddress() string {
+func (o *ConnectionSapHana) GetSchema() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Address
-}
-
-func (o *ConnectionSapHana) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
+	return o.Schema
 }
 
 func (o *ConnectionSapHana) GetUsername() string {
@@ -310,6 +296,20 @@ func (o *ConnectionSapHana) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
+func (o *ConnectionSapHana) GetPort() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Port
+}
+
+func (o *ConnectionSapHana) GetAddress() string {
+	if o == nil {
+		return ""
+	}
+	return o.Address
+}
+
 func (o *ConnectionSapHana) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -324,22 +324,22 @@ type ConnectionSapHanaInput struct {
 	Type ConnectionSapHanaType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// If not specified, the default schema will be used.
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use a change-tracking table and triggers defined on the source tables to capture changes from this database?
 	//
 	// For this setting to be enabled, the `ETLEAP_CTT` schema must be present in the source database, with the following privileges granted to the authenticating user: `SELECT`, `TRIGGER`, `CREATE ANY`, and `EXECUTE`.
 	//
 	// When enabled, Etleap will create a table and procedure in the `ETLEAP_CTT` schema and define triggers on any source table that has an Etleap pipeline. This setting cannot be changed later.
-	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
-	Address    string     `json:"address"`
-	Port       int64      `json:"port"`
-	Username   string     `json:"username"`
-	Password   string     `json:"password"`
-	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
-	Database   string     `json:"database"`
+	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
+	// If not specified, the default schema will be used.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	Schema    *string    `json:"schema,omitempty"`
+	Username  string     `json:"username"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Password  string     `json:"password"`
+	Port      int64      `json:"port"`
+	Address   string     `json:"address"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionSapHanaInput) MarshalJSON() ([]byte, error) {
@@ -374,9 +374,9 @@ func (o *ConnectionSapHanaInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSapHanaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSapHanaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -384,6 +384,13 @@ func (o *ConnectionSapHanaInput) GetUpdateScheduleInterval() *UpdateScheduleMode
 func (o *ConnectionSapHanaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSapHanaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -402,11 +409,11 @@ func (o *ConnectionSapHanaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWe
 	return nil
 }
 
-func (o *ConnectionSapHanaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionSapHanaInput) GetCdcEnabled() *bool {
+	if o == nil {
+		return nil
 	}
-	return nil
+	return o.CdcEnabled
 }
 
 func (o *ConnectionSapHanaInput) GetSchema() *string {
@@ -416,32 +423,18 @@ func (o *ConnectionSapHanaInput) GetSchema() *string {
 	return o.Schema
 }
 
-func (o *ConnectionSapHanaInput) GetCdcEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.CdcEnabled
-}
-
-func (o *ConnectionSapHanaInput) GetAddress() string {
-	if o == nil {
-		return ""
-	}
-	return o.Address
-}
-
-func (o *ConnectionSapHanaInput) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
-}
-
 func (o *ConnectionSapHanaInput) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
+}
+
+func (o *ConnectionSapHanaInput) GetSSHConfig() *SSHConfig {
+	if o == nil {
+		return nil
+	}
+	return o.SSHConfig
 }
 
 func (o *ConnectionSapHanaInput) GetPassword() string {
@@ -451,11 +444,18 @@ func (o *ConnectionSapHanaInput) GetPassword() string {
 	return o.Password
 }
 
-func (o *ConnectionSapHanaInput) GetSSHConfig() *SSHConfig {
+func (o *ConnectionSapHanaInput) GetPort() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
-	return o.SSHConfig
+	return o.Port
+}
+
+func (o *ConnectionSapHanaInput) GetAddress() string {
+	if o == nil {
+		return ""
+	}
+	return o.Address
 }
 
 func (o *ConnectionSapHanaInput) GetDatabase() string {

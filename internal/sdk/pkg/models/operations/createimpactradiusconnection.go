@@ -15,7 +15,7 @@ type CreateIMPACTRADIUSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionImpactRadius *shared.ConnectionImpactRadius
+	ConnectionImpactRadius *shared.ConnectionImpactRadiusOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateIMPACTRADIUSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateIMPACTRADIUSConnectionResponse) GetConnectionImpactRadius() *shared.ConnectionImpactRadius {
+func (o *CreateIMPACTRADIUSConnectionResponse) GetConnectionImpactRadius() *shared.ConnectionImpactRadiusOutput {
 	if o == nil {
 		return nil
 	}

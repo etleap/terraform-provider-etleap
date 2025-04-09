@@ -15,7 +15,7 @@ type CreateOUTLOOKConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionOutlook *shared.ConnectionOutlook
+	ConnectionOutlook *shared.ConnectionOutlookOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateOUTLOOKConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateOUTLOOKConnectionResponse) GetConnectionOutlook() *shared.ConnectionOutlook {
+func (o *CreateOUTLOOKConnectionResponse) GetConnectionOutlook() *shared.ConnectionOutlookOutput {
 	if o == nil {
 		return nil
 	}

@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionS3DataLakeType string
-
-const (
-	ConnectionS3DataLakeTypeS3DataLake ConnectionS3DataLakeType = "S3_DATA_LAKE"
-)
-
-func (e ConnectionS3DataLakeType) ToPointer() *ConnectionS3DataLakeType {
-	return &e
-}
-
-func (e *ConnectionS3DataLakeType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "S3_DATA_LAKE":
-		*e = ConnectionS3DataLakeType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionS3DataLakeType: %v", v)
-	}
-}
-
 // ConnectionS3DataLakeStatus - The current status of the connection.
 type ConnectionS3DataLakeStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionS3DataLakeDefaultUpdateSchedule) GetUpdateSchedule() *UpdateS
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionS3DataLakeDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionS3DataLakeDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionS3DataLakeDefaultUpdateSchedule) GetUpdateScheduleInterval() 
 func (o *ConnectionS3DataLakeDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionS3DataLakeDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,41 +108,58 @@ func (o *ConnectionS3DataLakeDefaultUpdateSchedule) GetUpdateScheduleWeekly() *U
 	return nil
 }
 
-func (o *ConnectionS3DataLakeDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionS3DataLakeType string
+
+const (
+	ConnectionS3DataLakeTypeS3DataLake ConnectionS3DataLakeType = "S3_DATA_LAKE"
+)
+
+func (e ConnectionS3DataLakeType) ToPointer() *ConnectionS3DataLakeType {
+	return &e
+}
+
+func (e *ConnectionS3DataLakeType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "S3_DATA_LAKE":
+		*e = ConnectionS3DataLakeType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionS3DataLakeType: %v", v)
+	}
 }
 
 type ConnectionS3DataLake struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                   `json:"name"`
-	Type ConnectionS3DataLakeType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionS3DataLakeStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionS3DataLakeDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	// Whether this connection has been marked as active.
+	Active bool                     `json:"active"`
+	Type   ConnectionS3DataLakeType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// An IAM Role ARN looks like 'arn:aws:iam::account_id:role/role-name'. Etleap will assume this role to access this bucket.
 	IamRole string `json:"iamRole"`
-	// The S3 bucket where your data will be stored.
-	InputBucket string `json:"inputBucket"`
-	// The base directory in the data bucket. Any data written by Etleap will be under this directory.
-	BaseDirectory string `json:"baseDirectory"`
 	// Customer KMS key used to encrypt all files written to the S3 bucket.
-	KmsKey       *string `json:"kmsKey,omitempty"`
-	GlueDatabase *string `json:"glueDatabase,omitempty"`
-	GlueRegion   *string `json:"glueRegion,omitempty"`
+	KmsKey *string `json:"kmsKey,omitempty"`
 	// If this is set to 'true', Etleap will write a manifest file containing the metadata along with each load. More info <a target="_blank" href="https://support.etleap.com/hc/en-us/articles/360007751614-Generating-load-manifests-for-data-loaded-into-S3">here</a>.
 	WriteManifest *bool `json:"writeManifest,omitempty"`
+	// The S3 bucket where your data will be stored.
+	InputBucket  string  `json:"inputBucket"`
+	GlueDatabase *string `json:"glueDatabase,omitempty"`
+	GlueRegion   *string `json:"glueRegion,omitempty"`
+	// The base directory in the data bucket. Any data written by Etleap will be under this directory.
+	BaseDirectory string `json:"baseDirectory"`
 }
 
 func (c ConnectionS3DataLake) MarshalJSON() ([]byte, error) {
@@ -173,11 +173,11 @@ func (c *ConnectionS3DataLake) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionS3DataLake) GetID() string {
+func (o *ConnectionS3DataLake) GetStatus() ConnectionS3DataLakeStatus {
 	if o == nil {
-		return ""
+		return ConnectionS3DataLakeStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionS3DataLake) GetName() string {
@@ -187,11 +187,18 @@ func (o *ConnectionS3DataLake) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionS3DataLake) GetType() ConnectionS3DataLakeType {
+func (o *ConnectionS3DataLake) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionS3DataLakeType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionS3DataLake) GetDefaultUpdateSchedule() []ConnectionS3DataLakeDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionS3DataLakeDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionS3DataLake) GetActive() bool {
@@ -201,18 +208,18 @@ func (o *ConnectionS3DataLake) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionS3DataLake) GetStatus() ConnectionS3DataLakeStatus {
+func (o *ConnectionS3DataLake) GetType() ConnectionS3DataLakeType {
 	if o == nil {
-		return ConnectionS3DataLakeStatus("")
+		return ConnectionS3DataLakeType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionS3DataLake) GetCreateDate() time.Time {
+func (o *ConnectionS3DataLake) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionS3DataLake) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -222,9 +229,9 @@ func (o *ConnectionS3DataLake) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionS3DataLake) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionS3DataLake) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -232,6 +239,13 @@ func (o *ConnectionS3DataLake) GetUpdateScheduleInterval() *UpdateScheduleModeIn
 func (o *ConnectionS3DataLake) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionS3DataLake) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -250,20 +264,6 @@ func (o *ConnectionS3DataLake) GetUpdateScheduleWeekly() *UpdateScheduleModeWeek
 	return nil
 }
 
-func (o *ConnectionS3DataLake) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionS3DataLake) GetDefaultUpdateSchedule() []ConnectionS3DataLakeDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionS3DataLakeDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
-}
-
 func (o *ConnectionS3DataLake) GetIamRole() string {
 	if o == nil {
 		return ""
@@ -271,25 +271,25 @@ func (o *ConnectionS3DataLake) GetIamRole() string {
 	return o.IamRole
 }
 
-func (o *ConnectionS3DataLake) GetInputBucket() string {
-	if o == nil {
-		return ""
-	}
-	return o.InputBucket
-}
-
-func (o *ConnectionS3DataLake) GetBaseDirectory() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseDirectory
-}
-
 func (o *ConnectionS3DataLake) GetKmsKey() *string {
 	if o == nil {
 		return nil
 	}
 	return o.KmsKey
+}
+
+func (o *ConnectionS3DataLake) GetWriteManifest() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.WriteManifest
+}
+
+func (o *ConnectionS3DataLake) GetInputBucket() string {
+	if o == nil {
+		return ""
+	}
+	return o.InputBucket
 }
 
 func (o *ConnectionS3DataLake) GetGlueDatabase() *string {
@@ -306,11 +306,11 @@ func (o *ConnectionS3DataLake) GetGlueRegion() *string {
 	return o.GlueRegion
 }
 
-func (o *ConnectionS3DataLake) GetWriteManifest() *bool {
+func (o *ConnectionS3DataLake) GetBaseDirectory() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.WriteManifest
+	return o.BaseDirectory
 }
 
 type ConnectionS3DataLakeInput struct {
@@ -321,16 +321,16 @@ type ConnectionS3DataLakeInput struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// An IAM Role ARN looks like 'arn:aws:iam::account_id:role/role-name'. Etleap will assume this role to access this bucket.
 	IamRole string `json:"iamRole"`
-	// The S3 bucket where your data will be stored.
-	InputBucket string `json:"inputBucket"`
-	// The base directory in the data bucket. Any data written by Etleap will be under this directory.
-	BaseDirectory string `json:"baseDirectory"`
 	// Customer KMS key used to encrypt all files written to the S3 bucket.
-	KmsKey       *string `json:"kmsKey,omitempty"`
-	GlueDatabase *string `json:"glueDatabase,omitempty"`
-	GlueRegion   *string `json:"glueRegion,omitempty"`
+	KmsKey *string `json:"kmsKey,omitempty"`
 	// If this is set to 'true', Etleap will write a manifest file containing the metadata along with each load. More info <a target="_blank" href="https://support.etleap.com/hc/en-us/articles/360007751614-Generating-load-manifests-for-data-loaded-into-S3">here</a>.
 	WriteManifest *bool `json:"writeManifest,omitempty"`
+	// The S3 bucket where your data will be stored.
+	InputBucket  string  `json:"inputBucket"`
+	GlueDatabase *string `json:"glueDatabase,omitempty"`
+	GlueRegion   *string `json:"glueRegion,omitempty"`
+	// The base directory in the data bucket. Any data written by Etleap will be under this directory.
+	BaseDirectory string `json:"baseDirectory"`
 }
 
 func (o *ConnectionS3DataLakeInput) GetName() string {
@@ -354,9 +354,9 @@ func (o *ConnectionS3DataLakeInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionS3DataLakeInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionS3DataLakeInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -364,6 +364,13 @@ func (o *ConnectionS3DataLakeInput) GetUpdateScheduleInterval() *UpdateScheduleM
 func (o *ConnectionS3DataLakeInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionS3DataLakeInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -382,13 +389,6 @@ func (o *ConnectionS3DataLakeInput) GetUpdateScheduleWeekly() *UpdateScheduleMod
 	return nil
 }
 
-func (o *ConnectionS3DataLakeInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
 func (o *ConnectionS3DataLakeInput) GetIamRole() string {
 	if o == nil {
 		return ""
@@ -396,25 +396,25 @@ func (o *ConnectionS3DataLakeInput) GetIamRole() string {
 	return o.IamRole
 }
 
-func (o *ConnectionS3DataLakeInput) GetInputBucket() string {
-	if o == nil {
-		return ""
-	}
-	return o.InputBucket
-}
-
-func (o *ConnectionS3DataLakeInput) GetBaseDirectory() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseDirectory
-}
-
 func (o *ConnectionS3DataLakeInput) GetKmsKey() *string {
 	if o == nil {
 		return nil
 	}
 	return o.KmsKey
+}
+
+func (o *ConnectionS3DataLakeInput) GetWriteManifest() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.WriteManifest
+}
+
+func (o *ConnectionS3DataLakeInput) GetInputBucket() string {
+	if o == nil {
+		return ""
+	}
+	return o.InputBucket
 }
 
 func (o *ConnectionS3DataLakeInput) GetGlueDatabase() *string {
@@ -431,9 +431,9 @@ func (o *ConnectionS3DataLakeInput) GetGlueRegion() *string {
 	return o.GlueRegion
 }
 
-func (o *ConnectionS3DataLakeInput) GetWriteManifest() *bool {
+func (o *ConnectionS3DataLakeInput) GetBaseDirectory() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.WriteManifest
+	return o.BaseDirectory
 }

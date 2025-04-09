@@ -33,18 +33,18 @@ func (e *DestinationSnowflakeType) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationSnowflake struct {
-	Type DestinationSnowflakeType `json:"type"`
 	// The universally unique identifier of the destination connection.
-	ConnectionID string `json:"connectionId"`
-	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
-	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
+	ConnectionID string                   `json:"connectionId"`
+	Type         DestinationSnowflakeType `json:"type"`
 	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
 	PrimaryKey []string `json:"primaryKey,omitempty"`
+	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
+	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
 	// Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
-	AutomaticSchemaChanges *bool `default:"true" json:"automaticSchemaChanges"`
+	AutomaticSchemaChanges *bool  `default:"true" json:"automaticSchemaChanges"`
+	Table                  string `json:"table"`
 	// The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 	Schema *string `json:"schema,omitempty"`
-	Table  string  `json:"table"`
 	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
 	RetainHistory *bool `default:"false" json:"retainHistory"`
 	// Keys to cluster the table on. If unspecified, the table will use "automatic clustering".
@@ -64,13 +64,6 @@ func (d *DestinationSnowflake) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationSnowflake) GetType() DestinationSnowflakeType {
-	if o == nil {
-		return DestinationSnowflakeType("")
-	}
-	return o.Type
-}
-
 func (o *DestinationSnowflake) GetConnectionID() string {
 	if o == nil {
 		return ""
@@ -78,11 +71,11 @@ func (o *DestinationSnowflake) GetConnectionID() string {
 	return o.ConnectionID
 }
 
-func (o *DestinationSnowflake) GetWaitForQualityCheck() *bool {
+func (o *DestinationSnowflake) GetType() DestinationSnowflakeType {
 	if o == nil {
-		return nil
+		return DestinationSnowflakeType("")
 	}
-	return o.WaitForQualityCheck
+	return o.Type
 }
 
 func (o *DestinationSnowflake) GetPrimaryKey() []string {
@@ -92,6 +85,13 @@ func (o *DestinationSnowflake) GetPrimaryKey() []string {
 	return o.PrimaryKey
 }
 
+func (o *DestinationSnowflake) GetWaitForQualityCheck() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.WaitForQualityCheck
+}
+
 func (o *DestinationSnowflake) GetAutomaticSchemaChanges() *bool {
 	if o == nil {
 		return nil
@@ -99,18 +99,18 @@ func (o *DestinationSnowflake) GetAutomaticSchemaChanges() *bool {
 	return o.AutomaticSchemaChanges
 }
 
-func (o *DestinationSnowflake) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
 func (o *DestinationSnowflake) GetTable() string {
 	if o == nil {
 		return ""
 	}
 	return o.Table
+}
+
+func (o *DestinationSnowflake) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
 }
 
 func (o *DestinationSnowflake) GetRetainHistory() *bool {
