@@ -12,11 +12,11 @@ import (
 type DestinationTypesType string
 
 const (
-	DestinationTypesTypeRedshift   DestinationTypesType = "REDSHIFT"
-	DestinationTypesTypeSnowflake  DestinationTypesType = "SNOWFLAKE"
-	DestinationTypesTypeDeltaLake  DestinationTypesType = "DELTA_LAKE"
 	DestinationTypesTypeS3DataLake DestinationTypesType = "S3_DATA_LAKE"
+	DestinationTypesTypeDeltaLake  DestinationTypesType = "DELTA_LAKE"
 	DestinationTypesTypeIceberg    DestinationTypesType = "ICEBERG"
+	DestinationTypesTypeSnowflake  DestinationTypesType = "SNOWFLAKE"
+	DestinationTypesTypeRedshift   DestinationTypesType = "REDSHIFT"
 )
 
 type DestinationTypes struct {
@@ -29,27 +29,15 @@ type DestinationTypes struct {
 	Type DestinationTypesType
 }
 
-func CreateDestinationTypesRedshift(redshift DestinationRedshift) DestinationTypes {
-	typ := DestinationTypesTypeRedshift
+func CreateDestinationTypesS3DataLake(s3DataLake DestinationS3DataLake) DestinationTypes {
+	typ := DestinationTypesTypeS3DataLake
 
-	typStr := DestinationRedshiftType(typ)
-	redshift.Type = typStr
-
-	return DestinationTypes{
-		DestinationRedshift: &redshift,
-		Type:                typ,
-	}
-}
-
-func CreateDestinationTypesSnowflake(snowflake DestinationSnowflake) DestinationTypes {
-	typ := DestinationTypesTypeSnowflake
-
-	typStr := DestinationSnowflakeType(typ)
-	snowflake.Type = typStr
+	typStr := DestinationS3DataLakeType(typ)
+	s3DataLake.Type = typStr
 
 	return DestinationTypes{
-		DestinationSnowflake: &snowflake,
-		Type:                 typ,
+		DestinationS3DataLake: &s3DataLake,
+		Type:                  typ,
 	}
 }
 
@@ -65,18 +53,6 @@ func CreateDestinationTypesDeltaLake(deltaLake DestinationDeltaLake) Destination
 	}
 }
 
-func CreateDestinationTypesS3DataLake(s3DataLake DestinationS3DataLake) DestinationTypes {
-	typ := DestinationTypesTypeS3DataLake
-
-	typStr := DestinationS3DataLakeType(typ)
-	s3DataLake.Type = typStr
-
-	return DestinationTypes{
-		DestinationS3DataLake: &s3DataLake,
-		Type:                  typ,
-	}
-}
-
 func CreateDestinationTypesIceberg(iceberg DestinationIceberg) DestinationTypes {
 	typ := DestinationTypesTypeIceberg
 
@@ -86,6 +62,30 @@ func CreateDestinationTypesIceberg(iceberg DestinationIceberg) DestinationTypes 
 	return DestinationTypes{
 		DestinationIceberg: &iceberg,
 		Type:               typ,
+	}
+}
+
+func CreateDestinationTypesSnowflake(snowflake DestinationSnowflake) DestinationTypes {
+	typ := DestinationTypesTypeSnowflake
+
+	typStr := DestinationSnowflakeType(typ)
+	snowflake.Type = typStr
+
+	return DestinationTypes{
+		DestinationSnowflake: &snowflake,
+		Type:                 typ,
+	}
+}
+
+func CreateDestinationTypesRedshift(redshift DestinationRedshift) DestinationTypes {
+	typ := DestinationTypesTypeRedshift
+
+	typStr := DestinationRedshiftType(typ)
+	redshift.Type = typStr
+
+	return DestinationTypes{
+		DestinationRedshift: &redshift,
+		Type:                typ,
 	}
 }
 
@@ -101,23 +101,14 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Type {
-	case "REDSHIFT":
-		destinationRedshift := new(DestinationRedshift)
-		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, true); err != nil {
+	case "S3_DATA_LAKE":
+		destinationS3DataLake := new(DestinationS3DataLake)
+		if err := utils.UnmarshalJSON(data, &destinationS3DataLake, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.DestinationRedshift = destinationRedshift
-		u.Type = DestinationTypesTypeRedshift
-		return nil
-	case "SNOWFLAKE":
-		destinationSnowflake := new(DestinationSnowflake)
-		if err := utils.UnmarshalJSON(data, &destinationSnowflake, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.DestinationSnowflake = destinationSnowflake
-		u.Type = DestinationTypesTypeSnowflake
+		u.DestinationS3DataLake = destinationS3DataLake
+		u.Type = DestinationTypesTypeS3DataLake
 		return nil
 	case "DELTA_LAKE":
 		destinationDeltaLake := new(DestinationDeltaLake)
@@ -128,15 +119,6 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
 		u.DestinationDeltaLake = destinationDeltaLake
 		u.Type = DestinationTypesTypeDeltaLake
 		return nil
-	case "S3_DATA_LAKE":
-		destinationS3DataLake := new(DestinationS3DataLake)
-		if err := utils.UnmarshalJSON(data, &destinationS3DataLake, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.DestinationS3DataLake = destinationS3DataLake
-		u.Type = DestinationTypesTypeS3DataLake
-		return nil
 	case "ICEBERG":
 		destinationIceberg := new(DestinationIceberg)
 		if err := utils.UnmarshalJSON(data, &destinationIceberg, "", true, true); err != nil {
@@ -145,6 +127,24 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
 
 		u.DestinationIceberg = destinationIceberg
 		u.Type = DestinationTypesTypeIceberg
+		return nil
+	case "SNOWFLAKE":
+		destinationSnowflake := new(DestinationSnowflake)
+		if err := utils.UnmarshalJSON(data, &destinationSnowflake, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.DestinationSnowflake = destinationSnowflake
+		u.Type = DestinationTypesTypeSnowflake
+		return nil
+	case "REDSHIFT":
+		destinationRedshift := new(DestinationRedshift)
+		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.DestinationRedshift = destinationRedshift
+		u.Type = DestinationTypesTypeRedshift
 		return nil
 	}
 

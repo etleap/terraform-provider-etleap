@@ -35,7 +35,7 @@ type UpdatePOSTGRESConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionPostgres *shared.ConnectionPostgres
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

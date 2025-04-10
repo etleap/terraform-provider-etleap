@@ -35,7 +35,7 @@ type UpdateFTPConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionFtp *shared.ConnectionFtp
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

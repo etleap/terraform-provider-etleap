@@ -1,10 +1,10 @@
 resource "etleap_connection_sftp" "my_connectionsftp" {
   base_directory              = "...my_base_directory..."
-  deletion_of_export_products = true
-  hostname                    = "same-cucumber.biz"
-  name                        = "Austin Witting"
+  deletion_of_export_products = false
+  hostname                    = "better-croup.com"
+  name                        = "Thomas Fisher"
   password                    = "...my_password..."
-  port                        = 2
+  port                        = 7
   type                        = "SFTP"
-  username                    = "Virgil62"
+  username                    = "Tracey_Oberbrunner"
 }

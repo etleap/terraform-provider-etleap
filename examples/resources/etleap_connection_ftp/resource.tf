@@ -1,10 +1,10 @@
 resource "etleap_connection_ftp" "my_connectionftp" {
-  deletion_of_export_products = false
-  hostname                    = "political-narrative.name"
-  name                        = "Pamela Torphy"
-  passive_mode                = true
+  deletion_of_export_products = true
+  hostname                    = "aching-base.name"
+  name                        = "Sara Smith"
+  passive_mode                = false
   password                    = "...my_password..."
   port                        = 1
   type                        = "FTP"
-  username                    = "Pansy_Auer3"
+  username                    = "Mia.Harris"
 }

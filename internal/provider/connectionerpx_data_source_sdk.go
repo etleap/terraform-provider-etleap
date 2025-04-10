@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionERPXDataSourceModel) RefreshFromSharedConnectionErpx(resp *shared.ConnectionErpx) {
+func (r *ConnectionERPXDataSourceModel) RefreshFromSharedConnectionErpxOutput(resp *shared.ConnectionErpxOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.APIURL = types.StringValue(resp.APIURL)
 	r.ClientID = types.StringValue(resp.ClientID)
@@ -18,7 +18,7 @@ func (r *ConnectionERPXDataSourceModel) RefreshFromSharedConnectionErpx(resp *sh
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

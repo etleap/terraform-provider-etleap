@@ -28,20 +28,20 @@ type ConnectionLDAPDataSource struct {
 
 // ConnectionLDAPDataSourceModel describes the data model.
 type ConnectionLDAPDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	BaseDn                types.String            `tfsdk:"base_dn"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	Hostname              types.String            `tfsdk:"hostname"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Pen                   types.Int64             `tfsdk:"pen"`
-	Port                  types.Int64             `tfsdk:"port"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	User                  types.String            `tfsdk:"user"`
-	UseSsl                types.Bool              `tfsdk:"use_ssl"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	BaseDn                types.String                                    `tfsdk:"base_dn"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	Hostname              types.String                                    `tfsdk:"hostname"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	Pen                   types.Int64                                     `tfsdk:"pen"`
+	Port                  types.Int64                                     `tfsdk:"port"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	User                  types.String                                    `tfsdk:"user"`
+	UseSsl                types.Bool                                      `tfsdk:"use_ssl"`
 }
 
 // Metadata returns the data source type name.

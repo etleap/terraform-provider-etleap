@@ -26,8 +26,8 @@ type GetSAPCONCURConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSapConcur *shared.ConnectionSapConcur
-	// Forbidden. You don't have access to view this connection.
+	ConnectionSapConcur *shared.ConnectionSapConcurOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetSAPCONCURConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetSAPCONCURConnectionResponse) GetConnectionSapConcur() *shared.ConnectionSapConcur {
+func (o *GetSAPCONCURConnectionResponse) GetConnectionSapConcur() *shared.ConnectionSapConcurOutput {
 	if o == nil {
 		return nil
 	}

@@ -26,8 +26,8 @@ type GetTIKTOKADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionTikTokAds *shared.ConnectionTikTokAds
-	// Forbidden. You don't have access to view this connection.
+	ConnectionTikTokAds *shared.ConnectionTikTokAdsOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetTIKTOKADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetTIKTOKADSConnectionResponse) GetConnectionTikTokAds() *shared.ConnectionTikTokAds {
+func (o *GetTIKTOKADSConnectionResponse) GetConnectionTikTokAds() *shared.ConnectionTikTokAdsOutput {
 	if o == nil {
 		return nil
 	}

@@ -37,10 +37,10 @@ func (e *CdcProcessType) UnmarshalJSON(data []byte) error {
 }
 
 type CdcRestarts struct {
-	// Enable this if you want to request the restart of a healthy CDC process.
-	RestartHealthyCdcProcess *bool `default:"false" json:"restartHealthyCdcProcess"`
 	// Which CDC process to restart. Pipelines that load to Iceberg destinations ingest from the `STREAMING` CDC process, all other pipelines ingest from the `BATCH` CDC process.
 	CdcProcessType *CdcProcessType `default:"BATCH" json:"cdcProcessType"`
+	// Enable this if you want to request the restart of a healthy CDC process.
+	RestartHealthyCdcProcess *bool `default:"false" json:"restartHealthyCdcProcess"`
 }
 
 func (c CdcRestarts) MarshalJSON() ([]byte, error) {
@@ -54,16 +54,16 @@ func (c *CdcRestarts) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CdcRestarts) GetRestartHealthyCdcProcess() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.RestartHealthyCdcProcess
-}
-
 func (o *CdcRestarts) GetCdcProcessType() *CdcProcessType {
 	if o == nil {
 		return nil
 	}
 	return o.CdcProcessType
+}
+
+func (o *CdcRestarts) GetRestartHealthyCdcProcess() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RestartHealthyCdcProcess
 }

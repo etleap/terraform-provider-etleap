@@ -37,10 +37,10 @@ type CursorURIPagingStrategy struct {
 	// The name of the request parameter used to specify the page size.
 	PageSizeFieldName string `json:"pageSizeFieldName"`
 	// The maximum page size supported by the API.
-	MaxPageSize int64                        `json:"maxPageSize"`
-	Type        *CursorURIPagingStrategyType `default:"CURSOR_URI" json:"type"`
+	MaxPageSize int64 `json:"maxPageSize"`
 	// The path to the paging cursor inside the response body.
-	PathToCursor string `json:"pathToCursor"`
+	PathToCursor string                       `json:"pathToCursor"`
+	Type         *CursorURIPagingStrategyType `default:"CURSOR_URI" json:"type"`
 	// String prepended to the paging cursor string to turn it into a URL, e.g. because the cursor only contains the URL path.
 	URLPrefix string `json:"urlPrefix"`
 }
@@ -70,18 +70,18 @@ func (o *CursorURIPagingStrategy) GetMaxPageSize() int64 {
 	return o.MaxPageSize
 }
 
-func (o *CursorURIPagingStrategy) GetType() *CursorURIPagingStrategyType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
-}
-
 func (o *CursorURIPagingStrategy) GetPathToCursor() string {
 	if o == nil {
 		return ""
 	}
 	return o.PathToCursor
+}
+
+func (o *CursorURIPagingStrategy) GetType() *CursorURIPagingStrategyType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }
 
 func (o *CursorURIPagingStrategy) GetURLPrefix() string {

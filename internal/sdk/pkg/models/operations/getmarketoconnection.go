@@ -26,8 +26,8 @@ type GetMARKETOConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionMarketo *shared.ConnectionMarketo
-	// Forbidden. You don't have access to view this connection.
+	ConnectionMarketo *shared.ConnectionMarketoOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetMARKETOConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetMARKETOConnectionResponse) GetConnectionMarketo() *shared.ConnectionMarketo {
+func (o *GetMARKETOConnectionResponse) GetConnectionMarketo() *shared.ConnectionMarketoOutput {
 	if o == nil {
 		return nil
 	}

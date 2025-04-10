@@ -34,8 +34,8 @@ type UpdateJIRACLOUDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionJiraCloud *shared.ConnectionJiraCloud
-	// Bad Request
+	ConnectionJiraCloud *shared.ConnectionJiraCloudOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateJIRACLOUDConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateJIRACLOUDConnectionResponse) GetConnectionJiraCloud() *shared.ConnectionJiraCloud {
+func (o *UpdateJIRACLOUDConnectionResponse) GetConnectionJiraCloud() *shared.ConnectionJiraCloudOutput {
 	if o == nil {
 		return nil
 	}

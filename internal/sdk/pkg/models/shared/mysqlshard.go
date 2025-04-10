@@ -7,11 +7,11 @@ type MysqlShard struct {
 	ShardID string `json:"shardId"`
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Database  *string    `json:"database,omitempty"`
-	Address   string     `json:"address"`
-	Port      int64      `json:"port"`
 	Username  string     `json:"username"`
-	Password  string     `json:"password"`
 	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Password  string     `json:"password"`
+	Port      int64      `json:"port"`
+	Address   string     `json:"address"`
 }
 
 func (o *MysqlShard) GetShardID() string {
@@ -28,25 +28,18 @@ func (o *MysqlShard) GetDatabase() *string {
 	return o.Database
 }
 
-func (o *MysqlShard) GetAddress() string {
-	if o == nil {
-		return ""
-	}
-	return o.Address
-}
-
-func (o *MysqlShard) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
-}
-
 func (o *MysqlShard) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
+}
+
+func (o *MysqlShard) GetSSHConfig() *SSHConfig {
+	if o == nil {
+		return nil
+	}
+	return o.SSHConfig
 }
 
 func (o *MysqlShard) GetPassword() string {
@@ -56,9 +49,16 @@ func (o *MysqlShard) GetPassword() string {
 	return o.Password
 }
 
-func (o *MysqlShard) GetSSHConfig() *SSHConfig {
+func (o *MysqlShard) GetPort() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
-	return o.SSHConfig
+	return o.Port
+}
+
+func (o *MysqlShard) GetAddress() string {
+	if o == nil {
+		return ""
+	}
+	return o.Address
 }

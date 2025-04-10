@@ -35,7 +35,7 @@ type UpdateJIRAALIGNConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionJiraAlign *shared.ConnectionJiraAlign
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

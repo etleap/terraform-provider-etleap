@@ -34,8 +34,8 @@ type UpdateGONGConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionGong *shared.ConnectionGong
-	// Bad Request
+	ConnectionGong *shared.ConnectionGongOutput
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateGONGConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateGONGConnectionResponse) GetConnectionGong() *shared.ConnectionGong {
+func (o *UpdateGONGConnectionResponse) GetConnectionGong() *shared.ConnectionGongOutput {
 	if o == nil {
 		return nil
 	}

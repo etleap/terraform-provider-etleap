@@ -27,7 +27,7 @@ type GetOUTREACHConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionOutreach *shared.ConnectionOutreach
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

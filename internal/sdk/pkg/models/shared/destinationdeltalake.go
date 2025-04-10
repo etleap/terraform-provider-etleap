@@ -33,20 +33,18 @@ func (e *DestinationDeltaLakeType) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationDeltaLake struct {
-	Type DestinationDeltaLakeType `json:"type"`
 	// The universally unique identifier of the destination connection.
-	ConnectionID string `json:"connectionId"`
-	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
-	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
+	ConnectionID string                   `json:"connectionId"`
+	Type         DestinationDeltaLakeType `json:"type"`
 	// The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
 	PrimaryKey []string `json:"primaryKey,omitempty"`
+	// If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
+	WaitForQualityCheck *bool `default:"false" json:"waitForQualityCheck"`
 	// Whether schema changes detected during transformation should be handled automatically or not. Defaults to `true`.
-	AutomaticSchemaChanges *bool `default:"true" json:"automaticSchemaChanges"`
+	AutomaticSchemaChanges *bool  `default:"true" json:"automaticSchemaChanges"`
+	Table                  string `json:"table"`
 	// The schema in the destination that the tables will be created in.
 	Schema string `json:"schema"`
-	Table  string `json:"table"`
-	// Name of a column that indicates the time the record was updated at the destination.
-	LastUpdatedColumn *string `json:"lastUpdatedColumn,omitempty"`
 	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
 	RetainHistory *bool `default:"false" json:"retainHistory"`
 	// This setting disables column mapping on the tables created by this pipeline.
@@ -55,6 +53,8 @@ type DestinationDeltaLake struct {
 	//
 	// However, without column mapping, native schema changes are not supported and will cause the table's underlying Parquet files to be rewritten, which can be slow. Schema changes will also not preserve column constraints such as `NOT NULL` on the destination tables.
 	Pre10Dot2RuntimeSupport *bool `default:"false" json:"pre10Dot2RuntimeSupport"`
+	// Name of a column that indicates the time the record was updated at the destination.
+	LastUpdatedColumn *string `json:"lastUpdatedColumn,omitempty"`
 }
 
 func (d DestinationDeltaLake) MarshalJSON() ([]byte, error) {
@@ -68,13 +68,6 @@ func (d *DestinationDeltaLake) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationDeltaLake) GetType() DestinationDeltaLakeType {
-	if o == nil {
-		return DestinationDeltaLakeType("")
-	}
-	return o.Type
-}
-
 func (o *DestinationDeltaLake) GetConnectionID() string {
 	if o == nil {
 		return ""
@@ -82,11 +75,11 @@ func (o *DestinationDeltaLake) GetConnectionID() string {
 	return o.ConnectionID
 }
 
-func (o *DestinationDeltaLake) GetWaitForQualityCheck() *bool {
+func (o *DestinationDeltaLake) GetType() DestinationDeltaLakeType {
 	if o == nil {
-		return nil
+		return DestinationDeltaLakeType("")
 	}
-	return o.WaitForQualityCheck
+	return o.Type
 }
 
 func (o *DestinationDeltaLake) GetPrimaryKey() []string {
@@ -96,18 +89,18 @@ func (o *DestinationDeltaLake) GetPrimaryKey() []string {
 	return o.PrimaryKey
 }
 
+func (o *DestinationDeltaLake) GetWaitForQualityCheck() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.WaitForQualityCheck
+}
+
 func (o *DestinationDeltaLake) GetAutomaticSchemaChanges() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.AutomaticSchemaChanges
-}
-
-func (o *DestinationDeltaLake) GetSchema() string {
-	if o == nil {
-		return ""
-	}
-	return o.Schema
 }
 
 func (o *DestinationDeltaLake) GetTable() string {
@@ -117,11 +110,11 @@ func (o *DestinationDeltaLake) GetTable() string {
 	return o.Table
 }
 
-func (o *DestinationDeltaLake) GetLastUpdatedColumn() *string {
+func (o *DestinationDeltaLake) GetSchema() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.LastUpdatedColumn
+	return o.Schema
 }
 
 func (o *DestinationDeltaLake) GetRetainHistory() *bool {
@@ -136,4 +129,11 @@ func (o *DestinationDeltaLake) GetPre10Dot2RuntimeSupport() *bool {
 		return nil
 	}
 	return o.Pre10Dot2RuntimeSupport
+}
+
+func (o *DestinationDeltaLake) GetLastUpdatedColumn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.LastUpdatedColumn
 }

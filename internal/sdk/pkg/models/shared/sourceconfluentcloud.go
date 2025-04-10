@@ -32,20 +32,13 @@ func (e *SourceConfluentCloudType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceConfluentCloud struct {
-	Type SourceConfluentCloudType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string                   `json:"connectionId"`
+	Type         SourceConfluentCloudType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// You can ingest data from Kafka topics in your Confluent Cloud cluster.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceConfluentCloud) GetType() SourceConfluentCloudType {
-	if o == nil {
-		return SourceConfluentCloudType("")
-	}
-	return o.Type
 }
 
 func (o *SourceConfluentCloud) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceConfluentCloud) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceConfluentCloud) GetType() SourceConfluentCloudType {
+	if o == nil {
+		return SourceConfluentCloudType("")
+	}
+	return o.Type
 }
 
 func (o *SourceConfluentCloud) GetLatencyThreshold() *int64 {

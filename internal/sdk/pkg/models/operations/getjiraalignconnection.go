@@ -27,7 +27,7 @@ type GetJIRAALIGNConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionJiraAlign *shared.ConnectionJiraAlign
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

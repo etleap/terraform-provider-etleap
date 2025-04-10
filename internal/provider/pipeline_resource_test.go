@@ -5,16 +5,17 @@ import (
 	"text/template"
 
 	"github.com/etleap/terraform-provider-etleap/internal/provider/testutils"
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/plancheck"
-	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/models/shared"
 )
 
 type PipelineConfig struct {
 	Name                   string
 	AutomaticSchemaChanges bool
 	RefreshSchedule        *shared.RefreshScheduleTypes
+	LatencyThreshold       int
 	testutils.TestConstants
 }
 
@@ -29,6 +30,7 @@ resource "etleap_pipeline" "test_mysql_pipeline" {
 		database            = "etleap_test"
 		table               = "date_pk_test"
 		primary_key_columns = ["date_pk"]
+		latency_threshold   = {{.LatencyThreshold}}
 	  }
 	}
   
@@ -78,11 +80,12 @@ func TestAccMysqlToRedshiftPipeline(t *testing.T) {
 					pipelineName,
 					false,
 					&shared.RefreshScheduleTypes{
-                        RefreshScheduleModeDaily: &shared.RefreshScheduleModeDaily{
-                            Mode:      "DAILY",
-                            HourOfDay: 5,
-                        },
-                    },
+						RefreshScheduleModeDaily: &shared.RefreshScheduleModeDaily{
+							Mode:      "DAILY",
+							HourOfDay: 5,
+						},
+					},
+					1,
 					*testutils.Constants,
 				}),
 				ConfigPlanChecks: resource.ConfigPlanChecks{
@@ -93,23 +96,25 @@ func TestAccMysqlToRedshiftPipeline(t *testing.T) {
 				},
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "name", pipelineName),
+					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "source.mysql.latency_threshold", "1"),
 					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "source.mysql.connection_id", testutils.Constants.MysqlConnectionId),
 					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "destination.redshift.connection_id", testutils.Constants.RedshiftConnectionId),
 					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "destination.redshift.automatic_schema_changes", "false"),
 					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "refresh_schedule.daily.hour_of_day", "5"),
 				),
 			},
-			{ // Modify name and schema changes
+			{ // Modify name, schema changes and latency threshold
 				Config: GetProviderDefinition() + getPipelineConfig(&PipelineConfig{
 					pipelineName + " 2",
 					true,
 					&shared.RefreshScheduleTypes{
-                        RefreshScheduleModeWeekly: &shared.RefreshScheduleModeWeekly{
-                            Mode:      "WEEKLY",
-                            DayOfWeek: 1,
-                            HourOfDay: 5,
-                        },
-                    },
+						RefreshScheduleModeWeekly: &shared.RefreshScheduleModeWeekly{
+							Mode:      "WEEKLY",
+							DayOfWeek: 1,
+							HourOfDay: 5,
+						},
+					},
+					2,
 					*testutils.Constants,
 				}),
 				ConfigPlanChecks: resource.ConfigPlanChecks{
@@ -120,9 +125,10 @@ func TestAccMysqlToRedshiftPipeline(t *testing.T) {
 				},
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "name", pipelineName+" 2"),
+					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "source.mysql.latency_threshold", "2"),
 					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "destination.redshift.automatic_schema_changes", "true"),
 					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "refresh_schedule.weekly.hour_of_day", "5"),
-                    resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "refresh_schedule.weekly.day_of_week", "1"),
+					resource.TestCheckResourceAttr("etleap_pipeline.test_mysql_pipeline", "refresh_schedule.weekly.day_of_week", "1"),
 				),
 			},
 		},

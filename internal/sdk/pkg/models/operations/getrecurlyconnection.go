@@ -26,8 +26,8 @@ type GetRECURLYConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionRecurly *shared.ConnectionRecurly
-	// Forbidden. You don't have access to view this connection.
+	ConnectionRecurly *shared.ConnectionRecurlyOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetRECURLYConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetRECURLYConnectionResponse) GetConnectionRecurly() *shared.ConnectionRecurly {
+func (o *GetRECURLYConnectionResponse) GetConnectionRecurly() *shared.ConnectionRecurlyOutput {
 	if o == nil {
 		return nil
 	}

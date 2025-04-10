@@ -28,17 +28,17 @@ type ConnectionTHETRADEDESKDataSource struct {
 
 // ConnectionTHETRADEDESKDataSourceModel describes the data model.
 type ConnectionTHETRADEDESKDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	PartnerID             types.String            `tfsdk:"partner_id"`
-	Sandbox               types.Bool              `tfsdk:"sandbox"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	Username              types.String            `tfsdk:"username"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	PartnerID             types.String                                    `tfsdk:"partner_id"`
+	Sandbox               types.Bool                                      `tfsdk:"sandbox"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Username              types.String                                    `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.

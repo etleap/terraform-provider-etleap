@@ -35,7 +35,7 @@ type UpdateORACLEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionOracle *shared.ConnectionOracle
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

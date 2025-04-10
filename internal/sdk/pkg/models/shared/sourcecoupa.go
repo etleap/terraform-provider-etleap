@@ -32,20 +32,13 @@ func (e *SourceCoupaType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCoupa struct {
-	Type SourceCoupaType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string          `json:"connectionId"`
+	Type         SourceCoupaType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Coupa resource. Example: Approvals, Items, Suppliers.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceCoupa) GetType() SourceCoupaType {
-	if o == nil {
-		return SourceCoupaType("")
-	}
-	return o.Type
 }
 
 func (o *SourceCoupa) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceCoupa) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceCoupa) GetType() SourceCoupaType {
+	if o == nil {
+		return SourceCoupaType("")
+	}
+	return o.Type
 }
 
 func (o *SourceCoupa) GetLatencyThreshold() *int64 {

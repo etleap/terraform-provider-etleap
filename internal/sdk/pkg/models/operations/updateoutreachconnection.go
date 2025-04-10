@@ -35,7 +35,7 @@ type UpdateOUTREACHConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionOutreach *shared.ConnectionOutreach
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

@@ -32,29 +32,15 @@ func (e *ConnectionStripeUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionStripeUpdate struct {
-	// The unique name of this connection.
-	Name *string                     `json:"name,omitempty"`
-	Type *ConnectionStripeUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                       `json:"active,omitempty"`
+	Type   *ConnectionStripeUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your API secret key can be found in your dashboard under the "Developer" tab.
 	APISecretKey *string `json:"apiSecretKey,omitempty"`
-}
-
-func (o *ConnectionStripeUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionStripeUpdate) GetType() *ConnectionStripeUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionStripeUpdate) GetActive() *bool {
@@ -64,6 +50,20 @@ func (o *ConnectionStripeUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionStripeUpdate) GetType() *ConnectionStripeUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionStripeUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionStripeUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -71,9 +71,9 @@ func (o *ConnectionStripeUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionStripeUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionStripeUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -81,6 +81,13 @@ func (o *ConnectionStripeUpdate) GetUpdateScheduleInterval() *UpdateScheduleMode
 func (o *ConnectionStripeUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionStripeUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -95,13 +102,6 @@ func (o *ConnectionStripeUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDai
 func (o *ConnectionStripeUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionStripeUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionJiraAlignType string
-
-const (
-	ConnectionJiraAlignTypeJiraAlign ConnectionJiraAlignType = "JIRA_ALIGN"
-)
-
-func (e ConnectionJiraAlignType) ToPointer() *ConnectionJiraAlignType {
-	return &e
-}
-
-func (e *ConnectionJiraAlignType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "JIRA_ALIGN":
-		*e = ConnectionJiraAlignType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionJiraAlignType: %v", v)
-	}
-}
-
 // ConnectionJiraAlignStatus - The current status of the connection.
 type ConnectionJiraAlignStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionJiraAlignDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSc
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionJiraAlignDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionJiraAlignDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionJiraAlignDefaultUpdateSchedule) GetUpdateScheduleInterval() *
 func (o *ConnectionJiraAlignDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionJiraAlignDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,29 +108,46 @@ func (o *ConnectionJiraAlignDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Up
 	return nil
 }
 
-func (o *ConnectionJiraAlignDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionJiraAlignType string
+
+const (
+	ConnectionJiraAlignTypeJiraAlign ConnectionJiraAlignType = "JIRA_ALIGN"
+)
+
+func (e ConnectionJiraAlignType) ToPointer() *ConnectionJiraAlignType {
+	return &e
+}
+
+func (e *ConnectionJiraAlignType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "JIRA_ALIGN":
+		*e = ConnectionJiraAlignType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionJiraAlignType: %v", v)
+	}
 }
 
 type ConnectionJiraAlign struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                  `json:"name"`
-	Type ConnectionJiraAlignType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionJiraAlignStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionJiraAlignDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	// Whether this connection has been marked as active.
+	Active bool                    `json:"active"`
+	Type   ConnectionJiraAlignType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your JIRA Align subdomain (i.e. SUBDOMAIN.jiraalign.com)
 	Subdomain string `json:"subdomain"`
 }
@@ -163,11 +163,11 @@ func (c *ConnectionJiraAlign) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionJiraAlign) GetID() string {
+func (o *ConnectionJiraAlign) GetStatus() ConnectionJiraAlignStatus {
 	if o == nil {
-		return ""
+		return ConnectionJiraAlignStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionJiraAlign) GetName() string {
@@ -177,11 +177,18 @@ func (o *ConnectionJiraAlign) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionJiraAlign) GetType() ConnectionJiraAlignType {
+func (o *ConnectionJiraAlign) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionJiraAlignType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionJiraAlign) GetDefaultUpdateSchedule() []ConnectionJiraAlignDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionJiraAlignDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionJiraAlign) GetActive() bool {
@@ -191,18 +198,18 @@ func (o *ConnectionJiraAlign) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionJiraAlign) GetStatus() ConnectionJiraAlignStatus {
+func (o *ConnectionJiraAlign) GetType() ConnectionJiraAlignType {
 	if o == nil {
-		return ConnectionJiraAlignStatus("")
+		return ConnectionJiraAlignType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionJiraAlign) GetCreateDate() time.Time {
+func (o *ConnectionJiraAlign) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionJiraAlign) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -212,9 +219,9 @@ func (o *ConnectionJiraAlign) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionJiraAlign) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionJiraAlign) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -222,6 +229,13 @@ func (o *ConnectionJiraAlign) GetUpdateScheduleInterval() *UpdateScheduleModeInt
 func (o *ConnectionJiraAlign) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionJiraAlign) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -238,20 +252,6 @@ func (o *ConnectionJiraAlign) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekl
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
-}
-
-func (o *ConnectionJiraAlign) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionJiraAlign) GetDefaultUpdateSchedule() []ConnectionJiraAlignDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionJiraAlignDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionJiraAlign) GetSubdomain() string {
@@ -294,9 +294,9 @@ func (o *ConnectionJiraAlignInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionJiraAlignInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionJiraAlignInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -304,6 +304,13 @@ func (o *ConnectionJiraAlignInput) GetUpdateScheduleInterval() *UpdateScheduleMo
 func (o *ConnectionJiraAlignInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionJiraAlignInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -318,13 +325,6 @@ func (o *ConnectionJiraAlignInput) GetUpdateScheduleDaily() *UpdateScheduleModeD
 func (o *ConnectionJiraAlignInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionJiraAlignInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

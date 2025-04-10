@@ -1,7 +1,7 @@
 resource "etleap_connection_confluent_cloud" "my_connectionconfluent_cloud" {
-  deletion_of_export_products = true
+  deletion_of_export_products = false
   key                         = "...my_key..."
-  name                        = "Colin Mohr"
+  name                        = "Miss Evan Marks"
   schema_registry_key         = "...my_schema_registry_key..."
   schema_registry_secret      = "...my_schema_registry_secret..."
   schema_registry_server      = "...my_schema_registry_server..."

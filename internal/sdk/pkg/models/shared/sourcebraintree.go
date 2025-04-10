@@ -32,20 +32,13 @@ func (e *SourceBraintreeType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBraintree struct {
-	Type SourceBraintreeType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string              `json:"connectionId"`
+	Type         SourceBraintreeType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Braintree entity.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceBraintree) GetType() SourceBraintreeType {
-	if o == nil {
-		return SourceBraintreeType("")
-	}
-	return o.Type
 }
 
 func (o *SourceBraintree) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceBraintree) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceBraintree) GetType() SourceBraintreeType {
+	if o == nil {
+		return SourceBraintreeType("")
+	}
+	return o.Type
 }
 
 func (o *SourceBraintree) GetLatencyThreshold() *int64 {

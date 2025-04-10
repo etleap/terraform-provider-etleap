@@ -32,9 +32,9 @@ func (e *SourceFacebookAdsType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFacebookAds struct {
-	Type SourceFacebookAdsType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string                `json:"connectionId"`
+	Type         SourceFacebookAdsType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The aggregation level of the Facebook report. Example values: [Insights by Ad, Insights by Adset, Insights by Campaign, Insights by Account]
@@ -43,18 +43,18 @@ type SourceFacebookAds struct {
 	Breakdowns []string `json:"breakdowns"`
 }
 
-func (o *SourceFacebookAds) GetType() SourceFacebookAdsType {
-	if o == nil {
-		return SourceFacebookAdsType("")
-	}
-	return o.Type
-}
-
 func (o *SourceFacebookAds) GetConnectionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceFacebookAds) GetType() SourceFacebookAdsType {
+	if o == nil {
+		return SourceFacebookAdsType("")
+	}
+	return o.Type
 }
 
 func (o *SourceFacebookAds) GetLatencyThreshold() *int64 {

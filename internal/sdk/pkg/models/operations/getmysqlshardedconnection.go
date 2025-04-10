@@ -26,8 +26,8 @@ type GetMYSQLSHARDEDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionMysqlSharded *shared.ConnectionMysqlSharded
-	// Forbidden. You don't have access to view this connection.
+	ConnectionMysqlSharded *shared.ConnectionMysqlShardedOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetMYSQLSHARDEDConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetMYSQLSHARDEDConnectionResponse) GetConnectionMysqlSharded() *shared.ConnectionMysqlSharded {
+func (o *GetMYSQLSHARDEDConnectionResponse) GetConnectionMysqlSharded() *shared.ConnectionMysqlShardedOutput {
 	if o == nil {
 		return nil
 	}

@@ -8,20 +8,20 @@ import (
 
 // DbtScheduleInput - Request body for POST /dbtSchedules
 type DbtScheduleInput struct {
-	// The name of the dbt schedule.
-	Name string `json:"name"`
-	// `true` if the schedule should start as paused; defaults to `false`
-	Paused *bool `default:"false" json:"paused"`
-	// The selector (from `selectors.yaml`) to run the build for.
-	Selector string `json:"selector"`
-	// The target schema for the dbt build. See [here](https://docs.getdbt.com/docs/build/custom-schemas) for details on how it's used.
-	TargetSchema string `json:"targetSchema"`
 	// The cron expression that defines triggers for this schedule. The maximum supported cron schedule precision is 1 minute.
 	Cron string `json:"cron"`
-	// The [connection](https://docs.etleap.com/docs/api-v2/edbec13814bbc-connection) where the dbt build runs. The only supported connections are Redshift, Snowflake or Databricks Delta Lake destinations.
-	ConnectionID string `json:"connectionId"`
+	// The name of the dbt schedule.
+	Name string `json:"name"`
 	// Whether the dbt build is skipped if no new data has been ingested for any of the pipelines this schedule depends on.
 	SkipBuildIfNoNewData *bool `default:"false" json:"skipBuildIfNoNewData"`
+	// The [connection](https://docs.etleap.com/docs/api-v2/edbec13814bbc-connection) where the dbt build runs. The only supported connections are Redshift, Snowflake or Databricks Delta Lake destinations.
+	ConnectionID string `json:"connectionId"`
+	// The selector (from `selectors.yaml`) to run the build for.
+	Selector string `json:"selector"`
+	// `true` if the schedule should start as paused; defaults to `false`
+	Paused *bool `default:"false" json:"paused"`
+	// The target schema for the dbt build. See [here](https://docs.getdbt.com/docs/build/custom-schemas) for details on how it's used.
+	TargetSchema string `json:"targetSchema"`
 }
 
 func (d DbtScheduleInput) MarshalJSON() ([]byte, error) {
@@ -35,6 +35,13 @@ func (d *DbtScheduleInput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *DbtScheduleInput) GetCron() string {
+	if o == nil {
+		return ""
+	}
+	return o.Cron
+}
+
 func (o *DbtScheduleInput) GetName() string {
 	if o == nil {
 		return ""
@@ -42,32 +49,11 @@ func (o *DbtScheduleInput) GetName() string {
 	return o.Name
 }
 
-func (o *DbtScheduleInput) GetPaused() *bool {
+func (o *DbtScheduleInput) GetSkipBuildIfNoNewData() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Paused
-}
-
-func (o *DbtScheduleInput) GetSelector() string {
-	if o == nil {
-		return ""
-	}
-	return o.Selector
-}
-
-func (o *DbtScheduleInput) GetTargetSchema() string {
-	if o == nil {
-		return ""
-	}
-	return o.TargetSchema
-}
-
-func (o *DbtScheduleInput) GetCron() string {
-	if o == nil {
-		return ""
-	}
-	return o.Cron
+	return o.SkipBuildIfNoNewData
 }
 
 func (o *DbtScheduleInput) GetConnectionID() string {
@@ -77,9 +63,23 @@ func (o *DbtScheduleInput) GetConnectionID() string {
 	return o.ConnectionID
 }
 
-func (o *DbtScheduleInput) GetSkipBuildIfNoNewData() *bool {
+func (o *DbtScheduleInput) GetSelector() string {
+	if o == nil {
+		return ""
+	}
+	return o.Selector
+}
+
+func (o *DbtScheduleInput) GetPaused() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.SkipBuildIfNoNewData
+	return o.Paused
+}
+
+func (o *DbtScheduleInput) GetTargetSchema() string {
+	if o == nil {
+		return ""
+	}
+	return o.TargetSchema
 }

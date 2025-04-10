@@ -12,8 +12,8 @@ import (
 type WarehouseTypesType string
 
 const (
-	WarehouseTypesTypeRedshift  WarehouseTypesType = "REDSHIFT"
 	WarehouseTypesTypeSnowflake WarehouseTypesType = "SNOWFLAKE"
+	WarehouseTypesTypeRedshift  WarehouseTypesType = "REDSHIFT"
 )
 
 type WarehouseTypes struct {
@@ -21,18 +21,6 @@ type WarehouseTypes struct {
 	WarehouseSnowflake *WarehouseSnowflake
 
 	Type WarehouseTypesType
-}
-
-func CreateWarehouseTypesRedshift(redshift WarehouseRedshift) WarehouseTypes {
-	typ := WarehouseTypesTypeRedshift
-
-	typStr := WarehouseRedshiftType(typ)
-	redshift.Type = typStr
-
-	return WarehouseTypes{
-		WarehouseRedshift: &redshift,
-		Type:              typ,
-	}
 }
 
 func CreateWarehouseTypesSnowflake(snowflake WarehouseSnowflake) WarehouseTypes {
@@ -44,6 +32,18 @@ func CreateWarehouseTypesSnowflake(snowflake WarehouseSnowflake) WarehouseTypes 
 	return WarehouseTypes{
 		WarehouseSnowflake: &snowflake,
 		Type:               typ,
+	}
+}
+
+func CreateWarehouseTypesRedshift(redshift WarehouseRedshift) WarehouseTypes {
+	typ := WarehouseTypesTypeRedshift
+
+	typStr := WarehouseRedshiftType(typ)
+	redshift.Type = typStr
+
+	return WarehouseTypes{
+		WarehouseRedshift: &redshift,
+		Type:              typ,
 	}
 }
 
@@ -59,15 +59,6 @@ func (u *WarehouseTypes) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Type {
-	case "REDSHIFT":
-		warehouseRedshift := new(WarehouseRedshift)
-		if err := utils.UnmarshalJSON(data, &warehouseRedshift, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.WarehouseRedshift = warehouseRedshift
-		u.Type = WarehouseTypesTypeRedshift
-		return nil
 	case "SNOWFLAKE":
 		warehouseSnowflake := new(WarehouseSnowflake)
 		if err := utils.UnmarshalJSON(data, &warehouseSnowflake, "", true, true); err != nil {
@@ -76,6 +67,15 @@ func (u *WarehouseTypes) UnmarshalJSON(data []byte) error {
 
 		u.WarehouseSnowflake = warehouseSnowflake
 		u.Type = WarehouseTypesTypeSnowflake
+		return nil
+	case "REDSHIFT":
+		warehouseRedshift := new(WarehouseRedshift)
+		if err := utils.UnmarshalJSON(data, &warehouseRedshift, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.WarehouseRedshift = warehouseRedshift
+		u.Type = WarehouseTypesTypeRedshift
 		return nil
 	}
 

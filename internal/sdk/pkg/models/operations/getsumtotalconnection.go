@@ -27,7 +27,7 @@ type GetSUMTOTALConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSumTotal *shared.ConnectionSumTotal
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

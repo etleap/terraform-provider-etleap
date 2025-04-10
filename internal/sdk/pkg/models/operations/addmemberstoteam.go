@@ -46,7 +46,7 @@ type AddMembersToTeamResponse struct {
 	RawResponse *http.Response
 	// OK
 	TeamOutput *shared.TeamOutput
-	// Bad Request
+	// Team for this id was not found.
 	Errors *shared.Errors
 }
 

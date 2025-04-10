@@ -42,25 +42,25 @@ type ConnectionORACLEResource struct {
 
 // ConnectionORACLEResourceModel describes the resource data model.
 type ConnectionORACLEResourceModel struct {
-	Active                           types.Bool              `tfsdk:"active"`
-	Address                          types.String            `tfsdk:"address"`
-	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
-	Certificate                      types.String            `tfsdk:"certificate"`
-	CreateDate                       types.String            `tfsdk:"create_date"`
-	Database                         types.String            `tfsdk:"database"`
-	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts         types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                               types.String            `tfsdk:"id"`
-	Name                             types.String            `tfsdk:"name"`
-	Password                         types.String            `tfsdk:"password"`
-	Port                             types.Int64             `tfsdk:"port"`
-	RequireSslAndValidateCertificate types.Bool              `tfsdk:"require_ssl_and_validate_certificate"`
-	Schema                           types.String            `tfsdk:"schema"`
-	SSHConfig                        *SSHConfig              `tfsdk:"ssh_config"`
-	Status                           types.String            `tfsdk:"status"`
-	Type                             types.String            `tfsdk:"type"`
-	UpdateSchedule                   *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	Username                         types.String            `tfsdk:"username"`
+	Active                           types.Bool                                      `tfsdk:"active"`
+	Address                          types.String                                    `tfsdk:"address"`
+	CdcEnabled                       types.Bool                                      `tfsdk:"cdc_enabled"`
+	Certificate                      types.String                                    `tfsdk:"certificate"`
+	CreateDate                       types.String                                    `tfsdk:"create_date"`
+	Database                         types.String                                    `tfsdk:"database"`
+	DefaultUpdateSchedule            []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts         types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                               types.String                                    `tfsdk:"id"`
+	Name                             types.String                                    `tfsdk:"name"`
+	Password                         types.String                                    `tfsdk:"password"`
+	Port                             types.Int64                                     `tfsdk:"port"`
+	RequireSslAndValidateCertificate types.Bool                                      `tfsdk:"require_ssl_and_validate_certificate"`
+	Schema                           types.String                                    `tfsdk:"schema"`
+	SSHConfig                        *SSHConfig                                      `tfsdk:"ssh_config"`
+	Status                           types.String                                    `tfsdk:"status"`
+	Type                             types.String                                    `tfsdk:"type"`
+	UpdateSchedule                   *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Username                         types.String                                    `tfsdk:"username"`
 }
 
 func (r *ConnectionORACLEResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

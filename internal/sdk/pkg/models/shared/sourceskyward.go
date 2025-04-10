@@ -32,20 +32,13 @@ func (e *SourceSkywardType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSkyward struct {
-	Type SourceSkywardType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string            `json:"connectionId"`
+	Type         SourceSkywardType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Skyward entity. Spelled capitalized with spaces. Example Values: [Academic Sessions, Categories, Classes, Courses, Demographics, Enrollments, Grading Periods, Line Items, Orgs, Results, Schools, Students, Teachers, Terms, Users]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceSkyward) GetType() SourceSkywardType {
-	if o == nil {
-		return SourceSkywardType("")
-	}
-	return o.Type
 }
 
 func (o *SourceSkyward) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceSkyward) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceSkyward) GetType() SourceSkywardType {
+	if o == nil {
+		return SourceSkywardType("")
+	}
+	return o.Type
 }
 
 func (o *SourceSkyward) GetLatencyThreshold() *int64 {

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSAPCONCURDataSourceModel) RefreshFromSharedConnectionSapConcur(resp *shared.ConnectionSapConcur) {
+func (r *ConnectionSAPCONCURDataSourceModel) RefreshFromSharedConnectionSapConcurOutput(resp *shared.ConnectionSapConcurOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.ClientID = types.StringValue(resp.ClientID)
 	r.CompanyID = types.StringValue(resp.CompanyID)
@@ -17,7 +17,7 @@ func (r *ConnectionSAPCONCURDataSourceModel) RefreshFromSharedConnectionSapConcu
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

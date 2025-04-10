@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbInput() *shared.ConnectionFbInput {
+func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFb() *shared.ConnectionFb {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionFbType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbInput() *shared
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,7 +87,7 @@ func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbInput() *shared
 		}
 	}
 	code := r.Code.ValueString()
-	out := shared.ConnectionFbInput{
+	out := shared.ConnectionFb{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -96,14 +96,14 @@ func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbInput() *shared
 	return &out
 }
 
-func (r *ConnectionFACEBOOKADSResourceModel) RefreshFromSharedConnectionFb(resp *shared.ConnectionFb) {
+func (r *ConnectionFACEBOOKADSResourceModel) RefreshFromSharedConnectionFbOutput(resp *shared.ConnectionFbOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -186,18 +186,18 @@ func (r *ConnectionFACEBOOKADSResourceModel) RefreshFromSharedConnectionFb(resp 
 }
 
 func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbUpdate() *shared.ConnectionFbUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
-	} else {
-		name = nil
-	}
-	typeVar := shared.ConnectionFbUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
 	} else {
 		active = nil
+	}
+	typeVar := shared.ConnectionFbUpdateType(r.Type.ValueString())
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -260,12 +260,12 @@ func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbUpdate() *share
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -281,9 +281,9 @@ func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbUpdate() *share
 		code = nil
 	}
 	out := shared.ConnectionFbUpdate{
-		Name:           name,
-		Type:           typeVar,
 		Active:         active,
+		Type:           typeVar,
+		Name:           name,
 		UpdateSchedule: updateSchedule,
 		Code:           code,
 	}

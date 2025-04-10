@@ -32,9 +32,9 @@ func (e *SourceFreshsalesType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFreshsales struct {
-	Type SourceFreshsalesType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string               `json:"connectionId"`
+	Type         SourceFreshsalesType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Freshsales resource. Example values: [Leads, Deals, Appointments or Tasks]
@@ -43,18 +43,18 @@ type SourceFreshsales struct {
 	View []string `json:"view,omitempty"`
 }
 
-func (o *SourceFreshsales) GetType() SourceFreshsalesType {
-	if o == nil {
-		return SourceFreshsalesType("")
-	}
-	return o.Type
-}
-
 func (o *SourceFreshsales) GetConnectionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceFreshsales) GetType() SourceFreshsalesType {
+	if o == nil {
+		return SourceFreshsalesType("")
+	}
+	return o.Type
 }
 
 func (o *SourceFreshsales) GetLatencyThreshold() *int64 {

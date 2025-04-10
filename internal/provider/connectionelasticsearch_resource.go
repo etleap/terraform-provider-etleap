@@ -41,20 +41,20 @@ type ConnectionELASTICSEARCHResource struct {
 
 // ConnectionELASTICSEARCHResourceModel describes the resource data model.
 type ConnectionELASTICSEARCHResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	Address                  types.String            `tfsdk:"address"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	Password                 types.String            `tfsdk:"password"`
-	Port                     types.Int64             `tfsdk:"port"`
-	SslEnabled               types.Bool              `tfsdk:"ssl_enabled"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	Username                 types.String            `tfsdk:"username"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	Address                  types.String                                    `tfsdk:"address"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	Password                 types.String                                    `tfsdk:"password"`
+	Port                     types.Int64                                     `tfsdk:"port"`
+	SslEnabled               types.Bool                                      `tfsdk:"ssl_enabled"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Username                 types.String                                    `tfsdk:"username"`
 }
 
 func (r *ConnectionELASTICSEARCHResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

@@ -35,7 +35,7 @@ type UpdateQUORAADSConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionQuora *shared.ConnectionQuora
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

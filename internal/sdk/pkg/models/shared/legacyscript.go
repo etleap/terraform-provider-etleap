@@ -9,10 +9,10 @@ import (
 
 // LegacyScript - To be used only for copying a script exactly.
 type LegacyScript struct {
-	// The serialization of a script. Not meant to be human-readable.
-	LegacyScript string `json:"legacyScript"`
 	// The date and time when then the script was created.
 	CreateDate time.Time `json:"createDate"`
+	// The serialization of a script. Not meant to be human-readable.
+	LegacyScript string `json:"legacyScript"`
 }
 
 func (l LegacyScript) MarshalJSON() ([]byte, error) {
@@ -26,16 +26,16 @@ func (l *LegacyScript) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *LegacyScript) GetLegacyScript() string {
-	if o == nil {
-		return ""
-	}
-	return o.LegacyScript
-}
-
 func (o *LegacyScript) GetCreateDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.CreateDate
+}
+
+func (o *LegacyScript) GetLegacyScript() string {
+	if o == nil {
+		return ""
+	}
+	return o.LegacyScript
 }

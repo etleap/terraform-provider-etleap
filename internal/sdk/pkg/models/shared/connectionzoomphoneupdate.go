@@ -32,33 +32,19 @@ func (e *ConnectionZoomPhoneUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionZoomPhoneUpdate struct {
-	// The unique name of this connection.
-	Name *string                       `json:"name,omitempty"`
-	Type ConnectionZoomPhoneUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                         `json:"active,omitempty"`
+	Type   ConnectionZoomPhoneUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code *string `json:"code,omitempty"`
 	// Under Admin Dashboard > Created App > App credentials
-	ClientID *string `json:"clientId,omitempty"`
-	// Under Admin Dashboard > Created App > App credentials
 	ClientSecret *string `json:"clientSecret,omitempty"`
-}
-
-func (o *ConnectionZoomPhoneUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionZoomPhoneUpdate) GetType() ConnectionZoomPhoneUpdateType {
-	if o == nil {
-		return ConnectionZoomPhoneUpdateType("")
-	}
-	return o.Type
+	// Under Admin Dashboard > Created App > App credentials
+	ClientID *string `json:"clientId,omitempty"`
 }
 
 func (o *ConnectionZoomPhoneUpdate) GetActive() *bool {
@@ -68,6 +54,20 @@ func (o *ConnectionZoomPhoneUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionZoomPhoneUpdate) GetType() ConnectionZoomPhoneUpdateType {
+	if o == nil {
+		return ConnectionZoomPhoneUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionZoomPhoneUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionZoomPhoneUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -75,9 +75,9 @@ func (o *ConnectionZoomPhoneUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionZoomPhoneUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionZoomPhoneUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -85,6 +85,13 @@ func (o *ConnectionZoomPhoneUpdate) GetUpdateScheduleInterval() *UpdateScheduleM
 func (o *ConnectionZoomPhoneUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionZoomPhoneUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -103,13 +110,6 @@ func (o *ConnectionZoomPhoneUpdate) GetUpdateScheduleWeekly() *UpdateScheduleMod
 	return nil
 }
 
-func (o *ConnectionZoomPhoneUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
 func (o *ConnectionZoomPhoneUpdate) GetCode() *string {
 	if o == nil {
 		return nil
@@ -117,16 +117,16 @@ func (o *ConnectionZoomPhoneUpdate) GetCode() *string {
 	return o.Code
 }
 
-func (o *ConnectionZoomPhoneUpdate) GetClientID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientID
-}
-
 func (o *ConnectionZoomPhoneUpdate) GetClientSecret() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ClientSecret
+}
+
+func (o *ConnectionZoomPhoneUpdate) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
 }

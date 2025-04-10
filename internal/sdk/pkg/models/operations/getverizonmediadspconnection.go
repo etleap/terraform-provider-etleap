@@ -27,7 +27,7 @@ type GetVERIZONMEDIADSPConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionVerizonMedia *shared.ConnectionVerizonMedia
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

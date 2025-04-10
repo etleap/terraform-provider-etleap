@@ -26,8 +26,8 @@ type GetGOOGLESHEETSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionGoogleSheets *shared.ConnectionGoogleSheets
-	// Forbidden. You don't have access to view this connection.
+	ConnectionGoogleSheets *shared.ConnectionGoogleSheetsOutput
+	// Not Found.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetGOOGLESHEETSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetGOOGLESHEETSConnectionResponse) GetConnectionGoogleSheets() *shared.ConnectionGoogleSheets {
+func (o *GetGOOGLESHEETSConnectionResponse) GetConnectionGoogleSheets() *shared.ConnectionGoogleSheetsOutput {
 	if o == nil {
 		return nil
 	}

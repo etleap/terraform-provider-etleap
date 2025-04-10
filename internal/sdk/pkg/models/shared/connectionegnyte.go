@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionEgnyteType string
-
-const (
-	ConnectionEgnyteTypeEgnyte ConnectionEgnyteType = "EGNYTE"
-)
-
-func (e ConnectionEgnyteType) ToPointer() *ConnectionEgnyteType {
-	return &e
-}
-
-func (e *ConnectionEgnyteType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "EGNYTE":
-		*e = ConnectionEgnyteType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionEgnyteType: %v", v)
-	}
-}
-
 // ConnectionEgnyteStatus - The current status of the connection.
 type ConnectionEgnyteStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionEgnyteDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSched
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionEgnyteDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionEgnyteDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionEgnyteDefaultUpdateSchedule) GetUpdateScheduleInterval() *Upd
 func (o *ConnectionEgnyteDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionEgnyteDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,33 +108,50 @@ func (o *ConnectionEgnyteDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Updat
 	return nil
 }
 
-func (o *ConnectionEgnyteDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionEgnyteType string
+
+const (
+	ConnectionEgnyteTypeEgnyte ConnectionEgnyteType = "EGNYTE"
+)
+
+func (e ConnectionEgnyteType) ToPointer() *ConnectionEgnyteType {
+	return &e
+}
+
+func (e *ConnectionEgnyteType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "EGNYTE":
+		*e = ConnectionEgnyteType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionEgnyteType: %v", v)
+	}
 }
 
 type ConnectionEgnyte struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string               `json:"name"`
-	Type ConnectionEgnyteType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionEgnyteStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionEgnyteDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// The name of your Egnyte domain.
-	DomainName string `json:"domainName"`
+	// Whether this connection has been marked as active.
+	Active bool                 `json:"active"`
+	Type   ConnectionEgnyteType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The path for your base directory. Use "/" for the whole file system.
 	BaseDirectory string `json:"baseDirectory"`
+	// The name of your Egnyte domain.
+	DomainName string `json:"domainName"`
 }
 
 func (c ConnectionEgnyte) MarshalJSON() ([]byte, error) {
@@ -165,11 +165,11 @@ func (c *ConnectionEgnyte) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionEgnyte) GetID() string {
+func (o *ConnectionEgnyte) GetStatus() ConnectionEgnyteStatus {
 	if o == nil {
-		return ""
+		return ConnectionEgnyteStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionEgnyte) GetName() string {
@@ -179,11 +179,18 @@ func (o *ConnectionEgnyte) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionEgnyte) GetType() ConnectionEgnyteType {
+func (o *ConnectionEgnyte) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionEgnyteType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionEgnyte) GetDefaultUpdateSchedule() []ConnectionEgnyteDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionEgnyteDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionEgnyte) GetActive() bool {
@@ -193,18 +200,18 @@ func (o *ConnectionEgnyte) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionEgnyte) GetStatus() ConnectionEgnyteStatus {
+func (o *ConnectionEgnyte) GetType() ConnectionEgnyteType {
 	if o == nil {
-		return ConnectionEgnyteStatus("")
+		return ConnectionEgnyteType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionEgnyte) GetCreateDate() time.Time {
+func (o *ConnectionEgnyte) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionEgnyte) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -214,9 +221,9 @@ func (o *ConnectionEgnyte) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionEgnyte) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionEgnyte) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -224,6 +231,13 @@ func (o *ConnectionEgnyte) GetUpdateScheduleInterval() *UpdateScheduleModeInterv
 func (o *ConnectionEgnyte) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionEgnyte) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -242,18 +256,11 @@ func (o *ConnectionEgnyte) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	return nil
 }
 
-func (o *ConnectionEgnyte) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionEgnyte) GetDefaultUpdateSchedule() []ConnectionEgnyteDefaultUpdateSchedule {
+func (o *ConnectionEgnyte) GetBaseDirectory() string {
 	if o == nil {
-		return []ConnectionEgnyteDefaultUpdateSchedule{}
+		return ""
 	}
-	return o.DefaultUpdateSchedule
+	return o.BaseDirectory
 }
 
 func (o *ConnectionEgnyte) GetDomainName() string {
@@ -261,13 +268,6 @@ func (o *ConnectionEgnyte) GetDomainName() string {
 		return ""
 	}
 	return o.DomainName
-}
-
-func (o *ConnectionEgnyte) GetBaseDirectory() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseDirectory
 }
 
 type ConnectionEgnyteInput struct {
@@ -278,10 +278,10 @@ type ConnectionEgnyteInput struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code string `json:"code"`
-	// The name of your Egnyte domain.
-	DomainName string `json:"domainName"`
 	// The path for your base directory. Use "/" for the whole file system.
 	BaseDirectory string `json:"baseDirectory"`
+	// The name of your Egnyte domain.
+	DomainName string `json:"domainName"`
 }
 
 func (o *ConnectionEgnyteInput) GetName() string {
@@ -305,9 +305,9 @@ func (o *ConnectionEgnyteInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionEgnyteInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionEgnyteInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -315,6 +315,13 @@ func (o *ConnectionEgnyteInput) GetUpdateScheduleInterval() *UpdateScheduleModeI
 func (o *ConnectionEgnyteInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionEgnyteInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -333,13 +340,6 @@ func (o *ConnectionEgnyteInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWee
 	return nil
 }
 
-func (o *ConnectionEgnyteInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
 func (o *ConnectionEgnyteInput) GetCode() string {
 	if o == nil {
 		return ""
@@ -347,16 +347,16 @@ func (o *ConnectionEgnyteInput) GetCode() string {
 	return o.Code
 }
 
-func (o *ConnectionEgnyteInput) GetDomainName() string {
-	if o == nil {
-		return ""
-	}
-	return o.DomainName
-}
-
 func (o *ConnectionEgnyteInput) GetBaseDirectory() string {
 	if o == nil {
 		return ""
 	}
 	return o.BaseDirectory
+}
+
+func (o *ConnectionEgnyteInput) GetDomainName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DomainName
 }

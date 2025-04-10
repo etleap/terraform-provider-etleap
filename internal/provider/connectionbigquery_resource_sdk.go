@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryInput() *shared.ConnectionBigQueryInput {
+func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQuery() *shared.ConnectionBigQuery {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionBigQueryType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryInput() *sha
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,24 +86,24 @@ func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryInput() *sha
 			}
 		}
 	}
+	jsonCredentials := r.JSONCredentials.ValueString()
 	dataset := new(string)
 	if !r.Dataset.IsUnknown() && !r.Dataset.IsNull() {
 		*dataset = r.Dataset.ValueString()
 	} else {
 		dataset = nil
 	}
-	jsonCredentials := r.JSONCredentials.ValueString()
-	out := shared.ConnectionBigQueryInput{
+	out := shared.ConnectionBigQuery{
 		Name:            name,
 		Type:            typeVar,
 		UpdateSchedule:  updateSchedule,
-		Dataset:         dataset,
 		JSONCredentials: jsonCredentials,
+		Dataset:         dataset,
 	}
 	return &out
 }
 
-func (r *ConnectionBIGQUERYResourceModel) RefreshFromSharedConnectionBigQuery(resp *shared.ConnectionBigQuery) {
+func (r *ConnectionBIGQUERYResourceModel) RefreshFromSharedConnectionBigQueryOutput(resp *shared.ConnectionBigQueryOutput) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Dataset = types.StringPointerValue(resp.Dataset)
@@ -111,7 +111,7 @@ func (r *ConnectionBIGQUERYResourceModel) RefreshFromSharedConnectionBigQuery(re
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -193,11 +193,11 @@ func (r *ConnectionBIGQUERYResourceModel) RefreshFromSharedConnectionBigQuery(re
 }
 
 func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryUpdate() *shared.ConnectionBigQueryUpdate {
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	typeVar := new(shared.ConnectionBigQueryUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -205,11 +205,11 @@ func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryUpdate() *sh
 	} else {
 		typeVar = nil
 	}
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -272,12 +272,12 @@ func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryUpdate() *sh
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
+			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
+				DayOfMonth: dayOfMonth,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -286,25 +286,25 @@ func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryUpdate() *sh
 			}
 		}
 	}
-	dataset := new(string)
-	if !r.Dataset.IsUnknown() && !r.Dataset.IsNull() {
-		*dataset = r.Dataset.ValueString()
-	} else {
-		dataset = nil
-	}
 	jsonCredentials := new(string)
 	if !r.JSONCredentials.IsUnknown() && !r.JSONCredentials.IsNull() {
 		*jsonCredentials = r.JSONCredentials.ValueString()
 	} else {
 		jsonCredentials = nil
 	}
+	dataset := new(string)
+	if !r.Dataset.IsUnknown() && !r.Dataset.IsNull() {
+		*dataset = r.Dataset.ValueString()
+	} else {
+		dataset = nil
+	}
 	out := shared.ConnectionBigQueryUpdate{
-		Name:            name,
-		Type:            typeVar,
 		Active:          active,
+		Type:            typeVar,
+		Name:            name,
 		UpdateSchedule:  updateSchedule,
-		Dataset:         dataset,
 		JSONCredentials: jsonCredentials,
+		Dataset:         dataset,
 	}
 	return &out
 }

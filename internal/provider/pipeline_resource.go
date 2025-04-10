@@ -1741,7 +1741,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Optional: true,
 								NestedObject: schema.NestedAttributeObject{
 									Attributes: map[string]schema.Attribute{
-										"type_1": schema.StringAttribute{
+										"one": schema.StringAttribute{
 											PlanModifiers: []planmodifier.String{
 												stringplanmodifier.RequiresReplaceIfConfigured(),
 											},
@@ -2148,7 +2148,6 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"source": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
@@ -2156,7 +2155,6 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 					"active_campaign": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2188,20 +2186,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ACTIVE_CAMPAIGN"]`,
+								Description: `Not Null; must be one of ["ACTIVE_CAMPAIGN"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -2210,12 +2206,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"bigquery": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2253,11 +2247,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -2293,11 +2286,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["BIGQUERY"]`,
+								Description: `Not Null; must be one of ["BIGQUERY"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -2306,12 +2298,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"bing_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2357,20 +2347,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["BING_ADS"]`,
+								Description: `Not Null; must be one of ["BING_ADS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -2379,12 +2367,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"blackline": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2416,20 +2402,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["BLACKLINE"]`,
+								Description: `Not Null; must be one of ["BLACKLINE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -2438,12 +2422,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"braintree": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2475,20 +2457,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["BRAINTREE"]`,
+								Description: `Not Null; must be one of ["BRAINTREE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -2497,12 +2477,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"confluent_cloud": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2534,20 +2512,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["CONFLUENT_CLOUD"]`,
+								Description: `Not Null; must be one of ["CONFLUENT_CLOUD"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -2556,12 +2532,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"coupa": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2593,20 +2567,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["COUPA"]`,
+								Description: `Not Null; must be one of ["COUPA"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -2615,12 +2587,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"criteo": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2679,11 +2649,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"metrics": schema.ListAttribute{
 								Computed: true,
@@ -2715,11 +2684,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["CRITEO"]`,
+								Description: `Not Null; must be one of ["CRITEO"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -2728,12 +2696,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"db2": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2762,11 +2728,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -2811,11 +2776,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["DB2"]`,
+								Description: `Not Null; must be one of ["DB2"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -2824,12 +2788,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"db2_sharded": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2858,11 +2820,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -2907,11 +2868,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["DB2_SHARDED"]`,
+								Description: `Not Null; must be one of ["DB2_SHARDED"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -2920,12 +2880,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"delta_lake": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -2954,11 +2912,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -3003,11 +2960,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["DELTA_LAKE"]`,
+								Description: `Not Null; must be one of ["DELTA_LAKE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3016,12 +2972,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"egnyte": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3053,20 +3007,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["EGNYTE"]`,
+								Description: `Not Null; must be one of ["EGNYTE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3075,12 +3027,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"elasticsearch": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3112,20 +3062,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ELASTICSEARCH"]`,
+								Description: `Not Null; must be one of ["ELASTICSEARCH"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3134,12 +3082,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"elluminate": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3181,11 +3127,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"schema_name": schema.StringAttribute{
 								Computed: true,
@@ -3202,11 +3147,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ELLUMINATE"]`,
+								Description: `Not Null; must be one of ["ELLUMINATE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3215,12 +3159,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"eloqua": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3252,20 +3194,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ELOQUA"]`,
+								Description: `Not Null; must be one of ["ELOQUA"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3274,12 +3214,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"erpx": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3311,20 +3249,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ERPX"]`,
+								Description: `Not Null; must be one of ["ERPX"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3333,12 +3269,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"facebook_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3384,20 +3318,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["FACEBOOK_ADS"]`,
+								Description: `Not Null; must be one of ["FACEBOOK_ADS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3406,12 +3338,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"fifteen_five": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3443,20 +3373,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["FIFTEEN_FIVE"]`,
+								Description: `Not Null; must be one of ["FIFTEEN_FIVE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3465,12 +3393,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"freshchat": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3502,20 +3428,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["FRESHCHAT"]`,
+								Description: `Not Null; must be one of ["FRESHCHAT"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3534,12 +3458,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `Only when Entity is related to Deals. Select which views you want Etleap to pull data from. Requires replacement if changed. `,
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"freshsales": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3571,20 +3493,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["FRESHSALES"]`,
+								Description: `Not Null; must be one of ["FRESHSALES"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3603,12 +3523,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `Only when Entity is related to Deals. Select which views you want Etleap to pull data from. Requires replacement if changed. `,
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"freshworks": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3640,20 +3558,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["FRESHWORKS"]`,
+								Description: `Not Null; must be one of ["FRESHWORKS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3662,12 +3578,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"ftp": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3705,11 +3619,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"low_watermark": schema.StringAttribute{
 								Computed: true,
@@ -3756,11 +3669,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["FTP"]`,
+								Description: `Not Null; must be one of ["FTP"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3769,12 +3681,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"gong": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3806,20 +3716,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["GONG"]`,
+								Description: `Not Null; must be one of ["GONG"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3828,12 +3736,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"google_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3891,11 +3797,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"metrics": schema.ListAttribute{
 								Computed: true,
@@ -3926,11 +3831,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["GOOGLE_ADS"]`,
+								Description: `Not Null; must be one of ["GOOGLE_ADS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -3939,12 +3843,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"google_analytics_ga4": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -3990,11 +3892,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"metrics": schema.ListAttribute{
 								Computed: true,
@@ -4013,11 +3914,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["GOOGLE_ANALYTICS_GA4"]`,
+								Description: `Not Null; must be one of ["GOOGLE_ANALYTICS_GA4"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4026,12 +3926,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"google_cloud_storage": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4069,11 +3967,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"low_watermark": schema.StringAttribute{
 								Computed: true,
@@ -4120,11 +4017,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["GOOGLE_CLOUD_STORAGE"]`,
+								Description: `Not Null; must be one of ["GOOGLE_CLOUD_STORAGE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4133,12 +4029,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"google_sheets": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4170,20 +4064,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["GOOGLE_SHEETS"]`,
+								Description: `Not Null; must be one of ["GOOGLE_SHEETS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4192,12 +4084,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"hubspot": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4229,20 +4119,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["HUBSPOT"]`,
+								Description: `Not Null; must be one of ["HUBSPOT"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4251,12 +4139,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"impact_radius": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4288,20 +4174,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["IMPACT_RADIUS"]`,
+								Description: `Not Null; must be one of ["IMPACT_RADIUS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4310,12 +4194,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"intercom": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4347,20 +4229,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["INTERCOM"]`,
+								Description: `Not Null; must be one of ["INTERCOM"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4369,12 +4249,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"jira": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4406,20 +4284,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["JIRA"]`,
+								Description: `Not Null; must be one of ["JIRA"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4428,12 +4304,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"jira_align": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4465,20 +4339,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["JIRA_ALIGN"]`,
+								Description: `Not Null; must be one of ["JIRA_ALIGN"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4487,12 +4359,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"jira_cloud": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4524,20 +4394,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["JIRA_CLOUD"]`,
+								Description: `Not Null; must be one of ["JIRA_CLOUD"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4546,12 +4414,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"kafka": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4583,20 +4449,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["KAFKA"]`,
+								Description: `Not Null; must be one of ["KAFKA"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4605,12 +4469,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"kustomer": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4642,20 +4504,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["KUSTOMER"]`,
+								Description: `Not Null; must be one of ["KUSTOMER"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4664,12 +4524,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"ldap": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4701,20 +4559,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["LDAP"]`,
+								Description: `Not Null; must be one of ["LDAP"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4723,12 +4579,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"ldap_virtual_list_view": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4760,20 +4614,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["LDAP_VIRTUAL_LIST_VIEW"]`,
+								Description: `Not Null; must be one of ["LDAP_VIRTUAL_LIST_VIEW"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4782,12 +4634,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"linked_in_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4819,11 +4669,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"metrics": schema.ListAttribute{
 								Computed: true,
@@ -4854,11 +4703,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["LINKED_IN_ADS"]`,
+								Description: `Not Null; must be one of ["LINKED_IN_ADS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4867,12 +4715,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"marketo": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4917,20 +4763,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["MARKETO"]`,
+								Description: `Not Null; must be one of ["MARKETO"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4939,12 +4783,65 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
+					},
+					"microsoft_entra_id": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The universally unique identifier for the source. Requires replacement if changed. ; Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"entity": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The Microsoft Entra ID entity. Requires replacement if changed. ; Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["MICROSOFT_ENTRA_ID"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"MICROSOFT_ENTRA_ID",
+									),
+								},
+							},
+						},
 					},
 					"mixpanel": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -4976,20 +4873,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["MIXPANEL"]`,
+								Description: `Not Null; must be one of ["MIXPANEL"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -4998,12 +4893,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"mongodb": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5023,11 +4916,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"table": schema.StringAttribute{
 								Computed: true,
@@ -5050,11 +4942,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["MONGODB"]`,
+								Description: `Not Null; must be one of ["MONGODB"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5063,12 +4954,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"mysql": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5106,11 +4995,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -5146,11 +5034,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["MYSQL"]`,
+								Description: `Not Null; must be one of ["MYSQL"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5159,12 +5046,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"mysql_sharded": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5202,11 +5087,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -5242,11 +5126,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["MYSQL_SHARDED"]`,
+								Description: `Not Null; must be one of ["MYSQL_SHARDED"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5255,12 +5138,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"netsuite": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5292,20 +5173,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["NETSUITE"]`,
+								Description: `Not Null; must be one of ["NETSUITE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5314,12 +5193,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"netsuite_v2": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5351,20 +5228,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["NETSUITE_V2"]`,
+								Description: `Not Null; must be one of ["NETSUITE_V2"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5373,12 +5248,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"oracle": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5407,11 +5280,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -5456,11 +5328,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ORACLE"]`,
+								Description: `Not Null; must be one of ["ORACLE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5469,12 +5340,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"oracle_sharded": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5503,11 +5372,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -5552,11 +5420,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ORACLE_SHARDED"]`,
+								Description: `Not Null; must be one of ["ORACLE_SHARDED"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5565,12 +5432,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"outlook": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5602,20 +5467,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["OUTLOOK"]`,
+								Description: `Not Null; must be one of ["OUTLOOK"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5624,12 +5487,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"outreach": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5661,20 +5522,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["OUTREACH"]`,
+								Description: `Not Null; must be one of ["OUTREACH"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5683,12 +5542,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"pinterest_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5733,11 +5590,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"level": schema.ListAttribute{
 								Computed: true,
@@ -5765,11 +5621,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["PINTEREST_ADS"]`,
+								Description: `Not Null; must be one of ["PINTEREST_ADS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5778,12 +5633,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"postgres": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5812,11 +5665,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -5861,11 +5713,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["POSTGRES"]`,
+								Description: `Not Null; must be one of ["POSTGRES"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5874,12 +5725,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"postgres_sharded": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -5908,11 +5757,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -5957,11 +5805,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["POSTGRES_SHARDED"]`,
+								Description: `Not Null; must be one of ["POSTGRES_SHARDED"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -5970,12 +5817,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"quora_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6007,20 +5852,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["QUORA_ADS"]`,
+								Description: `Not Null; must be one of ["QUORA_ADS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6029,12 +5872,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"rave_medidata": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6066,20 +5907,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["RAVE_MEDIDATA"]`,
+								Description: `Not Null; must be one of ["RAVE_MEDIDATA"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6088,12 +5927,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"recurly": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6125,20 +5962,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["RECURLY"]`,
+								Description: `Not Null; must be one of ["RECURLY"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6147,12 +5982,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"redshift": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6181,11 +6014,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -6230,11 +6062,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["REDSHIFT"]`,
+								Description: `Not Null; must be one of ["REDSHIFT"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6243,12 +6074,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"redshift_sharded": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6277,11 +6106,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -6326,11 +6154,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["REDSHIFT_SHARDED"]`,
+								Description: `Not Null; must be one of ["REDSHIFT_SHARDED"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6339,12 +6166,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"s3_input": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6382,11 +6207,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"low_watermark": schema.StringAttribute{
 								Computed: true,
@@ -6443,11 +6267,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["S3_INPUT"]`,
+								Description: `Not Null; must be one of ["S3_INPUT"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6456,12 +6279,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"s3_legacy": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6490,11 +6311,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"low_watermark": schema.StringAttribute{
 								Computed: true,
@@ -6542,11 +6362,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["S3_LEGACY"]`,
+								Description: `Not Null; must be one of ["S3_LEGACY"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6555,12 +6374,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"salesforce": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6592,20 +6409,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SALESFORCE"]`,
+								Description: `Not Null; must be one of ["SALESFORCE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6614,12 +6429,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"salesforce_marketing_cloud": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6651,20 +6464,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SALESFORCE_MARKETING_CLOUD"]`,
+								Description: `Not Null; must be one of ["SALESFORCE_MARKETING_CLOUD"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6673,12 +6484,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"sap_concur": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6710,20 +6519,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SAP_CONCUR"]`,
+								Description: `Not Null; must be one of ["SAP_CONCUR"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6732,12 +6539,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"sap_hana": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6766,11 +6571,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -6815,11 +6619,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SAP_HANA"]`,
+								Description: `Not Null; must be one of ["SAP_HANA"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6828,12 +6631,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"sap_hana_sharded": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6862,11 +6663,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -6911,11 +6711,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SAP_HANA_SHARDED"]`,
+								Description: `Not Null; must be one of ["SAP_HANA_SHARDED"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6924,12 +6723,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"seismic": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -6961,20 +6758,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SEISMIC"]`,
+								Description: `Not Null; must be one of ["SEISMIC"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -6983,12 +6778,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"service_now": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7020,20 +6813,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SERVICE_NOW"]`,
+								Description: `Not Null; must be one of ["SERVICE_NOW"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7042,12 +6833,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"sftp": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7085,11 +6874,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"low_watermark": schema.StringAttribute{
 								Computed: true,
@@ -7136,11 +6924,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SFTP"]`,
+								Description: `Not Null; must be one of ["SFTP"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7149,12 +6936,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"shopify": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7186,20 +6971,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SHOPIFY"]`,
+								Description: `Not Null; must be one of ["SHOPIFY"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7208,12 +6991,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"skyward": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7245,20 +7026,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SKYWARD"]`,
+								Description: `Not Null; must be one of ["SKYWARD"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7267,12 +7046,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"snapchat_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7323,11 +7100,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"metrics": schema.ListAttribute{
 								Computed: true,
@@ -7355,11 +7131,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SNAPCHAT_ADS"]`,
+								Description: `Not Null; must be one of ["SNAPCHAT_ADS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7368,12 +7143,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"snowflake": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7402,11 +7175,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -7451,11 +7223,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SNOWFLAKE"]`,
+								Description: `Not Null; must be one of ["SNOWFLAKE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7464,12 +7235,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"snowflake_sharded": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7498,11 +7267,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -7547,11 +7315,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SNOWFLAKE_SHARDED"]`,
+								Description: `Not Null; must be one of ["SNOWFLAKE_SHARDED"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7560,12 +7327,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"sql_server": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7594,11 +7359,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -7643,11 +7407,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SQL_SERVER"]`,
+								Description: `Not Null; must be one of ["SQL_SERVER"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7656,12 +7419,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"sql_server_sharded": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7690,11 +7451,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"primary_key_columns": schema.ListAttribute{
 								Computed: true,
@@ -7739,11 +7499,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SQL_SERVER_SHARDED"]`,
+								Description: `Not Null; must be one of ["SQL_SERVER_SHARDED"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7752,12 +7511,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"square": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7789,20 +7546,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SQUARE"]`,
+								Description: `Not Null; must be one of ["SQUARE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7811,12 +7566,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"streaming": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7845,11 +7598,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"low_watermark": schema.StringAttribute{
 								Computed: true,
@@ -7897,11 +7649,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["STREAMING"]`,
+								Description: `Not Null; must be one of ["STREAMING"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7910,12 +7661,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"stripe": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -7947,20 +7696,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["STRIPE"]`,
+								Description: `Not Null; must be one of ["STRIPE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -7969,12 +7716,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"sumtotal": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8006,20 +7751,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["SUMTOTAL"]`,
+								Description: `Not Null; must be one of ["SUMTOTAL"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8028,12 +7771,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"the_trade_desk": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8065,20 +7806,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["THE_TRADE_DESK"]`,
+								Description: `Not Null; must be one of ["THE_TRADE_DESK"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8087,12 +7826,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"tik_tok_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8146,11 +7883,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"metrics": schema.ListAttribute{
 								Computed: true,
@@ -8168,11 +7904,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["TIK_TOK_ADS"]`,
+								Description: `Not Null; must be one of ["TIK_TOK_ADS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8181,12 +7916,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"twilio": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8218,20 +7951,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["TWILIO"]`,
+								Description: `Not Null; must be one of ["TWILIO"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8240,12 +7971,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"twitter_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8277,20 +8006,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["TWITTER_ADS"]`,
+								Description: `Not Null; must be one of ["TWITTER_ADS"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8299,12 +8026,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"user_defined_api": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8336,20 +8061,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["USER_DEFINED_API"]`,
+								Description: `Not Null; must be one of ["USER_DEFINED_API"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8358,12 +8081,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"uservoice": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8395,20 +8116,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["USERVOICE"]`,
+								Description: `Not Null; must be one of ["USERVOICE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8417,12 +8136,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"veeva": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8454,20 +8171,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["VEEVA"]`,
+								Description: `Not Null; must be one of ["VEEVA"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8476,12 +8191,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"verizon_media_dsp": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8527,11 +8240,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"metrics": schema.ListAttribute{
 								Computed: true,
@@ -8550,11 +8262,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["VERIZON_MEDIA_DSP"]`,
+								Description: `Not Null; must be one of ["VERIZON_MEDIA_DSP"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8563,12 +8274,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"workday_report": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8600,20 +8309,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["WORKDAY_REPORT"]`,
+								Description: `Not Null; must be one of ["WORKDAY_REPORT"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8622,12 +8329,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"workfront": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8659,20 +8364,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["WORKFRONT"]`,
+								Description: `Not Null; must be one of ["WORKFRONT"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8681,12 +8384,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"zendesk": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8718,20 +8419,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ZENDESK"]`,
+								Description: `Not Null; must be one of ["ZENDESK"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8740,12 +8439,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"zoom_phone": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8777,20 +8474,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ZOOM_PHONE"]`,
+								Description: `Not Null; must be one of ["ZOOM_PHONE"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8799,12 +8494,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 					"zuora": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplaceIfConfigured(),
 							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
@@ -8836,20 +8529,18 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `. Requires replacement if changed. `,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplaceIfConfigured(),
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `Requires replacement if changed. ; Not Null; must be one of ["ZUORA"]`,
+								Description: `Not Null; must be one of ["ZUORA"]`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 									stringvalidator.OneOf(
@@ -8858,10 +8549,8 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 							},
 						},
-						Description: `Requires replacement if changed. `,
 					},
 				},
-				Description: `Requires replacement if changed. `,
 				Validators: []validator.Object{
 					validators.ExactlyOneChild(),
 				},

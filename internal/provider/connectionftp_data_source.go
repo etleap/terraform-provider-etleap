@@ -28,18 +28,18 @@ type ConnectionFTPDataSource struct {
 
 // ConnectionFTPDataSourceModel describes the data model.
 type ConnectionFTPDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	Hostname              types.String            `tfsdk:"hostname"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	PassiveMode           types.Bool              `tfsdk:"passive_mode"`
-	Port                  types.Int64             `tfsdk:"port"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	Username              types.String            `tfsdk:"username"`
+	Active                types.Bool                                      `tfsdk:"active"`
+	CreateDate            types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	Hostname              types.String                                    `tfsdk:"hostname"`
+	ID                    types.String                                    `tfsdk:"id"`
+	Name                  types.String                                    `tfsdk:"name"`
+	PassiveMode           types.Bool                                      `tfsdk:"passive_mode"`
+	Port                  types.Int64                                     `tfsdk:"port"`
+	Status                types.String                                    `tfsdk:"status"`
+	Type                  types.String                                    `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Username              types.String                                    `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.

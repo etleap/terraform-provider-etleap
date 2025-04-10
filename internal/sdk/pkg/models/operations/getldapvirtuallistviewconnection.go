@@ -27,7 +27,7 @@ type GetLDAPVIRTUALLISTVIEWConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionLdapVirtualListView *shared.ConnectionLdapVirtualListView
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

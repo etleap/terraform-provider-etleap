@@ -35,7 +35,7 @@ type UpdateS3INPUTConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionS3Input *shared.ConnectionS3Input
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

@@ -3,15 +3,8 @@
 package shared
 
 type RetentionByDay struct {
-	RowsRemovedFromWarehouse []RetentionDayRowCount `json:"rowsRemovedFromWarehouse"`
 	RowsCurrentlyInWarehouse []RetentionDayRowCount `json:"rowsCurrentlyInWarehouse"`
-}
-
-func (o *RetentionByDay) GetRowsRemovedFromWarehouse() []RetentionDayRowCount {
-	if o == nil {
-		return []RetentionDayRowCount{}
-	}
-	return o.RowsRemovedFromWarehouse
+	RowsRemovedFromWarehouse []RetentionDayRowCount `json:"rowsRemovedFromWarehouse"`
 }
 
 func (o *RetentionByDay) GetRowsCurrentlyInWarehouse() []RetentionDayRowCount {
@@ -19,4 +12,11 @@ func (o *RetentionByDay) GetRowsCurrentlyInWarehouse() []RetentionDayRowCount {
 		return []RetentionDayRowCount{}
 	}
 	return o.RowsCurrentlyInWarehouse
+}
+
+func (o *RetentionByDay) GetRowsRemovedFromWarehouse() []RetentionDayRowCount {
+	if o == nil {
+		return []RetentionDayRowCount{}
+	}
+	return o.RowsRemovedFromWarehouse
 }

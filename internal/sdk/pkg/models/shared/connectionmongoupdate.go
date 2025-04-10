@@ -31,18 +31,30 @@ func (e *ConnectionMongoUpdateType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type ConnectionMongoUpdateSSHConfigurationUpdate struct {
-	// The server address for the SSH connection.
-	Address *string `json:"address,omitempty"`
-	// The username for the SSH connection.
-	Username *string `json:"username,omitempty"`
+type ConnectionMongoUpdateReplicaSet struct {
+	Port    int64  `json:"port"`
+	Address string `json:"address"`
 }
 
-func (o *ConnectionMongoUpdateSSHConfigurationUpdate) GetAddress() *string {
+func (o *ConnectionMongoUpdateReplicaSet) GetPort() int64 {
 	if o == nil {
-		return nil
+		return 0
+	}
+	return o.Port
+}
+
+func (o *ConnectionMongoUpdateReplicaSet) GetAddress() string {
+	if o == nil {
+		return ""
 	}
 	return o.Address
+}
+
+type ConnectionMongoUpdateSSHConfigurationUpdate struct {
+	// The username for the SSH connection.
+	Username *string `json:"username,omitempty"`
+	// The server address for the SSH connection.
+	Address *string `json:"address,omitempty"`
 }
 
 func (o *ConnectionMongoUpdateSSHConfigurationUpdate) GetUsername() *string {
@@ -52,57 +64,31 @@ func (o *ConnectionMongoUpdateSSHConfigurationUpdate) GetUsername() *string {
 	return o.Username
 }
 
-type ReplicaSet struct {
-	Address string `json:"address"`
-	Port    int64  `json:"port"`
-}
-
-func (o *ReplicaSet) GetAddress() string {
+func (o *ConnectionMongoUpdateSSHConfigurationUpdate) GetAddress() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Address
 }
 
-func (o *ReplicaSet) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
-}
-
 type ConnectionMongoUpdate struct {
-	// The unique name of this connection.
-	Name *string                    `json:"name,omitempty"`
-	Type *ConnectionMongoUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                      `json:"active,omitempty"`
+	Type   *ConnectionMongoUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes                         `json:"updateSchedule,omitempty"`
-	SSHConfig      *ConnectionMongoUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
-	ReplicaSet     []ReplicaSet                                 `json:"replicaSet,omitempty"`
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	Username       *string              `json:"username,omitempty"`
+	// Whether Etleap should connect over SSL.
+	UseSsl     *bool                             `json:"useSsl,omitempty"`
+	ReplicaSet []ConnectionMongoUpdateReplicaSet `json:"replicaSet,omitempty"`
+	// The database used for authentication. Omit to use the connection database.
+	AuthDatabaseName *string                                      `json:"authDatabaseName,omitempty"`
+	SSHConfig        *ConnectionMongoUpdateSSHConfigurationUpdate `json:"sshConfig,omitempty"`
 	// The name of the database, e.g. 'etleap'
 	DatabaseName *string `json:"databaseName,omitempty"`
-	// Whether Etleap should connect over SSL.
-	UseSsl   *bool   `json:"useSsl,omitempty"`
-	Username *string `json:"username,omitempty"`
-	Password *string `json:"password,omitempty"`
-	// The database used for authentication. Omit to use the connection database.
-	AuthDatabaseName *string `json:"authDatabaseName,omitempty"`
-}
-
-func (o *ConnectionMongoUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionMongoUpdate) GetType() *ConnectionMongoUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	Password     *string `json:"password,omitempty"`
 }
 
 func (o *ConnectionMongoUpdate) GetActive() *bool {
@@ -112,6 +98,20 @@ func (o *ConnectionMongoUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionMongoUpdate) GetType() *ConnectionMongoUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionMongoUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionMongoUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -119,9 +119,9 @@ func (o *ConnectionMongoUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMongoUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionMongoUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -129,6 +129,13 @@ func (o *ConnectionMongoUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeI
 func (o *ConnectionMongoUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionMongoUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -147,32 +154,11 @@ func (o *ConnectionMongoUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWee
 	return nil
 }
 
-func (o *ConnectionMongoUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionMongoUpdate) GetSSHConfig() *ConnectionMongoUpdateSSHConfigurationUpdate {
+func (o *ConnectionMongoUpdate) GetUsername() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SSHConfig
-}
-
-func (o *ConnectionMongoUpdate) GetReplicaSet() []ReplicaSet {
-	if o == nil {
-		return nil
-	}
-	return o.ReplicaSet
-}
-
-func (o *ConnectionMongoUpdate) GetDatabaseName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DatabaseName
+	return o.Username
 }
 
 func (o *ConnectionMongoUpdate) GetUseSsl() *bool {
@@ -182,18 +168,11 @@ func (o *ConnectionMongoUpdate) GetUseSsl() *bool {
 	return o.UseSsl
 }
 
-func (o *ConnectionMongoUpdate) GetUsername() *string {
+func (o *ConnectionMongoUpdate) GetReplicaSet() []ConnectionMongoUpdateReplicaSet {
 	if o == nil {
 		return nil
 	}
-	return o.Username
-}
-
-func (o *ConnectionMongoUpdate) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
+	return o.ReplicaSet
 }
 
 func (o *ConnectionMongoUpdate) GetAuthDatabaseName() *string {
@@ -201,4 +180,25 @@ func (o *ConnectionMongoUpdate) GetAuthDatabaseName() *string {
 		return nil
 	}
 	return o.AuthDatabaseName
+}
+
+func (o *ConnectionMongoUpdate) GetSSHConfig() *ConnectionMongoUpdateSSHConfigurationUpdate {
+	if o == nil {
+		return nil
+	}
+	return o.SSHConfig
+}
+
+func (o *ConnectionMongoUpdate) GetDatabaseName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DatabaseName
+}
+
+func (o *ConnectionMongoUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
 }

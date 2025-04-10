@@ -109,19 +109,19 @@ func (s *DbtSchedule) Create(ctx context.Context, request *shared.DbtScheduleInp
 	return res, nil
 }
 
-// Get a dbt schedule
-// Returns the details of a dbt schedule.
+// Delete a dbt schedule
+// Delete a dbt schedule.
 //
 // <!-- theme: warning -->
 // > This feature is currently in preview which means that it is subject to non-backwards-compatible and breaking changes.
-func (s *DbtSchedule) Get(ctx context.Context, request operations.GetDbtScheduleRequest) (*operations.GetDbtScheduleResponse, error) {
+func (s *DbtSchedule) Delete(ctx context.Context, request operations.DeleteDbtScheduleRequest) (*operations.DeleteDbtScheduleResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/dbtSchedules/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -147,24 +147,13 @@ func (s *DbtSchedule) Get(ctx context.Context, request operations.GetDbtSchedule
 
 	contentType := httpRes.Header.Get("Content-Type")
 
-	res := &operations.GetDbtScheduleResponse{
+	res := &operations.DeleteDbtScheduleResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.DbtScheduleOutput
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.DbtScheduleOutput = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
+	case httpRes.StatusCode == 204:
 	case httpRes.StatusCode == 401:
 		fallthrough
 	case httpRes.StatusCode == 404:
@@ -271,19 +260,19 @@ func (s *DbtSchedule) Update(ctx context.Context, request operations.UpdateDbtSc
 	return res, nil
 }
 
-// Delete a dbt schedule
-// Delete a dbt schedule.
+// Get a dbt schedule
+// Returns the details of a dbt schedule.
 //
 // <!-- theme: warning -->
 // > This feature is currently in preview which means that it is subject to non-backwards-compatible and breaking changes.
-func (s *DbtSchedule) Delete(ctx context.Context, request operations.DeleteDbtScheduleRequest) (*operations.DeleteDbtScheduleResponse, error) {
+func (s *DbtSchedule) Get(ctx context.Context, request operations.GetDbtScheduleRequest) (*operations.GetDbtScheduleResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/dbtSchedules/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "DELETE", url, nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -309,13 +298,24 @@ func (s *DbtSchedule) Delete(ctx context.Context, request operations.DeleteDbtSc
 
 	contentType := httpRes.Header.Get("Content-Type")
 
-	res := &operations.DeleteDbtScheduleResponse{
+	res := &operations.GetDbtScheduleResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.DbtScheduleOutput
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.DbtScheduleOutput = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
 	case httpRes.StatusCode == 401:
 		fallthrough
 	case httpRes.StatusCode == 404:

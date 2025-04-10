@@ -32,20 +32,13 @@ func (e *SourceServiceNowType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceServiceNow struct {
-	Type SourceServiceNowType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string `json:"connectionId"`
+	ConnectionID string               `json:"connectionId"`
+	Type         SourceServiceNowType `json:"type"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The ServiceNow entity. Example values: [Task, Problem, Incident]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceServiceNow) GetType() SourceServiceNowType {
-	if o == nil {
-		return SourceServiceNowType("")
-	}
-	return o.Type
 }
 
 func (o *SourceServiceNow) GetConnectionID() string {
@@ -53,6 +46,13 @@ func (o *SourceServiceNow) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *SourceServiceNow) GetType() SourceServiceNowType {
+	if o == nil {
+		return SourceServiceNowType("")
+	}
+	return o.Type
 }
 
 func (o *SourceServiceNow) GetLatencyThreshold() *int64 {

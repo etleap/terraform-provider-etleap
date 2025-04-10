@@ -32,39 +32,25 @@ func (e *ConnectionConfluentCloudUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionConfluentCloudUpdate struct {
-	// The unique name of this connection in the form host:port
-	Name *string                             `json:"name,omitempty"`
-	Type *ConnectionConfluentCloudUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                               `json:"active,omitempty"`
+	Type   *ConnectionConfluentCloudUpdateType `json:"type"`
+	// The unique name of this connection in the form host:port
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// The Confluent Cloud bootstrap server
-	ServerURL *string `json:"serverUrl,omitempty"`
-	// The API Key
-	Key *string `json:"key,omitempty"`
-	// The API Secret
-	Secret *string `json:"secret,omitempty"`
-	// The Schema Registry Server, e.g. 'instance.region.confluent.cloud'
-	SchemaRegistryServer *string `json:"schemaRegistryServer,omitempty"`
-	// Schema Registry API Key
-	SchemaRegistryKey *string `json:"schemaRegistryKey,omitempty"`
 	// Schema Registry API Secret
 	SchemaRegistrySecret *string `json:"schemaRegistrySecret,omitempty"`
-}
-
-func (o *ConnectionConfluentCloudUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionConfluentCloudUpdate) GetType() *ConnectionConfluentCloudUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	// Schema Registry API Key
+	SchemaRegistryKey *string `json:"schemaRegistryKey,omitempty"`
+	// The Confluent Cloud bootstrap server
+	ServerURL *string `json:"serverUrl,omitempty"`
+	// The Schema Registry Server, e.g. 'instance.region.confluent.cloud'
+	SchemaRegistryServer *string `json:"schemaRegistryServer,omitempty"`
+	// The API Secret
+	Secret *string `json:"secret,omitempty"`
+	// The API Key
+	Key *string `json:"key,omitempty"`
 }
 
 func (o *ConnectionConfluentCloudUpdate) GetActive() *bool {
@@ -74,6 +60,20 @@ func (o *ConnectionConfluentCloudUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionConfluentCloudUpdate) GetType() *ConnectionConfluentCloudUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionConfluentCloudUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionConfluentCloudUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -81,9 +81,9 @@ func (o *ConnectionConfluentCloudUpdate) GetUpdateSchedule() *UpdateScheduleType
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionConfluentCloudUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionConfluentCloudUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -91,6 +91,13 @@ func (o *ConnectionConfluentCloudUpdate) GetUpdateScheduleInterval() *UpdateSche
 func (o *ConnectionConfluentCloudUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionConfluentCloudUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -109,39 +116,11 @@ func (o *ConnectionConfluentCloudUpdate) GetUpdateScheduleWeekly() *UpdateSchedu
 	return nil
 }
 
-func (o *ConnectionConfluentCloudUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionConfluentCloudUpdate) GetServerURL() *string {
+func (o *ConnectionConfluentCloudUpdate) GetSchemaRegistrySecret() *string {
 	if o == nil {
 		return nil
 	}
-	return o.ServerURL
-}
-
-func (o *ConnectionConfluentCloudUpdate) GetKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Key
-}
-
-func (o *ConnectionConfluentCloudUpdate) GetSecret() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Secret
-}
-
-func (o *ConnectionConfluentCloudUpdate) GetSchemaRegistryServer() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SchemaRegistryServer
+	return o.SchemaRegistrySecret
 }
 
 func (o *ConnectionConfluentCloudUpdate) GetSchemaRegistryKey() *string {
@@ -151,9 +130,30 @@ func (o *ConnectionConfluentCloudUpdate) GetSchemaRegistryKey() *string {
 	return o.SchemaRegistryKey
 }
 
-func (o *ConnectionConfluentCloudUpdate) GetSchemaRegistrySecret() *string {
+func (o *ConnectionConfluentCloudUpdate) GetServerURL() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SchemaRegistrySecret
+	return o.ServerURL
+}
+
+func (o *ConnectionConfluentCloudUpdate) GetSchemaRegistryServer() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SchemaRegistryServer
+}
+
+func (o *ConnectionConfluentCloudUpdate) GetSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Secret
+}
+
+func (o *ConnectionConfluentCloudUpdate) GetKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Key
 }

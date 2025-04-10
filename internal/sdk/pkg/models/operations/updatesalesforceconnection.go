@@ -35,7 +35,7 @@ type UpdateSALESFORCEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSalesforce *shared.ConnectionSalesforce
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

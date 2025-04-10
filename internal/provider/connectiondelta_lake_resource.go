@@ -41,19 +41,19 @@ type ConnectionDELTALAKEResource struct {
 
 // ConnectionDELTALAKEResourceModel describes the resource data model.
 type ConnectionDELTALAKEResourceModel struct {
-	Active                   types.Bool              `tfsdk:"active"`
-	CreateDate               types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	Hostname                 types.String            `tfsdk:"hostname"`
-	HTTPPath                 types.String            `tfsdk:"http_path"`
-	ID                       types.String            `tfsdk:"id"`
-	Name                     types.String            `tfsdk:"name"`
-	PersonalAccessToken      types.String            `tfsdk:"personal_access_token"`
-	Schema                   types.String            `tfsdk:"schema"`
-	Status                   types.String            `tfsdk:"status"`
-	Type                     types.String            `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                   types.Bool                                      `tfsdk:"active"`
+	CreateDate               types.String                                    `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
+	Hostname                 types.String                                    `tfsdk:"hostname"`
+	HTTPPath                 types.String                                    `tfsdk:"http_path"`
+	ID                       types.String                                    `tfsdk:"id"`
+	Name                     types.String                                    `tfsdk:"name"`
+	PersonalAccessToken      types.String                                    `tfsdk:"personal_access_token"`
+	Schema                   types.String                                    `tfsdk:"schema"`
+	Status                   types.String                                    `tfsdk:"status"`
+	Type                     types.String                                    `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionDELTALAKEResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -581,7 +581,7 @@ func (r *ConnectionDELTALAKEResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToSharedConnectionDeltaLakeInput()
+	request := *data.ToSharedConnectionDeltaLake()
 	res, err := r.client.Connection.CreateDELTALAKEConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -602,7 +602,7 @@ func (r *ConnectionDELTALAKEResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionDeltaLake(res.ConnectionDeltaLake)
+	data.RefreshFromSharedConnectionDeltaLakeOutput(res.ConnectionDeltaLake)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetDELTALAKEConnectionRequest{
@@ -628,7 +628,7 @@ func (r *ConnectionDELTALAKEResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionDeltaLake(res1.ConnectionDeltaLake)
+	data.RefreshFromSharedConnectionDeltaLakeOutput(res1.ConnectionDeltaLake)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -677,7 +677,7 @@ func (r *ConnectionDELTALAKEResource) Read(ctx context.Context, req resource.Rea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionDeltaLake(res.ConnectionDeltaLake)
+	data.RefreshFromSharedConnectionDeltaLakeOutput(res.ConnectionDeltaLake)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -723,7 +723,7 @@ func (r *ConnectionDELTALAKEResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionDeltaLake(res.ConnectionDeltaLake)
+	data.RefreshFromSharedConnectionDeltaLakeOutput(res.ConnectionDeltaLake)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetDELTALAKEConnectionRequest{
@@ -749,7 +749,7 @@ func (r *ConnectionDELTALAKEResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionDeltaLake(res1.ConnectionDeltaLake)
+	data.RefreshFromSharedConnectionDeltaLakeOutput(res1.ConnectionDeltaLake)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

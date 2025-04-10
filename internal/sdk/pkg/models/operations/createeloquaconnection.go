@@ -15,7 +15,7 @@ type CreateELOQUAConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionEloqua *shared.ConnectionEloqua
+	ConnectionEloqua *shared.ConnectionEloquaOutput
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateELOQUAConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateELOQUAConnectionResponse) GetConnectionEloqua() *shared.ConnectionEloqua {
+func (o *CreateELOQUAConnectionResponse) GetConnectionEloqua() *shared.ConnectionEloquaOutput {
 	if o == nil {
 		return nil
 	}

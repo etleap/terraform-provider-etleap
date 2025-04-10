@@ -15,7 +15,7 @@ func (r *ConnectionSNOWFLAKESHARDEDDataSourceModel) RefreshFromSharedConnectionS
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 DefaultUpdateSchedule
+		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -70,16 +70,16 @@ func (r *ConnectionSNOWFLAKESHARDEDDataSourceModel) RefreshFromSharedConnectionS
 		r.Shards = r.Shards[:len(resp.Shards)]
 	}
 	for shardsCount, shardsItem := range resp.Shards {
-		var shards1 SnowflakeShardOutput
+		var shards1 SnowflakeShard1
 		shards1.Address = types.StringValue(shardsItem.Address)
 		if shardsItem.Authentication == nil {
 			shards1.Authentication = nil
 		} else {
-			shards1.Authentication = &SnowflakeAuthenticationTypesOutput{}
-			if shardsItem.Authentication.SnowflakeAuthenticationKeyPairOutput != nil {
-				shards1.Authentication.KeyPair = &SnowflakeAuthenticationKeyPairOutput{}
-				shards1.Authentication.KeyPair.PublicKey = types.StringValue(shardsItem.Authentication.SnowflakeAuthenticationKeyPairOutput.PublicKey)
-				shards1.Authentication.KeyPair.Type = types.StringValue(string(shardsItem.Authentication.SnowflakeAuthenticationKeyPairOutput.Type))
+			shards1.Authentication = &SnowflakeAuthenticationTypes{}
+			if shardsItem.Authentication.SnowflakeAuthenticationKeyPair != nil {
+				shards1.Authentication.KeyPair = &SnowflakeAuthenticationKeyPair1{}
+				shards1.Authentication.KeyPair.PublicKey = types.StringValue(shardsItem.Authentication.SnowflakeAuthenticationKeyPair.PublicKey)
+				shards1.Authentication.KeyPair.Type = types.StringValue(string(shardsItem.Authentication.SnowflakeAuthenticationKeyPair.Type))
 			}
 			if shardsItem.Authentication.SnowflakeAuthenticationPasswordOutput != nil {
 				shards1.Authentication.Password = &SnowflakeAuthenticationPasswordOutput{}

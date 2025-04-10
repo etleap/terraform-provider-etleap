@@ -27,7 +27,7 @@ type GetGOOGLECLOUDSTORAGEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionGoogleCloudStorage *shared.ConnectionGoogleCloudStorage
-	// Forbidden. You don't have access to view this connection.
+	// Not Found.
 	Errors *shared.Errors
 }
 

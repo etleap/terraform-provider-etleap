@@ -32,29 +32,15 @@ func (e *ConnectionFbUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionFbUpdate struct {
-	// The unique name of this connection.
-	Name *string                `json:"name,omitempty"`
-	Type ConnectionFbUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                  `json:"active,omitempty"`
+	Type   ConnectionFbUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code *string `json:"code,omitempty"`
-}
-
-func (o *ConnectionFbUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionFbUpdate) GetType() ConnectionFbUpdateType {
-	if o == nil {
-		return ConnectionFbUpdateType("")
-	}
-	return o.Type
 }
 
 func (o *ConnectionFbUpdate) GetActive() *bool {
@@ -64,6 +50,20 @@ func (o *ConnectionFbUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionFbUpdate) GetType() ConnectionFbUpdateType {
+	if o == nil {
+		return ConnectionFbUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionFbUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionFbUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -71,9 +71,9 @@ func (o *ConnectionFbUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionFbUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionFbUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -81,6 +81,13 @@ func (o *ConnectionFbUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInte
 func (o *ConnectionFbUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionFbUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -95,13 +102,6 @@ func (o *ConnectionFbUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
 func (o *ConnectionFbUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
-	}
-	return nil
-}
-
-func (o *ConnectionFbUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

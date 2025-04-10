@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionLdapVirtualListViewType string
-
-const (
-	ConnectionLdapVirtualListViewTypeLdapVirtualListView ConnectionLdapVirtualListViewType = "LDAP_VIRTUAL_LIST_VIEW"
-)
-
-func (e ConnectionLdapVirtualListViewType) ToPointer() *ConnectionLdapVirtualListViewType {
-	return &e
-}
-
-func (e *ConnectionLdapVirtualListViewType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "LDAP_VIRTUAL_LIST_VIEW":
-		*e = ConnectionLdapVirtualListViewType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionLdapVirtualListViewType: %v", v)
-	}
-}
-
 // ConnectionLdapVirtualListViewStatus - The current status of the connection.
 type ConnectionLdapVirtualListViewStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionLdapVirtualListViewDefaultUpdateSchedule) GetUpdateSchedule()
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionLdapVirtualListViewDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionLdapVirtualListViewDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionLdapVirtualListViewDefaultUpdateSchedule) GetUpdateScheduleIn
 func (o *ConnectionLdapVirtualListViewDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionLdapVirtualListViewDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,27 +108,44 @@ func (o *ConnectionLdapVirtualListViewDefaultUpdateSchedule) GetUpdateScheduleWe
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListViewDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-// ConnectionLdapVirtualListViewScope - Indicates the set of entries that may be considered potential matches for the search.
-type ConnectionLdapVirtualListViewScope string
+type ConnectionLdapVirtualListViewType string
 
 const (
-	ConnectionLdapVirtualListViewScopeBase        ConnectionLdapVirtualListViewScope = "Base"
-	ConnectionLdapVirtualListViewScopeSingleLevel ConnectionLdapVirtualListViewScope = "Single-level"
-	ConnectionLdapVirtualListViewScopeSubtree     ConnectionLdapVirtualListViewScope = "Subtree"
+	ConnectionLdapVirtualListViewTypeLdapVirtualListView ConnectionLdapVirtualListViewType = "LDAP_VIRTUAL_LIST_VIEW"
 )
 
-func (e ConnectionLdapVirtualListViewScope) ToPointer() *ConnectionLdapVirtualListViewScope {
+func (e ConnectionLdapVirtualListViewType) ToPointer() *ConnectionLdapVirtualListViewType {
 	return &e
 }
 
-func (e *ConnectionLdapVirtualListViewScope) UnmarshalJSON(data []byte) error {
+func (e *ConnectionLdapVirtualListViewType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "LDAP_VIRTUAL_LIST_VIEW":
+		*e = ConnectionLdapVirtualListViewType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionLdapVirtualListViewType: %v", v)
+	}
+}
+
+// Scope - Indicates the set of entries that may be considered potential matches for the search.
+type Scope string
+
+const (
+	ScopeBase        Scope = "Base"
+	ScopeSingleLevel Scope = "Single-level"
+	ScopeSubtree     Scope = "Subtree"
+)
+
+func (e Scope) ToPointer() *Scope {
+	return &e
+}
+
+func (e *Scope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -156,42 +156,42 @@ func (e *ConnectionLdapVirtualListViewScope) UnmarshalJSON(data []byte) error {
 	case "Single-level":
 		fallthrough
 	case "Subtree":
-		*e = ConnectionLdapVirtualListViewScope(v)
+		*e = Scope(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionLdapVirtualListViewScope: %v", v)
+		return fmt.Errorf("invalid value for Scope: %v", v)
 	}
 }
 
 type ConnectionLdapVirtualListView struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                            `json:"name"`
-	Type ConnectionLdapVirtualListViewType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionLdapVirtualListViewStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionLdapVirtualListViewDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// LDAP server name or ip address.
-	Hostname string `json:"hostname"`
-	Port     int64  `json:"port"`
-	// Enable this if you are using a secure port to connect to LDAP. Usually, this should be enabled if you are connecting via port 636.
-	UseSsl bool `json:"useSsl"`
-	// The login string to use, similar to 'uid=admin,ou=system'.
-	User string `json:"user"`
+	// Whether this connection has been marked as active.
+	Active bool                              `json:"active"`
+	Type   ConnectionLdapVirtualListViewType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The path of your DIT, typically a DC, OU, or O entry.
 	BaseDn string `json:"baseDn"`
-	// Indicates the set of entries that may be considered potential matches for the search.
-	Scope ConnectionLdapVirtualListViewScope `json:"scope"`
+	// Enable this if you are using a secure port to connect to LDAP. Usually, this should be enabled if you are connecting via port 636.
+	UseSsl bool `json:"useSsl"`
+	// LDAP server name or ip address.
+	Hostname string `json:"hostname"`
 	// The filter to be used in the search, e.g. (uid=*)
 	Filter string `json:"filter"`
+	// The login string to use, similar to 'uid=admin,ou=system'.
+	User string `json:"user"`
+	// Indicates the set of entries that may be considered potential matches for the search.
+	Scope Scope `json:"scope"`
+	Port  int64 `json:"port"`
 	// The fields (comma-delimited) to be used for sorting the result. For descending order, you should append "-" to the field. E.g.: "uid,-cn".
 	SortOrder string `json:"sortOrder"`
 }
@@ -207,11 +207,11 @@ func (c *ConnectionLdapVirtualListView) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListView) GetID() string {
+func (o *ConnectionLdapVirtualListView) GetStatus() ConnectionLdapVirtualListViewStatus {
 	if o == nil {
-		return ""
+		return ConnectionLdapVirtualListViewStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionLdapVirtualListView) GetName() string {
@@ -221,11 +221,18 @@ func (o *ConnectionLdapVirtualListView) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionLdapVirtualListView) GetType() ConnectionLdapVirtualListViewType {
+func (o *ConnectionLdapVirtualListView) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionLdapVirtualListViewType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionLdapVirtualListView) GetDefaultUpdateSchedule() []ConnectionLdapVirtualListViewDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionLdapVirtualListViewDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionLdapVirtualListView) GetActive() bool {
@@ -235,18 +242,18 @@ func (o *ConnectionLdapVirtualListView) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionLdapVirtualListView) GetStatus() ConnectionLdapVirtualListViewStatus {
+func (o *ConnectionLdapVirtualListView) GetType() ConnectionLdapVirtualListViewType {
 	if o == nil {
-		return ConnectionLdapVirtualListViewStatus("")
+		return ConnectionLdapVirtualListViewType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionLdapVirtualListView) GetCreateDate() time.Time {
+func (o *ConnectionLdapVirtualListView) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionLdapVirtualListView) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -256,9 +263,9 @@ func (o *ConnectionLdapVirtualListView) GetUpdateSchedule() *UpdateScheduleTypes
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionLdapVirtualListView) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionLdapVirtualListView) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -266,6 +273,13 @@ func (o *ConnectionLdapVirtualListView) GetUpdateScheduleInterval() *UpdateSched
 func (o *ConnectionLdapVirtualListView) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionLdapVirtualListView) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -284,32 +298,11 @@ func (o *ConnectionLdapVirtualListView) GetUpdateScheduleWeekly() *UpdateSchedul
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListView) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionLdapVirtualListView) GetDefaultUpdateSchedule() []ConnectionLdapVirtualListViewDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionLdapVirtualListViewDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
-}
-
-func (o *ConnectionLdapVirtualListView) GetHostname() string {
+func (o *ConnectionLdapVirtualListView) GetBaseDn() string {
 	if o == nil {
 		return ""
 	}
-	return o.Hostname
-}
-
-func (o *ConnectionLdapVirtualListView) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
+	return o.BaseDn
 }
 
 func (o *ConnectionLdapVirtualListView) GetUseSsl() bool {
@@ -319,25 +312,11 @@ func (o *ConnectionLdapVirtualListView) GetUseSsl() bool {
 	return o.UseSsl
 }
 
-func (o *ConnectionLdapVirtualListView) GetUser() string {
+func (o *ConnectionLdapVirtualListView) GetHostname() string {
 	if o == nil {
 		return ""
 	}
-	return o.User
-}
-
-func (o *ConnectionLdapVirtualListView) GetBaseDn() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseDn
-}
-
-func (o *ConnectionLdapVirtualListView) GetScope() ConnectionLdapVirtualListViewScope {
-	if o == nil {
-		return ConnectionLdapVirtualListViewScope("")
-	}
-	return o.Scope
+	return o.Hostname
 }
 
 func (o *ConnectionLdapVirtualListView) GetFilter() string {
@@ -345,6 +324,27 @@ func (o *ConnectionLdapVirtualListView) GetFilter() string {
 		return ""
 	}
 	return o.Filter
+}
+
+func (o *ConnectionLdapVirtualListView) GetUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.User
+}
+
+func (o *ConnectionLdapVirtualListView) GetScope() Scope {
+	if o == nil {
+		return Scope("")
+	}
+	return o.Scope
+}
+
+func (o *ConnectionLdapVirtualListView) GetPort() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Port
 }
 
 func (o *ConnectionLdapVirtualListView) GetSortOrder() string {
@@ -360,20 +360,20 @@ type ConnectionLdapVirtualListViewInput struct {
 	Type ConnectionLdapVirtualListViewType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// LDAP server name or ip address.
-	Hostname string `json:"hostname"`
-	Port     int64  `json:"port"`
-	// Enable this if you are using a secure port to connect to LDAP. Usually, this should be enabled if you are connecting via port 636.
-	UseSsl bool `json:"useSsl"`
-	// The login string to use, similar to 'uid=admin,ou=system'.
-	User     string `json:"user"`
-	Password string `json:"password"`
 	// The path of your DIT, typically a DC, OU, or O entry.
 	BaseDn string `json:"baseDn"`
-	// Indicates the set of entries that may be considered potential matches for the search.
-	Scope ConnectionLdapVirtualListViewScope `json:"scope"`
+	// Enable this if you are using a secure port to connect to LDAP. Usually, this should be enabled if you are connecting via port 636.
+	UseSsl bool `json:"useSsl"`
+	// LDAP server name or ip address.
+	Hostname string `json:"hostname"`
 	// The filter to be used in the search, e.g. (uid=*)
 	Filter string `json:"filter"`
+	// The login string to use, similar to 'uid=admin,ou=system'.
+	User string `json:"user"`
+	// Indicates the set of entries that may be considered potential matches for the search.
+	Scope    Scope  `json:"scope"`
+	Password string `json:"password"`
+	Port     int64  `json:"port"`
 	// The fields (comma-delimited) to be used for sorting the result. For descending order, you should append "-" to the field. E.g.: "uid,-cn".
 	SortOrder string `json:"sortOrder"`
 }
@@ -399,9 +399,9 @@ func (o *ConnectionLdapVirtualListViewInput) GetUpdateSchedule() *UpdateSchedule
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -409,6 +409,13 @@ func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleInterval() *Update
 func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -427,25 +434,11 @@ func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleWeekly() *UpdateSc
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionLdapVirtualListViewInput) GetHostname() string {
+func (o *ConnectionLdapVirtualListViewInput) GetBaseDn() string {
 	if o == nil {
 		return ""
 	}
-	return o.Hostname
-}
-
-func (o *ConnectionLdapVirtualListViewInput) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
+	return o.BaseDn
 }
 
 func (o *ConnectionLdapVirtualListViewInput) GetUseSsl() bool {
@@ -455,11 +448,32 @@ func (o *ConnectionLdapVirtualListViewInput) GetUseSsl() bool {
 	return o.UseSsl
 }
 
+func (o *ConnectionLdapVirtualListViewInput) GetHostname() string {
+	if o == nil {
+		return ""
+	}
+	return o.Hostname
+}
+
+func (o *ConnectionLdapVirtualListViewInput) GetFilter() string {
+	if o == nil {
+		return ""
+	}
+	return o.Filter
+}
+
 func (o *ConnectionLdapVirtualListViewInput) GetUser() string {
 	if o == nil {
 		return ""
 	}
 	return o.User
+}
+
+func (o *ConnectionLdapVirtualListViewInput) GetScope() Scope {
+	if o == nil {
+		return Scope("")
+	}
+	return o.Scope
 }
 
 func (o *ConnectionLdapVirtualListViewInput) GetPassword() string {
@@ -469,25 +483,11 @@ func (o *ConnectionLdapVirtualListViewInput) GetPassword() string {
 	return o.Password
 }
 
-func (o *ConnectionLdapVirtualListViewInput) GetBaseDn() string {
+func (o *ConnectionLdapVirtualListViewInput) GetPort() int64 {
 	if o == nil {
-		return ""
+		return 0
 	}
-	return o.BaseDn
-}
-
-func (o *ConnectionLdapVirtualListViewInput) GetScope() ConnectionLdapVirtualListViewScope {
-	if o == nil {
-		return ConnectionLdapVirtualListViewScope("")
-	}
-	return o.Scope
-}
-
-func (o *ConnectionLdapVirtualListViewInput) GetFilter() string {
-	if o == nil {
-		return ""
-	}
-	return o.Filter
+	return o.Port
 }
 
 func (o *ConnectionLdapVirtualListViewInput) GetSortOrder() string {

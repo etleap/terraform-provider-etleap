@@ -34,7 +34,7 @@ type DeleteSAPCONCURConnectionResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-	// Bad Request.
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

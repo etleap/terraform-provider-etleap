@@ -32,35 +32,21 @@ func (e *ConnectionErpxUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionErpxUpdate struct {
-	// The unique name of this connection.
-	Name *string                   `json:"name,omitempty"`
-	Type *ConnectionErpxUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
-	Active *bool `json:"active,omitempty"`
+	Active *bool                     `json:"active,omitempty"`
+	Type   *ConnectionErpxUpdateType `json:"type"`
+	// The unique name of this connection.
+	Name *string `json:"name,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Client ID
-	ClientID *string `json:"clientId,omitempty"`
 	// Client Secret
 	ClientSecret *string `json:"clientSecret,omitempty"`
 	// Your ERPx tenant authentication URL.
 	TokenURL *string `json:"tokenUrl,omitempty"`
 	// Your ERPx tenant API URL.
 	APIURL *string `json:"apiUrl,omitempty"`
-}
-
-func (o *ConnectionErpxUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
-}
-
-func (o *ConnectionErpxUpdate) GetType() *ConnectionErpxUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	// Client ID
+	ClientID *string `json:"clientId,omitempty"`
 }
 
 func (o *ConnectionErpxUpdate) GetActive() *bool {
@@ -70,6 +56,20 @@ func (o *ConnectionErpxUpdate) GetActive() *bool {
 	return o.Active
 }
 
+func (o *ConnectionErpxUpdate) GetType() *ConnectionErpxUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionErpxUpdate) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
 func (o *ConnectionErpxUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -77,9 +77,9 @@ func (o *ConnectionErpxUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionErpxUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionErpxUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -87,6 +87,13 @@ func (o *ConnectionErpxUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeIn
 func (o *ConnectionErpxUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionErpxUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -103,20 +110,6 @@ func (o *ConnectionErpxUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeek
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
-}
-
-func (o *ConnectionErpxUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionErpxUpdate) GetClientID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientID
 }
 
 func (o *ConnectionErpxUpdate) GetClientSecret() *string {
@@ -138,4 +131,11 @@ func (o *ConnectionErpxUpdate) GetAPIURL() *string {
 		return nil
 	}
 	return o.APIURL
+}
+
+func (o *ConnectionErpxUpdate) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
 }

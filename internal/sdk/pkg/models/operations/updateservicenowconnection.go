@@ -35,7 +35,7 @@ type UpdateSERVICENOWConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionServiceNow *shared.ConnectionServiceNow
-	// Bad Request
+	// Connection for this id was not found.
 	Errors *shared.Errors
 }
 

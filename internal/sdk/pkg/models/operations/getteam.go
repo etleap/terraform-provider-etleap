@@ -27,7 +27,7 @@ type GetTeamResponse struct {
 	RawResponse *http.Response
 	// OK
 	TeamOutput *shared.TeamOutput
-	// Bad Request
+	// A team with the given id was not found.
 	Errors *shared.Errors
 }
 

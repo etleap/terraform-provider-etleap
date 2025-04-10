@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionUserDefinedAPIType string
-
-const (
-	ConnectionUserDefinedAPITypeUserDefinedAPI ConnectionUserDefinedAPIType = "USER_DEFINED_API"
-)
-
-func (e ConnectionUserDefinedAPIType) ToPointer() *ConnectionUserDefinedAPIType {
-	return &e
-}
-
-func (e *ConnectionUserDefinedAPIType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "USER_DEFINED_API":
-		*e = ConnectionUserDefinedAPIType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionUserDefinedAPIType: %v", v)
-	}
-}
-
 // ConnectionUserDefinedAPIStatus - The current status of the connection.
 type ConnectionUserDefinedAPIStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionUserDefinedAPIDefaultUpdateSchedule) GetUpdateSchedule() *Upd
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionUserDefinedAPIDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionUserDefinedAPIDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionUserDefinedAPIDefaultUpdateSchedule) GetUpdateScheduleInterva
 func (o *ConnectionUserDefinedAPIDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionUserDefinedAPIDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,32 +108,49 @@ func (o *ConnectionUserDefinedAPIDefaultUpdateSchedule) GetUpdateScheduleWeekly(
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPIDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionUserDefinedAPIType string
+
+const (
+	ConnectionUserDefinedAPITypeUserDefinedAPI ConnectionUserDefinedAPIType = "USER_DEFINED_API"
+)
+
+func (e ConnectionUserDefinedAPIType) ToPointer() *ConnectionUserDefinedAPIType {
+	return &e
+}
+
+func (e *ConnectionUserDefinedAPIType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "USER_DEFINED_API":
+		*e = ConnectionUserDefinedAPIType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionUserDefinedAPIType: %v", v)
+	}
 }
 
 type ConnectionUserDefinedAPI struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                       `json:"name"`
-	Type ConnectionUserDefinedAPIType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionUserDefinedAPIStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionUserDefinedAPIDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	Authentication        Authentication                                  `json:"authentication"`
+	// Whether this connection has been marked as active.
+	Active bool                         `json:"active"`
+	Type   ConnectionUserDefinedAPIType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The list of entities.
-	Entities []UserDefinedAPIEntity `json:"entities"`
+	Entities       []UserDefinedAPIEntity `json:"entities"`
+	Authentication Authentication         `json:"authentication"`
 }
 
 func (c ConnectionUserDefinedAPI) MarshalJSON() ([]byte, error) {
@@ -164,11 +164,11 @@ func (c *ConnectionUserDefinedAPI) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPI) GetID() string {
+func (o *ConnectionUserDefinedAPI) GetStatus() ConnectionUserDefinedAPIStatus {
 	if o == nil {
-		return ""
+		return ConnectionUserDefinedAPIStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionUserDefinedAPI) GetName() string {
@@ -178,11 +178,18 @@ func (o *ConnectionUserDefinedAPI) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionUserDefinedAPI) GetType() ConnectionUserDefinedAPIType {
+func (o *ConnectionUserDefinedAPI) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionUserDefinedAPIType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionUserDefinedAPI) GetDefaultUpdateSchedule() []ConnectionUserDefinedAPIDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionUserDefinedAPIDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionUserDefinedAPI) GetActive() bool {
@@ -192,18 +199,18 @@ func (o *ConnectionUserDefinedAPI) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionUserDefinedAPI) GetStatus() ConnectionUserDefinedAPIStatus {
+func (o *ConnectionUserDefinedAPI) GetType() ConnectionUserDefinedAPIType {
 	if o == nil {
-		return ConnectionUserDefinedAPIStatus("")
+		return ConnectionUserDefinedAPIType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionUserDefinedAPI) GetCreateDate() time.Time {
+func (o *ConnectionUserDefinedAPI) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionUserDefinedAPI) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -213,9 +220,9 @@ func (o *ConnectionUserDefinedAPI) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionUserDefinedAPI) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionUserDefinedAPI) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -223,6 +230,13 @@ func (o *ConnectionUserDefinedAPI) GetUpdateScheduleInterval() *UpdateScheduleMo
 func (o *ConnectionUserDefinedAPI) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionUserDefinedAPI) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -241,18 +255,11 @@ func (o *ConnectionUserDefinedAPI) GetUpdateScheduleWeekly() *UpdateScheduleMode
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPI) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionUserDefinedAPI) GetDefaultUpdateSchedule() []ConnectionUserDefinedAPIDefaultUpdateSchedule {
+func (o *ConnectionUserDefinedAPI) GetEntities() []UserDefinedAPIEntity {
 	if o == nil {
-		return []ConnectionUserDefinedAPIDefaultUpdateSchedule{}
+		return []UserDefinedAPIEntity{}
 	}
-	return o.DefaultUpdateSchedule
+	return o.Entities
 }
 
 func (o *ConnectionUserDefinedAPI) GetAuthentication() Authentication {
@@ -262,23 +269,16 @@ func (o *ConnectionUserDefinedAPI) GetAuthentication() Authentication {
 	return o.Authentication
 }
 
-func (o *ConnectionUserDefinedAPI) GetAuthenticationBasic() *BasicAuthentication {
-	return o.GetAuthentication().BasicAuthentication
+func (o *ConnectionUserDefinedAPI) GetAuthenticationHeader() *HeaderAuthentication {
+	return o.GetAuthentication().HeaderAuthentication
 }
 
 func (o *ConnectionUserDefinedAPI) GetAuthenticationBearer() *BearerAuthentication {
 	return o.GetAuthentication().BearerAuthentication
 }
 
-func (o *ConnectionUserDefinedAPI) GetAuthenticationHeader() *HeaderAuthentication {
-	return o.GetAuthentication().HeaderAuthentication
-}
-
-func (o *ConnectionUserDefinedAPI) GetEntities() []UserDefinedAPIEntity {
-	if o == nil {
-		return []UserDefinedAPIEntity{}
-	}
-	return o.Entities
+func (o *ConnectionUserDefinedAPI) GetAuthenticationBasic() *BasicAuthentication {
+	return o.GetAuthentication().BasicAuthentication
 }
 
 type ConnectionUserDefinedAPIInput struct {
@@ -287,9 +287,9 @@ type ConnectionUserDefinedAPIInput struct {
 	Type ConnectionUserDefinedAPIType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Authentication Authentication       `json:"authentication"`
 	// The list of entities.
-	Entities []UserDefinedAPIEntity `json:"entities"`
+	Entities       []UserDefinedAPIEntity `json:"entities"`
+	Authentication Authentication         `json:"authentication"`
 }
 
 func (o *ConnectionUserDefinedAPIInput) GetName() string {
@@ -313,9 +313,9 @@ func (o *ConnectionUserDefinedAPIInput) GetUpdateSchedule() *UpdateScheduleTypes
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -323,6 +323,13 @@ func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleInterval() *UpdateSched
 func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -341,11 +348,11 @@ func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleWeekly() *UpdateSchedul
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+func (o *ConnectionUserDefinedAPIInput) GetEntities() []UserDefinedAPIEntity {
+	if o == nil {
+		return []UserDefinedAPIEntity{}
 	}
-	return nil
+	return o.Entities
 }
 
 func (o *ConnectionUserDefinedAPIInput) GetAuthentication() Authentication {
@@ -355,21 +362,14 @@ func (o *ConnectionUserDefinedAPIInput) GetAuthentication() Authentication {
 	return o.Authentication
 }
 
-func (o *ConnectionUserDefinedAPIInput) GetAuthenticationBasic() *BasicAuthentication {
-	return o.GetAuthentication().BasicAuthentication
+func (o *ConnectionUserDefinedAPIInput) GetAuthenticationHeader() *HeaderAuthentication {
+	return o.GetAuthentication().HeaderAuthentication
 }
 
 func (o *ConnectionUserDefinedAPIInput) GetAuthenticationBearer() *BearerAuthentication {
 	return o.GetAuthentication().BearerAuthentication
 }
 
-func (o *ConnectionUserDefinedAPIInput) GetAuthenticationHeader() *HeaderAuthentication {
-	return o.GetAuthentication().HeaderAuthentication
-}
-
-func (o *ConnectionUserDefinedAPIInput) GetEntities() []UserDefinedAPIEntity {
-	if o == nil {
-		return []UserDefinedAPIEntity{}
-	}
-	return o.Entities
+func (o *ConnectionUserDefinedAPIInput) GetAuthenticationBasic() *BasicAuthentication {
+	return o.GetAuthentication().BasicAuthentication
 }

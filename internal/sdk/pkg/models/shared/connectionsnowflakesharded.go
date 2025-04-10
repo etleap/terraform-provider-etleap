@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-type ConnectionSnowflakeShardedType string
-
-const (
-	ConnectionSnowflakeShardedTypeSnowflakeSharded ConnectionSnowflakeShardedType = "SNOWFLAKE_SHARDED"
-)
-
-func (e ConnectionSnowflakeShardedType) ToPointer() *ConnectionSnowflakeShardedType {
-	return &e
-}
-
-func (e *ConnectionSnowflakeShardedType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "SNOWFLAKE_SHARDED":
-		*e = ConnectionSnowflakeShardedType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionSnowflakeShardedType: %v", v)
-	}
-}
-
 // ConnectionSnowflakeShardedStatus - The current status of the connection.
 type ConnectionSnowflakeShardedStatus string
 
@@ -97,9 +73,9 @@ func (o *ConnectionSnowflakeShardedDefaultUpdateSchedule) GetUpdateSchedule() *U
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnowflakeShardedDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSnowflakeShardedDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -107,6 +83,13 @@ func (o *ConnectionSnowflakeShardedDefaultUpdateSchedule) GetUpdateScheduleInter
 func (o *ConnectionSnowflakeShardedDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSnowflakeShardedDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -125,38 +108,55 @@ func (o *ConnectionSnowflakeShardedDefaultUpdateSchedule) GetUpdateScheduleWeekl
 	return nil
 }
 
-func (o *ConnectionSnowflakeShardedDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+type ConnectionSnowflakeShardedType string
+
+const (
+	ConnectionSnowflakeShardedTypeSnowflakeSharded ConnectionSnowflakeShardedType = "SNOWFLAKE_SHARDED"
+)
+
+func (e ConnectionSnowflakeShardedType) ToPointer() *ConnectionSnowflakeShardedType {
+	return &e
+}
+
+func (e *ConnectionSnowflakeShardedType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
 	}
-	return nil
+	switch v {
+	case "SNOWFLAKE_SHARDED":
+		*e = ConnectionSnowflakeShardedType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionSnowflakeShardedType: %v", v)
+	}
 }
 
 type ConnectionSnowflakeSharded struct {
-	// The unique identifier of the connection.
-	ID string `json:"id"`
-	// The unique name of this connection.
-	Name string                         `json:"name"`
-	Type ConnectionSnowflakeShardedType `json:"type"`
-	// Whether this connection has been marked as active.
-	Active bool `json:"active"`
 	// The current status of the connection.
 	Status ConnectionSnowflakeShardedStatus `json:"status"`
+	// The unique name of this connection.
+	Name string `json:"name"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionSnowflakeShardedDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	// Whether this connection has been marked as active.
+	Active bool                           `json:"active"`
+	Type   ConnectionSnowflakeShardedType `json:"type"`
+	// The unique identifier of the connection.
+	ID string `json:"id"`
+	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
+	SourceOnly *bool `default:"false" json:"sourceOnly"`
+	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
+	Roles []string `json:"roles,omitempty"`
 	// Take into account that the schema is case sensitive
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string `json:"schema,omitempty"`
-	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
-	Roles []string `json:"roles,omitempty"`
-	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
-	SourceOnly *bool                  `default:"false" json:"sourceOnly"`
-	Shards     []SnowflakeShardOutput `json:"shards"`
+	Schema *string          `json:"schema,omitempty"`
+	Shards []SnowflakeShard `json:"shards"`
 }
 
 func (c ConnectionSnowflakeSharded) MarshalJSON() ([]byte, error) {
@@ -170,11 +170,11 @@ func (c *ConnectionSnowflakeSharded) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionSnowflakeSharded) GetID() string {
+func (o *ConnectionSnowflakeSharded) GetStatus() ConnectionSnowflakeShardedStatus {
 	if o == nil {
-		return ""
+		return ConnectionSnowflakeShardedStatus("")
 	}
-	return o.ID
+	return o.Status
 }
 
 func (o *ConnectionSnowflakeSharded) GetName() string {
@@ -184,11 +184,18 @@ func (o *ConnectionSnowflakeSharded) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionSnowflakeSharded) GetType() ConnectionSnowflakeShardedType {
+func (o *ConnectionSnowflakeSharded) GetCreateDate() time.Time {
 	if o == nil {
-		return ConnectionSnowflakeShardedType("")
+		return time.Time{}
 	}
-	return o.Type
+	return o.CreateDate
+}
+
+func (o *ConnectionSnowflakeSharded) GetDefaultUpdateSchedule() []ConnectionSnowflakeShardedDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionSnowflakeShardedDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionSnowflakeSharded) GetActive() bool {
@@ -198,18 +205,18 @@ func (o *ConnectionSnowflakeSharded) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionSnowflakeSharded) GetStatus() ConnectionSnowflakeShardedStatus {
+func (o *ConnectionSnowflakeSharded) GetType() ConnectionSnowflakeShardedType {
 	if o == nil {
-		return ConnectionSnowflakeShardedStatus("")
+		return ConnectionSnowflakeShardedType("")
 	}
-	return o.Status
+	return o.Type
 }
 
-func (o *ConnectionSnowflakeSharded) GetCreateDate() time.Time {
+func (o *ConnectionSnowflakeSharded) GetID() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.CreateDate
+	return o.ID
 }
 
 func (o *ConnectionSnowflakeSharded) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -219,9 +226,9 @@ func (o *ConnectionSnowflakeSharded) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnowflakeSharded) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSnowflakeSharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -229,6 +236,13 @@ func (o *ConnectionSnowflakeSharded) GetUpdateScheduleInterval() *UpdateSchedule
 func (o *ConnectionSnowflakeSharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSnowflakeSharded) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -247,25 +261,11 @@ func (o *ConnectionSnowflakeSharded) GetUpdateScheduleWeekly() *UpdateScheduleMo
 	return nil
 }
 
-func (o *ConnectionSnowflakeSharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionSnowflakeSharded) GetDefaultUpdateSchedule() []ConnectionSnowflakeShardedDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionSnowflakeShardedDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
-}
-
-func (o *ConnectionSnowflakeSharded) GetSchema() *string {
+func (o *ConnectionSnowflakeSharded) GetSourceOnly() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Schema
+	return o.SourceOnly
 }
 
 func (o *ConnectionSnowflakeSharded) GetRoles() []string {
@@ -275,16 +275,16 @@ func (o *ConnectionSnowflakeSharded) GetRoles() []string {
 	return o.Roles
 }
 
-func (o *ConnectionSnowflakeSharded) GetSourceOnly() *bool {
+func (o *ConnectionSnowflakeSharded) GetSchema() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SourceOnly
+	return o.Schema
 }
 
-func (o *ConnectionSnowflakeSharded) GetShards() []SnowflakeShardOutput {
+func (o *ConnectionSnowflakeSharded) GetShards() []SnowflakeShard {
 	if o == nil {
-		return []SnowflakeShardOutput{}
+		return []SnowflakeShard{}
 	}
 	return o.Shards
 }
@@ -295,15 +295,15 @@ type ConnectionSnowflakeShardedInput struct {
 	Type ConnectionSnowflakeShardedType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
+	SourceOnly *bool `default:"false" json:"sourceOnly"`
+	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
+	Roles []string `json:"roles,omitempty"`
 	// Take into account that the schema is case sensitive
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string `json:"schema,omitempty"`
-	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
-	Roles []string `json:"roles,omitempty"`
-	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
-	SourceOnly *bool            `default:"false" json:"sourceOnly"`
-	Shards     []SnowflakeShard `json:"shards"`
+	Schema *string               `json:"schema,omitempty"`
+	Shards []SnowflakeShardInput `json:"shards"`
 }
 
 func (c ConnectionSnowflakeShardedInput) MarshalJSON() ([]byte, error) {
@@ -338,9 +338,9 @@ func (o *ConnectionSnowflakeShardedInput) GetUpdateSchedule() *UpdateScheduleTyp
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnowflakeShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSnowflakeShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
@@ -348,6 +348,13 @@ func (o *ConnectionSnowflakeShardedInput) GetUpdateScheduleInterval() *UpdateSch
 func (o *ConnectionSnowflakeShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
+	}
+	return nil
+}
+
+func (o *ConnectionSnowflakeShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -366,18 +373,11 @@ func (o *ConnectionSnowflakeShardedInput) GetUpdateScheduleWeekly() *UpdateSched
 	return nil
 }
 
-func (o *ConnectionSnowflakeShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
-	}
-	return nil
-}
-
-func (o *ConnectionSnowflakeShardedInput) GetSchema() *string {
+func (o *ConnectionSnowflakeShardedInput) GetSourceOnly() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Schema
+	return o.SourceOnly
 }
 
 func (o *ConnectionSnowflakeShardedInput) GetRoles() []string {
@@ -387,16 +387,16 @@ func (o *ConnectionSnowflakeShardedInput) GetRoles() []string {
 	return o.Roles
 }
 
-func (o *ConnectionSnowflakeShardedInput) GetSourceOnly() *bool {
+func (o *ConnectionSnowflakeShardedInput) GetSchema() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SourceOnly
+	return o.Schema
 }
 
-func (o *ConnectionSnowflakeShardedInput) GetShards() []SnowflakeShard {
+func (o *ConnectionSnowflakeShardedInput) GetShards() []SnowflakeShardInput {
 	if o == nil {
-		return []SnowflakeShard{}
+		return []SnowflakeShardInput{}
 	}
 	return o.Shards
 }
