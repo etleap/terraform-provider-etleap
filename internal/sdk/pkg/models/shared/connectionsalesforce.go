@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionSalesforceType string
+
+const (
+	ConnectionSalesforceTypeSalesforce ConnectionSalesforceType = "SALESFORCE"
+)
+
+func (e ConnectionSalesforceType) ToPointer() *ConnectionSalesforceType {
+	return &e
+}
+
+func (e *ConnectionSalesforceType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "SALESFORCE":
+		*e = ConnectionSalesforceType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionSalesforceType: %v", v)
+	}
+}
+
 // ConnectionSalesforceStatus - The current status of the connection.
 type ConnectionSalesforceStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionSalesforceDefaultUpdateSchedule) GetUpdateSchedule() *UpdateS
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSalesforceDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSalesforceDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionSalesforceDefaultUpdateSchedule) GetUpdateScheduleMonthly() *
 func (o *ConnectionSalesforceDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSalesforceDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,51 +125,34 @@ func (o *ConnectionSalesforceDefaultUpdateSchedule) GetUpdateScheduleWeekly() *U
 	return nil
 }
 
-type ConnectionSalesforceType string
-
-const (
-	ConnectionSalesforceTypeSalesforce ConnectionSalesforceType = "SALESFORCE"
-)
-
-func (e ConnectionSalesforceType) ToPointer() *ConnectionSalesforceType {
-	return &e
-}
-
-func (e *ConnectionSalesforceType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionSalesforceDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "SALESFORCE":
-		*e = ConnectionSalesforceType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionSalesforceType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionSalesforce struct {
-	// The current status of the connection.
-	Status ConnectionSalesforceStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionSalesforceDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                     `json:"active"`
-	Type   ConnectionSalesforceType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                   `json:"name"`
+	Type ConnectionSalesforceType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionSalesforceStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Username       string               `json:"username"`
-	Sandbox        bool                 `json:"sandbox"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionSalesforceDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	Sandbox               bool                                        `json:"sandbox"`
+	Username              string                                      `json:"username"`
+	InstanceURL           string                                      `json:"instanceUrl"`
 	// The maximum number of Bulk API batch requests Etleap will use per 24-hour window. Etleap will also stop if the remaining quota goes under 500 requests.
-	QuotaLimit  int64  `json:"quotaLimit"`
-	InstanceURL string `json:"instanceUrl"`
+	QuotaLimit int64 `json:"quotaLimit"`
 }
 
 func (c ConnectionSalesforce) MarshalJSON() ([]byte, error) {
@@ -166,11 +166,11 @@ func (c *ConnectionSalesforce) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionSalesforce) GetStatus() ConnectionSalesforceStatus {
+func (o *ConnectionSalesforce) GetID() string {
 	if o == nil {
-		return ConnectionSalesforceStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionSalesforce) GetName() string {
@@ -180,18 +180,11 @@ func (o *ConnectionSalesforce) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionSalesforce) GetCreateDate() time.Time {
+func (o *ConnectionSalesforce) GetType() ConnectionSalesforceType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionSalesforceType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionSalesforce) GetDefaultUpdateSchedule() []ConnectionSalesforceDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionSalesforceDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionSalesforce) GetActive() bool {
@@ -201,18 +194,18 @@ func (o *ConnectionSalesforce) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionSalesforce) GetType() ConnectionSalesforceType {
+func (o *ConnectionSalesforce) GetStatus() ConnectionSalesforceStatus {
 	if o == nil {
-		return ConnectionSalesforceType("")
+		return ConnectionSalesforceStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionSalesforce) GetID() string {
+func (o *ConnectionSalesforce) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionSalesforce) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -222,9 +215,9 @@ func (o *ConnectionSalesforce) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSalesforce) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSalesforce) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -232,13 +225,6 @@ func (o *ConnectionSalesforce) GetUpdateScheduleMonthly() *UpdateScheduleModeMon
 func (o *ConnectionSalesforce) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSalesforce) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -257,11 +243,18 @@ func (o *ConnectionSalesforce) GetUpdateScheduleWeekly() *UpdateScheduleModeWeek
 	return nil
 }
 
-func (o *ConnectionSalesforce) GetUsername() string {
-	if o == nil {
-		return ""
+func (o *ConnectionSalesforce) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.Username
+	return nil
+}
+
+func (o *ConnectionSalesforce) GetDefaultUpdateSchedule() []ConnectionSalesforceDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionSalesforceDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionSalesforce) GetSandbox() bool {
@@ -271,11 +264,11 @@ func (o *ConnectionSalesforce) GetSandbox() bool {
 	return o.Sandbox
 }
 
-func (o *ConnectionSalesforce) GetQuotaLimit() int64 {
+func (o *ConnectionSalesforce) GetUsername() string {
 	if o == nil {
-		return 0
+		return ""
 	}
-	return o.QuotaLimit
+	return o.Username
 }
 
 func (o *ConnectionSalesforce) GetInstanceURL() string {
@@ -283,6 +276,13 @@ func (o *ConnectionSalesforce) GetInstanceURL() string {
 		return ""
 	}
 	return o.InstanceURL
+}
+
+func (o *ConnectionSalesforce) GetQuotaLimit() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.QuotaLimit
 }
 
 type ConnectionSalesforceInput struct {
@@ -319,9 +319,9 @@ func (o *ConnectionSalesforceInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSalesforceInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSalesforceInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -329,13 +329,6 @@ func (o *ConnectionSalesforceInput) GetUpdateScheduleMonthly() *UpdateScheduleMo
 func (o *ConnectionSalesforceInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSalesforceInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -350,6 +343,13 @@ func (o *ConnectionSalesforceInput) GetUpdateScheduleDaily() *UpdateScheduleMode
 func (o *ConnectionSalesforceInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionSalesforceInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

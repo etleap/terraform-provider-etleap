@@ -34,8 +34,8 @@ type UpdateSFTPConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSftp *shared.ConnectionSftpOutput
-	// Connection for this id was not found.
+	ConnectionSftp *shared.ConnectionSftp
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateSFTPConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateSFTPConnectionResponse) GetConnectionSftp() *shared.ConnectionSftpOutput {
+func (o *UpdateSFTPConnectionResponse) GetConnectionSftp() *shared.ConnectionSftp {
 	if o == nil {
 		return nil
 	}

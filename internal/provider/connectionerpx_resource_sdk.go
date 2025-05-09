@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionERPXResourceModel) ToSharedConnectionErpx() *shared.ConnectionErpx {
+func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxInput() *shared.ConnectionErpxInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionErpxType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpx() *shared.Connectio
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,30 +86,30 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpx() *shared.Connectio
 			}
 		}
 	}
+	clientID := r.ClientID.ValueString()
 	clientSecret := r.ClientSecret.ValueString()
 	tokenURL := r.TokenURL.ValueString()
-	clientID := r.ClientID.ValueString()
+	apiURL := r.APIURL.ValueString()
 	companyIds := new(string)
 	if !r.CompanyIds.IsUnknown() && !r.CompanyIds.IsNull() {
 		*companyIds = r.CompanyIds.ValueString()
 	} else {
 		companyIds = nil
 	}
-	apiURL := r.APIURL.ValueString()
-	out := shared.ConnectionErpx{
+	out := shared.ConnectionErpxInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
+		ClientID:       clientID,
 		ClientSecret:   clientSecret,
 		TokenURL:       tokenURL,
-		ClientID:       clientID,
-		CompanyIds:     companyIds,
 		APIURL:         apiURL,
+		CompanyIds:     companyIds,
 	}
 	return &out
 }
 
-func (r *ConnectionERPXResourceModel) RefreshFromSharedConnectionErpxOutput(resp *shared.ConnectionErpxOutput) {
+func (r *ConnectionERPXResourceModel) RefreshFromSharedConnectionErpx(resp *shared.ConnectionErpx) {
 	r.Active = types.BoolValue(resp.Active)
 	r.APIURL = types.StringValue(resp.APIURL)
 	r.ClientID = types.StringValue(resp.ClientID)
@@ -119,7 +119,7 @@ func (r *ConnectionERPXResourceModel) RefreshFromSharedConnectionErpxOutput(resp
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -202,11 +202,11 @@ func (r *ConnectionERPXResourceModel) RefreshFromSharedConnectionErpxOutput(resp
 }
 
 func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxUpdate() *shared.ConnectionErpxUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionErpxUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -214,11 +214,11 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxUpdate() *shared.Con
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -281,12 +281,12 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxUpdate() *shared.Con
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -294,6 +294,12 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxUpdate() *shared.Con
 				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
 			}
 		}
+	}
+	clientID := new(string)
+	if !r.ClientID.IsUnknown() && !r.ClientID.IsNull() {
+		*clientID = r.ClientID.ValueString()
+	} else {
+		clientID = nil
 	}
 	clientSecret := new(string)
 	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
@@ -307,20 +313,14 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxUpdate() *shared.Con
 	} else {
 		tokenURL = nil
 	}
-	clientID := new(string)
-	if !r.ClientID.IsUnknown() && !r.ClientID.IsNull() {
-		*clientID = r.ClientID.ValueString()
-	} else {
-		clientID = nil
-	}
 	out := shared.ConnectionErpxUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
+		ClientID:       clientID,
 		ClientSecret:   clientSecret,
 		TokenURL:       tokenURL,
-		ClientID:       clientID,
 	}
 	return &out
 }

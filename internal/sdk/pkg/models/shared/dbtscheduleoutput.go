@@ -9,25 +9,25 @@ import (
 
 // DbtScheduleOutput - Response body for GET /dbtSchedules/{id}
 type DbtScheduleOutput struct {
-	// The cron expression that defines triggers for this schedule. The maximum supported cron schedule precision is 1 minute.
-	Cron string `json:"cron"`
-	// The name of the dbt schedule.
-	Name string `json:"name"`
-	// Whether the dbt build is skipped if no new data has been ingested for any of the pipelines in the table above.
-	SkipBuildIfNoNewData bool      `json:"skipBuildIfNoNewData"`
-	CreateDate           time.Time `json:"createDate"`
-	// The [connection](https://docs.etleap.com/docs/api-v2/edbec13814bbc-connection) where the dbt build runs. The only supported connections are Redshift, Snowflake or Databricks Delta Lake destinations.
-	ConnectionID string `json:"connectionId"`
-	// The selector this schedule runs.
-	Selector string `json:"selector"`
-	// `true` if the schedule is paused.
-	Paused bool `json:"paused"`
-	// The target schema for the dbt build. See [here](https://docs.getdbt.com/docs/build/custom-schemas) for details on how it's used.
-	TargetSchema string               `json:"targetSchema"`
-	LatestRun    *DbtScheduleRunTypes `json:"latestRun,omitempty"`
-	Owner        User                 `json:"owner"`
 	// The id of the dbt schedule.
 	ID string `json:"id"`
+	// The name of the dbt schedule.
+	Name string `json:"name"`
+	// `true` if the schedule is paused.
+	Paused bool `json:"paused"`
+	// The selector this schedule runs.
+	Selector string `json:"selector"`
+	// The target schema for the dbt build. See [here](https://docs.getdbt.com/docs/build/custom-schemas) for details on how it's used.
+	TargetSchema string `json:"targetSchema"`
+	Owner        User   `json:"owner"`
+	// The cron expression that defines triggers for this schedule. The maximum supported cron schedule precision is 1 minute.
+	Cron string `json:"cron"`
+	// The [connection](https://docs.etleap.com/docs/api-v2/edbec13814bbc-connection) where the dbt build runs. The only supported connections are Redshift, Snowflake or Databricks Delta Lake destinations.
+	ConnectionID string `json:"connectionId"`
+	// Whether the dbt build is skipped if no new data has been ingested for any of the pipelines in the table above.
+	SkipBuildIfNoNewData bool                 `json:"skipBuildIfNoNewData"`
+	CreateDate           time.Time            `json:"createDate"`
+	LatestRun            *DbtScheduleRunTypes `json:"latestRun,omitempty"`
 }
 
 func (d DbtScheduleOutput) MarshalJSON() ([]byte, error) {
@@ -41,11 +41,11 @@ func (d *DbtScheduleOutput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DbtScheduleOutput) GetCron() string {
+func (o *DbtScheduleOutput) GetID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Cron
+	return o.ID
 }
 
 func (o *DbtScheduleOutput) GetName() string {
@@ -53,6 +53,48 @@ func (o *DbtScheduleOutput) GetName() string {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *DbtScheduleOutput) GetPaused() bool {
+	if o == nil {
+		return false
+	}
+	return o.Paused
+}
+
+func (o *DbtScheduleOutput) GetSelector() string {
+	if o == nil {
+		return ""
+	}
+	return o.Selector
+}
+
+func (o *DbtScheduleOutput) GetTargetSchema() string {
+	if o == nil {
+		return ""
+	}
+	return o.TargetSchema
+}
+
+func (o *DbtScheduleOutput) GetOwner() User {
+	if o == nil {
+		return User{}
+	}
+	return o.Owner
+}
+
+func (o *DbtScheduleOutput) GetCron() string {
+	if o == nil {
+		return ""
+	}
+	return o.Cron
+}
+
+func (o *DbtScheduleOutput) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *DbtScheduleOutput) GetSkipBuildIfNoNewData() bool {
@@ -69,46 +111,11 @@ func (o *DbtScheduleOutput) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *DbtScheduleOutput) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
-}
-
-func (o *DbtScheduleOutput) GetSelector() string {
-	if o == nil {
-		return ""
-	}
-	return o.Selector
-}
-
-func (o *DbtScheduleOutput) GetPaused() bool {
-	if o == nil {
-		return false
-	}
-	return o.Paused
-}
-
-func (o *DbtScheduleOutput) GetTargetSchema() string {
-	if o == nil {
-		return ""
-	}
-	return o.TargetSchema
-}
-
 func (o *DbtScheduleOutput) GetLatestRun() *DbtScheduleRunTypes {
 	if o == nil {
 		return nil
 	}
 	return o.LatestRun
-}
-
-func (o *DbtScheduleOutput) GetLatestRunSuccessWithDbtWarnings() *DbtScheduleRunSuccess {
-	if v := o.GetLatestRun(); v != nil {
-		return v.DbtScheduleRunSuccess
-	}
-	return nil
 }
 
 func (o *DbtScheduleOutput) GetLatestRunInProgress() *DbtScheduleRunInProgress {
@@ -132,23 +139,16 @@ func (o *DbtScheduleOutput) GetLatestRunDbtError() *DbtScheduleRunFailure {
 	return nil
 }
 
-func (o *DbtScheduleOutput) GetLatestRunSuccess() *DbtScheduleRunSuccess {
+func (o *DbtScheduleOutput) GetLatestRunSuccessWithDbtWarnings() *DbtScheduleRunSuccess {
 	if v := o.GetLatestRun(); v != nil {
 		return v.DbtScheduleRunSuccess
 	}
 	return nil
 }
 
-func (o *DbtScheduleOutput) GetOwner() User {
-	if o == nil {
-		return User{}
+func (o *DbtScheduleOutput) GetLatestRunSuccess() *DbtScheduleRunSuccess {
+	if v := o.GetLatestRun(); v != nil {
+		return v.DbtScheduleRunSuccess
 	}
-	return o.Owner
-}
-
-func (o *DbtScheduleOutput) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
+	return nil
 }

@@ -26,8 +26,8 @@ type GetSALESFORCEMARKETINGCLOUDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSalesforceMarketingCloud *shared.ConnectionSalesforceMarketingCloudOutput
-	// Not Found.
+	ConnectionSalesforceMarketingCloud *shared.ConnectionSalesforceMarketingCloud
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetSALESFORCEMARKETINGCLOUDConnectionResponse) GetRawResponse() *http.R
 	return o.RawResponse
 }
 
-func (o *GetSALESFORCEMARKETINGCLOUDConnectionResponse) GetConnectionSalesforceMarketingCloud() *shared.ConnectionSalesforceMarketingCloudOutput {
+func (o *GetSALESFORCEMARKETINGCLOUDConnectionResponse) GetConnectionSalesforceMarketingCloud() *shared.ConnectionSalesforceMarketingCloud {
 	if o == nil {
 		return nil
 	}

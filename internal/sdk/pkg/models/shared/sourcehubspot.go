@@ -32,20 +32,13 @@ func (e *SourceHubspotType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceHubspot struct {
+	Type SourceHubspotType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string            `json:"connectionId"`
-	Type         SourceHubspotType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Hubspot entity. Example values: [Campaigns, Contacts, Email Events, Engagements, Deals, Owners, Deal Pipelines, Companies, Marketing Emails, Pages, Landing Pages Analytics]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceHubspot) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceHubspot) GetType() SourceHubspotType {
@@ -53,6 +46,13 @@ func (o *SourceHubspot) GetType() SourceHubspotType {
 		return SourceHubspotType("")
 	}
 	return o.Type
+}
+
+func (o *SourceHubspot) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceHubspot) GetLatencyThreshold() *int64 {

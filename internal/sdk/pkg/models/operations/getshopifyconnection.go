@@ -26,8 +26,8 @@ type GetSHOPIFYConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionShopify *shared.ConnectionShopifyOutput
-	// Not Found.
+	ConnectionShopify *shared.ConnectionShopify
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetSHOPIFYConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetSHOPIFYConnectionResponse) GetConnectionShopify() *shared.ConnectionShopifyOutput {
+func (o *GetSHOPIFYConnectionResponse) GetConnectionShopify() *shared.ConnectionShopify {
 	if o == nil {
 		return nil
 	}

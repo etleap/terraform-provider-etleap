@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionMicrosoftEntraIDType string
+
+const (
+	ConnectionMicrosoftEntraIDTypeMicrosoftEntraID ConnectionMicrosoftEntraIDType = "MICROSOFT_ENTRA_ID"
+)
+
+func (e ConnectionMicrosoftEntraIDType) ToPointer() *ConnectionMicrosoftEntraIDType {
+	return &e
+}
+
+func (e *ConnectionMicrosoftEntraIDType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MICROSOFT_ENTRA_ID":
+		*e = ConnectionMicrosoftEntraIDType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionMicrosoftEntraIDType: %v", v)
+	}
+}
+
 // ConnectionMicrosoftEntraIDStatus - The current status of the connection.
 type ConnectionMicrosoftEntraIDStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionMicrosoftEntraIDDefaultUpdateSchedule) GetUpdateSchedule() *U
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMicrosoftEntraIDDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionMicrosoftEntraIDDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionMicrosoftEntraIDDefaultUpdateSchedule) GetUpdateScheduleMonth
 func (o *ConnectionMicrosoftEntraIDDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionMicrosoftEntraIDDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,46 +125,29 @@ func (o *ConnectionMicrosoftEntraIDDefaultUpdateSchedule) GetUpdateScheduleWeekl
 	return nil
 }
 
-type ConnectionMicrosoftEntraIDType string
-
-const (
-	ConnectionMicrosoftEntraIDTypeMicrosoftEntraID ConnectionMicrosoftEntraIDType = "MICROSOFT_ENTRA_ID"
-)
-
-func (e ConnectionMicrosoftEntraIDType) ToPointer() *ConnectionMicrosoftEntraIDType {
-	return &e
-}
-
-func (e *ConnectionMicrosoftEntraIDType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionMicrosoftEntraIDDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "MICROSOFT_ENTRA_ID":
-		*e = ConnectionMicrosoftEntraIDType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionMicrosoftEntraIDType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionMicrosoftEntraID struct {
-	// The current status of the connection.
-	Status ConnectionMicrosoftEntraIDStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionMicrosoftEntraIDDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                           `json:"active"`
-	Type   ConnectionMicrosoftEntraIDType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                         `json:"name"`
+	Type ConnectionMicrosoftEntraIDType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionMicrosoftEntraIDStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionMicrosoftEntraIDDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 }
 
 func (c ConnectionMicrosoftEntraID) MarshalJSON() ([]byte, error) {
@@ -161,11 +161,11 @@ func (c *ConnectionMicrosoftEntraID) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionMicrosoftEntraID) GetStatus() ConnectionMicrosoftEntraIDStatus {
+func (o *ConnectionMicrosoftEntraID) GetID() string {
 	if o == nil {
-		return ConnectionMicrosoftEntraIDStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionMicrosoftEntraID) GetName() string {
@@ -175,18 +175,11 @@ func (o *ConnectionMicrosoftEntraID) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionMicrosoftEntraID) GetCreateDate() time.Time {
+func (o *ConnectionMicrosoftEntraID) GetType() ConnectionMicrosoftEntraIDType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionMicrosoftEntraIDType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionMicrosoftEntraID) GetDefaultUpdateSchedule() []ConnectionMicrosoftEntraIDDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionMicrosoftEntraIDDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionMicrosoftEntraID) GetActive() bool {
@@ -196,18 +189,18 @@ func (o *ConnectionMicrosoftEntraID) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionMicrosoftEntraID) GetType() ConnectionMicrosoftEntraIDType {
+func (o *ConnectionMicrosoftEntraID) GetStatus() ConnectionMicrosoftEntraIDStatus {
 	if o == nil {
-		return ConnectionMicrosoftEntraIDType("")
+		return ConnectionMicrosoftEntraIDStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionMicrosoftEntraID) GetID() string {
+func (o *ConnectionMicrosoftEntraID) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionMicrosoftEntraID) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -217,9 +210,9 @@ func (o *ConnectionMicrosoftEntraID) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMicrosoftEntraID) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionMicrosoftEntraID) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -227,13 +220,6 @@ func (o *ConnectionMicrosoftEntraID) GetUpdateScheduleMonthly() *UpdateScheduleM
 func (o *ConnectionMicrosoftEntraID) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionMicrosoftEntraID) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -250,6 +236,20 @@ func (o *ConnectionMicrosoftEntraID) GetUpdateScheduleWeekly() *UpdateScheduleMo
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
+}
+
+func (o *ConnectionMicrosoftEntraID) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionMicrosoftEntraID) GetDefaultUpdateSchedule() []ConnectionMicrosoftEntraIDDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionMicrosoftEntraIDDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 type ConnectionMicrosoftEntraIDInput struct {
@@ -283,9 +283,9 @@ func (o *ConnectionMicrosoftEntraIDInput) GetUpdateSchedule() *UpdateScheduleTyp
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMicrosoftEntraIDInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionMicrosoftEntraIDInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -293,13 +293,6 @@ func (o *ConnectionMicrosoftEntraIDInput) GetUpdateScheduleMonthly() *UpdateSche
 func (o *ConnectionMicrosoftEntraIDInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionMicrosoftEntraIDInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -314,6 +307,13 @@ func (o *ConnectionMicrosoftEntraIDInput) GetUpdateScheduleDaily() *UpdateSchedu
 func (o *ConnectionMicrosoftEntraIDInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionMicrosoftEntraIDInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

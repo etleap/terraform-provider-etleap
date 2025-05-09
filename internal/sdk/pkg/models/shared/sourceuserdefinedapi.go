@@ -32,20 +32,13 @@ func (e *SourceUserDefinedAPIType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceUserDefinedAPI struct {
+	Type SourceUserDefinedAPIType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string                   `json:"connectionId"`
-	Type         SourceUserDefinedAPIType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The User-Defined API entity.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceUserDefinedAPI) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceUserDefinedAPI) GetType() SourceUserDefinedAPIType {
@@ -53,6 +46,13 @@ func (o *SourceUserDefinedAPI) GetType() SourceUserDefinedAPIType {
 		return SourceUserDefinedAPIType("")
 	}
 	return o.Type
+}
+
+func (o *SourceUserDefinedAPI) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceUserDefinedAPI) GetLatencyThreshold() *int64 {

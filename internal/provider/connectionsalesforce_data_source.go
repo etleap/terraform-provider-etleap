@@ -28,18 +28,18 @@ type ConnectionSALESFORCEDataSource struct {
 
 // ConnectionSALESFORCEDataSourceModel describes the data model.
 type ConnectionSALESFORCEDataSourceModel struct {
-	Active                types.Bool                                      `tfsdk:"active"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String                                    `tfsdk:"id"`
-	InstanceURL           types.String                                    `tfsdk:"instance_url"`
-	Name                  types.String                                    `tfsdk:"name"`
-	QuotaLimit            types.Int64                                     `tfsdk:"quota_limit"`
-	Sandbox               types.Bool                                      `tfsdk:"sandbox"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	Username              types.String                                    `tfsdk:"username"`
+	Active                types.Bool              `tfsdk:"active"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String            `tfsdk:"id"`
+	InstanceURL           types.String            `tfsdk:"instance_url"`
+	Name                  types.String            `tfsdk:"name"`
+	QuotaLimit            types.Int64             `tfsdk:"quota_limit"`
+	Sandbox               types.Bool              `tfsdk:"sandbox"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Username              types.String            `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.

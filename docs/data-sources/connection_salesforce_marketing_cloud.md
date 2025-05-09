@@ -14,7 +14,7 @@ ConnectionSALESFORCEMARKETINGCLOUD DataSource
 
 ```terraform
 data "etleap_connection_salesforce_marketing_cloud" "my_connectionsalesforce_marketing_cloud" {
-  id = "ff471c63-a432-4a01-8f2a-be8c7f99dade"
+  id = "e008b056-ee63-4ca8-9c6a-66008df1e39e"
 }
 ```
 

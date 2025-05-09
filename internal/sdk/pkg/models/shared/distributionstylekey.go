@@ -32,15 +32,8 @@ func (e *DistributionStyleKeyType) UnmarshalJSON(data []byte) error {
 }
 
 type DistributionStyleKey struct {
-	Column string                   `json:"column"`
 	Type   DistributionStyleKeyType `json:"type"`
-}
-
-func (o *DistributionStyleKey) GetColumn() string {
-	if o == nil {
-		return ""
-	}
-	return o.Column
+	Column string                   `json:"column"`
 }
 
 func (o *DistributionStyleKey) GetType() DistributionStyleKeyType {
@@ -48,4 +41,11 @@ func (o *DistributionStyleKey) GetType() DistributionStyleKeyType {
 		return DistributionStyleKeyType("")
 	}
 	return o.Type
+}
+
+func (o *DistributionStyleKey) GetColumn() string {
+	if o == nil {
+		return ""
+	}
+	return o.Column
 }

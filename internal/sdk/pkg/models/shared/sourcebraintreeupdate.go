@@ -32,16 +32,9 @@ func (e *SourceBraintreeUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBraintreeUpdate struct {
-	Type *SourceBraintreeUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceBraintreeUpdate) GetType() *SourceBraintreeUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                     `json:"latencyThreshold,omitempty"`
+	Type             *SourceBraintreeUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceBraintreeUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceBraintreeUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceBraintreeUpdate) GetType() *SourceBraintreeUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

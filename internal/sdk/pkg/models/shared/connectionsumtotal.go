@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionSumTotalType string
+
+const (
+	ConnectionSumTotalTypeSumtotal ConnectionSumTotalType = "SUMTOTAL"
+)
+
+func (e ConnectionSumTotalType) ToPointer() *ConnectionSumTotalType {
+	return &e
+}
+
+func (e *ConnectionSumTotalType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "SUMTOTAL":
+		*e = ConnectionSumTotalType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionSumTotalType: %v", v)
+	}
+}
+
 // ConnectionSumTotalStatus - The current status of the connection.
 type ConnectionSumTotalStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionSumTotalDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSch
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSumTotalDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSumTotalDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionSumTotalDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Up
 func (o *ConnectionSumTotalDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSumTotalDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,48 +125,31 @@ func (o *ConnectionSumTotalDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Upd
 	return nil
 }
 
-type ConnectionSumTotalType string
-
-const (
-	ConnectionSumTotalTypeSumtotal ConnectionSumTotalType = "SUMTOTAL"
-)
-
-func (e ConnectionSumTotalType) ToPointer() *ConnectionSumTotalType {
-	return &e
-}
-
-func (e *ConnectionSumTotalType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionSumTotalDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "SUMTOTAL":
-		*e = ConnectionSumTotalType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionSumTotalType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionSumTotal struct {
-	// The current status of the connection.
-	Status ConnectionSumTotalStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionSumTotalDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                   `json:"active"`
-	Type   ConnectionSumTotalType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                 `json:"name"`
+	Type ConnectionSumTotalType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionSumTotalStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	TenantURL      string               `json:"tenantUrl"`
-	ClientID       string               `json:"clientId"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionSumTotalDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	TenantURL             string                                    `json:"tenantUrl"`
+	ClientID              string                                    `json:"clientId"`
 }
 
 func (c ConnectionSumTotal) MarshalJSON() ([]byte, error) {
@@ -163,11 +163,11 @@ func (c *ConnectionSumTotal) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionSumTotal) GetStatus() ConnectionSumTotalStatus {
+func (o *ConnectionSumTotal) GetID() string {
 	if o == nil {
-		return ConnectionSumTotalStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionSumTotal) GetName() string {
@@ -177,18 +177,11 @@ func (o *ConnectionSumTotal) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionSumTotal) GetCreateDate() time.Time {
+func (o *ConnectionSumTotal) GetType() ConnectionSumTotalType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionSumTotalType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionSumTotal) GetDefaultUpdateSchedule() []ConnectionSumTotalDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionSumTotalDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionSumTotal) GetActive() bool {
@@ -198,18 +191,18 @@ func (o *ConnectionSumTotal) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionSumTotal) GetType() ConnectionSumTotalType {
+func (o *ConnectionSumTotal) GetStatus() ConnectionSumTotalStatus {
 	if o == nil {
-		return ConnectionSumTotalType("")
+		return ConnectionSumTotalStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionSumTotal) GetID() string {
+func (o *ConnectionSumTotal) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionSumTotal) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -219,9 +212,9 @@ func (o *ConnectionSumTotal) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSumTotal) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSumTotal) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -229,13 +222,6 @@ func (o *ConnectionSumTotal) GetUpdateScheduleMonthly() *UpdateScheduleModeMonth
 func (o *ConnectionSumTotal) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSumTotal) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -252,6 +238,20 @@ func (o *ConnectionSumTotal) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
+}
+
+func (o *ConnectionSumTotal) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionSumTotal) GetDefaultUpdateSchedule() []ConnectionSumTotalDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionSumTotalDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionSumTotal) GetTenantURL() string {
@@ -274,9 +274,9 @@ type ConnectionSumTotalInput struct {
 	Type ConnectionSumTotalType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	ClientSecret   string               `json:"clientSecret"`
 	TenantURL      string               `json:"tenantUrl"`
 	ClientID       string               `json:"clientId"`
+	ClientSecret   string               `json:"clientSecret"`
 }
 
 func (o *ConnectionSumTotalInput) GetName() string {
@@ -300,9 +300,9 @@ func (o *ConnectionSumTotalInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSumTotalInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSumTotalInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -310,13 +310,6 @@ func (o *ConnectionSumTotalInput) GetUpdateScheduleMonthly() *UpdateScheduleMode
 func (o *ConnectionSumTotalInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSumTotalInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -335,11 +328,11 @@ func (o *ConnectionSumTotalInput) GetUpdateScheduleWeekly() *UpdateScheduleModeW
 	return nil
 }
 
-func (o *ConnectionSumTotalInput) GetClientSecret() string {
-	if o == nil {
-		return ""
+func (o *ConnectionSumTotalInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.ClientSecret
+	return nil
 }
 
 func (o *ConnectionSumTotalInput) GetTenantURL() string {
@@ -354,4 +347,11 @@ func (o *ConnectionSumTotalInput) GetClientID() string {
 		return ""
 	}
 	return o.ClientID
+}
+
+func (o *ConnectionSumTotalInput) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }

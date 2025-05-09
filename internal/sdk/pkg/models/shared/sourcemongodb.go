@@ -32,9 +32,9 @@ func (e *SourceMongodbType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMongodb struct {
+	Type SourceMongodbType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string            `json:"connectionId"`
-	Type         SourceMongodbType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both.
@@ -43,18 +43,18 @@ type SourceMongodb struct {
 	TableNameFilter *string `json:"tableNameFilter,omitempty"`
 }
 
-func (o *SourceMongodb) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
-}
-
 func (o *SourceMongodb) GetType() SourceMongodbType {
 	if o == nil {
 		return SourceMongodbType("")
 	}
 	return o.Type
+}
+
+func (o *SourceMongodb) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceMongodb) GetLatencyThreshold() *int64 {

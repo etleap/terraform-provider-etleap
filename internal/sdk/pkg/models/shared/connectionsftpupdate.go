@@ -32,35 +32,21 @@ func (e *ConnectionSftpUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionSftpUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                     `json:"active,omitempty"`
-	Type   *ConnectionSftpUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                   `json:"name,omitempty"`
+	Type *ConnectionSftpUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Username       *string              `json:"username,omitempty"`
 	// E.g. 'etleap.com' or '10.0.0.2'.
 	Hostname *string `json:"hostname,omitempty"`
+	Port     *int64  `json:"port,omitempty"`
 	// The start directory for the user. Etleap will read any file or folders under this directory.
 	BaseDirectory *string `json:"baseDirectory,omitempty"`
+	Username      *string `json:"username,omitempty"`
 	// If set to `null`, Public Key Authentication will be used.
 	Password *string `json:"password,omitempty"`
-	Port     *int64  `json:"port,omitempty"`
-}
-
-func (o *ConnectionSftpUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionSftpUpdate) GetType() *ConnectionSftpUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionSftpUpdate) GetName() *string {
@@ -70,6 +56,20 @@ func (o *ConnectionSftpUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionSftpUpdate) GetType() *ConnectionSftpUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionSftpUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionSftpUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -77,9 +77,9 @@ func (o *ConnectionSftpUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSftpUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSftpUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -87,13 +87,6 @@ func (o *ConnectionSftpUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMon
 func (o *ConnectionSftpUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSftpUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -112,11 +105,11 @@ func (o *ConnectionSftpUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeek
 	return nil
 }
 
-func (o *ConnectionSftpUpdate) GetUsername() *string {
-	if o == nil {
-		return nil
+func (o *ConnectionSftpUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.Username
+	return nil
 }
 
 func (o *ConnectionSftpUpdate) GetHostname() *string {
@@ -126,6 +119,13 @@ func (o *ConnectionSftpUpdate) GetHostname() *string {
 	return o.Hostname
 }
 
+func (o *ConnectionSftpUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
 func (o *ConnectionSftpUpdate) GetBaseDirectory() *string {
 	if o == nil {
 		return nil
@@ -133,16 +133,16 @@ func (o *ConnectionSftpUpdate) GetBaseDirectory() *string {
 	return o.BaseDirectory
 }
 
+func (o *ConnectionSftpUpdate) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
+}
+
 func (o *ConnectionSftpUpdate) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
-}
-
-func (o *ConnectionSftpUpdate) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
 }

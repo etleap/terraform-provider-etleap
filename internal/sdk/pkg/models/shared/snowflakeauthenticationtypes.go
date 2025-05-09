@@ -18,21 +18,21 @@ const (
 
 // SnowflakeAuthenticationTypes - Snowflake Authentication Types
 type SnowflakeAuthenticationTypes struct {
-	SnowflakeAuthenticationKeyPair        *SnowflakeAuthenticationKeyPair
-	SnowflakeAuthenticationPasswordOutput *SnowflakeAuthenticationPasswordOutput
+	SnowflakeAuthenticationKeyPair  *SnowflakeAuthenticationKeyPair
+	SnowflakeAuthenticationPassword *SnowflakeAuthenticationPassword
 
 	Type SnowflakeAuthenticationTypesType
 }
 
-func CreateSnowflakeAuthenticationTypesPassword(password SnowflakeAuthenticationPasswordOutput) SnowflakeAuthenticationTypes {
+func CreateSnowflakeAuthenticationTypesPassword(password SnowflakeAuthenticationPassword) SnowflakeAuthenticationTypes {
 	typ := SnowflakeAuthenticationTypesTypePassword
 
 	typStr := SnowflakeAuthenticationPasswordType(typ)
 	password.Type = typStr
 
 	return SnowflakeAuthenticationTypes{
-		SnowflakeAuthenticationPasswordOutput: &password,
-		Type:                                  typ,
+		SnowflakeAuthenticationPassword: &password,
+		Type:                            typ,
 	}
 }
 
@@ -61,12 +61,12 @@ func (u *SnowflakeAuthenticationTypes) UnmarshalJSON(data []byte) error {
 
 	switch dis.Type {
 	case "PASSWORD":
-		snowflakeAuthenticationPasswordOutput := new(SnowflakeAuthenticationPasswordOutput)
-		if err := utils.UnmarshalJSON(data, &snowflakeAuthenticationPasswordOutput, "", true, true); err != nil {
+		snowflakeAuthenticationPassword := new(SnowflakeAuthenticationPassword)
+		if err := utils.UnmarshalJSON(data, &snowflakeAuthenticationPassword, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SnowflakeAuthenticationPasswordOutput = snowflakeAuthenticationPasswordOutput
+		u.SnowflakeAuthenticationPassword = snowflakeAuthenticationPassword
 		u.Type = SnowflakeAuthenticationTypesTypePassword
 		return nil
 	case "KEY_PAIR":
@@ -88,8 +88,8 @@ func (u SnowflakeAuthenticationTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SnowflakeAuthenticationKeyPair, "", true)
 	}
 
-	if u.SnowflakeAuthenticationPasswordOutput != nil {
-		return utils.MarshalJSON(u.SnowflakeAuthenticationPasswordOutput, "", true)
+	if u.SnowflakeAuthenticationPassword != nil {
+		return utils.MarshalJSON(u.SnowflakeAuthenticationPassword, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

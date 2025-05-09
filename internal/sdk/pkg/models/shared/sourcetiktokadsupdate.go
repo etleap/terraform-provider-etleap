@@ -32,16 +32,9 @@ func (e *SourceTikTokAdsUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTikTokAdsUpdate struct {
-	Type *SourceTikTokAdsUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceTikTokAdsUpdate) GetType() *SourceTikTokAdsUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                     `json:"latencyThreshold,omitempty"`
+	Type             *SourceTikTokAdsUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceTikTokAdsUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceTikTokAdsUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceTikTokAdsUpdate) GetType() *SourceTikTokAdsUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

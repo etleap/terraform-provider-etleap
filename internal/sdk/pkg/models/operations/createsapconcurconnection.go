@@ -15,7 +15,7 @@ type CreateSAPCONCURConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSapConcur *shared.ConnectionSapConcurOutput
+	ConnectionSapConcur *shared.ConnectionSapConcur
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateSAPCONCURConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateSAPCONCURConnectionResponse) GetConnectionSapConcur() *shared.ConnectionSapConcurOutput {
+func (o *CreateSAPCONCURConnectionResponse) GetConnectionSapConcur() *shared.ConnectionSapConcur {
 	if o == nil {
 		return nil
 	}

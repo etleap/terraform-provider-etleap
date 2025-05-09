@@ -56,7 +56,7 @@ resource "etleap_pipeline" "my_pipeline" {
 
 - `destination` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--destination))
 - `name` (String)
-- `source` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source))
+- `source` (Attributes) (see [below for nested schema](#nestedatt--source))
 
 ### Optional
 
@@ -223,97 +223,98 @@ Optional:
 
 Optional:
 
-- `active_campaign` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--active_campaign))
-- `bigquery` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--bigquery))
-- `bing_ads` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--bing_ads))
-- `blackline` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--blackline))
-- `braintree` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--braintree))
-- `confluent_cloud` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--confluent_cloud))
-- `coupa` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--coupa))
-- `criteo` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--criteo))
-- `db2` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--db2))
-- `db2_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--db2_sharded))
-- `delta_lake` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--delta_lake))
-- `egnyte` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--egnyte))
-- `elasticsearch` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--elasticsearch))
-- `elluminate` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--elluminate))
-- `eloqua` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--eloqua))
-- `erpx` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--erpx))
-- `facebook_ads` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--facebook_ads))
-- `fifteen_five` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--fifteen_five))
-- `freshchat` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--freshchat))
-- `freshsales` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--freshsales))
-- `freshworks` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--freshworks))
-- `ftp` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--ftp))
-- `gong` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--gong))
-- `google_ads` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--google_ads))
-- `google_analytics_ga4` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--google_analytics_ga4))
-- `google_cloud_storage` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--google_cloud_storage))
-- `google_sheets` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--google_sheets))
-- `hubspot` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--hubspot))
-- `impact_radius` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--impact_radius))
-- `intercom` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--intercom))
-- `jira` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--jira))
-- `jira_align` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--jira_align))
-- `jira_cloud` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--jira_cloud))
-- `kafka` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--kafka))
-- `kustomer` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--kustomer))
-- `ldap` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--ldap))
-- `ldap_virtual_list_view` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--ldap_virtual_list_view))
-- `linked_in_ads` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--linked_in_ads))
-- `marketo` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--marketo))
-- `mixpanel` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--mixpanel))
-- `mongodb` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--mongodb))
-- `mysql` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--mysql))
-- `mysql_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--mysql_sharded))
-- `netsuite` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--netsuite))
-- `netsuite_v2` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--netsuite_v2))
-- `oracle` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--oracle))
-- `oracle_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--oracle_sharded))
-- `outlook` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--outlook))
-- `outreach` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--outreach))
-- `pinterest_ads` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--pinterest_ads))
-- `postgres` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--postgres))
-- `postgres_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--postgres_sharded))
-- `quora_ads` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--quora_ads))
-- `rave_medidata` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--rave_medidata))
-- `recurly` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--recurly))
-- `redshift` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--redshift))
-- `redshift_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--redshift_sharded))
-- `s3_input` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--s3_input))
-- `s3_legacy` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--s3_legacy))
-- `salesforce` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--salesforce))
-- `salesforce_marketing_cloud` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--salesforce_marketing_cloud))
-- `sap_concur` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sap_concur))
-- `sap_hana` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sap_hana))
-- `sap_hana_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sap_hana_sharded))
-- `seismic` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--seismic))
-- `service_now` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--service_now))
-- `sftp` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sftp))
-- `shopify` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--shopify))
-- `skyward` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--skyward))
-- `snapchat_ads` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--snapchat_ads))
-- `snowflake` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--snowflake))
-- `snowflake_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--snowflake_sharded))
-- `sql_server` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sql_server))
-- `sql_server_sharded` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sql_server_sharded))
-- `square` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--square))
-- `streaming` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--streaming))
-- `stripe` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--stripe))
-- `sumtotal` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--sumtotal))
-- `the_trade_desk` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--the_trade_desk))
-- `tik_tok_ads` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--tik_tok_ads))
-- `twilio` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--twilio))
-- `twitter_ads` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--twitter_ads))
-- `user_defined_api` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--user_defined_api))
-- `uservoice` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--uservoice))
-- `veeva` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--veeva))
-- `verizon_media_dsp` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--verizon_media_dsp))
-- `workday_report` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--workday_report))
-- `workfront` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--workfront))
-- `zendesk` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--zendesk))
-- `zoom_phone` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--zoom_phone))
-- `zuora` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--source--zuora))
+- `active_campaign` (Attributes) (see [below for nested schema](#nestedatt--source--active_campaign))
+- `bigquery` (Attributes) (see [below for nested schema](#nestedatt--source--bigquery))
+- `bing_ads` (Attributes) (see [below for nested schema](#nestedatt--source--bing_ads))
+- `blackline` (Attributes) (see [below for nested schema](#nestedatt--source--blackline))
+- `braintree` (Attributes) (see [below for nested schema](#nestedatt--source--braintree))
+- `confluent_cloud` (Attributes) (see [below for nested schema](#nestedatt--source--confluent_cloud))
+- `coupa` (Attributes) (see [below for nested schema](#nestedatt--source--coupa))
+- `criteo` (Attributes) (see [below for nested schema](#nestedatt--source--criteo))
+- `db2` (Attributes) (see [below for nested schema](#nestedatt--source--db2))
+- `db2_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--db2_sharded))
+- `delta_lake` (Attributes) (see [below for nested schema](#nestedatt--source--delta_lake))
+- `egnyte` (Attributes) (see [below for nested schema](#nestedatt--source--egnyte))
+- `elasticsearch` (Attributes) (see [below for nested schema](#nestedatt--source--elasticsearch))
+- `elluminate` (Attributes) (see [below for nested schema](#nestedatt--source--elluminate))
+- `eloqua` (Attributes) (see [below for nested schema](#nestedatt--source--eloqua))
+- `erpx` (Attributes) (see [below for nested schema](#nestedatt--source--erpx))
+- `facebook_ads` (Attributes) (see [below for nested schema](#nestedatt--source--facebook_ads))
+- `fifteen_five` (Attributes) (see [below for nested schema](#nestedatt--source--fifteen_five))
+- `freshchat` (Attributes) (see [below for nested schema](#nestedatt--source--freshchat))
+- `freshsales` (Attributes) (see [below for nested schema](#nestedatt--source--freshsales))
+- `freshworks` (Attributes) (see [below for nested schema](#nestedatt--source--freshworks))
+- `ftp` (Attributes) (see [below for nested schema](#nestedatt--source--ftp))
+- `gong` (Attributes) (see [below for nested schema](#nestedatt--source--gong))
+- `google_ads` (Attributes) (see [below for nested schema](#nestedatt--source--google_ads))
+- `google_analytics_ga4` (Attributes) (see [below for nested schema](#nestedatt--source--google_analytics_ga4))
+- `google_cloud_storage` (Attributes) (see [below for nested schema](#nestedatt--source--google_cloud_storage))
+- `google_sheets` (Attributes) (see [below for nested schema](#nestedatt--source--google_sheets))
+- `hubspot` (Attributes) (see [below for nested schema](#nestedatt--source--hubspot))
+- `impact_radius` (Attributes) (see [below for nested schema](#nestedatt--source--impact_radius))
+- `intercom` (Attributes) (see [below for nested schema](#nestedatt--source--intercom))
+- `jira` (Attributes) (see [below for nested schema](#nestedatt--source--jira))
+- `jira_align` (Attributes) (see [below for nested schema](#nestedatt--source--jira_align))
+- `jira_cloud` (Attributes) (see [below for nested schema](#nestedatt--source--jira_cloud))
+- `kafka` (Attributes) (see [below for nested schema](#nestedatt--source--kafka))
+- `kustomer` (Attributes) (see [below for nested schema](#nestedatt--source--kustomer))
+- `ldap` (Attributes) (see [below for nested schema](#nestedatt--source--ldap))
+- `ldap_virtual_list_view` (Attributes) (see [below for nested schema](#nestedatt--source--ldap_virtual_list_view))
+- `linked_in_ads` (Attributes) (see [below for nested schema](#nestedatt--source--linked_in_ads))
+- `marketo` (Attributes) (see [below for nested schema](#nestedatt--source--marketo))
+- `microsoft_entra_id` (Attributes) (see [below for nested schema](#nestedatt--source--microsoft_entra_id))
+- `mixpanel` (Attributes) (see [below for nested schema](#nestedatt--source--mixpanel))
+- `mongodb` (Attributes) (see [below for nested schema](#nestedatt--source--mongodb))
+- `mysql` (Attributes) (see [below for nested schema](#nestedatt--source--mysql))
+- `mysql_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--mysql_sharded))
+- `netsuite` (Attributes) (see [below for nested schema](#nestedatt--source--netsuite))
+- `netsuite_v2` (Attributes) (see [below for nested schema](#nestedatt--source--netsuite_v2))
+- `oracle` (Attributes) (see [below for nested schema](#nestedatt--source--oracle))
+- `oracle_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--oracle_sharded))
+- `outlook` (Attributes) (see [below for nested schema](#nestedatt--source--outlook))
+- `outreach` (Attributes) (see [below for nested schema](#nestedatt--source--outreach))
+- `pinterest_ads` (Attributes) (see [below for nested schema](#nestedatt--source--pinterest_ads))
+- `postgres` (Attributes) (see [below for nested schema](#nestedatt--source--postgres))
+- `postgres_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--postgres_sharded))
+- `quora_ads` (Attributes) (see [below for nested schema](#nestedatt--source--quora_ads))
+- `rave_medidata` (Attributes) (see [below for nested schema](#nestedatt--source--rave_medidata))
+- `recurly` (Attributes) (see [below for nested schema](#nestedatt--source--recurly))
+- `redshift` (Attributes) (see [below for nested schema](#nestedatt--source--redshift))
+- `redshift_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--redshift_sharded))
+- `s3_input` (Attributes) (see [below for nested schema](#nestedatt--source--s3_input))
+- `s3_legacy` (Attributes) (see [below for nested schema](#nestedatt--source--s3_legacy))
+- `salesforce` (Attributes) (see [below for nested schema](#nestedatt--source--salesforce))
+- `salesforce_marketing_cloud` (Attributes) (see [below for nested schema](#nestedatt--source--salesforce_marketing_cloud))
+- `sap_concur` (Attributes) (see [below for nested schema](#nestedatt--source--sap_concur))
+- `sap_hana` (Attributes) (see [below for nested schema](#nestedatt--source--sap_hana))
+- `sap_hana_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--sap_hana_sharded))
+- `seismic` (Attributes) (see [below for nested schema](#nestedatt--source--seismic))
+- `service_now` (Attributes) (see [below for nested schema](#nestedatt--source--service_now))
+- `sftp` (Attributes) (see [below for nested schema](#nestedatt--source--sftp))
+- `shopify` (Attributes) (see [below for nested schema](#nestedatt--source--shopify))
+- `skyward` (Attributes) (see [below for nested schema](#nestedatt--source--skyward))
+- `snapchat_ads` (Attributes) (see [below for nested schema](#nestedatt--source--snapchat_ads))
+- `snowflake` (Attributes) (see [below for nested schema](#nestedatt--source--snowflake))
+- `snowflake_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--snowflake_sharded))
+- `sql_server` (Attributes) (see [below for nested schema](#nestedatt--source--sql_server))
+- `sql_server_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--sql_server_sharded))
+- `square` (Attributes) (see [below for nested schema](#nestedatt--source--square))
+- `streaming` (Attributes) (see [below for nested schema](#nestedatt--source--streaming))
+- `stripe` (Attributes) (see [below for nested schema](#nestedatt--source--stripe))
+- `sumtotal` (Attributes) (see [below for nested schema](#nestedatt--source--sumtotal))
+- `the_trade_desk` (Attributes) (see [below for nested schema](#nestedatt--source--the_trade_desk))
+- `tik_tok_ads` (Attributes) (see [below for nested schema](#nestedatt--source--tik_tok_ads))
+- `twilio` (Attributes) (see [below for nested schema](#nestedatt--source--twilio))
+- `twitter_ads` (Attributes) (see [below for nested schema](#nestedatt--source--twitter_ads))
+- `user_defined_api` (Attributes) (see [below for nested schema](#nestedatt--source--user_defined_api))
+- `uservoice` (Attributes) (see [below for nested schema](#nestedatt--source--uservoice))
+- `veeva` (Attributes) (see [below for nested schema](#nestedatt--source--veeva))
+- `verizon_media_dsp` (Attributes) (see [below for nested schema](#nestedatt--source--verizon_media_dsp))
+- `workday_report` (Attributes) (see [below for nested schema](#nestedatt--source--workday_report))
+- `workfront` (Attributes) (see [below for nested schema](#nestedatt--source--workfront))
+- `zendesk` (Attributes) (see [below for nested schema](#nestedatt--source--zendesk))
+- `zoom_phone` (Attributes) (see [below for nested schema](#nestedatt--source--zoom_phone))
+- `zuora` (Attributes) (see [below for nested schema](#nestedatt--source--zuora))
 
 <a id="nestedatt--source--active_campaign"></a>
 ### Nested Schema for `source.active_campaign`
@@ -322,8 +323,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The ActiveCampaign resource. Example: Contacts, Custom Fields and Custom Values. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ACTIVE_CAMPAIGN"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["ACTIVE_CAMPAIGN"]
 
 
 <a id="nestedatt--source--bigquery"></a>
@@ -334,11 +335,11 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `dataset` (String) Name of dataset in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["BIGQUERY"]
+- `type` (String) Not Null; must be one of ["BIGQUERY"]
 
 
 <a id="nestedatt--source--bing_ads"></a>
@@ -349,8 +350,8 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The report type. Requires replacement if changed. ; Not Null
 - `fields` (List of String) The field names. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["BING_ADS"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["BING_ADS"]
 
 
 <a id="nestedatt--source--blackline"></a>
@@ -360,8 +361,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Blackline report name. Example: Account Details Extract Template. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["BLACKLINE"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["BLACKLINE"]
 
 
 <a id="nestedatt--source--braintree"></a>
@@ -371,8 +372,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Braintree entity. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["BRAINTREE"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["BRAINTREE"]
 
 
 <a id="nestedatt--source--confluent_cloud"></a>
@@ -382,8 +383,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) You can ingest data from Kafka topics in your Confluent Cloud cluster. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["CONFLUENT_CLOUD"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["CONFLUENT_CLOUD"]
 
 
 <a id="nestedatt--source--coupa"></a>
@@ -393,8 +394,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Coupa resource. Example: Approvals, Items, Suppliers. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["COUPA"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["COUPA"]
 
 
 <a id="nestedatt--source--criteo"></a>
@@ -406,10 +407,10 @@ Optional:
 - `currency` (List of String) Specify the report `currency` if and only if the entity is 'report_placement', 'report_statistics' or 'report_transactions'. Example values: [USD, EUR]. Requires replacement if changed.
 - `dimensions` (List of String) Specify the report `dimension` if and only if the entity is 'report_placement' or 'report_statistics'. Example values: [Day, advertiserId, adsetId]. Requires replacement if changed.
 - `entity` (String) The Criteo resource. Example: ad_set, advertiser, audience, campaign, report_placement, report_statistics, and report_transactions. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `metrics` (List of String) Specify the report `metric` if and only if the entity is 'report_placement' or 'report_statistics'. Example values: [clicks, displays]. Requires replacement if changed.
 - `timezone` (List of String) Specify the report `timezone` if and only if the entity is 'report_placement' or 'report_transactions'. Example values: [UTC, ETC/GMT-3]. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["CRITEO"]
+- `type` (String) Not Null; must be one of ["CRITEO"]
 
 
 <a id="nestedatt--source--db2"></a>
@@ -419,12 +420,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["DB2"]
+- `type` (String) Not Null; must be one of ["DB2"]
 
 
 <a id="nestedatt--source--db2_sharded"></a>
@@ -434,12 +435,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["DB2_SHARDED"]
+- `type` (String) Not Null; must be one of ["DB2_SHARDED"]
 
 
 <a id="nestedatt--source--delta_lake"></a>
@@ -449,12 +450,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["DELTA_LAKE"]
+- `type` (String) Not Null; must be one of ["DELTA_LAKE"]
 
 
 <a id="nestedatt--source--egnyte"></a>
@@ -464,8 +465,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Excel resource path on egnyte. e.g. "/Shared/Documents/data.xlsx" or  "/Shared/Documents/data.xlsx/sheet_1". Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["EGNYTE"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["EGNYTE"]
 
 
 <a id="nestedatt--source--elasticsearch"></a>
@@ -475,8 +476,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The index name. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ELASTICSEARCH"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["ELASTICSEARCH"]
 
 
 <a id="nestedatt--source--elluminate"></a>
@@ -487,9 +488,9 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `domain_name` (List of String) The Domain that you want to extract from. If no domain is specified Etleap will extract data from all schema's domains. . Requires replacement if changed.
 - `entity` (String) The Elluminate study name. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `schema_name` (String) The Schema that you want to extract from. Requires replacement if changed. ; Not Null
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ELLUMINATE"]
+- `type` (String) Not Null; must be one of ["ELLUMINATE"]
 
 
 <a id="nestedatt--source--eloqua"></a>
@@ -499,8 +500,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Eloqua resource, spelled as it is shown in the Eloqua UI. Each ActivityType is a different entity and is spelled without spaces like EmailClickthrough and EmailSend. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ELOQUA"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["ELOQUA"]
 
 
 <a id="nestedatt--source--erpx"></a>
@@ -510,8 +511,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The ERPx resource. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ERPX"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["ERPX"]
 
 
 <a id="nestedatt--source--facebook_ads"></a>
@@ -522,8 +523,8 @@ Optional:
 - `breakdowns` (List of String) The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v21.0#insights-api-breakdowns). Requires replacement if changed. ; Not Null
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The aggregation level of the Facebook report. Example values: [Insights by Ad, Insights by Adset, Insights by Campaign, Insights by Account]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["FACEBOOK_ADS"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["FACEBOOK_ADS"]
 
 
 <a id="nestedatt--source--fifteen_five"></a>
@@ -533,8 +534,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The 15Five entity. Example values: [answer, report, department, feature-status, group-type, group, high-five, objective_objective_id_history, objective, attribute_value, attribute, priority, question, security-audit, vacation, user]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["FIFTEEN_FIVE"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["FIFTEEN_FIVE"]
 
 
 <a id="nestedatt--source--freshchat"></a>
@@ -544,8 +545,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Freshchat resource. Example values: [Agents, Channels, Conversations, Conversation Messages]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["FRESHCHAT"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["FRESHCHAT"]
 - `view` (List of String) Only when Entity is related to Deals. Select which views you want Etleap to pull data from. Requires replacement if changed.
 
 
@@ -556,8 +557,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Freshsales resource. Example values: [Leads, Deals, Appointments or Tasks]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["FRESHSALES"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["FRESHSALES"]
 - `view` (List of String) Only when Entity is related to Deals. Select which views you want Etleap to pull data from. Requires replacement if changed.
 
 
@@ -568,8 +569,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["FRESHWORKS"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["FRESHWORKS"]
 
 
 <a id="nestedatt--source--ftp"></a>
@@ -580,11 +581,11 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified. Requires replacement if changed.
 - `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'. Requires replacement if changed.
 - `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. Requires replacement if changed. ; Not Null; must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["FTP"]
+- `type` (String) Not Null; must be one of ["FTP"]
 
 
 <a id="nestedatt--source--gong"></a>
@@ -594,8 +595,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Gong resource. Example values: [Answered Scorecards, Call Transcripts, Calls, Calls Extensive, Folders, Interactions, Scorecards, Users, Users Activity, Users Extensive, Workspaces]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["GONG"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["GONG"]
 
 
 <a id="nestedatt--source--google_ads"></a>
@@ -607,10 +608,10 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Google Ads report type, capitalized and spelled with spaces between words. Requires replacement if changed. ; Not Null
 - `fields` (List of String) Specify the report `fields`. Example values: [campaign.resource_name, campaign.campaign_budget, campaign.advertising_channel_type]. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `metrics` (List of String) Specify the report `metrics`. Example values: [metrics.clicks, metrics.all_conversions, metrics.average_cost]. Requires replacement if changed.
 - `segments` (List of String) Specify the report `segmentation` groups. Example values: [segments.date, segments.click_type, segments.geo_target_county]. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["GOOGLE_ADS"]
+- `type` (String) Not Null; must be one of ["GOOGLE_ADS"]
 
 
 <a id="nestedatt--source--google_analytics_ga4"></a>
@@ -621,9 +622,9 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `dimensions` (List of String) Dimensions are attributes for your data. Example values: [date, browser]. Requires replacement if changed. ; Not Null
 - `entity` (String) The Google Analytics GA4 resource. Provide the ID of the GA4 resource. You can find out how to retrieve the ID of you resource <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id'>here</a>. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `metrics` (List of String) Metrics represent quantitative measurements calculated by Google Analytics. Example values: [active1DayUsers, conversions]. Requires replacement if changed. ; Not Null
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["GOOGLE_ANALYTICS_GA4"]
+- `type` (String) Not Null; must be one of ["GOOGLE_ANALYTICS_GA4"]
 
 
 <a id="nestedatt--source--google_cloud_storage"></a>
@@ -634,11 +635,11 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified. Requires replacement if changed.
 - `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'. Requires replacement if changed.
 - `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. Requires replacement if changed. ; Not Null; must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["GOOGLE_CLOUD_STORAGE"]
+- `type` (String) Not Null; must be one of ["GOOGLE_CLOUD_STORAGE"]
 
 
 <a id="nestedatt--source--google_sheets"></a>
@@ -648,8 +649,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) Google Sheets entities are in the form `SpreadsheetID/SheetID`. You can find both values by clicking on the sheet (tab) you want and looking at the URL: docs.google.com/spreadsheets/d/`1pRAGMSRpEEG31kbtG2qcpr-HDeDfvafp_v00`/edit#gid=`642381756`. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["GOOGLE_SHEETS"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["GOOGLE_SHEETS"]
 
 
 <a id="nestedatt--source--hubspot"></a>
@@ -659,8 +660,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Hubspot entity. Example values: [Campaigns, Contacts, Email Events, Engagements, Deals, Owners, Deal Pipelines, Companies, Marketing Emails, Pages, Landing Pages Analytics]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["HUBSPOT"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["HUBSPOT"]
 
 
 <a id="nestedatt--source--impact_radius"></a>
@@ -670,8 +671,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Impact Radius entity, spelled the same way as in the UI. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["IMPACT_RADIUS"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["IMPACT_RADIUS"]
 
 
 <a id="nestedatt--source--intercom"></a>
@@ -681,8 +682,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Intercom entity. Example values: [User, Lead, Contact, Company, Admin, Tag, Segment, Note, Event, Counts, Conversation Counts, Admin Conversation Counts, User Tags Counts, User Segments Counts, Company Tags Counts, Company Segments Counts, Conversation, Conversation Parts, Conversation Tags, Subscription]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["INTERCOM"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["INTERCOM"]
 
 
 <a id="nestedatt--source--jira"></a>
@@ -692,8 +693,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The JIRA entity. Example values: [Issues, Issue Links, Issue Types, Changelog, Comments, Worklogs, Fields, Groups, Group Members, Priorities, Projects, Resolutions, Statuses, Status Categories, Users, Multiple Choice Field]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["JIRA"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["JIRA"]
 
 
 <a id="nestedatt--source--jira_align"></a>
@@ -703,8 +704,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The JIRA Align entity. Spelled without spaces except for the Audit Logs. Example values: [Capabilities, Cities, Customers, Defects, Epics, Epics Audit Logs, Features, Features Audit Logs, Goals, Ideas, Iterations, KeyResults, Milestones, Milestones Audit Logs, Objectives, Objectives Audit Logs, Portfolios, Products, Programs, Regions, ReleaseVehicles, Releases, Snapshots, Stories, Tasks, Teams, Themes, Users, ValueStreams]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["JIRA_ALIGN"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["JIRA_ALIGN"]
 
 
 <a id="nestedatt--source--jira_cloud"></a>
@@ -714,8 +715,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The JIRA Software Cloud entity. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["JIRA_CLOUD"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["JIRA_CLOUD"]
 
 
 <a id="nestedatt--source--kafka"></a>
@@ -725,8 +726,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) You can ingest data from Kafka topics. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["KAFKA"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["KAFKA"]
 
 
 <a id="nestedatt--source--kustomer"></a>
@@ -736,8 +737,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Kustomer entity. Example values: [AUDIT_LOGS, BRANDS, BUSINESS_SCHEDULES, CARDS, COMPANIES, CONVERSATION_ATTACHMENTS, CONVERSATION_EVENTS, CONVERSATION_FORWARDS, CONVERSATION_TIMES, CONVERSATIONS, CUSTOM_ATTRIBUTE_METADATA, CUSTOMER_DRAFTS, CUSTOMER_MERGES, CUSTOMERS, KOBJECTS, KLASSES, MESSAGES, NOTES, NOTIFICATIONS, OUTBOUND_ACCOUNTS, QUEUES, SLAS, SATISFACTIONS, SHORTCUTS, SNOOZES, SPAM_SENDERS, TEAM_ROUTING_SETTINGS, TEAMS, USERS]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["KUSTOMER"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["KUSTOMER"]
 
 
 <a id="nestedatt--source--ldap"></a>
@@ -747,8 +748,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["LDAP"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["LDAP"]
 
 
 <a id="nestedatt--source--ldap_virtual_list_view"></a>
@@ -758,8 +759,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["LDAP_VIRTUAL_LIST_VIEW"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["LDAP_VIRTUAL_LIST_VIEW"]
 
 
 <a id="nestedatt--source--linked_in_ads"></a>
@@ -769,10 +770,10 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The LinkedIn resource. Example values: [ACCOUNTS, ACCOUNT_USERS, AD_ANALYTICS, CAMPAIGNS, CAMPAIGN_GROUPS, CONVERSIONS, INSIGHT_TAG_DOMAINS]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `metrics` (List of String) Specify the report `metrics` if and only if the entity is 'AD_ANALYTICS'. Example values: [dateRange, pivotValues, clicks]. Requires replacement if changed.
 - `pivots` (List of String) Specify the report `pivots` groups if and only if the entity is 'AD_ANALYTICS'. Example values: [ACCOUNT, CAMPAIGN, COMPANY]. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["LINKED_IN_ADS"]
+- `type` (String) Not Null; must be one of ["LINKED_IN_ADS"]
 
 
 <a id="nestedatt--source--marketo"></a>
@@ -783,8 +784,19 @@ Optional:
 - `activity_types` (List of String) Specify `activityTypes` if and only if the entity is 'Activities'. Requires replacement if changed.
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Marketo entity type. Example values: [Leads, Activities, Campaigns, Programs, Tags]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["MARKETO"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["MARKETO"]
+
+
+<a id="nestedatt--source--microsoft_entra_id"></a>
+### Nested Schema for `source.microsoft_entra_id`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The Microsoft Entra ID entity. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["MICROSOFT_ENTRA_ID"]
 
 
 <a id="nestedatt--source--mixpanel"></a>
@@ -794,8 +806,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) 'Raw Data' is the only entity available for Mixpanel. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["MIXPANEL"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["MIXPANEL"]
 
 
 <a id="nestedatt--source--mongodb"></a>
@@ -804,10 +816,10 @@ Optional:
 Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["MONGODB"]
+- `type` (String) Not Null; must be one of ["MONGODB"]
 
 
 <a id="nestedatt--source--mysql"></a>
@@ -818,11 +830,11 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `database` (String) Name of the database in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["MYSQL"]
+- `type` (String) Not Null; must be one of ["MYSQL"]
 
 
 <a id="nestedatt--source--mysql_sharded"></a>
@@ -833,11 +845,11 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `database` (String) Name of the database in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["MYSQL_SHARDED"]
+- `type` (String) Not Null; must be one of ["MYSQL_SHARDED"]
 
 
 <a id="nestedatt--source--netsuite"></a>
@@ -847,8 +859,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Netsuite entity. Spelled capitalized without spaces unless you have defined a custom entity in Netsuite with a different capitalization. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["NETSUITE"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["NETSUITE"]
 
 
 <a id="nestedatt--source--netsuite_v2"></a>
@@ -858,8 +870,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Netsuite entity. Spelled capitalized with spaces. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["NETSUITE_V2"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["NETSUITE_V2"]
 
 
 <a id="nestedatt--source--oracle"></a>
@@ -869,12 +881,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ORACLE"]
+- `type` (String) Not Null; must be one of ["ORACLE"]
 
 
 <a id="nestedatt--source--oracle_sharded"></a>
@@ -884,12 +896,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ORACLE_SHARDED"]
+- `type` (String) Not Null; must be one of ["ORACLE_SHARDED"]
 
 
 <a id="nestedatt--source--outlook"></a>
@@ -899,8 +911,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Outlook entity. Example values: [Messages, Events]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["OUTLOOK"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["OUTLOOK"]
 
 
 <a id="nestedatt--source--outreach"></a>
@@ -910,8 +922,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["OUTREACH"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["OUTREACH"]
 
 
 <a id="nestedatt--source--pinterest_ads"></a>
@@ -922,10 +934,10 @@ Optional:
 - `columns` (List of String) Specify the report `metrics` if and only if the entity is 'reports'. Example values: [SPEND_IN_MICRO_DOLLAR, PAID_IMPRESSION, CPC_IN_MICRO_DOLLAR]. Requires replacement if changed.
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Pinterest Ads resource. Example values: [ad_accounts, ad_groups, ads, campaigns and reports]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `level` (List of String) Specify the report `data level` if and only if the entity is 'reports'. Example values: [ADVERTISER, CAMPAIGN, AD_GROUP]. Requires replacement if changed.
 - `targeting_types` (List of String) Specify the report `targeting types` if and only if the entity is 'reports'. Example values: [KEYWORD, APPTYPE, LOCATION]. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["PINTEREST_ADS"]
+- `type` (String) Not Null; must be one of ["PINTEREST_ADS"]
 
 
 <a id="nestedatt--source--postgres"></a>
@@ -935,12 +947,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["POSTGRES"]
+- `type` (String) Not Null; must be one of ["POSTGRES"]
 
 
 <a id="nestedatt--source--postgres_sharded"></a>
@@ -950,12 +962,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["POSTGRES_SHARDED"]
+- `type` (String) Not Null; must be one of ["POSTGRES_SHARDED"]
 
 
 <a id="nestedatt--source--quora_ads"></a>
@@ -965,8 +977,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The level of aggregation for your Quora Ads data. Example values: [Account, Campaign, Ad Set, Ad]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["QUORA_ADS"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["QUORA_ADS"]
 
 
 <a id="nestedatt--source--rave_medidata"></a>
@@ -976,8 +988,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Rave Medidata entity. Example values: [dataset, study, <study-oid>@-@<form-oid>]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["RAVE_MEDIDATA"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["RAVE_MEDIDATA"]
 
 
 <a id="nestedatt--source--recurly"></a>
@@ -987,8 +999,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Recurly entity. Example values: [Account, Account Acquisition, Line Item, Coupon, Coupon Redemption, Credit Payment, Invoice, Measured Unit, Plan, Plan Add-On, Subscription, Transaction]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["RECURLY"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["RECURLY"]
 
 
 <a id="nestedatt--source--redshift"></a>
@@ -998,12 +1010,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["REDSHIFT"]
+- `type` (String) Not Null; must be one of ["REDSHIFT"]
 
 
 <a id="nestedatt--source--redshift_sharded"></a>
@@ -1013,12 +1025,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["REDSHIFT_SHARDED"]
+- `type` (String) Not Null; must be one of ["REDSHIFT_SHARDED"]
 
 
 <a id="nestedatt--source--s3_input"></a>
@@ -1029,12 +1041,12 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified. Requires replacement if changed.
 - `files_can_change` (Boolean) Etleap can check whether files that were already processed have changed. If the file has changed, then Etleap fetches the new file and removes the old file's data in the destination and adds the changed data. <br> This can only be enabled when `newFileBehavior` is set to `APPEND`. Defaults to `false`. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'. Requires replacement if changed.
 - `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. Requires replacement if changed. ; Not Null; must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. Requires replacement if changed. ; Not Null
 - `triggered_by_event` (Boolean) Whether this source should be triggered by a `Batch Added` event (`true`) or Etleap should inspect the source to find new files to process (`false`). Defaults to `false`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["S3_INPUT"]
+- `type` (String) Not Null; must be one of ["S3_INPUT"]
 
 
 <a id="nestedatt--source--s3_legacy"></a>
@@ -1044,11 +1056,11 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'. Requires replacement if changed.
 - `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. Requires replacement if changed. ; Not Null; must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. Requires replacement if changed. ; Not Null
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["S3_LEGACY"]
+- `type` (String) Not Null; must be one of ["S3_LEGACY"]
 
 
 <a id="nestedatt--source--salesforce"></a>
@@ -1058,8 +1070,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Salesforce table. Spelled capitalized without spaces, unless it is a custom table like `My_Table__c`. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SALESFORCE"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SALESFORCE"]
 
 
 <a id="nestedatt--source--salesforce_marketing_cloud"></a>
@@ -1069,8 +1081,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Salesforce Marketing Cloud entity. Example Values: [Bounce Event, Campaign, Click Event, Content Area, Data Extension, Data Extension Object, Email, Folders, List Subscriber, Lists, Open Event, Send, Sent Event, Subscribers, Unsub Event]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SALESFORCE_MARKETING_CLOUD"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SALESFORCE_MARKETING_CLOUD"]
 
 
 <a id="nestedatt--source--sap_concur"></a>
@@ -1080,8 +1092,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The SAP Concur entity. Example Values: [ExpenseEntries, Reports, Users]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SAP_CONCUR"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SAP_CONCUR"]
 
 
 <a id="nestedatt--source--sap_hana"></a>
@@ -1091,12 +1103,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SAP_HANA"]
+- `type` (String) Not Null; must be one of ["SAP_HANA"]
 
 
 <a id="nestedatt--source--sap_hana_sharded"></a>
@@ -1106,12 +1118,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SAP_HANA_SHARDED"]
+- `type` (String) Not Null; must be one of ["SAP_HANA_SHARDED"]
 
 
 <a id="nestedatt--source--seismic"></a>
@@ -1121,8 +1133,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Seismic entity. Example values: [Livesend Links, Livesend Link Contents, Livesend Link Members, Livesend Page Views, Users, User Activity]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SEISMIC"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SEISMIC"]
 
 
 <a id="nestedatt--source--service_now"></a>
@@ -1132,8 +1144,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The ServiceNow entity. Example values: [Task, Problem, Incident]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SERVICE_NOW"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SERVICE_NOW"]
 
 
 <a id="nestedatt--source--sftp"></a>
@@ -1144,11 +1156,11 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified. Requires replacement if changed.
 - `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'. Requires replacement if changed.
 - `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. Requires replacement if changed. ; Not Null; must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SFTP"]
+- `type` (String) Not Null; must be one of ["SFTP"]
 
 
 <a id="nestedatt--source--shopify"></a>
@@ -1158,8 +1170,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Shopify entity. Spelled with spaces and only first word capitalized. Nested JSON objects are selected by appending the field name. For example, `Orders fulfillments line items` has the lineItems field from the `Order fulfillments` entity. Start creating a pipeline in the Etleap UI for the full list of entities. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SHOPIFY"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SHOPIFY"]
 
 
 <a id="nestedatt--source--skyward"></a>
@@ -1169,8 +1181,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Skyward entity. Spelled capitalized with spaces. Example Values: [Academic Sessions, Categories, Classes, Courses, Demographics, Enrollments, Grading Periods, Line Items, Orgs, Results, Schools, Students, Teachers, Terms, Users]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SKYWARD"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SKYWARD"]
 
 
 <a id="nestedatt--source--snapchat_ads"></a>
@@ -1182,10 +1194,10 @@ Optional:
 - `breakdown` (String) Specify the report `breakdown` if and only if the entity is 'ad_account_report_hourly' or 'ad_account_report_daily'. Example values: [ad, adsquad, campaign]. Requires replacement if changed.
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Snapchat Ads entity. Example values: [ad, adaccount, ad_account_report_hourly, ad_account_report_daily]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `metrics` (List of String) Specify the report `metrics` if and only if the entity is 'ad_account_report_hourly' or 'ad_account_report_daily'. Example values: [impressions, swipes, screen_time_millis]. Requires replacement if changed.
 - `report_dimension` (List of String) Specify the report `dimension` groups if and only if the entity is 'ad_account_report_hourly' or 'ad_account_report_daily'. Example values: [country, region, gender]. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SNAPCHAT_ADS"]
+- `type` (String) Not Null; must be one of ["SNAPCHAT_ADS"]
 
 
 <a id="nestedatt--source--snowflake"></a>
@@ -1195,12 +1207,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SNOWFLAKE"]
+- `type` (String) Not Null; must be one of ["SNOWFLAKE"]
 
 
 <a id="nestedatt--source--snowflake_sharded"></a>
@@ -1210,12 +1222,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SNOWFLAKE_SHARDED"]
+- `type` (String) Not Null; must be one of ["SNOWFLAKE_SHARDED"]
 
 
 <a id="nestedatt--source--sql_server"></a>
@@ -1225,12 +1237,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SQL_SERVER"]
+- `type` (String) Not Null; must be one of ["SQL_SERVER"]
 
 
 <a id="nestedatt--source--sql_server_sharded"></a>
@@ -1240,12 +1252,12 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the source. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `primary_key_columns` (List of String) Columns that make up the primary key of the source. The specified order of columns matters for composite primary keys. <br> For source tables that do not have primary keys please specify an empty array. <br> For sharded sources include `shard_id` as first primary key column.<br><br>The **default value** is an empty array. Requires replacement if changed. ; Not Null
 - `schema` (String) Name of the schema in the source from which the data is to be extracted. If not specified, the source connection schema or the default schema for connection type will be used. Requires replacement if changed.
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SQL_SERVER_SHARDED"]
+- `type` (String) Not Null; must be one of ["SQL_SERVER_SHARDED"]
 
 
 <a id="nestedatt--source--square"></a>
@@ -1255,8 +1267,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Square entity. Example values: [Catalog, Customers, Loyalty Accounts, Loyalty Events, Loyalty Rewards, Orders, Refunds]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SQUARE"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SQUARE"]
 
 
 <a id="nestedatt--source--streaming"></a>
@@ -1266,11 +1278,11 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified. Requires replacement if changed.
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'. Requires replacement if changed.
 - `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. Requires replacement if changed. ; Not Null; must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. Requires replacement if changed. ; Not Null
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["STREAMING"]
+- `type` (String) Not Null; must be one of ["STREAMING"]
 
 
 <a id="nestedatt--source--stripe"></a>
@@ -1280,8 +1292,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Stripe entity. Example values: [Subscriptions, Invoice, InvoiceItems, Events]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["STRIPE"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["STRIPE"]
 
 
 <a id="nestedatt--source--sumtotal"></a>
@@ -1291,8 +1303,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The SumTotal entity. Example values: [Activities, Audiences, Competencies, Domains, Grades, Jobs, Organizations, Skills, Social, Topics, User Activities, User Activities Progress, User Courses, Users]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["SUMTOTAL"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SUMTOTAL"]
 
 
 <a id="nestedatt--source--the_trade_desk"></a>
@@ -1302,8 +1314,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["THE_TRADE_DESK"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["THE_TRADE_DESK"]
 
 
 <a id="nestedatt--source--tik_tok_ads"></a>
@@ -1315,9 +1327,9 @@ Optional:
 - `data_level` (String) Specify the report `data level` if and only if the entity is 'REPORT'. Example values: [AUCTION_AD, AUCTION_CAMPAIGN, RESERVATION_AD]. Requires replacement if changed.
 - `dimensions` (List of String) Specify the report `dimension` groups if and only if the entity is 'REPORT'. Example values: [start_time_day, start_time_hour, campaign_id]. Requires replacement if changed.
 - `entity` (String) The TikTok Ads resource. Example values: [AD, ADGROUP, ADVERTISER, CAMPAIGN and REPORT]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `metrics` (List of String) Specify the report `metrics` if and only if the entity is 'REPORT'. Example values: [ad_name, clicks, conversion]. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["TIK_TOK_ADS"]
+- `type` (String) Not Null; must be one of ["TIK_TOK_ADS"]
 
 
 <a id="nestedatt--source--twilio"></a>
@@ -1327,8 +1339,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Twilio entity. Example values: [Calls, Calls summary, Messages, Usage records]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["TWILIO"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["TWILIO"]
 
 
 <a id="nestedatt--source--twitter_ads"></a>
@@ -1338,8 +1350,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Twitter entity. Example values: [Account, Campaign, Funding Instrument, Line Item, Media Creative, Promoted Tweet, Followers, Tweets Likes, Tweets Quotes, Retweets, Recent Mentions,Tweets, Account Report, Campaign Report, Funding Instrument Report, Line Item Report, Media Creative Report, Promoted Tweet Report]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["TWITTER_ADS"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["TWITTER_ADS"]
 
 
 <a id="nestedatt--source--user_defined_api"></a>
@@ -1349,8 +1361,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The User-Defined API entity. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["USER_DEFINED_API"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["USER_DEFINED_API"]
 
 
 <a id="nestedatt--source--uservoice"></a>
@@ -1360,8 +1372,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The UserVoice entity. Example values: [Category, Comment, Feature, Feature Status, Feedback Record, Forum, Forum Invitation, Internal Status, Label, NPS Rating, Note, Permission, Product Area, Score, Segment, Segmented Values, Status, Status Updates, Suggestion, Suggestion Activity Entry, Supporter, Supporter Message, Team, User, VSTS Work Item]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["USERVOICE"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["USERVOICE"]
 
 
 <a id="nestedatt--source--veeva"></a>
@@ -1371,8 +1383,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Veeva Entity name. Example values: [APQR, APQR Item, Action, Activity, Admin Link, Admin Section, Admin Section Controller Code, Answer Library Design, Application Context Selector, Application License Model, Application License Model Field, Application Manifest, Application Provisioner, Application Role]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["VEEVA"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["VEEVA"]
 
 
 <a id="nestedatt--source--verizon_media_dsp"></a>
@@ -1383,9 +1395,9 @@ Optional:
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `dimensions` (List of String) Requires replacement if changed. ; Not Null
 - `entity` (String) Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `metrics` (List of String) Requires replacement if changed. ; Not Null
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["VERIZON_MEDIA_DSP"]
+- `type` (String) Not Null; must be one of ["VERIZON_MEDIA_DSP"]
 
 
 <a id="nestedatt--source--workday_report"></a>
@@ -1395,8 +1407,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Workday Report name. Spelled the same as Workday UI but all spaces are replaced with underscores. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["WORKDAY_REPORT"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["WORKDAY_REPORT"]
 
 
 <a id="nestedatt--source--workfront"></a>
@@ -1406,8 +1418,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Workfront entity. Spelled capitalized without spaces. For the full list, start creating a pipeline in the Etleap UI. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["WORKFRONT"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["WORKFRONT"]
 
 
 <a id="nestedatt--source--zendesk"></a>
@@ -1417,8 +1429,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Zendesk entity. Example values: [Group Memberships, Groups, Macros, Organizations, Satisfaction Ratings, SLA Policies, Tags, Ticket Audits, Ticket Comments, Ticket Fields, Ticket Forms, Tickets, Ticket Metrics, Users]. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ZENDESK"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["ZENDESK"]
 
 
 <a id="nestedatt--source--zoom_phone"></a>
@@ -1428,8 +1440,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ZOOM_PHONE"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["ZOOM_PHONE"]
 
 
 <a id="nestedatt--source--zuora"></a>
@@ -1439,8 +1451,8 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Zuora entity. Spelled capitalized with spaces. For the full list, start creating a pipeline in the Etleap UI. Requires replacement if changed. ; Not Null
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`. Requires replacement if changed.
-- `type` (String) Requires replacement if changed. ; Not Null; must be one of ["ZUORA"]
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["ZUORA"]
 
 
 

@@ -32,16 +32,9 @@ func (e *SourceConfluentCloudUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceConfluentCloudUpdate struct {
-	Type *SourceConfluentCloudUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceConfluentCloudUpdate) GetType() *SourceConfluentCloudUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                          `json:"latencyThreshold,omitempty"`
+	Type             *SourceConfluentCloudUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceConfluentCloudUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceConfluentCloudUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceConfluentCloudUpdate) GetType() *SourceConfluentCloudUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

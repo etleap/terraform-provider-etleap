@@ -32,16 +32,9 @@ func (e *SourceJiraCloudUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceJiraCloudUpdate struct {
-	Type *SourceJiraCloudUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceJiraCloudUpdate) GetType() *SourceJiraCloudUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                     `json:"latencyThreshold,omitempty"`
+	Type             *SourceJiraCloudUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceJiraCloudUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceJiraCloudUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceJiraCloudUpdate) GetType() *SourceJiraCloudUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

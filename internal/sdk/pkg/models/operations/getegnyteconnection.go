@@ -27,7 +27,7 @@ type GetEGNYTEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionEgnyte *shared.ConnectionEgnyte
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionJIRACLOUDResourceModel) ToSharedConnectionJiraCloud() *shared.ConnectionJiraCloud {
+func (r *ConnectionJIRACLOUDResourceModel) ToSharedConnectionJiraCloudInput() *shared.ConnectionJiraCloudInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionJiraCloudType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionJIRACLOUDResourceModel) ToSharedConnectionJiraCloud() *shared
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,7 +87,7 @@ func (r *ConnectionJIRACLOUDResourceModel) ToSharedConnectionJiraCloud() *shared
 		}
 	}
 	code := r.Code.ValueString()
-	out := shared.ConnectionJiraCloud{
+	out := shared.ConnectionJiraCloudInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -96,14 +96,14 @@ func (r *ConnectionJIRACLOUDResourceModel) ToSharedConnectionJiraCloud() *shared
 	return &out
 }
 
-func (r *ConnectionJIRACLOUDResourceModel) RefreshFromSharedConnectionJiraCloudOutput(resp *shared.ConnectionJiraCloudOutput) {
+func (r *ConnectionJIRACLOUDResourceModel) RefreshFromSharedConnectionJiraCloud(resp *shared.ConnectionJiraCloud) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -185,18 +185,18 @@ func (r *ConnectionJIRACLOUDResourceModel) RefreshFromSharedConnectionJiraCloudO
 }
 
 func (r *ConnectionJIRACLOUDResourceModel) ToSharedConnectionJiraCloudUpdate() *shared.ConnectionJiraCloudUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
-	} else {
-		active = nil
-	}
-	typeVar := shared.ConnectionJiraCloudUpdateType(r.Type.ValueString())
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
+	}
+	typeVar := shared.ConnectionJiraCloudUpdateType(r.Type.ValueString())
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
+	} else {
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -259,12 +259,12 @@ func (r *ConnectionJIRACLOUDResourceModel) ToSharedConnectionJiraCloudUpdate() *
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -280,9 +280,9 @@ func (r *ConnectionJIRACLOUDResourceModel) ToSharedConnectionJiraCloudUpdate() *
 		code = nil
 	}
 	out := shared.ConnectionJiraCloudUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
 		Code:           code,
 	}

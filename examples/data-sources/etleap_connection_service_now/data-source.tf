@@ -1,3 +1,3 @@
 data "etleap_connection_service_now" "my_connectionservice_now" {
-  id = "32066bf3-930a-4a9d-904a-7f6d5a20b51d"
+  id = "28eaba38-3819-4897-9487-2841337b16d5"
 }

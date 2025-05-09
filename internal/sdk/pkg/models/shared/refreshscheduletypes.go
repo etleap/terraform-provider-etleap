@@ -12,11 +12,11 @@ import (
 type RefreshScheduleTypesType string
 
 const (
-	RefreshScheduleTypesTypeMonthly RefreshScheduleTypesType = "MONTHLY"
-	RefreshScheduleTypesTypeHourly  RefreshScheduleTypesType = "HOURLY"
 	RefreshScheduleTypesTypeNever   RefreshScheduleTypesType = "NEVER"
+	RefreshScheduleTypesTypeHourly  RefreshScheduleTypesType = "HOURLY"
 	RefreshScheduleTypesTypeDaily   RefreshScheduleTypesType = "DAILY"
 	RefreshScheduleTypesTypeWeekly  RefreshScheduleTypesType = "WEEKLY"
+	RefreshScheduleTypesTypeMonthly RefreshScheduleTypesType = "MONTHLY"
 )
 
 type RefreshScheduleTypes struct {
@@ -29,15 +29,15 @@ type RefreshScheduleTypes struct {
 	Type RefreshScheduleTypesType
 }
 
-func CreateRefreshScheduleTypesMonthly(monthly RefreshScheduleModeMonthly) RefreshScheduleTypes {
-	typ := RefreshScheduleTypesTypeMonthly
+func CreateRefreshScheduleTypesNever(never RefreshScheduleModeNever) RefreshScheduleTypes {
+	typ := RefreshScheduleTypesTypeNever
 
-	typStr := RefreshScheduleModeMonthlyMode(typ)
-	monthly.Mode = typStr
+	typStr := RefreshScheduleModeNeverMode(typ)
+	never.Mode = typStr
 
 	return RefreshScheduleTypes{
-		RefreshScheduleModeMonthly: &monthly,
-		Type:                       typ,
+		RefreshScheduleModeNever: &never,
+		Type:                     typ,
 	}
 }
 
@@ -50,18 +50,6 @@ func CreateRefreshScheduleTypesHourly(hourly RefreshScheduleModeHourly) RefreshS
 	return RefreshScheduleTypes{
 		RefreshScheduleModeHourly: &hourly,
 		Type:                      typ,
-	}
-}
-
-func CreateRefreshScheduleTypesNever(never RefreshScheduleModeNever) RefreshScheduleTypes {
-	typ := RefreshScheduleTypesTypeNever
-
-	typStr := RefreshScheduleModeNeverMode(typ)
-	never.Mode = typStr
-
-	return RefreshScheduleTypes{
-		RefreshScheduleModeNever: &never,
-		Type:                     typ,
 	}
 }
 
@@ -89,6 +77,18 @@ func CreateRefreshScheduleTypesWeekly(weekly RefreshScheduleModeWeekly) RefreshS
 	}
 }
 
+func CreateRefreshScheduleTypesMonthly(monthly RefreshScheduleModeMonthly) RefreshScheduleTypes {
+	typ := RefreshScheduleTypesTypeMonthly
+
+	typStr := RefreshScheduleModeMonthlyMode(typ)
+	monthly.Mode = typStr
+
+	return RefreshScheduleTypes{
+		RefreshScheduleModeMonthly: &monthly,
+		Type:                       typ,
+	}
+}
+
 func (u *RefreshScheduleTypes) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
@@ -101,14 +101,14 @@ func (u *RefreshScheduleTypes) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Mode {
-	case "MONTHLY":
-		refreshScheduleModeMonthly := new(RefreshScheduleModeMonthly)
-		if err := utils.UnmarshalJSON(data, &refreshScheduleModeMonthly, "", true, true); err != nil {
+	case "NEVER":
+		refreshScheduleModeNever := new(RefreshScheduleModeNever)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeNever, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.RefreshScheduleModeMonthly = refreshScheduleModeMonthly
-		u.Type = RefreshScheduleTypesTypeMonthly
+		u.RefreshScheduleModeNever = refreshScheduleModeNever
+		u.Type = RefreshScheduleTypesTypeNever
 		return nil
 	case "HOURLY":
 		refreshScheduleModeHourly := new(RefreshScheduleModeHourly)
@@ -118,15 +118,6 @@ func (u *RefreshScheduleTypes) UnmarshalJSON(data []byte) error {
 
 		u.RefreshScheduleModeHourly = refreshScheduleModeHourly
 		u.Type = RefreshScheduleTypesTypeHourly
-		return nil
-	case "NEVER":
-		refreshScheduleModeNever := new(RefreshScheduleModeNever)
-		if err := utils.UnmarshalJSON(data, &refreshScheduleModeNever, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.RefreshScheduleModeNever = refreshScheduleModeNever
-		u.Type = RefreshScheduleTypesTypeNever
 		return nil
 	case "DAILY":
 		refreshScheduleModeDaily := new(RefreshScheduleModeDaily)
@@ -145,6 +136,15 @@ func (u *RefreshScheduleTypes) UnmarshalJSON(data []byte) error {
 
 		u.RefreshScheduleModeWeekly = refreshScheduleModeWeekly
 		u.Type = RefreshScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		refreshScheduleModeMonthly := new(RefreshScheduleModeMonthly)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeMonthly, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.RefreshScheduleModeMonthly = refreshScheduleModeMonthly
+		u.Type = RefreshScheduleTypesTypeMonthly
 		return nil
 	}
 

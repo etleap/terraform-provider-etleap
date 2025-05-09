@@ -1,3 +1,3 @@
 data "etleap_connection_twilio" "my_connectiontwilio" {
-  id = "d84fd9ce-3c71-4e85-bb32-95852dfc788d"
+  id = "6a6149d2-a489-4c05-b389-bf72d903defa"
 }

@@ -55,9 +55,9 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 				destinations1.Destination.Redshift.DistributionStyle = nil
 			} else {
 				destinations1.Destination.Redshift.DistributionStyle = &DistributionStyle{}
-				if destinationsItem.Destination.DestinationRedshift.DistributionStyle.DistributionStyle1 != nil {
-					if destinationsItem.Destination.DestinationRedshift.DistributionStyle.DistributionStyle1 != nil {
-						destinations1.Destination.Redshift.DistributionStyle.One = types.StringValue(string(*destinationsItem.Destination.DestinationRedshift.DistributionStyle.DistributionStyle1))
+				if destinationsItem.Destination.DestinationRedshift.DistributionStyle.One != nil {
+					if destinationsItem.Destination.DestinationRedshift.DistributionStyle.One != nil {
+						destinations1.Destination.Redshift.DistributionStyle.One = types.StringValue(string(*destinationsItem.Destination.DestinationRedshift.DistributionStyle.One))
 					} else {
 						destinations1.Destination.Redshift.DistributionStyle.One = types.StringNull()
 					}

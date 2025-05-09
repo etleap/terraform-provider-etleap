@@ -32,20 +32,13 @@ func (e *SourceNetsuiteType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceNetsuite struct {
+	Type SourceNetsuiteType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string             `json:"connectionId"`
-	Type         SourceNetsuiteType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Netsuite entity. Spelled capitalized without spaces unless you have defined a custom entity in Netsuite with a different capitalization.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceNetsuite) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceNetsuite) GetType() SourceNetsuiteType {
@@ -53,6 +46,13 @@ func (o *SourceNetsuite) GetType() SourceNetsuiteType {
 		return SourceNetsuiteType("")
 	}
 	return o.Type
+}
+
+func (o *SourceNetsuite) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceNetsuite) GetLatencyThreshold() *int64 {

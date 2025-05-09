@@ -43,22 +43,22 @@ type ConnectionMYSQLSHARDEDResource struct {
 
 // ConnectionMYSQLSHARDEDResourceModel describes the resource data model.
 type ConnectionMYSQLSHARDEDResourceModel struct {
-	Active                           types.Bool                                      `tfsdk:"active"`
-	AutoReplicate                    types.String                                    `tfsdk:"auto_replicate"`
-	CdcEnabled                       types.Bool                                      `tfsdk:"cdc_enabled"`
-	Certificate                      types.String                                    `tfsdk:"certificate"`
-	CreateDate                       types.String                                    `tfsdk:"create_date"`
-	Database                         types.String                                    `tfsdk:"database"`
-	DefaultUpdateSchedule            []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts         types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                               types.String                                    `tfsdk:"id"`
-	Name                             types.String                                    `tfsdk:"name"`
-	RequireSslAndValidateCertificate types.Bool                                      `tfsdk:"require_ssl_and_validate_certificate"`
-	Shards                           []MysqlShard                                    `tfsdk:"shards"`
-	Status                           types.String                                    `tfsdk:"status"`
-	TinyInt1IsBoolean                types.Bool                                      `tfsdk:"tiny_int1_is_boolean"`
-	Type                             types.String                                    `tfsdk:"type"`
-	UpdateSchedule                   *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                           types.Bool              `tfsdk:"active"`
+	AutoReplicate                    types.String            `tfsdk:"auto_replicate"`
+	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
+	Certificate                      types.String            `tfsdk:"certificate"`
+	CreateDate                       types.String            `tfsdk:"create_date"`
+	Database                         types.String            `tfsdk:"database"`
+	DefaultUpdateSchedule            []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts         types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                               types.String            `tfsdk:"id"`
+	Name                             types.String            `tfsdk:"name"`
+	RequireSslAndValidateCertificate types.Bool              `tfsdk:"require_ssl_and_validate_certificate"`
+	Shards                           []MysqlShard            `tfsdk:"shards"`
+	Status                           types.String            `tfsdk:"status"`
+	TinyInt1IsBoolean                types.Bool              `tfsdk:"tiny_int1_is_boolean"`
+	Type                             types.String            `tfsdk:"type"`
+	UpdateSchedule                   *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionMYSQLSHARDEDResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -719,7 +719,7 @@ func (r *ConnectionMYSQLSHARDEDResource) Create(ctx context.Context, req resourc
 		return
 	}
 
-	request := *data.ToSharedConnectionMysqlSharded()
+	request := *data.ToSharedConnectionMysqlShardedInput()
 	res, err := r.client.Connection.CreateMYSQLSHARDEDConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -740,7 +740,7 @@ func (r *ConnectionMYSQLSHARDEDResource) Create(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMysqlShardedOutput(res.ConnectionMysqlSharded)
+	data.RefreshFromSharedConnectionMysqlSharded(res.ConnectionMysqlSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetMYSQLSHARDEDConnectionRequest{
@@ -766,7 +766,7 @@ func (r *ConnectionMYSQLSHARDEDResource) Create(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMysqlShardedOutput(res1.ConnectionMysqlSharded)
+	data.RefreshFromSharedConnectionMysqlSharded(res1.ConnectionMysqlSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -815,7 +815,7 @@ func (r *ConnectionMYSQLSHARDEDResource) Read(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMysqlShardedOutput(res.ConnectionMysqlSharded)
+	data.RefreshFromSharedConnectionMysqlSharded(res.ConnectionMysqlSharded)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -861,7 +861,7 @@ func (r *ConnectionMYSQLSHARDEDResource) Update(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMysqlShardedOutput(res.ConnectionMysqlSharded)
+	data.RefreshFromSharedConnectionMysqlSharded(res.ConnectionMysqlSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetMYSQLSHARDEDConnectionRequest{
@@ -887,7 +887,7 @@ func (r *ConnectionMYSQLSHARDEDResource) Update(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMysqlShardedOutput(res1.ConnectionMysqlSharded)
+	data.RefreshFromSharedConnectionMysqlSharded(res1.ConnectionMysqlSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

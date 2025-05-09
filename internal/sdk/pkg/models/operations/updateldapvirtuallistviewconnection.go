@@ -35,7 +35,7 @@ type UpdateLDAPVIRTUALLISTVIEWConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionLdapVirtualListView *shared.ConnectionLdapVirtualListView
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

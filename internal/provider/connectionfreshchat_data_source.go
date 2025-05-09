@@ -28,15 +28,15 @@ type ConnectionFRESHCHATDataSource struct {
 
 // ConnectionFRESHCHATDataSourceModel describes the data model.
 type ConnectionFRESHCHATDataSourceModel struct {
-	Active                types.Bool                                      `tfsdk:"active"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	Domain                types.String                                    `tfsdk:"domain"`
-	ID                    types.String                                    `tfsdk:"id"`
-	Name                  types.String                                    `tfsdk:"name"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                types.Bool              `tfsdk:"active"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	Domain                types.String            `tfsdk:"domain"`
+	ID                    types.String            `tfsdk:"id"`
+	Name                  types.String            `tfsdk:"name"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -311,7 +311,7 @@ func (r *ConnectionFRESHCHATDataSource) Read(ctx context.Context, req datasource
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFreshchatOutput(res.ConnectionFreshchat)
+	data.RefreshFromSharedConnectionFreshchat(res.ConnectionFreshchat)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

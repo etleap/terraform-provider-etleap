@@ -41,21 +41,21 @@ type ConnectionICEBERGResource struct {
 
 // ConnectionICEBERGResourceModel describes the resource data model.
 type ConnectionICEBERGResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	BaseDirectory            types.String                                    `tfsdk:"base_directory"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DataBucket               types.String                                    `tfsdk:"data_bucket"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	GlueDatabase             types.String                                    `tfsdk:"glue_database"`
-	GlueRegion               types.String                                    `tfsdk:"glue_region"`
-	IamRole                  types.String                                    `tfsdk:"iam_role"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	WarehouseConnection      types.String                                    `tfsdk:"warehouse_connection"`
+	Active                   types.Bool              `tfsdk:"active"`
+	BaseDirectory            types.String            `tfsdk:"base_directory"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DataBucket               types.String            `tfsdk:"data_bucket"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	GlueDatabase             types.String            `tfsdk:"glue_database"`
+	GlueRegion               types.String            `tfsdk:"glue_region"`
+	IamRole                  types.String            `tfsdk:"iam_role"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	WarehouseConnection      types.String            `tfsdk:"warehouse_connection"`
 }
 
 func (r *ConnectionICEBERGResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

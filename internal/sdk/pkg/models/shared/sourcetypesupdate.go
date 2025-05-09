@@ -12,98 +12,98 @@ import (
 type SourceTypesUpdateType string
 
 const (
-	SourceTypesUpdateTypeGoogleCloudStorage       SourceTypesUpdateType = "GOOGLE_CLOUD_STORAGE"
-	SourceTypesUpdateTypeJiraCloud                SourceTypesUpdateType = "JIRA_CLOUD"
-	SourceTypesUpdateTypeErpx                     SourceTypesUpdateType = "ERPX"
-	SourceTypesUpdateTypeRaveMedidata             SourceTypesUpdateType = "RAVE_MEDIDATA"
-	SourceTypesUpdateTypeDeltaLake                SourceTypesUpdateType = "DELTA_LAKE"
+	SourceTypesUpdateTypeActiveCampaign           SourceTypesUpdateType = "ACTIVE_CAMPAIGN"
+	SourceTypesUpdateTypeBigquery                 SourceTypesUpdateType = "BIGQUERY"
+	SourceTypesUpdateTypeBingAds                  SourceTypesUpdateType = "BING_ADS"
+	SourceTypesUpdateTypeBlackline                SourceTypesUpdateType = "BLACKLINE"
+	SourceTypesUpdateTypeBraintree                SourceTypesUpdateType = "BRAINTREE"
+	SourceTypesUpdateTypeConfluentCloud           SourceTypesUpdateType = "CONFLUENT_CLOUD"
+	SourceTypesUpdateTypeCoupa                    SourceTypesUpdateType = "COUPA"
+	SourceTypesUpdateTypeCriteo                   SourceTypesUpdateType = "CRITEO"
 	SourceTypesUpdateTypeDb2                      SourceTypesUpdateType = "DB2"
-	SourceTypesUpdateTypeSnowflake                SourceTypesUpdateType = "SNOWFLAKE"
-	SourceTypesUpdateTypeTikTokAds                SourceTypesUpdateType = "TIK_TOK_ADS"
-	SourceTypesUpdateTypeOutlook                  SourceTypesUpdateType = "OUTLOOK"
-	SourceTypesUpdateTypeSnowflakeSharded         SourceTypesUpdateType = "SNOWFLAKE_SHARDED"
-	SourceTypesUpdateTypeFreshchat                SourceTypesUpdateType = "FRESHCHAT"
-	SourceTypesUpdateTypeVeeva                    SourceTypesUpdateType = "VEEVA"
-	SourceTypesUpdateTypeWorkdayReport            SourceTypesUpdateType = "WORKDAY_REPORT"
-	SourceTypesUpdateTypeS3Input                  SourceTypesUpdateType = "S3_INPUT"
-	SourceTypesUpdateTypeOutreach                 SourceTypesUpdateType = "OUTREACH"
-	SourceTypesUpdateTypeRecurly                  SourceTypesUpdateType = "RECURLY"
-	SourceTypesUpdateTypeGoogleAds                SourceTypesUpdateType = "GOOGLE_ADS"
-	SourceTypesUpdateTypeQuoraAds                 SourceTypesUpdateType = "QUORA_ADS"
-	SourceTypesUpdateTypeElluminate               SourceTypesUpdateType = "ELLUMINATE"
-	SourceTypesUpdateTypeStreaming                SourceTypesUpdateType = "STREAMING"
 	SourceTypesUpdateTypeDb2Sharded               SourceTypesUpdateType = "DB2_SHARDED"
-	SourceTypesUpdateTypeLdap                     SourceTypesUpdateType = "LDAP"
-	SourceTypesUpdateTypeMysqlSharded             SourceTypesUpdateType = "MYSQL_SHARDED"
+	SourceTypesUpdateTypeDeltaLake                SourceTypesUpdateType = "DELTA_LAKE"
+	SourceTypesUpdateTypeEgnyte                   SourceTypesUpdateType = "EGNYTE"
+	SourceTypesUpdateTypeElasticsearch            SourceTypesUpdateType = "ELASTICSEARCH"
+	SourceTypesUpdateTypeElluminate               SourceTypesUpdateType = "ELLUMINATE"
+	SourceTypesUpdateTypeEloqua                   SourceTypesUpdateType = "ELOQUA"
+	SourceTypesUpdateTypeErpx                     SourceTypesUpdateType = "ERPX"
+	SourceTypesUpdateTypeFacebookAds              SourceTypesUpdateType = "FACEBOOK_ADS"
+	SourceTypesUpdateTypeFifteenFive              SourceTypesUpdateType = "FIFTEEN_FIVE"
+	SourceTypesUpdateTypeFreshchat                SourceTypesUpdateType = "FRESHCHAT"
+	SourceTypesUpdateTypeFreshsales               SourceTypesUpdateType = "FRESHSALES"
+	SourceTypesUpdateTypeFreshworks               SourceTypesUpdateType = "FRESHWORKS"
+	SourceTypesUpdateTypeFtp                      SourceTypesUpdateType = "FTP"
+	SourceTypesUpdateTypeGong                     SourceTypesUpdateType = "GONG"
+	SourceTypesUpdateTypeGoogleAnalyticsGa4       SourceTypesUpdateType = "GOOGLE_ANALYTICS_GA4"
+	SourceTypesUpdateTypeGoogleCloudStorage       SourceTypesUpdateType = "GOOGLE_CLOUD_STORAGE"
+	SourceTypesUpdateTypeGoogleAds                SourceTypesUpdateType = "GOOGLE_ADS"
+	SourceTypesUpdateTypeGoogleSheets             SourceTypesUpdateType = "GOOGLE_SHEETS"
+	SourceTypesUpdateTypeHubspot                  SourceTypesUpdateType = "HUBSPOT"
+	SourceTypesUpdateTypeIntercom                 SourceTypesUpdateType = "INTERCOM"
 	SourceTypesUpdateTypeImpactRadius             SourceTypesUpdateType = "IMPACT_RADIUS"
 	SourceTypesUpdateTypeJira                     SourceTypesUpdateType = "JIRA"
-	SourceTypesUpdateTypeVerizonMediaDsp          SourceTypesUpdateType = "VERIZON_MEDIA_DSP"
-	SourceTypesUpdateTypeTwitterAds               SourceTypesUpdateType = "TWITTER_ADS"
-	SourceTypesUpdateTypeIntercom                 SourceTypesUpdateType = "INTERCOM"
-	SourceTypesUpdateTypeCoupa                    SourceTypesUpdateType = "COUPA"
-	SourceTypesUpdateTypeTwilio                   SourceTypesUpdateType = "TWILIO"
-	SourceTypesUpdateTypeBingAds                  SourceTypesUpdateType = "BING_ADS"
-	SourceTypesUpdateTypeSalesforce               SourceTypesUpdateType = "SALESFORCE"
-	SourceTypesUpdateTypeSapHana                  SourceTypesUpdateType = "SAP_HANA"
-	SourceTypesUpdateTypeCriteo                   SourceTypesUpdateType = "CRITEO"
-	SourceTypesUpdateTypeFtp                      SourceTypesUpdateType = "FTP"
-	SourceTypesUpdateTypeSquare                   SourceTypesUpdateType = "SQUARE"
-	SourceTypesUpdateTypeEgnyte                   SourceTypesUpdateType = "EGNYTE"
-	SourceTypesUpdateTypeUserDefinedAPI           SourceTypesUpdateType = "USER_DEFINED_API"
-	SourceTypesUpdateTypeSapConcur                SourceTypesUpdateType = "SAP_CONCUR"
-	SourceTypesUpdateTypeUservoice                SourceTypesUpdateType = "USERVOICE"
-	SourceTypesUpdateTypeNetsuite                 SourceTypesUpdateType = "NETSUITE"
-	SourceTypesUpdateTypeTheTradeDesk             SourceTypesUpdateType = "THE_TRADE_DESK"
-	SourceTypesUpdateTypeMongodb                  SourceTypesUpdateType = "MONGODB"
 	SourceTypesUpdateTypeJiraAlign                SourceTypesUpdateType = "JIRA_ALIGN"
-	SourceTypesUpdateTypeGong                     SourceTypesUpdateType = "GONG"
-	SourceTypesUpdateTypePinterestAds             SourceTypesUpdateType = "PINTEREST_ADS"
-	SourceTypesUpdateTypeShopify                  SourceTypesUpdateType = "SHOPIFY"
-	SourceTypesUpdateTypeNetsuiteV2               SourceTypesUpdateType = "NETSUITE_V2"
-	SourceTypesUpdateTypeBraintree                SourceTypesUpdateType = "BRAINTREE"
-	SourceTypesUpdateTypeSQLServer                SourceTypesUpdateType = "SQL_SERVER"
-	SourceTypesUpdateTypeSalesforceMarketingCloud SourceTypesUpdateType = "SALESFORCE_MARKETING_CLOUD"
-	SourceTypesUpdateTypeSftp                     SourceTypesUpdateType = "SFTP"
-	SourceTypesUpdateTypeS3Legacy                 SourceTypesUpdateType = "S3_LEGACY"
-	SourceTypesUpdateTypeBlackline                SourceTypesUpdateType = "BLACKLINE"
-	SourceTypesUpdateTypeRedshift                 SourceTypesUpdateType = "REDSHIFT"
-	SourceTypesUpdateTypeStripe                   SourceTypesUpdateType = "STRIPE"
-	SourceTypesUpdateTypeFifteenFive              SourceTypesUpdateType = "FIFTEEN_FIVE"
-	SourceTypesUpdateTypeSQLServerSharded         SourceTypesUpdateType = "SQL_SERVER_SHARDED"
-	SourceTypesUpdateTypeKustomer                 SourceTypesUpdateType = "KUSTOMER"
+	SourceTypesUpdateTypeJiraCloud                SourceTypesUpdateType = "JIRA_CLOUD"
 	SourceTypesUpdateTypeKafka                    SourceTypesUpdateType = "KAFKA"
-	SourceTypesUpdateTypeZoomPhone                SourceTypesUpdateType = "ZOOM_PHONE"
-	SourceTypesUpdateTypeFacebookAds              SourceTypesUpdateType = "FACEBOOK_ADS"
-	SourceTypesUpdateTypeLinkedInAds              SourceTypesUpdateType = "LINKED_IN_ADS"
-	SourceTypesUpdateTypeMysql                    SourceTypesUpdateType = "MYSQL"
-	SourceTypesUpdateTypeFreshworks               SourceTypesUpdateType = "FRESHWORKS"
-	SourceTypesUpdateTypeWorkfront                SourceTypesUpdateType = "WORKFRONT"
-	SourceTypesUpdateTypeHubspot                  SourceTypesUpdateType = "HUBSPOT"
-	SourceTypesUpdateTypeMarketo                  SourceTypesUpdateType = "MARKETO"
-	SourceTypesUpdateTypeSumtotal                 SourceTypesUpdateType = "SUMTOTAL"
-	SourceTypesUpdateTypeSapHanaSharded           SourceTypesUpdateType = "SAP_HANA_SHARDED"
-	SourceTypesUpdateTypeGoogleAnalyticsGa4       SourceTypesUpdateType = "GOOGLE_ANALYTICS_GA4"
-	SourceTypesUpdateTypeGoogleSheets             SourceTypesUpdateType = "GOOGLE_SHEETS"
-	SourceTypesUpdateTypeBigquery                 SourceTypesUpdateType = "BIGQUERY"
-	SourceTypesUpdateTypeConfluentCloud           SourceTypesUpdateType = "CONFLUENT_CLOUD"
-	SourceTypesUpdateTypeEloqua                   SourceTypesUpdateType = "ELOQUA"
+	SourceTypesUpdateTypeKustomer                 SourceTypesUpdateType = "KUSTOMER"
+	SourceTypesUpdateTypeLdap                     SourceTypesUpdateType = "LDAP"
 	SourceTypesUpdateTypeLdapVirtualListView      SourceTypesUpdateType = "LDAP_VIRTUAL_LIST_VIEW"
-	SourceTypesUpdateTypePostgresSharded          SourceTypesUpdateType = "POSTGRES_SHARDED"
+	SourceTypesUpdateTypeLinkedInAds              SourceTypesUpdateType = "LINKED_IN_ADS"
+	SourceTypesUpdateTypeMarketo                  SourceTypesUpdateType = "MARKETO"
 	SourceTypesUpdateTypeMicrosoftEntraID         SourceTypesUpdateType = "MICROSOFT_ENTRA_ID"
-	SourceTypesUpdateTypeSkyward                  SourceTypesUpdateType = "SKYWARD"
-	SourceTypesUpdateTypeServiceNow               SourceTypesUpdateType = "SERVICE_NOW"
-	SourceTypesUpdateTypeActiveCampaign           SourceTypesUpdateType = "ACTIVE_CAMPAIGN"
 	SourceTypesUpdateTypeMixpanel                 SourceTypesUpdateType = "MIXPANEL"
-	SourceTypesUpdateTypePostgres                 SourceTypesUpdateType = "POSTGRES"
-	SourceTypesUpdateTypeOracleSharded            SourceTypesUpdateType = "ORACLE_SHARDED"
-	SourceTypesUpdateTypeElasticsearch            SourceTypesUpdateType = "ELASTICSEARCH"
-	SourceTypesUpdateTypeZendesk                  SourceTypesUpdateType = "ZENDESK"
-	SourceTypesUpdateTypeRedshiftSharded          SourceTypesUpdateType = "REDSHIFT_SHARDED"
-	SourceTypesUpdateTypeZuora                    SourceTypesUpdateType = "ZUORA"
-	SourceTypesUpdateTypeFreshsales               SourceTypesUpdateType = "FRESHSALES"
+	SourceTypesUpdateTypeMongodb                  SourceTypesUpdateType = "MONGODB"
+	SourceTypesUpdateTypeMysqlSharded             SourceTypesUpdateType = "MYSQL_SHARDED"
+	SourceTypesUpdateTypeMysql                    SourceTypesUpdateType = "MYSQL"
+	SourceTypesUpdateTypeNetsuite                 SourceTypesUpdateType = "NETSUITE"
+	SourceTypesUpdateTypeNetsuiteV2               SourceTypesUpdateType = "NETSUITE_V2"
 	SourceTypesUpdateTypeOracle                   SourceTypesUpdateType = "ORACLE"
+	SourceTypesUpdateTypeOracleSharded            SourceTypesUpdateType = "ORACLE_SHARDED"
+	SourceTypesUpdateTypeOutreach                 SourceTypesUpdateType = "OUTREACH"
+	SourceTypesUpdateTypeOutlook                  SourceTypesUpdateType = "OUTLOOK"
+	SourceTypesUpdateTypePinterestAds             SourceTypesUpdateType = "PINTEREST_ADS"
+	SourceTypesUpdateTypePostgres                 SourceTypesUpdateType = "POSTGRES"
+	SourceTypesUpdateTypePostgresSharded          SourceTypesUpdateType = "POSTGRES_SHARDED"
+	SourceTypesUpdateTypeQuoraAds                 SourceTypesUpdateType = "QUORA_ADS"
+	SourceTypesUpdateTypeRaveMedidata             SourceTypesUpdateType = "RAVE_MEDIDATA"
+	SourceTypesUpdateTypeRecurly                  SourceTypesUpdateType = "RECURLY"
+	SourceTypesUpdateTypeRedshift                 SourceTypesUpdateType = "REDSHIFT"
+	SourceTypesUpdateTypeRedshiftSharded          SourceTypesUpdateType = "REDSHIFT_SHARDED"
+	SourceTypesUpdateTypeS3Legacy                 SourceTypesUpdateType = "S3_LEGACY"
+	SourceTypesUpdateTypeS3Input                  SourceTypesUpdateType = "S3_INPUT"
+	SourceTypesUpdateTypeSalesforceMarketingCloud SourceTypesUpdateType = "SALESFORCE_MARKETING_CLOUD"
+	SourceTypesUpdateTypeSapConcur                SourceTypesUpdateType = "SAP_CONCUR"
+	SourceTypesUpdateTypeSapHana                  SourceTypesUpdateType = "SAP_HANA"
+	SourceTypesUpdateTypeSapHanaSharded           SourceTypesUpdateType = "SAP_HANA_SHARDED"
 	SourceTypesUpdateTypeSeismic                  SourceTypesUpdateType = "SEISMIC"
+	SourceTypesUpdateTypeServiceNow               SourceTypesUpdateType = "SERVICE_NOW"
+	SourceTypesUpdateTypeShopify                  SourceTypesUpdateType = "SHOPIFY"
+	SourceTypesUpdateTypeSkyward                  SourceTypesUpdateType = "SKYWARD"
+	SourceTypesUpdateTypeSalesforce               SourceTypesUpdateType = "SALESFORCE"
+	SourceTypesUpdateTypeSftp                     SourceTypesUpdateType = "SFTP"
+	SourceTypesUpdateTypeSQLServer                SourceTypesUpdateType = "SQL_SERVER"
+	SourceTypesUpdateTypeSQLServerSharded         SourceTypesUpdateType = "SQL_SERVER_SHARDED"
+	SourceTypesUpdateTypeStreaming                SourceTypesUpdateType = "STREAMING"
+	SourceTypesUpdateTypeSnowflake                SourceTypesUpdateType = "SNOWFLAKE"
+	SourceTypesUpdateTypeSnowflakeSharded         SourceTypesUpdateType = "SNOWFLAKE_SHARDED"
+	SourceTypesUpdateTypeSquare                   SourceTypesUpdateType = "SQUARE"
 	SourceTypesUpdateTypeSnapchatAds              SourceTypesUpdateType = "SNAPCHAT_ADS"
+	SourceTypesUpdateTypeStripe                   SourceTypesUpdateType = "STRIPE"
+	SourceTypesUpdateTypeSumtotal                 SourceTypesUpdateType = "SUMTOTAL"
+	SourceTypesUpdateTypeTheTradeDesk             SourceTypesUpdateType = "THE_TRADE_DESK"
+	SourceTypesUpdateTypeTikTokAds                SourceTypesUpdateType = "TIK_TOK_ADS"
+	SourceTypesUpdateTypeTwilio                   SourceTypesUpdateType = "TWILIO"
+	SourceTypesUpdateTypeTwitterAds               SourceTypesUpdateType = "TWITTER_ADS"
+	SourceTypesUpdateTypeUserDefinedAPI           SourceTypesUpdateType = "USER_DEFINED_API"
+	SourceTypesUpdateTypeUservoice                SourceTypesUpdateType = "USERVOICE"
+	SourceTypesUpdateTypeVeeva                    SourceTypesUpdateType = "VEEVA"
+	SourceTypesUpdateTypeVerizonMediaDsp          SourceTypesUpdateType = "VERIZON_MEDIA_DSP"
+	SourceTypesUpdateTypeWorkdayReport            SourceTypesUpdateType = "WORKDAY_REPORT"
+	SourceTypesUpdateTypeWorkfront                SourceTypesUpdateType = "WORKFRONT"
+	SourceTypesUpdateTypeZendesk                  SourceTypesUpdateType = "ZENDESK"
+	SourceTypesUpdateTypeZoomPhone                SourceTypesUpdateType = "ZOOM_PHONE"
+	SourceTypesUpdateTypeZuora                    SourceTypesUpdateType = "ZUORA"
 )
 
 type SourceTypesUpdate struct {
@@ -203,63 +203,99 @@ type SourceTypesUpdate struct {
 	Type SourceTypesUpdateType
 }
 
-func CreateSourceTypesUpdateGoogleCloudStorage(googleCloudStorage SourceGoogleCloudStorageUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeGoogleCloudStorage
+func CreateSourceTypesUpdateActiveCampaign(activeCampaign SourceActiveCampaignUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeActiveCampaign
 
-	typStr := SourceTypeEnum(typ)
-	googleCloudStorage.Type = &typStr
+	typStr := SourceActiveCampaignUpdateType(typ)
+	activeCampaign.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceGoogleCloudStorageUpdate: &googleCloudStorage,
-		Type:                           typ,
+		SourceActiveCampaignUpdate: &activeCampaign,
+		Type:                       typ,
 	}
 }
 
-func CreateSourceTypesUpdateJiraCloud(jiraCloud SourceJiraCloudUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeJiraCloud
+func CreateSourceTypesUpdateBigquery(bigquery SourceBigQueryUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeBigquery
 
-	typStr := SourceJiraCloudUpdateType(typ)
-	jiraCloud.Type = &typStr
+	typStr := SourceBigQueryUpdateType(typ)
+	bigquery.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceJiraCloudUpdate: &jiraCloud,
+		SourceBigQueryUpdate: &bigquery,
+		Type:                 typ,
+	}
+}
+
+func CreateSourceTypesUpdateBingAds(bingAds SourceBingAdsUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeBingAds
+
+	typStr := SourceBingAdsUpdateType(typ)
+	bingAds.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceBingAdsUpdate: &bingAds,
+		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateBlackline(blackline SourceBlacklineUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeBlackline
+
+	typStr := SourceBlacklineUpdateType(typ)
+	blackline.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceBlacklineUpdate: &blackline,
 		Type:                  typ,
 	}
 }
 
-func CreateSourceTypesUpdateErpx(erpx SourceErpxUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeErpx
+func CreateSourceTypesUpdateBraintree(braintree SourceBraintreeUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeBraintree
 
-	typStr := SourceErpxUpdateType(typ)
-	erpx.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceErpxUpdate: &erpx,
-		Type:             typ,
-	}
-}
-
-func CreateSourceTypesUpdateRaveMedidata(raveMedidata SourceRaveMedidataUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeRaveMedidata
-
-	typStr := SourceRaveMedidataUpdateType(typ)
-	raveMedidata.Type = &typStr
+	typStr := SourceBraintreeUpdateType(typ)
+	braintree.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceRaveMedidataUpdate: &raveMedidata,
-		Type:                     typ,
-	}
-}
-
-func CreateSourceTypesUpdateDeltaLake(deltaLake SourceDeltaLakeUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeDeltaLake
-
-	typStr := SourceDeltaLakeUpdateType(typ)
-	deltaLake.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceDeltaLakeUpdate: &deltaLake,
+		SourceBraintreeUpdate: &braintree,
 		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateConfluentCloud(confluentCloud SourceConfluentCloudUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeConfluentCloud
+
+	typStr := SourceConfluentCloudUpdateType(typ)
+	confluentCloud.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceConfluentCloudUpdate: &confluentCloud,
+		Type:                       typ,
+	}
+}
+
+func CreateSourceTypesUpdateCoupa(coupa SourceCoupaUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeCoupa
+
+	typStr := SourceCoupaUpdateType(typ)
+	coupa.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceCoupaUpdate: &coupa,
+		Type:              typ,
+	}
+}
+
+func CreateSourceTypesUpdateCriteo(criteo SourceCriteoUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeCriteo
+
+	typStr := SourceCriteoUpdateType(typ)
+	criteo.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceCriteoUpdate: &criteo,
+		Type:               typ,
 	}
 }
 
@@ -275,147 +311,51 @@ func CreateSourceTypesUpdateDb2(db2 SourceDb2Update) SourceTypesUpdate {
 	}
 }
 
-func CreateSourceTypesUpdateSnowflake(snowflake SourceSnowflakeUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSnowflake
+func CreateSourceTypesUpdateDb2Sharded(db2Sharded SourceDb2ShardedUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeDb2Sharded
 
-	typStr := SourceSnowflakeUpdateType(typ)
-	snowflake.Type = &typStr
+	typStr := SourceDb2ShardedUpdateType(typ)
+	db2Sharded.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceSnowflakeUpdate: &snowflake,
+		SourceDb2ShardedUpdate: &db2Sharded,
+		Type:                   typ,
+	}
+}
+
+func CreateSourceTypesUpdateDeltaLake(deltaLake SourceDeltaLakeUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeDeltaLake
+
+	typStr := SourceDeltaLakeUpdateType(typ)
+	deltaLake.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceDeltaLakeUpdate: &deltaLake,
 		Type:                  typ,
 	}
 }
 
-func CreateSourceTypesUpdateTikTokAds(tikTokAds SourceTikTokAdsUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeTikTokAds
+func CreateSourceTypesUpdateEgnyte(egnyte SourceEgnyteUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeEgnyte
 
-	typStr := SourceTikTokAdsUpdateType(typ)
-	tikTokAds.Type = &typStr
+	typStr := SourceEgnyteUpdateType(typ)
+	egnyte.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceTikTokAdsUpdate: &tikTokAds,
-		Type:                  typ,
+		SourceEgnyteUpdate: &egnyte,
+		Type:               typ,
 	}
 }
 
-func CreateSourceTypesUpdateOutlook(outlook SourceOutlookUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeOutlook
+func CreateSourceTypesUpdateElasticsearch(elasticsearch SourceElasticSearchUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeElasticsearch
 
-	typStr := SourceOutlookUpdateType(typ)
-	outlook.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceOutlookUpdate: &outlook,
-		Type:                typ,
-	}
-}
-
-func CreateSourceTypesUpdateSnowflakeSharded(snowflakeSharded SourceSnowflakeShardedUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSnowflakeSharded
-
-	typStr := SourceSnowflakeShardedUpdateType(typ)
-	snowflakeSharded.Type = &typStr
+	typStr := SourceElasticSearchUpdateType(typ)
+	elasticsearch.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceSnowflakeShardedUpdate: &snowflakeSharded,
-		Type:                         typ,
-	}
-}
-
-func CreateSourceTypesUpdateFreshchat(freshchat SourceFreshchatUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeFreshchat
-
-	typStr := SourceFreshchatUpdateType(typ)
-	freshchat.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceFreshchatUpdate: &freshchat,
-		Type:                  typ,
-	}
-}
-
-func CreateSourceTypesUpdateVeeva(veeva SourceVeevaUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeVeeva
-
-	typStr := SourceVeevaUpdateType(typ)
-	veeva.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceVeevaUpdate: &veeva,
-		Type:              typ,
-	}
-}
-
-func CreateSourceTypesUpdateWorkdayReport(workdayReport SourceWorkdayReportUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeWorkdayReport
-
-	typStr := SourceWorkdayReportUpdateType(typ)
-	workdayReport.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceWorkdayReportUpdate: &workdayReport,
+		SourceElasticSearchUpdate: &elasticsearch,
 		Type:                      typ,
-	}
-}
-
-func CreateSourceTypesUpdateS3Input(s3Input SourceS3InputUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeS3Input
-
-	typStr := SourceS3InputUpdateType(typ)
-	s3Input.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceS3InputUpdate: &s3Input,
-		Type:                typ,
-	}
-}
-
-func CreateSourceTypesUpdateOutreach(outreach SourceOutreachUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeOutreach
-
-	typStr := SourceOutreachUpdateType(typ)
-	outreach.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceOutreachUpdate: &outreach,
-		Type:                 typ,
-	}
-}
-
-func CreateSourceTypesUpdateRecurly(recurly SourceRecurlyUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeRecurly
-
-	typStr := SourceRecurlyUpdateType(typ)
-	recurly.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceRecurlyUpdate: &recurly,
-		Type:                typ,
-	}
-}
-
-func CreateSourceTypesUpdateGoogleAds(googleAds SourceGoogleAdsUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeGoogleAds
-
-	typStr := SourceGoogleAdsUpdateType(typ)
-	googleAds.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceGoogleAdsUpdate: &googleAds,
-		Type:                  typ,
-	}
-}
-
-func CreateSourceTypesUpdateQuoraAds(quoraAds SourceQuoraAdsUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeQuoraAds
-
-	typStr := SourceQuoraAdsUpdateType(typ)
-	quoraAds.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceQuoraAdsUpdate: &quoraAds,
-		Type:                 typ,
 	}
 }
 
@@ -431,51 +371,183 @@ func CreateSourceTypesUpdateElluminate(elluminate SourceElluminateUpdate) Source
 	}
 }
 
-func CreateSourceTypesUpdateStreaming(streaming SourceStreamingUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeStreaming
+func CreateSourceTypesUpdateEloqua(eloqua SourceEloquaUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeEloqua
 
-	typStr := SourceStreamingUpdateType(typ)
-	streaming.Type = &typStr
+	typStr := SourceEloquaUpdateType(typ)
+	eloqua.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceStreamingUpdate: &streaming,
-		Type:                  typ,
+		SourceEloquaUpdate: &eloqua,
+		Type:               typ,
 	}
 }
 
-func CreateSourceTypesUpdateDb2Sharded(db2Sharded SourceDb2ShardedUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeDb2Sharded
+func CreateSourceTypesUpdateErpx(erpx SourceErpxUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeErpx
 
-	typStr := SourceDb2ShardedUpdateType(typ)
-	db2Sharded.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceDb2ShardedUpdate: &db2Sharded,
-		Type:                   typ,
-	}
-}
-
-func CreateSourceTypesUpdateLdap(ldap SourceLdapUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeLdap
-
-	typStr := SourceLdapUpdateType(typ)
-	ldap.Type = &typStr
+	typStr := SourceErpxUpdateType(typ)
+	erpx.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceLdapUpdate: &ldap,
+		SourceErpxUpdate: &erpx,
 		Type:             typ,
 	}
 }
 
-func CreateSourceTypesUpdateMysqlSharded(mysqlSharded SourceMysqlShardedUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeMysqlSharded
+func CreateSourceTypesUpdateFacebookAds(facebookAds SourceFacebookAdsUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeFacebookAds
 
-	typStr := SourceMysqlShardedUpdateType(typ)
-	mysqlSharded.Type = &typStr
+	typStr := SourceFacebookAdsUpdateType(typ)
+	facebookAds.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceMysqlShardedUpdate: &mysqlSharded,
+		SourceFacebookAdsUpdate: &facebookAds,
+		Type:                    typ,
+	}
+}
+
+func CreateSourceTypesUpdateFifteenFive(fifteenFive SourceFifteenFiveUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeFifteenFive
+
+	typStr := SourceFifteenFiveUpdateType(typ)
+	fifteenFive.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceFifteenFiveUpdate: &fifteenFive,
+		Type:                    typ,
+	}
+}
+
+func CreateSourceTypesUpdateFreshchat(freshchat SourceFreshchatUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeFreshchat
+
+	typStr := SourceFreshchatUpdateType(typ)
+	freshchat.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceFreshchatUpdate: &freshchat,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateFreshsales(freshsales SourceFreshsalesUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeFreshsales
+
+	typStr := SourceFreshsalesUpdateType(typ)
+	freshsales.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceFreshsalesUpdate: &freshsales,
+		Type:                   typ,
+	}
+}
+
+func CreateSourceTypesUpdateFreshworks(freshworks SourceFreshworksUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeFreshworks
+
+	typStr := SourceFreshworksUpdateType(typ)
+	freshworks.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceFreshworksUpdate: &freshworks,
+		Type:                   typ,
+	}
+}
+
+func CreateSourceTypesUpdateFtp(ftp SourceFtpUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeFtp
+
+	typStr := SourceFtpUpdateType(typ)
+	ftp.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceFtpUpdate: &ftp,
+		Type:            typ,
+	}
+}
+
+func CreateSourceTypesUpdateGong(gong SourceGongUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeGong
+
+	typStr := SourceGongUpdateType(typ)
+	gong.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceGongUpdate: &gong,
+		Type:             typ,
+	}
+}
+
+func CreateSourceTypesUpdateGoogleAnalyticsGa4(googleAnalyticsGa4 SourceGoogleAnalyticsGa4Update) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeGoogleAnalyticsGa4
+
+	typStr := SourceGoogleAnalyticsGa4UpdateType(typ)
+	googleAnalyticsGa4.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceGoogleAnalyticsGa4Update: &googleAnalyticsGa4,
+		Type:                           typ,
+	}
+}
+
+func CreateSourceTypesUpdateGoogleCloudStorage(googleCloudStorage SourceGoogleCloudStorageUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeGoogleCloudStorage
+
+	typStr := SourceTypeEnum(typ)
+	googleCloudStorage.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceGoogleCloudStorageUpdate: &googleCloudStorage,
+		Type:                           typ,
+	}
+}
+
+func CreateSourceTypesUpdateGoogleAds(googleAds SourceGoogleAdsUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeGoogleAds
+
+	typStr := SourceGoogleAdsUpdateType(typ)
+	googleAds.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceGoogleAdsUpdate: &googleAds,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateGoogleSheets(googleSheets SourceGoogleSheetsUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeGoogleSheets
+
+	typStr := SourceGoogleSheetsUpdateType(typ)
+	googleSheets.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceGoogleSheetsUpdate: &googleSheets,
 		Type:                     typ,
+	}
+}
+
+func CreateSourceTypesUpdateHubspot(hubspot SourceHubspotUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeHubspot
+
+	typStr := SourceHubspotUpdateType(typ)
+	hubspot.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceHubspotUpdate: &hubspot,
+		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateIntercom(intercom SourceIntercomUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeIntercom
+
+	typStr := SourceIntercomUpdateType(typ)
+	intercom.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceIntercomUpdate: &intercom,
+		Type:                 typ,
 	}
 }
 
@@ -503,222 +575,6 @@ func CreateSourceTypesUpdateJira(jira SourceJiraUpdate) SourceTypesUpdate {
 	}
 }
 
-func CreateSourceTypesUpdateVerizonMediaDsp(verizonMediaDsp SourceVerizonMediaDspUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeVerizonMediaDsp
-
-	typStr := SourceVerizonMediaDspUpdateType(typ)
-	verizonMediaDsp.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceVerizonMediaDspUpdate: &verizonMediaDsp,
-		Type:                        typ,
-	}
-}
-
-func CreateSourceTypesUpdateTwitterAds(twitterAds SourceTwitterUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeTwitterAds
-
-	typStr := SourceTwitterUpdateType(typ)
-	twitterAds.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceTwitterUpdate: &twitterAds,
-		Type:                typ,
-	}
-}
-
-func CreateSourceTypesUpdateIntercom(intercom SourceIntercomUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeIntercom
-
-	typStr := SourceIntercomUpdateType(typ)
-	intercom.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceIntercomUpdate: &intercom,
-		Type:                 typ,
-	}
-}
-
-func CreateSourceTypesUpdateCoupa(coupa SourceCoupaUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeCoupa
-
-	typStr := SourceCoupaUpdateType(typ)
-	coupa.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceCoupaUpdate: &coupa,
-		Type:              typ,
-	}
-}
-
-func CreateSourceTypesUpdateTwilio(twilio SourceTwilioUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeTwilio
-
-	typStr := SourceTwilioUpdateType(typ)
-	twilio.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceTwilioUpdate: &twilio,
-		Type:               typ,
-	}
-}
-
-func CreateSourceTypesUpdateBingAds(bingAds SourceBingAdsUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeBingAds
-
-	typStr := SourceBingAdsUpdateType(typ)
-	bingAds.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceBingAdsUpdate: &bingAds,
-		Type:                typ,
-	}
-}
-
-func CreateSourceTypesUpdateSalesforce(salesforce SourceSalesforceUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSalesforce
-
-	typStr := SourceSalesforceUpdateType(typ)
-	salesforce.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSalesforceUpdate: &salesforce,
-		Type:                   typ,
-	}
-}
-
-func CreateSourceTypesUpdateSapHana(sapHana SourceSapHanaUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSapHana
-
-	typStr := SourceSapHanaUpdateType(typ)
-	sapHana.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSapHanaUpdate: &sapHana,
-		Type:                typ,
-	}
-}
-
-func CreateSourceTypesUpdateCriteo(criteo SourceCriteoUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeCriteo
-
-	typStr := SourceCriteoUpdateType(typ)
-	criteo.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceCriteoUpdate: &criteo,
-		Type:               typ,
-	}
-}
-
-func CreateSourceTypesUpdateFtp(ftp SourceFtpUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeFtp
-
-	typStr := SourceFtpUpdateType(typ)
-	ftp.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceFtpUpdate: &ftp,
-		Type:            typ,
-	}
-}
-
-func CreateSourceTypesUpdateSquare(square SourceSquareUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSquare
-
-	typStr := SourceSquareUpdateType(typ)
-	square.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSquareUpdate: &square,
-		Type:               typ,
-	}
-}
-
-func CreateSourceTypesUpdateEgnyte(egnyte SourceEgnyteUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeEgnyte
-
-	typStr := SourceEgnyteUpdateType(typ)
-	egnyte.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceEgnyteUpdate: &egnyte,
-		Type:               typ,
-	}
-}
-
-func CreateSourceTypesUpdateUserDefinedAPI(userDefinedAPI SourceUserDefinedAPIUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeUserDefinedAPI
-
-	typStr := SourceUserDefinedAPIUpdateType(typ)
-	userDefinedAPI.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceUserDefinedAPIUpdate: &userDefinedAPI,
-		Type:                       typ,
-	}
-}
-
-func CreateSourceTypesUpdateSapConcur(sapConcur SourceSapConcurUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSapConcur
-
-	typStr := SourceSapConcurUpdateType(typ)
-	sapConcur.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSapConcurUpdate: &sapConcur,
-		Type:                  typ,
-	}
-}
-
-func CreateSourceTypesUpdateUservoice(uservoice SourceUserVoiceUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeUservoice
-
-	typStr := SourceUserVoiceUpdateType(typ)
-	uservoice.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceUserVoiceUpdate: &uservoice,
-		Type:                  typ,
-	}
-}
-
-func CreateSourceTypesUpdateNetsuite(netsuite SourceNetsuiteUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeNetsuite
-
-	typStr := SourceNetsuiteUpdateType(typ)
-	netsuite.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceNetsuiteUpdate: &netsuite,
-		Type:                 typ,
-	}
-}
-
-func CreateSourceTypesUpdateTheTradeDesk(theTradeDesk SourceTheTradeDeskUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeTheTradeDesk
-
-	typStr := SourceTheTradeDeskUpdateType(typ)
-	theTradeDesk.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceTheTradeDeskUpdate: &theTradeDesk,
-		Type:                     typ,
-	}
-}
-
-func CreateSourceTypesUpdateMongodb(mongodb SourceMongodbUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeMongodb
-
-	typStr := SourceMongodbUpdateType(typ)
-	mongodb.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceMongodbUpdate: &mongodb,
-		Type:                typ,
-	}
-}
-
 func CreateSourceTypesUpdateJiraAlign(jiraAlign SourceJiraAlignUpdate) SourceTypesUpdate {
 	typ := SourceTypesUpdateTypeJiraAlign
 
@@ -731,183 +587,15 @@ func CreateSourceTypesUpdateJiraAlign(jiraAlign SourceJiraAlignUpdate) SourceTyp
 	}
 }
 
-func CreateSourceTypesUpdateGong(gong SourceGongUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeGong
+func CreateSourceTypesUpdateJiraCloud(jiraCloud SourceJiraCloudUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeJiraCloud
 
-	typStr := SourceGongUpdateType(typ)
-	gong.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceGongUpdate: &gong,
-		Type:             typ,
-	}
-}
-
-func CreateSourceTypesUpdatePinterestAds(pinterestAds SourcePinterestAdsUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypePinterestAds
-
-	typStr := SourcePinterestAdsUpdateType(typ)
-	pinterestAds.Type = &typStr
+	typStr := SourceJiraCloudUpdateType(typ)
+	jiraCloud.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourcePinterestAdsUpdate: &pinterestAds,
-		Type:                     typ,
-	}
-}
-
-func CreateSourceTypesUpdateShopify(shopify SourceShopifyUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeShopify
-
-	typStr := SourceShopifyUpdateType(typ)
-	shopify.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceShopifyUpdate: &shopify,
-		Type:                typ,
-	}
-}
-
-func CreateSourceTypesUpdateNetsuiteV2(netsuiteV2 SourceNetsuiteV2Update) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeNetsuiteV2
-
-	typStr := SourceNetsuiteV2UpdateType(typ)
-	netsuiteV2.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceNetsuiteV2Update: &netsuiteV2,
-		Type:                   typ,
-	}
-}
-
-func CreateSourceTypesUpdateBraintree(braintree SourceBraintreeUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeBraintree
-
-	typStr := SourceBraintreeUpdateType(typ)
-	braintree.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceBraintreeUpdate: &braintree,
+		SourceJiraCloudUpdate: &jiraCloud,
 		Type:                  typ,
-	}
-}
-
-func CreateSourceTypesUpdateSQLServer(sqlServer SourceSQLServerUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSQLServer
-
-	typStr := SourceSQLServerUpdateType(typ)
-	sqlServer.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSQLServerUpdate: &sqlServer,
-		Type:                  typ,
-	}
-}
-
-func CreateSourceTypesUpdateSalesforceMarketingCloud(salesforceMarketingCloud SourceSalesforceMarketingCloudUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSalesforceMarketingCloud
-
-	typStr := SourceSalesforceMarketingCloudUpdateType(typ)
-	salesforceMarketingCloud.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSalesforceMarketingCloudUpdate: &salesforceMarketingCloud,
-		Type:                                 typ,
-	}
-}
-
-func CreateSourceTypesUpdateSftp(sftp SourceSftpUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSftp
-
-	typStr := SourceSftpUpdateType(typ)
-	sftp.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSftpUpdate: &sftp,
-		Type:             typ,
-	}
-}
-
-func CreateSourceTypesUpdateS3Legacy(s3Legacy SourceS3LegacyUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeS3Legacy
-
-	typStr := SourceS3LegacyUpdateType(typ)
-	s3Legacy.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceS3LegacyUpdate: &s3Legacy,
-		Type:                 typ,
-	}
-}
-
-func CreateSourceTypesUpdateBlackline(blackline SourceBlacklineUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeBlackline
-
-	typStr := SourceBlacklineUpdateType(typ)
-	blackline.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceBlacklineUpdate: &blackline,
-		Type:                  typ,
-	}
-}
-
-func CreateSourceTypesUpdateRedshift(redshift SourceRedshiftUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeRedshift
-
-	typStr := SourceRedshiftUpdateType(typ)
-	redshift.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceRedshiftUpdate: &redshift,
-		Type:                 typ,
-	}
-}
-
-func CreateSourceTypesUpdateStripe(stripe SourceStripeUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeStripe
-
-	typStr := SourceStripeUpdateType(typ)
-	stripe.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceStripeUpdate: &stripe,
-		Type:               typ,
-	}
-}
-
-func CreateSourceTypesUpdateFifteenFive(fifteenFive SourceFifteenFiveUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeFifteenFive
-
-	typStr := SourceFifteenFiveUpdateType(typ)
-	fifteenFive.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceFifteenFiveUpdate: &fifteenFive,
-		Type:                    typ,
-	}
-}
-
-func CreateSourceTypesUpdateSQLServerSharded(sqlServerSharded SourceSQLServerShardedUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSQLServerSharded
-
-	typStr := SourceSQLServerShardedUpdateType(typ)
-	sqlServerSharded.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSQLServerShardedUpdate: &sqlServerSharded,
-		Type:                         typ,
-	}
-}
-
-func CreateSourceTypesUpdateKustomer(kustomer SourceKustomerUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeKustomer
-
-	typStr := SourceKustomerUpdateType(typ)
-	kustomer.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceKustomerUpdate: &kustomer,
-		Type:                 typ,
 	}
 }
 
@@ -923,183 +611,27 @@ func CreateSourceTypesUpdateKafka(kafka SourceKafkaUpdate) SourceTypesUpdate {
 	}
 }
 
-func CreateSourceTypesUpdateZoomPhone(zoomPhone SourceZoomPhoneUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeZoomPhone
+func CreateSourceTypesUpdateKustomer(kustomer SourceKustomerUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeKustomer
 
-	typStr := SourceZoomPhoneUpdateType(typ)
-	zoomPhone.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceZoomPhoneUpdate: &zoomPhone,
-		Type:                  typ,
-	}
-}
-
-func CreateSourceTypesUpdateFacebookAds(facebookAds SourceFacebookAdsUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeFacebookAds
-
-	typStr := SourceFacebookAdsUpdateType(typ)
-	facebookAds.Type = &typStr
+	typStr := SourceKustomerUpdateType(typ)
+	kustomer.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceFacebookAdsUpdate: &facebookAds,
-		Type:                    typ,
-	}
-}
-
-func CreateSourceTypesUpdateLinkedInAds(linkedInAds SourceLinkedInAdsUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeLinkedInAds
-
-	typStr := SourceLinkedInAdsUpdateType(typ)
-	linkedInAds.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceLinkedInAdsUpdate: &linkedInAds,
-		Type:                    typ,
-	}
-}
-
-func CreateSourceTypesUpdateMysql(mysql SourceMysqlUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeMysql
-
-	typStr := SourceMysqlUpdateType(typ)
-	mysql.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceMysqlUpdate: &mysql,
-		Type:              typ,
-	}
-}
-
-func CreateSourceTypesUpdateFreshworks(freshworks SourceFreshworksUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeFreshworks
-
-	typStr := SourceFreshworksUpdateType(typ)
-	freshworks.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceFreshworksUpdate: &freshworks,
-		Type:                   typ,
-	}
-}
-
-func CreateSourceTypesUpdateWorkfront(workfront SourceWorkfrontUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeWorkfront
-
-	typStr := SourceWorkfrontUpdateType(typ)
-	workfront.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceWorkfrontUpdate: &workfront,
-		Type:                  typ,
-	}
-}
-
-func CreateSourceTypesUpdateHubspot(hubspot SourceHubspotUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeHubspot
-
-	typStr := SourceHubspotUpdateType(typ)
-	hubspot.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceHubspotUpdate: &hubspot,
-		Type:                typ,
-	}
-}
-
-func CreateSourceTypesUpdateMarketo(marketo SourceMarketoUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeMarketo
-
-	typStr := SourceMarketoUpdateType(typ)
-	marketo.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceMarketoUpdate: &marketo,
-		Type:                typ,
-	}
-}
-
-func CreateSourceTypesUpdateSumtotal(sumtotal SourceSumTotalUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSumtotal
-
-	typStr := SourceSumTotalUpdateType(typ)
-	sumtotal.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSumTotalUpdate: &sumtotal,
+		SourceKustomerUpdate: &kustomer,
 		Type:                 typ,
 	}
 }
 
-func CreateSourceTypesUpdateSapHanaSharded(sapHanaSharded SourceSapHanaShardedUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSapHanaSharded
+func CreateSourceTypesUpdateLdap(ldap SourceLdapUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeLdap
 
-	typStr := SourceSapHanaShardedUpdateType(typ)
-	sapHanaSharded.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSapHanaShardedUpdate: &sapHanaSharded,
-		Type:                       typ,
-	}
-}
-
-func CreateSourceTypesUpdateGoogleAnalyticsGa4(googleAnalyticsGa4 SourceGoogleAnalyticsGa4Update) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeGoogleAnalyticsGa4
-
-	typStr := SourceGoogleAnalyticsGa4UpdateType(typ)
-	googleAnalyticsGa4.Type = &typStr
+	typStr := SourceLdapUpdateType(typ)
+	ldap.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceGoogleAnalyticsGa4Update: &googleAnalyticsGa4,
-		Type:                           typ,
-	}
-}
-
-func CreateSourceTypesUpdateGoogleSheets(googleSheets SourceGoogleSheetsUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeGoogleSheets
-
-	typStr := SourceGoogleSheetsUpdateType(typ)
-	googleSheets.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceGoogleSheetsUpdate: &googleSheets,
-		Type:                     typ,
-	}
-}
-
-func CreateSourceTypesUpdateBigquery(bigquery SourceBigQueryUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeBigquery
-
-	typStr := SourceBigQueryUpdateType(typ)
-	bigquery.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceBigQueryUpdate: &bigquery,
-		Type:                 typ,
-	}
-}
-
-func CreateSourceTypesUpdateConfluentCloud(confluentCloud SourceConfluentCloudUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeConfluentCloud
-
-	typStr := SourceConfluentCloudUpdateType(typ)
-	confluentCloud.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceConfluentCloudUpdate: &confluentCloud,
-		Type:                       typ,
-	}
-}
-
-func CreateSourceTypesUpdateEloqua(eloqua SourceEloquaUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeEloqua
-
-	typStr := SourceEloquaUpdateType(typ)
-	eloqua.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceEloquaUpdate: &eloqua,
-		Type:               typ,
+		SourceLdapUpdate: &ldap,
+		Type:             typ,
 	}
 }
 
@@ -1115,15 +647,27 @@ func CreateSourceTypesUpdateLdapVirtualListView(ldapVirtualListView SourceLdapVi
 	}
 }
 
-func CreateSourceTypesUpdatePostgresSharded(postgresSharded SourcePostgresShardedUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypePostgresSharded
+func CreateSourceTypesUpdateLinkedInAds(linkedInAds SourceLinkedInAdsUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeLinkedInAds
 
-	typStr := SourcePostgresShardedUpdateType(typ)
-	postgresSharded.Type = &typStr
+	typStr := SourceLinkedInAdsUpdateType(typ)
+	linkedInAds.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourcePostgresShardedUpdate: &postgresSharded,
-		Type:                        typ,
+		SourceLinkedInAdsUpdate: &linkedInAds,
+		Type:                    typ,
+	}
+}
+
+func CreateSourceTypesUpdateMarketo(marketo SourceMarketoUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeMarketo
+
+	typStr := SourceMarketoUpdateType(typ)
+	marketo.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceMarketoUpdate: &marketo,
+		Type:                typ,
 	}
 }
 
@@ -1139,42 +683,6 @@ func CreateSourceTypesUpdateMicrosoftEntraID(microsoftEntraID SourceMicrosoftEnt
 	}
 }
 
-func CreateSourceTypesUpdateSkyward(skyward SourceSkywardUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeSkyward
-
-	typStr := SourceSkywardUpdateType(typ)
-	skyward.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceSkywardUpdate: &skyward,
-		Type:                typ,
-	}
-}
-
-func CreateSourceTypesUpdateServiceNow(serviceNow SourceServiceNowUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeServiceNow
-
-	typStr := SourceServiceNowUpdateType(typ)
-	serviceNow.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceServiceNowUpdate: &serviceNow,
-		Type:                   typ,
-	}
-}
-
-func CreateSourceTypesUpdateActiveCampaign(activeCampaign SourceActiveCampaignUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeActiveCampaign
-
-	typStr := SourceActiveCampaignUpdateType(typ)
-	activeCampaign.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceActiveCampaignUpdate: &activeCampaign,
-		Type:                       typ,
-	}
-}
-
 func CreateSourceTypesUpdateMixpanel(mixpanel SourceMixpanelUpdate) SourceTypesUpdate {
 	typ := SourceTypesUpdateTypeMixpanel
 
@@ -1187,86 +695,62 @@ func CreateSourceTypesUpdateMixpanel(mixpanel SourceMixpanelUpdate) SourceTypesU
 	}
 }
 
-func CreateSourceTypesUpdatePostgres(postgres SourcePostgresUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypePostgres
+func CreateSourceTypesUpdateMongodb(mongodb SourceMongodbUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeMongodb
 
-	typStr := SourcePostgresUpdateType(typ)
-	postgres.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourcePostgresUpdate: &postgres,
-		Type:                 typ,
-	}
-}
-
-func CreateSourceTypesUpdateOracleSharded(oracleSharded SourceOracleShardedUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeOracleSharded
-
-	typStr := SourceOracleShardedUpdateType(typ)
-	oracleSharded.Type = &typStr
+	typStr := SourceMongodbUpdateType(typ)
+	mongodb.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceOracleShardedUpdate: &oracleSharded,
-		Type:                      typ,
-	}
-}
-
-func CreateSourceTypesUpdateElasticsearch(elasticsearch SourceElasticSearchUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeElasticsearch
-
-	typStr := SourceElasticSearchUpdateType(typ)
-	elasticsearch.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceElasticSearchUpdate: &elasticsearch,
-		Type:                      typ,
-	}
-}
-
-func CreateSourceTypesUpdateZendesk(zendesk SourceZendeskUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeZendesk
-
-	typStr := SourceZendeskUpdateType(typ)
-	zendesk.Type = &typStr
-
-	return SourceTypesUpdate{
-		SourceZendeskUpdate: &zendesk,
+		SourceMongodbUpdate: &mongodb,
 		Type:                typ,
 	}
 }
 
-func CreateSourceTypesUpdateRedshiftSharded(redshiftSharded SourceRedshiftShardedUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeRedshiftSharded
+func CreateSourceTypesUpdateMysqlSharded(mysqlSharded SourceMysqlShardedUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeMysqlSharded
 
-	typStr := SourceRedshiftShardedUpdateType(typ)
-	redshiftSharded.Type = &typStr
+	typStr := SourceMysqlShardedUpdateType(typ)
+	mysqlSharded.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceRedshiftShardedUpdate: &redshiftSharded,
-		Type:                        typ,
+		SourceMysqlShardedUpdate: &mysqlSharded,
+		Type:                     typ,
 	}
 }
 
-func CreateSourceTypesUpdateZuora(zuora SourceZuoraUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeZuora
+func CreateSourceTypesUpdateMysql(mysql SourceMysqlUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeMysql
 
-	typStr := SourceZuoraUpdateType(typ)
-	zuora.Type = &typStr
+	typStr := SourceMysqlUpdateType(typ)
+	mysql.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceZuoraUpdate: &zuora,
+		SourceMysqlUpdate: &mysql,
 		Type:              typ,
 	}
 }
 
-func CreateSourceTypesUpdateFreshsales(freshsales SourceFreshsalesUpdate) SourceTypesUpdate {
-	typ := SourceTypesUpdateTypeFreshsales
+func CreateSourceTypesUpdateNetsuite(netsuite SourceNetsuiteUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeNetsuite
 
-	typStr := SourceFreshsalesUpdateType(typ)
-	freshsales.Type = &typStr
+	typStr := SourceNetsuiteUpdateType(typ)
+	netsuite.Type = &typStr
 
 	return SourceTypesUpdate{
-		SourceFreshsalesUpdate: &freshsales,
+		SourceNetsuiteUpdate: &netsuite,
+		Type:                 typ,
+	}
+}
+
+func CreateSourceTypesUpdateNetsuiteV2(netsuiteV2 SourceNetsuiteV2Update) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeNetsuiteV2
+
+	typStr := SourceNetsuiteV2UpdateType(typ)
+	netsuiteV2.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceNetsuiteV2Update: &netsuiteV2,
 		Type:                   typ,
 	}
 }
@@ -1283,6 +767,210 @@ func CreateSourceTypesUpdateOracle(oracle SourceOracleUpdate) SourceTypesUpdate 
 	}
 }
 
+func CreateSourceTypesUpdateOracleSharded(oracleSharded SourceOracleShardedUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeOracleSharded
+
+	typStr := SourceOracleShardedUpdateType(typ)
+	oracleSharded.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceOracleShardedUpdate: &oracleSharded,
+		Type:                      typ,
+	}
+}
+
+func CreateSourceTypesUpdateOutreach(outreach SourceOutreachUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeOutreach
+
+	typStr := SourceOutreachUpdateType(typ)
+	outreach.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceOutreachUpdate: &outreach,
+		Type:                 typ,
+	}
+}
+
+func CreateSourceTypesUpdateOutlook(outlook SourceOutlookUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeOutlook
+
+	typStr := SourceOutlookUpdateType(typ)
+	outlook.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceOutlookUpdate: &outlook,
+		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdatePinterestAds(pinterestAds SourcePinterestAdsUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypePinterestAds
+
+	typStr := SourcePinterestAdsUpdateType(typ)
+	pinterestAds.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourcePinterestAdsUpdate: &pinterestAds,
+		Type:                     typ,
+	}
+}
+
+func CreateSourceTypesUpdatePostgres(postgres SourcePostgresUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypePostgres
+
+	typStr := SourcePostgresUpdateType(typ)
+	postgres.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourcePostgresUpdate: &postgres,
+		Type:                 typ,
+	}
+}
+
+func CreateSourceTypesUpdatePostgresSharded(postgresSharded SourcePostgresShardedUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypePostgresSharded
+
+	typStr := SourcePostgresShardedUpdateType(typ)
+	postgresSharded.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourcePostgresShardedUpdate: &postgresSharded,
+		Type:                        typ,
+	}
+}
+
+func CreateSourceTypesUpdateQuoraAds(quoraAds SourceQuoraAdsUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeQuoraAds
+
+	typStr := SourceQuoraAdsUpdateType(typ)
+	quoraAds.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceQuoraAdsUpdate: &quoraAds,
+		Type:                 typ,
+	}
+}
+
+func CreateSourceTypesUpdateRaveMedidata(raveMedidata SourceRaveMedidataUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeRaveMedidata
+
+	typStr := SourceRaveMedidataUpdateType(typ)
+	raveMedidata.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceRaveMedidataUpdate: &raveMedidata,
+		Type:                     typ,
+	}
+}
+
+func CreateSourceTypesUpdateRecurly(recurly SourceRecurlyUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeRecurly
+
+	typStr := SourceRecurlyUpdateType(typ)
+	recurly.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceRecurlyUpdate: &recurly,
+		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateRedshift(redshift SourceRedshiftUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeRedshift
+
+	typStr := SourceRedshiftUpdateType(typ)
+	redshift.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceRedshiftUpdate: &redshift,
+		Type:                 typ,
+	}
+}
+
+func CreateSourceTypesUpdateRedshiftSharded(redshiftSharded SourceRedshiftShardedUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeRedshiftSharded
+
+	typStr := SourceRedshiftShardedUpdateType(typ)
+	redshiftSharded.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceRedshiftShardedUpdate: &redshiftSharded,
+		Type:                        typ,
+	}
+}
+
+func CreateSourceTypesUpdateS3Legacy(s3Legacy SourceS3LegacyUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeS3Legacy
+
+	typStr := SourceS3LegacyUpdateType(typ)
+	s3Legacy.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceS3LegacyUpdate: &s3Legacy,
+		Type:                 typ,
+	}
+}
+
+func CreateSourceTypesUpdateS3Input(s3Input SourceS3InputUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeS3Input
+
+	typStr := SourceS3InputUpdateType(typ)
+	s3Input.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceS3InputUpdate: &s3Input,
+		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateSalesforceMarketingCloud(salesforceMarketingCloud SourceSalesforceMarketingCloudUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSalesforceMarketingCloud
+
+	typStr := SourceSalesforceMarketingCloudUpdateType(typ)
+	salesforceMarketingCloud.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSalesforceMarketingCloudUpdate: &salesforceMarketingCloud,
+		Type:                                 typ,
+	}
+}
+
+func CreateSourceTypesUpdateSapConcur(sapConcur SourceSapConcurUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSapConcur
+
+	typStr := SourceSapConcurUpdateType(typ)
+	sapConcur.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSapConcurUpdate: &sapConcur,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateSapHana(sapHana SourceSapHanaUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSapHana
+
+	typStr := SourceSapHanaUpdateType(typ)
+	sapHana.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSapHanaUpdate: &sapHana,
+		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateSapHanaSharded(sapHanaSharded SourceSapHanaShardedUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSapHanaSharded
+
+	typStr := SourceSapHanaShardedUpdateType(typ)
+	sapHanaSharded.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSapHanaShardedUpdate: &sapHanaSharded,
+		Type:                       typ,
+	}
+}
+
 func CreateSourceTypesUpdateSeismic(seismic SourceSeismicUpdate) SourceTypesUpdate {
 	typ := SourceTypesUpdateTypeSeismic
 
@@ -1292,6 +980,138 @@ func CreateSourceTypesUpdateSeismic(seismic SourceSeismicUpdate) SourceTypesUpda
 	return SourceTypesUpdate{
 		SourceSeismicUpdate: &seismic,
 		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateServiceNow(serviceNow SourceServiceNowUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeServiceNow
+
+	typStr := SourceServiceNowUpdateType(typ)
+	serviceNow.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceServiceNowUpdate: &serviceNow,
+		Type:                   typ,
+	}
+}
+
+func CreateSourceTypesUpdateShopify(shopify SourceShopifyUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeShopify
+
+	typStr := SourceShopifyUpdateType(typ)
+	shopify.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceShopifyUpdate: &shopify,
+		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateSkyward(skyward SourceSkywardUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSkyward
+
+	typStr := SourceSkywardUpdateType(typ)
+	skyward.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSkywardUpdate: &skyward,
+		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateSalesforce(salesforce SourceSalesforceUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSalesforce
+
+	typStr := SourceSalesforceUpdateType(typ)
+	salesforce.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSalesforceUpdate: &salesforce,
+		Type:                   typ,
+	}
+}
+
+func CreateSourceTypesUpdateSftp(sftp SourceSftpUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSftp
+
+	typStr := SourceSftpUpdateType(typ)
+	sftp.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSftpUpdate: &sftp,
+		Type:             typ,
+	}
+}
+
+func CreateSourceTypesUpdateSQLServer(sqlServer SourceSQLServerUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSQLServer
+
+	typStr := SourceSQLServerUpdateType(typ)
+	sqlServer.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSQLServerUpdate: &sqlServer,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateSQLServerSharded(sqlServerSharded SourceSQLServerShardedUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSQLServerSharded
+
+	typStr := SourceSQLServerShardedUpdateType(typ)
+	sqlServerSharded.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSQLServerShardedUpdate: &sqlServerSharded,
+		Type:                         typ,
+	}
+}
+
+func CreateSourceTypesUpdateStreaming(streaming SourceStreamingUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeStreaming
+
+	typStr := SourceStreamingUpdateType(typ)
+	streaming.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceStreamingUpdate: &streaming,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateSnowflake(snowflake SourceSnowflakeUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSnowflake
+
+	typStr := SourceSnowflakeUpdateType(typ)
+	snowflake.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSnowflakeUpdate: &snowflake,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateSnowflakeSharded(snowflakeSharded SourceSnowflakeShardedUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSnowflakeSharded
+
+	typStr := SourceSnowflakeShardedUpdateType(typ)
+	snowflakeSharded.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSnowflakeShardedUpdate: &snowflakeSharded,
+		Type:                         typ,
+	}
+}
+
+func CreateSourceTypesUpdateSquare(square SourceSquareUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSquare
+
+	typStr := SourceSquareUpdateType(typ)
+	square.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSquareUpdate: &square,
+		Type:               typ,
 	}
 }
 
@@ -1307,6 +1127,186 @@ func CreateSourceTypesUpdateSnapchatAds(snapchatAds SourceSnapchatAdsUpdate) Sou
 	}
 }
 
+func CreateSourceTypesUpdateStripe(stripe SourceStripeUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeStripe
+
+	typStr := SourceStripeUpdateType(typ)
+	stripe.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceStripeUpdate: &stripe,
+		Type:               typ,
+	}
+}
+
+func CreateSourceTypesUpdateSumtotal(sumtotal SourceSumTotalUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSumtotal
+
+	typStr := SourceSumTotalUpdateType(typ)
+	sumtotal.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSumTotalUpdate: &sumtotal,
+		Type:                 typ,
+	}
+}
+
+func CreateSourceTypesUpdateTheTradeDesk(theTradeDesk SourceTheTradeDeskUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeTheTradeDesk
+
+	typStr := SourceTheTradeDeskUpdateType(typ)
+	theTradeDesk.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceTheTradeDeskUpdate: &theTradeDesk,
+		Type:                     typ,
+	}
+}
+
+func CreateSourceTypesUpdateTikTokAds(tikTokAds SourceTikTokAdsUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeTikTokAds
+
+	typStr := SourceTikTokAdsUpdateType(typ)
+	tikTokAds.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceTikTokAdsUpdate: &tikTokAds,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateTwilio(twilio SourceTwilioUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeTwilio
+
+	typStr := SourceTwilioUpdateType(typ)
+	twilio.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceTwilioUpdate: &twilio,
+		Type:               typ,
+	}
+}
+
+func CreateSourceTypesUpdateTwitterAds(twitterAds SourceTwitterUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeTwitterAds
+
+	typStr := SourceTwitterUpdateType(typ)
+	twitterAds.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceTwitterUpdate: &twitterAds,
+		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateUserDefinedAPI(userDefinedAPI SourceUserDefinedAPIUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeUserDefinedAPI
+
+	typStr := SourceUserDefinedAPIUpdateType(typ)
+	userDefinedAPI.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceUserDefinedAPIUpdate: &userDefinedAPI,
+		Type:                       typ,
+	}
+}
+
+func CreateSourceTypesUpdateUservoice(uservoice SourceUserVoiceUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeUservoice
+
+	typStr := SourceUserVoiceUpdateType(typ)
+	uservoice.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceUserVoiceUpdate: &uservoice,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateVeeva(veeva SourceVeevaUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeVeeva
+
+	typStr := SourceVeevaUpdateType(typ)
+	veeva.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceVeevaUpdate: &veeva,
+		Type:              typ,
+	}
+}
+
+func CreateSourceTypesUpdateVerizonMediaDsp(verizonMediaDsp SourceVerizonMediaDspUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeVerizonMediaDsp
+
+	typStr := SourceVerizonMediaDspUpdateType(typ)
+	verizonMediaDsp.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceVerizonMediaDspUpdate: &verizonMediaDsp,
+		Type:                        typ,
+	}
+}
+
+func CreateSourceTypesUpdateWorkdayReport(workdayReport SourceWorkdayReportUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeWorkdayReport
+
+	typStr := SourceWorkdayReportUpdateType(typ)
+	workdayReport.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceWorkdayReportUpdate: &workdayReport,
+		Type:                      typ,
+	}
+}
+
+func CreateSourceTypesUpdateWorkfront(workfront SourceWorkfrontUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeWorkfront
+
+	typStr := SourceWorkfrontUpdateType(typ)
+	workfront.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceWorkfrontUpdate: &workfront,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateZendesk(zendesk SourceZendeskUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeZendesk
+
+	typStr := SourceZendeskUpdateType(typ)
+	zendesk.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceZendeskUpdate: &zendesk,
+		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateZoomPhone(zoomPhone SourceZoomPhoneUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeZoomPhone
+
+	typStr := SourceZoomPhoneUpdateType(typ)
+	zoomPhone.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceZoomPhoneUpdate: &zoomPhone,
+		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesUpdateZuora(zuora SourceZuoraUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeZuora
+
+	typStr := SourceZuoraUpdateType(typ)
+	zuora.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceZuoraUpdate: &zuora,
+		Type:              typ,
+	}
+}
+
 func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
@@ -1319,50 +1319,77 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Type {
-	case "GOOGLE_CLOUD_STORAGE":
-		sourceGoogleCloudStorageUpdate := new(SourceGoogleCloudStorageUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceGoogleCloudStorageUpdate, "", true, true); err != nil {
+	case "ACTIVE_CAMPAIGN":
+		sourceActiveCampaignUpdate := new(SourceActiveCampaignUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceActiveCampaignUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceGoogleCloudStorageUpdate = sourceGoogleCloudStorageUpdate
-		u.Type = SourceTypesUpdateTypeGoogleCloudStorage
+		u.SourceActiveCampaignUpdate = sourceActiveCampaignUpdate
+		u.Type = SourceTypesUpdateTypeActiveCampaign
 		return nil
-	case "JIRA_CLOUD":
-		sourceJiraCloudUpdate := new(SourceJiraCloudUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceJiraCloudUpdate, "", true, true); err != nil {
+	case "BIGQUERY":
+		sourceBigQueryUpdate := new(SourceBigQueryUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceBigQueryUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceJiraCloudUpdate = sourceJiraCloudUpdate
-		u.Type = SourceTypesUpdateTypeJiraCloud
+		u.SourceBigQueryUpdate = sourceBigQueryUpdate
+		u.Type = SourceTypesUpdateTypeBigquery
 		return nil
-	case "ERPX":
-		sourceErpxUpdate := new(SourceErpxUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceErpxUpdate, "", true, true); err != nil {
+	case "BING_ADS":
+		sourceBingAdsUpdate := new(SourceBingAdsUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceBingAdsUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceErpxUpdate = sourceErpxUpdate
-		u.Type = SourceTypesUpdateTypeErpx
+		u.SourceBingAdsUpdate = sourceBingAdsUpdate
+		u.Type = SourceTypesUpdateTypeBingAds
 		return nil
-	case "RAVE_MEDIDATA":
-		sourceRaveMedidataUpdate := new(SourceRaveMedidataUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceRaveMedidataUpdate, "", true, true); err != nil {
+	case "BLACKLINE":
+		sourceBlacklineUpdate := new(SourceBlacklineUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceBlacklineUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceRaveMedidataUpdate = sourceRaveMedidataUpdate
-		u.Type = SourceTypesUpdateTypeRaveMedidata
+		u.SourceBlacklineUpdate = sourceBlacklineUpdate
+		u.Type = SourceTypesUpdateTypeBlackline
 		return nil
-	case "DELTA_LAKE":
-		sourceDeltaLakeUpdate := new(SourceDeltaLakeUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceDeltaLakeUpdate, "", true, true); err != nil {
+	case "BRAINTREE":
+		sourceBraintreeUpdate := new(SourceBraintreeUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceBraintreeUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceDeltaLakeUpdate = sourceDeltaLakeUpdate
-		u.Type = SourceTypesUpdateTypeDeltaLake
+		u.SourceBraintreeUpdate = sourceBraintreeUpdate
+		u.Type = SourceTypesUpdateTypeBraintree
+		return nil
+	case "CONFLUENT_CLOUD":
+		sourceConfluentCloudUpdate := new(SourceConfluentCloudUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceConfluentCloudUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceConfluentCloudUpdate = sourceConfluentCloudUpdate
+		u.Type = SourceTypesUpdateTypeConfluentCloud
+		return nil
+	case "COUPA":
+		sourceCoupaUpdate := new(SourceCoupaUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceCoupaUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceCoupaUpdate = sourceCoupaUpdate
+		u.Type = SourceTypesUpdateTypeCoupa
+		return nil
+	case "CRITEO":
+		sourceCriteoUpdate := new(SourceCriteoUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceCriteoUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceCriteoUpdate = sourceCriteoUpdate
+		u.Type = SourceTypesUpdateTypeCriteo
 		return nil
 	case "DB2":
 		sourceDb2Update := new(SourceDb2Update)
@@ -1373,113 +1400,41 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceDb2Update = sourceDb2Update
 		u.Type = SourceTypesUpdateTypeDb2
 		return nil
-	case "SNOWFLAKE":
-		sourceSnowflakeUpdate := new(SourceSnowflakeUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSnowflakeUpdate, "", true, true); err != nil {
+	case "DB2_SHARDED":
+		sourceDb2ShardedUpdate := new(SourceDb2ShardedUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceDb2ShardedUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceSnowflakeUpdate = sourceSnowflakeUpdate
-		u.Type = SourceTypesUpdateTypeSnowflake
+		u.SourceDb2ShardedUpdate = sourceDb2ShardedUpdate
+		u.Type = SourceTypesUpdateTypeDb2Sharded
 		return nil
-	case "TIK_TOK_ADS":
-		sourceTikTokAdsUpdate := new(SourceTikTokAdsUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceTikTokAdsUpdate, "", true, true); err != nil {
+	case "DELTA_LAKE":
+		sourceDeltaLakeUpdate := new(SourceDeltaLakeUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceDeltaLakeUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceTikTokAdsUpdate = sourceTikTokAdsUpdate
-		u.Type = SourceTypesUpdateTypeTikTokAds
+		u.SourceDeltaLakeUpdate = sourceDeltaLakeUpdate
+		u.Type = SourceTypesUpdateTypeDeltaLake
 		return nil
-	case "OUTLOOK":
-		sourceOutlookUpdate := new(SourceOutlookUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceOutlookUpdate, "", true, true); err != nil {
+	case "EGNYTE":
+		sourceEgnyteUpdate := new(SourceEgnyteUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceEgnyteUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceOutlookUpdate = sourceOutlookUpdate
-		u.Type = SourceTypesUpdateTypeOutlook
+		u.SourceEgnyteUpdate = sourceEgnyteUpdate
+		u.Type = SourceTypesUpdateTypeEgnyte
 		return nil
-	case "SNOWFLAKE_SHARDED":
-		sourceSnowflakeShardedUpdate := new(SourceSnowflakeShardedUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSnowflakeShardedUpdate, "", true, true); err != nil {
+	case "ELASTICSEARCH":
+		sourceElasticSearchUpdate := new(SourceElasticSearchUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceElasticSearchUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceSnowflakeShardedUpdate = sourceSnowflakeShardedUpdate
-		u.Type = SourceTypesUpdateTypeSnowflakeSharded
-		return nil
-	case "FRESHCHAT":
-		sourceFreshchatUpdate := new(SourceFreshchatUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceFreshchatUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceFreshchatUpdate = sourceFreshchatUpdate
-		u.Type = SourceTypesUpdateTypeFreshchat
-		return nil
-	case "VEEVA":
-		sourceVeevaUpdate := new(SourceVeevaUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceVeevaUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceVeevaUpdate = sourceVeevaUpdate
-		u.Type = SourceTypesUpdateTypeVeeva
-		return nil
-	case "WORKDAY_REPORT":
-		sourceWorkdayReportUpdate := new(SourceWorkdayReportUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceWorkdayReportUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceWorkdayReportUpdate = sourceWorkdayReportUpdate
-		u.Type = SourceTypesUpdateTypeWorkdayReport
-		return nil
-	case "S3_INPUT":
-		sourceS3InputUpdate := new(SourceS3InputUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceS3InputUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceS3InputUpdate = sourceS3InputUpdate
-		u.Type = SourceTypesUpdateTypeS3Input
-		return nil
-	case "OUTREACH":
-		sourceOutreachUpdate := new(SourceOutreachUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceOutreachUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceOutreachUpdate = sourceOutreachUpdate
-		u.Type = SourceTypesUpdateTypeOutreach
-		return nil
-	case "RECURLY":
-		sourceRecurlyUpdate := new(SourceRecurlyUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceRecurlyUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceRecurlyUpdate = sourceRecurlyUpdate
-		u.Type = SourceTypesUpdateTypeRecurly
-		return nil
-	case "GOOGLE_ADS":
-		sourceGoogleAdsUpdate := new(SourceGoogleAdsUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceGoogleAdsUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceGoogleAdsUpdate = sourceGoogleAdsUpdate
-		u.Type = SourceTypesUpdateTypeGoogleAds
-		return nil
-	case "QUORA_ADS":
-		sourceQuoraAdsUpdate := new(SourceQuoraAdsUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceQuoraAdsUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceQuoraAdsUpdate = sourceQuoraAdsUpdate
-		u.Type = SourceTypesUpdateTypeQuoraAds
+		u.SourceElasticSearchUpdate = sourceElasticSearchUpdate
+		u.Type = SourceTypesUpdateTypeElasticsearch
 		return nil
 	case "ELLUMINATE":
 		sourceElluminateUpdate := new(SourceElluminateUpdate)
@@ -1490,41 +1445,140 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceElluminateUpdate = sourceElluminateUpdate
 		u.Type = SourceTypesUpdateTypeElluminate
 		return nil
-	case "STREAMING":
-		sourceStreamingUpdate := new(SourceStreamingUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceStreamingUpdate, "", true, true); err != nil {
+	case "ELOQUA":
+		sourceEloquaUpdate := new(SourceEloquaUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceEloquaUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceStreamingUpdate = sourceStreamingUpdate
-		u.Type = SourceTypesUpdateTypeStreaming
+		u.SourceEloquaUpdate = sourceEloquaUpdate
+		u.Type = SourceTypesUpdateTypeEloqua
 		return nil
-	case "DB2_SHARDED":
-		sourceDb2ShardedUpdate := new(SourceDb2ShardedUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceDb2ShardedUpdate, "", true, true); err != nil {
+	case "ERPX":
+		sourceErpxUpdate := new(SourceErpxUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceErpxUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceDb2ShardedUpdate = sourceDb2ShardedUpdate
-		u.Type = SourceTypesUpdateTypeDb2Sharded
+		u.SourceErpxUpdate = sourceErpxUpdate
+		u.Type = SourceTypesUpdateTypeErpx
 		return nil
-	case "LDAP":
-		sourceLdapUpdate := new(SourceLdapUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceLdapUpdate, "", true, true); err != nil {
+	case "FACEBOOK_ADS":
+		sourceFacebookAdsUpdate := new(SourceFacebookAdsUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceFacebookAdsUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceLdapUpdate = sourceLdapUpdate
-		u.Type = SourceTypesUpdateTypeLdap
+		u.SourceFacebookAdsUpdate = sourceFacebookAdsUpdate
+		u.Type = SourceTypesUpdateTypeFacebookAds
 		return nil
-	case "MYSQL_SHARDED":
-		sourceMysqlShardedUpdate := new(SourceMysqlShardedUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceMysqlShardedUpdate, "", true, true); err != nil {
+	case "FIFTEEN_FIVE":
+		sourceFifteenFiveUpdate := new(SourceFifteenFiveUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceFifteenFiveUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceMysqlShardedUpdate = sourceMysqlShardedUpdate
-		u.Type = SourceTypesUpdateTypeMysqlSharded
+		u.SourceFifteenFiveUpdate = sourceFifteenFiveUpdate
+		u.Type = SourceTypesUpdateTypeFifteenFive
+		return nil
+	case "FRESHCHAT":
+		sourceFreshchatUpdate := new(SourceFreshchatUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceFreshchatUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceFreshchatUpdate = sourceFreshchatUpdate
+		u.Type = SourceTypesUpdateTypeFreshchat
+		return nil
+	case "FRESHSALES":
+		sourceFreshsalesUpdate := new(SourceFreshsalesUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceFreshsalesUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceFreshsalesUpdate = sourceFreshsalesUpdate
+		u.Type = SourceTypesUpdateTypeFreshsales
+		return nil
+	case "FRESHWORKS":
+		sourceFreshworksUpdate := new(SourceFreshworksUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceFreshworksUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceFreshworksUpdate = sourceFreshworksUpdate
+		u.Type = SourceTypesUpdateTypeFreshworks
+		return nil
+	case "FTP":
+		sourceFtpUpdate := new(SourceFtpUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceFtpUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceFtpUpdate = sourceFtpUpdate
+		u.Type = SourceTypesUpdateTypeFtp
+		return nil
+	case "GONG":
+		sourceGongUpdate := new(SourceGongUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceGongUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceGongUpdate = sourceGongUpdate
+		u.Type = SourceTypesUpdateTypeGong
+		return nil
+	case "GOOGLE_ANALYTICS_GA4":
+		sourceGoogleAnalyticsGa4Update := new(SourceGoogleAnalyticsGa4Update)
+		if err := utils.UnmarshalJSON(data, &sourceGoogleAnalyticsGa4Update, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceGoogleAnalyticsGa4Update = sourceGoogleAnalyticsGa4Update
+		u.Type = SourceTypesUpdateTypeGoogleAnalyticsGa4
+		return nil
+	case "GOOGLE_CLOUD_STORAGE":
+		sourceGoogleCloudStorageUpdate := new(SourceGoogleCloudStorageUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceGoogleCloudStorageUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceGoogleCloudStorageUpdate = sourceGoogleCloudStorageUpdate
+		u.Type = SourceTypesUpdateTypeGoogleCloudStorage
+		return nil
+	case "GOOGLE_ADS":
+		sourceGoogleAdsUpdate := new(SourceGoogleAdsUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceGoogleAdsUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceGoogleAdsUpdate = sourceGoogleAdsUpdate
+		u.Type = SourceTypesUpdateTypeGoogleAds
+		return nil
+	case "GOOGLE_SHEETS":
+		sourceGoogleSheetsUpdate := new(SourceGoogleSheetsUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceGoogleSheetsUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceGoogleSheetsUpdate = sourceGoogleSheetsUpdate
+		u.Type = SourceTypesUpdateTypeGoogleSheets
+		return nil
+	case "HUBSPOT":
+		sourceHubspotUpdate := new(SourceHubspotUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceHubspotUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceHubspotUpdate = sourceHubspotUpdate
+		u.Type = SourceTypesUpdateTypeHubspot
+		return nil
+	case "INTERCOM":
+		sourceIntercomUpdate := new(SourceIntercomUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceIntercomUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceIntercomUpdate = sourceIntercomUpdate
+		u.Type = SourceTypesUpdateTypeIntercom
 		return nil
 	case "IMPACT_RADIUS":
 		sourceImpactRadiusUpdate := new(SourceImpactRadiusUpdate)
@@ -1544,168 +1598,6 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceJiraUpdate = sourceJiraUpdate
 		u.Type = SourceTypesUpdateTypeJira
 		return nil
-	case "VERIZON_MEDIA_DSP":
-		sourceVerizonMediaDspUpdate := new(SourceVerizonMediaDspUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceVerizonMediaDspUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceVerizonMediaDspUpdate = sourceVerizonMediaDspUpdate
-		u.Type = SourceTypesUpdateTypeVerizonMediaDsp
-		return nil
-	case "TWITTER_ADS":
-		sourceTwitterUpdate := new(SourceTwitterUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceTwitterUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceTwitterUpdate = sourceTwitterUpdate
-		u.Type = SourceTypesUpdateTypeTwitterAds
-		return nil
-	case "INTERCOM":
-		sourceIntercomUpdate := new(SourceIntercomUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceIntercomUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceIntercomUpdate = sourceIntercomUpdate
-		u.Type = SourceTypesUpdateTypeIntercom
-		return nil
-	case "COUPA":
-		sourceCoupaUpdate := new(SourceCoupaUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceCoupaUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceCoupaUpdate = sourceCoupaUpdate
-		u.Type = SourceTypesUpdateTypeCoupa
-		return nil
-	case "TWILIO":
-		sourceTwilioUpdate := new(SourceTwilioUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceTwilioUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceTwilioUpdate = sourceTwilioUpdate
-		u.Type = SourceTypesUpdateTypeTwilio
-		return nil
-	case "BING_ADS":
-		sourceBingAdsUpdate := new(SourceBingAdsUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceBingAdsUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceBingAdsUpdate = sourceBingAdsUpdate
-		u.Type = SourceTypesUpdateTypeBingAds
-		return nil
-	case "SALESFORCE":
-		sourceSalesforceUpdate := new(SourceSalesforceUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSalesforceUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSalesforceUpdate = sourceSalesforceUpdate
-		u.Type = SourceTypesUpdateTypeSalesforce
-		return nil
-	case "SAP_HANA":
-		sourceSapHanaUpdate := new(SourceSapHanaUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSapHanaUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSapHanaUpdate = sourceSapHanaUpdate
-		u.Type = SourceTypesUpdateTypeSapHana
-		return nil
-	case "CRITEO":
-		sourceCriteoUpdate := new(SourceCriteoUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceCriteoUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceCriteoUpdate = sourceCriteoUpdate
-		u.Type = SourceTypesUpdateTypeCriteo
-		return nil
-	case "FTP":
-		sourceFtpUpdate := new(SourceFtpUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceFtpUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceFtpUpdate = sourceFtpUpdate
-		u.Type = SourceTypesUpdateTypeFtp
-		return nil
-	case "SQUARE":
-		sourceSquareUpdate := new(SourceSquareUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSquareUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSquareUpdate = sourceSquareUpdate
-		u.Type = SourceTypesUpdateTypeSquare
-		return nil
-	case "EGNYTE":
-		sourceEgnyteUpdate := new(SourceEgnyteUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceEgnyteUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceEgnyteUpdate = sourceEgnyteUpdate
-		u.Type = SourceTypesUpdateTypeEgnyte
-		return nil
-	case "USER_DEFINED_API":
-		sourceUserDefinedAPIUpdate := new(SourceUserDefinedAPIUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceUserDefinedAPIUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceUserDefinedAPIUpdate = sourceUserDefinedAPIUpdate
-		u.Type = SourceTypesUpdateTypeUserDefinedAPI
-		return nil
-	case "SAP_CONCUR":
-		sourceSapConcurUpdate := new(SourceSapConcurUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSapConcurUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSapConcurUpdate = sourceSapConcurUpdate
-		u.Type = SourceTypesUpdateTypeSapConcur
-		return nil
-	case "USERVOICE":
-		sourceUserVoiceUpdate := new(SourceUserVoiceUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceUserVoiceUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceUserVoiceUpdate = sourceUserVoiceUpdate
-		u.Type = SourceTypesUpdateTypeUservoice
-		return nil
-	case "NETSUITE":
-		sourceNetsuiteUpdate := new(SourceNetsuiteUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceNetsuiteUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceNetsuiteUpdate = sourceNetsuiteUpdate
-		u.Type = SourceTypesUpdateTypeNetsuite
-		return nil
-	case "THE_TRADE_DESK":
-		sourceTheTradeDeskUpdate := new(SourceTheTradeDeskUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceTheTradeDeskUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceTheTradeDeskUpdate = sourceTheTradeDeskUpdate
-		u.Type = SourceTypesUpdateTypeTheTradeDesk
-		return nil
-	case "MONGODB":
-		sourceMongodbUpdate := new(SourceMongodbUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceMongodbUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceMongodbUpdate = sourceMongodbUpdate
-		u.Type = SourceTypesUpdateTypeMongodb
-		return nil
 	case "JIRA_ALIGN":
 		sourceJiraAlignUpdate := new(SourceJiraAlignUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceJiraAlignUpdate, "", true, true); err != nil {
@@ -1715,140 +1607,14 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceJiraAlignUpdate = sourceJiraAlignUpdate
 		u.Type = SourceTypesUpdateTypeJiraAlign
 		return nil
-	case "GONG":
-		sourceGongUpdate := new(SourceGongUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceGongUpdate, "", true, true); err != nil {
+	case "JIRA_CLOUD":
+		sourceJiraCloudUpdate := new(SourceJiraCloudUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceJiraCloudUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceGongUpdate = sourceGongUpdate
-		u.Type = SourceTypesUpdateTypeGong
-		return nil
-	case "PINTEREST_ADS":
-		sourcePinterestAdsUpdate := new(SourcePinterestAdsUpdate)
-		if err := utils.UnmarshalJSON(data, &sourcePinterestAdsUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourcePinterestAdsUpdate = sourcePinterestAdsUpdate
-		u.Type = SourceTypesUpdateTypePinterestAds
-		return nil
-	case "SHOPIFY":
-		sourceShopifyUpdate := new(SourceShopifyUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceShopifyUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceShopifyUpdate = sourceShopifyUpdate
-		u.Type = SourceTypesUpdateTypeShopify
-		return nil
-	case "NETSUITE_V2":
-		sourceNetsuiteV2Update := new(SourceNetsuiteV2Update)
-		if err := utils.UnmarshalJSON(data, &sourceNetsuiteV2Update, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceNetsuiteV2Update = sourceNetsuiteV2Update
-		u.Type = SourceTypesUpdateTypeNetsuiteV2
-		return nil
-	case "BRAINTREE":
-		sourceBraintreeUpdate := new(SourceBraintreeUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceBraintreeUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceBraintreeUpdate = sourceBraintreeUpdate
-		u.Type = SourceTypesUpdateTypeBraintree
-		return nil
-	case "SQL_SERVER":
-		sourceSQLServerUpdate := new(SourceSQLServerUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSQLServerUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSQLServerUpdate = sourceSQLServerUpdate
-		u.Type = SourceTypesUpdateTypeSQLServer
-		return nil
-	case "SALESFORCE_MARKETING_CLOUD":
-		sourceSalesforceMarketingCloudUpdate := new(SourceSalesforceMarketingCloudUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSalesforceMarketingCloudUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSalesforceMarketingCloudUpdate = sourceSalesforceMarketingCloudUpdate
-		u.Type = SourceTypesUpdateTypeSalesforceMarketingCloud
-		return nil
-	case "SFTP":
-		sourceSftpUpdate := new(SourceSftpUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSftpUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSftpUpdate = sourceSftpUpdate
-		u.Type = SourceTypesUpdateTypeSftp
-		return nil
-	case "S3_LEGACY":
-		sourceS3LegacyUpdate := new(SourceS3LegacyUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceS3LegacyUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceS3LegacyUpdate = sourceS3LegacyUpdate
-		u.Type = SourceTypesUpdateTypeS3Legacy
-		return nil
-	case "BLACKLINE":
-		sourceBlacklineUpdate := new(SourceBlacklineUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceBlacklineUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceBlacklineUpdate = sourceBlacklineUpdate
-		u.Type = SourceTypesUpdateTypeBlackline
-		return nil
-	case "REDSHIFT":
-		sourceRedshiftUpdate := new(SourceRedshiftUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceRedshiftUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceRedshiftUpdate = sourceRedshiftUpdate
-		u.Type = SourceTypesUpdateTypeRedshift
-		return nil
-	case "STRIPE":
-		sourceStripeUpdate := new(SourceStripeUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceStripeUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceStripeUpdate = sourceStripeUpdate
-		u.Type = SourceTypesUpdateTypeStripe
-		return nil
-	case "FIFTEEN_FIVE":
-		sourceFifteenFiveUpdate := new(SourceFifteenFiveUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceFifteenFiveUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceFifteenFiveUpdate = sourceFifteenFiveUpdate
-		u.Type = SourceTypesUpdateTypeFifteenFive
-		return nil
-	case "SQL_SERVER_SHARDED":
-		sourceSQLServerShardedUpdate := new(SourceSQLServerShardedUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSQLServerShardedUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSQLServerShardedUpdate = sourceSQLServerShardedUpdate
-		u.Type = SourceTypesUpdateTypeSQLServerSharded
-		return nil
-	case "KUSTOMER":
-		sourceKustomerUpdate := new(SourceKustomerUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceKustomerUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceKustomerUpdate = sourceKustomerUpdate
-		u.Type = SourceTypesUpdateTypeKustomer
+		u.SourceJiraCloudUpdate = sourceJiraCloudUpdate
+		u.Type = SourceTypesUpdateTypeJiraCloud
 		return nil
 	case "KAFKA":
 		sourceKafkaUpdate := new(SourceKafkaUpdate)
@@ -1859,140 +1625,23 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceKafkaUpdate = sourceKafkaUpdate
 		u.Type = SourceTypesUpdateTypeKafka
 		return nil
-	case "ZOOM_PHONE":
-		sourceZoomPhoneUpdate := new(SourceZoomPhoneUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceZoomPhoneUpdate, "", true, true); err != nil {
+	case "KUSTOMER":
+		sourceKustomerUpdate := new(SourceKustomerUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceKustomerUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceZoomPhoneUpdate = sourceZoomPhoneUpdate
-		u.Type = SourceTypesUpdateTypeZoomPhone
+		u.SourceKustomerUpdate = sourceKustomerUpdate
+		u.Type = SourceTypesUpdateTypeKustomer
 		return nil
-	case "FACEBOOK_ADS":
-		sourceFacebookAdsUpdate := new(SourceFacebookAdsUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceFacebookAdsUpdate, "", true, true); err != nil {
+	case "LDAP":
+		sourceLdapUpdate := new(SourceLdapUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceLdapUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceFacebookAdsUpdate = sourceFacebookAdsUpdate
-		u.Type = SourceTypesUpdateTypeFacebookAds
-		return nil
-	case "LINKED_IN_ADS":
-		sourceLinkedInAdsUpdate := new(SourceLinkedInAdsUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceLinkedInAdsUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceLinkedInAdsUpdate = sourceLinkedInAdsUpdate
-		u.Type = SourceTypesUpdateTypeLinkedInAds
-		return nil
-	case "MYSQL":
-		sourceMysqlUpdate := new(SourceMysqlUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceMysqlUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceMysqlUpdate = sourceMysqlUpdate
-		u.Type = SourceTypesUpdateTypeMysql
-		return nil
-	case "FRESHWORKS":
-		sourceFreshworksUpdate := new(SourceFreshworksUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceFreshworksUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceFreshworksUpdate = sourceFreshworksUpdate
-		u.Type = SourceTypesUpdateTypeFreshworks
-		return nil
-	case "WORKFRONT":
-		sourceWorkfrontUpdate := new(SourceWorkfrontUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceWorkfrontUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceWorkfrontUpdate = sourceWorkfrontUpdate
-		u.Type = SourceTypesUpdateTypeWorkfront
-		return nil
-	case "HUBSPOT":
-		sourceHubspotUpdate := new(SourceHubspotUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceHubspotUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceHubspotUpdate = sourceHubspotUpdate
-		u.Type = SourceTypesUpdateTypeHubspot
-		return nil
-	case "MARKETO":
-		sourceMarketoUpdate := new(SourceMarketoUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceMarketoUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceMarketoUpdate = sourceMarketoUpdate
-		u.Type = SourceTypesUpdateTypeMarketo
-		return nil
-	case "SUMTOTAL":
-		sourceSumTotalUpdate := new(SourceSumTotalUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSumTotalUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSumTotalUpdate = sourceSumTotalUpdate
-		u.Type = SourceTypesUpdateTypeSumtotal
-		return nil
-	case "SAP_HANA_SHARDED":
-		sourceSapHanaShardedUpdate := new(SourceSapHanaShardedUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSapHanaShardedUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSapHanaShardedUpdate = sourceSapHanaShardedUpdate
-		u.Type = SourceTypesUpdateTypeSapHanaSharded
-		return nil
-	case "GOOGLE_ANALYTICS_GA4":
-		sourceGoogleAnalyticsGa4Update := new(SourceGoogleAnalyticsGa4Update)
-		if err := utils.UnmarshalJSON(data, &sourceGoogleAnalyticsGa4Update, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceGoogleAnalyticsGa4Update = sourceGoogleAnalyticsGa4Update
-		u.Type = SourceTypesUpdateTypeGoogleAnalyticsGa4
-		return nil
-	case "GOOGLE_SHEETS":
-		sourceGoogleSheetsUpdate := new(SourceGoogleSheetsUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceGoogleSheetsUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceGoogleSheetsUpdate = sourceGoogleSheetsUpdate
-		u.Type = SourceTypesUpdateTypeGoogleSheets
-		return nil
-	case "BIGQUERY":
-		sourceBigQueryUpdate := new(SourceBigQueryUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceBigQueryUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceBigQueryUpdate = sourceBigQueryUpdate
-		u.Type = SourceTypesUpdateTypeBigquery
-		return nil
-	case "CONFLUENT_CLOUD":
-		sourceConfluentCloudUpdate := new(SourceConfluentCloudUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceConfluentCloudUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceConfluentCloudUpdate = sourceConfluentCloudUpdate
-		u.Type = SourceTypesUpdateTypeConfluentCloud
-		return nil
-	case "ELOQUA":
-		sourceEloquaUpdate := new(SourceEloquaUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceEloquaUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceEloquaUpdate = sourceEloquaUpdate
-		u.Type = SourceTypesUpdateTypeEloqua
+		u.SourceLdapUpdate = sourceLdapUpdate
+		u.Type = SourceTypesUpdateTypeLdap
 		return nil
 	case "LDAP_VIRTUAL_LIST_VIEW":
 		sourceLdapVirtualListViewUpdate := new(SourceLdapVirtualListViewUpdate)
@@ -2003,14 +1652,23 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceLdapVirtualListViewUpdate = sourceLdapVirtualListViewUpdate
 		u.Type = SourceTypesUpdateTypeLdapVirtualListView
 		return nil
-	case "POSTGRES_SHARDED":
-		sourcePostgresShardedUpdate := new(SourcePostgresShardedUpdate)
-		if err := utils.UnmarshalJSON(data, &sourcePostgresShardedUpdate, "", true, true); err != nil {
+	case "LINKED_IN_ADS":
+		sourceLinkedInAdsUpdate := new(SourceLinkedInAdsUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceLinkedInAdsUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourcePostgresShardedUpdate = sourcePostgresShardedUpdate
-		u.Type = SourceTypesUpdateTypePostgresSharded
+		u.SourceLinkedInAdsUpdate = sourceLinkedInAdsUpdate
+		u.Type = SourceTypesUpdateTypeLinkedInAds
+		return nil
+	case "MARKETO":
+		sourceMarketoUpdate := new(SourceMarketoUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceMarketoUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceMarketoUpdate = sourceMarketoUpdate
+		u.Type = SourceTypesUpdateTypeMarketo
 		return nil
 	case "MICROSOFT_ENTRA_ID":
 		sourceMicrosoftEntraIDUpdate := new(SourceMicrosoftEntraIDUpdate)
@@ -2021,33 +1679,6 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceMicrosoftEntraIDUpdate = sourceMicrosoftEntraIDUpdate
 		u.Type = SourceTypesUpdateTypeMicrosoftEntraID
 		return nil
-	case "SKYWARD":
-		sourceSkywardUpdate := new(SourceSkywardUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceSkywardUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSkywardUpdate = sourceSkywardUpdate
-		u.Type = SourceTypesUpdateTypeSkyward
-		return nil
-	case "SERVICE_NOW":
-		sourceServiceNowUpdate := new(SourceServiceNowUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceServiceNowUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceServiceNowUpdate = sourceServiceNowUpdate
-		u.Type = SourceTypesUpdateTypeServiceNow
-		return nil
-	case "ACTIVE_CAMPAIGN":
-		sourceActiveCampaignUpdate := new(SourceActiveCampaignUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceActiveCampaignUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceActiveCampaignUpdate = sourceActiveCampaignUpdate
-		u.Type = SourceTypesUpdateTypeActiveCampaign
-		return nil
 	case "MIXPANEL":
 		sourceMixpanelUpdate := new(SourceMixpanelUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceMixpanelUpdate, "", true, true); err != nil {
@@ -2057,68 +1688,50 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceMixpanelUpdate = sourceMixpanelUpdate
 		u.Type = SourceTypesUpdateTypeMixpanel
 		return nil
-	case "POSTGRES":
-		sourcePostgresUpdate := new(SourcePostgresUpdate)
-		if err := utils.UnmarshalJSON(data, &sourcePostgresUpdate, "", true, true); err != nil {
+	case "MONGODB":
+		sourceMongodbUpdate := new(SourceMongodbUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceMongodbUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourcePostgresUpdate = sourcePostgresUpdate
-		u.Type = SourceTypesUpdateTypePostgres
+		u.SourceMongodbUpdate = sourceMongodbUpdate
+		u.Type = SourceTypesUpdateTypeMongodb
 		return nil
-	case "ORACLE_SHARDED":
-		sourceOracleShardedUpdate := new(SourceOracleShardedUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceOracleShardedUpdate, "", true, true); err != nil {
+	case "MYSQL_SHARDED":
+		sourceMysqlShardedUpdate := new(SourceMysqlShardedUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceMysqlShardedUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceOracleShardedUpdate = sourceOracleShardedUpdate
-		u.Type = SourceTypesUpdateTypeOracleSharded
+		u.SourceMysqlShardedUpdate = sourceMysqlShardedUpdate
+		u.Type = SourceTypesUpdateTypeMysqlSharded
 		return nil
-	case "ELASTICSEARCH":
-		sourceElasticSearchUpdate := new(SourceElasticSearchUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceElasticSearchUpdate, "", true, true); err != nil {
+	case "MYSQL":
+		sourceMysqlUpdate := new(SourceMysqlUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceMysqlUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceElasticSearchUpdate = sourceElasticSearchUpdate
-		u.Type = SourceTypesUpdateTypeElasticsearch
+		u.SourceMysqlUpdate = sourceMysqlUpdate
+		u.Type = SourceTypesUpdateTypeMysql
 		return nil
-	case "ZENDESK":
-		sourceZendeskUpdate := new(SourceZendeskUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceZendeskUpdate, "", true, true); err != nil {
+	case "NETSUITE":
+		sourceNetsuiteUpdate := new(SourceNetsuiteUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceNetsuiteUpdate, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceZendeskUpdate = sourceZendeskUpdate
-		u.Type = SourceTypesUpdateTypeZendesk
+		u.SourceNetsuiteUpdate = sourceNetsuiteUpdate
+		u.Type = SourceTypesUpdateTypeNetsuite
 		return nil
-	case "REDSHIFT_SHARDED":
-		sourceRedshiftShardedUpdate := new(SourceRedshiftShardedUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceRedshiftShardedUpdate, "", true, true); err != nil {
+	case "NETSUITE_V2":
+		sourceNetsuiteV2Update := new(SourceNetsuiteV2Update)
+		if err := utils.UnmarshalJSON(data, &sourceNetsuiteV2Update, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceRedshiftShardedUpdate = sourceRedshiftShardedUpdate
-		u.Type = SourceTypesUpdateTypeRedshiftSharded
-		return nil
-	case "ZUORA":
-		sourceZuoraUpdate := new(SourceZuoraUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceZuoraUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceZuoraUpdate = sourceZuoraUpdate
-		u.Type = SourceTypesUpdateTypeZuora
-		return nil
-	case "FRESHSALES":
-		sourceFreshsalesUpdate := new(SourceFreshsalesUpdate)
-		if err := utils.UnmarshalJSON(data, &sourceFreshsalesUpdate, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceFreshsalesUpdate = sourceFreshsalesUpdate
-		u.Type = SourceTypesUpdateTypeFreshsales
+		u.SourceNetsuiteV2Update = sourceNetsuiteV2Update
+		u.Type = SourceTypesUpdateTypeNetsuiteV2
 		return nil
 	case "ORACLE":
 		sourceOracleUpdate := new(SourceOracleUpdate)
@@ -2129,6 +1742,159 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceOracleUpdate = sourceOracleUpdate
 		u.Type = SourceTypesUpdateTypeOracle
 		return nil
+	case "ORACLE_SHARDED":
+		sourceOracleShardedUpdate := new(SourceOracleShardedUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceOracleShardedUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceOracleShardedUpdate = sourceOracleShardedUpdate
+		u.Type = SourceTypesUpdateTypeOracleSharded
+		return nil
+	case "OUTREACH":
+		sourceOutreachUpdate := new(SourceOutreachUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceOutreachUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceOutreachUpdate = sourceOutreachUpdate
+		u.Type = SourceTypesUpdateTypeOutreach
+		return nil
+	case "OUTLOOK":
+		sourceOutlookUpdate := new(SourceOutlookUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceOutlookUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceOutlookUpdate = sourceOutlookUpdate
+		u.Type = SourceTypesUpdateTypeOutlook
+		return nil
+	case "PINTEREST_ADS":
+		sourcePinterestAdsUpdate := new(SourcePinterestAdsUpdate)
+		if err := utils.UnmarshalJSON(data, &sourcePinterestAdsUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourcePinterestAdsUpdate = sourcePinterestAdsUpdate
+		u.Type = SourceTypesUpdateTypePinterestAds
+		return nil
+	case "POSTGRES":
+		sourcePostgresUpdate := new(SourcePostgresUpdate)
+		if err := utils.UnmarshalJSON(data, &sourcePostgresUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourcePostgresUpdate = sourcePostgresUpdate
+		u.Type = SourceTypesUpdateTypePostgres
+		return nil
+	case "POSTGRES_SHARDED":
+		sourcePostgresShardedUpdate := new(SourcePostgresShardedUpdate)
+		if err := utils.UnmarshalJSON(data, &sourcePostgresShardedUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourcePostgresShardedUpdate = sourcePostgresShardedUpdate
+		u.Type = SourceTypesUpdateTypePostgresSharded
+		return nil
+	case "QUORA_ADS":
+		sourceQuoraAdsUpdate := new(SourceQuoraAdsUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceQuoraAdsUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceQuoraAdsUpdate = sourceQuoraAdsUpdate
+		u.Type = SourceTypesUpdateTypeQuoraAds
+		return nil
+	case "RAVE_MEDIDATA":
+		sourceRaveMedidataUpdate := new(SourceRaveMedidataUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceRaveMedidataUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceRaveMedidataUpdate = sourceRaveMedidataUpdate
+		u.Type = SourceTypesUpdateTypeRaveMedidata
+		return nil
+	case "RECURLY":
+		sourceRecurlyUpdate := new(SourceRecurlyUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceRecurlyUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceRecurlyUpdate = sourceRecurlyUpdate
+		u.Type = SourceTypesUpdateTypeRecurly
+		return nil
+	case "REDSHIFT":
+		sourceRedshiftUpdate := new(SourceRedshiftUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceRedshiftUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceRedshiftUpdate = sourceRedshiftUpdate
+		u.Type = SourceTypesUpdateTypeRedshift
+		return nil
+	case "REDSHIFT_SHARDED":
+		sourceRedshiftShardedUpdate := new(SourceRedshiftShardedUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceRedshiftShardedUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceRedshiftShardedUpdate = sourceRedshiftShardedUpdate
+		u.Type = SourceTypesUpdateTypeRedshiftSharded
+		return nil
+	case "S3_LEGACY":
+		sourceS3LegacyUpdate := new(SourceS3LegacyUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceS3LegacyUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceS3LegacyUpdate = sourceS3LegacyUpdate
+		u.Type = SourceTypesUpdateTypeS3Legacy
+		return nil
+	case "S3_INPUT":
+		sourceS3InputUpdate := new(SourceS3InputUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceS3InputUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceS3InputUpdate = sourceS3InputUpdate
+		u.Type = SourceTypesUpdateTypeS3Input
+		return nil
+	case "SALESFORCE_MARKETING_CLOUD":
+		sourceSalesforceMarketingCloudUpdate := new(SourceSalesforceMarketingCloudUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSalesforceMarketingCloudUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSalesforceMarketingCloudUpdate = sourceSalesforceMarketingCloudUpdate
+		u.Type = SourceTypesUpdateTypeSalesforceMarketingCloud
+		return nil
+	case "SAP_CONCUR":
+		sourceSapConcurUpdate := new(SourceSapConcurUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSapConcurUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSapConcurUpdate = sourceSapConcurUpdate
+		u.Type = SourceTypesUpdateTypeSapConcur
+		return nil
+	case "SAP_HANA":
+		sourceSapHanaUpdate := new(SourceSapHanaUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSapHanaUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSapHanaUpdate = sourceSapHanaUpdate
+		u.Type = SourceTypesUpdateTypeSapHana
+		return nil
+	case "SAP_HANA_SHARDED":
+		sourceSapHanaShardedUpdate := new(SourceSapHanaShardedUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSapHanaShardedUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSapHanaShardedUpdate = sourceSapHanaShardedUpdate
+		u.Type = SourceTypesUpdateTypeSapHanaSharded
+		return nil
 	case "SEISMIC":
 		sourceSeismicUpdate := new(SourceSeismicUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceSeismicUpdate, "", true, true); err != nil {
@@ -2138,6 +1904,105 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceSeismicUpdate = sourceSeismicUpdate
 		u.Type = SourceTypesUpdateTypeSeismic
 		return nil
+	case "SERVICE_NOW":
+		sourceServiceNowUpdate := new(SourceServiceNowUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceServiceNowUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceServiceNowUpdate = sourceServiceNowUpdate
+		u.Type = SourceTypesUpdateTypeServiceNow
+		return nil
+	case "SHOPIFY":
+		sourceShopifyUpdate := new(SourceShopifyUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceShopifyUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceShopifyUpdate = sourceShopifyUpdate
+		u.Type = SourceTypesUpdateTypeShopify
+		return nil
+	case "SKYWARD":
+		sourceSkywardUpdate := new(SourceSkywardUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSkywardUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSkywardUpdate = sourceSkywardUpdate
+		u.Type = SourceTypesUpdateTypeSkyward
+		return nil
+	case "SALESFORCE":
+		sourceSalesforceUpdate := new(SourceSalesforceUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSalesforceUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSalesforceUpdate = sourceSalesforceUpdate
+		u.Type = SourceTypesUpdateTypeSalesforce
+		return nil
+	case "SFTP":
+		sourceSftpUpdate := new(SourceSftpUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSftpUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSftpUpdate = sourceSftpUpdate
+		u.Type = SourceTypesUpdateTypeSftp
+		return nil
+	case "SQL_SERVER":
+		sourceSQLServerUpdate := new(SourceSQLServerUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSQLServerUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSQLServerUpdate = sourceSQLServerUpdate
+		u.Type = SourceTypesUpdateTypeSQLServer
+		return nil
+	case "SQL_SERVER_SHARDED":
+		sourceSQLServerShardedUpdate := new(SourceSQLServerShardedUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSQLServerShardedUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSQLServerShardedUpdate = sourceSQLServerShardedUpdate
+		u.Type = SourceTypesUpdateTypeSQLServerSharded
+		return nil
+	case "STREAMING":
+		sourceStreamingUpdate := new(SourceStreamingUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceStreamingUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceStreamingUpdate = sourceStreamingUpdate
+		u.Type = SourceTypesUpdateTypeStreaming
+		return nil
+	case "SNOWFLAKE":
+		sourceSnowflakeUpdate := new(SourceSnowflakeUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSnowflakeUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSnowflakeUpdate = sourceSnowflakeUpdate
+		u.Type = SourceTypesUpdateTypeSnowflake
+		return nil
+	case "SNOWFLAKE_SHARDED":
+		sourceSnowflakeShardedUpdate := new(SourceSnowflakeShardedUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSnowflakeShardedUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSnowflakeShardedUpdate = sourceSnowflakeShardedUpdate
+		u.Type = SourceTypesUpdateTypeSnowflakeSharded
+		return nil
+	case "SQUARE":
+		sourceSquareUpdate := new(SourceSquareUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSquareUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSquareUpdate = sourceSquareUpdate
+		u.Type = SourceTypesUpdateTypeSquare
+		return nil
 	case "SNAPCHAT_ADS":
 		sourceSnapchatAdsUpdate := new(SourceSnapchatAdsUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceSnapchatAdsUpdate, "", true, true); err != nil {
@@ -2146,6 +2011,141 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 
 		u.SourceSnapchatAdsUpdate = sourceSnapchatAdsUpdate
 		u.Type = SourceTypesUpdateTypeSnapchatAds
+		return nil
+	case "STRIPE":
+		sourceStripeUpdate := new(SourceStripeUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceStripeUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceStripeUpdate = sourceStripeUpdate
+		u.Type = SourceTypesUpdateTypeStripe
+		return nil
+	case "SUMTOTAL":
+		sourceSumTotalUpdate := new(SourceSumTotalUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSumTotalUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSumTotalUpdate = sourceSumTotalUpdate
+		u.Type = SourceTypesUpdateTypeSumtotal
+		return nil
+	case "THE_TRADE_DESK":
+		sourceTheTradeDeskUpdate := new(SourceTheTradeDeskUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceTheTradeDeskUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceTheTradeDeskUpdate = sourceTheTradeDeskUpdate
+		u.Type = SourceTypesUpdateTypeTheTradeDesk
+		return nil
+	case "TIK_TOK_ADS":
+		sourceTikTokAdsUpdate := new(SourceTikTokAdsUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceTikTokAdsUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceTikTokAdsUpdate = sourceTikTokAdsUpdate
+		u.Type = SourceTypesUpdateTypeTikTokAds
+		return nil
+	case "TWILIO":
+		sourceTwilioUpdate := new(SourceTwilioUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceTwilioUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceTwilioUpdate = sourceTwilioUpdate
+		u.Type = SourceTypesUpdateTypeTwilio
+		return nil
+	case "TWITTER_ADS":
+		sourceTwitterUpdate := new(SourceTwitterUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceTwitterUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceTwitterUpdate = sourceTwitterUpdate
+		u.Type = SourceTypesUpdateTypeTwitterAds
+		return nil
+	case "USER_DEFINED_API":
+		sourceUserDefinedAPIUpdate := new(SourceUserDefinedAPIUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceUserDefinedAPIUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceUserDefinedAPIUpdate = sourceUserDefinedAPIUpdate
+		u.Type = SourceTypesUpdateTypeUserDefinedAPI
+		return nil
+	case "USERVOICE":
+		sourceUserVoiceUpdate := new(SourceUserVoiceUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceUserVoiceUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceUserVoiceUpdate = sourceUserVoiceUpdate
+		u.Type = SourceTypesUpdateTypeUservoice
+		return nil
+	case "VEEVA":
+		sourceVeevaUpdate := new(SourceVeevaUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceVeevaUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceVeevaUpdate = sourceVeevaUpdate
+		u.Type = SourceTypesUpdateTypeVeeva
+		return nil
+	case "VERIZON_MEDIA_DSP":
+		sourceVerizonMediaDspUpdate := new(SourceVerizonMediaDspUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceVerizonMediaDspUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceVerizonMediaDspUpdate = sourceVerizonMediaDspUpdate
+		u.Type = SourceTypesUpdateTypeVerizonMediaDsp
+		return nil
+	case "WORKDAY_REPORT":
+		sourceWorkdayReportUpdate := new(SourceWorkdayReportUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceWorkdayReportUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceWorkdayReportUpdate = sourceWorkdayReportUpdate
+		u.Type = SourceTypesUpdateTypeWorkdayReport
+		return nil
+	case "WORKFRONT":
+		sourceWorkfrontUpdate := new(SourceWorkfrontUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceWorkfrontUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceWorkfrontUpdate = sourceWorkfrontUpdate
+		u.Type = SourceTypesUpdateTypeWorkfront
+		return nil
+	case "ZENDESK":
+		sourceZendeskUpdate := new(SourceZendeskUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceZendeskUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceZendeskUpdate = sourceZendeskUpdate
+		u.Type = SourceTypesUpdateTypeZendesk
+		return nil
+	case "ZOOM_PHONE":
+		sourceZoomPhoneUpdate := new(SourceZoomPhoneUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceZoomPhoneUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceZoomPhoneUpdate = sourceZoomPhoneUpdate
+		u.Type = SourceTypesUpdateTypeZoomPhone
+		return nil
+	case "ZUORA":
+		sourceZuoraUpdate := new(SourceZuoraUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceZuoraUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceZuoraUpdate = sourceZuoraUpdate
+		u.Type = SourceTypesUpdateTypeZuora
 		return nil
 	}
 

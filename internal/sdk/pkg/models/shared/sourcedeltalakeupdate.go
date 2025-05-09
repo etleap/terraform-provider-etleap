@@ -32,16 +32,9 @@ func (e *SourceDeltaLakeUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceDeltaLakeUpdate struct {
-	Type *SourceDeltaLakeUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceDeltaLakeUpdate) GetType() *SourceDeltaLakeUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                     `json:"latencyThreshold,omitempty"`
+	Type             *SourceDeltaLakeUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceDeltaLakeUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceDeltaLakeUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceDeltaLakeUpdate) GetType() *SourceDeltaLakeUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

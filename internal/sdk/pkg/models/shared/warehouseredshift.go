@@ -32,25 +32,25 @@ func (e *WarehouseRedshiftType) UnmarshalJSON(data []byte) error {
 }
 
 type WarehouseRedshift struct {
+	Type         WarehouseRedshiftType `json:"type"`
+	ConnectionID string                `json:"connectionId"`
+	Schema       *string               `json:"schema,omitempty"`
+	Table        string                `json:"table"`
 	// Only set when a table rename was triggered but is not complete yet.
-	PendingRenamedTable      *string               `json:"pendingRenamedTable,omitempty"`
-	ConnectionID             string                `json:"connectionId"`
-	MaterializedView         bool                  `json:"materializedView"`
-	WaitForUpdatePreparation bool                  `json:"waitForUpdatePreparation"`
-	Table                    string                `json:"table"`
-	Type                     WarehouseRedshiftType `json:"type"`
-	Schema                   *string               `json:"schema,omitempty"`
-	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
-	DistributionStyle DistributionStyle `json:"distributionStyle"`
+	PendingRenamedTable      *string `json:"pendingRenamedTable,omitempty"`
+	MaterializedView         bool    `json:"materializedView"`
+	WaitForUpdatePreparation bool    `json:"waitForUpdatePreparation"`
 	// The sort columns to use.
 	SortColumns []string `json:"sortColumns,omitempty"`
+	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
+	DistributionStyle DistributionStyle `json:"distributionStyle"`
 }
 
-func (o *WarehouseRedshift) GetPendingRenamedTable() *string {
+func (o *WarehouseRedshift) GetType() WarehouseRedshiftType {
 	if o == nil {
-		return nil
+		return WarehouseRedshiftType("")
 	}
-	return o.PendingRenamedTable
+	return o.Type
 }
 
 func (o *WarehouseRedshift) GetConnectionID() string {
@@ -58,6 +58,27 @@ func (o *WarehouseRedshift) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *WarehouseRedshift) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *WarehouseRedshift) GetTable() string {
+	if o == nil {
+		return ""
+	}
+	return o.Table
+}
+
+func (o *WarehouseRedshift) GetPendingRenamedTable() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PendingRenamedTable
 }
 
 func (o *WarehouseRedshift) GetMaterializedView() bool {
@@ -74,25 +95,11 @@ func (o *WarehouseRedshift) GetWaitForUpdatePreparation() bool {
 	return o.WaitForUpdatePreparation
 }
 
-func (o *WarehouseRedshift) GetTable() string {
-	if o == nil {
-		return ""
-	}
-	return o.Table
-}
-
-func (o *WarehouseRedshift) GetType() WarehouseRedshiftType {
-	if o == nil {
-		return WarehouseRedshiftType("")
-	}
-	return o.Type
-}
-
-func (o *WarehouseRedshift) GetSchema() *string {
+func (o *WarehouseRedshift) GetSortColumns() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Schema
+	return o.SortColumns
 }
 
 func (o *WarehouseRedshift) GetDistributionStyle() DistributionStyle {
@@ -102,24 +109,24 @@ func (o *WarehouseRedshift) GetDistributionStyle() DistributionStyle {
 	return o.DistributionStyle
 }
 
-func (o *WarehouseRedshift) GetSortColumns() []string {
-	if o == nil {
-		return nil
-	}
-	return o.SortColumns
-}
-
 type WarehouseRedshiftInput struct {
+	Type                     WarehouseRedshiftType `json:"type"`
 	ConnectionID             string                `json:"connectionId"`
+	Schema                   *string               `json:"schema,omitempty"`
+	Table                    string                `json:"table"`
 	MaterializedView         bool                  `json:"materializedView"`
 	WaitForUpdatePreparation bool                  `json:"waitForUpdatePreparation"`
-	Table                    string                `json:"table"`
-	Type                     WarehouseRedshiftType `json:"type"`
-	Schema                   *string               `json:"schema,omitempty"`
-	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
-	DistributionStyle DistributionStyle `json:"distributionStyle"`
 	// The sort columns to use.
 	SortColumns []string `json:"sortColumns,omitempty"`
+	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
+	DistributionStyle DistributionStyle `json:"distributionStyle"`
+}
+
+func (o *WarehouseRedshiftInput) GetType() WarehouseRedshiftType {
+	if o == nil {
+		return WarehouseRedshiftType("")
+	}
+	return o.Type
 }
 
 func (o *WarehouseRedshiftInput) GetConnectionID() string {
@@ -127,6 +134,20 @@ func (o *WarehouseRedshiftInput) GetConnectionID() string {
 		return ""
 	}
 	return o.ConnectionID
+}
+
+func (o *WarehouseRedshiftInput) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *WarehouseRedshiftInput) GetTable() string {
+	if o == nil {
+		return ""
+	}
+	return o.Table
 }
 
 func (o *WarehouseRedshiftInput) GetMaterializedView() bool {
@@ -143,25 +164,11 @@ func (o *WarehouseRedshiftInput) GetWaitForUpdatePreparation() bool {
 	return o.WaitForUpdatePreparation
 }
 
-func (o *WarehouseRedshiftInput) GetTable() string {
-	if o == nil {
-		return ""
-	}
-	return o.Table
-}
-
-func (o *WarehouseRedshiftInput) GetType() WarehouseRedshiftType {
-	if o == nil {
-		return WarehouseRedshiftType("")
-	}
-	return o.Type
-}
-
-func (o *WarehouseRedshiftInput) GetSchema() *string {
+func (o *WarehouseRedshiftInput) GetSortColumns() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Schema
+	return o.SortColumns
 }
 
 func (o *WarehouseRedshiftInput) GetDistributionStyle() DistributionStyle {
@@ -169,11 +176,4 @@ func (o *WarehouseRedshiftInput) GetDistributionStyle() DistributionStyle {
 		return DistributionStyle{}
 	}
 	return o.DistributionStyle
-}
-
-func (o *WarehouseRedshiftInput) GetSortColumns() []string {
-	if o == nil {
-		return nil
-	}
-	return o.SortColumns
 }

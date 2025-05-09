@@ -32,33 +32,19 @@ func (e *ConnectionEgnyteUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionEgnyteUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                       `json:"active,omitempty"`
-	Type   *ConnectionEgnyteUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                     `json:"name,omitempty"`
+	Type *ConnectionEgnyteUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code *string `json:"code,omitempty"`
-	// The path for your base directory. Use "/" for the whole file system.
-	BaseDirectory *string `json:"baseDirectory,omitempty"`
 	// The name of your Egnyte domain.
 	DomainName *string `json:"domainName,omitempty"`
-}
-
-func (o *ConnectionEgnyteUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionEgnyteUpdate) GetType() *ConnectionEgnyteUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	// The path for your base directory. Use "/" for the whole file system.
+	BaseDirectory *string `json:"baseDirectory,omitempty"`
 }
 
 func (o *ConnectionEgnyteUpdate) GetName() *string {
@@ -68,6 +54,20 @@ func (o *ConnectionEgnyteUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionEgnyteUpdate) GetType() *ConnectionEgnyteUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionEgnyteUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionEgnyteUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -75,9 +75,9 @@ func (o *ConnectionEgnyteUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionEgnyteUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionEgnyteUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -85,13 +85,6 @@ func (o *ConnectionEgnyteUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeM
 func (o *ConnectionEgnyteUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionEgnyteUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -110,6 +103,13 @@ func (o *ConnectionEgnyteUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWe
 	return nil
 }
 
+func (o *ConnectionEgnyteUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 func (o *ConnectionEgnyteUpdate) GetCode() *string {
 	if o == nil {
 		return nil
@@ -117,16 +117,16 @@ func (o *ConnectionEgnyteUpdate) GetCode() *string {
 	return o.Code
 }
 
-func (o *ConnectionEgnyteUpdate) GetBaseDirectory() *string {
-	if o == nil {
-		return nil
-	}
-	return o.BaseDirectory
-}
-
 func (o *ConnectionEgnyteUpdate) GetDomainName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DomainName
+}
+
+func (o *ConnectionEgnyteUpdate) GetBaseDirectory() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BaseDirectory
 }

@@ -32,19 +32,12 @@ func (e *SourceLdapVirtualListViewType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceLdapVirtualListView struct {
+	Type SourceLdapVirtualListViewType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string                        `json:"connectionId"`
-	Type         SourceLdapVirtualListViewType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	Entity           string `json:"entity"`
-}
-
-func (o *SourceLdapVirtualListView) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceLdapVirtualListView) GetType() SourceLdapVirtualListViewType {
@@ -52,6 +45,13 @@ func (o *SourceLdapVirtualListView) GetType() SourceLdapVirtualListViewType {
 		return SourceLdapVirtualListViewType("")
 	}
 	return o.Type
+}
+
+func (o *SourceLdapVirtualListView) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceLdapVirtualListView) GetLatencyThreshold() *int64 {

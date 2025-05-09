@@ -14,7 +14,7 @@ ConnectionWORKFRONT DataSource
 
 ```terraform
 data "etleap_connection_workfront" "my_connectionworkfront" {
-  id = "27818efa-a31b-4c1c-836b-9a43f3b29145"
+  id = "6421624c-5ce2-421b-a953-6511b1f060b1"
 }
 ```
 

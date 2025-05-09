@@ -32,16 +32,9 @@ func (e *SourceSapHanaShardedUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSapHanaShardedUpdate struct {
-	Type *SourceSapHanaShardedUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceSapHanaShardedUpdate) GetType() *SourceSapHanaShardedUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                          `json:"latencyThreshold,omitempty"`
+	Type             *SourceSapHanaShardedUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceSapHanaShardedUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceSapHanaShardedUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceSapHanaShardedUpdate) GetType() *SourceSapHanaShardedUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

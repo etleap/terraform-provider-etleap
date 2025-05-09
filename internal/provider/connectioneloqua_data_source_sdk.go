@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionELOQUADataSourceModel) RefreshFromSharedConnectionEloquaOutput(resp *shared.ConnectionEloquaOutput) {
+func (r *ConnectionELOQUADataSourceModel) RefreshFromSharedConnectionEloqua(resp *shared.ConnectionEloqua) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Company = types.StringValue(resp.Company)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -16,7 +16,7 @@ func (r *ConnectionELOQUADataSourceModel) RefreshFromSharedConnectionEloquaOutpu
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

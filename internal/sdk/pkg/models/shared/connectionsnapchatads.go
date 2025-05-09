@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionSnapchatAdsType string
+
+const (
+	ConnectionSnapchatAdsTypeSnapchatAds ConnectionSnapchatAdsType = "SNAPCHAT_ADS"
+)
+
+func (e ConnectionSnapchatAdsType) ToPointer() *ConnectionSnapchatAdsType {
+	return &e
+}
+
+func (e *ConnectionSnapchatAdsType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "SNAPCHAT_ADS":
+		*e = ConnectionSnapchatAdsType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionSnapchatAdsType: %v", v)
+	}
+}
+
 // ConnectionSnapchatAdsStatus - The current status of the connection.
 type ConnectionSnapchatAdsStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionSnapchatAdsDefaultUpdateSchedule) GetUpdateSchedule() *Update
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnapchatAdsDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSnapchatAdsDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionSnapchatAdsDefaultUpdateSchedule) GetUpdateScheduleMonthly() 
 func (o *ConnectionSnapchatAdsDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSnapchatAdsDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,47 +125,30 @@ func (o *ConnectionSnapchatAdsDefaultUpdateSchedule) GetUpdateScheduleWeekly() *
 	return nil
 }
 
-type ConnectionSnapchatAdsType string
-
-const (
-	ConnectionSnapchatAdsTypeSnapchatAds ConnectionSnapchatAdsType = "SNAPCHAT_ADS"
-)
-
-func (e ConnectionSnapchatAdsType) ToPointer() *ConnectionSnapchatAdsType {
-	return &e
-}
-
-func (e *ConnectionSnapchatAdsType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionSnapchatAdsDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "SNAPCHAT_ADS":
-		*e = ConnectionSnapchatAdsType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionSnapchatAdsType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionSnapchatAds struct {
-	// The current status of the connection.
-	Status ConnectionSnapchatAdsStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionSnapchatAdsDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                      `json:"active"`
-	Type   ConnectionSnapchatAdsType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                    `json:"name"`
+	Type ConnectionSnapchatAdsType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionSnapchatAdsStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Username       *string              `json:"username,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionSnapchatAdsDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	Username              *string                                      `json:"username,omitempty"`
 }
 
 func (c ConnectionSnapchatAds) MarshalJSON() ([]byte, error) {
@@ -162,11 +162,11 @@ func (c *ConnectionSnapchatAds) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionSnapchatAds) GetStatus() ConnectionSnapchatAdsStatus {
+func (o *ConnectionSnapchatAds) GetID() string {
 	if o == nil {
-		return ConnectionSnapchatAdsStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionSnapchatAds) GetName() string {
@@ -176,18 +176,11 @@ func (o *ConnectionSnapchatAds) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionSnapchatAds) GetCreateDate() time.Time {
+func (o *ConnectionSnapchatAds) GetType() ConnectionSnapchatAdsType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionSnapchatAdsType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionSnapchatAds) GetDefaultUpdateSchedule() []ConnectionSnapchatAdsDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionSnapchatAdsDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionSnapchatAds) GetActive() bool {
@@ -197,18 +190,18 @@ func (o *ConnectionSnapchatAds) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionSnapchatAds) GetType() ConnectionSnapchatAdsType {
+func (o *ConnectionSnapchatAds) GetStatus() ConnectionSnapchatAdsStatus {
 	if o == nil {
-		return ConnectionSnapchatAdsType("")
+		return ConnectionSnapchatAdsStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionSnapchatAds) GetID() string {
+func (o *ConnectionSnapchatAds) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionSnapchatAds) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -218,9 +211,9 @@ func (o *ConnectionSnapchatAds) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnapchatAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSnapchatAds) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -228,13 +221,6 @@ func (o *ConnectionSnapchatAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMo
 func (o *ConnectionSnapchatAds) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSnapchatAds) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -251,6 +237,20 @@ func (o *ConnectionSnapchatAds) GetUpdateScheduleWeekly() *UpdateScheduleModeWee
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
+}
+
+func (o *ConnectionSnapchatAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionSnapchatAds) GetDefaultUpdateSchedule() []ConnectionSnapchatAdsDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionSnapchatAdsDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionSnapchatAds) GetUsername() *string {
@@ -291,9 +291,9 @@ func (o *ConnectionSnapchatAdsInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnapchatAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSnapchatAdsInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -301,13 +301,6 @@ func (o *ConnectionSnapchatAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleM
 func (o *ConnectionSnapchatAdsInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSnapchatAdsInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -322,6 +315,13 @@ func (o *ConnectionSnapchatAdsInput) GetUpdateScheduleDaily() *UpdateScheduleMod
 func (o *ConnectionSnapchatAdsInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionSnapchatAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

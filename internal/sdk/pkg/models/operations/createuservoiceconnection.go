@@ -15,7 +15,7 @@ type CreateUSERVOICEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionUserVoice *shared.ConnectionUserVoiceOutput
+	ConnectionUserVoice *shared.ConnectionUserVoice
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateUSERVOICEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateUSERVOICEConnectionResponse) GetConnectionUserVoice() *shared.ConnectionUserVoiceOutput {
+func (o *CreateUSERVOICEConnectionResponse) GetConnectionUserVoice() *shared.ConnectionUserVoice {
 	if o == nil {
 		return nil
 	}

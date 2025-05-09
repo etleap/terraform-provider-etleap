@@ -32,16 +32,9 @@ func (e *SourceGoogleSheetsUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleSheetsUpdate struct {
-	Type *SourceGoogleSheetsUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceGoogleSheetsUpdate) GetType() *SourceGoogleSheetsUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                        `json:"latencyThreshold,omitempty"`
+	Type             *SourceGoogleSheetsUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceGoogleSheetsUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceGoogleSheetsUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceGoogleSheetsUpdate) GetType() *SourceGoogleSheetsUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

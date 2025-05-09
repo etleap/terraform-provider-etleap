@@ -34,8 +34,8 @@ type UpdateFIFTEENFIVEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionFifteenFive *shared.ConnectionFifteenFiveOutput
-	// Connection for this id was not found.
+	ConnectionFifteenFive *shared.ConnectionFifteenFive
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateFIFTEENFIVEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateFIFTEENFIVEConnectionResponse) GetConnectionFifteenFive() *shared.ConnectionFifteenFiveOutput {
+func (o *UpdateFIFTEENFIVEConnectionResponse) GetConnectionFifteenFive() *shared.ConnectionFifteenFive {
 	if o == nil {
 		return nil
 	}

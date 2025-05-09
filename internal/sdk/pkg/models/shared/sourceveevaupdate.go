@@ -32,16 +32,9 @@ func (e *SourceVeevaUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceVeevaUpdate struct {
-	Type *SourceVeevaUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceVeevaUpdate) GetType() *SourceVeevaUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                 `json:"latencyThreshold,omitempty"`
+	Type             *SourceVeevaUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceVeevaUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceVeevaUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceVeevaUpdate) GetType() *SourceVeevaUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

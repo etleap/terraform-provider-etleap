@@ -26,8 +26,8 @@ type GetFRESHSALESConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionFreshsales *shared.ConnectionFreshsalesOutput
-	// Not Found.
+	ConnectionFreshsales *shared.ConnectionFreshsales
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetFRESHSALESConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetFRESHSALESConnectionResponse) GetConnectionFreshsales() *shared.ConnectionFreshsalesOutput {
+func (o *GetFRESHSALESConnectionResponse) GetConnectionFreshsales() *shared.ConnectionFreshsales {
 	if o == nil {
 		return nil
 	}

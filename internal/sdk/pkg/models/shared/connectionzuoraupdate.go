@@ -32,36 +32,22 @@ func (e *ConnectionZuoraUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionZuoraUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                      `json:"active,omitempty"`
-	Type   *ConnectionZuoraUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                    `json:"name,omitempty"`
+	Type *ConnectionZuoraUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Leave blank unless you have been assigned a specific endpoint, e.g. services42.zuora.com. Setting this overrides the 'Endpoint' and 'Sandbox' settings above.
-	EndpointHostname *string `json:"endpointHostname,omitempty"`
-	ClientSecret     *string `json:"clientSecret,omitempty"`
+	// The Client ID displayed when you created the OAuth client. If you need help to create an OAuth Client, <a target="_blank" href="https://knowledgecenter.zuora.com/CF_Users_and_Administrators/A_Administrator_Settings/Manage_Users#Create_an_OAuth_Client_for_a_User">follow this article</a>.
+	ClientID     *string `json:"clientId,omitempty"`
+	ClientSecret *string `json:"clientSecret,omitempty"`
 	// The endpoint region.
 	Endpoint *string `json:"endpoint,omitempty"`
-	// The Client ID displayed when you created the OAuth client. If you need help to create an OAuth Client, <a target="_blank" href="https://knowledgecenter.zuora.com/CF_Users_and_Administrators/A_Administrator_Settings/Manage_Users#Create_an_OAuth_Client_for_a_User">follow this article</a>.
-	ClientID *string `json:"clientId,omitempty"`
 	// Whether this is a sandbox account.
 	Sandbox *bool `json:"sandbox,omitempty"`
-}
-
-func (o *ConnectionZuoraUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionZuoraUpdate) GetType() *ConnectionZuoraUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	// Leave blank unless you have been assigned a specific endpoint, e.g. services42.zuora.com. Setting this overrides the 'Endpoint' and 'Sandbox' settings above.
+	EndpointHostname *string `json:"endpointHostname,omitempty"`
 }
 
 func (o *ConnectionZuoraUpdate) GetName() *string {
@@ -71,6 +57,20 @@ func (o *ConnectionZuoraUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionZuoraUpdate) GetType() *ConnectionZuoraUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionZuoraUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionZuoraUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -78,9 +78,9 @@ func (o *ConnectionZuoraUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionZuoraUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionZuoraUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -88,13 +88,6 @@ func (o *ConnectionZuoraUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMo
 func (o *ConnectionZuoraUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionZuoraUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -113,11 +106,18 @@ func (o *ConnectionZuoraUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWee
 	return nil
 }
 
-func (o *ConnectionZuoraUpdate) GetEndpointHostname() *string {
+func (o *ConnectionZuoraUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionZuoraUpdate) GetClientID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.EndpointHostname
+	return o.ClientID
 }
 
 func (o *ConnectionZuoraUpdate) GetClientSecret() *string {
@@ -134,16 +134,16 @@ func (o *ConnectionZuoraUpdate) GetEndpoint() *string {
 	return o.Endpoint
 }
 
-func (o *ConnectionZuoraUpdate) GetClientID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientID
-}
-
 func (o *ConnectionZuoraUpdate) GetSandbox() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Sandbox
+}
+
+func (o *ConnectionZuoraUpdate) GetEndpointHostname() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EndpointHostname
 }

@@ -26,8 +26,8 @@ type GetDELTALAKEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionDeltaLake *shared.ConnectionDeltaLakeOutput
-	// Not Found.
+	ConnectionDeltaLake *shared.ConnectionDeltaLake
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetDELTALAKEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetDELTALAKEConnectionResponse) GetConnectionDeltaLake() *shared.ConnectionDeltaLakeOutput {
+func (o *GetDELTALAKEConnectionResponse) GetConnectionDeltaLake() *shared.ConnectionDeltaLake {
 	if o == nil {
 		return nil
 	}

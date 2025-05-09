@@ -34,8 +34,8 @@ type UpdateMYSQLConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionMysql *shared.ConnectionMysqlOutput
-	// Connection for this id was not found.
+	ConnectionMysql *shared.ConnectionMysql
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateMYSQLConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateMYSQLConnectionResponse) GetConnectionMysql() *shared.ConnectionMysqlOutput {
+func (o *UpdateMYSQLConnectionResponse) GetConnectionMysql() *shared.ConnectionMysql {
 	if o == nil {
 		return nil
 	}

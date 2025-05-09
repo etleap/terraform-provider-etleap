@@ -62,15 +62,15 @@ func (e *Privilege) UnmarshalJSON(data []byte) error {
 
 // GrantWithPrivilegeUser - A grant with privilege providing access to an object in Etleap for a user.
 type GrantWithPrivilegeUser struct {
+	Type GrantWithPrivilegeUserType `json:"type"`
+	ID   string                     `json:"id"`
 	// The date and time when then the grant was created.
-	CreateDate   time.Time                  `json:"createDate"`
-	Type         GrantWithPrivilegeUserType `json:"type"`
-	ID           string                     `json:"id"`
-	UserID       string                     `json:"userId"`
-	LastName     string                     `json:"lastName"`
-	EmailAddress string                     `json:"emailAddress"`
-	FirstName    string                     `json:"firstName"`
-	Privilege    Privilege                  `json:"privilege"`
+	CreateDate   time.Time `json:"createDate"`
+	UserID       string    `json:"userId"`
+	FirstName    string    `json:"firstName"`
+	LastName     string    `json:"lastName"`
+	EmailAddress string    `json:"emailAddress"`
+	Privilege    Privilege `json:"privilege"`
 }
 
 func (g GrantWithPrivilegeUser) MarshalJSON() ([]byte, error) {
@@ -82,13 +82,6 @@ func (g *GrantWithPrivilegeUser) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *GrantWithPrivilegeUser) GetCreateDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.CreateDate
 }
 
 func (o *GrantWithPrivilegeUser) GetType() GrantWithPrivilegeUserType {
@@ -105,11 +98,25 @@ func (o *GrantWithPrivilegeUser) GetID() string {
 	return o.ID
 }
 
+func (o *GrantWithPrivilegeUser) GetCreateDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.CreateDate
+}
+
 func (o *GrantWithPrivilegeUser) GetUserID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UserID
+}
+
+func (o *GrantWithPrivilegeUser) GetFirstName() string {
+	if o == nil {
+		return ""
+	}
+	return o.FirstName
 }
 
 func (o *GrantWithPrivilegeUser) GetLastName() string {
@@ -124,13 +131,6 @@ func (o *GrantWithPrivilegeUser) GetEmailAddress() string {
 		return ""
 	}
 	return o.EmailAddress
-}
-
-func (o *GrantWithPrivilegeUser) GetFirstName() string {
-	if o == nil {
-		return ""
-	}
-	return o.FirstName
 }
 
 func (o *GrantWithPrivilegeUser) GetPrivilege() Privilege {

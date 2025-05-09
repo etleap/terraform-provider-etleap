@@ -32,16 +32,9 @@ func (e *SourceIntercomUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceIntercomUpdate struct {
-	Type *SourceIntercomUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceIntercomUpdate) GetType() *SourceIntercomUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                    `json:"latencyThreshold,omitempty"`
+	Type             *SourceIntercomUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceIntercomUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceIntercomUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceIntercomUpdate) GetType() *SourceIntercomUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

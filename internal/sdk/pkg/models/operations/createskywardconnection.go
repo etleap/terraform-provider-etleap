@@ -15,7 +15,7 @@ type CreateSKYWARDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSkyward *shared.ConnectionSkywardOutput
+	ConnectionSkyward *shared.ConnectionSkyward
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateSKYWARDConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateSKYWARDConnectionResponse) GetConnectionSkyward() *shared.ConnectionSkywardOutput {
+func (o *CreateSKYWARDConnectionResponse) GetConnectionSkyward() *shared.ConnectionSkyward {
 	if o == nil {
 		return nil
 	}

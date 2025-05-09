@@ -1,3 +1,3 @@
 data "etleap_connection_twitter_ads" "my_connectiontwitter_ads" {
-  id = "1a83658c-b2d1-4d2e-b685-964cdb881452"
+  id = "6df6bb0c-476e-4aeb-a204-0089401208f3"
 }

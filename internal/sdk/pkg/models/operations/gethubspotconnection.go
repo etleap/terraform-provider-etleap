@@ -26,8 +26,8 @@ type GetHUBSPOTConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionHubspot *shared.ConnectionHubspotOutput
-	// Not Found.
+	ConnectionHubspot *shared.ConnectionHubspot
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetHUBSPOTConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetHUBSPOTConnectionResponse) GetConnectionHubspot() *shared.ConnectionHubspotOutput {
+func (o *GetHUBSPOTConnectionResponse) GetConnectionHubspot() *shared.ConnectionHubspot {
 	if o == nil {
 		return nil
 	}

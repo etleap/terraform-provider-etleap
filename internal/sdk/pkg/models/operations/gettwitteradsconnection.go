@@ -27,7 +27,7 @@ type GetTWITTERADSConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionTwitter *shared.ConnectionTwitter
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

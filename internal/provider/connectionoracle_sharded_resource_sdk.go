@@ -72,12 +72,12 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,11 +86,11 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 			}
 		}
 	}
-	requireSslAndValidateCertificate := new(bool)
-	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
-		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
 	} else {
-		requireSslAndValidateCertificate = nil
+		schema = nil
 	}
 	cdcEnabled := new(bool)
 	if !r.CdcEnabled.IsUnknown() && !r.CdcEnabled.IsNull() {
@@ -98,41 +98,41 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 	} else {
 		cdcEnabled = nil
 	}
+	requireSslAndValidateCertificate := new(bool)
+	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
+		*requireSslAndValidateCertificate = r.RequireSslAndValidateCertificate.ValueBool()
+	} else {
+		requireSslAndValidateCertificate = nil
+	}
 	certificate := new(string)
 	if !r.Certificate.IsUnknown() && !r.Certificate.IsNull() {
 		*certificate = r.Certificate.ValueString()
 	} else {
 		certificate = nil
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
-	} else {
-		schema = nil
-	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
+		address := shardsItem.Address.ValueString()
+		port := shardsItem.Port.ValueInt64()
 		username := shardsItem.Username.ValueString()
+		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
 		if shardsItem.SSHConfig != nil {
+			address1 := shardsItem.SSHConfig.Address.ValueString()
 			username1 := shardsItem.SSHConfig.Username.ValueString()
-			address := shardsItem.SSHConfig.Address.ValueString()
 			sshConfig = &shared.SSHConfig{
+				Address:  address1,
 				Username: username1,
-				Address:  address,
 			}
 		}
-		password := shardsItem.Password.ValueString()
-		port := shardsItem.Port.ValueInt64()
-		address1 := shardsItem.Address.ValueString()
 		database := shardsItem.Database.ValueString()
 		shardID := shardsItem.ShardID.ValueString()
 		shards = append(shards, shared.DatabaseShard{
-			Username:  username,
-			SSHConfig: sshConfig,
-			Password:  password,
+			Address:   address,
 			Port:      port,
-			Address:   address1,
+			Username:  username,
+			Password:  password,
+			SSHConfig: sshConfig,
 			Database:  database,
 			ShardID:   shardID,
 		})
@@ -141,10 +141,10 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 		Name:                             name,
 		Type:                             typeVar,
 		UpdateSchedule:                   updateSchedule,
-		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
-		CdcEnabled:                       cdcEnabled,
-		Certificate:                      certificate,
 		Schema:                           schema,
+		CdcEnabled:                       cdcEnabled,
+		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
+		Certificate:                      certificate,
 		Shards:                           shards,
 	}
 	return &out
@@ -159,7 +159,7 @@ func (r *ConnectionORACLESHARDEDResourceModel) RefreshFromSharedConnectionOracle
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -271,18 +271,18 @@ func (r *ConnectionORACLESHARDEDResourceModel) RefreshFromSharedConnectionOracle
 }
 
 func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedUpdate() *shared.ConnectionOracleShardedUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
-	} else {
-		active = nil
-	}
-	typeVar := shared.ConnectionOracleShardedUpdateType(r.Type.ValueString())
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
+	}
+	typeVar := shared.ConnectionOracleShardedUpdateType(r.Type.ValueString())
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
+	} else {
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -345,12 +345,12 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedUp
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -358,6 +358,12 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedUp
 				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
 			}
 		}
+	}
+	schema := new(string)
+	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
+		*schema = r.Schema.ValueString()
+	} else {
+		schema = nil
 	}
 	requireSslAndValidateCertificate := new(bool)
 	if !r.RequireSslAndValidateCertificate.IsUnknown() && !r.RequireSslAndValidateCertificate.IsNull() {
@@ -371,47 +377,41 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedUp
 	} else {
 		certificate = nil
 	}
-	schema := new(string)
-	if !r.Schema.IsUnknown() && !r.Schema.IsNull() {
-		*schema = r.Schema.ValueString()
-	} else {
-		schema = nil
-	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
+		address := shardsItem.Address.ValueString()
+		port := shardsItem.Port.ValueInt64()
 		username := shardsItem.Username.ValueString()
+		password := shardsItem.Password.ValueString()
 		var sshConfig *shared.SSHConfig
 		if shardsItem.SSHConfig != nil {
+			address1 := shardsItem.SSHConfig.Address.ValueString()
 			username1 := shardsItem.SSHConfig.Username.ValueString()
-			address := shardsItem.SSHConfig.Address.ValueString()
 			sshConfig = &shared.SSHConfig{
+				Address:  address1,
 				Username: username1,
-				Address:  address,
 			}
 		}
-		password := shardsItem.Password.ValueString()
-		port := shardsItem.Port.ValueInt64()
-		address1 := shardsItem.Address.ValueString()
 		database := shardsItem.Database.ValueString()
 		shardID := shardsItem.ShardID.ValueString()
 		shards = append(shards, shared.DatabaseShard{
-			Username:  username,
-			SSHConfig: sshConfig,
-			Password:  password,
+			Address:   address,
 			Port:      port,
-			Address:   address1,
+			Username:  username,
+			Password:  password,
+			SSHConfig: sshConfig,
 			Database:  database,
 			ShardID:   shardID,
 		})
 	}
 	out := shared.ConnectionOracleShardedUpdate{
-		Active:                           active,
-		Type:                             typeVar,
 		Name:                             name,
+		Type:                             typeVar,
+		Active:                           active,
 		UpdateSchedule:                   updateSchedule,
+		Schema:                           schema,
 		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
 		Certificate:                      certificate,
-		Schema:                           schema,
 		Shards:                           shards,
 	}
 	return &out

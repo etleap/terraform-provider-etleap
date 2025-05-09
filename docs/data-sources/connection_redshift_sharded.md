@@ -14,7 +14,7 @@ ConnectionREDSHIFTSHARDED DataSource
 
 ```terraform
 data "etleap_connection_redshift_sharded" "my_connectionredshift_sharded" {
-  id = "d32012a3-9645-4e03-8b67-dcc72f29566e"
+  id = "6375518c-08e4-448d-9b22-374a72481b62"
 }
 ```
 

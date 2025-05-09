@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionZUORAResourceModel) ToSharedConnectionZuora() *shared.ConnectionZuora {
+func (r *ConnectionZUORAResourceModel) ToSharedConnectionZuoraInput() *shared.ConnectionZuoraInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionZuoraType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionZUORAResourceModel) ToSharedConnectionZuora() *shared.Connect
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,30 +86,30 @@ func (r *ConnectionZUORAResourceModel) ToSharedConnectionZuora() *shared.Connect
 			}
 		}
 	}
+	clientID := r.ClientID.ValueString()
+	clientSecret := r.ClientSecret.ValueString()
+	endpoint := r.Endpoint.ValueString()
+	sandbox := r.Sandbox.ValueBool()
 	endpointHostname := new(string)
 	if !r.EndpointHostname.IsUnknown() && !r.EndpointHostname.IsNull() {
 		*endpointHostname = r.EndpointHostname.ValueString()
 	} else {
 		endpointHostname = nil
 	}
-	clientSecret := r.ClientSecret.ValueString()
-	endpoint := r.Endpoint.ValueString()
-	clientID := r.ClientID.ValueString()
-	sandbox := r.Sandbox.ValueBool()
-	out := shared.ConnectionZuora{
+	out := shared.ConnectionZuoraInput{
 		Name:             name,
 		Type:             typeVar,
 		UpdateSchedule:   updateSchedule,
-		EndpointHostname: endpointHostname,
+		ClientID:         clientID,
 		ClientSecret:     clientSecret,
 		Endpoint:         endpoint,
-		ClientID:         clientID,
 		Sandbox:          sandbox,
+		EndpointHostname: endpointHostname,
 	}
 	return &out
 }
 
-func (r *ConnectionZUORAResourceModel) RefreshFromSharedConnectionZuoraOutput(resp *shared.ConnectionZuoraOutput) {
+func (r *ConnectionZUORAResourceModel) RefreshFromSharedConnectionZuora(resp *shared.ConnectionZuora) {
 	r.Active = types.BoolValue(resp.Active)
 	r.ClientID = types.StringValue(resp.ClientID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -117,7 +117,7 @@ func (r *ConnectionZUORAResourceModel) RefreshFromSharedConnectionZuoraOutput(re
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -202,11 +202,11 @@ func (r *ConnectionZUORAResourceModel) RefreshFromSharedConnectionZuoraOutput(re
 }
 
 func (r *ConnectionZUORAResourceModel) ToSharedConnectionZuoraUpdate() *shared.ConnectionZuoraUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionZuoraUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -214,11 +214,11 @@ func (r *ConnectionZUORAResourceModel) ToSharedConnectionZuoraUpdate() *shared.C
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -281,12 +281,12 @@ func (r *ConnectionZUORAResourceModel) ToSharedConnectionZuoraUpdate() *shared.C
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -295,11 +295,11 @@ func (r *ConnectionZUORAResourceModel) ToSharedConnectionZuoraUpdate() *shared.C
 			}
 		}
 	}
-	endpointHostname := new(string)
-	if !r.EndpointHostname.IsUnknown() && !r.EndpointHostname.IsNull() {
-		*endpointHostname = r.EndpointHostname.ValueString()
+	clientID := new(string)
+	if !r.ClientID.IsUnknown() && !r.ClientID.IsNull() {
+		*clientID = r.ClientID.ValueString()
 	} else {
-		endpointHostname = nil
+		clientID = nil
 	}
 	clientSecret := new(string)
 	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
@@ -313,28 +313,28 @@ func (r *ConnectionZUORAResourceModel) ToSharedConnectionZuoraUpdate() *shared.C
 	} else {
 		endpoint = nil
 	}
-	clientID := new(string)
-	if !r.ClientID.IsUnknown() && !r.ClientID.IsNull() {
-		*clientID = r.ClientID.ValueString()
-	} else {
-		clientID = nil
-	}
 	sandbox := new(bool)
 	if !r.Sandbox.IsUnknown() && !r.Sandbox.IsNull() {
 		*sandbox = r.Sandbox.ValueBool()
 	} else {
 		sandbox = nil
 	}
+	endpointHostname := new(string)
+	if !r.EndpointHostname.IsUnknown() && !r.EndpointHostname.IsNull() {
+		*endpointHostname = r.EndpointHostname.ValueString()
+	} else {
+		endpointHostname = nil
+	}
 	out := shared.ConnectionZuoraUpdate{
-		Active:           active,
-		Type:             typeVar,
 		Name:             name,
+		Type:             typeVar,
+		Active:           active,
 		UpdateSchedule:   updateSchedule,
-		EndpointHostname: endpointHostname,
+		ClientID:         clientID,
 		ClientSecret:     clientSecret,
 		Endpoint:         endpoint,
-		ClientID:         clientID,
 		Sandbox:          sandbox,
+		EndpointHostname: endpointHostname,
 	}
 	return &out
 }

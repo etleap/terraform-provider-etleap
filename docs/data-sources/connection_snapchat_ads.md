@@ -14,7 +14,7 @@ ConnectionSNAPCHATADS DataSource
 
 ```terraform
 data "etleap_connection_snapchat_ads" "my_connectionsnapchat_ads" {
-  id = "d750d84f-3371-4205-b1bb-10d8ac3e0d0d"
+  id = "47b3b16a-3468-47ce-905f-2babd6292eb3"
 }
 ```
 

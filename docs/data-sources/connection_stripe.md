@@ -14,7 +14,7 @@ ConnectionSTRIPE DataSource
 
 ```terraform
 data "etleap_connection_stripe" "my_connectionstripe" {
-  id = "9c8be602-902b-4e87-b853-f11b9d2c570b"
+  id = "10edafda-5623-4137-9108-5e785064975d"
 }
 ```
 

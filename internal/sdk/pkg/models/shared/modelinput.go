@@ -3,37 +3,15 @@
 package shared
 
 type ModelInput struct {
+	Name             string              `json:"name"`
 	Warehouse        WarehouseTypesInput `json:"warehouse"`
 	QueryAndTriggers QueryAndTriggers    `json:"queryAndTriggers"`
-	Name             string              `json:"name"`
 	// How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-updates) for more information.
 	UpdateSchedule RefreshScheduleTypes `json:"updateSchedule"`
 	// An array of users' emails to share the model with. Once shared, a model cannot be unshared, and future calls to `PATCH` can only add to this list.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Shares []string `json:"shares,omitempty"`
-}
-
-func (o *ModelInput) GetWarehouse() WarehouseTypesInput {
-	if o == nil {
-		return WarehouseTypesInput{}
-	}
-	return o.Warehouse
-}
-
-func (o *ModelInput) GetWarehouseSnowflake() *WarehouseSnowflakeInput {
-	return o.GetWarehouse().WarehouseSnowflakeInput
-}
-
-func (o *ModelInput) GetWarehouseRedshift() *WarehouseRedshiftInput {
-	return o.GetWarehouse().WarehouseRedshiftInput
-}
-
-func (o *ModelInput) GetQueryAndTriggers() QueryAndTriggers {
-	if o == nil {
-		return QueryAndTriggers{}
-	}
-	return o.QueryAndTriggers
 }
 
 func (o *ModelInput) GetName() string {
@@ -43,6 +21,28 @@ func (o *ModelInput) GetName() string {
 	return o.Name
 }
 
+func (o *ModelInput) GetWarehouse() WarehouseTypesInput {
+	if o == nil {
+		return WarehouseTypesInput{}
+	}
+	return o.Warehouse
+}
+
+func (o *ModelInput) GetWarehouseRedshift() *WarehouseRedshiftInput {
+	return o.GetWarehouse().WarehouseRedshiftInput
+}
+
+func (o *ModelInput) GetWarehouseSnowflake() *WarehouseSnowflakeInput {
+	return o.GetWarehouse().WarehouseSnowflakeInput
+}
+
+func (o *ModelInput) GetQueryAndTriggers() QueryAndTriggers {
+	if o == nil {
+		return QueryAndTriggers{}
+	}
+	return o.QueryAndTriggers
+}
+
 func (o *ModelInput) GetUpdateSchedule() RefreshScheduleTypes {
 	if o == nil {
 		return RefreshScheduleTypes{}
@@ -50,16 +50,12 @@ func (o *ModelInput) GetUpdateSchedule() RefreshScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ModelInput) GetUpdateScheduleMonthly() *RefreshScheduleModeMonthly {
-	return o.GetUpdateSchedule().RefreshScheduleModeMonthly
+func (o *ModelInput) GetUpdateScheduleNever() *RefreshScheduleModeNever {
+	return o.GetUpdateSchedule().RefreshScheduleModeNever
 }
 
 func (o *ModelInput) GetUpdateScheduleHourly() *RefreshScheduleModeHourly {
 	return o.GetUpdateSchedule().RefreshScheduleModeHourly
-}
-
-func (o *ModelInput) GetUpdateScheduleNever() *RefreshScheduleModeNever {
-	return o.GetUpdateSchedule().RefreshScheduleModeNever
 }
 
 func (o *ModelInput) GetUpdateScheduleDaily() *RefreshScheduleModeDaily {
@@ -68,6 +64,10 @@ func (o *ModelInput) GetUpdateScheduleDaily() *RefreshScheduleModeDaily {
 
 func (o *ModelInput) GetUpdateScheduleWeekly() *RefreshScheduleModeWeekly {
 	return o.GetUpdateSchedule().RefreshScheduleModeWeekly
+}
+
+func (o *ModelInput) GetUpdateScheduleMonthly() *RefreshScheduleModeMonthly {
+	return o.GetUpdateSchedule().RefreshScheduleModeMonthly
 }
 
 func (o *ModelInput) GetShares() []string {

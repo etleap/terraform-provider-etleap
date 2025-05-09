@@ -32,20 +32,13 @@ func (e *SourceStripeType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceStripe struct {
+	Type SourceStripeType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string           `json:"connectionId"`
-	Type         SourceStripeType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Stripe entity. Example values: [Subscriptions, Invoice, InvoiceItems, Events]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceStripe) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceStripe) GetType() SourceStripeType {
@@ -53,6 +46,13 @@ func (o *SourceStripe) GetType() SourceStripeType {
 		return SourceStripeType("")
 	}
 	return o.Type
+}
+
+func (o *SourceStripe) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceStripe) GetLatencyThreshold() *int64 {

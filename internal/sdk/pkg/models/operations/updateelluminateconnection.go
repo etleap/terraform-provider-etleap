@@ -35,7 +35,7 @@ type UpdateELLUMINATEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionElluminate *shared.ConnectionElluminate
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

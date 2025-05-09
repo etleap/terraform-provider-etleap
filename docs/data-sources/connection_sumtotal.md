@@ -14,7 +14,7 @@ ConnectionSUMTOTAL DataSource
 
 ```terraform
 data "etleap_connection_sumtotal" "my_connectionsumtotal" {
-  id = "10edafda-5623-4137-9108-5e785064975d"
+  id = "0e682d36-590d-4842-a806-e542855c71c1"
 }
 ```
 

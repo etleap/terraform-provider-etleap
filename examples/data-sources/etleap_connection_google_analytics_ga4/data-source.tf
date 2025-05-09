@@ -1,3 +1,3 @@
 data "etleap_connection_google_analytics_ga4" "my_connectiongoogle_analytics_ga4" {
-  id = "7729972e-a844-4a7c-8c6f-59dbee04529a"
+  id = "7e2dadcd-9e9a-4c25-a337-c2c4cbd99988"
 }

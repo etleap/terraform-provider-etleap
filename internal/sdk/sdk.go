@@ -63,12 +63,12 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // SDK - Etleap API v2: Etleap API v2
 type SDK struct {
-	Connection  *Connection
-	DbtSchedule *DbtSchedule
-	Model       *Model
 	Pipeline    *Pipeline
+	Model       *Model
+	Connection  *Connection
 	Team        *Team
 	User        *User
+	DbtSchedule *DbtSchedule
 
 	sdkConfiguration sdkConfiguration
 }
@@ -144,10 +144,10 @@ func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
-			OpenAPIDocVersion: "2.7.22",
-			SDKVersion:        "0.1.28",
+			OpenAPIDocVersion: "2.7.23",
+			SDKVersion:        "0.1.29",
 			GenVersion:        "2.248.6",
-			UserAgent:         "speakeasy-sdk/go 0.1.28 2.248.6 2.7.22 etleap",
+			UserAgent:         "speakeasy-sdk/go 0.1.29 2.248.6 2.7.23 etleap",
 		},
 	}
 	for _, opt := range opts {
@@ -166,17 +166,17 @@ func New(opts ...SDKOption) *SDK {
 		}
 	}
 
-	sdk.Connection = newConnection(sdk.sdkConfiguration)
-
-	sdk.DbtSchedule = newDbtSchedule(sdk.sdkConfiguration)
+	sdk.Pipeline = newPipeline(sdk.sdkConfiguration)
 
 	sdk.Model = newModel(sdk.sdkConfiguration)
 
-	sdk.Pipeline = newPipeline(sdk.sdkConfiguration)
+	sdk.Connection = newConnection(sdk.sdkConfiguration)
 
 	sdk.Team = newTeam(sdk.sdkConfiguration)
 
 	sdk.User = newUser(sdk.sdkConfiguration)
+
+	sdk.DbtSchedule = newDbtSchedule(sdk.sdkConfiguration)
 
 	return sdk
 }

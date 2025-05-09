@@ -32,16 +32,9 @@ func (e *SourceSnowflakeUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSnowflakeUpdate struct {
-	Type *SourceSnowflakeUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceSnowflakeUpdate) GetType() *SourceSnowflakeUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                     `json:"latencyThreshold,omitempty"`
+	Type             *SourceSnowflakeUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceSnowflakeUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceSnowflakeUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceSnowflakeUpdate) GetType() *SourceSnowflakeUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

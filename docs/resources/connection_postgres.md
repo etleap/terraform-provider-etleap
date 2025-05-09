@@ -14,17 +14,17 @@ ConnectionPOSTGRES Resource
 
 ```terraform
 resource "etleap_connection_postgres" "my_connectionpostgres" {
-  address                     = "794 Lindsey Well"
+  address                     = "609 Bernhard Trace"
   auto_replicate              = "...my_auto_replicate..."
-  cdc_enabled                 = true
+  cdc_enabled                 = false
   database                    = "...my_database..."
   deletion_of_export_products = false
-  name                        = "Emmett Bernhard"
+  name                        = "Eduardo Harber"
   password                    = "...my_password..."
-  port                        = 9
+  port                        = 0
   schema                      = "...my_schema..."
   type                        = "POSTGRES"
-  username                    = "Kyle34"
+  username                    = "Wiley59"
 }
 ```
 

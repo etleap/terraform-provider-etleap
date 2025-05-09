@@ -16,7 +16,7 @@ type CreateTeamResponse struct {
 	RawResponse *http.Response
 	// OK
 	TeamOutput *shared.TeamOutput
-	// User does not have permission to create teams. Contact your organization admin.
+	// Bad Request
 	Errors *shared.Errors
 }
 

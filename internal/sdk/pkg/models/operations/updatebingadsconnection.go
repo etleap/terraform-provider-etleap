@@ -34,8 +34,8 @@ type UpdateBINGADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBing *shared.ConnectionBingOutput
-	// Connection for this id was not found.
+	ConnectionBing *shared.ConnectionBing
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateBINGADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateBINGADSConnectionResponse) GetConnectionBing() *shared.ConnectionBingOutput {
+func (o *UpdateBINGADSConnectionResponse) GetConnectionBing() *shared.ConnectionBing {
 	if o == nil {
 		return nil
 	}

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionMYSQLDataSourceModel) RefreshFromSharedConnectionMysqlOutput(resp *shared.ConnectionMysqlOutput) {
+func (r *ConnectionMYSQLDataSourceModel) RefreshFromSharedConnectionMysql(resp *shared.ConnectionMysql) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
@@ -20,7 +20,7 @@ func (r *ConnectionMYSQLDataSourceModel) RefreshFromSharedConnectionMysqlOutput(
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

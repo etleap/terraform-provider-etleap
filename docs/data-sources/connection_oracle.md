@@ -14,7 +14,7 @@ ConnectionORACLE DataSource
 
 ```terraform
 data "etleap_connection_oracle" "my_connectionoracle" {
-  id = "01e2376a-ba5a-4dde-a4c5-d64a562100fd"
+  id = "eba531f4-b1e1-4ba6-8c3e-a710653f59f6"
 }
 ```
 

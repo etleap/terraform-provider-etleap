@@ -32,19 +32,12 @@ func (e *SourceZoomPhoneType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZoomPhone struct {
+	Type SourceZoomPhoneType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string              `json:"connectionId"`
-	Type         SourceZoomPhoneType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	Entity           string `json:"entity"`
-}
-
-func (o *SourceZoomPhone) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceZoomPhone) GetType() SourceZoomPhoneType {
@@ -52,6 +45,13 @@ func (o *SourceZoomPhone) GetType() SourceZoomPhoneType {
 		return SourceZoomPhoneType("")
 	}
 	return o.Type
+}
+
+func (o *SourceZoomPhone) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceZoomPhone) GetLatencyThreshold() *int64 {

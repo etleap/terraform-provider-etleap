@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionZUORADataSourceModel) RefreshFromSharedConnectionZuoraOutput(resp *shared.ConnectionZuoraOutput) {
+func (r *ConnectionZUORADataSourceModel) RefreshFromSharedConnectionZuora(resp *shared.ConnectionZuora) {
 	r.Active = types.BoolValue(resp.Active)
 	r.ClientID = types.StringValue(resp.ClientID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -16,7 +16,7 @@ func (r *ConnectionZUORADataSourceModel) RefreshFromSharedConnectionZuoraOutput(
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

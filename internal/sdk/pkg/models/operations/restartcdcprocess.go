@@ -34,7 +34,7 @@ type RestartCdcProcessResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-	// User does not have permission to restart the CDC process for this connection.
+	// Bad Request. The CDC process could not be restarted.
 	Errors *shared.Errors
 }
 

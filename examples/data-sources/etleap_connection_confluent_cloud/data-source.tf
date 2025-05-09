@@ -1,3 +1,3 @@
 data "etleap_connection_confluent_cloud" "my_connectionconfluent_cloud" {
-  id = "8a393d20-e502-4ca6-a627-bb3ea17703d3"
+  id = "8df6c7ef-0f71-44d9-a106-3a76d6e7aa77"
 }

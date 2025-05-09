@@ -62,10 +62,10 @@ func (e *GrantWithPrivilegeTeamPrivilege) UnmarshalJSON(data []byte) error {
 
 // GrantWithPrivilegeTeam - A grant with privilege providing access to an object in Etleap for a team.
 type GrantWithPrivilegeTeam struct {
+	Type GrantWithPrivilegeTeamType `json:"type"`
+	ID   string                     `json:"id"`
 	// The date and time when then the grant was created.
 	CreateDate time.Time                       `json:"createDate"`
-	Type       GrantWithPrivilegeTeamType      `json:"type"`
-	ID         string                          `json:"id"`
 	TeamID     string                          `json:"teamId"`
 	Name       string                          `json:"name"`
 	Privilege  GrantWithPrivilegeTeamPrivilege `json:"privilege"`
@@ -82,13 +82,6 @@ func (g *GrantWithPrivilegeTeam) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *GrantWithPrivilegeTeam) GetCreateDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.CreateDate
-}
-
 func (o *GrantWithPrivilegeTeam) GetType() GrantWithPrivilegeTeamType {
 	if o == nil {
 		return GrantWithPrivilegeTeamType("")
@@ -101,6 +94,13 @@ func (o *GrantWithPrivilegeTeam) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *GrantWithPrivilegeTeam) GetCreateDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.CreateDate
 }
 
 func (o *GrantWithPrivilegeTeam) GetTeamID() string {

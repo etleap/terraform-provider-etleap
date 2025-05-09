@@ -32,16 +32,9 @@ func (e *SourceEloquaUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceEloquaUpdate struct {
-	Type *SourceEloquaUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceEloquaUpdate) GetType() *SourceEloquaUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                  `json:"latencyThreshold,omitempty"`
+	Type             *SourceEloquaUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceEloquaUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceEloquaUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceEloquaUpdate) GetType() *SourceEloquaUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

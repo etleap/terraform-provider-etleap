@@ -26,8 +26,8 @@ type GetSQUAREConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSquare *shared.ConnectionSquareOutput
-	// Not Found.
+	ConnectionSquare *shared.ConnectionSquare
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetSQUAREConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetSQUAREConnectionResponse) GetConnectionSquare() *shared.ConnectionSquareOutput {
+func (o *GetSQUAREConnectionResponse) GetConnectionSquare() *shared.ConnectionSquare {
 	if o == nil {
 		return nil
 	}

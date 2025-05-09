@@ -41,17 +41,17 @@ type ConnectionRECURLYResource struct {
 
 // ConnectionRECURLYResourceModel describes the resource data model.
 type ConnectionRECURLYResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	APIKey                   types.String                                    `tfsdk:"api_key"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Subdomain                types.String                                    `tfsdk:"subdomain"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	APIKey                   types.String            `tfsdk:"api_key"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	Subdomain                types.String            `tfsdk:"subdomain"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionRECURLYResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -564,7 +564,7 @@ func (r *ConnectionRECURLYResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToSharedConnectionRecurly()
+	request := *data.ToSharedConnectionRecurlyInput()
 	res, err := r.client.Connection.CreateRECURLYConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -585,7 +585,7 @@ func (r *ConnectionRECURLYResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionRecurlyOutput(res.ConnectionRecurly)
+	data.RefreshFromSharedConnectionRecurly(res.ConnectionRecurly)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetRECURLYConnectionRequest{
@@ -611,7 +611,7 @@ func (r *ConnectionRECURLYResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionRecurlyOutput(res1.ConnectionRecurly)
+	data.RefreshFromSharedConnectionRecurly(res1.ConnectionRecurly)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -660,7 +660,7 @@ func (r *ConnectionRECURLYResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionRecurlyOutput(res.ConnectionRecurly)
+	data.RefreshFromSharedConnectionRecurly(res.ConnectionRecurly)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -706,7 +706,7 @@ func (r *ConnectionRECURLYResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionRecurlyOutput(res.ConnectionRecurly)
+	data.RefreshFromSharedConnectionRecurly(res.ConnectionRecurly)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetRECURLYConnectionRequest{
@@ -732,7 +732,7 @@ func (r *ConnectionRECURLYResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionRecurlyOutput(res1.ConnectionRecurly)
+	data.RefreshFromSharedConnectionRecurly(res1.ConnectionRecurly)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

@@ -26,8 +26,8 @@ type GetSTRIPEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionStripe *shared.ConnectionStripeOutput
-	// Not Found.
+	ConnectionStripe *shared.ConnectionStripe
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetSTRIPEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetSTRIPEConnectionResponse) GetConnectionStripe() *shared.ConnectionStripeOutput {
+func (o *GetSTRIPEConnectionResponse) GetConnectionStripe() *shared.ConnectionStripe {
 	if o == nil {
 		return nil
 	}

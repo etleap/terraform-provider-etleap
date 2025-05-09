@@ -34,10 +34,10 @@ func (e *BasicAuthenticationType) UnmarshalJSON(data []byte) error {
 
 // BasicAuthentication - Authentication method that uses a username/password pair.
 type BasicAuthentication struct {
-	Username string `json:"username"`
-	// The Basic password. This property is stored as a secret in Etleap.
-	Password string                   `json:"password"`
 	Type     *BasicAuthenticationType `default:"BASIC" json:"type"`
+	Username string                   `json:"username"`
+	// The Basic password. This property is stored as a secret in Etleap.
+	Password string `json:"password"`
 }
 
 func (b BasicAuthentication) MarshalJSON() ([]byte, error) {
@@ -49,6 +49,13 @@ func (b *BasicAuthentication) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *BasicAuthentication) GetType() *BasicAuthenticationType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }
 
 func (o *BasicAuthentication) GetUsername() string {
@@ -63,11 +70,4 @@ func (o *BasicAuthentication) GetPassword() string {
 		return ""
 	}
 	return o.Password
-}
-
-func (o *BasicAuthentication) GetType() *BasicAuthenticationType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }

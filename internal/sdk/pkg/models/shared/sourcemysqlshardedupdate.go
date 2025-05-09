@@ -32,16 +32,9 @@ func (e *SourceMysqlShardedUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMysqlShardedUpdate struct {
-	Type *SourceMysqlShardedUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceMysqlShardedUpdate) GetType() *SourceMysqlShardedUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                        `json:"latencyThreshold,omitempty"`
+	Type             *SourceMysqlShardedUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceMysqlShardedUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceMysqlShardedUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceMysqlShardedUpdate) GetType() *SourceMysqlShardedUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

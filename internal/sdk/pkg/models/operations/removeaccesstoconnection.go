@@ -33,7 +33,7 @@ type RemoveAccessToConnectionResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-	// A connection or grant with the given id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

@@ -14,7 +14,7 @@ ConnectionTIKTOKADS DataSource
 
 ```terraform
 data "etleap_connection_tik_tok_ads" "my_connectiontik_tok_ads" {
-  id = "ec7a013d-aba5-4c27-b52e-ec0b9049facc"
+  id = "1fd5a8bd-d21a-4d42-b415-22f4a0314c6b"
 }
 ```
 

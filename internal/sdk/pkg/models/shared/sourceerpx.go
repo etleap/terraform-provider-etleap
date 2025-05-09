@@ -32,20 +32,13 @@ func (e *SourceErpxType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceErpx struct {
+	Type SourceErpxType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string         `json:"connectionId"`
-	Type         SourceErpxType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The ERPx resource.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceErpx) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceErpx) GetType() SourceErpxType {
@@ -53,6 +46,13 @@ func (o *SourceErpx) GetType() SourceErpxType {
 		return SourceErpxType("")
 	}
 	return o.Type
+}
+
+func (o *SourceErpx) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceErpx) GetLatencyThreshold() *int64 {

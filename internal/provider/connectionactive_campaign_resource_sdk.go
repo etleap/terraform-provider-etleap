@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionACTIVECAMPAIGNResourceModel) ToSharedConnectionActiveCampaign() *shared.ConnectionActiveCampaign {
+func (r *ConnectionACTIVECAMPAIGNResourceModel) ToSharedConnectionActiveCampaignInput() *shared.ConnectionActiveCampaignInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionActiveCampaignType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionACTIVECAMPAIGNResourceModel) ToSharedConnectionActiveCampaign
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,19 +86,19 @@ func (r *ConnectionACTIVECAMPAIGNResourceModel) ToSharedConnectionActiveCampaign
 			}
 		}
 	}
-	apiKey := r.APIKey.ValueString()
 	baseURL := r.BaseURL.ValueString()
-	out := shared.ConnectionActiveCampaign{
+	apiKey := r.APIKey.ValueString()
+	out := shared.ConnectionActiveCampaignInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		APIKey:         apiKey,
 		BaseURL:        baseURL,
+		APIKey:         apiKey,
 	}
 	return &out
 }
 
-func (r *ConnectionACTIVECAMPAIGNResourceModel) RefreshFromSharedConnectionActiveCampaignOutput(resp *shared.ConnectionActiveCampaignOutput) {
+func (r *ConnectionACTIVECAMPAIGNResourceModel) RefreshFromSharedConnectionActiveCampaign(resp *shared.ConnectionActiveCampaign) {
 	r.Active = types.BoolValue(resp.Active)
 	r.BaseURL = types.StringValue(resp.BaseURL)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -106,7 +106,7 @@ func (r *ConnectionACTIVECAMPAIGNResourceModel) RefreshFromSharedConnectionActiv
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -188,18 +188,18 @@ func (r *ConnectionACTIVECAMPAIGNResourceModel) RefreshFromSharedConnectionActiv
 }
 
 func (r *ConnectionACTIVECAMPAIGNResourceModel) ToSharedConnectionActiveCampaignUpdate() *shared.ConnectionActiveCampaignUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
-	} else {
-		active = nil
-	}
-	typeVar := shared.ConnectionActiveCampaignUpdateType(r.Type.ValueString())
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
+	}
+	typeVar := shared.ConnectionActiveCampaignUpdateType(r.Type.ValueString())
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
+	} else {
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -262,12 +262,12 @@ func (r *ConnectionACTIVECAMPAIGNResourceModel) ToSharedConnectionActiveCampaign
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -276,25 +276,25 @@ func (r *ConnectionACTIVECAMPAIGNResourceModel) ToSharedConnectionActiveCampaign
 			}
 		}
 	}
-	apiKey := new(string)
-	if !r.APIKey.IsUnknown() && !r.APIKey.IsNull() {
-		*apiKey = r.APIKey.ValueString()
-	} else {
-		apiKey = nil
-	}
 	baseURL := new(string)
 	if !r.BaseURL.IsUnknown() && !r.BaseURL.IsNull() {
 		*baseURL = r.BaseURL.ValueString()
 	} else {
 		baseURL = nil
 	}
+	apiKey := new(string)
+	if !r.APIKey.IsUnknown() && !r.APIKey.IsNull() {
+		*apiKey = r.APIKey.ValueString()
+	} else {
+		apiKey = nil
+	}
 	out := shared.ConnectionActiveCampaignUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
-		APIKey:         apiKey,
 		BaseURL:        baseURL,
+		APIKey:         apiKey,
 	}
 	return &out
 }

@@ -15,7 +15,7 @@ type CreateSFTPConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSftp *shared.ConnectionSftpOutput
+	ConnectionSftp *shared.ConnectionSftp
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateSFTPConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateSFTPConnectionResponse) GetConnectionSftp() *shared.ConnectionSftpOutput {
+func (o *CreateSFTPConnectionResponse) GetConnectionSftp() *shared.ConnectionSftp {
 	if o == nil {
 		return nil
 	}

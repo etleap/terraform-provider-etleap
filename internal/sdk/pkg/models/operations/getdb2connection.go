@@ -27,7 +27,7 @@ type GetDb2ConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionDb2 *shared.ConnectionDb2
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

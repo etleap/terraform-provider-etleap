@@ -28,16 +28,16 @@ type ConnectionELLUMINATEDataSource struct {
 
 // ConnectionELLUMINATEDataSourceModel describes the data model.
 type ConnectionELLUMINATEDataSourceModel struct {
-	Active                types.Bool                                      `tfsdk:"active"`
-	APIKey                types.String                                    `tfsdk:"api_key"`
-	BaseURL               types.String                                    `tfsdk:"base_url"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String                                    `tfsdk:"id"`
-	Name                  types.String                                    `tfsdk:"name"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                types.Bool              `tfsdk:"active"`
+	APIKey                types.String            `tfsdk:"api_key"`
+	BaseURL               types.String            `tfsdk:"base_url"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String            `tfsdk:"id"`
+	Name                  types.String            `tfsdk:"name"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.

@@ -18,7 +18,7 @@ resource "etleap_connection_s3_input" "my_connections3_input" {
   deletion_of_export_products = true
   iam_role                    = "...my_iam_role..."
   input_bucket                = "...my_input_bucket..."
-  name                        = "Lynette Luettgen"
+  name                        = "Lionel Lebsack"
   type                        = "S3_INPUT"
 }
 ```

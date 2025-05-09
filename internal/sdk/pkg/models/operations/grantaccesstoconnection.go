@@ -35,7 +35,7 @@ type GrantAccessToConnectionResponse struct {
 	RawResponse *http.Response
 	// The grants that were added to the connection in this request are returned by a successful call.
 	GrantsWithPrivilegeList *shared.GrantsWithPrivilegeList
-	// A pipeline with the given id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

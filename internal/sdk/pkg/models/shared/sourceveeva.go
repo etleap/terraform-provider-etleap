@@ -32,20 +32,13 @@ func (e *SourceVeevaType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceVeeva struct {
+	Type SourceVeevaType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string          `json:"connectionId"`
-	Type         SourceVeevaType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Veeva Entity name. Example values: [APQR, APQR Item, Action, Activity, Admin Link, Admin Section, Admin Section Controller Code, Answer Library Design, Application Context Selector, Application License Model, Application License Model Field, Application Manifest, Application Provisioner, Application Role]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceVeeva) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceVeeva) GetType() SourceVeevaType {
@@ -53,6 +46,13 @@ func (o *SourceVeeva) GetType() SourceVeevaType {
 		return SourceVeevaType("")
 	}
 	return o.Type
+}
+
+func (o *SourceVeeva) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceVeeva) GetLatencyThreshold() *int64 {

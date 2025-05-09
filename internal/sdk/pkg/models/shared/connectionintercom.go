@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionIntercomType string
+
+const (
+	ConnectionIntercomTypeIntercom ConnectionIntercomType = "INTERCOM"
+)
+
+func (e ConnectionIntercomType) ToPointer() *ConnectionIntercomType {
+	return &e
+}
+
+func (e *ConnectionIntercomType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERCOM":
+		*e = ConnectionIntercomType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionIntercomType: %v", v)
+	}
+}
+
 // ConnectionIntercomStatus - The current status of the connection.
 type ConnectionIntercomStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionIntercomDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSch
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionIntercomDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionIntercomDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionIntercomDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Up
 func (o *ConnectionIntercomDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionIntercomDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,47 +125,30 @@ func (o *ConnectionIntercomDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Upd
 	return nil
 }
 
-type ConnectionIntercomType string
-
-const (
-	ConnectionIntercomTypeIntercom ConnectionIntercomType = "INTERCOM"
-)
-
-func (e ConnectionIntercomType) ToPointer() *ConnectionIntercomType {
-	return &e
-}
-
-func (e *ConnectionIntercomType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionIntercomDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "INTERCOM":
-		*e = ConnectionIntercomType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionIntercomType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionIntercom struct {
-	// The current status of the connection.
-	Status ConnectionIntercomStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionIntercomDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                   `json:"active"`
-	Type   ConnectionIntercomType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                 `json:"name"`
+	Type ConnectionIntercomType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionIntercomStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Username       string               `json:"username"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionIntercomDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	Username              string                                    `json:"username"`
 }
 
 func (c ConnectionIntercom) MarshalJSON() ([]byte, error) {
@@ -162,11 +162,11 @@ func (c *ConnectionIntercom) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionIntercom) GetStatus() ConnectionIntercomStatus {
+func (o *ConnectionIntercom) GetID() string {
 	if o == nil {
-		return ConnectionIntercomStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionIntercom) GetName() string {
@@ -176,18 +176,11 @@ func (o *ConnectionIntercom) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionIntercom) GetCreateDate() time.Time {
+func (o *ConnectionIntercom) GetType() ConnectionIntercomType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionIntercomType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionIntercom) GetDefaultUpdateSchedule() []ConnectionIntercomDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionIntercomDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionIntercom) GetActive() bool {
@@ -197,18 +190,18 @@ func (o *ConnectionIntercom) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionIntercom) GetType() ConnectionIntercomType {
+func (o *ConnectionIntercom) GetStatus() ConnectionIntercomStatus {
 	if o == nil {
-		return ConnectionIntercomType("")
+		return ConnectionIntercomStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionIntercom) GetID() string {
+func (o *ConnectionIntercom) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionIntercom) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -218,9 +211,9 @@ func (o *ConnectionIntercom) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionIntercom) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionIntercom) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -228,13 +221,6 @@ func (o *ConnectionIntercom) GetUpdateScheduleMonthly() *UpdateScheduleModeMonth
 func (o *ConnectionIntercom) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionIntercom) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -251,6 +237,20 @@ func (o *ConnectionIntercom) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
+}
+
+func (o *ConnectionIntercom) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionIntercom) GetDefaultUpdateSchedule() []ConnectionIntercomDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionIntercomDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionIntercom) GetUsername() string {
@@ -291,9 +291,9 @@ func (o *ConnectionIntercomInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionIntercomInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionIntercomInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -301,13 +301,6 @@ func (o *ConnectionIntercomInput) GetUpdateScheduleMonthly() *UpdateScheduleMode
 func (o *ConnectionIntercomInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionIntercomInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -322,6 +315,13 @@ func (o *ConnectionIntercomInput) GetUpdateScheduleDaily() *UpdateScheduleModeDa
 func (o *ConnectionIntercomInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionIntercomInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

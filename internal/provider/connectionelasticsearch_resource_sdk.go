@@ -72,12 +72,12 @@ func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchIn
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,30 +86,30 @@ func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchIn
 			}
 		}
 	}
+	address := r.Address.ValueString()
+	port := r.Port.ValueInt64()
+	sslEnabled := r.SslEnabled.ValueBool()
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
 		*username = r.Username.ValueString()
 	} else {
 		username = nil
 	}
-	sslEnabled := r.SslEnabled.ValueBool()
-	address := r.Address.ValueString()
 	password := new(string)
 	if !r.Password.IsUnknown() && !r.Password.IsNull() {
 		*password = r.Password.ValueString()
 	} else {
 		password = nil
 	}
-	port := r.Port.ValueInt64()
 	out := shared.ConnectionElasticSearchInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		Username:       username,
-		SslEnabled:     sslEnabled,
 		Address:        address,
-		Password:       password,
 		Port:           port,
+		SslEnabled:     sslEnabled,
+		Username:       username,
+		Password:       password,
 	}
 	return &out
 }
@@ -122,7 +122,7 @@ func (r *ConnectionELASTICSEARCHResourceModel) RefreshFromSharedConnectionElasti
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -207,11 +207,11 @@ func (r *ConnectionELASTICSEARCHResourceModel) RefreshFromSharedConnectionElasti
 }
 
 func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchUpdate() *shared.ConnectionElasticSearchUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionElasticSearchUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -219,11 +219,11 @@ func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchUp
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -286,12 +286,12 @@ func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchUp
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -300,29 +300,11 @@ func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchUp
 			}
 		}
 	}
-	username := new(string)
-	if !r.Username.IsUnknown() && !r.Username.IsNull() {
-		*username = r.Username.ValueString()
-	} else {
-		username = nil
-	}
-	sslEnabled := new(bool)
-	if !r.SslEnabled.IsUnknown() && !r.SslEnabled.IsNull() {
-		*sslEnabled = r.SslEnabled.ValueBool()
-	} else {
-		sslEnabled = nil
-	}
 	address := new(string)
 	if !r.Address.IsUnknown() && !r.Address.IsNull() {
 		*address = r.Address.ValueString()
 	} else {
 		address = nil
-	}
-	password := new(string)
-	if !r.Password.IsUnknown() && !r.Password.IsNull() {
-		*password = r.Password.ValueString()
-	} else {
-		password = nil
 	}
 	port := new(int64)
 	if !r.Port.IsUnknown() && !r.Port.IsNull() {
@@ -330,16 +312,34 @@ func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchUp
 	} else {
 		port = nil
 	}
+	sslEnabled := new(bool)
+	if !r.SslEnabled.IsUnknown() && !r.SslEnabled.IsNull() {
+		*sslEnabled = r.SslEnabled.ValueBool()
+	} else {
+		sslEnabled = nil
+	}
+	username := new(string)
+	if !r.Username.IsUnknown() && !r.Username.IsNull() {
+		*username = r.Username.ValueString()
+	} else {
+		username = nil
+	}
+	password := new(string)
+	if !r.Password.IsUnknown() && !r.Password.IsNull() {
+		*password = r.Password.ValueString()
+	} else {
+		password = nil
+	}
 	out := shared.ConnectionElasticSearchUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
-		Username:       username,
-		SslEnabled:     sslEnabled,
 		Address:        address,
-		Password:       password,
 		Port:           port,
+		SslEnabled:     sslEnabled,
+		Username:       username,
+		Password:       password,
 	}
 	return &out
 }

@@ -4,17 +4,10 @@ package shared
 
 // AddScriptResponse - The specification of the response from "Add a script to a pipeline" endpoint
 type AddScriptResponse struct {
-	// Whether a new refresh was started due to the script change
-	RefreshInitiated bool `json:"refreshInitiated"`
 	// The current and refreshing versions for each destination after the script was updated
 	DestinationVersions []DestinationAndPipelineVersions `json:"destinationVersions"`
-}
-
-func (o *AddScriptResponse) GetRefreshInitiated() bool {
-	if o == nil {
-		return false
-	}
-	return o.RefreshInitiated
+	// Whether a new refresh was started due to the script change
+	RefreshInitiated bool `json:"refreshInitiated"`
 }
 
 func (o *AddScriptResponse) GetDestinationVersions() []DestinationAndPipelineVersions {
@@ -22,4 +15,11 @@ func (o *AddScriptResponse) GetDestinationVersions() []DestinationAndPipelineVer
 		return []DestinationAndPipelineVersions{}
 	}
 	return o.DestinationVersions
+}
+
+func (o *AddScriptResponse) GetRefreshInitiated() bool {
+	if o == nil {
+		return false
+	}
+	return o.RefreshInitiated
 }

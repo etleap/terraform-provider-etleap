@@ -14,7 +14,7 @@ ConnectionSQLSERVERSHARDED DataSource
 
 ```terraform
 data "etleap_connection_sql_server_sharded" "my_connectionsql_server_sharded" {
-  id = "7395bc97-7378-48af-ad83-1c3f77a747b0"
+  id = "9a5d5dab-fed9-4a37-a3db-04da80b4095e"
 }
 ```
 

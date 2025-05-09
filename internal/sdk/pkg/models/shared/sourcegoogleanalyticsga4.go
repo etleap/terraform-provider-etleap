@@ -32,24 +32,17 @@ func (e *SourceGoogleAnalyticsGa4Type) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleAnalyticsGa4 struct {
+	Type SourceGoogleAnalyticsGa4Type `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string                       `json:"connectionId"`
-	Type         SourceGoogleAnalyticsGa4Type `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Google Analytics GA4 resource. Provide the ID of the GA4 resource. You can find out how to retrieve the ID of you resource <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id'>here</a>.
 	Entity string `json:"entity"`
-	// Metrics represent quantitative measurements calculated by Google Analytics. Example values: [active1DayUsers, conversions]
-	Metrics []string `json:"metrics"`
 	// Dimensions are attributes for your data. Example values: [date, browser].
 	Dimensions []string `json:"dimensions"`
-}
-
-func (o *SourceGoogleAnalyticsGa4) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
+	// Metrics represent quantitative measurements calculated by Google Analytics. Example values: [active1DayUsers, conversions]
+	Metrics []string `json:"metrics"`
 }
 
 func (o *SourceGoogleAnalyticsGa4) GetType() SourceGoogleAnalyticsGa4Type {
@@ -57,6 +50,13 @@ func (o *SourceGoogleAnalyticsGa4) GetType() SourceGoogleAnalyticsGa4Type {
 		return SourceGoogleAnalyticsGa4Type("")
 	}
 	return o.Type
+}
+
+func (o *SourceGoogleAnalyticsGa4) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceGoogleAnalyticsGa4) GetLatencyThreshold() *int64 {
@@ -73,16 +73,16 @@ func (o *SourceGoogleAnalyticsGa4) GetEntity() string {
 	return o.Entity
 }
 
-func (o *SourceGoogleAnalyticsGa4) GetMetrics() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Metrics
-}
-
 func (o *SourceGoogleAnalyticsGa4) GetDimensions() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.Dimensions
+}
+
+func (o *SourceGoogleAnalyticsGa4) GetMetrics() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Metrics
 }

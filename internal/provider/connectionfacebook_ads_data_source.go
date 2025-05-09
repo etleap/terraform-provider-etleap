@@ -28,15 +28,15 @@ type ConnectionFACEBOOKADSDataSource struct {
 
 // ConnectionFACEBOOKADSDataSourceModel describes the data model.
 type ConnectionFACEBOOKADSDataSourceModel struct {
-	Active                types.Bool                                      `tfsdk:"active"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String                                    `tfsdk:"id"`
-	Name                  types.String                                    `tfsdk:"name"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	Username              types.String                                    `tfsdk:"username"`
+	Active                types.Bool              `tfsdk:"active"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String            `tfsdk:"id"`
+	Name                  types.String            `tfsdk:"name"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Username              types.String            `tfsdk:"username"`
 }
 
 // Metadata returns the data source type name.
@@ -310,7 +310,7 @@ func (r *ConnectionFACEBOOKADSDataSource) Read(ctx context.Context, req datasour
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionFbOutput(res.ConnectionFb)
+	data.RefreshFromSharedConnectionFb(res.ConnectionFb)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

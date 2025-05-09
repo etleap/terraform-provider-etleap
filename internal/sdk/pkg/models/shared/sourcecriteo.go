@@ -32,9 +32,9 @@ func (e *SourceCriteoType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCriteo struct {
+	Type SourceCriteoType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string           `json:"connectionId"`
-	Type         SourceCriteoType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Criteo resource. Example: ad_set, advertiser, audience, campaign, report_placement, report_statistics, and report_transactions.
@@ -43,17 +43,10 @@ type SourceCriteo struct {
 	Dimensions []string `json:"dimensions,omitempty"`
 	// Specify the report `metric` if and only if the entity is 'report_placement' or 'report_statistics'. Example values: [clicks, displays]
 	Metrics []string `json:"metrics,omitempty"`
-	// Specify the report `currency` if and only if the entity is 'report_placement', 'report_statistics' or 'report_transactions'. Example values: [USD, EUR]
-	Currency []string `json:"currency,omitempty"`
 	// Specify the report `timezone` if and only if the entity is 'report_placement' or 'report_transactions'. Example values: [UTC, ETC/GMT-3]
 	Timezone []string `json:"timezone,omitempty"`
-}
-
-func (o *SourceCriteo) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
+	// Specify the report `currency` if and only if the entity is 'report_placement', 'report_statistics' or 'report_transactions'. Example values: [USD, EUR]
+	Currency []string `json:"currency,omitempty"`
 }
 
 func (o *SourceCriteo) GetType() SourceCriteoType {
@@ -61,6 +54,13 @@ func (o *SourceCriteo) GetType() SourceCriteoType {
 		return SourceCriteoType("")
 	}
 	return o.Type
+}
+
+func (o *SourceCriteo) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceCriteo) GetLatencyThreshold() *int64 {
@@ -91,16 +91,16 @@ func (o *SourceCriteo) GetMetrics() []string {
 	return o.Metrics
 }
 
-func (o *SourceCriteo) GetCurrency() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Currency
-}
-
 func (o *SourceCriteo) GetTimezone() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Timezone
+}
+
+func (o *SourceCriteo) GetCurrency() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Currency
 }

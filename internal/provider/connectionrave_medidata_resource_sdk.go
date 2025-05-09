@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionRAVEMEDIDATAResourceModel) ToSharedConnectionRaveMedidata() *shared.ConnectionRaveMedidata {
+func (r *ConnectionRAVEMEDIDATAResourceModel) ToSharedConnectionRaveMedidataInput() *shared.ConnectionRaveMedidataInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionRaveMedidataType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionRAVEMEDIDATAResourceModel) ToSharedConnectionRaveMedidata() *
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,28 +86,28 @@ func (r *ConnectionRAVEMEDIDATAResourceModel) ToSharedConnectionRaveMedidata() *
 			}
 		}
 	}
+	hostname := r.Hostname.ValueString()
 	username := r.Username.ValueString()
 	password := r.Password.ValueString()
-	hostname := r.Hostname.ValueString()
-	out := shared.ConnectionRaveMedidata{
+	out := shared.ConnectionRaveMedidataInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
+		Hostname:       hostname,
 		Username:       username,
 		Password:       password,
-		Hostname:       hostname,
 	}
 	return &out
 }
 
-func (r *ConnectionRAVEMEDIDATAResourceModel) RefreshFromSharedConnectionRaveMedidataOutput(resp *shared.ConnectionRaveMedidataOutput) {
+func (r *ConnectionRAVEMEDIDATAResourceModel) RefreshFromSharedConnectionRaveMedidata(resp *shared.ConnectionRaveMedidata) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -189,11 +189,11 @@ func (r *ConnectionRAVEMEDIDATAResourceModel) RefreshFromSharedConnectionRaveMed
 }
 
 func (r *ConnectionRAVEMEDIDATAResourceModel) ToSharedConnectionRaveMedidataUpdate() *shared.ConnectionRaveMedidataUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionRaveMedidataUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -201,11 +201,11 @@ func (r *ConnectionRAVEMEDIDATAResourceModel) ToSharedConnectionRaveMedidataUpda
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -268,12 +268,12 @@ func (r *ConnectionRAVEMEDIDATAResourceModel) ToSharedConnectionRaveMedidataUpda
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -281,6 +281,12 @@ func (r *ConnectionRAVEMEDIDATAResourceModel) ToSharedConnectionRaveMedidataUpda
 				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
 			}
 		}
+	}
+	hostname := new(string)
+	if !r.Hostname.IsUnknown() && !r.Hostname.IsNull() {
+		*hostname = r.Hostname.ValueString()
+	} else {
+		hostname = nil
 	}
 	username := new(string)
 	if !r.Username.IsUnknown() && !r.Username.IsNull() {
@@ -294,20 +300,14 @@ func (r *ConnectionRAVEMEDIDATAResourceModel) ToSharedConnectionRaveMedidataUpda
 	} else {
 		password = nil
 	}
-	hostname := new(string)
-	if !r.Hostname.IsUnknown() && !r.Hostname.IsNull() {
-		*hostname = r.Hostname.ValueString()
-	} else {
-		hostname = nil
-	}
 	out := shared.ConnectionRaveMedidataUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
+		Hostname:       hostname,
 		Username:       username,
 		Password:       password,
-		Hostname:       hostname,
 	}
 	return &out
 }

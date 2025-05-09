@@ -43,18 +43,18 @@ type ConnectionSQLSERVERSHARDEDResource struct {
 
 // ConnectionSQLSERVERSHARDEDResourceModel describes the resource data model.
 type ConnectionSQLSERVERSHARDEDResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	CdcEnabled               types.Bool                                      `tfsdk:"cdc_enabled"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Schema                   types.String                                    `tfsdk:"schema"`
-	Shards                   []DatabaseShard                                 `tfsdk:"shards"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	CdcEnabled               types.Bool              `tfsdk:"cdc_enabled"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Schema                   types.String            `tfsdk:"schema"`
+	Shards                   []DatabaseShard         `tfsdk:"shards"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionSQLSERVERSHARDEDResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -685,7 +685,7 @@ func (r *ConnectionSQLSERVERSHARDEDResource) Create(ctx context.Context, req res
 		return
 	}
 
-	request := *data.ToSharedConnectionSQLServerSharded()
+	request := *data.ToSharedConnectionSQLServerShardedInput()
 	res, err := r.client.Connection.CreateSQLSERVERSHARDEDConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -706,7 +706,7 @@ func (r *ConnectionSQLSERVERSHARDEDResource) Create(ctx context.Context, req res
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSQLServerShardedOutput(res.ConnectionSQLServerSharded)
+	data.RefreshFromSharedConnectionSQLServerSharded(res.ConnectionSQLServerSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetSQLSERVERSHARDEDConnectionRequest{
@@ -732,7 +732,7 @@ func (r *ConnectionSQLSERVERSHARDEDResource) Create(ctx context.Context, req res
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSQLServerShardedOutput(res1.ConnectionSQLServerSharded)
+	data.RefreshFromSharedConnectionSQLServerSharded(res1.ConnectionSQLServerSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -781,7 +781,7 @@ func (r *ConnectionSQLSERVERSHARDEDResource) Read(ctx context.Context, req resou
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSQLServerShardedOutput(res.ConnectionSQLServerSharded)
+	data.RefreshFromSharedConnectionSQLServerSharded(res.ConnectionSQLServerSharded)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -827,7 +827,7 @@ func (r *ConnectionSQLSERVERSHARDEDResource) Update(ctx context.Context, req res
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSQLServerShardedOutput(res.ConnectionSQLServerSharded)
+	data.RefreshFromSharedConnectionSQLServerSharded(res.ConnectionSQLServerSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetSQLSERVERSHARDEDConnectionRequest{
@@ -853,7 +853,7 @@ func (r *ConnectionSQLSERVERSHARDEDResource) Update(ctx context.Context, req res
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionSQLServerShardedOutput(res1.ConnectionSQLServerSharded)
+	data.RefreshFromSharedConnectionSQLServerSharded(res1.ConnectionSQLServerSharded)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

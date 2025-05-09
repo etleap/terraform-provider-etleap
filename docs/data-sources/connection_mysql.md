@@ -14,7 +14,7 @@ ConnectionMYSQL DataSource
 
 ```terraform
 data "etleap_connection_mysql" "my_connectionmysql" {
-  id = "56b22ded-9244-4dc2-80dc-bfb6fcd8e3f9"
+  id = "da6ff80d-06aa-4c06-bbf6-70e7b5cd6b82"
 }
 ```
 

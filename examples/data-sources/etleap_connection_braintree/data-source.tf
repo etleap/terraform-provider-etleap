@@ -1,3 +1,3 @@
 data "etleap_connection_braintree" "my_connectionbraintree" {
-  id = "b0c73179-c86a-4a06-9d1b-f9640a1c1d3e"
+  id = "c1ba08b7-f3a3-4e61-ab6f-0baa3e2cf504"
 }

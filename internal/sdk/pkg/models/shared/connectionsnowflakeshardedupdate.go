@@ -32,36 +32,22 @@ func (e *ConnectionSnowflakeShardedUpdateType) UnmarshalJSON(data []byte) error 
 }
 
 type ConnectionSnowflakeShardedUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                                `json:"active,omitempty"`
-	Type   ConnectionSnowflakeShardedUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                              `json:"name,omitempty"`
+	Type ConnectionSnowflakeShardedUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
-	SourceOnly *bool `json:"sourceOnly,omitempty"`
-	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
-	Roles []string `json:"roles,omitempty"`
 	// Take into account that the schema is case sensitive
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema *string               `json:"schema,omitempty"`
-	Shards []SnowflakeShardInput `json:"shards,omitempty"`
-}
-
-func (o *ConnectionSnowflakeShardedUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionSnowflakeShardedUpdate) GetType() ConnectionSnowflakeShardedUpdateType {
-	if o == nil {
-		return ConnectionSnowflakeShardedUpdateType("")
-	}
-	return o.Type
+	Schema *string `json:"schema,omitempty"`
+	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
+	Roles []string `json:"roles,omitempty"`
+	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
+	SourceOnly *bool            `json:"sourceOnly,omitempty"`
+	Shards     []SnowflakeShard `json:"shards,omitempty"`
 }
 
 func (o *ConnectionSnowflakeShardedUpdate) GetName() *string {
@@ -71,6 +57,20 @@ func (o *ConnectionSnowflakeShardedUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionSnowflakeShardedUpdate) GetType() ConnectionSnowflakeShardedUpdateType {
+	if o == nil {
+		return ConnectionSnowflakeShardedUpdateType("")
+	}
+	return o.Type
+}
+
+func (o *ConnectionSnowflakeShardedUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionSnowflakeShardedUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -78,9 +78,9 @@ func (o *ConnectionSnowflakeShardedUpdate) GetUpdateSchedule() *UpdateScheduleTy
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnowflakeShardedUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSnowflakeShardedUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -88,13 +88,6 @@ func (o *ConnectionSnowflakeShardedUpdate) GetUpdateScheduleMonthly() *UpdateSch
 func (o *ConnectionSnowflakeShardedUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionSnowflakeShardedUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -113,18 +106,11 @@ func (o *ConnectionSnowflakeShardedUpdate) GetUpdateScheduleWeekly() *UpdateSche
 	return nil
 }
 
-func (o *ConnectionSnowflakeShardedUpdate) GetSourceOnly() *bool {
-	if o == nil {
-		return nil
+func (o *ConnectionSnowflakeShardedUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.SourceOnly
-}
-
-func (o *ConnectionSnowflakeShardedUpdate) GetRoles() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Roles
+	return nil
 }
 
 func (o *ConnectionSnowflakeShardedUpdate) GetSchema() *string {
@@ -134,7 +120,21 @@ func (o *ConnectionSnowflakeShardedUpdate) GetSchema() *string {
 	return o.Schema
 }
 
-func (o *ConnectionSnowflakeShardedUpdate) GetShards() []SnowflakeShardInput {
+func (o *ConnectionSnowflakeShardedUpdate) GetRoles() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Roles
+}
+
+func (o *ConnectionSnowflakeShardedUpdate) GetSourceOnly() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SourceOnly
+}
+
+func (o *ConnectionSnowflakeShardedUpdate) GetShards() []SnowflakeShard {
 	if o == nil {
 		return nil
 	}

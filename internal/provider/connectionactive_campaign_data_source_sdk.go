@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionACTIVECAMPAIGNDataSourceModel) RefreshFromSharedConnectionActiveCampaignOutput(resp *shared.ConnectionActiveCampaignOutput) {
+func (r *ConnectionACTIVECAMPAIGNDataSourceModel) RefreshFromSharedConnectionActiveCampaign(resp *shared.ConnectionActiveCampaign) {
 	r.Active = types.BoolValue(resp.Active)
 	r.BaseURL = types.StringValue(resp.BaseURL)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -16,7 +16,7 @@ func (r *ConnectionACTIVECAMPAIGNDataSourceModel) RefreshFromSharedConnectionAct
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

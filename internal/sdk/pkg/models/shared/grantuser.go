@@ -35,14 +35,14 @@ func (e *GrantUserType) UnmarshalJSON(data []byte) error {
 
 // GrantUser - A grant providing access to an object in Etleap for a user.
 type GrantUser struct {
+	Type GrantUserType `json:"type"`
+	ID   string        `json:"id"`
 	// The date and time when then the grant was created.
-	CreateDate   time.Time     `json:"createDate"`
-	Type         GrantUserType `json:"type"`
-	ID           string        `json:"id"`
-	UserID       string        `json:"userId"`
-	LastName     string        `json:"lastName"`
-	EmailAddress string        `json:"emailAddress"`
-	FirstName    string        `json:"firstName"`
+	CreateDate   time.Time `json:"createDate"`
+	UserID       string    `json:"userId"`
+	FirstName    string    `json:"firstName"`
+	LastName     string    `json:"lastName"`
+	EmailAddress string    `json:"emailAddress"`
 }
 
 func (g GrantUser) MarshalJSON() ([]byte, error) {
@@ -54,13 +54,6 @@ func (g *GrantUser) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *GrantUser) GetCreateDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.CreateDate
 }
 
 func (o *GrantUser) GetType() GrantUserType {
@@ -77,11 +70,25 @@ func (o *GrantUser) GetID() string {
 	return o.ID
 }
 
+func (o *GrantUser) GetCreateDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.CreateDate
+}
+
 func (o *GrantUser) GetUserID() string {
 	if o == nil {
 		return ""
 	}
 	return o.UserID
+}
+
+func (o *GrantUser) GetFirstName() string {
+	if o == nil {
+		return ""
+	}
+	return o.FirstName
 }
 
 func (o *GrantUser) GetLastName() string {
@@ -96,13 +103,6 @@ func (o *GrantUser) GetEmailAddress() string {
 		return ""
 	}
 	return o.EmailAddress
-}
-
-func (o *GrantUser) GetFirstName() string {
-	if o == nil {
-		return ""
-	}
-	return o.FirstName
 }
 
 // GrantUserInput - A grant providing access to an object in Etleap for a user.

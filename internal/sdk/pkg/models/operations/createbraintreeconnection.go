@@ -15,7 +15,7 @@ type CreateBRAINTREEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBraintree *shared.ConnectionBraintreeOutput
+	ConnectionBraintree *shared.ConnectionBraintree
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateBRAINTREEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateBRAINTREEConnectionResponse) GetConnectionBraintree() *shared.ConnectionBraintreeOutput {
+func (o *CreateBRAINTREEConnectionResponse) GetConnectionBraintree() *shared.ConnectionBraintree {
 	if o == nil {
 		return nil
 	}

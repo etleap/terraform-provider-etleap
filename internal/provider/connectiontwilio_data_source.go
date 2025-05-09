@@ -28,16 +28,16 @@ type ConnectionTWILIODataSource struct {
 
 // ConnectionTWILIODataSourceModel describes the data model.
 type ConnectionTWILIODataSourceModel struct {
-	AccountSid            types.String                                    `tfsdk:"account_sid"`
-	Active                types.Bool                                      `tfsdk:"active"`
-	APIKeySid             types.String                                    `tfsdk:"api_key_sid"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String                                    `tfsdk:"id"`
-	Name                  types.String                                    `tfsdk:"name"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	AccountSid            types.String            `tfsdk:"account_sid"`
+	Active                types.Bool              `tfsdk:"active"`
+	APIKeySid             types.String            `tfsdk:"api_key_sid"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String            `tfsdk:"id"`
+	Name                  types.String            `tfsdk:"name"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -316,7 +316,7 @@ func (r *ConnectionTWILIODataSource) Read(ctx context.Context, req datasource.Re
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwilioOutput(res.ConnectionTwilio)
+	data.RefreshFromSharedConnectionTwilio(res.ConnectionTwilio)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

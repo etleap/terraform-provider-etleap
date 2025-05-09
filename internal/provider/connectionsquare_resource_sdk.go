@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSQUAREResourceModel) ToSharedConnectionSquare() *shared.ConnectionSquare {
+func (r *ConnectionSQUAREResourceModel) ToSharedConnectionSquareInput() *shared.ConnectionSquareInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionSquareType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionSQUAREResourceModel) ToSharedConnectionSquare() *shared.Conne
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -87,22 +87,22 @@ func (r *ConnectionSQUAREResourceModel) ToSharedConnectionSquare() *shared.Conne
 		}
 	}
 	code := r.Code.ValueString()
-	sandboxAccount := r.SandboxAccount.ValueBool()
-	applicationSecret := r.ApplicationSecret.ValueString()
 	applicationID := r.ApplicationID.ValueString()
-	out := shared.ConnectionSquare{
+	applicationSecret := r.ApplicationSecret.ValueString()
+	sandboxAccount := r.SandboxAccount.ValueBool()
+	out := shared.ConnectionSquareInput{
 		Name:              name,
 		Type:              typeVar,
 		UpdateSchedule:    updateSchedule,
 		Code:              code,
-		SandboxAccount:    sandboxAccount,
-		ApplicationSecret: applicationSecret,
 		ApplicationID:     applicationID,
+		ApplicationSecret: applicationSecret,
+		SandboxAccount:    sandboxAccount,
 	}
 	return &out
 }
 
-func (r *ConnectionSQUAREResourceModel) RefreshFromSharedConnectionSquareOutput(resp *shared.ConnectionSquareOutput) {
+func (r *ConnectionSQUAREResourceModel) RefreshFromSharedConnectionSquare(resp *shared.ConnectionSquare) {
 	r.Active = types.BoolValue(resp.Active)
 	r.ApplicationID = types.StringValue(resp.ApplicationID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -110,7 +110,7 @@ func (r *ConnectionSQUAREResourceModel) RefreshFromSharedConnectionSquareOutput(
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -193,18 +193,18 @@ func (r *ConnectionSQUAREResourceModel) RefreshFromSharedConnectionSquareOutput(
 }
 
 func (r *ConnectionSQUAREResourceModel) ToSharedConnectionSquareUpdate() *shared.ConnectionSquareUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
-	} else {
-		active = nil
-	}
-	typeVar := shared.ConnectionSquareUpdateType(r.Type.ValueString())
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
+	}
+	typeVar := shared.ConnectionSquareUpdateType(r.Type.ValueString())
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
+	} else {
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -267,12 +267,12 @@ func (r *ConnectionSQUAREResourceModel) ToSharedConnectionSquareUpdate() *shared
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -287,11 +287,11 @@ func (r *ConnectionSQUAREResourceModel) ToSharedConnectionSquareUpdate() *shared
 	} else {
 		code = nil
 	}
-	sandboxAccount := new(bool)
-	if !r.SandboxAccount.IsUnknown() && !r.SandboxAccount.IsNull() {
-		*sandboxAccount = r.SandboxAccount.ValueBool()
+	applicationID := new(string)
+	if !r.ApplicationID.IsUnknown() && !r.ApplicationID.IsNull() {
+		*applicationID = r.ApplicationID.ValueString()
 	} else {
-		sandboxAccount = nil
+		applicationID = nil
 	}
 	applicationSecret := new(string)
 	if !r.ApplicationSecret.IsUnknown() && !r.ApplicationSecret.IsNull() {
@@ -299,21 +299,21 @@ func (r *ConnectionSQUAREResourceModel) ToSharedConnectionSquareUpdate() *shared
 	} else {
 		applicationSecret = nil
 	}
-	applicationID := new(string)
-	if !r.ApplicationID.IsUnknown() && !r.ApplicationID.IsNull() {
-		*applicationID = r.ApplicationID.ValueString()
+	sandboxAccount := new(bool)
+	if !r.SandboxAccount.IsUnknown() && !r.SandboxAccount.IsNull() {
+		*sandboxAccount = r.SandboxAccount.ValueBool()
 	} else {
-		applicationID = nil
+		sandboxAccount = nil
 	}
 	out := shared.ConnectionSquareUpdate{
-		Active:            active,
-		Type:              typeVar,
 		Name:              name,
+		Type:              typeVar,
+		Active:            active,
 		UpdateSchedule:    updateSchedule,
 		Code:              code,
-		SandboxAccount:    sandboxAccount,
-		ApplicationSecret: applicationSecret,
 		ApplicationID:     applicationID,
+		ApplicationSecret: applicationSecret,
+		SandboxAccount:    sandboxAccount,
 	}
 	return &out
 }

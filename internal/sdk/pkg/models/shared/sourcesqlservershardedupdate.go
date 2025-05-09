@@ -32,16 +32,9 @@ func (e *SourceSQLServerShardedUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSQLServerShardedUpdate struct {
-	Type *SourceSQLServerShardedUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceSQLServerShardedUpdate) GetType() *SourceSQLServerShardedUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                            `json:"latencyThreshold,omitempty"`
+	Type             *SourceSQLServerShardedUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceSQLServerShardedUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceSQLServerShardedUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceSQLServerShardedUpdate) GetType() *SourceSQLServerShardedUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

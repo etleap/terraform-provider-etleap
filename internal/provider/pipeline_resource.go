@@ -1741,7 +1741,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Optional: true,
 								NestedObject: schema.NestedAttributeObject{
 									Attributes: map[string]schema.Attribute{
-										"one": schema.StringAttribute{
+										"type_1": schema.StringAttribute{
 											PlanModifiers: []planmodifier.String{
 												stringplanmodifier.RequiresReplaceIfConfigured(),
 											},

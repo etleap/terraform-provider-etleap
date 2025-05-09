@@ -1,3 +1,3 @@
 data "etleap_connection_sap_hana_sharded" "my_connectionsap_hana_sharded" {
-  id = "42ef30f3-664b-4568-938d-0c3c91cbba03"
+  id = "1fe244f8-a0be-46d5-9c73-989982d77215"
 }

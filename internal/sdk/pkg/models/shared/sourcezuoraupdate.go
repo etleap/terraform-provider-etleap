@@ -32,16 +32,9 @@ func (e *SourceZuoraUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZuoraUpdate struct {
-	Type *SourceZuoraUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceZuoraUpdate) GetType() *SourceZuoraUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                 `json:"latencyThreshold,omitempty"`
+	Type             *SourceZuoraUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceZuoraUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceZuoraUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceZuoraUpdate) GetType() *SourceZuoraUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

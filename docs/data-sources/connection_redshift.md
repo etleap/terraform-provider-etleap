@@ -14,7 +14,7 @@ ConnectionREDSHIFT DataSource
 
 ```terraform
 data "etleap_connection_redshift" "my_connectionredshift" {
-  id = "abb365c6-00d8-4953-939f-3b5b5c2660e4"
+  id = "d32012a3-9645-4e03-8b67-dcc72f29566e"
 }
 ```
 

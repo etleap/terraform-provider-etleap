@@ -26,8 +26,8 @@ type GetBRAINTREEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBraintree *shared.ConnectionBraintreeOutput
-	// Not Found.
+	ConnectionBraintree *shared.ConnectionBraintree
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetBRAINTREEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetBRAINTREEConnectionResponse) GetConnectionBraintree() *shared.ConnectionBraintreeOutput {
+func (o *GetBRAINTREEConnectionResponse) GetConnectionBraintree() *shared.ConnectionBraintree {
 	if o == nil {
 		return nil
 	}

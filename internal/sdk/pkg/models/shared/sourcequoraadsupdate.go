@@ -32,16 +32,9 @@ func (e *SourceQuoraAdsUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceQuoraAdsUpdate struct {
-	Type *SourceQuoraAdsUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceQuoraAdsUpdate) GetType() *SourceQuoraAdsUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                    `json:"latencyThreshold,omitempty"`
+	Type             *SourceQuoraAdsUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceQuoraAdsUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceQuoraAdsUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceQuoraAdsUpdate) GetType() *SourceQuoraAdsUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

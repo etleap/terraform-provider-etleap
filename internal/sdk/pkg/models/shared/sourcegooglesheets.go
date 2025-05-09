@@ -32,20 +32,13 @@ func (e *SourceGoogleSheetsType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleSheets struct {
+	Type SourceGoogleSheetsType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string                 `json:"connectionId"`
-	Type         SourceGoogleSheetsType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// Google Sheets entities are in the form `SpreadsheetID/SheetID`. You can find both values by clicking on the sheet (tab) you want and looking at the URL: docs.google.com/spreadsheets/d/`1pRAGMSRpEEG31kbtG2qcpr-HDeDfvafp_v00`/edit#gid=`642381756`
 	Entity string `json:"entity"`
-}
-
-func (o *SourceGoogleSheets) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceGoogleSheets) GetType() SourceGoogleSheetsType {
@@ -53,6 +46,13 @@ func (o *SourceGoogleSheets) GetType() SourceGoogleSheetsType {
 		return SourceGoogleSheetsType("")
 	}
 	return o.Type
+}
+
+func (o *SourceGoogleSheets) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceGoogleSheets) GetLatencyThreshold() *int64 {

@@ -32,9 +32,9 @@ func (e *SourceLinkedInAdsType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceLinkedInAds struct {
+	Type SourceLinkedInAdsType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string                `json:"connectionId"`
-	Type         SourceLinkedInAdsType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The LinkedIn resource. Example values: [ACCOUNTS, ACCOUNT_USERS, AD_ANALYTICS, CAMPAIGNS, CAMPAIGN_GROUPS, CONVERSIONS, INSIGHT_TAG_DOMAINS]
@@ -45,18 +45,18 @@ type SourceLinkedInAds struct {
 	Pivots []string `json:"pivots,omitempty"`
 }
 
-func (o *SourceLinkedInAds) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
-}
-
 func (o *SourceLinkedInAds) GetType() SourceLinkedInAdsType {
 	if o == nil {
 		return SourceLinkedInAdsType("")
 	}
 	return o.Type
+}
+
+func (o *SourceLinkedInAds) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceLinkedInAds) GetLatencyThreshold() *int64 {

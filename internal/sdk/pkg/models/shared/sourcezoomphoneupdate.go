@@ -32,16 +32,9 @@ func (e *SourceZoomPhoneUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZoomPhoneUpdate struct {
-	Type *SourceZoomPhoneUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceZoomPhoneUpdate) GetType() *SourceZoomPhoneUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                     `json:"latencyThreshold,omitempty"`
+	Type             *SourceZoomPhoneUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceZoomPhoneUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceZoomPhoneUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceZoomPhoneUpdate) GetType() *SourceZoomPhoneUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

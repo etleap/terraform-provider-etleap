@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "011e68c1-e700-437a-9177-d13b091b1f0d"
+  id = "ee52da56-1486-4379-bcbe-3940b5f3e9f5"
 }
 ```
 
@@ -388,6 +388,7 @@ Read-Only:
 - `ldap_virtual_list_view` (Attributes) (see [below for nested schema](#nestedatt--source--ldap_virtual_list_view))
 - `linked_in_ads` (Attributes) (see [below for nested schema](#nestedatt--source--linked_in_ads))
 - `marketo` (Attributes) (see [below for nested schema](#nestedatt--source--marketo))
+- `microsoft_entra_id` (Attributes) (see [below for nested schema](#nestedatt--source--microsoft_entra_id))
 - `mixpanel` (Attributes) (see [below for nested schema](#nestedatt--source--mixpanel))
 - `mongodb` (Attributes) (see [below for nested schema](#nestedatt--source--mongodb))
 - `mysql` (Attributes) (see [below for nested schema](#nestedatt--source--mysql))
@@ -911,6 +912,17 @@ Read-Only:
 - `entity` (String) The Marketo entity type. Example values: [Leads, Activities, Campaigns, Programs, Tags]
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["MARKETO"]
+
+
+<a id="nestedatt--source--microsoft_entra_id"></a>
+### Nested Schema for `source.microsoft_entra_id`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The Microsoft Entra ID entity.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["MICROSOFT_ENTRA_ID"]
 
 
 <a id="nestedatt--source--mixpanel"></a>

@@ -43,7 +43,7 @@ type UpdateConnectionGrantPrivilegeResponse struct {
 	RawResponse *http.Response
 	// OK.
 	GrantWithPrivilege *shared.GrantWithPrivilege
-	// A connection or grant with the given id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

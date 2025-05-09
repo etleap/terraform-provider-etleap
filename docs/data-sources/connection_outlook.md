@@ -14,7 +14,7 @@ ConnectionOUTLOOK DataSource
 
 ```terraform
 data "etleap_connection_outlook" "my_connectionoutlook" {
-  id = "488a539e-f9a3-42ef-a3b9-01de062d1d1b"
+  id = "ce23f5e3-cd92-47f1-9c11-db2e4f27a6f5"
 }
 ```
 

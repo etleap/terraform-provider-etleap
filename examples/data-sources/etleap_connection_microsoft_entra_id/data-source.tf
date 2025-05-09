@@ -1,3 +1,3 @@
 data "etleap_connection_microsoft_entra_id" "my_connectionmicrosoft_entra_id" {
-  id = "7a377ac9-dab3-48fe-9815-88fd62af094f"
+  id = "2b57f4c6-21b0-42a8-81cc-3d9f5f04b497"
 }

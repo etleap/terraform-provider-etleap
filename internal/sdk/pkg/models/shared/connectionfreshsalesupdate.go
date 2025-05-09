@@ -32,11 +32,11 @@ func (e *ConnectionFreshsalesUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionFreshsalesUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                           `json:"active,omitempty"`
-	Type   *ConnectionFreshsalesUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                         `json:"name,omitempty"`
+	Type *ConnectionFreshsalesUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your Freshsales domain. Can be found under Admin Settings -> API Settings under the "bundle alias" label.
@@ -47,11 +47,11 @@ type ConnectionFreshsalesUpdate struct {
 	QuotaLimit *float64 `json:"quotaLimit,omitempty"`
 }
 
-func (o *ConnectionFreshsalesUpdate) GetActive() *bool {
+func (o *ConnectionFreshsalesUpdate) GetName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Active
+	return o.Name
 }
 
 func (o *ConnectionFreshsalesUpdate) GetType() *ConnectionFreshsalesUpdateType {
@@ -61,11 +61,11 @@ func (o *ConnectionFreshsalesUpdate) GetType() *ConnectionFreshsalesUpdateType {
 	return o.Type
 }
 
-func (o *ConnectionFreshsalesUpdate) GetName() *string {
+func (o *ConnectionFreshsalesUpdate) GetActive() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Name
+	return o.Active
 }
 
 func (o *ConnectionFreshsalesUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -75,9 +75,9 @@ func (o *ConnectionFreshsalesUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionFreshsalesUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionFreshsalesUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -85,13 +85,6 @@ func (o *ConnectionFreshsalesUpdate) GetUpdateScheduleMonthly() *UpdateScheduleM
 func (o *ConnectionFreshsalesUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionFreshsalesUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -106,6 +99,13 @@ func (o *ConnectionFreshsalesUpdate) GetUpdateScheduleDaily() *UpdateScheduleMod
 func (o *ConnectionFreshsalesUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionFreshsalesUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

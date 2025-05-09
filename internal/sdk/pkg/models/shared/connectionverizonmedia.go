@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionVerizonMediaType string
+
+const (
+	ConnectionVerizonMediaTypeVerizonMediaDsp ConnectionVerizonMediaType = "VERIZON_MEDIA_DSP"
+)
+
+func (e ConnectionVerizonMediaType) ToPointer() *ConnectionVerizonMediaType {
+	return &e
+}
+
+func (e *ConnectionVerizonMediaType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "VERIZON_MEDIA_DSP":
+		*e = ConnectionVerizonMediaType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionVerizonMediaType: %v", v)
+	}
+}
+
 // ConnectionVerizonMediaStatus - The current status of the connection.
 type ConnectionVerizonMediaStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionVerizonMediaDefaultUpdateSchedule) GetUpdateSchedule() *Updat
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionVerizonMediaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionVerizonMediaDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionVerizonMediaDefaultUpdateSchedule) GetUpdateScheduleMonthly()
 func (o *ConnectionVerizonMediaDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionVerizonMediaDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,47 +125,30 @@ func (o *ConnectionVerizonMediaDefaultUpdateSchedule) GetUpdateScheduleWeekly() 
 	return nil
 }
 
-type ConnectionVerizonMediaType string
-
-const (
-	ConnectionVerizonMediaTypeVerizonMediaDsp ConnectionVerizonMediaType = "VERIZON_MEDIA_DSP"
-)
-
-func (e ConnectionVerizonMediaType) ToPointer() *ConnectionVerizonMediaType {
-	return &e
-}
-
-func (e *ConnectionVerizonMediaType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionVerizonMediaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "VERIZON_MEDIA_DSP":
-		*e = ConnectionVerizonMediaType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionVerizonMediaType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionVerizonMedia struct {
-	// The current status of the connection.
-	Status ConnectionVerizonMediaStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionVerizonMediaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                       `json:"active"`
-	Type   ConnectionVerizonMediaType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                     `json:"name"`
+	Type ConnectionVerizonMediaType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionVerizonMediaStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Username       string               `json:"username"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionVerizonMediaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	Username              string                                        `json:"username"`
 }
 
 func (c ConnectionVerizonMedia) MarshalJSON() ([]byte, error) {
@@ -162,11 +162,11 @@ func (c *ConnectionVerizonMedia) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionVerizonMedia) GetStatus() ConnectionVerizonMediaStatus {
+func (o *ConnectionVerizonMedia) GetID() string {
 	if o == nil {
-		return ConnectionVerizonMediaStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionVerizonMedia) GetName() string {
@@ -176,18 +176,11 @@ func (o *ConnectionVerizonMedia) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionVerizonMedia) GetCreateDate() time.Time {
+func (o *ConnectionVerizonMedia) GetType() ConnectionVerizonMediaType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionVerizonMediaType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionVerizonMedia) GetDefaultUpdateSchedule() []ConnectionVerizonMediaDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionVerizonMediaDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionVerizonMedia) GetActive() bool {
@@ -197,18 +190,18 @@ func (o *ConnectionVerizonMedia) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionVerizonMedia) GetType() ConnectionVerizonMediaType {
+func (o *ConnectionVerizonMedia) GetStatus() ConnectionVerizonMediaStatus {
 	if o == nil {
-		return ConnectionVerizonMediaType("")
+		return ConnectionVerizonMediaStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionVerizonMedia) GetID() string {
+func (o *ConnectionVerizonMedia) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionVerizonMedia) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -218,9 +211,9 @@ func (o *ConnectionVerizonMedia) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionVerizonMedia) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionVerizonMedia) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -228,13 +221,6 @@ func (o *ConnectionVerizonMedia) GetUpdateScheduleMonthly() *UpdateScheduleModeM
 func (o *ConnectionVerizonMedia) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionVerizonMedia) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -251,6 +237,20 @@ func (o *ConnectionVerizonMedia) GetUpdateScheduleWeekly() *UpdateScheduleModeWe
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
+}
+
+func (o *ConnectionVerizonMedia) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionVerizonMedia) GetDefaultUpdateSchedule() []ConnectionVerizonMediaDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionVerizonMediaDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionVerizonMedia) GetUsername() string {
@@ -291,9 +291,9 @@ func (o *ConnectionVerizonMediaInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionVerizonMediaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionVerizonMediaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -301,13 +301,6 @@ func (o *ConnectionVerizonMediaInput) GetUpdateScheduleMonthly() *UpdateSchedule
 func (o *ConnectionVerizonMediaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionVerizonMediaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -322,6 +315,13 @@ func (o *ConnectionVerizonMediaInput) GetUpdateScheduleDaily() *UpdateScheduleMo
 func (o *ConnectionVerizonMediaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionVerizonMediaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

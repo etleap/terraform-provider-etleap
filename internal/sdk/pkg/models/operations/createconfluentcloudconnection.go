@@ -15,7 +15,7 @@ type CreateCONFLUENTCLOUDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionConfluentCloud *shared.ConnectionConfluentCloudOutput
+	ConnectionConfluentCloud *shared.ConnectionConfluentCloud
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,7 +41,7 @@ func (o *CreateCONFLUENTCLOUDConnectionResponse) GetRawResponse() *http.Response
 	return o.RawResponse
 }
 
-func (o *CreateCONFLUENTCLOUDConnectionResponse) GetConnectionConfluentCloud() *shared.ConnectionConfluentCloudOutput {
+func (o *CreateCONFLUENTCLOUDConnectionResponse) GetConnectionConfluentCloud() *shared.ConnectionConfluentCloud {
 	if o == nil {
 		return nil
 	}

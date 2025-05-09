@@ -32,16 +32,9 @@ func (e *SourceStreamingUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceStreamingUpdate struct {
-	Type *SourceStreamingUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceStreamingUpdate) GetType() *SourceStreamingUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                     `json:"latencyThreshold,omitempty"`
+	Type             *SourceStreamingUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceStreamingUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceStreamingUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceStreamingUpdate) GetType() *SourceStreamingUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

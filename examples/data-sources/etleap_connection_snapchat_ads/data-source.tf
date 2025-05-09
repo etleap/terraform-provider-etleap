@@ -1,3 +1,3 @@
 data "etleap_connection_snapchat_ads" "my_connectionsnapchat_ads" {
-  id = "b78d830f-fb5b-4856-8b2b-e365080fd252"
+  id = "47b3b16a-3468-47ce-905f-2babd6292eb3"
 }

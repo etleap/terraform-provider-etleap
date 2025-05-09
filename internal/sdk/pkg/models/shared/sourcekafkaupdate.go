@@ -32,16 +32,9 @@ func (e *SourceKafkaUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceKafkaUpdate struct {
-	Type *SourceKafkaUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceKafkaUpdate) GetType() *SourceKafkaUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                 `json:"latencyThreshold,omitempty"`
+	Type             *SourceKafkaUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceKafkaUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceKafkaUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceKafkaUpdate) GetType() *SourceKafkaUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

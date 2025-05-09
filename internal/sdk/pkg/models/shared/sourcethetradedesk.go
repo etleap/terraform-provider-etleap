@@ -32,19 +32,12 @@ func (e *SourceTheTradeDeskType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTheTradeDesk struct {
+	Type SourceTheTradeDeskType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string                 `json:"connectionId"`
-	Type         SourceTheTradeDeskType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	Entity           string `json:"entity"`
-}
-
-func (o *SourceTheTradeDesk) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceTheTradeDesk) GetType() SourceTheTradeDeskType {
@@ -52,6 +45,13 @@ func (o *SourceTheTradeDesk) GetType() SourceTheTradeDeskType {
 		return SourceTheTradeDeskType("")
 	}
 	return o.Type
+}
+
+func (o *SourceTheTradeDesk) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceTheTradeDesk) GetLatencyThreshold() *int64 {

@@ -16,11 +16,11 @@ ConnectionSAPHANASHARDED Resource
 resource "etleap_connection_sap_hana_sharded" "my_connectionsap_hana_sharded" {
   cdc_enabled                 = true
   deletion_of_export_products = true
-  name                        = "Brad Wintheiser"
+  name                        = "Faith Kris"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "9047 Adolph Rapid"
+      address  = "047 Adolph Rapid"
       database = "...my_database..."
       password = "...my_password..."
       port     = 4

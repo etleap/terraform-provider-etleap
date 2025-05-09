@@ -9,395 +9,6 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-type RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode string
-
-const (
-	RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateModeMonthly RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode = "MONTHLY"
-)
-
-func (e RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode) ToPointer() *RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode {
-	return &e
-}
-
-func (e *RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "MONTHLY":
-		*e = RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode: %v", v)
-	}
-}
-
-type RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode struct {
-	Mode RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode `json:"mode"`
-	// Hour of day this schedule should trigger at (in UTC).
-	HourOfDay int64 `json:"hourOfDay"`
-	// Day of the month this schedule should trigger at (in UTC).
-	DayOfMonth int64 `json:"dayOfMonth"`
-}
-
-func (o *RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode) GetMode() RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode {
-	if o == nil {
-		return RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode("")
-	}
-	return o.Mode
-}
-
-func (o *RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode) GetHourOfDay() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.HourOfDay
-}
-
-func (o *RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode) GetDayOfMonth() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.DayOfMonth
-}
-
-type RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode string
-
-const (
-	RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateModeWeekly RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode = "WEEKLY"
-)
-
-func (e RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode) ToPointer() *RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode {
-	return &e
-}
-
-func (e *RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "WEEKLY":
-		*e = RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode: %v", v)
-	}
-}
-
-type RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode struct {
-	Mode RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode `json:"mode"`
-	// The day of the week this schedule should trigger at (in UTC).
-	DayOfWeek int64 `json:"dayOfWeek"`
-	// Hour of day this schedule should trigger at (in UTC).
-	HourOfDay int64 `json:"hourOfDay"`
-}
-
-func (o *RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode) GetMode() RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode {
-	if o == nil {
-		return RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode("")
-	}
-	return o.Mode
-}
-
-func (o *RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode) GetDayOfWeek() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.DayOfWeek
-}
-
-func (o *RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode) GetHourOfDay() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.HourOfDay
-}
-
-type RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode string
-
-const (
-	RefreshScheduleModeDailyScheduleTypesPipelineUpdateModeDaily RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode = "DAILY"
-)
-
-func (e RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode) ToPointer() *RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode {
-	return &e
-}
-
-func (e *RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "DAILY":
-		*e = RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode: %v", v)
-	}
-}
-
-type RefreshScheduleModeDailyScheduleTypesDailyScheduleMode struct {
-	Mode RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode `json:"mode"`
-	// Hour of day this schedule should trigger at (in UTC).
-	HourOfDay int64 `json:"hourOfDay"`
-}
-
-func (o *RefreshScheduleModeDailyScheduleTypesDailyScheduleMode) GetMode() RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode {
-	if o == nil {
-		return RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode("")
-	}
-	return o.Mode
-}
-
-func (o *RefreshScheduleModeDailyScheduleTypesDailyScheduleMode) GetHourOfDay() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.HourOfDay
-}
-
-type RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode string
-
-const (
-	RefreshScheduleModeHourlyScheduleTypesPipelineUpdateModeHourly RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode = "HOURLY"
-)
-
-func (e RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode) ToPointer() *RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode {
-	return &e
-}
-
-func (e *RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "HOURLY":
-		*e = RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode: %v", v)
-	}
-}
-
-type RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode struct {
-	Mode RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode `json:"mode"`
-}
-
-func (o *RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode) GetMode() RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode {
-	if o == nil {
-		return RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode("")
-	}
-	return o.Mode
-}
-
-type RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode string
-
-const (
-	RefreshScheduleModeNeverScheduleTypesPipelineUpdateModeNever RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode = "NEVER"
-)
-
-func (e RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode) ToPointer() *RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode {
-	return &e
-}
-
-func (e *RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "NEVER":
-		*e = RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode: %v", v)
-	}
-}
-
-type RefreshScheduleModeNeverScheduleTypesNeverScheduleMode struct {
-	Mode RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode `json:"mode"`
-}
-
-func (o *RefreshScheduleModeNeverScheduleTypesNeverScheduleMode) GetMode() RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode {
-	if o == nil {
-		return RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode("")
-	}
-	return o.Mode
-}
-
-type PipelineUpdateScheduleTypesType string
-
-const (
-	PipelineUpdateScheduleTypesTypeMonthly PipelineUpdateScheduleTypesType = "MONTHLY"
-	PipelineUpdateScheduleTypesTypeHourly  PipelineUpdateScheduleTypesType = "HOURLY"
-	PipelineUpdateScheduleTypesTypeNever   PipelineUpdateScheduleTypesType = "NEVER"
-	PipelineUpdateScheduleTypesTypeDaily   PipelineUpdateScheduleTypesType = "DAILY"
-	PipelineUpdateScheduleTypesTypeWeekly  PipelineUpdateScheduleTypesType = "WEEKLY"
-)
-
-// PipelineUpdateScheduleTypes - A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
-//
-// Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`.
-type PipelineUpdateScheduleTypes struct {
-	RefreshScheduleModeNeverScheduleTypesNeverScheduleMode     *RefreshScheduleModeNeverScheduleTypesNeverScheduleMode
-	RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode   *RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode
-	RefreshScheduleModeDailyScheduleTypesDailyScheduleMode     *RefreshScheduleModeDailyScheduleTypesDailyScheduleMode
-	RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode   *RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode
-	RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode *RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode
-
-	Type PipelineUpdateScheduleTypesType
-}
-
-func CreatePipelineUpdateScheduleTypesMonthly(monthly RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode) PipelineUpdateScheduleTypes {
-	typ := PipelineUpdateScheduleTypesTypeMonthly
-
-	typStr := RefreshScheduleModeMonthlyScheduleTypesPipelineUpdateMode(typ)
-	monthly.Mode = typStr
-
-	return PipelineUpdateScheduleTypes{
-		RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode: &monthly,
-		Type: typ,
-	}
-}
-
-func CreatePipelineUpdateScheduleTypesHourly(hourly RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode) PipelineUpdateScheduleTypes {
-	typ := PipelineUpdateScheduleTypesTypeHourly
-
-	typStr := RefreshScheduleModeHourlyScheduleTypesPipelineUpdateMode(typ)
-	hourly.Mode = typStr
-
-	return PipelineUpdateScheduleTypes{
-		RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode: &hourly,
-		Type: typ,
-	}
-}
-
-func CreatePipelineUpdateScheduleTypesNever(never RefreshScheduleModeNeverScheduleTypesNeverScheduleMode) PipelineUpdateScheduleTypes {
-	typ := PipelineUpdateScheduleTypesTypeNever
-
-	typStr := RefreshScheduleModeNeverScheduleTypesPipelineUpdateMode(typ)
-	never.Mode = typStr
-
-	return PipelineUpdateScheduleTypes{
-		RefreshScheduleModeNeverScheduleTypesNeverScheduleMode: &never,
-		Type: typ,
-	}
-}
-
-func CreatePipelineUpdateScheduleTypesDaily(daily RefreshScheduleModeDailyScheduleTypesDailyScheduleMode) PipelineUpdateScheduleTypes {
-	typ := PipelineUpdateScheduleTypesTypeDaily
-
-	typStr := RefreshScheduleModeDailyScheduleTypesPipelineUpdateMode(typ)
-	daily.Mode = typStr
-
-	return PipelineUpdateScheduleTypes{
-		RefreshScheduleModeDailyScheduleTypesDailyScheduleMode: &daily,
-		Type: typ,
-	}
-}
-
-func CreatePipelineUpdateScheduleTypesWeekly(weekly RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode) PipelineUpdateScheduleTypes {
-	typ := PipelineUpdateScheduleTypesTypeWeekly
-
-	typStr := RefreshScheduleModeWeeklyScheduleTypesPipelineUpdateMode(typ)
-	weekly.Mode = typStr
-
-	return PipelineUpdateScheduleTypes{
-		RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode: &weekly,
-		Type: typ,
-	}
-}
-
-func (u *PipelineUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
-
-	type discriminator struct {
-		Mode string
-	}
-
-	dis := new(discriminator)
-	if err := json.Unmarshal(data, &dis); err != nil {
-		return fmt.Errorf("could not unmarshal discriminator: %w", err)
-	}
-
-	switch dis.Mode {
-	case "MONTHLY":
-		refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode := new(RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode = refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode
-		u.Type = PipelineUpdateScheduleTypesTypeMonthly
-		return nil
-	case "HOURLY":
-		refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode := new(RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode = refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode
-		u.Type = PipelineUpdateScheduleTypesTypeHourly
-		return nil
-	case "NEVER":
-		refreshScheduleModeNeverScheduleTypesNeverScheduleMode := new(RefreshScheduleModeNeverScheduleTypesNeverScheduleMode)
-		if err := utils.UnmarshalJSON(data, &refreshScheduleModeNeverScheduleTypesNeverScheduleMode, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode = refreshScheduleModeNeverScheduleTypesNeverScheduleMode
-		u.Type = PipelineUpdateScheduleTypesTypeNever
-		return nil
-	case "DAILY":
-		refreshScheduleModeDailyScheduleTypesDailyScheduleMode := new(RefreshScheduleModeDailyScheduleTypesDailyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &refreshScheduleModeDailyScheduleTypesDailyScheduleMode, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode = refreshScheduleModeDailyScheduleTypesDailyScheduleMode
-		u.Type = PipelineUpdateScheduleTypesTypeDaily
-		return nil
-	case "WEEKLY":
-		refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode := new(RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode = refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode
-		u.Type = PipelineUpdateScheduleTypesTypeWeekly
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u PipelineUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
-	if u.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode != nil {
-		return utils.MarshalJSON(u.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode, "", true)
-	}
-
-	if u.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode != nil {
-		return utils.MarshalJSON(u.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode, "", true)
-	}
-
-	if u.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode != nil {
-		return utils.MarshalJSON(u.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode, "", true)
-	}
-
-	if u.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode != nil {
-		return utils.MarshalJSON(u.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode, "", true)
-	}
-
-	if u.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode != nil {
-		return utils.MarshalJSON(u.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
 // PipelineUpdateAction - Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached.
 type PipelineUpdateAction string
 
@@ -473,10 +84,10 @@ func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesMode) UnmarshalJSON(data []
 
 // MonthlyUpdateScheduleMode - The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
 type MonthlyUpdateScheduleMode struct {
-	Mode UpdateScheduleModeMonthlyUpdateScheduleTypesMode `json:"mode"`
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesMode `json:"mode"`
+	DayOfMonth int64                                            `json:"dayOfMonth"`
 	// Hour of day the  pipeline update should be started at (in UTC).
-	HourOfDay  int64 `json:"hourOfDay"`
-	DayOfMonth int64 `json:"dayOfMonth"`
+	HourOfDay int64 `json:"hourOfDay"`
 }
 
 func (o *MonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesMode {
@@ -486,18 +97,18 @@ func (o *MonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateSch
 	return o.Mode
 }
 
-func (o *MonthlyUpdateScheduleMode) GetHourOfDay() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.HourOfDay
-}
-
 func (o *MonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.DayOfMonth
+}
+
+func (o *MonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
 }
 
 type UpdateScheduleModeWeeklyUpdateScheduleTypesMode string
@@ -682,11 +293,11 @@ func (o *IntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
 type PipelineUpdateUpdateScheduleTypesType string
 
 const (
-	PipelineUpdateUpdateScheduleTypesTypeMonthly  PipelineUpdateUpdateScheduleTypesType = "MONTHLY"
-	PipelineUpdateUpdateScheduleTypesTypeHourly   PipelineUpdateUpdateScheduleTypesType = "HOURLY"
 	PipelineUpdateUpdateScheduleTypesTypeInterval PipelineUpdateUpdateScheduleTypesType = "INTERVAL"
+	PipelineUpdateUpdateScheduleTypesTypeHourly   PipelineUpdateUpdateScheduleTypesType = "HOURLY"
 	PipelineUpdateUpdateScheduleTypesTypeDaily    PipelineUpdateUpdateScheduleTypesType = "DAILY"
 	PipelineUpdateUpdateScheduleTypesTypeWeekly   PipelineUpdateUpdateScheduleTypesType = "WEEKLY"
+	PipelineUpdateUpdateScheduleTypesTypeMonthly  PipelineUpdateUpdateScheduleTypesType = "MONTHLY"
 )
 
 // PipelineUpdateUpdateScheduleTypes - Setting the `updateSchedule` to `null` will remove the Pipeline Update Schedule and revert to using the Connection Update Schedule.
@@ -700,15 +311,15 @@ type PipelineUpdateUpdateScheduleTypes struct {
 	Type PipelineUpdateUpdateScheduleTypesType
 }
 
-func CreatePipelineUpdateUpdateScheduleTypesMonthly(monthly MonthlyUpdateScheduleMode) PipelineUpdateUpdateScheduleTypes {
-	typ := PipelineUpdateUpdateScheduleTypesTypeMonthly
+func CreatePipelineUpdateUpdateScheduleTypesInterval(interval IntervalUpdateScheduleMode) PipelineUpdateUpdateScheduleTypes {
+	typ := PipelineUpdateUpdateScheduleTypesTypeInterval
 
-	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesMode(typ)
-	monthly.Mode = typStr
+	typStr := UpdateScheduleTypesMode(typ)
+	interval.Mode = typStr
 
 	return PipelineUpdateUpdateScheduleTypes{
-		MonthlyUpdateScheduleMode: &monthly,
-		Type:                      typ,
+		IntervalUpdateScheduleMode: &interval,
+		Type:                       typ,
 	}
 }
 
@@ -721,18 +332,6 @@ func CreatePipelineUpdateUpdateScheduleTypesHourly(hourly HourlyUpdateScheduleMo
 	return PipelineUpdateUpdateScheduleTypes{
 		HourlyUpdateScheduleMode: &hourly,
 		Type:                     typ,
-	}
-}
-
-func CreatePipelineUpdateUpdateScheduleTypesInterval(interval IntervalUpdateScheduleMode) PipelineUpdateUpdateScheduleTypes {
-	typ := PipelineUpdateUpdateScheduleTypesTypeInterval
-
-	typStr := UpdateScheduleTypesMode(typ)
-	interval.Mode = typStr
-
-	return PipelineUpdateUpdateScheduleTypes{
-		IntervalUpdateScheduleMode: &interval,
-		Type:                       typ,
 	}
 }
 
@@ -760,6 +359,18 @@ func CreatePipelineUpdateUpdateScheduleTypesWeekly(weekly WeeklyUpdateScheduleMo
 	}
 }
 
+func CreatePipelineUpdateUpdateScheduleTypesMonthly(monthly MonthlyUpdateScheduleMode) PipelineUpdateUpdateScheduleTypes {
+	typ := PipelineUpdateUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesMode(typ)
+	monthly.Mode = typStr
+
+	return PipelineUpdateUpdateScheduleTypes{
+		MonthlyUpdateScheduleMode: &monthly,
+		Type:                      typ,
+	}
+}
+
 func (u *PipelineUpdateUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
@@ -772,14 +383,14 @@ func (u *PipelineUpdateUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Mode {
-	case "MONTHLY":
-		monthlyUpdateScheduleMode := new(MonthlyUpdateScheduleMode)
-		if err := utils.UnmarshalJSON(data, &monthlyUpdateScheduleMode, "", true, true); err != nil {
+	case "INTERVAL":
+		intervalUpdateScheduleMode := new(IntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &intervalUpdateScheduleMode, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.MonthlyUpdateScheduleMode = monthlyUpdateScheduleMode
-		u.Type = PipelineUpdateUpdateScheduleTypesTypeMonthly
+		u.IntervalUpdateScheduleMode = intervalUpdateScheduleMode
+		u.Type = PipelineUpdateUpdateScheduleTypesTypeInterval
 		return nil
 	case "HOURLY":
 		hourlyUpdateScheduleMode := new(HourlyUpdateScheduleMode)
@@ -789,15 +400,6 @@ func (u *PipelineUpdateUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
 
 		u.HourlyUpdateScheduleMode = hourlyUpdateScheduleMode
 		u.Type = PipelineUpdateUpdateScheduleTypesTypeHourly
-		return nil
-	case "INTERVAL":
-		intervalUpdateScheduleMode := new(IntervalUpdateScheduleMode)
-		if err := utils.UnmarshalJSON(data, &intervalUpdateScheduleMode, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.IntervalUpdateScheduleMode = intervalUpdateScheduleMode
-		u.Type = PipelineUpdateUpdateScheduleTypesTypeInterval
 		return nil
 	case "DAILY":
 		dailyUpdateScheduleMode := new(DailyUpdateScheduleMode)
@@ -816,6 +418,15 @@ func (u *PipelineUpdateUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
 
 		u.WeeklyUpdateScheduleMode = weeklyUpdateScheduleMode
 		u.Type = PipelineUpdateUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		monthlyUpdateScheduleMode := new(MonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &monthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.MonthlyUpdateScheduleMode = monthlyUpdateScheduleMode
+		u.Type = PipelineUpdateUpdateScheduleTypesTypeMonthly
 		return nil
 	}
 
@@ -846,24 +457,413 @@ func (u PipelineUpdateUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
+type RefreshScheduleModeMonthlyScheduleTypesMode string
+
+const (
+	RefreshScheduleModeMonthlyScheduleTypesModeMonthly RefreshScheduleModeMonthlyScheduleTypesMode = "MONTHLY"
+)
+
+func (e RefreshScheduleModeMonthlyScheduleTypesMode) ToPointer() *RefreshScheduleModeMonthlyScheduleTypesMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeMonthlyScheduleTypesMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = RefreshScheduleModeMonthlyScheduleTypesMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeMonthlyScheduleTypesMode: %v", v)
+	}
+}
+
+type MonthlyScheduleMode struct {
+	Mode RefreshScheduleModeMonthlyScheduleTypesMode `json:"mode"`
+	// Day of the month this schedule should trigger at (in UTC).
+	DayOfMonth int64 `json:"dayOfMonth"`
+	// Hour of day this schedule should trigger at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *MonthlyScheduleMode) GetMode() RefreshScheduleModeMonthlyScheduleTypesMode {
+	if o == nil {
+		return RefreshScheduleModeMonthlyScheduleTypesMode("")
+	}
+	return o.Mode
+}
+
+func (o *MonthlyScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *MonthlyScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type RefreshScheduleModeWeeklyScheduleTypesMode string
+
+const (
+	RefreshScheduleModeWeeklyScheduleTypesModeWeekly RefreshScheduleModeWeeklyScheduleTypesMode = "WEEKLY"
+)
+
+func (e RefreshScheduleModeWeeklyScheduleTypesMode) ToPointer() *RefreshScheduleModeWeeklyScheduleTypesMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeWeeklyScheduleTypesMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = RefreshScheduleModeWeeklyScheduleTypesMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeWeeklyScheduleTypesMode: %v", v)
+	}
+}
+
+type WeeklyScheduleMode struct {
+	Mode RefreshScheduleModeWeeklyScheduleTypesMode `json:"mode"`
+	// The day of the week this schedule should trigger at (in UTC).
+	DayOfWeek int64 `json:"dayOfWeek"`
+	// Hour of day this schedule should trigger at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *WeeklyScheduleMode) GetMode() RefreshScheduleModeWeeklyScheduleTypesMode {
+	if o == nil {
+		return RefreshScheduleModeWeeklyScheduleTypesMode("")
+	}
+	return o.Mode
+}
+
+func (o *WeeklyScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *WeeklyScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type RefreshScheduleModeDailyScheduleTypesMode string
+
+const (
+	RefreshScheduleModeDailyScheduleTypesModeDaily RefreshScheduleModeDailyScheduleTypesMode = "DAILY"
+)
+
+func (e RefreshScheduleModeDailyScheduleTypesMode) ToPointer() *RefreshScheduleModeDailyScheduleTypesMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeDailyScheduleTypesMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = RefreshScheduleModeDailyScheduleTypesMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeDailyScheduleTypesMode: %v", v)
+	}
+}
+
+type DailyScheduleMode struct {
+	Mode RefreshScheduleModeDailyScheduleTypesMode `json:"mode"`
+	// Hour of day this schedule should trigger at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *DailyScheduleMode) GetMode() RefreshScheduleModeDailyScheduleTypesMode {
+	if o == nil {
+		return RefreshScheduleModeDailyScheduleTypesMode("")
+	}
+	return o.Mode
+}
+
+func (o *DailyScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type RefreshScheduleModeHourlyScheduleTypesMode string
+
+const (
+	RefreshScheduleModeHourlyScheduleTypesModeHourly RefreshScheduleModeHourlyScheduleTypesMode = "HOURLY"
+)
+
+func (e RefreshScheduleModeHourlyScheduleTypesMode) ToPointer() *RefreshScheduleModeHourlyScheduleTypesMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeHourlyScheduleTypesMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = RefreshScheduleModeHourlyScheduleTypesMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeHourlyScheduleTypesMode: %v", v)
+	}
+}
+
+type HourlyScheduleMode struct {
+	Mode RefreshScheduleModeHourlyScheduleTypesMode `json:"mode"`
+}
+
+func (o *HourlyScheduleMode) GetMode() RefreshScheduleModeHourlyScheduleTypesMode {
+	if o == nil {
+		return RefreshScheduleModeHourlyScheduleTypesMode("")
+	}
+	return o.Mode
+}
+
+type ScheduleTypesMode string
+
+const (
+	ScheduleTypesModeNever ScheduleTypesMode = "NEVER"
+)
+
+func (e ScheduleTypesMode) ToPointer() *ScheduleTypesMode {
+	return &e
+}
+
+func (e *ScheduleTypesMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "NEVER":
+		*e = ScheduleTypesMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ScheduleTypesMode: %v", v)
+	}
+}
+
+type NeverScheduleMode struct {
+	Mode ScheduleTypesMode `json:"mode"`
+}
+
+func (o *NeverScheduleMode) GetMode() ScheduleTypesMode {
+	if o == nil {
+		return ScheduleTypesMode("")
+	}
+	return o.Mode
+}
+
+type ScheduleTypesType string
+
+const (
+	ScheduleTypesTypeNever   ScheduleTypesType = "NEVER"
+	ScheduleTypesTypeHourly  ScheduleTypesType = "HOURLY"
+	ScheduleTypesTypeDaily   ScheduleTypesType = "DAILY"
+	ScheduleTypesTypeWeekly  ScheduleTypesType = "WEEKLY"
+	ScheduleTypesTypeMonthly ScheduleTypesType = "MONTHLY"
+)
+
+// ScheduleTypes - A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
+//
+// Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`.
+type ScheduleTypes struct {
+	NeverScheduleMode   *NeverScheduleMode
+	HourlyScheduleMode  *HourlyScheduleMode
+	DailyScheduleMode   *DailyScheduleMode
+	WeeklyScheduleMode  *WeeklyScheduleMode
+	MonthlyScheduleMode *MonthlyScheduleMode
+
+	Type ScheduleTypesType
+}
+
+func CreateScheduleTypesNever(never NeverScheduleMode) ScheduleTypes {
+	typ := ScheduleTypesTypeNever
+
+	typStr := ScheduleTypesMode(typ)
+	never.Mode = typStr
+
+	return ScheduleTypes{
+		NeverScheduleMode: &never,
+		Type:              typ,
+	}
+}
+
+func CreateScheduleTypesHourly(hourly HourlyScheduleMode) ScheduleTypes {
+	typ := ScheduleTypesTypeHourly
+
+	typStr := RefreshScheduleModeHourlyScheduleTypesMode(typ)
+	hourly.Mode = typStr
+
+	return ScheduleTypes{
+		HourlyScheduleMode: &hourly,
+		Type:               typ,
+	}
+}
+
+func CreateScheduleTypesDaily(daily DailyScheduleMode) ScheduleTypes {
+	typ := ScheduleTypesTypeDaily
+
+	typStr := RefreshScheduleModeDailyScheduleTypesMode(typ)
+	daily.Mode = typStr
+
+	return ScheduleTypes{
+		DailyScheduleMode: &daily,
+		Type:              typ,
+	}
+}
+
+func CreateScheduleTypesWeekly(weekly WeeklyScheduleMode) ScheduleTypes {
+	typ := ScheduleTypesTypeWeekly
+
+	typStr := RefreshScheduleModeWeeklyScheduleTypesMode(typ)
+	weekly.Mode = typStr
+
+	return ScheduleTypes{
+		WeeklyScheduleMode: &weekly,
+		Type:               typ,
+	}
+}
+
+func CreateScheduleTypesMonthly(monthly MonthlyScheduleMode) ScheduleTypes {
+	typ := ScheduleTypesTypeMonthly
+
+	typStr := RefreshScheduleModeMonthlyScheduleTypesMode(typ)
+	monthly.Mode = typStr
+
+	return ScheduleTypes{
+		MonthlyScheduleMode: &monthly,
+		Type:                typ,
+	}
+}
+
+func (u *ScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "NEVER":
+		neverScheduleMode := new(NeverScheduleMode)
+		if err := utils.UnmarshalJSON(data, &neverScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.NeverScheduleMode = neverScheduleMode
+		u.Type = ScheduleTypesTypeNever
+		return nil
+	case "HOURLY":
+		hourlyScheduleMode := new(HourlyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &hourlyScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.HourlyScheduleMode = hourlyScheduleMode
+		u.Type = ScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		dailyScheduleMode := new(DailyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &dailyScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.DailyScheduleMode = dailyScheduleMode
+		u.Type = ScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		weeklyScheduleMode := new(WeeklyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &weeklyScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.WeeklyScheduleMode = weeklyScheduleMode
+		u.Type = ScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		monthlyScheduleMode := new(MonthlyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &monthlyScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.MonthlyScheduleMode = monthlyScheduleMode
+		u.Type = ScheduleTypesTypeMonthly
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.NeverScheduleMode != nil {
+		return utils.MarshalJSON(u.NeverScheduleMode, "", true)
+	}
+
+	if u.HourlyScheduleMode != nil {
+		return utils.MarshalJSON(u.HourlyScheduleMode, "", true)
+	}
+
+	if u.DailyScheduleMode != nil {
+		return utils.MarshalJSON(u.DailyScheduleMode, "", true)
+	}
+
+	if u.WeeklyScheduleMode != nil {
+		return utils.MarshalJSON(u.WeeklyScheduleMode, "", true)
+	}
+
+	if u.MonthlyScheduleMode != nil {
+		return utils.MarshalJSON(u.MonthlyScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type PipelineUpdate struct {
 	Name              *string             `json:"name,omitempty"`
+	Source            *SourceTypesUpdate  `json:"source,omitempty"`
 	DestinationUpdate []DestinationUpdate `json:"destination,omitempty"`
+	Paused            *bool               `json:"paused,omitempty"`
 	// A list of users' email to share the pipeline with.
 	//
 	// A pipeline cannot be unshared; therefore future calls can only add to this list.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Shares []string           `json:"shares,omitempty"`
-	Paused *bool              `json:"paused,omitempty"`
-	Source *SourceTypesUpdate `json:"source,omitempty"`
-	// A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
-	//
-	// Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`.
-	RefreshSchedule      *PipelineUpdateScheduleTypes        `json:"refreshSchedule,omitempty"`
+	Shares               []string                            `json:"shares,omitempty"`
 	ParsingErrorSettings *PipelineUpdateParsingErrorSettings `json:"parsingErrorSettings,omitempty"`
 	// Setting the `updateSchedule` to `null` will remove the Pipeline Update Schedule and revert to using the Connection Update Schedule.
 	UpdateSchedule *PipelineUpdateUpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
+	//
+	// Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`.
+	RefreshSchedule *ScheduleTypes `json:"refreshSchedule,omitempty"`
 }
 
 func (o *PipelineUpdate) GetName() *string {
@@ -873,27 +873,6 @@ func (o *PipelineUpdate) GetName() *string {
 	return o.Name
 }
 
-func (o *PipelineUpdate) GetDestinationUpdate() []DestinationUpdate {
-	if o == nil {
-		return nil
-	}
-	return o.DestinationUpdate
-}
-
-func (o *PipelineUpdate) GetShares() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Shares
-}
-
-func (o *PipelineUpdate) GetPaused() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Paused
-}
-
 func (o *PipelineUpdate) GetSource() *SourceTypesUpdate {
 	if o == nil {
 		return nil
@@ -901,37 +880,58 @@ func (o *PipelineUpdate) GetSource() *SourceTypesUpdate {
 	return o.Source
 }
 
-func (o *PipelineUpdate) GetSourceGoogleCloudStorage() *SourceGoogleCloudStorageUpdate {
+func (o *PipelineUpdate) GetSourceActiveCampaign() *SourceActiveCampaignUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceGoogleCloudStorageUpdate
+		return v.SourceActiveCampaignUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceJiraCloud() *SourceJiraCloudUpdate {
+func (o *PipelineUpdate) GetSourceBigquery() *SourceBigQueryUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceJiraCloudUpdate
+		return v.SourceBigQueryUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceErpx() *SourceErpxUpdate {
+func (o *PipelineUpdate) GetSourceBingAds() *SourceBingAdsUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceErpxUpdate
+		return v.SourceBingAdsUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceRaveMedidata() *SourceRaveMedidataUpdate {
+func (o *PipelineUpdate) GetSourceBlackline() *SourceBlacklineUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceRaveMedidataUpdate
+		return v.SourceBlacklineUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceDeltaLake() *SourceDeltaLakeUpdate {
+func (o *PipelineUpdate) GetSourceBraintree() *SourceBraintreeUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceDeltaLakeUpdate
+		return v.SourceBraintreeUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceConfluentCloud() *SourceConfluentCloudUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceConfluentCloudUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceCoupa() *SourceCoupaUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceCoupaUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceCriteo() *SourceCriteoUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceCriteoUpdate
 	}
 	return nil
 }
@@ -943,86 +943,30 @@ func (o *PipelineUpdate) GetSourceDb2() *SourceDb2Update {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceSnowflake() *SourceSnowflakeUpdate {
+func (o *PipelineUpdate) GetSourceDb2Sharded() *SourceDb2ShardedUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceSnowflakeUpdate
+		return v.SourceDb2ShardedUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceTikTokAds() *SourceTikTokAdsUpdate {
+func (o *PipelineUpdate) GetSourceDeltaLake() *SourceDeltaLakeUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceTikTokAdsUpdate
+		return v.SourceDeltaLakeUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceOutlook() *SourceOutlookUpdate {
+func (o *PipelineUpdate) GetSourceEgnyte() *SourceEgnyteUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceOutlookUpdate
+		return v.SourceEgnyteUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceSnowflakeSharded() *SourceSnowflakeShardedUpdate {
+func (o *PipelineUpdate) GetSourceElasticsearch() *SourceElasticSearchUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceSnowflakeShardedUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceFreshchat() *SourceFreshchatUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceFreshchatUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceVeeva() *SourceVeevaUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceVeevaUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceWorkdayReport() *SourceWorkdayReportUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceWorkdayReportUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceS3Input() *SourceS3InputUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceS3InputUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceOutreach() *SourceOutreachUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceOutreachUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceRecurly() *SourceRecurlyUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceRecurlyUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceGoogleAds() *SourceGoogleAdsUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceGoogleAdsUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceQuoraAds() *SourceQuoraAdsUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceQuoraAdsUpdate
+		return v.SourceElasticSearchUpdate
 	}
 	return nil
 }
@@ -1034,30 +978,107 @@ func (o *PipelineUpdate) GetSourceElluminate() *SourceElluminateUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceStreaming() *SourceStreamingUpdate {
+func (o *PipelineUpdate) GetSourceEloqua() *SourceEloquaUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceStreamingUpdate
+		return v.SourceEloquaUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceDb2Sharded() *SourceDb2ShardedUpdate {
+func (o *PipelineUpdate) GetSourceErpx() *SourceErpxUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceDb2ShardedUpdate
+		return v.SourceErpxUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceLdap() *SourceLdapUpdate {
+func (o *PipelineUpdate) GetSourceFacebookAds() *SourceFacebookAdsUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceLdapUpdate
+		return v.SourceFacebookAdsUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceMysqlSharded() *SourceMysqlShardedUpdate {
+func (o *PipelineUpdate) GetSourceFifteenFive() *SourceFifteenFiveUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceMysqlShardedUpdate
+		return v.SourceFifteenFiveUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceFreshchat() *SourceFreshchatUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceFreshchatUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceFreshsales() *SourceFreshsalesUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceFreshsalesUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceFreshworks() *SourceFreshworksUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceFreshworksUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceFtp() *SourceFtpUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceFtpUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceGong() *SourceGongUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceGongUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceGoogleAnalyticsGa4() *SourceGoogleAnalyticsGa4Update {
+	if v := o.GetSource(); v != nil {
+		return v.SourceGoogleAnalyticsGa4Update
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceGoogleCloudStorage() *SourceGoogleCloudStorageUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceGoogleCloudStorageUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceGoogleAds() *SourceGoogleAdsUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceGoogleAdsUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceGoogleSheets() *SourceGoogleSheetsUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceGoogleSheetsUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceHubspot() *SourceHubspotUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceHubspotUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceIntercom() *SourceIntercomUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceIntercomUpdate
 	}
 	return nil
 }
@@ -1076,132 +1097,6 @@ func (o *PipelineUpdate) GetSourceJira() *SourceJiraUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceVerizonMediaDsp() *SourceVerizonMediaDspUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceVerizonMediaDspUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceTwitterAds() *SourceTwitterUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceTwitterUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceIntercom() *SourceIntercomUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceIntercomUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceCoupa() *SourceCoupaUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceCoupaUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceTwilio() *SourceTwilioUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceTwilioUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceBingAds() *SourceBingAdsUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceBingAdsUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSalesforce() *SourceSalesforceUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSalesforceUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSapHana() *SourceSapHanaUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSapHanaUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceCriteo() *SourceCriteoUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceCriteoUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceFtp() *SourceFtpUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceFtpUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSquare() *SourceSquareUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSquareUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceEgnyte() *SourceEgnyteUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceEgnyteUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceUserDefinedAPI() *SourceUserDefinedAPIUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceUserDefinedAPIUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSapConcur() *SourceSapConcurUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSapConcurUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceUservoice() *SourceUserVoiceUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceUserVoiceUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceNetsuite() *SourceNetsuiteUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceNetsuiteUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceTheTradeDesk() *SourceTheTradeDeskUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceTheTradeDeskUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceMongodb() *SourceMongodbUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceMongodbUpdate
-	}
-	return nil
-}
-
 func (o *PipelineUpdate) GetSourceJiraAlign() *SourceJiraAlignUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceJiraAlignUpdate
@@ -1209,107 +1104,9 @@ func (o *PipelineUpdate) GetSourceJiraAlign() *SourceJiraAlignUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceGong() *SourceGongUpdate {
+func (o *PipelineUpdate) GetSourceJiraCloud() *SourceJiraCloudUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceGongUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourcePinterestAds() *SourcePinterestAdsUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourcePinterestAdsUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceShopify() *SourceShopifyUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceShopifyUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceNetsuiteV2() *SourceNetsuiteV2Update {
-	if v := o.GetSource(); v != nil {
-		return v.SourceNetsuiteV2Update
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceBraintree() *SourceBraintreeUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceBraintreeUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSQLServer() *SourceSQLServerUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSQLServerUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSalesforceMarketingCloud() *SourceSalesforceMarketingCloudUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSalesforceMarketingCloudUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSftp() *SourceSftpUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSftpUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceS3Legacy() *SourceS3LegacyUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceS3LegacyUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceBlackline() *SourceBlacklineUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceBlacklineUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceRedshift() *SourceRedshiftUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceRedshiftUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceStripe() *SourceStripeUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceStripeUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceFifteenFive() *SourceFifteenFiveUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceFifteenFiveUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSQLServerSharded() *SourceSQLServerShardedUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSQLServerShardedUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceKustomer() *SourceKustomerUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceKustomerUpdate
+		return v.SourceJiraCloudUpdate
 	}
 	return nil
 }
@@ -1321,107 +1118,16 @@ func (o *PipelineUpdate) GetSourceKafka() *SourceKafkaUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceZoomPhone() *SourceZoomPhoneUpdate {
+func (o *PipelineUpdate) GetSourceKustomer() *SourceKustomerUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceZoomPhoneUpdate
+		return v.SourceKustomerUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceFacebookAds() *SourceFacebookAdsUpdate {
+func (o *PipelineUpdate) GetSourceLdap() *SourceLdapUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceFacebookAdsUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceLinkedInAds() *SourceLinkedInAdsUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceLinkedInAdsUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceMysql() *SourceMysqlUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceMysqlUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceFreshworks() *SourceFreshworksUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceFreshworksUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceWorkfront() *SourceWorkfrontUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceWorkfrontUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceHubspot() *SourceHubspotUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceHubspotUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceMarketo() *SourceMarketoUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceMarketoUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSumtotal() *SourceSumTotalUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSumTotalUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSapHanaSharded() *SourceSapHanaShardedUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSapHanaShardedUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceGoogleAnalyticsGa4() *SourceGoogleAnalyticsGa4Update {
-	if v := o.GetSource(); v != nil {
-		return v.SourceGoogleAnalyticsGa4Update
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceGoogleSheets() *SourceGoogleSheetsUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceGoogleSheetsUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceBigquery() *SourceBigQueryUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceBigQueryUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceConfluentCloud() *SourceConfluentCloudUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceConfluentCloudUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceEloqua() *SourceEloquaUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceEloquaUpdate
+		return v.SourceLdapUpdate
 	}
 	return nil
 }
@@ -1433,9 +1139,16 @@ func (o *PipelineUpdate) GetSourceLdapVirtualListView() *SourceLdapVirtualListVi
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourcePostgresSharded() *SourcePostgresShardedUpdate {
+func (o *PipelineUpdate) GetSourceLinkedInAds() *SourceLinkedInAdsUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourcePostgresShardedUpdate
+		return v.SourceLinkedInAdsUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceMarketo() *SourceMarketoUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceMarketoUpdate
 	}
 	return nil
 }
@@ -1447,27 +1160,6 @@ func (o *PipelineUpdate) GetSourceMicrosoftEntraID() *SourceMicrosoftEntraIDUpda
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceSkyward() *SourceSkywardUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSkywardUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceServiceNow() *SourceServiceNowUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceServiceNowUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceActiveCampaign() *SourceActiveCampaignUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceActiveCampaignUpdate
-	}
-	return nil
-}
-
 func (o *PipelineUpdate) GetSourceMixpanel() *SourceMixpanelUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceMixpanelUpdate
@@ -1475,51 +1167,37 @@ func (o *PipelineUpdate) GetSourceMixpanel() *SourceMixpanelUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourcePostgres() *SourcePostgresUpdate {
+func (o *PipelineUpdate) GetSourceMongodb() *SourceMongodbUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourcePostgresUpdate
+		return v.SourceMongodbUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceOracleSharded() *SourceOracleShardedUpdate {
+func (o *PipelineUpdate) GetSourceMysqlSharded() *SourceMysqlShardedUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceOracleShardedUpdate
+		return v.SourceMysqlShardedUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceElasticsearch() *SourceElasticSearchUpdate {
+func (o *PipelineUpdate) GetSourceMysql() *SourceMysqlUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceElasticSearchUpdate
+		return v.SourceMysqlUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceZendesk() *SourceZendeskUpdate {
+func (o *PipelineUpdate) GetSourceNetsuite() *SourceNetsuiteUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceZendeskUpdate
+		return v.SourceNetsuiteUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceRedshiftSharded() *SourceRedshiftShardedUpdate {
+func (o *PipelineUpdate) GetSourceNetsuiteV2() *SourceNetsuiteV2Update {
 	if v := o.GetSource(); v != nil {
-		return v.SourceRedshiftShardedUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceZuora() *SourceZuoraUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceZuoraUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceFreshsales() *SourceFreshsalesUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceFreshsalesUpdate
+		return v.SourceNetsuiteV2Update
 	}
 	return nil
 }
@@ -1531,9 +1209,205 @@ func (o *PipelineUpdate) GetSourceOracle() *SourceOracleUpdate {
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceOracleSharded() *SourceOracleShardedUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceOracleShardedUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceOutreach() *SourceOutreachUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceOutreachUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceOutlook() *SourceOutlookUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceOutlookUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourcePinterestAds() *SourcePinterestAdsUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourcePinterestAdsUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourcePostgres() *SourcePostgresUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourcePostgresUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourcePostgresSharded() *SourcePostgresShardedUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourcePostgresShardedUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceQuoraAds() *SourceQuoraAdsUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceQuoraAdsUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceRaveMedidata() *SourceRaveMedidataUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceRaveMedidataUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceRecurly() *SourceRecurlyUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceRecurlyUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceRedshift() *SourceRedshiftUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceRedshiftUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceRedshiftSharded() *SourceRedshiftShardedUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceRedshiftShardedUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceS3Legacy() *SourceS3LegacyUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceS3LegacyUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceS3Input() *SourceS3InputUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceS3InputUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSalesforceMarketingCloud() *SourceSalesforceMarketingCloudUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSalesforceMarketingCloudUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSapConcur() *SourceSapConcurUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSapConcurUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSapHana() *SourceSapHanaUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSapHanaUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSapHanaSharded() *SourceSapHanaShardedUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSapHanaShardedUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceSeismic() *SourceSeismicUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceSeismicUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceServiceNow() *SourceServiceNowUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceServiceNowUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceShopify() *SourceShopifyUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceShopifyUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSkyward() *SourceSkywardUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSkywardUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSalesforce() *SourceSalesforceUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSalesforceUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSftp() *SourceSftpUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSftpUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSQLServer() *SourceSQLServerUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSQLServerUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSQLServerSharded() *SourceSQLServerShardedUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSQLServerShardedUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceStreaming() *SourceStreamingUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceStreamingUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSnowflake() *SourceSnowflakeUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSnowflakeUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSnowflakeSharded() *SourceSnowflakeShardedUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSnowflakeShardedUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSquare() *SourceSquareUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSquareUpdate
 	}
 	return nil
 }
@@ -1545,46 +1419,130 @@ func (o *PipelineUpdate) GetSourceSnapchatAds() *SourceSnapchatAdsUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetRefreshSchedule() *PipelineUpdateScheduleTypes {
+func (o *PipelineUpdate) GetSourceStripe() *SourceStripeUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceStripeUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSumtotal() *SourceSumTotalUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSumTotalUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceTheTradeDesk() *SourceTheTradeDeskUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceTheTradeDeskUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceTikTokAds() *SourceTikTokAdsUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceTikTokAdsUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceTwilio() *SourceTwilioUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceTwilioUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceTwitterAds() *SourceTwitterUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceTwitterUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceUserDefinedAPI() *SourceUserDefinedAPIUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceUserDefinedAPIUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceUservoice() *SourceUserVoiceUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceUserVoiceUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceVeeva() *SourceVeevaUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceVeevaUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceVerizonMediaDsp() *SourceVerizonMediaDspUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceVerizonMediaDspUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceWorkdayReport() *SourceWorkdayReportUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceWorkdayReportUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceWorkfront() *SourceWorkfrontUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceWorkfrontUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceZendesk() *SourceZendeskUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceZendeskUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceZoomPhone() *SourceZoomPhoneUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceZoomPhoneUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceZuora() *SourceZuoraUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceZuoraUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetDestinationUpdate() []DestinationUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.RefreshSchedule
+	return o.DestinationUpdate
 }
 
-func (o *PipelineUpdate) GetRefreshScheduleMonthly() *RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode {
-	if v := o.GetRefreshSchedule(); v != nil {
-		return v.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode
+func (o *PipelineUpdate) GetPaused() *bool {
+	if o == nil {
+		return nil
 	}
-	return nil
+	return o.Paused
 }
 
-func (o *PipelineUpdate) GetRefreshScheduleHourly() *RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode {
-	if v := o.GetRefreshSchedule(); v != nil {
-		return v.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode
+func (o *PipelineUpdate) GetShares() []string {
+	if o == nil {
+		return nil
 	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetRefreshScheduleNever() *RefreshScheduleModeNeverScheduleTypesNeverScheduleMode {
-	if v := o.GetRefreshSchedule(); v != nil {
-		return v.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetRefreshScheduleDaily() *RefreshScheduleModeDailyScheduleTypesDailyScheduleMode {
-	if v := o.GetRefreshSchedule(); v != nil {
-		return v.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetRefreshScheduleWeekly() *RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode {
-	if v := o.GetRefreshSchedule(); v != nil {
-		return v.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode
-	}
-	return nil
+	return o.Shares
 }
 
 func (o *PipelineUpdate) GetParsingErrorSettings() *PipelineUpdateParsingErrorSettings {
@@ -1601,9 +1559,9 @@ func (o *PipelineUpdate) GetUpdateSchedule() *PipelineUpdateUpdateScheduleTypes 
 	return o.UpdateSchedule
 }
 
-func (o *PipelineUpdate) GetUpdateScheduleMonthly() *MonthlyUpdateScheduleMode {
+func (o *PipelineUpdate) GetUpdateScheduleInterval() *IntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.MonthlyUpdateScheduleMode
+		return v.IntervalUpdateScheduleMode
 	}
 	return nil
 }
@@ -1611,13 +1569,6 @@ func (o *PipelineUpdate) GetUpdateScheduleMonthly() *MonthlyUpdateScheduleMode {
 func (o *PipelineUpdate) GetUpdateScheduleHourly() *HourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.HourlyUpdateScheduleMode
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetUpdateScheduleInterval() *IntervalUpdateScheduleMode {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.IntervalUpdateScheduleMode
 	}
 	return nil
 }
@@ -1632,6 +1583,55 @@ func (o *PipelineUpdate) GetUpdateScheduleDaily() *DailyUpdateScheduleMode {
 func (o *PipelineUpdate) GetUpdateScheduleWeekly() *WeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.WeeklyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetUpdateScheduleMonthly() *MonthlyUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.MonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetRefreshSchedule() *ScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.RefreshSchedule
+}
+
+func (o *PipelineUpdate) GetRefreshScheduleNever() *NeverScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.NeverScheduleMode
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetRefreshScheduleHourly() *HourlyScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.HourlyScheduleMode
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetRefreshScheduleDaily() *DailyScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.DailyScheduleMode
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetRefreshScheduleWeekly() *WeeklyScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.WeeklyScheduleMode
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetRefreshScheduleMonthly() *MonthlyScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.MonthlyScheduleMode
 	}
 	return nil
 }

@@ -32,20 +32,13 @@ func (e *SourceSquareType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSquare struct {
+	Type SourceSquareType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string           `json:"connectionId"`
-	Type         SourceSquareType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Square entity. Example values: [Catalog, Customers, Loyalty Accounts, Loyalty Events, Loyalty Rewards, Orders, Refunds]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceSquare) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceSquare) GetType() SourceSquareType {
@@ -53,6 +46,13 @@ func (o *SourceSquare) GetType() SourceSquareType {
 		return SourceSquareType("")
 	}
 	return o.Type
+}
+
+func (o *SourceSquare) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceSquare) GetLatencyThreshold() *int64 {

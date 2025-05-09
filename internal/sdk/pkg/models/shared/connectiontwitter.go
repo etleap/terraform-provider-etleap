@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionTwitterType string
+
+const (
+	ConnectionTwitterTypeTwitterAds ConnectionTwitterType = "TWITTER_ADS"
+)
+
+func (e ConnectionTwitterType) ToPointer() *ConnectionTwitterType {
+	return &e
+}
+
+func (e *ConnectionTwitterType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "TWITTER_ADS":
+		*e = ConnectionTwitterType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionTwitterType: %v", v)
+	}
+}
+
 // ConnectionTwitterStatus - The current status of the connection.
 type ConnectionTwitterStatus string
 
@@ -73,9 +97,9 @@ func (o *ConnectionTwitterDefaultUpdateSchedule) GetUpdateSchedule() *UpdateSche
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTwitterDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionTwitterDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionTwitterDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upd
 func (o *ConnectionTwitterDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionTwitterDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,46 +125,29 @@ func (o *ConnectionTwitterDefaultUpdateSchedule) GetUpdateScheduleWeekly() *Upda
 	return nil
 }
 
-type ConnectionTwitterType string
-
-const (
-	ConnectionTwitterTypeTwitterAds ConnectionTwitterType = "TWITTER_ADS"
-)
-
-func (e ConnectionTwitterType) ToPointer() *ConnectionTwitterType {
-	return &e
-}
-
-func (e *ConnectionTwitterType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionTwitterDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "TWITTER_ADS":
-		*e = ConnectionTwitterType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionTwitterType: %v", v)
-	}
+	return nil
 }
 
 type ConnectionTwitter struct {
-	// The current status of the connection.
-	Status ConnectionTwitterStatus `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionTwitterDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool                  `json:"active"`
-	Type   ConnectionTwitterType `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string                `json:"name"`
+	Type ConnectionTwitterType `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionTwitterStatus `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionTwitterDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// This represents your Twitter developer app when making API requests. Generated under 'Consumer API keys'.
 	AppKey string `json:"appKey"`
 	// If you want to create pipelines from entities that uses Twitter API V2 endpoints you need to specify which Twitter accounts you want to retrieve data from. The usernames must be separated by comma and without the @
@@ -165,11 +165,11 @@ func (c *ConnectionTwitter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionTwitter) GetStatus() ConnectionTwitterStatus {
+func (o *ConnectionTwitter) GetID() string {
 	if o == nil {
-		return ConnectionTwitterStatus("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionTwitter) GetName() string {
@@ -179,18 +179,11 @@ func (o *ConnectionTwitter) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionTwitter) GetCreateDate() time.Time {
+func (o *ConnectionTwitter) GetType() ConnectionTwitterType {
 	if o == nil {
-		return time.Time{}
+		return ConnectionTwitterType("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionTwitter) GetDefaultUpdateSchedule() []ConnectionTwitterDefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionTwitterDefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionTwitter) GetActive() bool {
@@ -200,18 +193,18 @@ func (o *ConnectionTwitter) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionTwitter) GetType() ConnectionTwitterType {
+func (o *ConnectionTwitter) GetStatus() ConnectionTwitterStatus {
 	if o == nil {
-		return ConnectionTwitterType("")
+		return ConnectionTwitterStatus("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionTwitter) GetID() string {
+func (o *ConnectionTwitter) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionTwitter) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -221,9 +214,9 @@ func (o *ConnectionTwitter) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTwitter) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionTwitter) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -231,13 +224,6 @@ func (o *ConnectionTwitter) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthl
 func (o *ConnectionTwitter) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionTwitter) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -254,6 +240,20 @@ func (o *ConnectionTwitter) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly 
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
+}
+
+func (o *ConnectionTwitter) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
+func (o *ConnectionTwitter) GetDefaultUpdateSchedule() []ConnectionTwitterDefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionTwitterDefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionTwitter) GetAppKey() string {
@@ -278,14 +278,14 @@ type ConnectionTwitterInput struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// This represents your Twitter developer app when making API requests. Generated under 'Consumer API keys'.
 	AppKey string `json:"appKey"`
-	// This identifies your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.
-	AccessToken string `json:"accessToken"`
-	// If you want to create pipelines from entities that uses Twitter API V2 endpoints you need to specify which Twitter accounts you want to retrieve data from. The usernames must be separated by comma and without the @
-	TwitterUsernames *string `json:"twitterUsernames,omitempty"`
-	// This authenticates your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.
-	AccessTokenSecret string `json:"accessTokenSecret"`
 	// This authenticates your Twitter developer app when making API requests. Generated under 'Consumer API keys'.
 	AppSecretKey string `json:"appSecretKey"`
+	// This identifies your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.
+	AccessToken string `json:"accessToken"`
+	// This authenticates your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.
+	AccessTokenSecret string `json:"accessTokenSecret"`
+	// If you want to create pipelines from entities that uses Twitter API V2 endpoints you need to specify which Twitter accounts you want to retrieve data from. The usernames must be separated by comma and without the @
+	TwitterUsernames *string `json:"twitterUsernames,omitempty"`
 }
 
 func (o *ConnectionTwitterInput) GetName() string {
@@ -309,9 +309,9 @@ func (o *ConnectionTwitterInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTwitterInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionTwitterInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -319,13 +319,6 @@ func (o *ConnectionTwitterInput) GetUpdateScheduleMonthly() *UpdateScheduleModeM
 func (o *ConnectionTwitterInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionTwitterInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -344,11 +337,25 @@ func (o *ConnectionTwitterInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWe
 	return nil
 }
 
+func (o *ConnectionTwitterInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
+	}
+	return nil
+}
+
 func (o *ConnectionTwitterInput) GetAppKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.AppKey
+}
+
+func (o *ConnectionTwitterInput) GetAppSecretKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppSecretKey
 }
 
 func (o *ConnectionTwitterInput) GetAccessToken() string {
@@ -358,13 +365,6 @@ func (o *ConnectionTwitterInput) GetAccessToken() string {
 	return o.AccessToken
 }
 
-func (o *ConnectionTwitterInput) GetTwitterUsernames() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TwitterUsernames
-}
-
 func (o *ConnectionTwitterInput) GetAccessTokenSecret() string {
 	if o == nil {
 		return ""
@@ -372,9 +372,9 @@ func (o *ConnectionTwitterInput) GetAccessTokenSecret() string {
 	return o.AccessTokenSecret
 }
 
-func (o *ConnectionTwitterInput) GetAppSecretKey() string {
+func (o *ConnectionTwitterInput) GetTwitterUsernames() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.AppSecretKey
+	return o.TwitterUsernames
 }

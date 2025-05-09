@@ -35,7 +35,7 @@ type UpdateBLACKLINEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionBlackline *shared.ConnectionBlackline
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongo() *shared.ConnectionMongo {
+func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoInput() *shared.ConnectionMongoInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionMongoType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongo() *shared.Conne
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,55 +86,55 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongo() *shared.Conne
 			}
 		}
 	}
-	username := r.Username.ValueString()
+	var sshConfig *shared.SSHConfig
+	if r.SSHConfig != nil {
+		address := r.SSHConfig.Address.ValueString()
+		username := r.SSHConfig.Username.ValueString()
+		sshConfig = &shared.SSHConfig{
+			Address:  address,
+			Username: username,
+		}
+	}
+	var replicaSet []shared.ConnectionMongoReplicaSet = nil
+	for _, replicaSetItem := range r.ReplicaSet {
+		address1 := replicaSetItem.Address.ValueString()
+		port := replicaSetItem.Port.ValueInt64()
+		replicaSet = append(replicaSet, shared.ConnectionMongoReplicaSet{
+			Address: address1,
+			Port:    port,
+		})
+	}
+	databaseName := r.DatabaseName.ValueString()
 	useSsl := new(bool)
 	if !r.UseSsl.IsUnknown() && !r.UseSsl.IsNull() {
 		*useSsl = r.UseSsl.ValueBool()
 	} else {
 		useSsl = nil
 	}
-	var replicaSet []shared.ReplicaSet = nil
-	for _, replicaSetItem := range r.ReplicaSet {
-		port := replicaSetItem.Port.ValueInt64()
-		address := replicaSetItem.Address.ValueString()
-		replicaSet = append(replicaSet, shared.ReplicaSet{
-			Port:    port,
-			Address: address,
-		})
-	}
+	username1 := r.Username.ValueString()
+	password := r.Password.ValueString()
 	authDatabaseName := new(string)
 	if !r.AuthDatabaseName.IsUnknown() && !r.AuthDatabaseName.IsNull() {
 		*authDatabaseName = r.AuthDatabaseName.ValueString()
 	} else {
 		authDatabaseName = nil
 	}
-	var sshConfig *shared.SSHConfig
-	if r.SSHConfig != nil {
-		username1 := r.SSHConfig.Username.ValueString()
-		address1 := r.SSHConfig.Address.ValueString()
-		sshConfig = &shared.SSHConfig{
-			Username: username1,
-			Address:  address1,
-		}
-	}
-	databaseName := r.DatabaseName.ValueString()
-	password := r.Password.ValueString()
-	out := shared.ConnectionMongo{
+	out := shared.ConnectionMongoInput{
 		Name:             name,
 		Type:             typeVar,
 		UpdateSchedule:   updateSchedule,
-		Username:         username,
-		UseSsl:           useSsl,
-		ReplicaSet:       replicaSet,
-		AuthDatabaseName: authDatabaseName,
 		SSHConfig:        sshConfig,
+		ReplicaSet:       replicaSet,
 		DatabaseName:     databaseName,
+		UseSsl:           useSsl,
+		Username:         username1,
 		Password:         password,
+		AuthDatabaseName: authDatabaseName,
 	}
 	return &out
 }
 
-func (r *ConnectionMONGODBResourceModel) RefreshFromSharedConnectionMongoOutput(resp *shared.ConnectionMongoOutput) {
+func (r *ConnectionMONGODBResourceModel) RefreshFromSharedConnectionMongo(resp *shared.ConnectionMongo) {
 	r.Active = types.BoolValue(resp.Active)
 	r.AuthDatabaseName = types.StringPointerValue(resp.AuthDatabaseName)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -143,7 +143,7 @@ func (r *ConnectionMONGODBResourceModel) RefreshFromSharedConnectionMongoOutput(
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -248,11 +248,11 @@ func (r *ConnectionMONGODBResourceModel) RefreshFromSharedConnectionMongoOutput(
 }
 
 func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoUpdate() *shared.ConnectionMongoUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionMongoUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -260,11 +260,11 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoUpdate() *shared
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -327,12 +327,12 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoUpdate() *shared
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -341,51 +341,33 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoUpdate() *shared
 			}
 		}
 	}
-	username := new(string)
-	if !r.Username.IsUnknown() && !r.Username.IsNull() {
-		*username = r.Username.ValueString()
-	} else {
-		username = nil
-	}
-	useSsl := new(bool)
-	if !r.UseSsl.IsUnknown() && !r.UseSsl.IsNull() {
-		*useSsl = r.UseSsl.ValueBool()
-	} else {
-		useSsl = nil
-	}
-	var replicaSet []shared.ConnectionMongoUpdateReplicaSet = nil
-	for _, replicaSetItem := range r.ReplicaSet {
-		port := replicaSetItem.Port.ValueInt64()
-		address := replicaSetItem.Address.ValueString()
-		replicaSet = append(replicaSet, shared.ConnectionMongoUpdateReplicaSet{
-			Port:    port,
-			Address: address,
-		})
-	}
-	authDatabaseName := new(string)
-	if !r.AuthDatabaseName.IsUnknown() && !r.AuthDatabaseName.IsNull() {
-		*authDatabaseName = r.AuthDatabaseName.ValueString()
-	} else {
-		authDatabaseName = nil
-	}
 	var sshConfig *shared.ConnectionMongoUpdateSSHConfigurationUpdate
 	if r.SSHConfig != nil {
-		username1 := new(string)
-		if !r.SSHConfig.Username.IsUnknown() && !r.SSHConfig.Username.IsNull() {
-			*username1 = r.SSHConfig.Username.ValueString()
-		} else {
-			username1 = nil
-		}
-		address1 := new(string)
+		address := new(string)
 		if !r.SSHConfig.Address.IsUnknown() && !r.SSHConfig.Address.IsNull() {
-			*address1 = r.SSHConfig.Address.ValueString()
+			*address = r.SSHConfig.Address.ValueString()
 		} else {
-			address1 = nil
+			address = nil
+		}
+		username := new(string)
+		if !r.SSHConfig.Username.IsUnknown() && !r.SSHConfig.Username.IsNull() {
+			*username = r.SSHConfig.Username.ValueString()
+		} else {
+			username = nil
 		}
 		sshConfig = &shared.ConnectionMongoUpdateSSHConfigurationUpdate{
-			Username: username1,
-			Address:  address1,
+			Address:  address,
+			Username: username,
 		}
+	}
+	var replicaSet []shared.ReplicaSet = nil
+	for _, replicaSetItem := range r.ReplicaSet {
+		address1 := replicaSetItem.Address.ValueString()
+		port := replicaSetItem.Port.ValueInt64()
+		replicaSet = append(replicaSet, shared.ReplicaSet{
+			Address: address1,
+			Port:    port,
+		})
 	}
 	databaseName := new(string)
 	if !r.DatabaseName.IsUnknown() && !r.DatabaseName.IsNull() {
@@ -393,24 +375,42 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoUpdate() *shared
 	} else {
 		databaseName = nil
 	}
+	useSsl := new(bool)
+	if !r.UseSsl.IsUnknown() && !r.UseSsl.IsNull() {
+		*useSsl = r.UseSsl.ValueBool()
+	} else {
+		useSsl = nil
+	}
+	username1 := new(string)
+	if !r.Username.IsUnknown() && !r.Username.IsNull() {
+		*username1 = r.Username.ValueString()
+	} else {
+		username1 = nil
+	}
 	password := new(string)
 	if !r.Password.IsUnknown() && !r.Password.IsNull() {
 		*password = r.Password.ValueString()
 	} else {
 		password = nil
 	}
+	authDatabaseName := new(string)
+	if !r.AuthDatabaseName.IsUnknown() && !r.AuthDatabaseName.IsNull() {
+		*authDatabaseName = r.AuthDatabaseName.ValueString()
+	} else {
+		authDatabaseName = nil
+	}
 	out := shared.ConnectionMongoUpdate{
-		Active:           active,
-		Type:             typeVar,
 		Name:             name,
+		Type:             typeVar,
+		Active:           active,
 		UpdateSchedule:   updateSchedule,
-		Username:         username,
-		UseSsl:           useSsl,
-		ReplicaSet:       replicaSet,
-		AuthDatabaseName: authDatabaseName,
 		SSHConfig:        sshConfig,
+		ReplicaSet:       replicaSet,
 		DatabaseName:     databaseName,
+		UseSsl:           useSsl,
+		Username:         username1,
 		Password:         password,
+		AuthDatabaseName: authDatabaseName,
 	}
 	return &out
 }

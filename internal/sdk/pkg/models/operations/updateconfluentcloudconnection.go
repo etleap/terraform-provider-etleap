@@ -34,8 +34,8 @@ type UpdateCONFLUENTCLOUDConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionConfluentCloud *shared.ConnectionConfluentCloudOutput
-	// Connection for this id was not found.
+	ConnectionConfluentCloud *shared.ConnectionConfluentCloud
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateCONFLUENTCLOUDConnectionResponse) GetRawResponse() *http.Response
 	return o.RawResponse
 }
 
-func (o *UpdateCONFLUENTCLOUDConnectionResponse) GetConnectionConfluentCloud() *shared.ConnectionConfluentCloudOutput {
+func (o *UpdateCONFLUENTCLOUDConnectionResponse) GetConnectionConfluentCloud() *shared.ConnectionConfluentCloud {
 	if o == nil {
 		return nil
 	}

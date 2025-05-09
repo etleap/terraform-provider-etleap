@@ -1,8 +1,8 @@
 resource "etleap_connection_salesforce" "my_connectionsalesforce" {
   code                        = "...my_code..."
-  deletion_of_export_products = false
-  name                        = "Natalie Spencer"
-  quota_limit                 = 0
-  sandbox                     = false
+  deletion_of_export_products = true
+  name                        = "Kristin Grady"
+  quota_limit                 = 7
+  sandbox                     = true
   type                        = "SALESFORCE"
 }

@@ -41,17 +41,17 @@ type ConnectionACTIVECAMPAIGNResource struct {
 
 // ConnectionACTIVECAMPAIGNResourceModel describes the resource data model.
 type ConnectionACTIVECAMPAIGNResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	APIKey                   types.String                                    `tfsdk:"api_key"`
-	BaseURL                  types.String                                    `tfsdk:"base_url"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	APIKey                   types.String            `tfsdk:"api_key"`
+	BaseURL                  types.String            `tfsdk:"base_url"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionACTIVECAMPAIGNResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -565,7 +565,7 @@ func (r *ConnectionACTIVECAMPAIGNResource) Create(ctx context.Context, req resou
 		return
 	}
 
-	request := *data.ToSharedConnectionActiveCampaign()
+	request := *data.ToSharedConnectionActiveCampaignInput()
 	res, err := r.client.Connection.CreateACTIVECAMPAIGNConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -586,7 +586,7 @@ func (r *ConnectionACTIVECAMPAIGNResource) Create(ctx context.Context, req resou
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionActiveCampaignOutput(res.ConnectionActiveCampaign)
+	data.RefreshFromSharedConnectionActiveCampaign(res.ConnectionActiveCampaign)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetACTIVECAMPAIGNConnectionRequest{
@@ -612,7 +612,7 @@ func (r *ConnectionACTIVECAMPAIGNResource) Create(ctx context.Context, req resou
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionActiveCampaignOutput(res1.ConnectionActiveCampaign)
+	data.RefreshFromSharedConnectionActiveCampaign(res1.ConnectionActiveCampaign)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -661,7 +661,7 @@ func (r *ConnectionACTIVECAMPAIGNResource) Read(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionActiveCampaignOutput(res.ConnectionActiveCampaign)
+	data.RefreshFromSharedConnectionActiveCampaign(res.ConnectionActiveCampaign)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -707,7 +707,7 @@ func (r *ConnectionACTIVECAMPAIGNResource) Update(ctx context.Context, req resou
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionActiveCampaignOutput(res.ConnectionActiveCampaign)
+	data.RefreshFromSharedConnectionActiveCampaign(res.ConnectionActiveCampaign)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetACTIVECAMPAIGNConnectionRequest{
@@ -733,7 +733,7 @@ func (r *ConnectionACTIVECAMPAIGNResource) Update(ctx context.Context, req resou
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionActiveCampaignOutput(res1.ConnectionActiveCampaign)
+	data.RefreshFromSharedConnectionActiveCampaign(res1.ConnectionActiveCampaign)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

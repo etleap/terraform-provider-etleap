@@ -27,7 +27,7 @@ type GetNETSUITEV2ConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionNetsuiteV2 *shared.ConnectionNetsuiteV2
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

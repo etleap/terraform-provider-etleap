@@ -3,9 +3,9 @@ resource "etleap_connection_blackline" "my_connectionblackline" {
   base_url                    = "...my_base_url..."
   client_id                   = "...my_client_id..."
   client_secret               = "...my_client_secret..."
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   instance_scope              = "...my_instance_scope..."
-  name                        = "Juana Keebler"
+  name                        = "June Schmitt DVM"
   type                        = "BLACKLINE"
-  username                    = "Eryn.Yost32"
+  username                    = "Daisha57"
 }

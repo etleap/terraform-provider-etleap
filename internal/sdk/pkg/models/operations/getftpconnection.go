@@ -27,7 +27,7 @@ type GetFTPConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionFtp *shared.ConnectionFtp
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

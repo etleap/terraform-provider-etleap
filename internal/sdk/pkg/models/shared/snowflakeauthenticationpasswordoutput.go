@@ -48,15 +48,8 @@ func (o *SnowflakeAuthenticationPasswordOutput) GetType() SnowflakeAuthenticatio
 
 // SnowflakeAuthenticationPassword - Snowflake Password Authentication
 type SnowflakeAuthenticationPassword struct {
-	Password string                              `json:"password"`
 	Type     SnowflakeAuthenticationPasswordType `json:"type"`
-}
-
-func (o *SnowflakeAuthenticationPassword) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
+	Password string                              `json:"password"`
 }
 
 func (o *SnowflakeAuthenticationPassword) GetType() SnowflakeAuthenticationPasswordType {
@@ -64,4 +57,11 @@ func (o *SnowflakeAuthenticationPassword) GetType() SnowflakeAuthenticationPassw
 		return SnowflakeAuthenticationPasswordType("")
 	}
 	return o.Type
+}
+
+func (o *SnowflakeAuthenticationPassword) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
 }

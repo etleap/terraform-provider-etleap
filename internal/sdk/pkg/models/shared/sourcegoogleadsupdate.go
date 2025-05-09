@@ -32,16 +32,9 @@ func (e *SourceGoogleAdsUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGoogleAdsUpdate struct {
-	Type *SourceGoogleAdsUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceGoogleAdsUpdate) GetType() *SourceGoogleAdsUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                     `json:"latencyThreshold,omitempty"`
+	Type             *SourceGoogleAdsUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceGoogleAdsUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceGoogleAdsUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceGoogleAdsUpdate) GetType() *SourceGoogleAdsUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

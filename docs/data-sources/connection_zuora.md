@@ -14,7 +14,7 @@ ConnectionZUORA DataSource
 
 ```terraform
 data "etleap_connection_zuora" "my_connectionzuora" {
-  id = "5e3c8969-c976-4ff4-8bc3-b3b01c1401c7"
+  id = "4ab26cae-8ba6-478d-a90e-85d3f67abc40"
 }
 ```
 

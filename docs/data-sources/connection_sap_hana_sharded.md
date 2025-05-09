@@ -14,7 +14,7 @@ ConnectionSAPHANASHARDED DataSource
 
 ```terraform
 data "etleap_connection_sap_hana_sharded" "my_connectionsap_hana_sharded" {
-  id = "75d4af3c-8533-4d61-85cd-66bfe854e4c4"
+  id = "1fe244f8-a0be-46d5-9c73-989982d77215"
 }
 ```
 

@@ -35,7 +35,7 @@ type UpdateNETSUITEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionNetsuite *shared.ConnectionNetsuite
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

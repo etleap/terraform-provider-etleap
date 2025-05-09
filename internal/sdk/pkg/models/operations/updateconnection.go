@@ -35,7 +35,7 @@ type UpdateConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionTypes interface{}
-	// Connection for this id was not found.
+	// Bad Request
 	Errors *shared.Errors
 }
 

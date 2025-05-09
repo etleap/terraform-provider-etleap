@@ -8,14 +8,14 @@ import (
 	"time"
 )
 
-func (r *ConnectionGOOGLESHEETSDataSourceModel) RefreshFromSharedConnectionGoogleSheetsOutput(resp *shared.ConnectionGoogleSheetsOutput) {
+func (r *ConnectionGOOGLESHEETSDataSourceModel) RefreshFromSharedConnectionGoogleSheets(resp *shared.ConnectionGoogleSheets) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

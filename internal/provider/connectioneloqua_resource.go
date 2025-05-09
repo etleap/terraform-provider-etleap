@@ -41,18 +41,18 @@ type ConnectionELOQUAResource struct {
 
 // ConnectionELOQUAResourceModel describes the resource data model.
 type ConnectionELOQUAResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	Company                  types.String                                    `tfsdk:"company"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Password                 types.String                                    `tfsdk:"password"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
-	Username                 types.String                                    `tfsdk:"username"`
+	Active                   types.Bool              `tfsdk:"active"`
+	Company                  types.String            `tfsdk:"company"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Password                 types.String            `tfsdk:"password"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Username                 types.String            `tfsdk:"username"`
 }
 
 func (r *ConnectionELOQUAResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -570,7 +570,7 @@ func (r *ConnectionELOQUAResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToSharedConnectionEloqua()
+	request := *data.ToSharedConnectionEloquaInput()
 	res, err := r.client.Connection.CreateELOQUAConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -591,7 +591,7 @@ func (r *ConnectionELOQUAResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionEloquaOutput(res.ConnectionEloqua)
+	data.RefreshFromSharedConnectionEloqua(res.ConnectionEloqua)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetELOQUAConnectionRequest{
@@ -617,7 +617,7 @@ func (r *ConnectionELOQUAResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionEloquaOutput(res1.ConnectionEloqua)
+	data.RefreshFromSharedConnectionEloqua(res1.ConnectionEloqua)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -666,7 +666,7 @@ func (r *ConnectionELOQUAResource) Read(ctx context.Context, req resource.ReadRe
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionEloquaOutput(res.ConnectionEloqua)
+	data.RefreshFromSharedConnectionEloqua(res.ConnectionEloqua)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -712,7 +712,7 @@ func (r *ConnectionELOQUAResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionEloquaOutput(res.ConnectionEloqua)
+	data.RefreshFromSharedConnectionEloqua(res.ConnectionEloqua)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetELOQUAConnectionRequest{
@@ -738,7 +738,7 @@ func (r *ConnectionELOQUAResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionEloquaOutput(res1.ConnectionEloqua)
+	data.RefreshFromSharedConnectionEloqua(res1.ConnectionEloqua)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSAPHANASHARDEDDataSourceModel) RefreshFromSharedConnectionSapHanaShardedOutput(resp *shared.ConnectionSapHanaShardedOutput) {
+func (r *ConnectionSAPHANASHARDEDDataSourceModel) RefreshFromSharedConnectionSapHanaSharded(resp *shared.ConnectionSapHanaSharded) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -16,7 +16,7 @@ func (r *ConnectionSAPHANASHARDEDDataSourceModel) RefreshFromSharedConnectionSap
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {

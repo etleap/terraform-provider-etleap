@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftp() *shared.ConnectionSftp {
+func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpInput() *shared.ConnectionSftpInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionSftpType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
@@ -72,12 +72,12 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftp() *shared.Connectio
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,30 +86,30 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftp() *shared.Connectio
 			}
 		}
 	}
-	username := r.Username.ValueString()
 	hostname := r.Hostname.ValueString()
+	port := r.Port.ValueInt64()
 	baseDirectory := r.BaseDirectory.ValueString()
+	username := r.Username.ValueString()
 	password := new(string)
 	if !r.Password.IsUnknown() && !r.Password.IsNull() {
 		*password = r.Password.ValueString()
 	} else {
 		password = nil
 	}
-	port := r.Port.ValueInt64()
-	out := shared.ConnectionSftp{
+	out := shared.ConnectionSftpInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		Username:       username,
 		Hostname:       hostname,
-		BaseDirectory:  baseDirectory,
-		Password:       password,
 		Port:           port,
+		BaseDirectory:  baseDirectory,
+		Username:       username,
+		Password:       password,
 	}
 	return &out
 }
 
-func (r *ConnectionSFTPResourceModel) RefreshFromSharedConnectionSftpOutput(resp *shared.ConnectionSftpOutput) {
+func (r *ConnectionSFTPResourceModel) RefreshFromSharedConnectionSftp(resp *shared.ConnectionSftp) {
 	r.Active = types.BoolValue(resp.Active)
 	r.BaseDirectory = types.StringValue(resp.BaseDirectory)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -117,7 +117,7 @@ func (r *ConnectionSFTPResourceModel) RefreshFromSharedConnectionSftpOutput(resp
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -203,11 +203,11 @@ func (r *ConnectionSFTPResourceModel) RefreshFromSharedConnectionSftpOutput(resp
 }
 
 func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpUpdate() *shared.ConnectionSftpUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionSftpUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -215,11 +215,11 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpUpdate() *shared.Con
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -282,12 +282,12 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpUpdate() *shared.Con
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -296,29 +296,11 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpUpdate() *shared.Con
 			}
 		}
 	}
-	username := new(string)
-	if !r.Username.IsUnknown() && !r.Username.IsNull() {
-		*username = r.Username.ValueString()
-	} else {
-		username = nil
-	}
 	hostname := new(string)
 	if !r.Hostname.IsUnknown() && !r.Hostname.IsNull() {
 		*hostname = r.Hostname.ValueString()
 	} else {
 		hostname = nil
-	}
-	baseDirectory := new(string)
-	if !r.BaseDirectory.IsUnknown() && !r.BaseDirectory.IsNull() {
-		*baseDirectory = r.BaseDirectory.ValueString()
-	} else {
-		baseDirectory = nil
-	}
-	password := new(string)
-	if !r.Password.IsUnknown() && !r.Password.IsNull() {
-		*password = r.Password.ValueString()
-	} else {
-		password = nil
 	}
 	port := new(int64)
 	if !r.Port.IsUnknown() && !r.Port.IsNull() {
@@ -326,16 +308,34 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpUpdate() *shared.Con
 	} else {
 		port = nil
 	}
+	baseDirectory := new(string)
+	if !r.BaseDirectory.IsUnknown() && !r.BaseDirectory.IsNull() {
+		*baseDirectory = r.BaseDirectory.ValueString()
+	} else {
+		baseDirectory = nil
+	}
+	username := new(string)
+	if !r.Username.IsUnknown() && !r.Username.IsNull() {
+		*username = r.Username.ValueString()
+	} else {
+		username = nil
+	}
+	password := new(string)
+	if !r.Password.IsUnknown() && !r.Password.IsNull() {
+		*password = r.Password.ValueString()
+	} else {
+		password = nil
+	}
 	out := shared.ConnectionSftpUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
-		Username:       username,
 		Hostname:       hostname,
-		BaseDirectory:  baseDirectory,
-		Password:       password,
 		Port:           port,
+		BaseDirectory:  baseDirectory,
+		Username:       username,
+		Password:       password,
 	}
 	return &out
 }

@@ -41,18 +41,18 @@ type ConnectionTWILIOResource struct {
 
 // ConnectionTWILIOResourceModel describes the resource data model.
 type ConnectionTWILIOResourceModel struct {
-	AccountSid               types.String                                    `tfsdk:"account_sid"`
-	Active                   types.Bool                                      `tfsdk:"active"`
-	APIKeySecret             types.String                                    `tfsdk:"api_key_secret"`
-	APIKeySid                types.String                                    `tfsdk:"api_key_sid"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	ID                       types.String                                    `tfsdk:"id"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	AccountSid               types.String            `tfsdk:"account_sid"`
+	Active                   types.Bool              `tfsdk:"active"`
+	APIKeySecret             types.String            `tfsdk:"api_key_secret"`
+	APIKeySid                types.String            `tfsdk:"api_key_sid"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	ID                       types.String            `tfsdk:"id"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionTWILIOResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -573,7 +573,7 @@ func (r *ConnectionTWILIOResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := *data.ToSharedConnectionTwilio()
+	request := *data.ToSharedConnectionTwilioInput()
 	res, err := r.client.Connection.CreateTWILIOConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -594,7 +594,7 @@ func (r *ConnectionTWILIOResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwilioOutput(res.ConnectionTwilio)
+	data.RefreshFromSharedConnectionTwilio(res.ConnectionTwilio)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetTWILIOConnectionRequest{
@@ -620,7 +620,7 @@ func (r *ConnectionTWILIOResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwilioOutput(res1.ConnectionTwilio)
+	data.RefreshFromSharedConnectionTwilio(res1.ConnectionTwilio)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -669,7 +669,7 @@ func (r *ConnectionTWILIOResource) Read(ctx context.Context, req resource.ReadRe
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwilioOutput(res.ConnectionTwilio)
+	data.RefreshFromSharedConnectionTwilio(res.ConnectionTwilio)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -715,7 +715,7 @@ func (r *ConnectionTWILIOResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwilioOutput(res.ConnectionTwilio)
+	data.RefreshFromSharedConnectionTwilio(res.ConnectionTwilio)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetTWILIOConnectionRequest{
@@ -741,7 +741,7 @@ func (r *ConnectionTWILIOResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwilioOutput(res1.ConnectionTwilio)
+	data.RefreshFromSharedConnectionTwilio(res1.ConnectionTwilio)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

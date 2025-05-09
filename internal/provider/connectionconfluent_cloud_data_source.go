@@ -28,18 +28,18 @@ type ConnectionCONFLUENTCLOUDDataSource struct {
 
 // ConnectionCONFLUENTCLOUDDataSourceModel describes the data model.
 type ConnectionCONFLUENTCLOUDDataSourceModel struct {
-	Active                types.Bool                                      `tfsdk:"active"`
-	CreateDate            types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String                                    `tfsdk:"id"`
-	Key                   types.String                                    `tfsdk:"key"`
-	Name                  types.String                                    `tfsdk:"name"`
-	SchemaRegistryKey     types.String                                    `tfsdk:"schema_registry_key"`
-	SchemaRegistryServer  types.String                                    `tfsdk:"schema_registry_server"`
-	ServerURL             types.String                                    `tfsdk:"server_url"`
-	Status                types.String                                    `tfsdk:"status"`
-	Type                  types.String                                    `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                types.Bool              `tfsdk:"active"`
+	CreateDate            types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	ID                    types.String            `tfsdk:"id"`
+	Key                   types.String            `tfsdk:"key"`
+	Name                  types.String            `tfsdk:"name"`
+	SchemaRegistryKey     types.String            `tfsdk:"schema_registry_key"`
+	SchemaRegistryServer  types.String            `tfsdk:"schema_registry_server"`
+	ServerURL             types.String            `tfsdk:"server_url"`
+	Status                types.String            `tfsdk:"status"`
+	Type                  types.String            `tfsdk:"type"`
+	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -326,7 +326,7 @@ func (r *ConnectionCONFLUENTCLOUDDataSource) Read(ctx context.Context, req datas
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionConfluentCloudOutput(res.ConnectionConfluentCloud)
+	data.RefreshFromSharedConnectionConfluentCloud(res.ConnectionConfluentCloud)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

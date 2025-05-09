@@ -10,20 +10,20 @@ type UserDefinedAPIEntity struct {
 	Columns []interface{} `json:"columns"`
 	// The name of the entity.
 	DisplayName string `json:"displayName"`
-	// Can be either the string `GET` or `POST`, which includes body parameters.
-	RestMethod RestMethod `json:"restMethod"`
-	// A list of headers to be passed with all the requests.
-	HeaderParameters []HeaderParameters `json:"headerParameters,omitempty"`
-	// The paging strategy.
-	PagingStrategy *PagingStrategy `json:"pagingStrategy,omitempty"`
-	// A list of query parameters to be passed with all the requests.
-	QueryParameters []QueryParameters `json:"queryParameters,omitempty"`
-	// Can be either the string `REPLACE` or one of the supported objects.
-	PipelineMode UserDefinedAPIPipelineMode `json:"pipelineMode"`
 	// The base URL to fetch data. Note that query parameters for things like pagination and sorting will be appended.
 	APIURL string `json:"apiUrl"`
 	// The [JMESPath](https://jmespath.org/) expression that converts the API response into an array containing one JSON object per record.
 	PathToResults string `json:"pathToResults"`
+	// Can be either the string `REPLACE` or one of the supported objects.
+	PipelineMode UserDefinedAPIPipelineMode `json:"pipelineMode"`
+	// The paging strategy.
+	PagingStrategy *PagingStrategy `json:"pagingStrategy,omitempty"`
+	// A list of query parameters to be passed with all the requests.
+	QueryParameters []QueryParameters `json:"queryParameters,omitempty"`
+	// A list of headers to be passed with all the requests.
+	HeaderParameters []HeaderParameters `json:"headerParameters,omitempty"`
+	// Can be either the string `GET` or `POST`, which includes body parameters.
+	RestMethod RestMethod `json:"restMethod"`
 }
 
 func (o *UserDefinedAPIEntity) GetID() string {
@@ -47,55 +47,6 @@ func (o *UserDefinedAPIEntity) GetDisplayName() string {
 	return o.DisplayName
 }
 
-func (o *UserDefinedAPIEntity) GetRestMethod() RestMethod {
-	if o == nil {
-		return RestMethod{}
-	}
-	return o.RestMethod
-}
-
-func (o *UserDefinedAPIEntity) GetHeaderParameters() []HeaderParameters {
-	if o == nil {
-		return nil
-	}
-	return o.HeaderParameters
-}
-
-func (o *UserDefinedAPIEntity) GetPagingStrategy() *PagingStrategy {
-	if o == nil {
-		return nil
-	}
-	return o.PagingStrategy
-}
-
-func (o *UserDefinedAPIEntity) GetPagingStrategyOffset() *OffsetPagingStrategy {
-	if v := o.GetPagingStrategy(); v != nil {
-		return v.OffsetPagingStrategy
-	}
-	return nil
-}
-
-func (o *UserDefinedAPIEntity) GetPagingStrategyCursorURI() *CursorURIPagingStrategy {
-	if v := o.GetPagingStrategy(); v != nil {
-		return v.CursorURIPagingStrategy
-	}
-	return nil
-}
-
-func (o *UserDefinedAPIEntity) GetQueryParameters() []QueryParameters {
-	if o == nil {
-		return nil
-	}
-	return o.QueryParameters
-}
-
-func (o *UserDefinedAPIEntity) GetPipelineMode() UserDefinedAPIPipelineMode {
-	if o == nil {
-		return UserDefinedAPIPipelineMode{}
-	}
-	return o.PipelineMode
-}
-
 func (o *UserDefinedAPIEntity) GetAPIURL() string {
 	if o == nil {
 		return ""
@@ -108,4 +59,53 @@ func (o *UserDefinedAPIEntity) GetPathToResults() string {
 		return ""
 	}
 	return o.PathToResults
+}
+
+func (o *UserDefinedAPIEntity) GetPipelineMode() UserDefinedAPIPipelineMode {
+	if o == nil {
+		return UserDefinedAPIPipelineMode{}
+	}
+	return o.PipelineMode
+}
+
+func (o *UserDefinedAPIEntity) GetPagingStrategy() *PagingStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.PagingStrategy
+}
+
+func (o *UserDefinedAPIEntity) GetPagingStrategyCursorURI() *CursorURIPagingStrategy {
+	if v := o.GetPagingStrategy(); v != nil {
+		return v.CursorURIPagingStrategy
+	}
+	return nil
+}
+
+func (o *UserDefinedAPIEntity) GetPagingStrategyOffset() *OffsetPagingStrategy {
+	if v := o.GetPagingStrategy(); v != nil {
+		return v.OffsetPagingStrategy
+	}
+	return nil
+}
+
+func (o *UserDefinedAPIEntity) GetQueryParameters() []QueryParameters {
+	if o == nil {
+		return nil
+	}
+	return o.QueryParameters
+}
+
+func (o *UserDefinedAPIEntity) GetHeaderParameters() []HeaderParameters {
+	if o == nil {
+		return nil
+	}
+	return o.HeaderParameters
+}
+
+func (o *UserDefinedAPIEntity) GetRestMethod() RestMethod {
+	if o == nil {
+		return RestMethod{}
+	}
+	return o.RestMethod
 }

@@ -32,16 +32,9 @@ func (e *SourceSalesforceMarketingCloudUpdateType) UnmarshalJSON(data []byte) er
 }
 
 type SourceSalesforceMarketingCloudUpdate struct {
-	Type *SourceSalesforceMarketingCloudUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceSalesforceMarketingCloudUpdate) GetType() *SourceSalesforceMarketingCloudUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                                    `json:"latencyThreshold,omitempty"`
+	Type             *SourceSalesforceMarketingCloudUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceSalesforceMarketingCloudUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceSalesforceMarketingCloudUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceSalesforceMarketingCloudUpdate) GetType() *SourceSalesforceMarketingCloudUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

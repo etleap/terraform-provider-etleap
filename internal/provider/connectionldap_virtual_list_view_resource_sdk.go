@@ -72,12 +72,12 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtu
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -86,27 +86,27 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtu
 			}
 		}
 	}
-	baseDn := r.BaseDn.ValueString()
-	useSsl := r.UseSsl.ValueBool()
 	hostname := r.Hostname.ValueString()
-	filter := r.Filter.ValueString()
-	user := r.User.ValueString()
-	scope := shared.Scope(r.Scope.ValueString())
-	password := r.Password.ValueString()
 	port := r.Port.ValueInt64()
+	useSsl := r.UseSsl.ValueBool()
+	user := r.User.ValueString()
+	password := r.Password.ValueString()
+	baseDn := r.BaseDn.ValueString()
+	scope := shared.ConnectionLdapVirtualListViewScope(r.Scope.ValueString())
+	filter := r.Filter.ValueString()
 	sortOrder := r.SortOrder.ValueString()
 	out := shared.ConnectionLdapVirtualListViewInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		BaseDn:         baseDn,
-		UseSsl:         useSsl,
 		Hostname:       hostname,
-		Filter:         filter,
-		User:           user,
-		Scope:          scope,
-		Password:       password,
 		Port:           port,
+		UseSsl:         useSsl,
+		User:           user,
+		Password:       password,
+		BaseDn:         baseDn,
+		Scope:          scope,
+		Filter:         filter,
 		SortOrder:      sortOrder,
 	}
 	return &out
@@ -120,7 +120,7 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) RefreshFromSharedConnection
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
 	}
 	for defaultUpdateScheduleCount, defaultUpdateScheduleItem := range resp.DefaultUpdateSchedule {
-		var defaultUpdateSchedule1 ConnectionActiveCampaignDefaultUpdateSchedule
+		var defaultUpdateSchedule1 DefaultUpdateSchedule
 		if defaultUpdateScheduleItem.PipelineMode != nil {
 			defaultUpdateSchedule1.PipelineMode = types.StringValue(string(*defaultUpdateScheduleItem.PipelineMode))
 		} else {
@@ -209,11 +209,11 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) RefreshFromSharedConnection
 }
 
 func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtualListViewUpdate() *shared.ConnectionLdapVirtualListViewUpdate {
-	active := new(bool)
-	if !r.Active.IsUnknown() && !r.Active.IsNull() {
-		*active = r.Active.ValueBool()
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
 	} else {
-		active = nil
+		name = nil
 	}
 	typeVar := new(shared.ConnectionLdapVirtualListViewUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
@@ -221,11 +221,11 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtu
 	} else {
 		typeVar = nil
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	active := new(bool)
+	if !r.Active.IsUnknown() && !r.Active.IsNull() {
+		*active = r.Active.ValueBool()
 	} else {
-		name = nil
+		active = nil
 	}
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
@@ -288,12 +288,12 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtu
 		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
 		if r.UpdateSchedule.Monthly != nil {
 			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
-			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
 			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
 				Mode:       mode4,
-				HourOfDay:  hourOfDay2,
 				DayOfMonth: dayOfMonth,
+				HourOfDay:  hourOfDay2,
 			}
 		}
 		if updateScheduleModeMonthly != nil {
@@ -302,11 +302,17 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtu
 			}
 		}
 	}
-	baseDn := new(string)
-	if !r.BaseDn.IsUnknown() && !r.BaseDn.IsNull() {
-		*baseDn = r.BaseDn.ValueString()
+	hostname := new(string)
+	if !r.Hostname.IsUnknown() && !r.Hostname.IsNull() {
+		*hostname = r.Hostname.ValueString()
 	} else {
-		baseDn = nil
+		hostname = nil
+	}
+	port := new(int64)
+	if !r.Port.IsUnknown() && !r.Port.IsNull() {
+		*port = r.Port.ValueInt64()
+	} else {
+		port = nil
 	}
 	useSsl := new(bool)
 	if !r.UseSsl.IsUnknown() && !r.UseSsl.IsNull() {
@@ -314,29 +320,11 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtu
 	} else {
 		useSsl = nil
 	}
-	hostname := new(string)
-	if !r.Hostname.IsUnknown() && !r.Hostname.IsNull() {
-		*hostname = r.Hostname.ValueString()
-	} else {
-		hostname = nil
-	}
-	filter := new(string)
-	if !r.Filter.IsUnknown() && !r.Filter.IsNull() {
-		*filter = r.Filter.ValueString()
-	} else {
-		filter = nil
-	}
 	user := new(string)
 	if !r.User.IsUnknown() && !r.User.IsNull() {
 		*user = r.User.ValueString()
 	} else {
 		user = nil
-	}
-	scope := new(shared.ConnectionLdapVirtualListViewUpdateScope)
-	if !r.Scope.IsUnknown() && !r.Scope.IsNull() {
-		*scope = shared.ConnectionLdapVirtualListViewUpdateScope(r.Scope.ValueString())
-	} else {
-		scope = nil
 	}
 	password := new(string)
 	if !r.Password.IsUnknown() && !r.Password.IsNull() {
@@ -344,11 +332,23 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtu
 	} else {
 		password = nil
 	}
-	port := new(int64)
-	if !r.Port.IsUnknown() && !r.Port.IsNull() {
-		*port = r.Port.ValueInt64()
+	baseDn := new(string)
+	if !r.BaseDn.IsUnknown() && !r.BaseDn.IsNull() {
+		*baseDn = r.BaseDn.ValueString()
 	} else {
-		port = nil
+		baseDn = nil
+	}
+	scope := new(shared.Scope)
+	if !r.Scope.IsUnknown() && !r.Scope.IsNull() {
+		*scope = shared.Scope(r.Scope.ValueString())
+	} else {
+		scope = nil
+	}
+	filter := new(string)
+	if !r.Filter.IsUnknown() && !r.Filter.IsNull() {
+		*filter = r.Filter.ValueString()
+	} else {
+		filter = nil
 	}
 	sortOrder := new(string)
 	if !r.SortOrder.IsUnknown() && !r.SortOrder.IsNull() {
@@ -357,18 +357,18 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtu
 		sortOrder = nil
 	}
 	out := shared.ConnectionLdapVirtualListViewUpdate{
-		Active:         active,
-		Type:           typeVar,
 		Name:           name,
+		Type:           typeVar,
+		Active:         active,
 		UpdateSchedule: updateSchedule,
-		BaseDn:         baseDn,
-		UseSsl:         useSsl,
 		Hostname:       hostname,
-		Filter:         filter,
-		User:           user,
-		Scope:          scope,
-		Password:       password,
 		Port:           port,
+		UseSsl:         useSsl,
+		User:           user,
+		Password:       password,
+		BaseDn:         baseDn,
+		Scope:          scope,
+		Filter:         filter,
 		SortOrder:      sortOrder,
 	}
 	return &out

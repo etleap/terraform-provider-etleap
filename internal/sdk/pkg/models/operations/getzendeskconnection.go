@@ -27,7 +27,7 @@ type GetZENDESKConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionZendesk *shared.ConnectionZendesk
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

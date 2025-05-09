@@ -32,20 +32,13 @@ func (e *SourceSalesforceMarketingCloudType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSalesforceMarketingCloud struct {
+	Type SourceSalesforceMarketingCloudType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string                             `json:"connectionId"`
-	Type         SourceSalesforceMarketingCloudType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Salesforce Marketing Cloud entity. Example Values: [Bounce Event, Campaign, Click Event, Content Area, Data Extension, Data Extension Object, Email, Folders, List Subscriber, Lists, Open Event, Send, Sent Event, Subscribers, Unsub Event]
 	Entity string `json:"entity"`
-}
-
-func (o *SourceSalesforceMarketingCloud) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceSalesforceMarketingCloud) GetType() SourceSalesforceMarketingCloudType {
@@ -53,6 +46,13 @@ func (o *SourceSalesforceMarketingCloud) GetType() SourceSalesforceMarketingClou
 		return SourceSalesforceMarketingCloudType("")
 	}
 	return o.Type
+}
+
+func (o *SourceSalesforceMarketingCloud) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceSalesforceMarketingCloud) GetLatencyThreshold() *int64 {

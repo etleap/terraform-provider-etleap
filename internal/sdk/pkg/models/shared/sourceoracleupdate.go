@@ -32,16 +32,9 @@ func (e *SourceOracleUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceOracleUpdate struct {
-	Type *SourceOracleUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceOracleUpdate) GetType() *SourceOracleUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                  `json:"latencyThreshold,omitempty"`
+	Type             *SourceOracleUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceOracleUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceOracleUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceOracleUpdate) GetType() *SourceOracleUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

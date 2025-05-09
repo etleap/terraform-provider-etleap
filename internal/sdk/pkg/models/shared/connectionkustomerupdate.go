@@ -32,28 +32,14 @@ func (e *ConnectionKustomerUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionKustomerUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                         `json:"active,omitempty"`
-	Type   *ConnectionKustomerUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                       `json:"name,omitempty"`
+	Type *ConnectionKustomerUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	APIKey         *string              `json:"apiKey,omitempty"`
-}
-
-func (o *ConnectionKustomerUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionKustomerUpdate) GetType() *ConnectionKustomerUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionKustomerUpdate) GetName() *string {
@@ -63,6 +49,20 @@ func (o *ConnectionKustomerUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionKustomerUpdate) GetType() *ConnectionKustomerUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionKustomerUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionKustomerUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -70,9 +70,9 @@ func (o *ConnectionKustomerUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionKustomerUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionKustomerUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -80,13 +80,6 @@ func (o *ConnectionKustomerUpdate) GetUpdateScheduleMonthly() *UpdateScheduleMod
 func (o *ConnectionKustomerUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionKustomerUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -101,6 +94,13 @@ func (o *ConnectionKustomerUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeD
 func (o *ConnectionKustomerUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
+	}
+	return nil
+}
+
+func (o *ConnectionKustomerUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }

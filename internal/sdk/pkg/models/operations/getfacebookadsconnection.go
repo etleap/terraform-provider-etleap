@@ -26,8 +26,8 @@ type GetFACEBOOKADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionFb *shared.ConnectionFbOutput
-	// Not Found.
+	ConnectionFb *shared.ConnectionFb
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetFACEBOOKADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetFACEBOOKADSConnectionResponse) GetConnectionFb() *shared.ConnectionFbOutput {
+func (o *GetFACEBOOKADSConnectionResponse) GetConnectionFb() *shared.ConnectionFb {
 	if o == nil {
 		return nil
 	}

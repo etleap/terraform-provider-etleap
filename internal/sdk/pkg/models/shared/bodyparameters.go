@@ -3,15 +3,8 @@
 package shared
 
 type BodyParameters struct {
-	Value string `json:"value"`
 	Key   string `json:"key"`
-}
-
-func (o *BodyParameters) GetValue() string {
-	if o == nil {
-		return ""
-	}
-	return o.Value
+	Value string `json:"value"`
 }
 
 func (o *BodyParameters) GetKey() string {
@@ -19,4 +12,11 @@ func (o *BodyParameters) GetKey() string {
 		return ""
 	}
 	return o.Key
+}
+
+func (o *BodyParameters) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
 }

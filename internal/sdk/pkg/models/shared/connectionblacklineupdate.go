@@ -32,39 +32,25 @@ func (e *ConnectionBlacklineUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionBlacklineUpdate struct {
-	// Whether this connection should be marked as active.
-	Active *bool                          `json:"active,omitempty"`
-	Type   *ConnectionBlacklineUpdateType `json:"type"`
 	// The unique name of this connection.
-	Name *string `json:"name,omitempty"`
+	Name *string                        `json:"name,omitempty"`
+	Type *ConnectionBlacklineUpdateType `json:"type"`
+	// Whether this connection should be marked as active.
+	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Your Blackline username
-	Username *string `json:"username,omitempty"`
 	// Your Blackline instance Client ID
 	ClientID *string `json:"client_id,omitempty"`
+	// Your Blackline instance Client Secret
+	ClientSecret *string `json:"client_secret,omitempty"`
 	// Your Blackline instance base URL, i.e, https://<BASE_URL>.api.blackline.com
 	BaseURL *string `json:"base_url,omitempty"`
 	// Your Blackline instance authorization scope.
 	InstanceScope *string `json:"instance_scope,omitempty"`
-	// Your Blackline instance Client Secret
-	ClientSecret *string `json:"client_secret,omitempty"`
+	// Your Blackline username
+	Username *string `json:"username,omitempty"`
 	// The Blackline API Key generated for your user
 	APIKey *string `json:"api_key,omitempty"`
-}
-
-func (o *ConnectionBlacklineUpdate) GetActive() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Active
-}
-
-func (o *ConnectionBlacklineUpdate) GetType() *ConnectionBlacklineUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
 }
 
 func (o *ConnectionBlacklineUpdate) GetName() *string {
@@ -74,6 +60,20 @@ func (o *ConnectionBlacklineUpdate) GetName() *string {
 	return o.Name
 }
 
+func (o *ConnectionBlacklineUpdate) GetType() *ConnectionBlacklineUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *ConnectionBlacklineUpdate) GetActive() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Active
+}
+
 func (o *ConnectionBlacklineUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
@@ -81,9 +81,9 @@ func (o *ConnectionBlacklineUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBlacklineUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBlacklineUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -91,13 +91,6 @@ func (o *ConnectionBlacklineUpdate) GetUpdateScheduleMonthly() *UpdateScheduleMo
 func (o *ConnectionBlacklineUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionBlacklineUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -116,11 +109,11 @@ func (o *ConnectionBlacklineUpdate) GetUpdateScheduleWeekly() *UpdateScheduleMod
 	return nil
 }
 
-func (o *ConnectionBlacklineUpdate) GetUsername() *string {
-	if o == nil {
-		return nil
+func (o *ConnectionBlacklineUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.Username
+	return nil
 }
 
 func (o *ConnectionBlacklineUpdate) GetClientID() *string {
@@ -128,6 +121,13 @@ func (o *ConnectionBlacklineUpdate) GetClientID() *string {
 		return nil
 	}
 	return o.ClientID
+}
+
+func (o *ConnectionBlacklineUpdate) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
 }
 
 func (o *ConnectionBlacklineUpdate) GetBaseURL() *string {
@@ -144,11 +144,11 @@ func (o *ConnectionBlacklineUpdate) GetInstanceScope() *string {
 	return o.InstanceScope
 }
 
-func (o *ConnectionBlacklineUpdate) GetClientSecret() *string {
+func (o *ConnectionBlacklineUpdate) GetUsername() *string {
 	if o == nil {
 		return nil
 	}
-	return o.ClientSecret
+	return o.Username
 }
 
 func (o *ConnectionBlacklineUpdate) GetAPIKey() *string {

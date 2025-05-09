@@ -4,9 +4,9 @@ package shared
 
 type User struct {
 	ID           string `json:"id"`
+	FirstName    string `json:"firstName"`
 	LastName     string `json:"lastName"`
 	EmailAddress string `json:"emailAddress"`
-	FirstName    string `json:"firstName"`
 }
 
 func (o *User) GetID() string {
@@ -14,6 +14,13 @@ func (o *User) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *User) GetFirstName() string {
+	if o == nil {
+		return ""
+	}
+	return o.FirstName
 }
 
 func (o *User) GetLastName() string {
@@ -28,11 +35,4 @@ func (o *User) GetEmailAddress() string {
 		return ""
 	}
 	return o.EmailAddress
-}
-
-func (o *User) GetFirstName() string {
-	if o == nil {
-		return ""
-	}
-	return o.FirstName
 }

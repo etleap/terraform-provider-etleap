@@ -27,7 +27,7 @@ type RefreshPipelineResponse struct {
 	RawResponse *http.Response
 	// OK
 	DestinationAndPipelineVersions []shared.DestinationAndPipelineVersions
-	// Unable to start refresh due to resource contention. This is likely caused by multiple requests to the same pipeline. Safe to try again after a timeout.
+	// Bad Request
 	Errors  *shared.Errors
 	Headers map[string][]string
 }

@@ -32,20 +32,13 @@ func (e *SourceMixpanelType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMixpanel struct {
+	Type SourceMixpanelType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string             `json:"connectionId"`
-	Type         SourceMixpanelType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// 'Raw Data' is the only entity available for Mixpanel.
 	Entity string `json:"entity"`
-}
-
-func (o *SourceMixpanel) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
 }
 
 func (o *SourceMixpanel) GetType() SourceMixpanelType {
@@ -53,6 +46,13 @@ func (o *SourceMixpanel) GetType() SourceMixpanelType {
 		return SourceMixpanelType("")
 	}
 	return o.Type
+}
+
+func (o *SourceMixpanel) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceMixpanel) GetLatencyThreshold() *int64 {

@@ -41,18 +41,18 @@ type ConnectionS3INPUTResource struct {
 
 // ConnectionS3INPUTResourceModel describes the resource data model.
 type ConnectionS3INPUTResourceModel struct {
-	Active                   types.Bool                                      `tfsdk:"active"`
-	BaseDirectory            types.String                                    `tfsdk:"base_directory"`
-	CreateDate               types.String                                    `tfsdk:"create_date"`
-	DefaultUpdateSchedule    []ConnectionActiveCampaignDefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	DeletionOfExportProducts types.Bool                                      `tfsdk:"deletion_of_export_products"`
-	IamRole                  types.String                                    `tfsdk:"iam_role"`
-	ID                       types.String                                    `tfsdk:"id"`
-	InputBucket              types.String                                    `tfsdk:"input_bucket"`
-	Name                     types.String                                    `tfsdk:"name"`
-	Status                   types.String                                    `tfsdk:"status"`
-	Type                     types.String                                    `tfsdk:"type"`
-	UpdateSchedule           *UpdateScheduleTypes                            `tfsdk:"update_schedule"`
+	Active                   types.Bool              `tfsdk:"active"`
+	BaseDirectory            types.String            `tfsdk:"base_directory"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	IamRole                  types.String            `tfsdk:"iam_role"`
+	ID                       types.String            `tfsdk:"id"`
+	InputBucket              types.String            `tfsdk:"input_bucket"`
+	Name                     types.String            `tfsdk:"name"`
+	Status                   types.String            `tfsdk:"status"`
+	Type                     types.String            `tfsdk:"type"`
+	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 func (r *ConnectionS3INPUTResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

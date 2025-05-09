@@ -34,8 +34,8 @@ type UpdateSTRIPEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionStripe *shared.ConnectionStripeOutput
-	// Connection for this id was not found.
+	ConnectionStripe *shared.ConnectionStripe
+	// Bad Request
 	Errors *shared.Errors
 }
 
@@ -60,7 +60,7 @@ func (o *UpdateSTRIPEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateSTRIPEConnectionResponse) GetConnectionStripe() *shared.ConnectionStripeOutput {
+func (o *UpdateSTRIPEConnectionResponse) GetConnectionStripe() *shared.ConnectionStripe {
 	if o == nil {
 		return nil
 	}

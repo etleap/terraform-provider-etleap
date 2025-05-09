@@ -32,16 +32,9 @@ func (e *SourceSeismicUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSeismicUpdate struct {
-	Type *SourceSeismicUpdateType `json:"type,omitempty"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-}
-
-func (o *SourceSeismicUpdate) GetType() *SourceSeismicUpdateType {
-	if o == nil {
-		return nil
-	}
-	return o.Type
+	LatencyThreshold *int64                   `json:"latencyThreshold,omitempty"`
+	Type             *SourceSeismicUpdateType `json:"type,omitempty"`
 }
 
 func (o *SourceSeismicUpdate) GetLatencyThreshold() *int64 {
@@ -49,4 +42,11 @@ func (o *SourceSeismicUpdate) GetLatencyThreshold() *int64 {
 		return nil
 	}
 	return o.LatencyThreshold
+}
+
+func (o *SourceSeismicUpdate) GetType() *SourceSeismicUpdateType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }

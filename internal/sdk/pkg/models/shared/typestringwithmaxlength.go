@@ -32,16 +32,9 @@ func (e *TypeStringWithMaxLengthType) UnmarshalJSON(data []byte) error {
 }
 
 type TypeStringWithMaxLength struct {
+	Type TypeStringWithMaxLengthType `json:"type"`
 	// Maximum string length in bytes.
-	Length int64                       `json:"length"`
-	Type   TypeStringWithMaxLengthType `json:"type"`
-}
-
-func (o *TypeStringWithMaxLength) GetLength() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Length
+	Length int64 `json:"length"`
 }
 
 func (o *TypeStringWithMaxLength) GetType() TypeStringWithMaxLengthType {
@@ -49,4 +42,11 @@ func (o *TypeStringWithMaxLength) GetType() TypeStringWithMaxLengthType {
 		return TypeStringWithMaxLengthType("")
 	}
 	return o.Type
+}
+
+func (o *TypeStringWithMaxLength) GetLength() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Length
 }

@@ -32,26 +32,19 @@ func (e *SourcePinterestAdsType) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePinterestAds struct {
+	Type SourcePinterestAdsType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string                 `json:"connectionId"`
-	Type         SourcePinterestAdsType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Pinterest Ads resource. Example values: [ad_accounts, ad_groups, ads, campaigns and reports]
 	Entity string `json:"entity"`
-	// Specify the report `targeting types` if and only if the entity is 'reports'. Example values: [KEYWORD, APPTYPE, LOCATION]
-	TargetingTypes []string `json:"targeting_types,omitempty"`
 	// Specify the report `data level` if and only if the entity is 'reports'. Example values: [ADVERTISER, CAMPAIGN, AD_GROUP]
 	Level []string `json:"level,omitempty"`
 	// Specify the report `metrics` if and only if the entity is 'reports'. Example values: [SPEND_IN_MICRO_DOLLAR, PAID_IMPRESSION, CPC_IN_MICRO_DOLLAR]
 	Columns []string `json:"columns,omitempty"`
-}
-
-func (o *SourcePinterestAds) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
+	// Specify the report `targeting types` if and only if the entity is 'reports'. Example values: [KEYWORD, APPTYPE, LOCATION]
+	TargetingTypes []string `json:"targeting_types,omitempty"`
 }
 
 func (o *SourcePinterestAds) GetType() SourcePinterestAdsType {
@@ -59,6 +52,13 @@ func (o *SourcePinterestAds) GetType() SourcePinterestAdsType {
 		return SourcePinterestAdsType("")
 	}
 	return o.Type
+}
+
+func (o *SourcePinterestAds) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourcePinterestAds) GetLatencyThreshold() *int64 {
@@ -75,13 +75,6 @@ func (o *SourcePinterestAds) GetEntity() string {
 	return o.Entity
 }
 
-func (o *SourcePinterestAds) GetTargetingTypes() []string {
-	if o == nil {
-		return nil
-	}
-	return o.TargetingTypes
-}
-
 func (o *SourcePinterestAds) GetLevel() []string {
 	if o == nil {
 		return nil
@@ -94,4 +87,11 @@ func (o *SourcePinterestAds) GetColumns() []string {
 		return nil
 	}
 	return o.Columns
+}
+
+func (o *SourcePinterestAds) GetTargetingTypes() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TargetingTypes
 }

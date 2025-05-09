@@ -9,6 +9,30 @@ import (
 	"time"
 )
 
+type ConnectionDb2Type string
+
+const (
+	ConnectionDb2TypeDb2 ConnectionDb2Type = "DB2"
+)
+
+func (e ConnectionDb2Type) ToPointer() *ConnectionDb2Type {
+	return &e
+}
+
+func (e *ConnectionDb2Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DB2":
+		*e = ConnectionDb2Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionDb2Type: %v", v)
+	}
+}
+
 // ConnectionDb2Status - The current status of the connection.
 type ConnectionDb2Status string
 
@@ -73,9 +97,9 @@ func (o *ConnectionDb2DefaultUpdateSchedule) GetUpdateSchedule() *UpdateSchedule
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionDb2DefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionDb2DefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -83,13 +107,6 @@ func (o *ConnectionDb2DefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateS
 func (o *ConnectionDb2DefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionDb2DefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -108,58 +125,41 @@ func (o *ConnectionDb2DefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateSc
 	return nil
 }
 
-type ConnectionDb2Type string
-
-const (
-	ConnectionDb2TypeDb2 ConnectionDb2Type = "DB2"
-)
-
-func (e ConnectionDb2Type) ToPointer() *ConnectionDb2Type {
-	return &e
-}
-
-func (e *ConnectionDb2Type) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+func (o *ConnectionDb2DefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	switch v {
-	case "DB2":
-		*e = ConnectionDb2Type(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectionDb2Type: %v", v)
-	}
+	return nil
 }
 
 // ConnectionDb2 - Specifies the location of a database.
 type ConnectionDb2 struct {
-	// The current status of the connection.
-	Status ConnectionDb2Status `json:"status"`
-	// The unique name of this connection.
-	Name string `json:"name"`
-	// The date and time when then the connection was created.
-	CreateDate time.Time `json:"createDate"`
-	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionDb2DefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Whether this connection has been marked as active.
-	Active bool              `json:"active"`
-	Type   ConnectionDb2Type `json:"type"`
 	// The unique identifier of the connection.
 	ID string `json:"id"`
+	// The unique name of this connection.
+	Name string            `json:"name"`
+	Type ConnectionDb2Type `json:"type"`
+	// Whether this connection has been marked as active.
+	Active bool `json:"active"`
+	// The current status of the connection.
+	Status ConnectionDb2Status `json:"status"`
+	// The date and time when then the connection was created.
+	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
-	Certificate *string `json:"certificate,omitempty"`
+	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
+	DefaultUpdateSchedule []ConnectionDb2DefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema    *string    `json:"schema,omitempty"`
-	Username  string     `json:"username"`
-	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
-	Port      int64      `json:"port"`
-	Address   string     `json:"address"`
-	Database  string     `json:"database"`
+	Schema *string `json:"schema,omitempty"`
+	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
+	Certificate *string    `json:"certificate,omitempty"`
+	Address     string     `json:"address"`
+	Port        int64      `json:"port"`
+	Username    string     `json:"username"`
+	SSHConfig   *SSHConfig `json:"sshConfig,omitempty"`
+	Database    string     `json:"database"`
 }
 
 func (c ConnectionDb2) MarshalJSON() ([]byte, error) {
@@ -173,11 +173,11 @@ func (c *ConnectionDb2) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ConnectionDb2) GetStatus() ConnectionDb2Status {
+func (o *ConnectionDb2) GetID() string {
 	if o == nil {
-		return ConnectionDb2Status("")
+		return ""
 	}
-	return o.Status
+	return o.ID
 }
 
 func (o *ConnectionDb2) GetName() string {
@@ -187,18 +187,11 @@ func (o *ConnectionDb2) GetName() string {
 	return o.Name
 }
 
-func (o *ConnectionDb2) GetCreateDate() time.Time {
+func (o *ConnectionDb2) GetType() ConnectionDb2Type {
 	if o == nil {
-		return time.Time{}
+		return ConnectionDb2Type("")
 	}
-	return o.CreateDate
-}
-
-func (o *ConnectionDb2) GetDefaultUpdateSchedule() []ConnectionDb2DefaultUpdateSchedule {
-	if o == nil {
-		return []ConnectionDb2DefaultUpdateSchedule{}
-	}
-	return o.DefaultUpdateSchedule
+	return o.Type
 }
 
 func (o *ConnectionDb2) GetActive() bool {
@@ -208,18 +201,18 @@ func (o *ConnectionDb2) GetActive() bool {
 	return o.Active
 }
 
-func (o *ConnectionDb2) GetType() ConnectionDb2Type {
+func (o *ConnectionDb2) GetStatus() ConnectionDb2Status {
 	if o == nil {
-		return ConnectionDb2Type("")
+		return ConnectionDb2Status("")
 	}
-	return o.Type
+	return o.Status
 }
 
-func (o *ConnectionDb2) GetID() string {
+func (o *ConnectionDb2) GetCreateDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ID
+	return o.CreateDate
 }
 
 func (o *ConnectionDb2) GetUpdateSchedule() *UpdateScheduleTypes {
@@ -229,9 +222,9 @@ func (o *ConnectionDb2) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionDb2) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionDb2) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -239,13 +232,6 @@ func (o *ConnectionDb2) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 func (o *ConnectionDb2) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionDb2) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -264,11 +250,18 @@ func (o *ConnectionDb2) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	return nil
 }
 
-func (o *ConnectionDb2) GetCertificate() *string {
-	if o == nil {
-		return nil
+func (o *ConnectionDb2) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.Certificate
+	return nil
+}
+
+func (o *ConnectionDb2) GetDefaultUpdateSchedule() []ConnectionDb2DefaultUpdateSchedule {
+	if o == nil {
+		return []ConnectionDb2DefaultUpdateSchedule{}
+	}
+	return o.DefaultUpdateSchedule
 }
 
 func (o *ConnectionDb2) GetSchema() *string {
@@ -276,6 +269,27 @@ func (o *ConnectionDb2) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *ConnectionDb2) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
+}
+
+func (o *ConnectionDb2) GetAddress() string {
+	if o == nil {
+		return ""
+	}
+	return o.Address
+}
+
+func (o *ConnectionDb2) GetPort() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Port
 }
 
 func (o *ConnectionDb2) GetUsername() string {
@@ -292,20 +306,6 @@ func (o *ConnectionDb2) GetSSHConfig() *SSHConfig {
 	return o.SSHConfig
 }
 
-func (o *ConnectionDb2) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
-}
-
-func (o *ConnectionDb2) GetAddress() string {
-	if o == nil {
-		return ""
-	}
-	return o.Address
-}
-
 func (o *ConnectionDb2) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -320,18 +320,18 @@ type ConnectionDb2Input struct {
 	Type ConnectionDb2Type `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
-	Certificate *string `json:"certificate,omitempty"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema    *string    `json:"schema,omitempty"`
-	Username  string     `json:"username"`
-	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
-	Password  string     `json:"password"`
-	Port      int64      `json:"port"`
-	Address   string     `json:"address"`
-	Database  string     `json:"database"`
+	Schema *string `json:"schema,omitempty"`
+	// Etleap secures all connections with TLS encryption. You can provide your own TLS certificate, or if none is provided, the AWS RDS global certificate bundle will be used by default.
+	Certificate *string    `json:"certificate,omitempty"`
+	Address     string     `json:"address"`
+	Port        int64      `json:"port"`
+	Username    string     `json:"username"`
+	Password    string     `json:"password"`
+	SSHConfig   *SSHConfig `json:"sshConfig,omitempty"`
+	Database    string     `json:"database"`
 }
 
 func (o *ConnectionDb2Input) GetName() string {
@@ -355,9 +355,9 @@ func (o *ConnectionDb2Input) GetUpdateSchedule() *UpdateScheduleTypes {
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionDb2Input) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionDb2Input) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -365,13 +365,6 @@ func (o *ConnectionDb2Input) GetUpdateScheduleMonthly() *UpdateScheduleModeMonth
 func (o *ConnectionDb2Input) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
-	}
-	return nil
-}
-
-func (o *ConnectionDb2Input) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
-	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
@@ -390,11 +383,11 @@ func (o *ConnectionDb2Input) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly
 	return nil
 }
 
-func (o *ConnectionDb2Input) GetCertificate() *string {
-	if o == nil {
-		return nil
+func (o *ConnectionDb2Input) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthly
 	}
-	return o.Certificate
+	return nil
 }
 
 func (o *ConnectionDb2Input) GetSchema() *string {
@@ -404,25 +397,18 @@ func (o *ConnectionDb2Input) GetSchema() *string {
 	return o.Schema
 }
 
-func (o *ConnectionDb2Input) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *ConnectionDb2Input) GetSSHConfig() *SSHConfig {
+func (o *ConnectionDb2Input) GetCertificate() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SSHConfig
+	return o.Certificate
 }
 
-func (o *ConnectionDb2Input) GetPassword() string {
+func (o *ConnectionDb2Input) GetAddress() string {
 	if o == nil {
 		return ""
 	}
-	return o.Password
+	return o.Address
 }
 
 func (o *ConnectionDb2Input) GetPort() int64 {
@@ -432,11 +418,25 @@ func (o *ConnectionDb2Input) GetPort() int64 {
 	return o.Port
 }
 
-func (o *ConnectionDb2Input) GetAddress() string {
+func (o *ConnectionDb2Input) GetUsername() string {
 	if o == nil {
 		return ""
 	}
-	return o.Address
+	return o.Username
+}
+
+func (o *ConnectionDb2Input) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *ConnectionDb2Input) GetSSHConfig() *SSHConfig {
+	if o == nil {
+		return nil
+	}
+	return o.SSHConfig
 }
 
 func (o *ConnectionDb2Input) GetDatabase() string {

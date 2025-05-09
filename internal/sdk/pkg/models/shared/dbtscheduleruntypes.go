@@ -12,10 +12,10 @@ import (
 type DbtScheduleRunTypesType string
 
 const (
-	DbtScheduleRunTypesTypeSuccessWithDbtWarnings DbtScheduleRunTypesType = "SUCCESS_WITH_DBT_WARNINGS"
 	DbtScheduleRunTypesTypeInProgress             DbtScheduleRunTypesType = "IN_PROGRESS"
 	DbtScheduleRunTypesTypeIngestCouldNotComplete DbtScheduleRunTypesType = "INGEST_COULD_NOT_COMPLETE"
 	DbtScheduleRunTypesTypeDbtError               DbtScheduleRunTypesType = "DBT_ERROR"
+	DbtScheduleRunTypesTypeSuccessWithDbtWarnings DbtScheduleRunTypesType = "SUCCESS_WITH_DBT_WARNINGS"
 	DbtScheduleRunTypesTypeSuccess                DbtScheduleRunTypesType = "SUCCESS"
 )
 
@@ -25,18 +25,6 @@ type DbtScheduleRunTypes struct {
 	DbtScheduleRunInProgress *DbtScheduleRunInProgress
 
 	Type DbtScheduleRunTypesType
-}
-
-func CreateDbtScheduleRunTypesSuccessWithDbtWarnings(successWithDbtWarnings DbtScheduleRunSuccess) DbtScheduleRunTypes {
-	typ := DbtScheduleRunTypesTypeSuccessWithDbtWarnings
-
-	typStr := DbtScheduleRunSuccessStatus(typ)
-	successWithDbtWarnings.Status = typStr
-
-	return DbtScheduleRunTypes{
-		DbtScheduleRunSuccess: &successWithDbtWarnings,
-		Type:                  typ,
-	}
 }
 
 func CreateDbtScheduleRunTypesInProgress(inProgress DbtScheduleRunInProgress) DbtScheduleRunTypes {
@@ -75,10 +63,22 @@ func CreateDbtScheduleRunTypesDbtError(dbtError DbtScheduleRunFailure) DbtSchedu
 	}
 }
 
+func CreateDbtScheduleRunTypesSuccessWithDbtWarnings(successWithDbtWarnings DbtScheduleRunSuccess) DbtScheduleRunTypes {
+	typ := DbtScheduleRunTypesTypeSuccessWithDbtWarnings
+
+	typStr := Status(typ)
+	successWithDbtWarnings.Status = typStr
+
+	return DbtScheduleRunTypes{
+		DbtScheduleRunSuccess: &successWithDbtWarnings,
+		Type:                  typ,
+	}
+}
+
 func CreateDbtScheduleRunTypesSuccess(success DbtScheduleRunSuccess) DbtScheduleRunTypes {
 	typ := DbtScheduleRunTypesTypeSuccess
 
-	typStr := DbtScheduleRunSuccessStatus(typ)
+	typStr := Status(typ)
 	success.Status = typStr
 
 	return DbtScheduleRunTypes{
@@ -99,15 +99,6 @@ func (u *DbtScheduleRunTypes) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Status {
-	case "SUCCESS_WITH_DBT_WARNINGS":
-		dbtScheduleRunSuccess := new(DbtScheduleRunSuccess)
-		if err := utils.UnmarshalJSON(data, &dbtScheduleRunSuccess, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.DbtScheduleRunSuccess = dbtScheduleRunSuccess
-		u.Type = DbtScheduleRunTypesTypeSuccessWithDbtWarnings
-		return nil
 	case "IN_PROGRESS":
 		dbtScheduleRunInProgress := new(DbtScheduleRunInProgress)
 		if err := utils.UnmarshalJSON(data, &dbtScheduleRunInProgress, "", true, true); err != nil {
@@ -134,6 +125,15 @@ func (u *DbtScheduleRunTypes) UnmarshalJSON(data []byte) error {
 
 		u.DbtScheduleRunFailure = dbtScheduleRunFailure
 		u.Type = DbtScheduleRunTypesTypeDbtError
+		return nil
+	case "SUCCESS_WITH_DBT_WARNINGS":
+		dbtScheduleRunSuccess := new(DbtScheduleRunSuccess)
+		if err := utils.UnmarshalJSON(data, &dbtScheduleRunSuccess, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.DbtScheduleRunSuccess = dbtScheduleRunSuccess
+		u.Type = DbtScheduleRunTypesTypeSuccessWithDbtWarnings
 		return nil
 	case "SUCCESS":
 		dbtScheduleRunSuccess := new(DbtScheduleRunSuccess)

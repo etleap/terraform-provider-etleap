@@ -27,7 +27,7 @@ type GetSALESFORCEConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSalesforce *shared.ConnectionSalesforce
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 

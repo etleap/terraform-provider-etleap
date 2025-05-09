@@ -32,19 +32,12 @@ func (e *WarehouseRedshiftUpdateType) UnmarshalJSON(data []byte) error {
 }
 
 type WarehouseRedshiftUpdate struct {
-	Table *string                     `json:"table,omitempty"`
 	Type  WarehouseRedshiftUpdateType `json:"type"`
-	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
-	DistributionStyle *DistributionStyle `json:"distributionStyle,omitempty"`
+	Table *string                     `json:"table,omitempty"`
 	// The sort columns to use.
 	SortColumns []string `json:"sortColumns,omitempty"`
-}
-
-func (o *WarehouseRedshiftUpdate) GetTable() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Table
+	// Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column.
+	DistributionStyle *DistributionStyle `json:"distributionStyle,omitempty"`
 }
 
 func (o *WarehouseRedshiftUpdate) GetType() WarehouseRedshiftUpdateType {
@@ -54,11 +47,11 @@ func (o *WarehouseRedshiftUpdate) GetType() WarehouseRedshiftUpdateType {
 	return o.Type
 }
 
-func (o *WarehouseRedshiftUpdate) GetDistributionStyle() *DistributionStyle {
+func (o *WarehouseRedshiftUpdate) GetTable() *string {
 	if o == nil {
 		return nil
 	}
-	return o.DistributionStyle
+	return o.Table
 }
 
 func (o *WarehouseRedshiftUpdate) GetSortColumns() []string {
@@ -66,4 +59,11 @@ func (o *WarehouseRedshiftUpdate) GetSortColumns() []string {
 		return nil
 	}
 	return o.SortColumns
+}
+
+func (o *WarehouseRedshiftUpdate) GetDistributionStyle() *DistributionStyle {
+	if o == nil {
+		return nil
+	}
+	return o.DistributionStyle
 }

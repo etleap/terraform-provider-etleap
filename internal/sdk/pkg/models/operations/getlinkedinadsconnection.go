@@ -26,8 +26,8 @@ type GetLINKEDINADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionLinkedInAds *shared.ConnectionLinkedInAdsOutput
-	// Not Found.
+	ConnectionLinkedInAds *shared.ConnectionLinkedInAds
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
@@ -52,7 +52,7 @@ func (o *GetLINKEDINADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetLINKEDINADSConnectionResponse) GetConnectionLinkedInAds() *shared.ConnectionLinkedInAdsOutput {
+func (o *GetLINKEDINADSConnectionResponse) GetConnectionLinkedInAds() *shared.ConnectionLinkedInAds {
 	if o == nil {
 		return nil
 	}

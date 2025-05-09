@@ -65,15 +65,15 @@ func (e *SourceSftpNewFileBehavior) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSftp struct {
+	Type SourceSftpType `json:"type"`
 	// The universally unique identifier for the source.
-	ConnectionID string         `json:"connectionId"`
-	Type         SourceSftpType `json:"type"`
+	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
-	NewFileBehavior SourceSftpNewFileBehavior `json:"newFileBehavior"`
 	// Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 	FileNameFilter *string `json:"fileNameFilter,omitempty"`
+	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
+	NewFileBehavior SourceSftpNewFileBehavior `json:"newFileBehavior"`
 	// Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
 	LowWatermark *types.Date `json:"lowWatermark,omitempty"`
 	// File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified.
@@ -93,18 +93,18 @@ func (s *SourceSftp) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceSftp) GetConnectionID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectionID
-}
-
 func (o *SourceSftp) GetType() SourceSftpType {
 	if o == nil {
 		return SourceSftpType("")
 	}
 	return o.Type
+}
+
+func (o *SourceSftp) GetConnectionID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ConnectionID
 }
 
 func (o *SourceSftp) GetLatencyThreshold() *int64 {
@@ -114,18 +114,18 @@ func (o *SourceSftp) GetLatencyThreshold() *int64 {
 	return o.LatencyThreshold
 }
 
-func (o *SourceSftp) GetNewFileBehavior() SourceSftpNewFileBehavior {
-	if o == nil {
-		return SourceSftpNewFileBehavior("")
-	}
-	return o.NewFileBehavior
-}
-
 func (o *SourceSftp) GetFileNameFilter() *string {
 	if o == nil {
 		return nil
 	}
 	return o.FileNameFilter
+}
+
+func (o *SourceSftp) GetNewFileBehavior() SourceSftpNewFileBehavior {
+	if o == nil {
+		return SourceSftpNewFileBehavior("")
+	}
+	return o.NewFileBehavior
 }
 
 func (o *SourceSftp) GetLowWatermark() *types.Date {

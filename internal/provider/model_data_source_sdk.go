@@ -80,9 +80,9 @@ func (r *ModelDataSourceModel) RefreshFromSharedModelOutput(resp *shared.ModelOu
 	if resp.Warehouse.WarehouseRedshift != nil {
 		r.Warehouse.Redshift = &WarehouseRedshift{}
 		r.Warehouse.Redshift.ConnectionID = types.StringValue(resp.Warehouse.WarehouseRedshift.ConnectionID)
-		if resp.Warehouse.WarehouseRedshift.DistributionStyle.DistributionStyle1 != nil {
-			if resp.Warehouse.WarehouseRedshift.DistributionStyle.DistributionStyle1 != nil {
-				r.Warehouse.Redshift.DistributionStyle.One = types.StringValue(string(*resp.Warehouse.WarehouseRedshift.DistributionStyle.DistributionStyle1))
+		if resp.Warehouse.WarehouseRedshift.DistributionStyle.One != nil {
+			if resp.Warehouse.WarehouseRedshift.DistributionStyle.One != nil {
+				r.Warehouse.Redshift.DistributionStyle.One = types.StringValue(string(*resp.Warehouse.WarehouseRedshift.DistributionStyle.One))
 			} else {
 				r.Warehouse.Redshift.DistributionStyle.One = types.StringNull()
 			}

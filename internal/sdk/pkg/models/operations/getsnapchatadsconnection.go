@@ -27,7 +27,7 @@ type GetSNAPCHATADSConnectionResponse struct {
 	RawResponse *http.Response
 	// OK.
 	ConnectionSnapchatAds *shared.ConnectionSnapchatAds
-	// Not Found.
+	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
 
