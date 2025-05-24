@@ -78,6 +78,7 @@ type SourceTypes struct {
 	SnowflakeSharded         *SourceSnowflakeSharded         `tfsdk:"snowflake_sharded"`
 	SQLServer                *SourceSQLServer                `tfsdk:"sql_server"`
 	SQLServerSharded         *SourceSQLServerSharded         `tfsdk:"sql_server_sharded"`
+	Sqs                      *SourceSqs                      `tfsdk:"sqs"`
 	Square                   *SourceSquare                   `tfsdk:"square"`
 	Streaming                *SourceStreaming                `tfsdk:"streaming"`
 	Stripe                   *SourceStripe                   `tfsdk:"stripe"`

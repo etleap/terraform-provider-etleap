@@ -18,10 +18,10 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
     basic = {
       password = "...my_password..."
       type     = "BASIC"
-      username = "Talon_Gislason24"
+      username = "Jaqueline.Morissette24"
     }
   }
-  deletion_of_export_products = true
+  deletion_of_export_products = false
   entities = [
     {
       api_url = "...my_api_url..."
@@ -35,10 +35,10 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      id = "79e632ee-6059-4909-bc8f-1d1a174cc096"
+      id = "ee605990-9fc8-4f1d-9a17-4cc096b23d6f"
       paging_strategy = {
         cursor_uri = {
-          max_page_size        = 8
+          max_page_size        = 0
           page_size_field_name = "...my_page_size_field_name..."
           path_to_cursor       = "...my_path_to_cursor..."
           type                 = "CURSOR_URI"
@@ -60,7 +60,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
       }
     },
   ]
-  name = "Shannon Steuber"
+  name = "Ricky Hegmann Sr."
   type = "USER_DEFINED_API"
 }
 ```

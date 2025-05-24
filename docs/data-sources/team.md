@@ -14,7 +14,7 @@ Team DataSource
 
 ```terraform
 data "etleap_team" "my_team" {
-  id = "54f956de-30d1-4594-a7bc-d9e32d8d2e21"
+  id = "35592d17-67d2-466d-b72c-efba7dd008a6"
 }
 ```
 

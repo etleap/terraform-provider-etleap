@@ -14,11 +14,11 @@ ConnectionVEEVA Resource
 
 ```terraform
 resource "etleap_connection_veeva" "my_connectionveeva" {
-  deletion_of_export_products = false
-  name                        = "Evelyn Hilll"
+  deletion_of_export_products = true
+  name                        = "Santiago West"
   password                    = "...my_password..."
   type                        = "VEEVA"
-  username                    = "Tevin_Ledner25"
+  username                    = "Walter_Hammes"
   vault_domain_name           = "...my_vault_domain_name..."
   vault_type                  = "PROMOMATS"
 }

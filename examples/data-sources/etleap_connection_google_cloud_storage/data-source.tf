@@ -1,3 +1,3 @@
 data "etleap_connection_google_cloud_storage" "my_connectiongoogle_cloud_storage" {
-  id = "ace51fe0-f19d-4146-8871-c9462c46fc90"
+  id = "fe0f19d1-4648-471c-9462-c46fc90b6e9f"
 }

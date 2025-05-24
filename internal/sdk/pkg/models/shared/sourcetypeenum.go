@@ -85,6 +85,7 @@ const (
 	SourceTypeEnumStreaming                SourceTypeEnum = "STREAMING"
 	SourceTypeEnumSnowflake                SourceTypeEnum = "SNOWFLAKE"
 	SourceTypeEnumSnowflakeSharded         SourceTypeEnum = "SNOWFLAKE_SHARDED"
+	SourceTypeEnumSqs                      SourceTypeEnum = "SQS"
 	SourceTypeEnumSquare                   SourceTypeEnum = "SQUARE"
 	SourceTypeEnumSnapchatAds              SourceTypeEnum = "SNAPCHAT_ADS"
 	SourceTypeEnumStripe                   SourceTypeEnum = "STRIPE"
@@ -263,6 +264,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	case "SNOWFLAKE":
 		fallthrough
 	case "SNOWFLAKE_SHARDED":
+		fallthrough
+	case "SQS":
 		fallthrough
 	case "SQUARE":
 		fallthrough

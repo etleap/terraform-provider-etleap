@@ -376,6 +376,10 @@ func (o *PipelineOutput) GetSourceSnowflakeSharded() *SourceSnowflakeSharded {
 	return o.GetSource().SourceSnowflakeSharded
 }
 
+func (o *PipelineOutput) GetSourceSqs() *SourceSqs {
+	return o.GetSource().SourceSqs
+}
+
 func (o *PipelineOutput) GetSourceSquare() *SourceSquare {
 	return o.GetSource().SourceSquare
 }

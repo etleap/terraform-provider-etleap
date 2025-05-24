@@ -1085,6 +1085,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.SQLServerSharded.TableNameFilter = types.StringPointerValue(resp.Source.SourceSQLServerSharded.TableNameFilter)
 		r.Source.SQLServerSharded.Type = types.StringValue(string(resp.Source.SourceSQLServerSharded.Type))
 	}
+	if resp.Source.SourceSqs != nil {
+		r.Source.Sqs = &SourceSqs{}
+		r.Source.Sqs.ConnectionID = types.StringValue(resp.Source.SourceSqs.ConnectionID)
+		r.Source.Sqs.Entity = types.StringValue(resp.Source.SourceSqs.Entity)
+		r.Source.Sqs.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSqs.LatencyThreshold)
+		r.Source.Sqs.Type = types.StringValue(string(resp.Source.SourceSqs.Type))
+	}
 	if resp.Source.SourceSquare != nil {
 		r.Source.Square = &SourceSquare{}
 		r.Source.Square.ConnectionID = types.StringValue(resp.Source.SourceSquare.ConnectionID)

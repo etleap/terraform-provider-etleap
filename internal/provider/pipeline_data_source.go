@@ -2685,6 +2685,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
+					"sqs": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The SQS queue URL. Example value: https://sqs.us-east-1.amazonaws.com/1234567890/my-sqs-queue.fifo`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["SQS"]`,
+							},
+						},
+					},
 					"square": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{

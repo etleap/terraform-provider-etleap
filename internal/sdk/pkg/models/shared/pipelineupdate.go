@@ -1405,6 +1405,13 @@ func (o *PipelineUpdate) GetSourceSnowflakeSharded() *SourceSnowflakeShardedUpda
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceSqs() *SourceSqsUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSqsUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceSquare() *SourceSquareUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceSquareUpdate

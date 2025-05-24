@@ -14,10 +14,10 @@ Pipeline Resource
 
 ```terraform
 resource "etleap_pipeline" "my_pipeline" {
-  deletion_of_export_products = true
+  deletion_of_export_products = false
   destination = {
     delta_lake = {
-      automatic_schema_changes   = false
+      automatic_schema_changes   = true
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
       pre10_dot2_runtime_support = true
@@ -28,11 +28,11 @@ resource "etleap_pipeline" "my_pipeline" {
       schema                 = "...my_schema..."
       table                  = "...my_table..."
       type                   = "DELTA_LAKE"
-      wait_for_quality_check = false
+      wait_for_quality_check = true
     }
   }
-  name   = "Johanna Hand PhD"
-  paused = false
+  name   = "Luis Bradtke II"
+  paused = true
   script = {
     legacy_script = {
       legacy_script = "...my_legacy_script..."
@@ -42,7 +42,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 1
+      latency_threshold = 6
       type              = "ACTIVE_CAMPAIGN"
     }
   }
@@ -298,6 +298,7 @@ Optional:
 - `snowflake_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--snowflake_sharded))
 - `sql_server` (Attributes) (see [below for nested schema](#nestedatt--source--sql_server))
 - `sql_server_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--sql_server_sharded))
+- `sqs` (Attributes) (see [below for nested schema](#nestedatt--source--sqs))
 - `square` (Attributes) (see [below for nested schema](#nestedatt--source--square))
 - `streaming` (Attributes) (see [below for nested schema](#nestedatt--source--streaming))
 - `stripe` (Attributes) (see [below for nested schema](#nestedatt--source--stripe))
@@ -1258,6 +1259,17 @@ Optional:
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both. Requires replacement if changed.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both. Requires replacement if changed.
 - `type` (String) Not Null; must be one of ["SQL_SERVER_SHARDED"]
+
+
+<a id="nestedatt--source--sqs"></a>
+### Nested Schema for `source.sqs`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The SQS queue URL. Example value: https://sqs.us-east-1.amazonaws.com/1234567890/my-sqs-queue.fifo. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SQS"]
 
 
 <a id="nestedatt--source--square"></a>

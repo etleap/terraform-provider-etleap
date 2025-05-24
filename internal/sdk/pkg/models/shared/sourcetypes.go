@@ -87,6 +87,7 @@ const (
 	SourceTypesTypeStreaming                SourceTypesType = "STREAMING"
 	SourceTypesTypeSnowflake                SourceTypesType = "SNOWFLAKE"
 	SourceTypesTypeSnowflakeSharded         SourceTypesType = "SNOWFLAKE_SHARDED"
+	SourceTypesTypeSqs                      SourceTypesType = "SQS"
 	SourceTypesTypeSquare                   SourceTypesType = "SQUARE"
 	SourceTypesTypeSnapchatAds              SourceTypesType = "SNAPCHAT_ADS"
 	SourceTypesTypeStripe                   SourceTypesType = "STRIPE"
@@ -182,6 +183,7 @@ type SourceTypes struct {
 	SourceStreaming                *SourceStreaming
 	SourceSnowflake                *SourceSnowflake
 	SourceSnowflakeSharded         *SourceSnowflakeSharded
+	SourceSqs                      *SourceSqs
 	SourceSquare                   *SourceSquare
 	SourceSnapchatAds              *SourceSnapchatAds
 	SourceStripe                   *SourceStripe
@@ -1103,6 +1105,18 @@ func CreateSourceTypesSnowflakeSharded(snowflakeSharded SourceSnowflakeSharded) 
 	}
 }
 
+func CreateSourceTypesSqs(sqs SourceSqs) SourceTypes {
+	typ := SourceTypesTypeSqs
+
+	typStr := SourceSqsType(typ)
+	sqs.Type = typStr
+
+	return SourceTypes{
+		SourceSqs: &sqs,
+		Type:      typ,
+	}
+}
+
 func CreateSourceTypesSquare(square SourceSquare) SourceTypes {
 	typ := SourceTypesTypeSquare
 
@@ -1994,6 +2008,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceSnowflakeSharded = sourceSnowflakeSharded
 		u.Type = SourceTypesTypeSnowflakeSharded
 		return nil
+	case "SQS":
+		sourceSqs := new(SourceSqs)
+		if err := utils.UnmarshalJSON(data, &sourceSqs, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSqs = sourceSqs
+		u.Type = SourceTypesTypeSqs
+		return nil
 	case "SQUARE":
 		sourceSquare := new(SourceSquare)
 		if err := utils.UnmarshalJSON(data, &sourceSquare, "", true, true); err != nil {
@@ -2451,6 +2474,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceSnowflakeSharded != nil {
 		return utils.MarshalJSON(u.SourceSnowflakeSharded, "", true)
+	}
+
+	if u.SourceSqs != nil {
+		return utils.MarshalJSON(u.SourceSqs, "", true)
 	}
 
 	if u.SourceSquare != nil {

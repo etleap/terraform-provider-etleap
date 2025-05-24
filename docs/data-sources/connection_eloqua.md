@@ -14,7 +14,7 @@ ConnectionELOQUA DataSource
 
 ```terraform
 data "etleap_connection_eloqua" "my_connectioneloqua" {
-  id = "b6404764-84ee-4a2a-bbbb-602fddbdedaf"
+  id = "76484eea-2a3b-4bb6-82fd-dbdedaf753fd"
 }
 ```
 

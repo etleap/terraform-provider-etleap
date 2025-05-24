@@ -87,6 +87,7 @@ const (
 	SourceTypesUpdateTypeStreaming                SourceTypesUpdateType = "STREAMING"
 	SourceTypesUpdateTypeSnowflake                SourceTypesUpdateType = "SNOWFLAKE"
 	SourceTypesUpdateTypeSnowflakeSharded         SourceTypesUpdateType = "SNOWFLAKE_SHARDED"
+	SourceTypesUpdateTypeSqs                      SourceTypesUpdateType = "SQS"
 	SourceTypesUpdateTypeSquare                   SourceTypesUpdateType = "SQUARE"
 	SourceTypesUpdateTypeSnapchatAds              SourceTypesUpdateType = "SNAPCHAT_ADS"
 	SourceTypesUpdateTypeStripe                   SourceTypesUpdateType = "STRIPE"
@@ -182,6 +183,7 @@ type SourceTypesUpdate struct {
 	SourceStreamingUpdate                *SourceStreamingUpdate
 	SourceSnowflakeUpdate                *SourceSnowflakeUpdate
 	SourceSnowflakeShardedUpdate         *SourceSnowflakeShardedUpdate
+	SourceSqsUpdate                      *SourceSqsUpdate
 	SourceSquareUpdate                   *SourceSquareUpdate
 	SourceSnapchatAdsUpdate              *SourceSnapchatAdsUpdate
 	SourceStripeUpdate                   *SourceStripeUpdate
@@ -1103,6 +1105,18 @@ func CreateSourceTypesUpdateSnowflakeSharded(snowflakeSharded SourceSnowflakeSha
 	}
 }
 
+func CreateSourceTypesUpdateSqs(sqs SourceSqsUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSqs
+
+	typStr := SourceSqsUpdateType(typ)
+	sqs.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSqsUpdate: &sqs,
+		Type:            typ,
+	}
+}
+
 func CreateSourceTypesUpdateSquare(square SourceSquareUpdate) SourceTypesUpdate {
 	typ := SourceTypesUpdateTypeSquare
 
@@ -1994,6 +2008,15 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceSnowflakeShardedUpdate = sourceSnowflakeShardedUpdate
 		u.Type = SourceTypesUpdateTypeSnowflakeSharded
 		return nil
+	case "SQS":
+		sourceSqsUpdate := new(SourceSqsUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSqsUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSqsUpdate = sourceSqsUpdate
+		u.Type = SourceTypesUpdateTypeSqs
+		return nil
 	case "SQUARE":
 		sourceSquareUpdate := new(SourceSquareUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceSquareUpdate, "", true, true); err != nil {
@@ -2451,6 +2474,10 @@ func (u SourceTypesUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.SourceSnowflakeShardedUpdate != nil {
 		return utils.MarshalJSON(u.SourceSnowflakeShardedUpdate, "", true)
+	}
+
+	if u.SourceSqsUpdate != nil {
+		return utils.MarshalJSON(u.SourceSqsUpdate, "", true)
 	}
 
 	if u.SourceSquareUpdate != nil {

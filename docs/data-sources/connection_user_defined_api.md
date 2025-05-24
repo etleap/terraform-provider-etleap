@@ -14,7 +14,7 @@ ConnectionUSERDEFINEDAPI DataSource
 
 ```terraform
 data "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
-  id = "f11cffc9-2ab8-4758-bc7a-bd9fadbde2ab"
+  id = "0bc52831-79fb-4ca0-bf66-6e3fd7ba260f"
 }
 ```
 

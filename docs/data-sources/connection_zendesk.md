@@ -14,7 +14,7 @@ ConnectionZENDESK DataSource
 
 ```terraform
 data "etleap_connection_zendesk" "my_connectionzendesk" {
-  id = "a7d9be0d-0595-4378-a7c8-dbec391d42cc"
+  id = "969c976f-f48b-4c3b-bb01-c1401c74ab26"
 }
 ```
 

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 29014054a84acfc754bf5c127a8382ce
-  docVersion: 2.7.23
+  docChecksum: b13352e973eb90c38a1e63255e603a98
+  docVersion: 2.7.24
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.1.29
-  configChecksum: 109e27214a829977529b03787c041b97
+  releaseVersion: 0.1.30
+  configChecksum: eb9835d87b3e285655ab6e932bd84229
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -352,6 +352,9 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatesqlservershardedconnection.go
   - internal/sdk/pkg/models/operations/getsqlservershardedconnection.go
   - internal/sdk/pkg/models/operations/deletesqlservershardedconnection.go
+  - internal/sdk/pkg/models/operations/updatesqsconnection.go
+  - internal/sdk/pkg/models/operations/getsqsconnection.go
+  - internal/sdk/pkg/models/operations/deletesqsconnection.go
   - internal/sdk/pkg/models/operations/updatesquareconnection.go
   - internal/sdk/pkg/models/operations/getsquareconnection.go
   - internal/sdk/pkg/models/operations/deletesquareconnection.go
@@ -475,6 +478,7 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/createsnowflakeshardedconnection.go
   - internal/sdk/pkg/models/operations/createsqlserverconnection.go
   - internal/sdk/pkg/models/operations/createsqlservershardedconnection.go
+  - internal/sdk/pkg/models/operations/createsqsconnection.go
   - internal/sdk/pkg/models/operations/createsquareconnection.go
   - internal/sdk/pkg/models/operations/createstripeconnection.go
   - internal/sdk/pkg/models/operations/createsumtotalconnection.go
@@ -614,6 +618,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourcestreaming.go
   - internal/sdk/pkg/models/shared/sourcesnowflake.go
   - internal/sdk/pkg/models/shared/sourcesnowflakesharded.go
+  - internal/sdk/pkg/models/shared/sourcesqs.go
   - internal/sdk/pkg/models/shared/sourcesquare.go
   - internal/sdk/pkg/models/shared/sourcesnapchatads.go
   - internal/sdk/pkg/models/shared/sourcestripe.go
@@ -710,6 +715,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourcestreamingupdate.go
   - internal/sdk/pkg/models/shared/sourcesnowflakeupdate.go
   - internal/sdk/pkg/models/shared/sourcesnowflakeshardedupdate.go
+  - internal/sdk/pkg/models/shared/sourcesqsupdate.go
   - internal/sdk/pkg/models/shared/sourcesquareupdate.go
   - internal/sdk/pkg/models/shared/sourcesnapchatadsupdate.go
   - internal/sdk/pkg/models/shared/sourcestripeupdate.go
@@ -942,6 +948,8 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionsqlserverupdate.go
   - internal/sdk/pkg/models/shared/connectionsqlserversharded.go
   - internal/sdk/pkg/models/shared/connectionsqlservershardedupdate.go
+  - internal/sdk/pkg/models/shared/connectionsqs.go
+  - internal/sdk/pkg/models/shared/connectionsqsupdate.go
   - internal/sdk/pkg/models/shared/connectionsquare.go
   - internal/sdk/pkg/models/shared/connectionsquareupdate.go
   - internal/sdk/pkg/models/shared/connectionstripe.go
@@ -1173,6 +1181,7 @@ generatedFiles:
   - internal/provider/type_source_snowflake_sharded.go
   - internal/provider/type_source_sql_server.go
   - internal/provider/type_source_sql_server_sharded.go
+  - internal/provider/type_source_sqs.go
   - internal/provider/type_source_square.go
   - internal/provider/type_source_streaming.go
   - internal/provider/type_source_stripe.go
@@ -1425,6 +1434,9 @@ generatedFiles:
   - internal/provider/connectionsql_server_sharded_resource.go
   - internal/provider/connectionsql_server_sharded_resource_sdk.go
   - examples/resources/etleap_connection_sql_server_sharded/resource.tf
+  - internal/provider/connectionsqs_resource.go
+  - internal/provider/connectionsqs_resource_sdk.go
+  - examples/resources/etleap_connection_sqs/resource.tf
   - internal/provider/connectionsquare_resource.go
   - internal/provider/connectionsquare_resource_sdk.go
   - examples/resources/etleap_connection_square/resource.tf
@@ -1710,6 +1722,9 @@ generatedFiles:
   - internal/provider/connectionsql_server_sharded_data_source.go
   - internal/provider/connectionsql_server_sharded_data_source_sdk.go
   - examples/data-sources/etleap_connection_sql_server_sharded/data-source.tf
+  - internal/provider/connectionsqs_data_source.go
+  - internal/provider/connectionsqs_data_source_sdk.go
+  - examples/data-sources/etleap_connection_sqs/data-source.tf
   - internal/provider/connectionsquare_data_source.go
   - internal/provider/connectionsquare_data_source_sdk.go
   - examples/data-sources/etleap_connection_square/data-source.tf

@@ -1,3 +1,3 @@
 data "etleap_connection_freshworks" "my_connectionfreshworks" {
-  id = "236b3e27-52b6-4d89-aa3a-dd93e7f46851"
+  id = "e2752b6d-892a-43ad-993e-7f468517a0d1"
 }

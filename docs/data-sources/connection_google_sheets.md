@@ -14,7 +14,7 @@ ConnectionGOOGLESHEETS DataSource
 
 ```terraform
 data "etleap_connection_google_sheets" "my_connectiongoogle_sheets" {
-  id = "b6e9f803-e49f-43cb-a343-ad889ee09ea5"
+  id = "803e49f3-cbe3-443a-9889-ee09ea509815"
 }
 ```
 

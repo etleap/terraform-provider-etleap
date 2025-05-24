@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "ee52da56-1486-4379-bcbe-3940b5f3e9f5"
+  id = "6de30d15-94a7-4bcd-9e32-d8d2e21cb3b1"
 }
 ```
 
@@ -424,6 +424,7 @@ Read-Only:
 - `snowflake_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--snowflake_sharded))
 - `sql_server` (Attributes) (see [below for nested schema](#nestedatt--source--sql_server))
 - `sql_server_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--sql_server_sharded))
+- `sqs` (Attributes) (see [below for nested schema](#nestedatt--source--sqs))
 - `square` (Attributes) (see [below for nested schema](#nestedatt--source--square))
 - `streaming` (Attributes) (see [below for nested schema](#nestedatt--source--streaming))
 - `stripe` (Attributes) (see [below for nested schema](#nestedatt--source--stripe))
@@ -1384,6 +1385,17 @@ Read-Only:
 - `table` (String) Name of the table to be extracted from the source. Either `table` or `tableNameFilter` must be specified, but not both.
 - `table_name_filter` (String) Regular expression matching all partitions of a table. Partitions must have the same table schema. Either `tableNameFilter` or `table` must be specified, but not both.
 - `type` (String) must be one of ["SQL_SERVER_SHARDED"]
+
+
+<a id="nestedatt--source--sqs"></a>
+### Nested Schema for `source.sqs`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The SQS queue URL. Example value: https://sqs.us-east-1.amazonaws.com/1234567890/my-sqs-queue.fifo
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["SQS"]
 
 
 <a id="nestedatt--source--square"></a>

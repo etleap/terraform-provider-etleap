@@ -14,8 +14,8 @@ Model Resource
 
 ```terraform
 resource "etleap_model" "my_model" {
-  deletion_of_export_products = false
-  name                        = "Emilio Watsica"
+  deletion_of_export_products = true
+  name                        = "Aaron Fay"
   query_and_triggers = {
     query = "...my_query..."
     triggers = [
@@ -24,7 +24,7 @@ resource "etleap_model" "my_model" {
   }
   update_schedule = {
     daily = {
-      hour_of_day = 10
+      hour_of_day = 4
       mode        = "DAILY"
     }
   }
@@ -32,7 +32,7 @@ resource "etleap_model" "my_model" {
     redshift = {
       connection_id = "...my_connection_id..."
       distribution_style = {
-        one = "ALL"
+        one = "AUTO"
       }
       materialized_view     = false
       pending_renamed_table = "...my_pending_renamed_table..."
@@ -42,7 +42,7 @@ resource "etleap_model" "my_model" {
       ]
       table                       = "...my_table..."
       type                        = "REDSHIFT"
-      wait_for_update_preparation = true
+      wait_for_update_preparation = false
     }
   }
 }
