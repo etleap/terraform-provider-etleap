@@ -56,8 +56,9 @@ func (o *SnowflakeAuthenticationKeyPairOutput) GetPublicKey() string {
 
 // SnowflakeAuthenticationKeyPair - Snowflake Key Pair Authentication
 type SnowflakeAuthenticationKeyPair struct {
-	Type       SnowflakeAuthenticationKeyPairType `json:"type"`
-	PrivateKey string                             `json:"privateKey"`
+	Type                 SnowflakeAuthenticationKeyPairType `json:"type"`
+	PrivateKey           string                             `json:"privateKey"`
+	PrivateKeyPassphrase *string                            `json:"privateKeyPassphrase,omitempty"`
 }
 
 func (o *SnowflakeAuthenticationKeyPair) GetType() SnowflakeAuthenticationKeyPairType {
@@ -72,4 +73,11 @@ func (o *SnowflakeAuthenticationKeyPair) GetPrivateKey() string {
 		return ""
 	}
 	return o.PrivateKey
+}
+
+func (o *SnowflakeAuthenticationKeyPair) GetPrivateKeyPassphrase() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PrivateKeyPassphrase
 }

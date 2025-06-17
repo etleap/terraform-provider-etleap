@@ -73,6 +73,7 @@ Optional:
 Optional:
 
 - `private_key` (String) Not Null
+- `private_key_passphrase` (String)
 - `type` (String) Not Null; must be one of ["PASSWORD", "KEY_PAIR"]
 
 Read-Only:

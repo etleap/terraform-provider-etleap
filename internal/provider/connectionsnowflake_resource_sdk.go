@@ -124,9 +124,16 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeInput() *s
 		if r.Authentication.KeyPair != nil {
 			typeVar1 := shared.SnowflakeAuthenticationKeyPairType(r.Authentication.KeyPair.Type.ValueString())
 			privateKey := r.Authentication.KeyPair.PrivateKey.ValueString()
+			privateKeyPassphrase := new(string)
+			if !r.Authentication.KeyPair.PrivateKeyPassphrase.IsUnknown() && !r.Authentication.KeyPair.PrivateKeyPassphrase.IsNull() {
+				*privateKeyPassphrase = r.Authentication.KeyPair.PrivateKeyPassphrase.ValueString()
+			} else {
+				privateKeyPassphrase = nil
+			}
 			snowflakeAuthenticationKeyPair = &shared.SnowflakeAuthenticationKeyPair{
-				Type:       typeVar1,
-				PrivateKey: privateKey,
+				Type:                 typeVar1,
+				PrivateKey:           privateKey,
+				PrivateKeyPassphrase: privateKeyPassphrase,
 			}
 		}
 		if snowflakeAuthenticationKeyPair != nil {
@@ -427,9 +434,16 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeUpdate() *
 		if r.Authentication.KeyPair != nil {
 			typeVar1 := shared.SnowflakeAuthenticationKeyPairType(r.Authentication.KeyPair.Type.ValueString())
 			privateKey := r.Authentication.KeyPair.PrivateKey.ValueString()
+			privateKeyPassphrase := new(string)
+			if !r.Authentication.KeyPair.PrivateKeyPassphrase.IsUnknown() && !r.Authentication.KeyPair.PrivateKeyPassphrase.IsNull() {
+				*privateKeyPassphrase = r.Authentication.KeyPair.PrivateKeyPassphrase.ValueString()
+			} else {
+				privateKeyPassphrase = nil
+			}
 			snowflakeAuthenticationKeyPair = &shared.SnowflakeAuthenticationKeyPair{
-				Type:       typeVar1,
-				PrivateKey: privateKey,
+				Type:                 typeVar1,
+				PrivateKey:           privateKey,
+				PrivateKeyPassphrase: privateKeyPassphrase,
 			}
 		}
 		if snowflakeAuthenticationKeyPair != nil {

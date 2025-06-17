@@ -7,9 +7,10 @@ resource "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" 
       address = "6061 Upton Corners"
       authentication = {
         key_pair = {
-          private_key = "...my_private_key..."
-          public_key  = "...my_public_key..."
-          type        = "PASSWORD"
+          private_key            = "...my_private_key..."
+          private_key_passphrase = "...my_private_key_passphrase..."
+          public_key             = "...my_public_key..."
+          type                   = "PASSWORD"
         }
       }
       database  = "...my_database..."

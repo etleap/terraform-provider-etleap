@@ -346,6 +346,13 @@ func (r *ConnectionSNOWFLAKESHARDEDResource) Schema(ctx context.Context, req res
 												speakeasy_stringvalidators.NotNull(),
 											},
 										},
+										"private_key_passphrase": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional: true,
+										},
 										"public_key": schema.StringAttribute{
 											Computed: true,
 											PlanModifiers: []planmodifier.String{
