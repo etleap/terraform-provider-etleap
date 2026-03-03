@@ -759,9 +759,20 @@ index 1acd729..8c62cbe 100644
  	"time"
 +	"reflect"
  )
- 
+
  func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
-@@ -7114,6 +7115,12 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate
+@@ -3894,5 +3895,8 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
+ 	r.Paused = types.BoolValue(resp.Paused)
+ 	r.PipelineMode = types.StringValue(string(resp.PipelineMode))
++	if r.RefreshSchedule == nil {
++		r.RefreshSchedule = &RefreshScheduleTypes{}
++	}
+ 	if resp.RefreshSchedule.RefreshScheduleModeDaily != nil {
+ 		r.RefreshSchedule.Daily = &UpdateScheduleModeDaily{}
+ 		r.RefreshSchedule.Daily.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeDaily.HourOfDay)
+@@ -7156,8 +7160,14 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate
+ 	if sourceZuoraUpdate != nil {
+ 		source = &shared.SourceTypesUpdate{
  			SourceZuoraUpdate: sourceZuoraUpdate,
  		}
  	}
@@ -771,10 +782,10 @@ index 1acd729..8c62cbe 100644
 +		nilOutTypeField(source)
 +	}
 +
- 	var refreshSchedule *shared.PipelineUpdateScheduleTypes
- 	if r.RefreshSchedule != nil {
- 		var refreshScheduleModeNeverScheduleTypesNeverScheduleMode *shared.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode
-@@ -7295,3 +7302,31 @@ func (r *PipelineResourceModel) ToSharedPipelineDelete() *shared.PipelineDelete
+ 	paused := new(bool)
+ 	if !r.Paused.IsUnknown() && !r.Paused.IsNull() {
+ 		*paused = r.Paused.ValueBool()
+@@ -7349,3 +7359,31 @@ func (r *PipelineResourceModel) ToSharedPipelineDelete() *shared.PipelineDelete
  	}
  	return &out
  }
@@ -914,17 +925,17 @@ diff --git a/internal/sdk/pkg/models/shared/destinationtypes.go b/internal/sdk/p
 index 074f815..dd6079f 100644
 --- a/internal/sdk/pkg/models/shared/destinationtypes.go
 +++ b/internal/sdk/pkg/models/shared/destinationtypes.go
-@@ -112,7 +112,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
- 		return nil
- 	case "DELTA_LAKE":
- 		destinationDeltaLake := new(DestinationDeltaLake)
--		if err := utils.UnmarshalJSON(data, &destinationDeltaLake, "", true, true); err != nil {
+@@ -103,7 +103,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
+ 	switch dis.Type {
+ 	case "REDSHIFT":
+ 		destinationRedshift := new(DestinationRedshift)
+-		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, true); err != nil {
 +		// [VIK-4496] Etleap monkey-patch: the unmarshal function allows unknown fields for ignoring schemaChangingTo and tableChangingTo
-+		if err := utils.UnmarshalJSON(data, &destinationDeltaLake, "", true, false); err != nil {
++		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, false); err != nil {
  			return fmt.Errorf("could not unmarshal expected type: %w", err)
  		}
- 
-@@ -130,7 +131,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
+
+@@ -112,7 +113,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
  		return nil
  	case "SNOWFLAKE":
  		destinationSnowflake := new(DestinationSnowflake)
@@ -933,14 +944,14 @@ index 074f815..dd6079f 100644
 +		if err := utils.UnmarshalJSON(data, &destinationSnowflake, "", true, false); err != nil {
  			return fmt.Errorf("could not unmarshal expected type: %w", err)
  		}
- 
-@@ -139,7 +141,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
+
+@@ -121,7 +123,8 @@ func (u *DestinationTypes) UnmarshalJSON(data []byte) error {
  		return nil
- 	case "REDSHIFT":
- 		destinationRedshift := new(DestinationRedshift)
--		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, true); err != nil {
+ 	case "DELTA_LAKE":
+ 		destinationDeltaLake := new(DestinationDeltaLake)
+-		if err := utils.UnmarshalJSON(data, &destinationDeltaLake, "", true, true); err != nil {
 +		// [VIK-4496] Etleap monkey-patch: the unmarshal function allows unknown fields for ignoring schemaChangingTo and tableChangingTo
-+		if err := utils.UnmarshalJSON(data, &destinationRedshift, "", true, false); err != nil {
++		if err := utils.UnmarshalJSON(data, &destinationDeltaLake, "", true, false); err != nil {
  			return fmt.Errorf("could not unmarshal expected type: %w", err)
  		}
  
