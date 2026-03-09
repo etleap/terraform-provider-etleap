@@ -36,8 +36,8 @@ outputSchemaFile = sys.argv[2]
 with open(inputSchemaFile, 'r+') as f:
     api_spec = j.load(f)
 
-connection_types = api_spec['components']['schemas']['connection_types']['oneOf']
-connection_types_update = api_spec['components']['schemas']['connection_update_types']['oneOf']
+connection_types = api_spec['components']['schemas']['Etleap-api-connectors.v2_Connection_types']['oneOf']
+connection_types_update = api_spec['components']['schemas']['Etleap-api-connectors.v2_Connection_update_types']['oneOf']
 
 paths = api_spec['paths']
 schemas = api_spec['components']['schemas']
@@ -57,7 +57,7 @@ for connection_type_update in connection_types_update:
     enum_value = get_enum_value_from_connection_spec(schemas[update_connection_schema])
 
     paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value] = {}
-    paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][PATCH] = updateConnectionTypesRef(paths[CONNECTIONS_ID_PATH][PATCH], '#/components/schemas/connection_update_types', connection_type_update['$ref'])
+    paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][PATCH] = updateConnectionTypesRef(paths[CONNECTIONS_ID_PATH][PATCH], '#/components/schemas/Etleap-api-connectors.v2_Connection_update_types', connection_type_update['$ref'])
     paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][PATCH]['operationId'] = 'update-' + enum_value + '-connection'
     paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][PATCH]['x-speakeasy-entity-operation'] = 'Connection' + enum_value + '#update'
 
@@ -70,18 +70,18 @@ for connection_type in connection_types:
     enum_value = get_enum_value_from_connection_spec(schemas[connections_schema])
 
     paths[CONNECTIONS_PATH_WITH_FRAGMENT + enum_value] = {}
-    paths[CONNECTIONS_PATH_WITH_FRAGMENT + enum_value][POST] = updateConnectionTypesRef(paths[CONNECTIONS_PATH][POST], '#/components/schemas/connection_types', connection_type['$ref'])
+    paths[CONNECTIONS_PATH_WITH_FRAGMENT + enum_value][POST] = updateConnectionTypesRef(paths[CONNECTIONS_PATH][POST], '#/components/schemas/Etleap-api-connectors.v2_Connection_types', connection_type['$ref'])
     paths[CONNECTIONS_PATH_WITH_FRAGMENT + enum_value][POST]['x-speakeasy-entity-operation'] = 'Connection' + enum_value + '#create'
     paths[CONNECTIONS_PATH_WITH_FRAGMENT + enum_value][POST]['x-speakeasy-entity-group'] = 'Connection'
     paths[CONNECTIONS_PATH_WITH_FRAGMENT + enum_value][POST]['operationId'] = 'create-' + enum_value + '-connection'
 
     paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value]['parameters'] = paths[CONNECTIONS_ID_PATH]['parameters']
-    paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][GET] = updateConnectionTypesRef(paths[CONNECTIONS_ID_PATH][GET], '#/components/schemas/connection_types', connection_type['$ref'])
+    paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][GET] = updateConnectionTypesRef(paths[CONNECTIONS_ID_PATH][GET], '#/components/schemas/Etleap-api-connectors.v2_Connection_types', connection_type['$ref'])
     paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][GET]['operationId'] = 'get-' + enum_value + '-connection'
 
     paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][GET]['x-speakeasy-entity-operation'] = 'Connection' + enum_value + '#get'
 
-    paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][PATCH] = updateConnectionTypesRef(paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][PATCH], '#/components/schemas/connection_types', connection_type['$ref'])
+    paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][PATCH] = updateConnectionTypesRef(paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][PATCH], '#/components/schemas/Etleap-api-connectors.v2_Connection_types', connection_type['$ref'])
 
     # Copy DELETES over, and annotate
     paths[CONNECTIONS_ID_PATH_WITH_FRAGMENT + enum_value][DELETE] = updateConnectionTypesRef(paths[CONNECTIONS_ID_PATH][DELETE], '', '')
@@ -132,7 +132,7 @@ def remove_required_properties(all_of, properties):
                     del block["required"]
 
 # Create source_x_update schemas for each source type
-schemas['source_types_update'] = copy.deepcopy(schemas['source_types'])
+schemas['source_types_update'] = copy.deepcopy(schemas['Etleap-api-connectors.v2_Source_types'])
 schemas['source_types_update']['title'] += ' Update'
 source_types_update = schemas['source_types_update']
 
@@ -173,7 +173,7 @@ schemas['pipeline_update']['properties']['source']['$ref'] = "#/components/schem
 schemas['source_update']['properties']['type'] = {
     '$ref': '#/components/schemas/source_type_enum'
 }
-schemas['source']['properties']['type'] = {
+schemas['Etleap-api-connectors.v2_Source']['properties']['type'] = {
     '$ref': '#/components/schemas/source_type_enum'
 }
 del schemas['source_update']['x-speakeasy-name-override']
