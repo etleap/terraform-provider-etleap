@@ -26,6 +26,86 @@ def updateConnectionTypesRef(schema, oldReference, newReference):
 
     return newSchema
 
+def rename_schema_keys(schemas, old_prefix):
+    # Remove prefix and convert first character to lowercase
+    renamed_schemas = {}
+    for key, value in schemas.items():
+        if key.startswith(old_prefix):
+            new_key = key[len(old_prefix):]
+            if new_key:
+                new_key = new_key[0].lower() + new_key[1:]
+            renamed_schemas[new_key] = value
+        else:
+            renamed_schemas[key] = value
+    return renamed_schemas
+
+def update_all_refs(obj, old_prefix):
+    # Remove prefix and convert to lowercase for $refs
+    if isinstance(obj, dict):
+        new_obj = {}
+        for key, value in obj.items():
+            if key == '$ref' and isinstance(value, str):
+                # Update schema references that use the old prefix
+                if f'schemas/{old_prefix}' in value:
+                    parts = value.split(f'schemas/{old_prefix}')
+                    if len(parts) == 2:
+                        schema_name = parts[1]
+                        if schema_name:
+                            schema_name = schema_name[0].lower() + schema_name[1:]
+                        new_obj[key] = parts[0] + 'schemas/' + schema_name
+                    else:
+                        new_obj[key] = value
+                else:
+                    new_obj[key] = value
+            else:
+                new_obj[key] = update_all_refs(value, old_prefix)
+        return new_obj
+    elif isinstance(obj, list):
+        return [update_all_refs(item, old_prefix) for item in obj]
+    else:
+        return obj
+
+def fix_discriminator_mappings(schemas, schema_name):
+    if schema_name not in schemas:
+        return
+    schema = schemas[schema_name]
+    if 'discriminator' not in schema:
+        return
+    discriminator = schema['discriminator']
+    if 'mapping' not in discriminator:
+        return
+    # Determine the types schema name
+    if 'source' in schema_name.lower():
+        types_schema_name = 'source_types'
+    elif 'connection' in schema_name.lower():
+        types_schema_name = 'connection_types'
+    else:
+        return
+    if types_schema_name not in schemas:
+        return
+    types_schema = schemas[types_schema_name]
+    if 'oneOf' not in types_schema:
+        return
+
+    # Build a map of enum values to their correct schema references
+    enum_to_schema = {}
+    for item in types_schema['oneOf']:
+        if '$ref' not in item:
+            continue
+        ref = item['$ref']
+        if '#/components/schemas/' in ref:
+            schema_ref = ref.split('#/components/schemas/')[-1]
+            if schema_ref in schemas:
+                # Get the enum value from the schema
+                enum_value = get_enum_value_from_connection_spec(schemas[schema_ref])
+                if enum_value:
+                    enum_to_schema[enum_value] = f"#/components/schemas/{schema_ref}"
+
+    # Update the discriminator mapping with correct references
+    for enum_key, ref_value in discriminator['mapping'].items():
+        if enum_key in enum_to_schema:
+            discriminator['mapping'][enum_key] = enum_to_schema[enum_key]
+
 if len(sys.argv) < 3:
     print("Usage python process.py input-schema.json output-schema.json")
     sys.exit(1)
@@ -35,6 +115,16 @@ outputSchemaFile = sys.argv[2]
 
 with open(inputSchemaFile, 'r+') as f:
     api_spec = j.load(f)
+
+# Removes prefix for all schema keys of connectors spec file
+OLD_PREFIX = 'Etleap-api-connectors.v2_'
+api_spec['components']['schemas'] = rename_schema_keys(
+    api_spec['components']['schemas'],
+    OLD_PREFIX
+)
+
+# Update all $ref values throughout the entire spec
+api_spec = update_all_refs(api_spec, OLD_PREFIX)
 
 connection_types = api_spec['components']['schemas']['connection_types']['oneOf']
 connection_types_update = api_spec['components']['schemas']['connection_update_types']['oneOf']
@@ -178,6 +268,9 @@ schemas['source']['properties']['type'] = {
 }
 del schemas['source_update']['x-speakeasy-name-override']
 
+# Fix discriminator mappings to point to the correct schema references
+fix_discriminator_mappings(schemas, 'source')
+fix_discriminator_mappings(schemas, 'connection')
 
 with open(outputSchemaFile, 'w+') as f:
     j.dump(api_spec, f, indent=4)
