@@ -65,6 +65,27 @@ def update_all_refs(obj, old_prefix):
     else:
         return obj
 
+def remove_external_file_refs(obj):
+    # Remove external api file 'etleap-api.v2.json' from ref mappings
+    file_prefix = 'etleap-api.v2.json'
+    if isinstance(obj, dict):
+        new_obj = {}
+        for key, value in obj.items():
+            if key == '$ref' and isinstance(value, str) and value.startswith(file_prefix):
+                new_obj[key] = value[len(file_prefix):]
+            elif key == 'mapping' and isinstance(value, dict):
+                new_obj[key] = {
+                    k: v[len(file_prefix):] if isinstance(v, str) and v.startswith(file_prefix) else v
+                    for k, v in value.items()
+                }
+            else:
+                new_obj[key] = remove_external_file_refs(value)
+        return new_obj
+    elif isinstance(obj, list):
+        return [remove_external_file_refs(item) for item in obj]
+    else:
+        return obj
+
 def fix_discriminator_mappings(schemas, schema_name):
     if schema_name not in schemas:
         return
@@ -115,6 +136,9 @@ outputSchemaFile = sys.argv[2]
 
 with open(inputSchemaFile, 'r+') as f:
     api_spec = j.load(f)
+
+# Removes external ref mapping
+api_spec = remove_external_file_refs(api_spec)
 
 # Removes prefix for all schema keys of connectors spec file
 OLD_PREFIX = 'Etleap-api-connectors.v2_'
