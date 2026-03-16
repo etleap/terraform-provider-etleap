@@ -103,7 +103,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										},
 										"retain_history": schema.BoolAttribute{
 											Computed:    true,
-											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `.`,
+											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to ` + "`" + `false` + "`" + `.`,
 										},
 										"schema": schema.StringAttribute{
 											Computed:    true,
@@ -203,7 +203,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										},
 										"retain_history": schema.BoolAttribute{
 											Computed:    true,
-											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `.`,
+											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to ` + "`" + `false` + "`" + `.`,
 										},
 										"schema": schema.StringAttribute{
 											Computed:    true,
@@ -296,7 +296,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 										},
 										"retain_history": schema.BoolAttribute{
 											Computed:    true,
-											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `.`,
+											Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to ` + "`" + `false` + "`" + `.`,
 										},
 										"schema": schema.StringAttribute{
 											Computed:    true,
@@ -463,7 +463,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 			},
 			"latency": schema.Int64Attribute{
 				Computed:    true,
-				Description: `The end-to-end latency in seconds for this pipeline. Not ` + "`" + `null` + "`" + ` if the pipeline is running (not paused or stopped) and if the initial backfill has finished. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMTU3NTQ3-latency#end-to-end-latency">the documentation</a> for more details.`,
+				Description: `The end-to-end latency in seconds for this pipeline. Not ` + "`" + `null` + "`" + ` if the pipeline is running (not paused or stopped) and if the initial backfill has finished. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/latency/#end-to-end-latency">the documentation</a> for more details.`,
 			},
 			"latest_script_version": schema.Int64Attribute{
 				Computed:    true,
@@ -508,7 +508,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 			},
 			"pipeline_mode": schema.StringAttribute{
 				Computed:    true,
-				Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+				Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 			},
 			"refresh_schedule": schema.SingleNestedAttribute{
 				Computed: true,
@@ -609,6 +609,48 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"type": schema.StringAttribute{
 								Computed:    true,
 								Description: `must be one of ["ACTIVE_CAMPAIGN"]`,
+							},
+						},
+					},
+					"azure_blob_storage": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"file_name_filter": schema.StringAttribute{
+								Computed:    true,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
+							},
+							"files_can_change": schema.BoolAttribute{
+								Computed:    true,
+								Description: `Etleap can check whether files that were already processed have changed. If the file has changed, then Etleap fetches the new file and removes the old file's data in the destination and adds the changed data. <br> This can only be enabled when ` + "`" + `newFileBehavior` + "`" + ` is set to ` + "`" + `APPEND` + "`" + `. Defaults to ` + "`" + `false` + "`" + `.`,
+							},
+							"glob_pattern": schema.StringAttribute{
+								Computed:    true,
+								Description: `A glob pattern to be used as a path. Either ` + "`" + `globPattern` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified, but not both.`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"low_watermark": schema.StringAttribute{
+								Computed:    true,
+								Description: `Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.`,
+							},
+							"new_file_behavior": schema.StringAttribute{
+								Computed:    true,
+								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
+							},
+							"paths": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. ` + "`" + `paths` + "`" + ` can't be used when a ` + "`" + `globPattern` + "`" + ` is specified.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["AZURE_BLOB_STORAGE"]`,
 							},
 						},
 					},
@@ -1035,7 +1077,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"breakdowns": schema.ListAttribute{
 								Computed:    true,
 								ElementType: types.StringType,
-								Description: `The breakdown fields. The first one must be ` + "`" + `date_start` + "`" + `. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v21.0#insights-api-breakdowns)`,
+								Description: `The breakdown fields. The first one must be ` + "`" + `date_start` + "`" + `. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v22.0#insights-api-breakdowns)`,
 							},
 							"connection_id": schema.StringAttribute{
 								Computed:    true,
@@ -1076,6 +1118,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
+					"freshcaller": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The Freshcaller resource. Example: Calls`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["FRESHCALLER"]`,
+							},
+						},
+					},
 					"freshchat": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -1099,6 +1162,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed:    true,
 								ElementType: types.StringType,
 								Description: `Only when Entity is related to Deals. Select which views you want Etleap to pull data from.`,
+							},
+						},
+					},
+					"freshdesk": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The Freshdesk resource. Example: Tickets`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["FRESHDESK"]`,
 							},
 						},
 					},
@@ -1128,26 +1212,6 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
-					"freshworks": schema.SingleNestedAttribute{
-						Computed: true,
-						Attributes: map[string]schema.Attribute{
-							"connection_id": schema.StringAttribute{
-								Computed:    true,
-								Description: `The universally unique identifier for the source.`,
-							},
-							"entity": schema.StringAttribute{
-								Computed: true,
-							},
-							"latency_threshold": schema.Int64Attribute{
-								Computed:    true,
-								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
-							},
-							"type": schema.StringAttribute{
-								Computed:    true,
-								Description: `must be one of ["FRESHWORKS"]`,
-							},
-						},
-					},
 					"ftp": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -1173,7 +1237,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"new_file_behavior": schema.StringAttribute{
 								Computed:    true,
-								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
+								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
 							},
 							"paths": schema.ListAttribute{
 								Computed:    true,
@@ -1183,6 +1247,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"type": schema.StringAttribute{
 								Computed:    true,
 								Description: `must be one of ["FTP"]`,
+							},
+						},
+					},
+					"gitlab": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The Gitlab resource. Example: projects`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["GITLAB"]`,
 							},
 						},
 					},
@@ -1304,7 +1389,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"new_file_behavior": schema.StringAttribute{
 								Computed:    true,
-								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
+								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
 							},
 							"paths": schema.ListAttribute{
 								Computed:    true,
@@ -1368,7 +1453,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"entity": schema.StringAttribute{
 								Computed:    true,
-								Description: `The Impact Radius entity, spelled the same way as in the UI.`,
+								Description: `The Impact entity, spelled the same way as in the UI.`,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,
@@ -1482,6 +1567,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"type": schema.StringAttribute{
 								Computed:    true,
 								Description: `must be one of ["KAFKA"]`,
+							},
+						},
+					},
+					"kinesis": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The Kinesis stream name.`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["KINESIS"]`,
 							},
 						},
 					},
@@ -1621,6 +1727,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"type": schema.StringAttribute{
 								Computed:    true,
 								Description: `must be one of ["MICROSOFT_ENTRA_ID"]`,
+							},
+						},
+					},
+					"microsoft_lists": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The name of the list`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["MICROSOFT_LISTS"]`,
 							},
 						},
 					},
@@ -2017,6 +2144,31 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
+					"qualtrics": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The Qualtrics resource. Example: DIRECTORY`,
+							},
+							"filter": schema.StringAttribute{
+								Computed:    true,
+								Description: `Specify which filter to use when fetching responses`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["QUALTRICS"]`,
+							},
+						},
+					},
 					"quora_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -2181,7 +2333,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"new_file_behavior": schema.StringAttribute{
 								Computed:    true,
-								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
+								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
 							},
 							"paths": schema.ListAttribute{
 								Computed:    true,
@@ -2219,7 +2371,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"new_file_behavior": schema.StringAttribute{
 								Computed:    true,
-								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
+								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
 							},
 							"paths": schema.ListAttribute{
 								Computed:    true,
@@ -2371,6 +2523,31 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
+					"sap_odata": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The SAP resource. Example: 0FI_ACDOCA_20_SRV`,
+							},
+							"incremental_column": schema.StringAttribute{
+								Computed:    true,
+								Description: `Optionally, specify a column that is incremental and is updated as the record is updated. (STRING/TIMESTAMP/NUMBER)`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["SAP_ODATA"]`,
+							},
+						},
+					},
 					"seismic": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -2438,7 +2615,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"new_file_behavior": schema.StringAttribute{
 								Computed:    true,
-								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
+								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
 							},
 							"paths": schema.ListAttribute{
 								Computed:    true,
@@ -2748,7 +2925,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"new_file_behavior": schema.StringAttribute{
 								Computed:    true,
-								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
+								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]`,
 							},
 							"paths": schema.ListAttribute{
 								Computed:    true,
@@ -2888,7 +3065,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 							"entity": schema.StringAttribute{
 								Computed:    true,
-								Description: `The Twitter entity. Example values: [Account, Campaign, Funding Instrument, Line Item, Media Creative, Promoted Tweet, Followers, Tweets Likes, Tweets Quotes, Retweets, Recent Mentions,Tweets, Account Report, Campaign Report, Funding Instrument Report, Line Item Report, Media Creative Report, Promoted Tweet Report]`,
+								Description: `The X entity. Example values: [Account, Campaign, Funding Instrument, Line Item, Media Creative, Promoted Tweet, Followers, Tweets Likes, Tweets Quotes, Retweets, Recent Mentions,Tweets, Account Report, Campaign Report, Funding Instrument Report, Line Item Report, Media Creative Report, Promoted Tweet Report]`,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,
@@ -3099,7 +3276,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 			},
 			"stop_reason": schema.StringAttribute{
 				Computed:    true,
-				Description: `Describes the reason a pipeline has stopped. ` + "`" + `null` + "`" + ` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline. must be one of ["PAUSED", "PARSING_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE"]`,
+				Description: `Describes the reason a pipeline has stopped. ` + "`" + `null` + "`" + ` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline. must be one of ["PAUSED", "PARSING_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE", "PIPELINE_SCRIPT_ERROR", "BROKEN_INGEST_ERROR"]`,
 			},
 			"update_schedule": schema.SingleNestedAttribute{
 				Computed: true,

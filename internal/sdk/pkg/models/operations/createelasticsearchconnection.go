@@ -15,7 +15,7 @@ type CreateELASTICSEARCHConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionElasticSearch *shared.ConnectionElasticSearch
+	ConnectionElasticsearch *shared.ConnectionElasticsearch
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,11 +41,11 @@ func (o *CreateELASTICSEARCHConnectionResponse) GetRawResponse() *http.Response 
 	return o.RawResponse
 }
 
-func (o *CreateELASTICSEARCHConnectionResponse) GetConnectionElasticSearch() *shared.ConnectionElasticSearch {
+func (o *CreateELASTICSEARCHConnectionResponse) GetConnectionElasticsearch() *shared.ConnectionElasticsearch {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionElasticSearch
+	return o.ConnectionElasticsearch
 }
 
 func (o *CreateELASTICSEARCHConnectionResponse) GetErrors() *shared.Errors {

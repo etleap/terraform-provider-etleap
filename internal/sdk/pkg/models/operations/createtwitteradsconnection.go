@@ -15,7 +15,7 @@ type CreateTWITTERADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionTwitter *shared.ConnectionTwitter
+	ConnectionTwitterAds *shared.ConnectionTwitterAds
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,11 +41,11 @@ func (o *CreateTWITTERADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateTWITTERADSConnectionResponse) GetConnectionTwitter() *shared.ConnectionTwitter {
+func (o *CreateTWITTERADSConnectionResponse) GetConnectionTwitterAds() *shared.ConnectionTwitterAds {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionTwitter
+	return o.ConnectionTwitterAds
 }
 
 func (o *CreateTWITTERADSConnectionResponse) GetErrors() *shared.Errors {

@@ -14,7 +14,7 @@ ConnectionBLACKLINE DataSource
 
 ```terraform
 data "etleap_connection_blackline" "my_connectionblackline" {
-  id = "4397c340-2710-4601-94ab-43bdd60c1ba0"
+  id = "19b93867-85f0-4be6-93b6-b8b9509980b3"
 }
 ```
 
@@ -24,10 +24,8 @@ data "etleap_connection_blackline" "my_connectionblackline" {
 ### Read-Only
 
 - `active` (Boolean) Whether this connection has been marked as active.
-- `api_key` (String) The Blackline API Key generated for your user
-- `base_url` (String) Your Blackline instance base URL, i.e, https://<BASE_URL>.api.blackline.com
-- `client_id` (String) Your Blackline instance Client ID
-- `client_secret` (String) Your Blackline instance Client Secret
+- `base_url` (String) Your Blackline instance base URL, i.e, https://BASE_URL.api.blackline.com
+- `client_id` (String) Your Blackline instance Client ID.
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `id` (String) The ID of this resource.
@@ -43,7 +41,7 @@ data "etleap_connection_blackline" "my_connectionblackline" {
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

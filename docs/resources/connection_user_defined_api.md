@@ -18,10 +18,10 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
     basic = {
       password = "...my_password..."
       type     = "BASIC"
-      username = "Jaqueline.Morissette24"
+      username = "Katarina_Huel71"
     }
   }
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   entities = [
     {
       api_url = "...my_api_url..."
@@ -35,10 +35,10 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      id = "ee605990-9fc8-4f1d-9a17-4cc096b23d6f"
+      id = "d5f3dec6-3792-41a5-b422-d4f1a434d8ba"
       paging_strategy = {
         cursor_uri = {
-          max_page_size        = 0
+          max_page_size        = 10
           page_size_field_name = "...my_page_size_field_name..."
           path_to_cursor       = "...my_path_to_cursor..."
           type                 = "CURSOR_URI"
@@ -60,7 +60,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
       }
     },
   ]
-  name = "Ricky Hegmann Sr."
+  name = "Terri Maggio"
   type = "USER_DEFINED_API"
 }
 ```
@@ -96,6 +96,7 @@ Optional:
 - `basic` (Attributes) Authentication method that uses a username/password pair. (see [below for nested schema](#nestedatt--authentication--basic))
 - `bearer` (Attributes) Authentication method that uses a Bearer token. (see [below for nested schema](#nestedatt--authentication--bearer))
 - `header` (Attributes) Authentication method that uses a header. (see [below for nested schema](#nestedatt--authentication--header))
+- `oauth` (Attributes) Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint. (see [below for nested schema](#nestedatt--authentication--oauth))
 
 <a id="nestedatt--authentication--basic"></a>
 ### Nested Schema for `authentication.basic`
@@ -126,6 +127,17 @@ Optional:
 - `value` (String) Not Null
 
 
+<a id="nestedatt--authentication--oauth"></a>
+### Nested Schema for `authentication.oauth`
+
+Optional:
+
+- `client_id` (String) The OAuth 2.0 client identifier. Not Null
+- `client_secret` (String) The OAuth 2.0 client secret. This property is stored as a secret in Etleap. Not Null
+- `token_url` (String) The OAuth 2.0 token endpoint URL where Etleap will exchange client credentials for an access token. Not Null
+- `type` (String) must be one of ["OAUTH"]; Default: "OAUTH"
+
+
 
 <a id="nestedatt--entities"></a>
 ### Nested Schema for `entities`
@@ -136,12 +148,15 @@ Optional:
 - `columns` (List of String) The columns of the entity. Requires replacement if changed. ; Not Null
 - `display_name` (String) The name of the entity. Requires replacement if changed. ; Not Null
 - `header_parameters` (Attributes List) A list of headers to be passed with all the requests. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--header_parameters))
-- `id` (String) The unique identifier of the entity. Requires replacement if changed. ; Not Null
 - `paging_strategy` (Attributes) The paging strategy. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--paging_strategy))
 - `path_to_results` (String) The [JMESPath](https://jmespath.org/) expression that converts the API response into an array containing one JSON object per record. Requires replacement if changed. ; Not Null
 - `pipeline_mode` (Attributes) Can be either the string `REPLACE` or one of the supported objects. Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--pipeline_mode))
 - `query_parameters` (Attributes List) A list of query parameters to be passed with all the requests. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--query_parameters))
 - `rest_method` (Attributes) Can be either the string `GET` or `POST`, which includes body parameters. Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--rest_method))
+
+Read-Only:
+
+- `id` (String) The unique identifier of the entity.
 
 <a id="nestedatt--entities--header_parameters"></a>
 ### Nested Schema for `entities.header_parameters`
@@ -159,6 +174,7 @@ Optional:
 
 - `cursor_uri` (Attributes) Paging strategy that uses a cursor to iterate through the results. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--paging_strategy--cursor_uri))
 - `offset` (Attributes) Paging strategy that is based on a result set offset. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--paging_strategy--offset))
+- `page_number` (Attributes) Paging strategy that uses page numbers to iterate through results. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--paging_strategy--page_number))
 
 <a id="nestedatt--entities--paging_strategy--cursor_uri"></a>
 ### Nested Schema for `entities.paging_strategy.cursor_uri`
@@ -169,7 +185,7 @@ Optional:
 - `page_size_field_name` (String) The name of the request parameter used to specify the page size. Requires replacement if changed. ; Not Null
 - `path_to_cursor` (String) The path to the paging cursor inside the response body. Requires replacement if changed. ; Not Null
 - `type` (String) Requires replacement if changed. ; must be one of ["CURSOR_URI"]; Default: "CURSOR_URI"
-- `url_prefix` (String) String prepended to the paging cursor string to turn it into a URL, e.g. because the cursor only contains the URL path. Requires replacement if changed. ; Not Null
+- `url_prefix` (String) String prepended to the paging cursor string to turn it into a URL, e.g. because the cursor only contains the URL path. Requires replacement if changed.
 
 
 <a id="nestedatt--entities--paging_strategy--offset"></a>
@@ -181,6 +197,17 @@ Optional:
 - `offset_field_name` (String) The name of the request parameter used to specify the offset. Requires replacement if changed. ; Not Null
 - `page_size_field_name` (String) The name of the request parameter used to specify the page size. Requires replacement if changed. ; Not Null
 - `type` (String) Requires replacement if changed. ; must be one of ["OFFSET"]; Default: "OFFSET"
+
+
+<a id="nestedatt--entities--paging_strategy--page_number"></a>
+### Nested Schema for `entities.paging_strategy.page_number`
+
+Optional:
+
+- `max_page_size` (Number) The maximum page size supported by the API. Requires replacement if changed. ; Not Null
+- `page_number_field_name` (String) The name of the request parameter used to specify the page number. Requires replacement if changed. ; Not Null
+- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Requires replacement if changed. ; Not Null
+- `type` (String) Requires replacement if changed. ; must be one of ["PAGE_NUMBER"]; Default: "PAGE_NUMBER"
 
 
 
@@ -238,8 +265,8 @@ Optional:
 Optional:
 
 - `foreign_key_columns` (Attributes List) The foreign columns of the entity. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--foreign_key_columns))
-- `primary_key_columns` (List of String) Requires replacement if changed.
-- `strategy` (Attributes) Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--strategy))
+- `primary_key_columns` (List of String) Requires replacement if changed. ; Not Null
+- `strategy` (Attributes) Requires replacement if changed. ; Not Null (see [below for nested schema](#nestedatt--entities--pipeline_mode--user_defined_api_update_mode--strategy))
 - `type` (String) Requires replacement if changed. ; must be one of ["UPDATE"]; Default: "UPDATE"
 
 <a id="nestedatt--entities--pipeline_mode--user_defined_api_update_mode--foreign_key_columns"></a>
@@ -455,7 +482,7 @@ Optional:
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

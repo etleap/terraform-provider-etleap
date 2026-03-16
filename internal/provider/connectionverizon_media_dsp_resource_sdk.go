@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func (r *ConnectionVERIZONMEDIADSPResourceModel) ToSharedConnectionVerizonMediaInput() *shared.ConnectionVerizonMediaInput {
+func (r *ConnectionVERIZONMEDIADSPResourceModel) ToSharedConnectionVerizonMediaDspInput() *shared.ConnectionVerizonMediaDspInput {
 	name := r.Name.ValueString()
-	typeVar := shared.ConnectionVerizonMediaType(r.Type.ValueString())
+	typeVar := shared.ConnectionVerizonMediaDspType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
@@ -87,7 +87,7 @@ func (r *ConnectionVERIZONMEDIADSPResourceModel) ToSharedConnectionVerizonMediaI
 		}
 	}
 	code := r.Code.ValueString()
-	out := shared.ConnectionVerizonMediaInput{
+	out := shared.ConnectionVerizonMediaDspInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -96,7 +96,7 @@ func (r *ConnectionVERIZONMEDIADSPResourceModel) ToSharedConnectionVerizonMediaI
 	return &out
 }
 
-func (r *ConnectionVERIZONMEDIADSPResourceModel) RefreshFromSharedConnectionVerizonMedia(resp *shared.ConnectionVerizonMedia) {
+func (r *ConnectionVERIZONMEDIADSPResourceModel) RefreshFromSharedConnectionVerizonMediaDsp(resp *shared.ConnectionVerizonMediaDsp) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -185,14 +185,14 @@ func (r *ConnectionVERIZONMEDIADSPResourceModel) RefreshFromSharedConnectionVeri
 	r.Username = types.StringValue(resp.Username)
 }
 
-func (r *ConnectionVERIZONMEDIADSPResourceModel) ToSharedConnectionVerizonMediaUpdate() *shared.ConnectionVerizonMediaUpdate {
+func (r *ConnectionVERIZONMEDIADSPResourceModel) ToSharedConnectionVerizonMediaDspUpdate() *shared.ConnectionVerizonMediaDspUpdate {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
 	}
-	typeVar := shared.ConnectionVerizonMediaUpdateType(r.Type.ValueString())
+	typeVar := shared.ConnectionVerizonMediaDspUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
@@ -280,7 +280,7 @@ func (r *ConnectionVERIZONMEDIADSPResourceModel) ToSharedConnectionVerizonMediaU
 	} else {
 		code = nil
 	}
-	out := shared.ConnectionVerizonMediaUpdate{
+	out := shared.ConnectionVerizonMediaDspUpdate{
 		Name:           name,
 		Type:           typeVar,
 		Active:         active,

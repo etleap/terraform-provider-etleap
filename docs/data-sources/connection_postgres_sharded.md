@@ -14,7 +14,7 @@ ConnectionPOSTGRESSHARDED DataSource
 
 ```terraform
 data "etleap_connection_postgres_sharded" "my_connectionpostgres_sharded" {
-  id = "1a56fc21-2690-4368-a0d2-b2b31caff949"
+  id = "432a010f-2abe-48c7-b99d-adee008b056e"
 }
 ```
 
@@ -25,9 +25,10 @@ data "etleap_connection_postgres_sharded" "my_connectionpostgres_sharded" {
 
 - `active` (Boolean) Whether this connection has been marked as active.
 - `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
-- `cdc_enabled` (Boolean) Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/docs/documentation/ZG9jOjM3MjY3NzM5-postgres) and ensure that all requirements are met.
+- `cdc_enabled` (Boolean) Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met.
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
+- `fetch_lobs_for_updated_rows` (Boolean) Can only be specified when `cdcEnabled` is set to `true`. When enabled, tables with LOB columns (`text`, `bytea`, `jsonb`, etc.) are eligible as sources for Etleap pipelines even when `REPLICA IDENTITY` is not set to `FULL`, i.e. the LOB values are not guaranteed to be included in the WAL log for updated rows. Etleap executes a database query for each updated row during the CDC phase to fetch the LOB values. Note that this reduces CDC throughput and adds additional load on the source database.
 - `id` (String) The ID of this resource.
 - `name` (String) The unique name of this connection.
 - `schema` (String) If not specified, the default schema will be used.
@@ -41,7 +42,7 @@ data "etleap_connection_postgres_sharded" "my_connectionpostgres_sharded" {
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

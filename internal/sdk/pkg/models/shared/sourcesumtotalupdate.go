@@ -7,44 +7,44 @@ import (
 	"fmt"
 )
 
-type SourceSumTotalUpdateType string
+type SourceSumtotalUpdateType string
 
 const (
-	SourceSumTotalUpdateTypeSumtotal SourceSumTotalUpdateType = "SUMTOTAL"
+	SourceSumtotalUpdateTypeSumtotal SourceSumtotalUpdateType = "SUMTOTAL"
 )
 
-func (e SourceSumTotalUpdateType) ToPointer() *SourceSumTotalUpdateType {
+func (e SourceSumtotalUpdateType) ToPointer() *SourceSumtotalUpdateType {
 	return &e
 }
 
-func (e *SourceSumTotalUpdateType) UnmarshalJSON(data []byte) error {
+func (e *SourceSumtotalUpdateType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SUMTOTAL":
-		*e = SourceSumTotalUpdateType(v)
+		*e = SourceSumtotalUpdateType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSumTotalUpdateType: %v", v)
+		return fmt.Errorf("invalid value for SourceSumtotalUpdateType: %v", v)
 	}
 }
 
-type SourceSumTotalUpdate struct {
+type SourceSumtotalUpdate struct {
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64                    `json:"latencyThreshold,omitempty"`
-	Type             *SourceSumTotalUpdateType `json:"type,omitempty"`
+	Type             *SourceSumtotalUpdateType `json:"type,omitempty"`
 }
 
-func (o *SourceSumTotalUpdate) GetLatencyThreshold() *int64 {
+func (o *SourceSumtotalUpdate) GetLatencyThreshold() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LatencyThreshold
 }
 
-func (o *SourceSumTotalUpdate) GetType() *SourceSumTotalUpdateType {
+func (o *SourceSumtotalUpdate) GetType() *SourceSumtotalUpdateType {
 	if o == nil {
 		return nil
 	}

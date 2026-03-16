@@ -36,8 +36,6 @@ type ConnectionMARKETODataSourceModel struct {
 	QuotaLimit            types.Int64             `tfsdk:"quota_limit"`
 	RestClientID          types.String            `tfsdk:"rest_client_id"`
 	RestEndpoint          types.String            `tfsdk:"rest_endpoint"`
-	SoapEndpoint          types.String            `tfsdk:"soap_endpoint"`
-	SoapUserID            types.String            `tfsdk:"soap_user_id"`
 	Status                types.String            `tfsdk:"status"`
 	Type                  types.String            `tfsdk:"type"`
 	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
@@ -68,7 +66,7 @@ func (r *ConnectionMARKETODataSource) Schema(ctx context.Context, req datasource
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
@@ -170,14 +168,6 @@ func (r *ConnectionMARKETODataSource) Schema(ctx context.Context, req datasource
 			"rest_endpoint": schema.StringAttribute{
 				Computed:    true,
 				Description: `E.g. 'https://259-ZDK-675.mktorest.com/rest'. In the Marketo UI this is the 'Endpoint' value in the 'REST API' section.`,
-			},
-			"soap_endpoint": schema.StringAttribute{
-				Computed:    true,
-				Description: `E.g. 'https://259-ZDK-675.mktoapi.com/soap/mktows/2_9'. In the Marketo UI this is the 'Endpoint' value in the 'SOAP API' section.`,
-			},
-			"soap_user_id": schema.StringAttribute{
-				Computed:    true,
-				Description: `E.g. 'MKTOWS_259-ZDK-675_1'. In the Marketo UI this is the 'User ID' value in the 'SOAP API' section.`,
 			},
 			"status": schema.StringAttribute{
 				Computed:    true,

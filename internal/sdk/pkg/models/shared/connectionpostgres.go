@@ -77,7 +77,7 @@ func (e *ConnectionPostgresStatus) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionPostgresDefaultUpdateSchedule struct {
-	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
 	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
@@ -155,13 +155,15 @@ type ConnectionPostgres struct {
 	Schema *string `json:"schema,omitempty"`
 	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
-	// Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/docs/documentation/ZG9jOjM3MjY3NzM5-postgres) and ensure that all requirements are met.
-	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
-	Address    string     `json:"address"`
-	Port       int64      `json:"port"`
-	Username   string     `json:"username"`
-	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
-	Database   string     `json:"database"`
+	// Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met.
+	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
+	// Can only be specified when `cdcEnabled` is set to `true`. When enabled, tables with LOB columns (`text`, `bytea`, `jsonb`, etc.) are eligible as sources for Etleap pipelines even when `REPLICA IDENTITY` is not set to `FULL`, i.e. the LOB values are not guaranteed to be included in the WAL log for updated rows. Etleap executes a database query for each updated row during the CDC phase to fetch the LOB values. Note that this reduces CDC throughput and adds additional load on the source database.
+	FetchLobsForUpdatedRows *bool      `default:"false" json:"fetchLobsForUpdatedRows"`
+	Address                 string     `json:"address"`
+	Port                    int64      `json:"port"`
+	Username                string     `json:"username"`
+	SSHConfig               *SSHConfig `json:"sshConfig,omitempty"`
+	Database                string     `json:"database"`
 }
 
 func (c ConnectionPostgres) MarshalJSON() ([]byte, error) {
@@ -287,6 +289,13 @@ func (o *ConnectionPostgres) GetCdcEnabled() *bool {
 	return o.CdcEnabled
 }
 
+func (o *ConnectionPostgres) GetFetchLobsForUpdatedRows() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FetchLobsForUpdatedRows
+}
+
 func (o *ConnectionPostgres) GetAddress() string {
 	if o == nil {
 		return ""
@@ -335,14 +344,16 @@ type ConnectionPostgresInput struct {
 	Schema *string `json:"schema,omitempty"`
 	// If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
 	AutoReplicate *string `json:"autoReplicate,omitempty"`
-	// Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/docs/documentation/ZG9jOjM3MjY3NzM5-postgres) and ensure that all requirements are met.
-	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
-	Address    string     `json:"address"`
-	Port       int64      `json:"port"`
-	Username   string     `json:"username"`
-	Password   string     `json:"password"`
-	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
-	Database   string     `json:"database"`
+	// Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met.
+	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
+	// Can only be specified when `cdcEnabled` is set to `true`. When enabled, tables with LOB columns (`text`, `bytea`, `jsonb`, etc.) are eligible as sources for Etleap pipelines even when `REPLICA IDENTITY` is not set to `FULL`, i.e. the LOB values are not guaranteed to be included in the WAL log for updated rows. Etleap executes a database query for each updated row during the CDC phase to fetch the LOB values. Note that this reduces CDC throughput and adds additional load on the source database.
+	FetchLobsForUpdatedRows *bool      `default:"false" json:"fetchLobsForUpdatedRows"`
+	Address                 string     `json:"address"`
+	Port                    int64      `json:"port"`
+	Username                string     `json:"username"`
+	Password                string     `json:"password"`
+	SSHConfig               *SSHConfig `json:"sshConfig,omitempty"`
+	Database                string     `json:"database"`
 }
 
 func (c ConnectionPostgresInput) MarshalJSON() ([]byte, error) {
@@ -431,6 +442,13 @@ func (o *ConnectionPostgresInput) GetCdcEnabled() *bool {
 		return nil
 	}
 	return o.CdcEnabled
+}
+
+func (o *ConnectionPostgresInput) GetFetchLobsForUpdatedRows() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FetchLobsForUpdatedRows
 }
 
 func (o *ConnectionPostgresInput) GetAddress() string {

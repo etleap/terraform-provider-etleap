@@ -1,3 +1,3 @@
 data "etleap_connection_the_trade_desk" "my_connectionthe_trade_desk" {
-  id = "8bdd21ad-42f4-4152-af4a-0314c6b6a614"
+  id = "976ff48b-c3b3-4b01-8140-1c74ab26cae8"
 }

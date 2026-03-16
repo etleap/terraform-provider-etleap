@@ -14,7 +14,7 @@ ConnectionIMPACTRADIUS DataSource
 
 ```terraform
 data "etleap_connection_impact_radius" "my_connectionimpact_radius" {
-  id = "b5e40d25-a1b1-4c84-8ce5-59de8d071ab8"
+  id = "03b5b2b1-c04e-4788-aab4-e467ad0b19ac"
 }
 ```
 
@@ -23,7 +23,7 @@ data "etleap_connection_impact_radius" "my_connectionimpact_radius" {
 
 ### Read-Only
 
-- `account_sid` (String) To find the Account SID to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
+- `account_sid` (String) To find the Account SID to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
 - `active` (Boolean) Whether this connection has been marked as active.
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
@@ -38,7 +38,7 @@ data "etleap_connection_impact_radius" "my_connectionimpact_radius" {
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

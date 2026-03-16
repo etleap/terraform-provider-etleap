@@ -75,9 +75,6 @@ func (r *ConnectionBLACKLINEResource) Schema(ctx context.Context, req resource.S
 				Description: `Whether this connection has been marked as active.`,
 			},
 			"api_key": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
 				Required:    true,
 				Description: `The Blackline API Key generated for your user`,
 			},
@@ -86,21 +83,18 @@ func (r *ConnectionBLACKLINEResource) Schema(ctx context.Context, req resource.S
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
-				Description: `Your Blackline instance base URL, i.e, https://<BASE_URL>.api.blackline.com`,
+				Description: `Your Blackline instance base URL, i.e, https://BASE_URL.api.blackline.com`,
 			},
 			"client_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
-				Description: `Your Blackline instance Client ID`,
+				Description: `Your Blackline instance Client ID.`,
 			},
 			"client_secret": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
 				Required:    true,
-				Description: `Your Blackline instance Client Secret`,
+				Description: `Your Blackline instance Client Secret.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,
@@ -124,7 +118,7 @@ func (r *ConnectionBLACKLINEResource) Schema(ctx context.Context, req resource.S
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -623,6 +617,32 @@ func (r *ConnectionBLACKLINEResource) Create(ctx context.Context, req resource.C
 	}
 	data.RefreshFromSharedConnectionBlackline(res.ConnectionBlackline)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	id := data.ID.ValueString()
+	request1 := operations.GetBLACKLINEConnectionRequest{
+		ID: id,
+	}
+	res1, err := r.client.Connection.GetBLACKLINEConnection(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.ConnectionBlackline == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedConnectionBlackline(res1.ConnectionBlackline)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -717,6 +737,32 @@ func (r *ConnectionBLACKLINEResource) Update(ctx context.Context, req resource.U
 		return
 	}
 	data.RefreshFromSharedConnectionBlackline(res.ConnectionBlackline)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	id1 := data.ID.ValueString()
+	request1 := operations.GetBLACKLINEConnectionRequest{
+		ID: id1,
+	}
+	res1, err := r.client.Connection.GetBLACKLINEConnection(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.ConnectionBlackline == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedConnectionBlackline(res1.ConnectionBlackline)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

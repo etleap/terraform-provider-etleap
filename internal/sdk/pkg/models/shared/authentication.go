@@ -15,12 +15,14 @@ const (
 	AuthenticationTypeBasic  AuthenticationType = "BASIC"
 	AuthenticationTypeBearer AuthenticationType = "BEARER"
 	AuthenticationTypeHeader AuthenticationType = "HEADER"
+	AuthenticationTypeOauth  AuthenticationType = "OAUTH"
 )
 
 type Authentication struct {
-	BasicAuthentication  *BasicAuthentication
-	BearerAuthentication *BearerAuthentication
-	HeaderAuthentication *HeaderAuthentication
+	BasicAuthentication                   *BasicAuthentication
+	BearerAuthentication                  *BearerAuthentication
+	HeaderAuthentication                  *HeaderAuthentication
+	Oauth2ClientCredentialsAuthentication *Oauth2ClientCredentialsAuthentication
 
 	Type AuthenticationType
 }
@@ -58,6 +60,18 @@ func CreateAuthenticationHeader(header HeaderAuthentication) Authentication {
 	return Authentication{
 		HeaderAuthentication: &header,
 		Type:                 typ,
+	}
+}
+
+func CreateAuthenticationOauth(oauth Oauth2ClientCredentialsAuthentication) Authentication {
+	typ := AuthenticationTypeOauth
+
+	typStr := Oauth2ClientCredentialsAuthenticationType(typ)
+	oauth.Type = &typStr
+
+	return Authentication{
+		Oauth2ClientCredentialsAuthentication: &oauth,
+		Type:                                  typ,
 	}
 }
 
@@ -100,6 +114,15 @@ func (u *Authentication) UnmarshalJSON(data []byte) error {
 		u.HeaderAuthentication = headerAuthentication
 		u.Type = AuthenticationTypeHeader
 		return nil
+	case "OAUTH":
+		oauth2ClientCredentialsAuthentication := new(Oauth2ClientCredentialsAuthentication)
+		if err := utils.UnmarshalJSON(data, &oauth2ClientCredentialsAuthentication, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.Oauth2ClientCredentialsAuthentication = oauth2ClientCredentialsAuthentication
+		u.Type = AuthenticationTypeOauth
+		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
@@ -116,6 +139,10 @@ func (u Authentication) MarshalJSON() ([]byte, error) {
 
 	if u.HeaderAuthentication != nil {
 		return utils.MarshalJSON(u.HeaderAuthentication, "", true)
+	}
+
+	if u.Oauth2ClientCredentialsAuthentication != nil {
+		return utils.MarshalJSON(u.Oauth2ClientCredentialsAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

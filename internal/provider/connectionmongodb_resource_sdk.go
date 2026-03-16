@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoInput() *shared.ConnectionMongoInput {
+func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongodbInput() *shared.ConnectionMongodbInput {
 	name := r.Name.ValueString()
-	typeVar := shared.ConnectionMongoType(r.Type.ValueString())
+	typeVar := shared.ConnectionMongodbType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
@@ -95,11 +95,11 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoInput() *shared.
 			Username: username,
 		}
 	}
-	var replicaSet []shared.ConnectionMongoReplicaSet = nil
+	var replicaSet []shared.ConnectionMongodbReplicaSet = nil
 	for _, replicaSetItem := range r.ReplicaSet {
 		address1 := replicaSetItem.Address.ValueString()
 		port := replicaSetItem.Port.ValueInt64()
-		replicaSet = append(replicaSet, shared.ConnectionMongoReplicaSet{
+		replicaSet = append(replicaSet, shared.ConnectionMongodbReplicaSet{
 			Address: address1,
 			Port:    port,
 		})
@@ -119,7 +119,7 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoInput() *shared.
 	} else {
 		authDatabaseName = nil
 	}
-	out := shared.ConnectionMongoInput{
+	out := shared.ConnectionMongodbInput{
 		Name:             name,
 		Type:             typeVar,
 		UpdateSchedule:   updateSchedule,
@@ -134,7 +134,7 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoInput() *shared.
 	return &out
 }
 
-func (r *ConnectionMONGODBResourceModel) RefreshFromSharedConnectionMongo(resp *shared.ConnectionMongo) {
+func (r *ConnectionMONGODBResourceModel) RefreshFromSharedConnectionMongodb(resp *shared.ConnectionMongodb) {
 	r.Active = types.BoolValue(resp.Active)
 	r.AuthDatabaseName = types.StringPointerValue(resp.AuthDatabaseName)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -247,16 +247,16 @@ func (r *ConnectionMONGODBResourceModel) RefreshFromSharedConnectionMongo(resp *
 	r.UseSsl = types.BoolPointerValue(resp.UseSsl)
 }
 
-func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoUpdate() *shared.ConnectionMongoUpdate {
+func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongodbUpdate() *shared.ConnectionMongodbUpdate {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
 	}
-	typeVar := new(shared.ConnectionMongoUpdateType)
+	typeVar := new(shared.ConnectionMongodbUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
-		*typeVar = shared.ConnectionMongoUpdateType(r.Type.ValueString())
+		*typeVar = shared.ConnectionMongodbUpdateType(r.Type.ValueString())
 	} else {
 		typeVar = nil
 	}
@@ -341,7 +341,7 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoUpdate() *shared
 			}
 		}
 	}
-	var sshConfig *shared.ConnectionMongoUpdateSSHConfigurationUpdate
+	var sshConfig *shared.ConnectionMongodbUpdateSSHConfigurationUpdate
 	if r.SSHConfig != nil {
 		address := new(string)
 		if !r.SSHConfig.Address.IsUnknown() && !r.SSHConfig.Address.IsNull() {
@@ -355,7 +355,7 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoUpdate() *shared
 		} else {
 			username = nil
 		}
-		sshConfig = &shared.ConnectionMongoUpdateSSHConfigurationUpdate{
+		sshConfig = &shared.ConnectionMongodbUpdateSSHConfigurationUpdate{
 			Address:  address,
 			Username: username,
 		}
@@ -399,7 +399,7 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongoUpdate() *shared
 	} else {
 		authDatabaseName = nil
 	}
-	out := shared.ConnectionMongoUpdate{
+	out := shared.ConnectionMongodbUpdate{
 		Name:             name,
 		Type:             typeVar,
 		Active:           active,

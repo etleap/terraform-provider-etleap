@@ -96,7 +96,7 @@ func (r *ConnectionVERIZONMEDIADSPResource) Schema(ctx context.Context, req reso
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -564,7 +564,7 @@ func (r *ConnectionVERIZONMEDIADSPResource) Create(ctx context.Context, req reso
 		return
 	}
 
-	request := *data.ToSharedConnectionVerizonMediaInput()
+	request := *data.ToSharedConnectionVerizonMediaDspInput()
 	res, err := r.client.Connection.CreateVERIZONMEDIADSPConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -581,11 +581,11 @@ func (r *ConnectionVERIZONMEDIADSPResource) Create(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionVerizonMedia == nil {
+	if res.ConnectionVerizonMediaDsp == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionVerizonMedia(res.ConnectionVerizonMedia)
+	data.RefreshFromSharedConnectionVerizonMediaDsp(res.ConnectionVerizonMediaDsp)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetVERIZONMEDIADSPConnectionRequest{
@@ -607,11 +607,11 @@ func (r *ConnectionVERIZONMEDIADSPResource) Create(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionVerizonMedia == nil {
+	if res1.ConnectionVerizonMediaDsp == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionVerizonMedia(res1.ConnectionVerizonMedia)
+	data.RefreshFromSharedConnectionVerizonMediaDsp(res1.ConnectionVerizonMediaDsp)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -656,11 +656,11 @@ func (r *ConnectionVERIZONMEDIADSPResource) Read(ctx context.Context, req resour
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionVerizonMedia == nil {
+	if res.ConnectionVerizonMediaDsp == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionVerizonMedia(res.ConnectionVerizonMedia)
+	data.RefreshFromSharedConnectionVerizonMediaDsp(res.ConnectionVerizonMediaDsp)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -681,10 +681,10 @@ func (r *ConnectionVERIZONMEDIADSPResource) Update(ctx context.Context, req reso
 	}
 
 	id := data.ID.ValueString()
-	connectionVerizonMediaUpdate := data.ToSharedConnectionVerizonMediaUpdate()
+	connectionVerizonMediaDspUpdate := data.ToSharedConnectionVerizonMediaDspUpdate()
 	request := operations.UpdateVERIZONMEDIADSPConnectionRequest{
-		ID:                           id,
-		ConnectionVerizonMediaUpdate: connectionVerizonMediaUpdate,
+		ID:                              id,
+		ConnectionVerizonMediaDspUpdate: connectionVerizonMediaDspUpdate,
 	}
 	res, err := r.client.Connection.UpdateVERIZONMEDIADSPConnection(ctx, request)
 	if err != nil {
@@ -702,11 +702,11 @@ func (r *ConnectionVERIZONMEDIADSPResource) Update(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionVerizonMedia == nil {
+	if res.ConnectionVerizonMediaDsp == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionVerizonMedia(res.ConnectionVerizonMedia)
+	data.RefreshFromSharedConnectionVerizonMediaDsp(res.ConnectionVerizonMediaDsp)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetVERIZONMEDIADSPConnectionRequest{
@@ -728,11 +728,11 @@ func (r *ConnectionVERIZONMEDIADSPResource) Update(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionVerizonMedia == nil {
+	if res1.ConnectionVerizonMediaDsp == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionVerizonMedia(res1.ConnectionVerizonMedia)
+	data.RefreshFromSharedConnectionVerizonMediaDsp(res1.ConnectionVerizonMediaDsp)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

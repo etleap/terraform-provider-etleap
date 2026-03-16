@@ -105,6 +105,7 @@ func (r *ConnectionSNOWFLAKESHARDEDDataSourceModel) RefreshFromSharedConnectionS
 	}
 	r.SourceOnly = types.BoolPointerValue(resp.SourceOnly)
 	r.Status = types.StringValue(string(resp.Status))
+	r.StorageIntegration = types.StringPointerValue(resp.StorageIntegration)
 	r.Type = types.StringValue(string(resp.Type))
 	if resp.UpdateSchedule == nil {
 		r.UpdateSchedule = nil

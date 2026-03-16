@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type ConnectionElasticSearchUpdateType string
+type ConnectionElasticsearchUpdateType string
 
 const (
-	ConnectionElasticSearchUpdateTypeElasticsearch ConnectionElasticSearchUpdateType = "ELASTICSEARCH"
+	ConnectionElasticsearchUpdateTypeElasticsearch ConnectionElasticsearchUpdateType = "ELASTICSEARCH"
 )
 
-func (e ConnectionElasticSearchUpdateType) ToPointer() *ConnectionElasticSearchUpdateType {
+func (e ConnectionElasticsearchUpdateType) ToPointer() *ConnectionElasticsearchUpdateType {
 	return &e
 }
 
-func (e *ConnectionElasticSearchUpdateType) UnmarshalJSON(data []byte) error {
+func (e *ConnectionElasticsearchUpdateType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "ELASTICSEARCH":
-		*e = ConnectionElasticSearchUpdateType(v)
+		*e = ConnectionElasticsearchUpdateType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionElasticSearchUpdateType: %v", v)
+		return fmt.Errorf("invalid value for ConnectionElasticsearchUpdateType: %v", v)
 	}
 }
 
-type ConnectionElasticSearchUpdate struct {
+type ConnectionElasticsearchUpdate struct {
 	// The unique name of this connection.
 	Name *string                            `json:"name,omitempty"`
-	Type *ConnectionElasticSearchUpdateType `json:"type"`
+	Type *ConnectionElasticsearchUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
@@ -48,103 +48,103 @@ type ConnectionElasticSearchUpdate struct {
 	//
 	// Cluster privileges: <ul><li>monitor</li></ul>
 	//  Index privileges: <ul><li>read</li><li>monitor</li><li>view_index_metadata</li></ul>
-	//  Index privileges must be enabled for all indices you want Etleap to access. These permissions can be set up in Kibana or by consulting <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/authorization.html">the Elastic documentation</a> for the version of your cluster.
+	//  Index privileges must be enabled for all indices you want Etleap to access. These permissions can be set up in Kibana or by consulting <a target="_blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/authorization.html">the Elastic documentation</a> for the version of your cluster.
 	Username *string `json:"username,omitempty"`
 	Password *string `json:"password,omitempty"`
 }
 
-func (o *ConnectionElasticSearchUpdate) GetName() *string {
+func (o *ConnectionElasticsearchUpdate) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *ConnectionElasticSearchUpdate) GetType() *ConnectionElasticSearchUpdateType {
+func (o *ConnectionElasticsearchUpdate) GetType() *ConnectionElasticsearchUpdateType {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *ConnectionElasticSearchUpdate) GetActive() *bool {
+func (o *ConnectionElasticsearchUpdate) GetActive() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Active
 }
 
-func (o *ConnectionElasticSearchUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionElasticsearchUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionElasticSearchUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionElasticsearchUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
 
-func (o *ConnectionElasticSearchUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionElasticsearchUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
 	}
 	return nil
 }
 
-func (o *ConnectionElasticSearchUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionElasticsearchUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeDaily
 	}
 	return nil
 }
 
-func (o *ConnectionElasticSearchUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionElasticsearchUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
 }
 
-func (o *ConnectionElasticSearchUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionElasticsearchUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
 
-func (o *ConnectionElasticSearchUpdate) GetAddress() *string {
+func (o *ConnectionElasticsearchUpdate) GetAddress() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Address
 }
 
-func (o *ConnectionElasticSearchUpdate) GetPort() *int64 {
+func (o *ConnectionElasticsearchUpdate) GetPort() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Port
 }
 
-func (o *ConnectionElasticSearchUpdate) GetSslEnabled() *bool {
+func (o *ConnectionElasticsearchUpdate) GetSslEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SslEnabled
 }
 
-func (o *ConnectionElasticSearchUpdate) GetUsername() *string {
+func (o *ConnectionElasticsearchUpdate) GetUsername() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Username
 }
 
-func (o *ConnectionElasticSearchUpdate) GetPassword() *string {
+func (o *ConnectionElasticsearchUpdate) GetPassword() *string {
 	if o == nil {
 		return nil
 	}

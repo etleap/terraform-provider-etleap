@@ -9,7 +9,7 @@ import (
 
 type UpdateUSERVOICEConnectionRequest struct {
 	ID                        string                            `pathParam:"style=simple,explode=false,name=id"`
-	ConnectionUserVoiceUpdate *shared.ConnectionUserVoiceUpdate `request:"mediaType=application/json"`
+	ConnectionUservoiceUpdate *shared.ConnectionUservoiceUpdate `request:"mediaType=application/json"`
 }
 
 func (o *UpdateUSERVOICEConnectionRequest) GetID() string {
@@ -19,11 +19,11 @@ func (o *UpdateUSERVOICEConnectionRequest) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateUSERVOICEConnectionRequest) GetConnectionUserVoiceUpdate() *shared.ConnectionUserVoiceUpdate {
+func (o *UpdateUSERVOICEConnectionRequest) GetConnectionUservoiceUpdate() *shared.ConnectionUservoiceUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionUserVoiceUpdate
+	return o.ConnectionUservoiceUpdate
 }
 
 type UpdateUSERVOICEConnectionResponse struct {
@@ -34,7 +34,7 @@ type UpdateUSERVOICEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionUserVoice *shared.ConnectionUserVoice
+	ConnectionUservoice *shared.ConnectionUservoice
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -60,11 +60,11 @@ func (o *UpdateUSERVOICEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateUSERVOICEConnectionResponse) GetConnectionUserVoice() *shared.ConnectionUserVoice {
+func (o *UpdateUSERVOICEConnectionResponse) GetConnectionUservoice() *shared.ConnectionUservoice {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionUserVoice
+	return o.ConnectionUservoice
 }
 
 func (o *UpdateUSERVOICEConnectionResponse) GetErrors() *shared.Errors {

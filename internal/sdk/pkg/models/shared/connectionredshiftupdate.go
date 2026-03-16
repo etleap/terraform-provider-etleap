@@ -69,11 +69,11 @@ type ConnectionRedshiftUpdate struct {
 	UserGroups []string `json:"userGroups,omitempty"`
 	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
 	SourceOnly *bool `json:"sourceOnly,omitempty"`
-	// Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#include-query-tags">here</a>.
+	// Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#include-query-tags">here</a>.
 	QueryTagsEnabled *bool `json:"queryTagsEnabled,omitempty"`
 	// The id of another Etleap Redshift connection. If specified, Etleap will make the data loaded available to the other cluster via Redshift Data Sharing.
 	DataSharingDestinations []string `json:"dataSharingDestinations,omitempty"`
-	// Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`.
+	// Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`.
 	DynamicVarcharWidthEnabled *bool                                           `json:"dynamicVarcharWidthEnabled,omitempty"`
 	Address                    *string                                         `json:"address,omitempty"`
 	Port                       *int64                                          `json:"port,omitempty"`

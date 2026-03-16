@@ -51,9 +51,6 @@ type ConnectionMARKETOResourceModel struct {
 	RestClientID             types.String            `tfsdk:"rest_client_id"`
 	RestClientSecret         types.String            `tfsdk:"rest_client_secret"`
 	RestEndpoint             types.String            `tfsdk:"rest_endpoint"`
-	SoapEncryptionKey        types.String            `tfsdk:"soap_encryption_key"`
-	SoapEndpoint             types.String            `tfsdk:"soap_endpoint"`
-	SoapUserID               types.String            `tfsdk:"soap_user_id"`
 	Status                   types.String            `tfsdk:"status"`
 	Type                     types.String            `tfsdk:"type"`
 	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
@@ -97,7 +94,7 @@ func (r *ConnectionMARKETOResource) Schema(ctx context.Context, req resource.Sch
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -312,24 +309,6 @@ func (r *ConnectionMARKETOResource) Schema(ctx context.Context, req resource.Sch
 				},
 				Required:    true,
 				Description: `E.g. 'https://259-ZDK-675.mktorest.com/rest'. In the Marketo UI this is the 'Endpoint' value in the 'REST API' section.`,
-			},
-			"soap_encryption_key": schema.StringAttribute{
-				Required:    true,
-				Description: `In the Marketo UI this is the 'Encryption Key' value in the 'SOAP API' section.`,
-			},
-			"soap_endpoint": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
-				Required:    true,
-				Description: `E.g. 'https://259-ZDK-675.mktoapi.com/soap/mktows/2_9'. In the Marketo UI this is the 'Endpoint' value in the 'SOAP API' section.`,
-			},
-			"soap_user_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
-				Required:    true,
-				Description: `E.g. 'MKTOWS_259-ZDK-675_1'. In the Marketo UI this is the 'User ID' value in the 'SOAP API' section.`,
 			},
 			"status": schema.StringAttribute{
 				Computed: true,

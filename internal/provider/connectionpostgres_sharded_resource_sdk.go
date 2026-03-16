@@ -104,6 +104,12 @@ func (r *ConnectionPOSTGRESSHARDEDResourceModel) ToSharedConnectionPostgresShard
 	} else {
 		cdcEnabled = nil
 	}
+	fetchLobsForUpdatedRows := new(bool)
+	if !r.FetchLobsForUpdatedRows.IsUnknown() && !r.FetchLobsForUpdatedRows.IsNull() {
+		*fetchLobsForUpdatedRows = r.FetchLobsForUpdatedRows.ValueBool()
+	} else {
+		fetchLobsForUpdatedRows = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
 		address := shardsItem.Address.ValueString()
@@ -132,13 +138,14 @@ func (r *ConnectionPOSTGRESSHARDEDResourceModel) ToSharedConnectionPostgresShard
 		})
 	}
 	out := shared.ConnectionPostgresShardedInput{
-		Name:           name,
-		Type:           typeVar,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		AutoReplicate:  autoReplicate,
-		CdcEnabled:     cdcEnabled,
-		Shards:         shards,
+		Name:                    name,
+		Type:                    typeVar,
+		UpdateSchedule:          updateSchedule,
+		Schema:                  schema,
+		AutoReplicate:           autoReplicate,
+		CdcEnabled:              cdcEnabled,
+		FetchLobsForUpdatedRows: fetchLobsForUpdatedRows,
+		Shards:                  shards,
 	}
 	return &out
 }
@@ -196,6 +203,7 @@ func (r *ConnectionPOSTGRESSHARDEDResourceModel) RefreshFromSharedConnectionPost
 			r.DefaultUpdateSchedule[defaultUpdateScheduleCount].UpdateSchedule = defaultUpdateSchedule1.UpdateSchedule
 		}
 	}
+	r.FetchLobsForUpdatedRows = types.BoolPointerValue(resp.FetchLobsForUpdatedRows)
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.Schema = types.StringPointerValue(resp.Schema)
@@ -363,6 +371,12 @@ func (r *ConnectionPOSTGRESSHARDEDResourceModel) ToSharedConnectionPostgresShard
 	} else {
 		autoReplicate = nil
 	}
+	fetchLobsForUpdatedRows := new(bool)
+	if !r.FetchLobsForUpdatedRows.IsUnknown() && !r.FetchLobsForUpdatedRows.IsNull() {
+		*fetchLobsForUpdatedRows = r.FetchLobsForUpdatedRows.ValueBool()
+	} else {
+		fetchLobsForUpdatedRows = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
 		address := shardsItem.Address.ValueString()
@@ -391,13 +405,14 @@ func (r *ConnectionPOSTGRESSHARDEDResourceModel) ToSharedConnectionPostgresShard
 		})
 	}
 	out := shared.ConnectionPostgresShardedUpdate{
-		Name:           name,
-		Type:           typeVar,
-		Active:         active,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		AutoReplicate:  autoReplicate,
-		Shards:         shards,
+		Name:                    name,
+		Type:                    typeVar,
+		Active:                  active,
+		UpdateSchedule:          updateSchedule,
+		Schema:                  schema,
+		AutoReplicate:           autoReplicate,
+		FetchLobsForUpdatedRows: fetchLobsForUpdatedRows,
+		Shards:                  shards,
 	}
 	return &out
 }

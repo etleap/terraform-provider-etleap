@@ -107,7 +107,7 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -291,7 +291,7 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 				},
 				Optional:    true,
 				Default:     booldefault.StaticBool(false),
-				Description: `Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to ` + "`" + `true` + "`" + `, it can't later be updated to ` + "`" + `false` + "`" + `. Default: false`,
+				Description: `Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to ` + "`" + `true` + "`" + `, it can't later be updated to ` + "`" + `false` + "`" + `. Default: false`,
 			},
 			"id": schema.StringAttribute{
 				Computed: true,
@@ -314,7 +314,7 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 				},
 				Optional:    true,
 				Default:     booldefault.StaticBool(false),
-				Description: `Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#include-query-tags">here</a>. Default: false`,
+				Description: `Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#include-query-tags">here</a>. Default: false`,
 			},
 			"schema": schema.StringAttribute{
 				Computed: true,

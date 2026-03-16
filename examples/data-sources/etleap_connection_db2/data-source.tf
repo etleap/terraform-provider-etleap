@@ -1,3 +1,3 @@
 data "etleap_connection_db2" "my_connectiondb2" {
-  id = "ff2575a9-89c8-4e2b-bbd9-fd7583574fcb"
+  id = "364a8975-f5e8-49b7-b2a7-1c0e74e016d6"
 }

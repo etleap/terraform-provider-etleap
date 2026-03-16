@@ -26,7 +26,7 @@ type GetUSERVOICEConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionUserVoice *shared.ConnectionUserVoice
+	ConnectionUservoice *shared.ConnectionUservoice
 	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
@@ -52,11 +52,11 @@ func (o *GetUSERVOICEConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetUSERVOICEConnectionResponse) GetConnectionUserVoice() *shared.ConnectionUserVoice {
+func (o *GetUSERVOICEConnectionResponse) GetConnectionUservoice() *shared.ConnectionUservoice {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionUserVoice
+	return o.ConnectionUservoice
 }
 
 func (o *GetUSERVOICEConnectionResponse) GetErrors() *shared.Errors {

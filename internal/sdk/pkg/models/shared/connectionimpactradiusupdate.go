@@ -39,9 +39,9 @@ type ConnectionImpactRadiusUpdate struct {
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// To find the Account SID to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
+	// To find the Account SID to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
 	AccountSid *string `json:"accountSid,omitempty"`
-	// To find the Auth Token to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
+	// To find the Auth Token to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
 	AuthToken *string `json:"authToken,omitempty"`
 }
 

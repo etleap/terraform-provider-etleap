@@ -8,8 +8,8 @@ import (
 )
 
 type UpdateQUORAADSConnectionRequest struct {
-	ID                    string                        `pathParam:"style=simple,explode=false,name=id"`
-	ConnectionQuoraUpdate *shared.ConnectionQuoraUpdate `request:"mediaType=application/json"`
+	ID                       string                           `pathParam:"style=simple,explode=false,name=id"`
+	ConnectionQuoraAdsUpdate *shared.ConnectionQuoraAdsUpdate `request:"mediaType=application/json"`
 }
 
 func (o *UpdateQUORAADSConnectionRequest) GetID() string {
@@ -19,11 +19,11 @@ func (o *UpdateQUORAADSConnectionRequest) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateQUORAADSConnectionRequest) GetConnectionQuoraUpdate() *shared.ConnectionQuoraUpdate {
+func (o *UpdateQUORAADSConnectionRequest) GetConnectionQuoraAdsUpdate() *shared.ConnectionQuoraAdsUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionQuoraUpdate
+	return o.ConnectionQuoraAdsUpdate
 }
 
 type UpdateQUORAADSConnectionResponse struct {
@@ -34,7 +34,7 @@ type UpdateQUORAADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionQuora *shared.ConnectionQuora
+	ConnectionQuoraAds *shared.ConnectionQuoraAds
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -60,11 +60,11 @@ func (o *UpdateQUORAADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateQUORAADSConnectionResponse) GetConnectionQuora() *shared.ConnectionQuora {
+func (o *UpdateQUORAADSConnectionResponse) GetConnectionQuoraAds() *shared.ConnectionQuoraAds {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionQuora
+	return o.ConnectionQuoraAds
 }
 
 func (o *UpdateQUORAADSConnectionResponse) GetErrors() *shared.Errors {

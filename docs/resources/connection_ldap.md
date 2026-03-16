@@ -15,15 +15,15 @@ ConnectionLDAP Resource
 ```terraform
 resource "etleap_connection_ldap" "my_connectionldap" {
   base_dn                     = "...my_base_dn..."
-  deletion_of_export_products = false
-  hostname                    = "linear-shoat.org"
-  name                        = "Arlene Sporer"
+  deletion_of_export_products = true
+  hostname                    = "gentle-rhyme.net"
+  name                        = "Mrs. Jeanne Rutherford"
   password                    = "...my_password..."
-  pen                         = 10
-  port                        = 2
+  pen                         = 5
+  port                        = 4
   type                        = "LDAP"
   user                        = "...my_user..."
-  use_ssl                     = false
+  use_ssl                     = true
 }
 ```
 
@@ -118,7 +118,7 @@ Optional:
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

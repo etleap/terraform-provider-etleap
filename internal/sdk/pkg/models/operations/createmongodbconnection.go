@@ -15,7 +15,7 @@ type CreateMONGODBConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionMongo *shared.ConnectionMongo
+	ConnectionMongodb *shared.ConnectionMongodb
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,11 +41,11 @@ func (o *CreateMONGODBConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateMONGODBConnectionResponse) GetConnectionMongo() *shared.ConnectionMongo {
+func (o *CreateMONGODBConnectionResponse) GetConnectionMongodb() *shared.ConnectionMongodb {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionMongo
+	return o.ConnectionMongodb
 }
 
 func (o *CreateMONGODBConnectionResponse) GetErrors() *shared.Errors {

@@ -59,7 +59,7 @@ func (r *ConnectionERPXDataSource) Schema(ctx context.Context, req datasource.Sc
 			},
 			"api_url": schema.StringAttribute{
 				Computed:    true,
-				Description: `Your ERPx tenant API URL.`,
+				Description: `Your ERPx tenant API URL`,
 			},
 			"client_id": schema.StringAttribute{
 				Computed:    true,
@@ -79,7 +79,7 @@ func (r *ConnectionERPXDataSource) Schema(ctx context.Context, req datasource.Sc
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
@@ -176,7 +176,7 @@ func (r *ConnectionERPXDataSource) Schema(ctx context.Context, req datasource.Sc
 			},
 			"token_url": schema.StringAttribute{
 				Computed:    true,
-				Description: `Your ERPx tenant authentication URL.`,
+				Description: `Your ERPx tenant authentication URL`,
 			},
 			"type": schema.StringAttribute{
 				Computed:    true,

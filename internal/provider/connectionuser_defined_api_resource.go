@@ -212,6 +212,63 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 						},
 						Description: `Authentication method that uses a header.`,
 					},
+					"oauth": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"client_id": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The OAuth 2.0 client identifier. Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"client_secret": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The OAuth 2.0 client secret. This property is stored as a secret in Etleap. Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"token_url": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The OAuth 2.0 token endpoint URL where Etleap will exchange client credentials for an access token. Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"type": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Default:     stringdefault.StaticString("OAUTH"),
+								Description: `must be one of ["OAUTH"]; Default: "OAUTH"`,
+								Validators: []validator.String{
+									stringvalidator.OneOf(
+										"OAUTH",
+									),
+								},
+							},
+						},
+						Description: `Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint.`,
+					},
 				},
 				Validators: []validator.Object{
 					validators.ExactlyOneChild(),
@@ -239,7 +296,7 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -502,14 +559,9 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 						"id": schema.StringAttribute{
 							Computed: true,
 							PlanModifiers: []planmodifier.String{
-								stringplanmodifier.RequiresReplaceIfConfigured(),
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Optional:    true,
-							Description: `The unique identifier of the entity. Requires replacement if changed. ; Not Null`,
-							Validators: []validator.String{
-								speakeasy_stringvalidators.NotNull(),
-							},
+							Description: `The unique identifier of the entity.`,
 						},
 						"paging_strategy": schema.SingleNestedAttribute{
 							Computed: true,
@@ -585,10 +637,7 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 											},
 											Optional:    true,
-											Description: `String prepended to the paging cursor string to turn it into a URL, e.g. because the cursor only contains the URL path. Requires replacement if changed. ; Not Null`,
-											Validators: []validator.String{
-												speakeasy_stringvalidators.NotNull(),
-											},
+											Description: `String prepended to the paging cursor string to turn it into a URL, e.g. because the cursor only contains the URL path. Requires replacement if changed. `,
 										},
 									},
 									Description: `Paging strategy that uses a cursor to iterate through the results. Requires replacement if changed. `,
@@ -654,6 +703,68 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 										},
 									},
 									Description: `Paging strategy that is based on a result set offset. Requires replacement if changed. `,
+								},
+								"page_number": schema.SingleNestedAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										objectplanmodifier.RequiresReplaceIfConfigured(),
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
+									Optional: true,
+									Attributes: map[string]schema.Attribute{
+										"max_page_size": schema.Int64Attribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												int64planmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Description: `The maximum page size supported by the API. Requires replacement if changed. ; Not Null`,
+											Validators: []validator.Int64{
+												speakeasy_int64validators.NotNull(),
+											},
+										},
+										"page_number_field_name": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												stringplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Description: `The name of the request parameter used to specify the page number. Requires replacement if changed. ; Not Null`,
+											Validators: []validator.String{
+												speakeasy_stringvalidators.NotNull(),
+											},
+										},
+										"page_size_field_name": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												stringplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Description: `The name of the request parameter used to specify the page size. Requires replacement if changed. ; Not Null`,
+											Validators: []validator.String{
+												speakeasy_stringvalidators.NotNull(),
+											},
+										},
+										"type": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												stringplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Default:     stringdefault.StaticString("PAGE_NUMBER"),
+											Description: `Requires replacement if changed. ; must be one of ["PAGE_NUMBER"]; Default: "PAGE_NUMBER"`,
+											Validators: []validator.String{
+												stringvalidator.OneOf(
+													"PAGE_NUMBER",
+												),
+											},
+										},
+									},
+									Description: `Paging strategy that uses page numbers to iterate through results. Requires replacement if changed. `,
 								},
 							},
 							Description: `The paging strategy. Requires replacement if changed. `,
@@ -972,8 +1083,9 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 											},
 											Optional:    true,
 											ElementType: types.StringType,
-											Description: `Requires replacement if changed. `,
+											Description: `Requires replacement if changed. ; Not Null`,
 											Validators: []validator.List{
+												speakeasy_listvalidators.NotNull(),
 												listvalidator.SizeAtLeast(1),
 											},
 										},
@@ -1323,8 +1435,9 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 													Description: `Requires replacement if changed. `,
 												},
 											},
-											Description: `Requires replacement if changed. `,
+											Description: `Requires replacement if changed. ; Not Null`,
 											Validators: []validator.Object{
+												speakeasy_objectvalidators.NotNull(),
 												validators.ExactlyOneChild(),
 											},
 										},
@@ -1888,32 +2001,6 @@ func (r *ConnectionUSERDEFINEDAPIResource) Update(ctx context.Context, req resou
 		return
 	}
 	data.RefreshFromSharedConnectionUserDefinedAPI(res.ConnectionUserDefinedAPI)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	id1 := data.ID.ValueString()
-	request1 := operations.GetUSERDEFINEDAPIConnectionRequest{
-		ID: id1,
-	}
-	res1, err := r.client.Connection.GetUSERDEFINEDAPIConnection(ctx, request1)
-	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res1 != nil && res1.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
-		}
-		return
-	}
-	if res1 == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
-		return
-	}
-	if res1.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
-		return
-	}
-	if res1.ConnectionUserDefinedAPI == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
-		return
-	}
-	data.RefreshFromSharedConnectionUserDefinedAPI(res1.ConnectionUserDefinedAPI)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

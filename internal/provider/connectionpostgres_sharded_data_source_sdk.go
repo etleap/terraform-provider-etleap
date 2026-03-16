@@ -61,6 +61,7 @@ func (r *ConnectionPOSTGRESSHARDEDDataSourceModel) RefreshFromSharedConnectionPo
 			r.DefaultUpdateSchedule[defaultUpdateScheduleCount].UpdateSchedule = defaultUpdateSchedule1.UpdateSchedule
 		}
 	}
+	r.FetchLobsForUpdatedRows = types.BoolPointerValue(resp.FetchLobsForUpdatedRows)
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.Schema = types.StringPointerValue(resp.Schema)

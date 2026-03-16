@@ -9,7 +9,7 @@ import (
 
 type UpdateSUMTOTALConnectionRequest struct {
 	ID                       string                           `pathParam:"style=simple,explode=false,name=id"`
-	ConnectionSumTotalUpdate *shared.ConnectionSumTotalUpdate `request:"mediaType=application/json"`
+	ConnectionSumtotalUpdate *shared.ConnectionSumtotalUpdate `request:"mediaType=application/json"`
 }
 
 func (o *UpdateSUMTOTALConnectionRequest) GetID() string {
@@ -19,11 +19,11 @@ func (o *UpdateSUMTOTALConnectionRequest) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateSUMTOTALConnectionRequest) GetConnectionSumTotalUpdate() *shared.ConnectionSumTotalUpdate {
+func (o *UpdateSUMTOTALConnectionRequest) GetConnectionSumtotalUpdate() *shared.ConnectionSumtotalUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionSumTotalUpdate
+	return o.ConnectionSumtotalUpdate
 }
 
 type UpdateSUMTOTALConnectionResponse struct {
@@ -34,7 +34,7 @@ type UpdateSUMTOTALConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSumTotal *shared.ConnectionSumTotal
+	ConnectionSumtotal *shared.ConnectionSumtotal
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -60,11 +60,11 @@ func (o *UpdateSUMTOTALConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateSUMTOTALConnectionResponse) GetConnectionSumTotal() *shared.ConnectionSumTotal {
+func (o *UpdateSUMTOTALConnectionResponse) GetConnectionSumtotal() *shared.ConnectionSumtotal {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionSumTotal
+	return o.ConnectionSumtotal
 }
 
 func (o *UpdateSUMTOTALConnectionResponse) GetErrors() *shared.Errors {

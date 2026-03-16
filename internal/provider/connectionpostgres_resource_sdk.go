@@ -104,6 +104,12 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresInput() *sha
 	} else {
 		cdcEnabled = nil
 	}
+	fetchLobsForUpdatedRows := new(bool)
+	if !r.FetchLobsForUpdatedRows.IsUnknown() && !r.FetchLobsForUpdatedRows.IsNull() {
+		*fetchLobsForUpdatedRows = r.FetchLobsForUpdatedRows.ValueBool()
+	} else {
+		fetchLobsForUpdatedRows = nil
+	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
 	username := r.Username.ValueString()
@@ -119,18 +125,19 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresInput() *sha
 	}
 	database := r.Database.ValueString()
 	out := shared.ConnectionPostgresInput{
-		Name:           name,
-		Type:           typeVar,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		AutoReplicate:  autoReplicate,
-		CdcEnabled:     cdcEnabled,
-		Address:        address,
-		Port:           port,
-		Username:       username,
-		Password:       password,
-		SSHConfig:      sshConfig,
-		Database:       database,
+		Name:                    name,
+		Type:                    typeVar,
+		UpdateSchedule:          updateSchedule,
+		Schema:                  schema,
+		AutoReplicate:           autoReplicate,
+		CdcEnabled:              cdcEnabled,
+		FetchLobsForUpdatedRows: fetchLobsForUpdatedRows,
+		Address:                 address,
+		Port:                    port,
+		Username:                username,
+		Password:                password,
+		SSHConfig:               sshConfig,
+		Database:                database,
 	}
 	return &out
 }
@@ -190,6 +197,7 @@ func (r *ConnectionPOSTGRESResourceModel) RefreshFromSharedConnectionPostgres(re
 			r.DefaultUpdateSchedule[defaultUpdateScheduleCount].UpdateSchedule = defaultUpdateSchedule1.UpdateSchedule
 		}
 	}
+	r.FetchLobsForUpdatedRows = types.BoolPointerValue(resp.FetchLobsForUpdatedRows)
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.Port = types.Int64Value(resp.Port)
@@ -338,6 +346,12 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 	} else {
 		autoReplicate = nil
 	}
+	fetchLobsForUpdatedRows := new(bool)
+	if !r.FetchLobsForUpdatedRows.IsUnknown() && !r.FetchLobsForUpdatedRows.IsNull() {
+		*fetchLobsForUpdatedRows = r.FetchLobsForUpdatedRows.ValueBool()
+	} else {
+		fetchLobsForUpdatedRows = nil
+	}
 	address := new(string)
 	if !r.Address.IsUnknown() && !r.Address.IsNull() {
 		*address = r.Address.ValueString()
@@ -388,18 +402,19 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 		database = nil
 	}
 	out := shared.ConnectionPostgresUpdate{
-		Name:           name,
-		Type:           typeVar,
-		Active:         active,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		AutoReplicate:  autoReplicate,
-		Address:        address,
-		Port:           port,
-		Username:       username,
-		Password:       password,
-		SSHConfig:      sshConfig,
-		Database:       database,
+		Name:                    name,
+		Type:                    typeVar,
+		Active:                  active,
+		UpdateSchedule:          updateSchedule,
+		Schema:                  schema,
+		AutoReplicate:           autoReplicate,
+		FetchLobsForUpdatedRows: fetchLobsForUpdatedRows,
+		Address:                 address,
+		Port:                    port,
+		Username:                username,
+		Password:                password,
+		SSHConfig:               sshConfig,
+		Database:                database,
 	}
 	return &out
 }

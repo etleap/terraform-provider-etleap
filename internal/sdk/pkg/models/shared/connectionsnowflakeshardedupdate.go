@@ -46,8 +46,10 @@ type ConnectionSnowflakeShardedUpdate struct {
 	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
 	Roles []string `json:"roles,omitempty"`
 	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
-	SourceOnly *bool            `json:"sourceOnly,omitempty"`
-	Shards     []SnowflakeShard `json:"shards,omitempty"`
+	SourceOnly *bool `json:"sourceOnly,omitempty"`
+	// The name of the [Snowflake Storage Integration](https://docs.snowflake.com/en/user-guide/data-load-s3-config-storage-integration) object to use when Etleap creates temporary Snowflake Stages for loading data. When specified, Etleap uses the Storage Integration instead of passing in temporary AWS credentials for authentication. The Storage Integration must be pre-configured in your Snowflake account with appropriate permissions to access the Etleap S3 intermediate bucket.
+	StorageIntegration *string          `json:"storageIntegration,omitempty"`
+	Shards             []SnowflakeShard `json:"shards,omitempty"`
 }
 
 func (o *ConnectionSnowflakeShardedUpdate) GetName() *string {
@@ -132,6 +134,13 @@ func (o *ConnectionSnowflakeShardedUpdate) GetSourceOnly() *bool {
 		return nil
 	}
 	return o.SourceOnly
+}
+
+func (o *ConnectionSnowflakeShardedUpdate) GetStorageIntegration() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StorageIntegration
 }
 
 func (o *ConnectionSnowflakeShardedUpdate) GetShards() []SnowflakeShard {

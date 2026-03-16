@@ -9,7 +9,7 @@ import (
 
 type UpdateBIGQUERYConnectionRequest struct {
 	ID                       string                           `pathParam:"style=simple,explode=false,name=id"`
-	ConnectionBigQueryUpdate *shared.ConnectionBigQueryUpdate `request:"mediaType=application/json"`
+	ConnectionBigqueryUpdate *shared.ConnectionBigqueryUpdate `request:"mediaType=application/json"`
 }
 
 func (o *UpdateBIGQUERYConnectionRequest) GetID() string {
@@ -19,11 +19,11 @@ func (o *UpdateBIGQUERYConnectionRequest) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateBIGQUERYConnectionRequest) GetConnectionBigQueryUpdate() *shared.ConnectionBigQueryUpdate {
+func (o *UpdateBIGQUERYConnectionRequest) GetConnectionBigqueryUpdate() *shared.ConnectionBigqueryUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionBigQueryUpdate
+	return o.ConnectionBigqueryUpdate
 }
 
 type UpdateBIGQUERYConnectionResponse struct {
@@ -34,7 +34,7 @@ type UpdateBIGQUERYConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBigQuery *shared.ConnectionBigQuery
+	ConnectionBigquery *shared.ConnectionBigquery
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -60,11 +60,11 @@ func (o *UpdateBIGQUERYConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateBIGQUERYConnectionResponse) GetConnectionBigQuery() *shared.ConnectionBigQuery {
+func (o *UpdateBIGQUERYConnectionResponse) GetConnectionBigquery() *shared.ConnectionBigquery {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionBigQuery
+	return o.ConnectionBigquery
 }
 
 func (o *UpdateBIGQUERYConnectionResponse) GetErrors() *shared.Errors {

@@ -47,7 +47,7 @@ type DestinationDeltaLake struct {
 	Table  string `json:"table"`
 	// Name of a column that indicates the time the record was updated at the destination.
 	LastUpdatedColumn *string `json:"lastUpdatedColumn,omitempty"`
-	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
+	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to `false`.
 	RetainHistory *bool `default:"false" json:"retainHistory"`
 	// This setting disables column mapping on the tables created by this pipeline.
 	//

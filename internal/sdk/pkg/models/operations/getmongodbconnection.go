@@ -26,7 +26,7 @@ type GetMONGODBConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionMongo *shared.ConnectionMongo
+	ConnectionMongodb *shared.ConnectionMongodb
 	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
@@ -52,11 +52,11 @@ func (o *GetMONGODBConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetMONGODBConnectionResponse) GetConnectionMongo() *shared.ConnectionMongo {
+func (o *GetMONGODBConnectionResponse) GetConnectionMongodb() *shared.ConnectionMongodb {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionMongo
+	return o.ConnectionMongodb
 }
 
 func (o *GetMONGODBConnectionResponse) GetErrors() *shared.Errors {

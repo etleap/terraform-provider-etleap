@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type ConnectionSumTotalUpdateType string
+type ConnectionSumtotalUpdateType string
 
 const (
-	ConnectionSumTotalUpdateTypeSumtotal ConnectionSumTotalUpdateType = "SUMTOTAL"
+	ConnectionSumtotalUpdateTypeSumtotal ConnectionSumtotalUpdateType = "SUMTOTAL"
 )
 
-func (e ConnectionSumTotalUpdateType) ToPointer() *ConnectionSumTotalUpdateType {
+func (e ConnectionSumtotalUpdateType) ToPointer() *ConnectionSumtotalUpdateType {
 	return &e
 }
 
-func (e *ConnectionSumTotalUpdateType) UnmarshalJSON(data []byte) error {
+func (e *ConnectionSumtotalUpdateType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SUMTOTAL":
-		*e = ConnectionSumTotalUpdateType(v)
+		*e = ConnectionSumtotalUpdateType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionSumTotalUpdateType: %v", v)
+		return fmt.Errorf("invalid value for ConnectionSumtotalUpdateType: %v", v)
 	}
 }
 
-type ConnectionSumTotalUpdate struct {
+type ConnectionSumtotalUpdate struct {
 	// The unique name of this connection.
 	Name *string                       `json:"name,omitempty"`
-	Type *ConnectionSumTotalUpdateType `json:"type"`
+	Type *ConnectionSumtotalUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
@@ -44,84 +44,84 @@ type ConnectionSumTotalUpdate struct {
 	ClientSecret   *string              `json:"clientSecret,omitempty"`
 }
 
-func (o *ConnectionSumTotalUpdate) GetName() *string {
+func (o *ConnectionSumtotalUpdate) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *ConnectionSumTotalUpdate) GetType() *ConnectionSumTotalUpdateType {
+func (o *ConnectionSumtotalUpdate) GetType() *ConnectionSumtotalUpdateType {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *ConnectionSumTotalUpdate) GetActive() *bool {
+func (o *ConnectionSumtotalUpdate) GetActive() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Active
 }
 
-func (o *ConnectionSumTotalUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionSumtotalUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSumTotalUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSumtotalUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
 
-func (o *ConnectionSumTotalUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionSumtotalUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
 	}
 	return nil
 }
 
-func (o *ConnectionSumTotalUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionSumtotalUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeDaily
 	}
 	return nil
 }
 
-func (o *ConnectionSumTotalUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionSumtotalUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
 }
 
-func (o *ConnectionSumTotalUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSumtotalUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
 
-func (o *ConnectionSumTotalUpdate) GetTenantURL() *string {
+func (o *ConnectionSumtotalUpdate) GetTenantURL() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TenantURL
 }
 
-func (o *ConnectionSumTotalUpdate) GetClientID() *string {
+func (o *ConnectionSumtotalUpdate) GetClientID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ClientID
 }
 
-func (o *ConnectionSumTotalUpdate) GetClientSecret() *string {
+func (o *ConnectionSumtotalUpdate) GetClientSecret() *string {
 	if o == nil {
 		return nil
 	}

@@ -14,8 +14,8 @@ Model Resource
 
 ```terraform
 resource "etleap_model" "my_model" {
-  deletion_of_export_products = true
-  name                        = "Aaron Fay"
+  deletion_of_export_products = false
+  name                        = "Grace Klein"
   query_and_triggers = {
     query = "...my_query..."
     triggers = [
@@ -24,7 +24,7 @@ resource "etleap_model" "my_model" {
   }
   update_schedule = {
     daily = {
-      hour_of_day = 4
+      hour_of_day = 8
       mode        = "DAILY"
     }
   }
@@ -32,7 +32,7 @@ resource "etleap_model" "my_model" {
     redshift = {
       connection_id = "...my_connection_id..."
       distribution_style = {
-        one = "AUTO"
+        one = "EVEN"
       }
       materialized_view     = false
       pending_renamed_table = "...my_pending_renamed_table..."
@@ -42,7 +42,7 @@ resource "etleap_model" "my_model" {
       ]
       table                       = "...my_table..."
       type                        = "REDSHIFT"
-      wait_for_update_preparation = false
+      wait_for_update_preparation = true
     }
   }
 }
@@ -55,7 +55,7 @@ resource "etleap_model" "my_model" {
 
 - `name` (String)
 - `query_and_triggers` (Attributes) (see [below for nested schema](#nestedatt--query_and_triggers))
-- `update_schedule` (Attributes) How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-updates) for more information. (see [below for nested schema](#nestedatt--update_schedule))
+- `update_schedule` (Attributes) How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-updates) for more information. (see [below for nested schema](#nestedatt--update_schedule))
 - `warehouse` (Attributes) (see [below for nested schema](#nestedatt--warehouse))
 
 ### Optional
@@ -92,7 +92,7 @@ becomes:
 SELECT col1, col2 FROM {{abcd1234}};
 ```
 
-[See the Model documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-dependencies) for more information on Model dependencies.
+[See the Model documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-dependencies) for more information on Model dependencies.
 - `triggers` (List of String) A list of model dependency ids. An update will be automatically triggered in this model if any of the dependencies listed here get new data. Any ids given here must be present as dependencies in the `query`.
 
 

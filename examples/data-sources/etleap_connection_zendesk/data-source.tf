@@ -1,3 +1,3 @@
 data "etleap_connection_zendesk" "my_connectionzendesk" {
-  id = "969c976f-f48b-4c3b-bb01-c1401c74ab26"
+  id = "2d54b777-2844-48ff-bd9b-fb6ee3908d0d"
 }

@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterInput() *shared.ConnectionTwitterInput {
+func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterAdsInput() *shared.ConnectionTwitterAdsInput {
 	name := r.Name.ValueString()
-	typeVar := shared.ConnectionTwitterType(r.Type.ValueString())
+	typeVar := shared.ConnectionTwitterAdsType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
@@ -96,7 +96,7 @@ func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterInput() *sh
 	} else {
 		twitterUsernames = nil
 	}
-	out := shared.ConnectionTwitterInput{
+	out := shared.ConnectionTwitterAdsInput{
 		Name:              name,
 		Type:              typeVar,
 		UpdateSchedule:    updateSchedule,
@@ -109,7 +109,7 @@ func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterInput() *sh
 	return &out
 }
 
-func (r *ConnectionTWITTERADSResourceModel) RefreshFromSharedConnectionTwitter(resp *shared.ConnectionTwitter) {
+func (r *ConnectionTWITTERADSResourceModel) RefreshFromSharedConnectionTwitterAds(resp *shared.ConnectionTwitterAds) {
 	r.Active = types.BoolValue(resp.Active)
 	r.AppKey = types.StringValue(resp.AppKey)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -199,16 +199,16 @@ func (r *ConnectionTWITTERADSResourceModel) RefreshFromSharedConnectionTwitter(r
 	}
 }
 
-func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterUpdate() *shared.ConnectionTwitterUpdate {
+func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterAdsUpdate() *shared.ConnectionTwitterAdsUpdate {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
 	}
-	typeVar := new(shared.ConnectionTwitterUpdateType)
+	typeVar := new(shared.ConnectionTwitterAdsUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
-		*typeVar = shared.ConnectionTwitterUpdateType(r.Type.ValueString())
+		*typeVar = shared.ConnectionTwitterAdsUpdateType(r.Type.ValueString())
 	} else {
 		typeVar = nil
 	}
@@ -323,7 +323,7 @@ func (r *ConnectionTWITTERADSResourceModel) ToSharedConnectionTwitterUpdate() *s
 	} else {
 		twitterUsernames = nil
 	}
-	out := shared.ConnectionTwitterUpdate{
+	out := shared.ConnectionTwitterAdsUpdate{
 		Name:              name,
 		Type:              typeVar,
 		Active:            active,

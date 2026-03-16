@@ -13,6 +13,7 @@ type SourceTypesType string
 
 const (
 	SourceTypesTypeActiveCampaign           SourceTypesType = "ACTIVE_CAMPAIGN"
+	SourceTypesTypeAzureBlobStorage         SourceTypesType = "AZURE_BLOB_STORAGE"
 	SourceTypesTypeBigquery                 SourceTypesType = "BIGQUERY"
 	SourceTypesTypeBingAds                  SourceTypesType = "BING_ADS"
 	SourceTypesTypeBlackline                SourceTypesType = "BLACKLINE"
@@ -30,74 +31,80 @@ const (
 	SourceTypesTypeErpx                     SourceTypesType = "ERPX"
 	SourceTypesTypeFacebookAds              SourceTypesType = "FACEBOOK_ADS"
 	SourceTypesTypeFifteenFive              SourceTypesType = "FIFTEEN_FIVE"
+	SourceTypesTypeFreshcaller              SourceTypesType = "FRESHCALLER"
 	SourceTypesTypeFreshchat                SourceTypesType = "FRESHCHAT"
+	SourceTypesTypeFreshdesk                SourceTypesType = "FRESHDESK"
 	SourceTypesTypeFreshsales               SourceTypesType = "FRESHSALES"
-	SourceTypesTypeFreshworks               SourceTypesType = "FRESHWORKS"
 	SourceTypesTypeFtp                      SourceTypesType = "FTP"
+	SourceTypesTypeGitlab                   SourceTypesType = "GITLAB"
 	SourceTypesTypeGong                     SourceTypesType = "GONG"
+	SourceTypesTypeGoogleAds                SourceTypesType = "GOOGLE_ADS"
 	SourceTypesTypeGoogleAnalyticsGa4       SourceTypesType = "GOOGLE_ANALYTICS_GA4"
 	SourceTypesTypeGoogleCloudStorage       SourceTypesType = "GOOGLE_CLOUD_STORAGE"
-	SourceTypesTypeGoogleAds                SourceTypesType = "GOOGLE_ADS"
 	SourceTypesTypeGoogleSheets             SourceTypesType = "GOOGLE_SHEETS"
 	SourceTypesTypeHubspot                  SourceTypesType = "HUBSPOT"
-	SourceTypesTypeIntercom                 SourceTypesType = "INTERCOM"
 	SourceTypesTypeImpactRadius             SourceTypesType = "IMPACT_RADIUS"
+	SourceTypesTypeIntercom                 SourceTypesType = "INTERCOM"
 	SourceTypesTypeJira                     SourceTypesType = "JIRA"
 	SourceTypesTypeJiraAlign                SourceTypesType = "JIRA_ALIGN"
 	SourceTypesTypeJiraCloud                SourceTypesType = "JIRA_CLOUD"
 	SourceTypesTypeKafka                    SourceTypesType = "KAFKA"
+	SourceTypesTypeKinesis                  SourceTypesType = "KINESIS"
 	SourceTypesTypeKustomer                 SourceTypesType = "KUSTOMER"
 	SourceTypesTypeLdap                     SourceTypesType = "LDAP"
 	SourceTypesTypeLdapVirtualListView      SourceTypesType = "LDAP_VIRTUAL_LIST_VIEW"
 	SourceTypesTypeLinkedInAds              SourceTypesType = "LINKED_IN_ADS"
 	SourceTypesTypeMarketo                  SourceTypesType = "MARKETO"
 	SourceTypesTypeMicrosoftEntraID         SourceTypesType = "MICROSOFT_ENTRA_ID"
+	SourceTypesTypeMicrosoftLists           SourceTypesType = "MICROSOFT_LISTS"
 	SourceTypesTypeMixpanel                 SourceTypesType = "MIXPANEL"
 	SourceTypesTypeMongodb                  SourceTypesType = "MONGODB"
-	SourceTypesTypeMysqlSharded             SourceTypesType = "MYSQL_SHARDED"
 	SourceTypesTypeMysql                    SourceTypesType = "MYSQL"
+	SourceTypesTypeMysqlSharded             SourceTypesType = "MYSQL_SHARDED"
 	SourceTypesTypeNetsuite                 SourceTypesType = "NETSUITE"
 	SourceTypesTypeNetsuiteV2               SourceTypesType = "NETSUITE_V2"
 	SourceTypesTypeOracle                   SourceTypesType = "ORACLE"
 	SourceTypesTypeOracleSharded            SourceTypesType = "ORACLE_SHARDED"
-	SourceTypesTypeOutreach                 SourceTypesType = "OUTREACH"
 	SourceTypesTypeOutlook                  SourceTypesType = "OUTLOOK"
+	SourceTypesTypeOutreach                 SourceTypesType = "OUTREACH"
 	SourceTypesTypePinterestAds             SourceTypesType = "PINTEREST_ADS"
 	SourceTypesTypePostgres                 SourceTypesType = "POSTGRES"
 	SourceTypesTypePostgresSharded          SourceTypesType = "POSTGRES_SHARDED"
+	SourceTypesTypeQualtrics                SourceTypesType = "QUALTRICS"
 	SourceTypesTypeQuoraAds                 SourceTypesType = "QUORA_ADS"
 	SourceTypesTypeRaveMedidata             SourceTypesType = "RAVE_MEDIDATA"
 	SourceTypesTypeRecurly                  SourceTypesType = "RECURLY"
 	SourceTypesTypeRedshift                 SourceTypesType = "REDSHIFT"
 	SourceTypesTypeRedshiftSharded          SourceTypesType = "REDSHIFT_SHARDED"
-	SourceTypesTypeS3Legacy                 SourceTypesType = "S3_LEGACY"
 	SourceTypesTypeS3Input                  SourceTypesType = "S3_INPUT"
+	SourceTypesTypeS3Legacy                 SourceTypesType = "S3_LEGACY"
+	SourceTypesTypeSalesforce               SourceTypesType = "SALESFORCE"
 	SourceTypesTypeSalesforceMarketingCloud SourceTypesType = "SALESFORCE_MARKETING_CLOUD"
 	SourceTypesTypeSapConcur                SourceTypesType = "SAP_CONCUR"
 	SourceTypesTypeSapHana                  SourceTypesType = "SAP_HANA"
 	SourceTypesTypeSapHanaSharded           SourceTypesType = "SAP_HANA_SHARDED"
+	SourceTypesTypeSapOdata                 SourceTypesType = "SAP_ODATA"
 	SourceTypesTypeSeismic                  SourceTypesType = "SEISMIC"
 	SourceTypesTypeServiceNow               SourceTypesType = "SERVICE_NOW"
+	SourceTypesTypeSftp                     SourceTypesType = "SFTP"
 	SourceTypesTypeShopify                  SourceTypesType = "SHOPIFY"
 	SourceTypesTypeSkyward                  SourceTypesType = "SKYWARD"
-	SourceTypesTypeSalesforce               SourceTypesType = "SALESFORCE"
-	SourceTypesTypeSftp                     SourceTypesType = "SFTP"
-	SourceTypesTypeSQLServer                SourceTypesType = "SQL_SERVER"
-	SourceTypesTypeSQLServerSharded         SourceTypesType = "SQL_SERVER_SHARDED"
-	SourceTypesTypeStreaming                SourceTypesType = "STREAMING"
+	SourceTypesTypeSnapchatAds              SourceTypesType = "SNAPCHAT_ADS"
 	SourceTypesTypeSnowflake                SourceTypesType = "SNOWFLAKE"
 	SourceTypesTypeSnowflakeSharded         SourceTypesType = "SNOWFLAKE_SHARDED"
+	SourceTypesTypeSQLServer                SourceTypesType = "SQL_SERVER"
+	SourceTypesTypeSQLServerSharded         SourceTypesType = "SQL_SERVER_SHARDED"
 	SourceTypesTypeSqs                      SourceTypesType = "SQS"
 	SourceTypesTypeSquare                   SourceTypesType = "SQUARE"
-	SourceTypesTypeSnapchatAds              SourceTypesType = "SNAPCHAT_ADS"
+	SourceTypesTypeStreaming                SourceTypesType = "STREAMING"
 	SourceTypesTypeStripe                   SourceTypesType = "STRIPE"
 	SourceTypesTypeSumtotal                 SourceTypesType = "SUMTOTAL"
 	SourceTypesTypeTheTradeDesk             SourceTypesType = "THE_TRADE_DESK"
 	SourceTypesTypeTikTokAds                SourceTypesType = "TIK_TOK_ADS"
 	SourceTypesTypeTwilio                   SourceTypesType = "TWILIO"
 	SourceTypesTypeTwitterAds               SourceTypesType = "TWITTER_ADS"
-	SourceTypesTypeUserDefinedAPI           SourceTypesType = "USER_DEFINED_API"
 	SourceTypesTypeUservoice                SourceTypesType = "USERVOICE"
+	SourceTypesTypeUserDefinedAPI           SourceTypesType = "USER_DEFINED_API"
 	SourceTypesTypeVeeva                    SourceTypesType = "VEEVA"
 	SourceTypesTypeVerizonMediaDsp          SourceTypesType = "VERIZON_MEDIA_DSP"
 	SourceTypesTypeWorkdayReport            SourceTypesType = "WORKDAY_REPORT"
@@ -109,7 +116,8 @@ const (
 
 type SourceTypes struct {
 	SourceActiveCampaign           *SourceActiveCampaign
-	SourceBigQuery                 *SourceBigQuery
+	SourceAzureBlobStorage         *SourceAzureBlobStorage
+	SourceBigquery                 *SourceBigquery
 	SourceBingAds                  *SourceBingAds
 	SourceBlackline                *SourceBlackline
 	SourceBraintree                *SourceBraintree
@@ -120,34 +128,38 @@ type SourceTypes struct {
 	SourceDb2Sharded               *SourceDb2Sharded
 	SourceDeltaLake                *SourceDeltaLake
 	SourceEgnyte                   *SourceEgnyte
-	SourceElasticSearch            *SourceElasticSearch
+	SourceElasticsearch            *SourceElasticsearch
 	SourceElluminate               *SourceElluminate
 	SourceEloqua                   *SourceEloqua
 	SourceErpx                     *SourceErpx
 	SourceFacebookAds              *SourceFacebookAds
 	SourceFifteenFive              *SourceFifteenFive
+	SourceFreshcaller              *SourceFreshcaller
 	SourceFreshchat                *SourceFreshchat
+	SourceFreshdesk                *SourceFreshdesk
 	SourceFreshsales               *SourceFreshsales
-	SourceFreshworks               *SourceFreshworks
 	SourceFtp                      *SourceFtp
+	SourceGitlab                   *SourceGitlab
 	SourceGong                     *SourceGong
+	SourceGoogleAds                *SourceGoogleAds
 	SourceGoogleAnalyticsGa4       *SourceGoogleAnalyticsGa4
 	SourceGoogleCloudStorage       *SourceGoogleCloudStorage
-	SourceGoogleAds                *SourceGoogleAds
 	SourceGoogleSheets             *SourceGoogleSheets
 	SourceHubspot                  *SourceHubspot
-	SourceIntercom                 *SourceIntercom
 	SourceImpactRadius             *SourceImpactRadius
+	SourceIntercom                 *SourceIntercom
 	SourceJira                     *SourceJira
 	SourceJiraAlign                *SourceJiraAlign
 	SourceJiraCloud                *SourceJiraCloud
 	SourceKafka                    *SourceKafka
+	SourceKinesis                  *SourceKinesis
 	SourceKustomer                 *SourceKustomer
 	SourceLdap                     *SourceLdap
 	SourceLdapVirtualListView      *SourceLdapVirtualListView
 	SourceLinkedInAds              *SourceLinkedInAds
 	SourceMarketo                  *SourceMarketo
 	SourceMicrosoftEntraID         *SourceMicrosoftEntraID
+	SourceMicrosoftLists           *SourceMicrosoftLists
 	SourceMixpanel                 *SourceMixpanel
 	SourceMongodb                  *SourceMongodb
 	SourceMysql                    *SourceMysql
@@ -156,44 +168,46 @@ type SourceTypes struct {
 	SourceNetsuiteV2               *SourceNetsuiteV2
 	SourceOracle                   *SourceOracle
 	SourceOracleSharded            *SourceOracleSharded
-	SourceOutreach                 *SourceOutreach
 	SourceOutlook                  *SourceOutlook
+	SourceOutreach                 *SourceOutreach
 	SourcePinterestAds             *SourcePinterestAds
 	SourcePostgres                 *SourcePostgres
 	SourcePostgresSharded          *SourcePostgresSharded
+	SourceQualtrics                *SourceQualtrics
 	SourceQuoraAds                 *SourceQuoraAds
 	SourceRaveMedidata             *SourceRaveMedidata
 	SourceRecurly                  *SourceRecurly
 	SourceRedshift                 *SourceRedshift
 	SourceRedshiftSharded          *SourceRedshiftSharded
-	SourceS3Legacy                 *SourceS3Legacy
 	SourceS3Input                  *SourceS3Input
+	SourceS3Legacy                 *SourceS3Legacy
+	SourceSalesforce               *SourceSalesforce
 	SourceSalesforceMarketingCloud *SourceSalesforceMarketingCloud
 	SourceSapConcur                *SourceSapConcur
 	SourceSapHana                  *SourceSapHana
 	SourceSapHanaSharded           *SourceSapHanaSharded
+	SourceSapOdata                 *SourceSapOdata
 	SourceSeismic                  *SourceSeismic
 	SourceServiceNow               *SourceServiceNow
+	SourceSftp                     *SourceSftp
 	SourceShopify                  *SourceShopify
 	SourceSkyward                  *SourceSkyward
-	SourceSalesforce               *SourceSalesforce
-	SourceSftp                     *SourceSftp
-	SourceSQLServer                *SourceSQLServer
-	SourceSQLServerSharded         *SourceSQLServerSharded
-	SourceStreaming                *SourceStreaming
+	SourceSnapchatAds              *SourceSnapchatAds
 	SourceSnowflake                *SourceSnowflake
 	SourceSnowflakeSharded         *SourceSnowflakeSharded
+	SourceSQLServer                *SourceSQLServer
+	SourceSQLServerSharded         *SourceSQLServerSharded
 	SourceSqs                      *SourceSqs
 	SourceSquare                   *SourceSquare
-	SourceSnapchatAds              *SourceSnapchatAds
+	SourceStreaming                *SourceStreaming
 	SourceStripe                   *SourceStripe
-	SourceSumTotal                 *SourceSumTotal
+	SourceSumtotal                 *SourceSumtotal
 	SourceTheTradeDesk             *SourceTheTradeDesk
 	SourceTikTokAds                *SourceTikTokAds
 	SourceTwilio                   *SourceTwilio
-	SourceTwitter                  *SourceTwitter
+	SourceTwitterAds               *SourceTwitterAds
 	SourceUserDefinedAPI           *SourceUserDefinedAPI
-	SourceUserVoice                *SourceUserVoice
+	SourceUservoice                *SourceUservoice
 	SourceVeeva                    *SourceVeeva
 	SourceVerizonMediaDsp          *SourceVerizonMediaDsp
 	SourceWorkdayReport            *SourceWorkdayReport
@@ -217,14 +231,26 @@ func CreateSourceTypesActiveCampaign(activeCampaign SourceActiveCampaign) Source
 	}
 }
 
-func CreateSourceTypesBigquery(bigquery SourceBigQuery) SourceTypes {
+func CreateSourceTypesAzureBlobStorage(azureBlobStorage SourceAzureBlobStorage) SourceTypes {
+	typ := SourceTypesTypeAzureBlobStorage
+
+	typStr := SourceAzureBlobStorageType(typ)
+	azureBlobStorage.Type = typStr
+
+	return SourceTypes{
+		SourceAzureBlobStorage: &azureBlobStorage,
+		Type:                   typ,
+	}
+}
+
+func CreateSourceTypesBigquery(bigquery SourceBigquery) SourceTypes {
 	typ := SourceTypesTypeBigquery
 
-	typStr := SourceBigQueryType(typ)
+	typStr := SourceBigqueryType(typ)
 	bigquery.Type = typStr
 
 	return SourceTypes{
-		SourceBigQuery: &bigquery,
+		SourceBigquery: &bigquery,
 		Type:           typ,
 	}
 }
@@ -349,14 +375,14 @@ func CreateSourceTypesEgnyte(egnyte SourceEgnyte) SourceTypes {
 	}
 }
 
-func CreateSourceTypesElasticsearch(elasticsearch SourceElasticSearch) SourceTypes {
+func CreateSourceTypesElasticsearch(elasticsearch SourceElasticsearch) SourceTypes {
 	typ := SourceTypesTypeElasticsearch
 
-	typStr := SourceElasticSearchType(typ)
+	typStr := SourceElasticsearchType(typ)
 	elasticsearch.Type = typStr
 
 	return SourceTypes{
-		SourceElasticSearch: &elasticsearch,
+		SourceElasticsearch: &elasticsearch,
 		Type:                typ,
 	}
 }
@@ -421,6 +447,18 @@ func CreateSourceTypesFifteenFive(fifteenFive SourceFifteenFive) SourceTypes {
 	}
 }
 
+func CreateSourceTypesFreshcaller(freshcaller SourceFreshcaller) SourceTypes {
+	typ := SourceTypesTypeFreshcaller
+
+	typStr := SourceFreshcallerType(typ)
+	freshcaller.Type = typStr
+
+	return SourceTypes{
+		SourceFreshcaller: &freshcaller,
+		Type:              typ,
+	}
+}
+
 func CreateSourceTypesFreshchat(freshchat SourceFreshchat) SourceTypes {
 	typ := SourceTypesTypeFreshchat
 
@@ -429,6 +467,18 @@ func CreateSourceTypesFreshchat(freshchat SourceFreshchat) SourceTypes {
 
 	return SourceTypes{
 		SourceFreshchat: &freshchat,
+		Type:            typ,
+	}
+}
+
+func CreateSourceTypesFreshdesk(freshdesk SourceFreshdesk) SourceTypes {
+	typ := SourceTypesTypeFreshdesk
+
+	typStr := SourceFreshdeskType(typ)
+	freshdesk.Type = typStr
+
+	return SourceTypes{
+		SourceFreshdesk: &freshdesk,
 		Type:            typ,
 	}
 }
@@ -445,18 +495,6 @@ func CreateSourceTypesFreshsales(freshsales SourceFreshsales) SourceTypes {
 	}
 }
 
-func CreateSourceTypesFreshworks(freshworks SourceFreshworks) SourceTypes {
-	typ := SourceTypesTypeFreshworks
-
-	typStr := SourceFreshworksType(typ)
-	freshworks.Type = typStr
-
-	return SourceTypes{
-		SourceFreshworks: &freshworks,
-		Type:             typ,
-	}
-}
-
 func CreateSourceTypesFtp(ftp SourceFtp) SourceTypes {
 	typ := SourceTypesTypeFtp
 
@@ -469,6 +507,18 @@ func CreateSourceTypesFtp(ftp SourceFtp) SourceTypes {
 	}
 }
 
+func CreateSourceTypesGitlab(gitlab SourceGitlab) SourceTypes {
+	typ := SourceTypesTypeGitlab
+
+	typStr := SourceGitlabType(typ)
+	gitlab.Type = typStr
+
+	return SourceTypes{
+		SourceGitlab: &gitlab,
+		Type:         typ,
+	}
+}
+
 func CreateSourceTypesGong(gong SourceGong) SourceTypes {
 	typ := SourceTypesTypeGong
 
@@ -478,6 +528,18 @@ func CreateSourceTypesGong(gong SourceGong) SourceTypes {
 	return SourceTypes{
 		SourceGong: &gong,
 		Type:       typ,
+	}
+}
+
+func CreateSourceTypesGoogleAds(googleAds SourceGoogleAds) SourceTypes {
+	typ := SourceTypesTypeGoogleAds
+
+	typStr := SourceGoogleAdsType(typ)
+	googleAds.Type = typStr
+
+	return SourceTypes{
+		SourceGoogleAds: &googleAds,
+		Type:            typ,
 	}
 }
 
@@ -505,18 +567,6 @@ func CreateSourceTypesGoogleCloudStorage(googleCloudStorage SourceGoogleCloudSto
 	}
 }
 
-func CreateSourceTypesGoogleAds(googleAds SourceGoogleAds) SourceTypes {
-	typ := SourceTypesTypeGoogleAds
-
-	typStr := SourceGoogleAdsType(typ)
-	googleAds.Type = typStr
-
-	return SourceTypes{
-		SourceGoogleAds: &googleAds,
-		Type:            typ,
-	}
-}
-
 func CreateSourceTypesGoogleSheets(googleSheets SourceGoogleSheets) SourceTypes {
 	typ := SourceTypesTypeGoogleSheets
 
@@ -541,18 +591,6 @@ func CreateSourceTypesHubspot(hubspot SourceHubspot) SourceTypes {
 	}
 }
 
-func CreateSourceTypesIntercom(intercom SourceIntercom) SourceTypes {
-	typ := SourceTypesTypeIntercom
-
-	typStr := SourceIntercomType(typ)
-	intercom.Type = typStr
-
-	return SourceTypes{
-		SourceIntercom: &intercom,
-		Type:           typ,
-	}
-}
-
 func CreateSourceTypesImpactRadius(impactRadius SourceImpactRadius) SourceTypes {
 	typ := SourceTypesTypeImpactRadius
 
@@ -562,6 +600,18 @@ func CreateSourceTypesImpactRadius(impactRadius SourceImpactRadius) SourceTypes 
 	return SourceTypes{
 		SourceImpactRadius: &impactRadius,
 		Type:               typ,
+	}
+}
+
+func CreateSourceTypesIntercom(intercom SourceIntercom) SourceTypes {
+	typ := SourceTypesTypeIntercom
+
+	typStr := SourceIntercomType(typ)
+	intercom.Type = typStr
+
+	return SourceTypes{
+		SourceIntercom: &intercom,
+		Type:           typ,
 	}
 }
 
@@ -610,6 +660,18 @@ func CreateSourceTypesKafka(kafka SourceKafka) SourceTypes {
 	return SourceTypes{
 		SourceKafka: &kafka,
 		Type:        typ,
+	}
+}
+
+func CreateSourceTypesKinesis(kinesis SourceKinesis) SourceTypes {
+	typ := SourceTypesTypeKinesis
+
+	typStr := SourceKinesisType(typ)
+	kinesis.Type = typStr
+
+	return SourceTypes{
+		SourceKinesis: &kinesis,
+		Type:          typ,
 	}
 }
 
@@ -685,6 +747,18 @@ func CreateSourceTypesMicrosoftEntraID(microsoftEntraID SourceMicrosoftEntraID) 
 	}
 }
 
+func CreateSourceTypesMicrosoftLists(microsoftLists SourceMicrosoftLists) SourceTypes {
+	typ := SourceTypesTypeMicrosoftLists
+
+	typStr := SourceMicrosoftListsType(typ)
+	microsoftLists.Type = typStr
+
+	return SourceTypes{
+		SourceMicrosoftLists: &microsoftLists,
+		Type:                 typ,
+	}
+}
+
 func CreateSourceTypesMixpanel(mixpanel SourceMixpanel) SourceTypes {
 	typ := SourceTypesTypeMixpanel
 
@@ -709,18 +783,6 @@ func CreateSourceTypesMongodb(mongodb SourceMongodb) SourceTypes {
 	}
 }
 
-func CreateSourceTypesMysqlSharded(mysqlSharded SourceMysqlSharded) SourceTypes {
-	typ := SourceTypesTypeMysqlSharded
-
-	typStr := SourceMysqlShardedType(typ)
-	mysqlSharded.Type = typStr
-
-	return SourceTypes{
-		SourceMysqlSharded: &mysqlSharded,
-		Type:               typ,
-	}
-}
-
 func CreateSourceTypesMysql(mysql SourceMysql) SourceTypes {
 	typ := SourceTypesTypeMysql
 
@@ -730,6 +792,18 @@ func CreateSourceTypesMysql(mysql SourceMysql) SourceTypes {
 	return SourceTypes{
 		SourceMysql: &mysql,
 		Type:        typ,
+	}
+}
+
+func CreateSourceTypesMysqlSharded(mysqlSharded SourceMysqlSharded) SourceTypes {
+	typ := SourceTypesTypeMysqlSharded
+
+	typStr := SourceMysqlShardedType(typ)
+	mysqlSharded.Type = typStr
+
+	return SourceTypes{
+		SourceMysqlSharded: &mysqlSharded,
+		Type:               typ,
 	}
 }
 
@@ -781,18 +855,6 @@ func CreateSourceTypesOracleSharded(oracleSharded SourceOracleSharded) SourceTyp
 	}
 }
 
-func CreateSourceTypesOutreach(outreach SourceOutreach) SourceTypes {
-	typ := SourceTypesTypeOutreach
-
-	typStr := SourceOutreachType(typ)
-	outreach.Type = typStr
-
-	return SourceTypes{
-		SourceOutreach: &outreach,
-		Type:           typ,
-	}
-}
-
 func CreateSourceTypesOutlook(outlook SourceOutlook) SourceTypes {
 	typ := SourceTypesTypeOutlook
 
@@ -802,6 +864,18 @@ func CreateSourceTypesOutlook(outlook SourceOutlook) SourceTypes {
 	return SourceTypes{
 		SourceOutlook: &outlook,
 		Type:          typ,
+	}
+}
+
+func CreateSourceTypesOutreach(outreach SourceOutreach) SourceTypes {
+	typ := SourceTypesTypeOutreach
+
+	typStr := SourceOutreachType(typ)
+	outreach.Type = typStr
+
+	return SourceTypes{
+		SourceOutreach: &outreach,
+		Type:           typ,
 	}
 }
 
@@ -838,6 +912,18 @@ func CreateSourceTypesPostgresSharded(postgresSharded SourcePostgresSharded) Sou
 	return SourceTypes{
 		SourcePostgresSharded: &postgresSharded,
 		Type:                  typ,
+	}
+}
+
+func CreateSourceTypesQualtrics(qualtrics SourceQualtrics) SourceTypes {
+	typ := SourceTypesTypeQualtrics
+
+	typStr := SourceQualtricsType(typ)
+	qualtrics.Type = typStr
+
+	return SourceTypes{
+		SourceQualtrics: &qualtrics,
+		Type:            typ,
 	}
 }
 
@@ -901,6 +987,18 @@ func CreateSourceTypesRedshiftSharded(redshiftSharded SourceRedshiftSharded) Sou
 	}
 }
 
+func CreateSourceTypesS3Input(s3Input SourceS3Input) SourceTypes {
+	typ := SourceTypesTypeS3Input
+
+	typStr := SourceS3InputType(typ)
+	s3Input.Type = typStr
+
+	return SourceTypes{
+		SourceS3Input: &s3Input,
+		Type:          typ,
+	}
+}
+
 func CreateSourceTypesS3Legacy(s3Legacy SourceS3Legacy) SourceTypes {
 	typ := SourceTypesTypeS3Legacy
 
@@ -913,15 +1011,15 @@ func CreateSourceTypesS3Legacy(s3Legacy SourceS3Legacy) SourceTypes {
 	}
 }
 
-func CreateSourceTypesS3Input(s3Input SourceS3Input) SourceTypes {
-	typ := SourceTypesTypeS3Input
+func CreateSourceTypesSalesforce(salesforce SourceSalesforce) SourceTypes {
+	typ := SourceTypesTypeSalesforce
 
-	typStr := SourceS3InputType(typ)
-	s3Input.Type = typStr
+	typStr := SourceSalesforceType(typ)
+	salesforce.Type = typStr
 
 	return SourceTypes{
-		SourceS3Input: &s3Input,
-		Type:          typ,
+		SourceSalesforce: &salesforce,
+		Type:             typ,
 	}
 }
 
@@ -973,6 +1071,18 @@ func CreateSourceTypesSapHanaSharded(sapHanaSharded SourceSapHanaSharded) Source
 	}
 }
 
+func CreateSourceTypesSapOdata(sapOdata SourceSapOdata) SourceTypes {
+	typ := SourceTypesTypeSapOdata
+
+	typStr := SourceSapOdataType(typ)
+	sapOdata.Type = typStr
+
+	return SourceTypes{
+		SourceSapOdata: &sapOdata,
+		Type:           typ,
+	}
+}
+
 func CreateSourceTypesSeismic(seismic SourceSeismic) SourceTypes {
 	typ := SourceTypesTypeSeismic
 
@@ -994,6 +1104,18 @@ func CreateSourceTypesServiceNow(serviceNow SourceServiceNow) SourceTypes {
 	return SourceTypes{
 		SourceServiceNow: &serviceNow,
 		Type:             typ,
+	}
+}
+
+func CreateSourceTypesSftp(sftp SourceSftp) SourceTypes {
+	typ := SourceTypesTypeSftp
+
+	typStr := SourceSftpType(typ)
+	sftp.Type = typStr
+
+	return SourceTypes{
+		SourceSftp: &sftp,
+		Type:       typ,
 	}
 }
 
@@ -1021,63 +1143,15 @@ func CreateSourceTypesSkyward(skyward SourceSkyward) SourceTypes {
 	}
 }
 
-func CreateSourceTypesSalesforce(salesforce SourceSalesforce) SourceTypes {
-	typ := SourceTypesTypeSalesforce
+func CreateSourceTypesSnapchatAds(snapchatAds SourceSnapchatAds) SourceTypes {
+	typ := SourceTypesTypeSnapchatAds
 
-	typStr := SourceSalesforceType(typ)
-	salesforce.Type = typStr
-
-	return SourceTypes{
-		SourceSalesforce: &salesforce,
-		Type:             typ,
-	}
-}
-
-func CreateSourceTypesSftp(sftp SourceSftp) SourceTypes {
-	typ := SourceTypesTypeSftp
-
-	typStr := SourceSftpType(typ)
-	sftp.Type = typStr
+	typStr := SourceSnapchatAdsType(typ)
+	snapchatAds.Type = typStr
 
 	return SourceTypes{
-		SourceSftp: &sftp,
-		Type:       typ,
-	}
-}
-
-func CreateSourceTypesSQLServer(sqlServer SourceSQLServer) SourceTypes {
-	typ := SourceTypesTypeSQLServer
-
-	typStr := SourceSQLServerType(typ)
-	sqlServer.Type = typStr
-
-	return SourceTypes{
-		SourceSQLServer: &sqlServer,
-		Type:            typ,
-	}
-}
-
-func CreateSourceTypesSQLServerSharded(sqlServerSharded SourceSQLServerSharded) SourceTypes {
-	typ := SourceTypesTypeSQLServerSharded
-
-	typStr := SourceSQLServerShardedType(typ)
-	sqlServerSharded.Type = typStr
-
-	return SourceTypes{
-		SourceSQLServerSharded: &sqlServerSharded,
-		Type:                   typ,
-	}
-}
-
-func CreateSourceTypesStreaming(streaming SourceStreaming) SourceTypes {
-	typ := SourceTypesTypeStreaming
-
-	typStr := SourceStreamingType(typ)
-	streaming.Type = typStr
-
-	return SourceTypes{
-		SourceStreaming: &streaming,
-		Type:            typ,
+		SourceSnapchatAds: &snapchatAds,
+		Type:              typ,
 	}
 }
 
@@ -1101,6 +1175,30 @@ func CreateSourceTypesSnowflakeSharded(snowflakeSharded SourceSnowflakeSharded) 
 
 	return SourceTypes{
 		SourceSnowflakeSharded: &snowflakeSharded,
+		Type:                   typ,
+	}
+}
+
+func CreateSourceTypesSQLServer(sqlServer SourceSQLServer) SourceTypes {
+	typ := SourceTypesTypeSQLServer
+
+	typStr := SourceSQLServerType(typ)
+	sqlServer.Type = typStr
+
+	return SourceTypes{
+		SourceSQLServer: &sqlServer,
+		Type:            typ,
+	}
+}
+
+func CreateSourceTypesSQLServerSharded(sqlServerSharded SourceSQLServerSharded) SourceTypes {
+	typ := SourceTypesTypeSQLServerSharded
+
+	typStr := SourceSQLServerShardedType(typ)
+	sqlServerSharded.Type = typStr
+
+	return SourceTypes{
+		SourceSQLServerSharded: &sqlServerSharded,
 		Type:                   typ,
 	}
 }
@@ -1129,15 +1227,15 @@ func CreateSourceTypesSquare(square SourceSquare) SourceTypes {
 	}
 }
 
-func CreateSourceTypesSnapchatAds(snapchatAds SourceSnapchatAds) SourceTypes {
-	typ := SourceTypesTypeSnapchatAds
+func CreateSourceTypesStreaming(streaming SourceStreaming) SourceTypes {
+	typ := SourceTypesTypeStreaming
 
-	typStr := SourceSnapchatAdsType(typ)
-	snapchatAds.Type = typStr
+	typStr := SourceStreamingType(typ)
+	streaming.Type = typStr
 
 	return SourceTypes{
-		SourceSnapchatAds: &snapchatAds,
-		Type:              typ,
+		SourceStreaming: &streaming,
+		Type:            typ,
 	}
 }
 
@@ -1153,14 +1251,14 @@ func CreateSourceTypesStripe(stripe SourceStripe) SourceTypes {
 	}
 }
 
-func CreateSourceTypesSumtotal(sumtotal SourceSumTotal) SourceTypes {
+func CreateSourceTypesSumtotal(sumtotal SourceSumtotal) SourceTypes {
 	typ := SourceTypesTypeSumtotal
 
-	typStr := SourceSumTotalType(typ)
+	typStr := SourceSumtotalType(typ)
 	sumtotal.Type = typStr
 
 	return SourceTypes{
-		SourceSumTotal: &sumtotal,
+		SourceSumtotal: &sumtotal,
 		Type:           typ,
 	}
 }
@@ -1201,15 +1299,27 @@ func CreateSourceTypesTwilio(twilio SourceTwilio) SourceTypes {
 	}
 }
 
-func CreateSourceTypesTwitterAds(twitterAds SourceTwitter) SourceTypes {
+func CreateSourceTypesTwitterAds(twitterAds SourceTwitterAds) SourceTypes {
 	typ := SourceTypesTypeTwitterAds
 
-	typStr := SourceTwitterType(typ)
+	typStr := SourceTwitterAdsType(typ)
 	twitterAds.Type = typStr
 
 	return SourceTypes{
-		SourceTwitter: &twitterAds,
-		Type:          typ,
+		SourceTwitterAds: &twitterAds,
+		Type:             typ,
+	}
+}
+
+func CreateSourceTypesUservoice(uservoice SourceUservoice) SourceTypes {
+	typ := SourceTypesTypeUservoice
+
+	typStr := SourceUservoiceType(typ)
+	uservoice.Type = typStr
+
+	return SourceTypes{
+		SourceUservoice: &uservoice,
+		Type:            typ,
 	}
 }
 
@@ -1222,18 +1332,6 @@ func CreateSourceTypesUserDefinedAPI(userDefinedAPI SourceUserDefinedAPI) Source
 	return SourceTypes{
 		SourceUserDefinedAPI: &userDefinedAPI,
 		Type:                 typ,
-	}
-}
-
-func CreateSourceTypesUservoice(uservoice SourceUserVoice) SourceTypes {
-	typ := SourceTypesTypeUservoice
-
-	typStr := SourceUserVoiceType(typ)
-	uservoice.Type = typStr
-
-	return SourceTypes{
-		SourceUserVoice: &uservoice,
-		Type:            typ,
 	}
 }
 
@@ -1342,13 +1440,22 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceActiveCampaign = sourceActiveCampaign
 		u.Type = SourceTypesTypeActiveCampaign
 		return nil
-	case "BIGQUERY":
-		sourceBigQuery := new(SourceBigQuery)
-		if err := utils.UnmarshalJSON(data, &sourceBigQuery, "", true, true); err != nil {
+	case "AZURE_BLOB_STORAGE":
+		sourceAzureBlobStorage := new(SourceAzureBlobStorage)
+		if err := utils.UnmarshalJSON(data, &sourceAzureBlobStorage, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceBigQuery = sourceBigQuery
+		u.SourceAzureBlobStorage = sourceAzureBlobStorage
+		u.Type = SourceTypesTypeAzureBlobStorage
+		return nil
+	case "BIGQUERY":
+		sourceBigquery := new(SourceBigquery)
+		if err := utils.UnmarshalJSON(data, &sourceBigquery, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceBigquery = sourceBigquery
 		u.Type = SourceTypesTypeBigquery
 		return nil
 	case "BING_ADS":
@@ -1442,12 +1549,12 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.Type = SourceTypesTypeEgnyte
 		return nil
 	case "ELASTICSEARCH":
-		sourceElasticSearch := new(SourceElasticSearch)
-		if err := utils.UnmarshalJSON(data, &sourceElasticSearch, "", true, true); err != nil {
+		sourceElasticsearch := new(SourceElasticsearch)
+		if err := utils.UnmarshalJSON(data, &sourceElasticsearch, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceElasticSearch = sourceElasticSearch
+		u.SourceElasticsearch = sourceElasticsearch
 		u.Type = SourceTypesTypeElasticsearch
 		return nil
 	case "ELLUMINATE":
@@ -1495,6 +1602,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceFifteenFive = sourceFifteenFive
 		u.Type = SourceTypesTypeFifteenFive
 		return nil
+	case "FRESHCALLER":
+		sourceFreshcaller := new(SourceFreshcaller)
+		if err := utils.UnmarshalJSON(data, &sourceFreshcaller, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceFreshcaller = sourceFreshcaller
+		u.Type = SourceTypesTypeFreshcaller
+		return nil
 	case "FRESHCHAT":
 		sourceFreshchat := new(SourceFreshchat)
 		if err := utils.UnmarshalJSON(data, &sourceFreshchat, "", true, true); err != nil {
@@ -1503,6 +1619,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceFreshchat = sourceFreshchat
 		u.Type = SourceTypesTypeFreshchat
+		return nil
+	case "FRESHDESK":
+		sourceFreshdesk := new(SourceFreshdesk)
+		if err := utils.UnmarshalJSON(data, &sourceFreshdesk, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceFreshdesk = sourceFreshdesk
+		u.Type = SourceTypesTypeFreshdesk
 		return nil
 	case "FRESHSALES":
 		sourceFreshsales := new(SourceFreshsales)
@@ -1513,15 +1638,6 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceFreshsales = sourceFreshsales
 		u.Type = SourceTypesTypeFreshsales
 		return nil
-	case "FRESHWORKS":
-		sourceFreshworks := new(SourceFreshworks)
-		if err := utils.UnmarshalJSON(data, &sourceFreshworks, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceFreshworks = sourceFreshworks
-		u.Type = SourceTypesTypeFreshworks
-		return nil
 	case "FTP":
 		sourceFtp := new(SourceFtp)
 		if err := utils.UnmarshalJSON(data, &sourceFtp, "", true, true); err != nil {
@@ -1531,6 +1647,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceFtp = sourceFtp
 		u.Type = SourceTypesTypeFtp
 		return nil
+	case "GITLAB":
+		sourceGitlab := new(SourceGitlab)
+		if err := utils.UnmarshalJSON(data, &sourceGitlab, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceGitlab = sourceGitlab
+		u.Type = SourceTypesTypeGitlab
+		return nil
 	case "GONG":
 		sourceGong := new(SourceGong)
 		if err := utils.UnmarshalJSON(data, &sourceGong, "", true, true); err != nil {
@@ -1539,6 +1664,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceGong = sourceGong
 		u.Type = SourceTypesTypeGong
+		return nil
+	case "GOOGLE_ADS":
+		sourceGoogleAds := new(SourceGoogleAds)
+		if err := utils.UnmarshalJSON(data, &sourceGoogleAds, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceGoogleAds = sourceGoogleAds
+		u.Type = SourceTypesTypeGoogleAds
 		return nil
 	case "GOOGLE_ANALYTICS_GA4":
 		sourceGoogleAnalyticsGa4 := new(SourceGoogleAnalyticsGa4)
@@ -1558,15 +1692,6 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceGoogleCloudStorage = sourceGoogleCloudStorage
 		u.Type = SourceTypesTypeGoogleCloudStorage
 		return nil
-	case "GOOGLE_ADS":
-		sourceGoogleAds := new(SourceGoogleAds)
-		if err := utils.UnmarshalJSON(data, &sourceGoogleAds, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceGoogleAds = sourceGoogleAds
-		u.Type = SourceTypesTypeGoogleAds
-		return nil
 	case "GOOGLE_SHEETS":
 		sourceGoogleSheets := new(SourceGoogleSheets)
 		if err := utils.UnmarshalJSON(data, &sourceGoogleSheets, "", true, true); err != nil {
@@ -1585,15 +1710,6 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceHubspot = sourceHubspot
 		u.Type = SourceTypesTypeHubspot
 		return nil
-	case "INTERCOM":
-		sourceIntercom := new(SourceIntercom)
-		if err := utils.UnmarshalJSON(data, &sourceIntercom, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceIntercom = sourceIntercom
-		u.Type = SourceTypesTypeIntercom
-		return nil
 	case "IMPACT_RADIUS":
 		sourceImpactRadius := new(SourceImpactRadius)
 		if err := utils.UnmarshalJSON(data, &sourceImpactRadius, "", true, true); err != nil {
@@ -1602,6 +1718,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceImpactRadius = sourceImpactRadius
 		u.Type = SourceTypesTypeImpactRadius
+		return nil
+	case "INTERCOM":
+		sourceIntercom := new(SourceIntercom)
+		if err := utils.UnmarshalJSON(data, &sourceIntercom, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceIntercom = sourceIntercom
+		u.Type = SourceTypesTypeIntercom
 		return nil
 	case "JIRA":
 		sourceJira := new(SourceJira)
@@ -1638,6 +1763,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceKafka = sourceKafka
 		u.Type = SourceTypesTypeKafka
+		return nil
+	case "KINESIS":
+		sourceKinesis := new(SourceKinesis)
+		if err := utils.UnmarshalJSON(data, &sourceKinesis, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceKinesis = sourceKinesis
+		u.Type = SourceTypesTypeKinesis
 		return nil
 	case "KUSTOMER":
 		sourceKustomer := new(SourceKustomer)
@@ -1693,6 +1827,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceMicrosoftEntraID = sourceMicrosoftEntraID
 		u.Type = SourceTypesTypeMicrosoftEntraID
 		return nil
+	case "MICROSOFT_LISTS":
+		sourceMicrosoftLists := new(SourceMicrosoftLists)
+		if err := utils.UnmarshalJSON(data, &sourceMicrosoftLists, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceMicrosoftLists = sourceMicrosoftLists
+		u.Type = SourceTypesTypeMicrosoftLists
+		return nil
 	case "MIXPANEL":
 		sourceMixpanel := new(SourceMixpanel)
 		if err := utils.UnmarshalJSON(data, &sourceMixpanel, "", true, true); err != nil {
@@ -1711,15 +1854,6 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceMongodb = sourceMongodb
 		u.Type = SourceTypesTypeMongodb
 		return nil
-	case "MYSQL_SHARDED":
-		sourceMysqlSharded := new(SourceMysqlSharded)
-		if err := utils.UnmarshalJSON(data, &sourceMysqlSharded, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceMysqlSharded = sourceMysqlSharded
-		u.Type = SourceTypesTypeMysqlSharded
-		return nil
 	case "MYSQL":
 		sourceMysql := new(SourceMysql)
 		if err := utils.UnmarshalJSON(data, &sourceMysql, "", true, true); err != nil {
@@ -1728,6 +1862,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceMysql = sourceMysql
 		u.Type = SourceTypesTypeMysql
+		return nil
+	case "MYSQL_SHARDED":
+		sourceMysqlSharded := new(SourceMysqlSharded)
+		if err := utils.UnmarshalJSON(data, &sourceMysqlSharded, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceMysqlSharded = sourceMysqlSharded
+		u.Type = SourceTypesTypeMysqlSharded
 		return nil
 	case "NETSUITE":
 		sourceNetsuite := new(SourceNetsuite)
@@ -1765,15 +1908,6 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceOracleSharded = sourceOracleSharded
 		u.Type = SourceTypesTypeOracleSharded
 		return nil
-	case "OUTREACH":
-		sourceOutreach := new(SourceOutreach)
-		if err := utils.UnmarshalJSON(data, &sourceOutreach, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceOutreach = sourceOutreach
-		u.Type = SourceTypesTypeOutreach
-		return nil
 	case "OUTLOOK":
 		sourceOutlook := new(SourceOutlook)
 		if err := utils.UnmarshalJSON(data, &sourceOutlook, "", true, true); err != nil {
@@ -1782,6 +1916,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceOutlook = sourceOutlook
 		u.Type = SourceTypesTypeOutlook
+		return nil
+	case "OUTREACH":
+		sourceOutreach := new(SourceOutreach)
+		if err := utils.UnmarshalJSON(data, &sourceOutreach, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceOutreach = sourceOutreach
+		u.Type = SourceTypesTypeOutreach
 		return nil
 	case "PINTEREST_ADS":
 		sourcePinterestAds := new(SourcePinterestAds)
@@ -1809,6 +1952,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourcePostgresSharded = sourcePostgresSharded
 		u.Type = SourceTypesTypePostgresSharded
+		return nil
+	case "QUALTRICS":
+		sourceQualtrics := new(SourceQualtrics)
+		if err := utils.UnmarshalJSON(data, &sourceQualtrics, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceQualtrics = sourceQualtrics
+		u.Type = SourceTypesTypeQualtrics
 		return nil
 	case "QUORA_ADS":
 		sourceQuoraAds := new(SourceQuoraAds)
@@ -1855,6 +2007,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceRedshiftSharded = sourceRedshiftSharded
 		u.Type = SourceTypesTypeRedshiftSharded
 		return nil
+	case "S3_INPUT":
+		sourceS3Input := new(SourceS3Input)
+		if err := utils.UnmarshalJSON(data, &sourceS3Input, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceS3Input = sourceS3Input
+		u.Type = SourceTypesTypeS3Input
+		return nil
 	case "S3_LEGACY":
 		sourceS3Legacy := new(SourceS3Legacy)
 		if err := utils.UnmarshalJSON(data, &sourceS3Legacy, "", true, true); err != nil {
@@ -1864,14 +2025,14 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceS3Legacy = sourceS3Legacy
 		u.Type = SourceTypesTypeS3Legacy
 		return nil
-	case "S3_INPUT":
-		sourceS3Input := new(SourceS3Input)
-		if err := utils.UnmarshalJSON(data, &sourceS3Input, "", true, true); err != nil {
+	case "SALESFORCE":
+		sourceSalesforce := new(SourceSalesforce)
+		if err := utils.UnmarshalJSON(data, &sourceSalesforce, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceS3Input = sourceS3Input
-		u.Type = SourceTypesTypeS3Input
+		u.SourceSalesforce = sourceSalesforce
+		u.Type = SourceTypesTypeSalesforce
 		return nil
 	case "SALESFORCE_MARKETING_CLOUD":
 		sourceSalesforceMarketingCloud := new(SourceSalesforceMarketingCloud)
@@ -1909,6 +2070,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceSapHanaSharded = sourceSapHanaSharded
 		u.Type = SourceTypesTypeSapHanaSharded
 		return nil
+	case "SAP_ODATA":
+		sourceSapOdata := new(SourceSapOdata)
+		if err := utils.UnmarshalJSON(data, &sourceSapOdata, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSapOdata = sourceSapOdata
+		u.Type = SourceTypesTypeSapOdata
+		return nil
 	case "SEISMIC":
 		sourceSeismic := new(SourceSeismic)
 		if err := utils.UnmarshalJSON(data, &sourceSeismic, "", true, true); err != nil {
@@ -1926,6 +2096,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceServiceNow = sourceServiceNow
 		u.Type = SourceTypesTypeServiceNow
+		return nil
+	case "SFTP":
+		sourceSftp := new(SourceSftp)
+		if err := utils.UnmarshalJSON(data, &sourceSftp, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSftp = sourceSftp
+		u.Type = SourceTypesTypeSftp
 		return nil
 	case "SHOPIFY":
 		sourceShopify := new(SourceShopify)
@@ -1945,50 +2124,14 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceSkyward = sourceSkyward
 		u.Type = SourceTypesTypeSkyward
 		return nil
-	case "SALESFORCE":
-		sourceSalesforce := new(SourceSalesforce)
-		if err := utils.UnmarshalJSON(data, &sourceSalesforce, "", true, true); err != nil {
+	case "SNAPCHAT_ADS":
+		sourceSnapchatAds := new(SourceSnapchatAds)
+		if err := utils.UnmarshalJSON(data, &sourceSnapchatAds, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceSalesforce = sourceSalesforce
-		u.Type = SourceTypesTypeSalesforce
-		return nil
-	case "SFTP":
-		sourceSftp := new(SourceSftp)
-		if err := utils.UnmarshalJSON(data, &sourceSftp, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSftp = sourceSftp
-		u.Type = SourceTypesTypeSftp
-		return nil
-	case "SQL_SERVER":
-		sourceSQLServer := new(SourceSQLServer)
-		if err := utils.UnmarshalJSON(data, &sourceSQLServer, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSQLServer = sourceSQLServer
-		u.Type = SourceTypesTypeSQLServer
-		return nil
-	case "SQL_SERVER_SHARDED":
-		sourceSQLServerSharded := new(SourceSQLServerSharded)
-		if err := utils.UnmarshalJSON(data, &sourceSQLServerSharded, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceSQLServerSharded = sourceSQLServerSharded
-		u.Type = SourceTypesTypeSQLServerSharded
-		return nil
-	case "STREAMING":
-		sourceStreaming := new(SourceStreaming)
-		if err := utils.UnmarshalJSON(data, &sourceStreaming, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceStreaming = sourceStreaming
-		u.Type = SourceTypesTypeStreaming
+		u.SourceSnapchatAds = sourceSnapchatAds
+		u.Type = SourceTypesTypeSnapchatAds
 		return nil
 	case "SNOWFLAKE":
 		sourceSnowflake := new(SourceSnowflake)
@@ -2008,6 +2151,24 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceSnowflakeSharded = sourceSnowflakeSharded
 		u.Type = SourceTypesTypeSnowflakeSharded
 		return nil
+	case "SQL_SERVER":
+		sourceSQLServer := new(SourceSQLServer)
+		if err := utils.UnmarshalJSON(data, &sourceSQLServer, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSQLServer = sourceSQLServer
+		u.Type = SourceTypesTypeSQLServer
+		return nil
+	case "SQL_SERVER_SHARDED":
+		sourceSQLServerSharded := new(SourceSQLServerSharded)
+		if err := utils.UnmarshalJSON(data, &sourceSQLServerSharded, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSQLServerSharded = sourceSQLServerSharded
+		u.Type = SourceTypesTypeSQLServerSharded
+		return nil
 	case "SQS":
 		sourceSqs := new(SourceSqs)
 		if err := utils.UnmarshalJSON(data, &sourceSqs, "", true, true); err != nil {
@@ -2026,14 +2187,14 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceSquare = sourceSquare
 		u.Type = SourceTypesTypeSquare
 		return nil
-	case "SNAPCHAT_ADS":
-		sourceSnapchatAds := new(SourceSnapchatAds)
-		if err := utils.UnmarshalJSON(data, &sourceSnapchatAds, "", true, true); err != nil {
+	case "STREAMING":
+		sourceStreaming := new(SourceStreaming)
+		if err := utils.UnmarshalJSON(data, &sourceStreaming, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceSnapchatAds = sourceSnapchatAds
-		u.Type = SourceTypesTypeSnapchatAds
+		u.SourceStreaming = sourceStreaming
+		u.Type = SourceTypesTypeStreaming
 		return nil
 	case "STRIPE":
 		sourceStripe := new(SourceStripe)
@@ -2045,12 +2206,12 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.Type = SourceTypesTypeStripe
 		return nil
 	case "SUMTOTAL":
-		sourceSumTotal := new(SourceSumTotal)
-		if err := utils.UnmarshalJSON(data, &sourceSumTotal, "", true, true); err != nil {
+		sourceSumtotal := new(SourceSumtotal)
+		if err := utils.UnmarshalJSON(data, &sourceSumtotal, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceSumTotal = sourceSumTotal
+		u.SourceSumtotal = sourceSumtotal
 		u.Type = SourceTypesTypeSumtotal
 		return nil
 	case "THE_TRADE_DESK":
@@ -2081,13 +2242,22 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.Type = SourceTypesTypeTwilio
 		return nil
 	case "TWITTER_ADS":
-		sourceTwitter := new(SourceTwitter)
-		if err := utils.UnmarshalJSON(data, &sourceTwitter, "", true, true); err != nil {
+		sourceTwitterAds := new(SourceTwitterAds)
+		if err := utils.UnmarshalJSON(data, &sourceTwitterAds, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.SourceTwitter = sourceTwitter
+		u.SourceTwitterAds = sourceTwitterAds
 		u.Type = SourceTypesTypeTwitterAds
+		return nil
+	case "USERVOICE":
+		sourceUservoice := new(SourceUservoice)
+		if err := utils.UnmarshalJSON(data, &sourceUservoice, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceUservoice = sourceUservoice
+		u.Type = SourceTypesTypeUservoice
 		return nil
 	case "USER_DEFINED_API":
 		sourceUserDefinedAPI := new(SourceUserDefinedAPI)
@@ -2097,15 +2267,6 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 
 		u.SourceUserDefinedAPI = sourceUserDefinedAPI
 		u.Type = SourceTypesTypeUserDefinedAPI
-		return nil
-	case "USERVOICE":
-		sourceUserVoice := new(SourceUserVoice)
-		if err := utils.UnmarshalJSON(data, &sourceUserVoice, "", true, true); err != nil {
-			return fmt.Errorf("could not unmarshal expected type: %w", err)
-		}
-
-		u.SourceUserVoice = sourceUserVoice
-		u.Type = SourceTypesTypeUservoice
 		return nil
 	case "VEEVA":
 		sourceVeeva := new(SourceVeeva)
@@ -2180,8 +2341,12 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceActiveCampaign, "", true)
 	}
 
-	if u.SourceBigQuery != nil {
-		return utils.MarshalJSON(u.SourceBigQuery, "", true)
+	if u.SourceAzureBlobStorage != nil {
+		return utils.MarshalJSON(u.SourceAzureBlobStorage, "", true)
+	}
+
+	if u.SourceBigquery != nil {
+		return utils.MarshalJSON(u.SourceBigquery, "", true)
 	}
 
 	if u.SourceBingAds != nil {
@@ -2224,8 +2389,8 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceEgnyte, "", true)
 	}
 
-	if u.SourceElasticSearch != nil {
-		return utils.MarshalJSON(u.SourceElasticSearch, "", true)
+	if u.SourceElasticsearch != nil {
+		return utils.MarshalJSON(u.SourceElasticsearch, "", true)
 	}
 
 	if u.SourceElluminate != nil {
@@ -2248,24 +2413,36 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceFifteenFive, "", true)
 	}
 
+	if u.SourceFreshcaller != nil {
+		return utils.MarshalJSON(u.SourceFreshcaller, "", true)
+	}
+
 	if u.SourceFreshchat != nil {
 		return utils.MarshalJSON(u.SourceFreshchat, "", true)
+	}
+
+	if u.SourceFreshdesk != nil {
+		return utils.MarshalJSON(u.SourceFreshdesk, "", true)
 	}
 
 	if u.SourceFreshsales != nil {
 		return utils.MarshalJSON(u.SourceFreshsales, "", true)
 	}
 
-	if u.SourceFreshworks != nil {
-		return utils.MarshalJSON(u.SourceFreshworks, "", true)
-	}
-
 	if u.SourceFtp != nil {
 		return utils.MarshalJSON(u.SourceFtp, "", true)
 	}
 
+	if u.SourceGitlab != nil {
+		return utils.MarshalJSON(u.SourceGitlab, "", true)
+	}
+
 	if u.SourceGong != nil {
 		return utils.MarshalJSON(u.SourceGong, "", true)
+	}
+
+	if u.SourceGoogleAds != nil {
+		return utils.MarshalJSON(u.SourceGoogleAds, "", true)
 	}
 
 	if u.SourceGoogleAnalyticsGa4 != nil {
@@ -2276,10 +2453,6 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGoogleCloudStorage, "", true)
 	}
 
-	if u.SourceGoogleAds != nil {
-		return utils.MarshalJSON(u.SourceGoogleAds, "", true)
-	}
-
 	if u.SourceGoogleSheets != nil {
 		return utils.MarshalJSON(u.SourceGoogleSheets, "", true)
 	}
@@ -2288,12 +2461,12 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceHubspot, "", true)
 	}
 
-	if u.SourceIntercom != nil {
-		return utils.MarshalJSON(u.SourceIntercom, "", true)
-	}
-
 	if u.SourceImpactRadius != nil {
 		return utils.MarshalJSON(u.SourceImpactRadius, "", true)
+	}
+
+	if u.SourceIntercom != nil {
+		return utils.MarshalJSON(u.SourceIntercom, "", true)
 	}
 
 	if u.SourceJira != nil {
@@ -2310,6 +2483,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceKafka != nil {
 		return utils.MarshalJSON(u.SourceKafka, "", true)
+	}
+
+	if u.SourceKinesis != nil {
+		return utils.MarshalJSON(u.SourceKinesis, "", true)
 	}
 
 	if u.SourceKustomer != nil {
@@ -2334,6 +2511,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceMicrosoftEntraID != nil {
 		return utils.MarshalJSON(u.SourceMicrosoftEntraID, "", true)
+	}
+
+	if u.SourceMicrosoftLists != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftLists, "", true)
 	}
 
 	if u.SourceMixpanel != nil {
@@ -2368,12 +2549,12 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceOracleSharded, "", true)
 	}
 
-	if u.SourceOutreach != nil {
-		return utils.MarshalJSON(u.SourceOutreach, "", true)
-	}
-
 	if u.SourceOutlook != nil {
 		return utils.MarshalJSON(u.SourceOutlook, "", true)
+	}
+
+	if u.SourceOutreach != nil {
+		return utils.MarshalJSON(u.SourceOutreach, "", true)
 	}
 
 	if u.SourcePinterestAds != nil {
@@ -2386,6 +2567,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourcePostgresSharded != nil {
 		return utils.MarshalJSON(u.SourcePostgresSharded, "", true)
+	}
+
+	if u.SourceQualtrics != nil {
+		return utils.MarshalJSON(u.SourceQualtrics, "", true)
 	}
 
 	if u.SourceQuoraAds != nil {
@@ -2408,12 +2593,16 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceRedshiftSharded, "", true)
 	}
 
+	if u.SourceS3Input != nil {
+		return utils.MarshalJSON(u.SourceS3Input, "", true)
+	}
+
 	if u.SourceS3Legacy != nil {
 		return utils.MarshalJSON(u.SourceS3Legacy, "", true)
 	}
 
-	if u.SourceS3Input != nil {
-		return utils.MarshalJSON(u.SourceS3Input, "", true)
+	if u.SourceSalesforce != nil {
+		return utils.MarshalJSON(u.SourceSalesforce, "", true)
 	}
 
 	if u.SourceSalesforceMarketingCloud != nil {
@@ -2432,12 +2621,20 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSapHanaSharded, "", true)
 	}
 
+	if u.SourceSapOdata != nil {
+		return utils.MarshalJSON(u.SourceSapOdata, "", true)
+	}
+
 	if u.SourceSeismic != nil {
 		return utils.MarshalJSON(u.SourceSeismic, "", true)
 	}
 
 	if u.SourceServiceNow != nil {
 		return utils.MarshalJSON(u.SourceServiceNow, "", true)
+	}
+
+	if u.SourceSftp != nil {
+		return utils.MarshalJSON(u.SourceSftp, "", true)
 	}
 
 	if u.SourceShopify != nil {
@@ -2448,24 +2645,8 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSkyward, "", true)
 	}
 
-	if u.SourceSalesforce != nil {
-		return utils.MarshalJSON(u.SourceSalesforce, "", true)
-	}
-
-	if u.SourceSftp != nil {
-		return utils.MarshalJSON(u.SourceSftp, "", true)
-	}
-
-	if u.SourceSQLServer != nil {
-		return utils.MarshalJSON(u.SourceSQLServer, "", true)
-	}
-
-	if u.SourceSQLServerSharded != nil {
-		return utils.MarshalJSON(u.SourceSQLServerSharded, "", true)
-	}
-
-	if u.SourceStreaming != nil {
-		return utils.MarshalJSON(u.SourceStreaming, "", true)
+	if u.SourceSnapchatAds != nil {
+		return utils.MarshalJSON(u.SourceSnapchatAds, "", true)
 	}
 
 	if u.SourceSnowflake != nil {
@@ -2476,6 +2657,14 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSnowflakeSharded, "", true)
 	}
 
+	if u.SourceSQLServer != nil {
+		return utils.MarshalJSON(u.SourceSQLServer, "", true)
+	}
+
+	if u.SourceSQLServerSharded != nil {
+		return utils.MarshalJSON(u.SourceSQLServerSharded, "", true)
+	}
+
 	if u.SourceSqs != nil {
 		return utils.MarshalJSON(u.SourceSqs, "", true)
 	}
@@ -2484,16 +2673,16 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSquare, "", true)
 	}
 
-	if u.SourceSnapchatAds != nil {
-		return utils.MarshalJSON(u.SourceSnapchatAds, "", true)
+	if u.SourceStreaming != nil {
+		return utils.MarshalJSON(u.SourceStreaming, "", true)
 	}
 
 	if u.SourceStripe != nil {
 		return utils.MarshalJSON(u.SourceStripe, "", true)
 	}
 
-	if u.SourceSumTotal != nil {
-		return utils.MarshalJSON(u.SourceSumTotal, "", true)
+	if u.SourceSumtotal != nil {
+		return utils.MarshalJSON(u.SourceSumtotal, "", true)
 	}
 
 	if u.SourceTheTradeDesk != nil {
@@ -2508,16 +2697,16 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceTwilio, "", true)
 	}
 
-	if u.SourceTwitter != nil {
-		return utils.MarshalJSON(u.SourceTwitter, "", true)
+	if u.SourceTwitterAds != nil {
+		return utils.MarshalJSON(u.SourceTwitterAds, "", true)
 	}
 
 	if u.SourceUserDefinedAPI != nil {
 		return utils.MarshalJSON(u.SourceUserDefinedAPI, "", true)
 	}
 
-	if u.SourceUserVoice != nil {
-		return utils.MarshalJSON(u.SourceUserVoice, "", true)
+	if u.SourceUservoice != nil {
+		return utils.MarshalJSON(u.SourceUservoice, "", true)
 	}
 
 	if u.SourceVeeva != nil {

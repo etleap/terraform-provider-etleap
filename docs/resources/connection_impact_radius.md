@@ -17,7 +17,7 @@ resource "etleap_connection_impact_radius" "my_connectionimpact_radius" {
   account_sid                 = "...my_account_sid..."
   auth_token                  = "...my_auth_token..."
   deletion_of_export_products = false
-  name                        = "Charlie Harber"
+  name                        = "Victoria Nienow Jr."
   type                        = "IMPACT_RADIUS"
 }
 ```
@@ -27,8 +27,8 @@ resource "etleap_connection_impact_radius" "my_connectionimpact_radius" {
 
 ### Required
 
-- `account_sid` (String) To find the Account SID to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
-- `auth_token` (String) To find the Auth Token to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
+- `account_sid` (String) To find the Account SID to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
+- `auth_token` (String) To find the Auth Token to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
 - `name` (String) The unique name of this connection.
 - `type` (String) must be one of ["IMPACT_RADIUS"]
 
@@ -108,7 +108,7 @@ Optional:
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

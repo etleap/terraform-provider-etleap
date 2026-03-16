@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryInput() *shared.ConnectionBigQueryInput {
+func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigqueryInput() *shared.ConnectionBigqueryInput {
 	name := r.Name.ValueString()
-	typeVar := shared.ConnectionBigQueryType(r.Type.ValueString())
+	typeVar := shared.ConnectionBigqueryType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
@@ -93,7 +93,7 @@ func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryInput() *sha
 		dataset = nil
 	}
 	jsonCredentials := r.JSONCredentials.ValueString()
-	out := shared.ConnectionBigQueryInput{
+	out := shared.ConnectionBigqueryInput{
 		Name:            name,
 		Type:            typeVar,
 		UpdateSchedule:  updateSchedule,
@@ -103,7 +103,7 @@ func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryInput() *sha
 	return &out
 }
 
-func (r *ConnectionBIGQUERYResourceModel) RefreshFromSharedConnectionBigQuery(resp *shared.ConnectionBigQuery) {
+func (r *ConnectionBIGQUERYResourceModel) RefreshFromSharedConnectionBigquery(resp *shared.ConnectionBigquery) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Dataset = types.StringPointerValue(resp.Dataset)
@@ -192,16 +192,16 @@ func (r *ConnectionBIGQUERYResourceModel) RefreshFromSharedConnectionBigQuery(re
 	}
 }
 
-func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryUpdate() *shared.ConnectionBigQueryUpdate {
+func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigqueryUpdate() *shared.ConnectionBigqueryUpdate {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
 	}
-	typeVar := new(shared.ConnectionBigQueryUpdateType)
+	typeVar := new(shared.ConnectionBigqueryUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
-		*typeVar = shared.ConnectionBigQueryUpdateType(r.Type.ValueString())
+		*typeVar = shared.ConnectionBigqueryUpdateType(r.Type.ValueString())
 	} else {
 		typeVar = nil
 	}
@@ -298,7 +298,7 @@ func (r *ConnectionBIGQUERYResourceModel) ToSharedConnectionBigQueryUpdate() *sh
 	} else {
 		jsonCredentials = nil
 	}
-	out := shared.ConnectionBigQueryUpdate{
+	out := shared.ConnectionBigqueryUpdate{
 		Name:            name,
 		Type:            typeVar,
 		Active:          active,

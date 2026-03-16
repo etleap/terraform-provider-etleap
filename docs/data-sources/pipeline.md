@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "6de30d15-94a7-4bcd-9e32-d8d2e21cb3b1"
+  id = "f518b415-fdf7-4bd6-aeb5-f72e1171d176"
 }
 ```
 
@@ -28,19 +28,19 @@ data "etleap_pipeline" "my_pipeline" {
 - `id` (String) The ID of this resource.
 - `last_refresh_finish_date` (String) The date and time when the last refresh finished. `null` if the pipeline was never refreshed.
 - `last_refresh_start_date` (String) The date and time when the last refresh was started. `null` if the pipeline was never refreshed.
-- `latency` (Number) The end-to-end latency in seconds for this pipeline. Not `null` if the pipeline is running (not paused or stopped) and if the initial backfill has finished. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMTU3NTQ3-latency#end-to-end-latency">the documentation</a> for more details.
+- `latency` (Number) The end-to-end latency in seconds for this pipeline. Not `null` if the pipeline is running (not paused or stopped) and if the initial backfill has finished. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/latency/#end-to-end-latency">the documentation</a> for more details.
 - `latest_script_version` (Number) Valid script versions are whole numbers and range from 1 to this number.
 - `name` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
 - `parsing_error_settings` (Attributes) (see [below for nested schema](#nestedatt--parsing_error_settings))
 - `paused` (Boolean) If the pipeline is paused. Defaults to `false`.
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `refresh_schedule` (Attributes) A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--refresh_schedule))
 - `shares` (List of String) A list of users' emails this pipeline is shared with.
 
 A pipeline cannot be unshared, and future calls to `PATCH` can only add to this list.
 - `source` (Attributes) (see [below for nested schema](#nestedatt--source))
-- `stop_reason` (String) Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline. must be one of ["PAUSED", "PARSING_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE"]
+- `stop_reason` (String) Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline. must be one of ["PAUSED", "PARSING_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE", "PIPELINE_SCRIPT_ERROR", "BROKEN_INGEST_ERROR"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
 <a id="nestedatt--destinations"></a>
@@ -80,7 +80,7 @@ When enabled, this pipeline will create Delta Lake tables that can be read by Da
 
 However, without column mapping, native schema changes are not supported and will cause the table's underlying Parquet files to be rewritten, which can be slow. Schema changes will also not preserve column constraints such as `NOT NULL` on the destination tables.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to `false`.
 - `schema` (String) The schema in the destination that the tables will be created in.
 - `table` (String)
 - `type` (String) must be one of ["DELTA_LAKE"]
@@ -112,7 +112,7 @@ Read-Only:
 - `distribution_style` (Attributes) Can either be one the strings `ALL`, `AUTO` or `EVEN`, or an object for `KEY` distribution that specifies a column. (see [below for nested schema](#nestedatt--destinations--destination--redshift--distribution_style))
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the destination.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to `false`.
 - `schema` (String) The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 - `sort_columns` (List of String) The sort columns to use.
 - `table` (String)
@@ -164,7 +164,7 @@ Read-Only:
 - `connection_id` (String) The universally unique identifier of the destination connection.
 - `last_updated_column` (String) Name of a column that indicates the time the record was updated at the destination.
 - `primary_key` (List of String) The destination column names that constitute the primary key. <br> If the pipline has a sharded source include a column that specifies the shard identifier.
-- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
+- `retain_history` (Boolean) If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to `false`.
 - `schema` (String) The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 - `table` (String)
 - `type` (String) must be one of ["SNOWFLAKE"]
@@ -350,6 +350,7 @@ Read-Only:
 Read-Only:
 
 - `active_campaign` (Attributes) (see [below for nested schema](#nestedatt--source--active_campaign))
+- `azure_blob_storage` (Attributes) (see [below for nested schema](#nestedatt--source--azure_blob_storage))
 - `bigquery` (Attributes) (see [below for nested schema](#nestedatt--source--bigquery))
 - `bing_ads` (Attributes) (see [below for nested schema](#nestedatt--source--bing_ads))
 - `blackline` (Attributes) (see [below for nested schema](#nestedatt--source--blackline))
@@ -367,10 +368,12 @@ Read-Only:
 - `erpx` (Attributes) (see [below for nested schema](#nestedatt--source--erpx))
 - `facebook_ads` (Attributes) (see [below for nested schema](#nestedatt--source--facebook_ads))
 - `fifteen_five` (Attributes) (see [below for nested schema](#nestedatt--source--fifteen_five))
+- `freshcaller` (Attributes) (see [below for nested schema](#nestedatt--source--freshcaller))
 - `freshchat` (Attributes) (see [below for nested schema](#nestedatt--source--freshchat))
+- `freshdesk` (Attributes) (see [below for nested schema](#nestedatt--source--freshdesk))
 - `freshsales` (Attributes) (see [below for nested schema](#nestedatt--source--freshsales))
-- `freshworks` (Attributes) (see [below for nested schema](#nestedatt--source--freshworks))
 - `ftp` (Attributes) (see [below for nested schema](#nestedatt--source--ftp))
+- `gitlab` (Attributes) (see [below for nested schema](#nestedatt--source--gitlab))
 - `gong` (Attributes) (see [below for nested schema](#nestedatt--source--gong))
 - `google_ads` (Attributes) (see [below for nested schema](#nestedatt--source--google_ads))
 - `google_analytics_ga4` (Attributes) (see [below for nested schema](#nestedatt--source--google_analytics_ga4))
@@ -383,12 +386,14 @@ Read-Only:
 - `jira_align` (Attributes) (see [below for nested schema](#nestedatt--source--jira_align))
 - `jira_cloud` (Attributes) (see [below for nested schema](#nestedatt--source--jira_cloud))
 - `kafka` (Attributes) (see [below for nested schema](#nestedatt--source--kafka))
+- `kinesis` (Attributes) (see [below for nested schema](#nestedatt--source--kinesis))
 - `kustomer` (Attributes) (see [below for nested schema](#nestedatt--source--kustomer))
 - `ldap` (Attributes) (see [below for nested schema](#nestedatt--source--ldap))
 - `ldap_virtual_list_view` (Attributes) (see [below for nested schema](#nestedatt--source--ldap_virtual_list_view))
 - `linked_in_ads` (Attributes) (see [below for nested schema](#nestedatt--source--linked_in_ads))
 - `marketo` (Attributes) (see [below for nested schema](#nestedatt--source--marketo))
 - `microsoft_entra_id` (Attributes) (see [below for nested schema](#nestedatt--source--microsoft_entra_id))
+- `microsoft_lists` (Attributes) (see [below for nested schema](#nestedatt--source--microsoft_lists))
 - `mixpanel` (Attributes) (see [below for nested schema](#nestedatt--source--mixpanel))
 - `mongodb` (Attributes) (see [below for nested schema](#nestedatt--source--mongodb))
 - `mysql` (Attributes) (see [below for nested schema](#nestedatt--source--mysql))
@@ -402,6 +407,7 @@ Read-Only:
 - `pinterest_ads` (Attributes) (see [below for nested schema](#nestedatt--source--pinterest_ads))
 - `postgres` (Attributes) (see [below for nested schema](#nestedatt--source--postgres))
 - `postgres_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--postgres_sharded))
+- `qualtrics` (Attributes) (see [below for nested schema](#nestedatt--source--qualtrics))
 - `quora_ads` (Attributes) (see [below for nested schema](#nestedatt--source--quora_ads))
 - `rave_medidata` (Attributes) (see [below for nested schema](#nestedatt--source--rave_medidata))
 - `recurly` (Attributes) (see [below for nested schema](#nestedatt--source--recurly))
@@ -414,6 +420,7 @@ Read-Only:
 - `sap_concur` (Attributes) (see [below for nested schema](#nestedatt--source--sap_concur))
 - `sap_hana` (Attributes) (see [below for nested schema](#nestedatt--source--sap_hana))
 - `sap_hana_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--sap_hana_sharded))
+- `sap_odata` (Attributes) (see [below for nested schema](#nestedatt--source--sap_odata))
 - `seismic` (Attributes) (see [below for nested schema](#nestedatt--source--seismic))
 - `service_now` (Attributes) (see [below for nested schema](#nestedatt--source--service_now))
 - `sftp` (Attributes) (see [below for nested schema](#nestedatt--source--sftp))
@@ -452,6 +459,22 @@ Read-Only:
 - `entity` (String) The ActiveCampaign resource. Example: Contacts, Custom Fields and Custom Values
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["ACTIVE_CAMPAIGN"]
+
+
+<a id="nestedatt--source--azure_blob_storage"></a>
+### Nested Schema for `source.azure_blob_storage`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
+- `files_can_change` (Boolean) Etleap can check whether files that were already processed have changed. If the file has changed, then Etleap fetches the new file and removes the old file's data in the destination and adds the changed data. <br> This can only be enabled when `newFileBehavior` is set to `APPEND`. Defaults to `false`.
+- `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
+- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
+- `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified.
+- `type` (String) must be one of ["AZURE_BLOB_STORAGE"]
 
 
 <a id="nestedatt--source--bigquery"></a>
@@ -647,7 +670,7 @@ Read-Only:
 
 Read-Only:
 
-- `breakdowns` (List of String) The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v21.0#insights-api-breakdowns)
+- `breakdowns` (List of String) The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v22.0#insights-api-breakdowns)
 - `connection_id` (String) The universally unique identifier for the source.
 - `entity` (String) The aggregation level of the Facebook report. Example values: [Insights by Ad, Insights by Adset, Insights by Campaign, Insights by Account]
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
@@ -665,6 +688,17 @@ Read-Only:
 - `type` (String) must be one of ["FIFTEEN_FIVE"]
 
 
+<a id="nestedatt--source--freshcaller"></a>
+### Nested Schema for `source.freshcaller`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The Freshcaller resource. Example: Calls
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["FRESHCALLER"]
+
+
 <a id="nestedatt--source--freshchat"></a>
 ### Nested Schema for `source.freshchat`
 
@@ -675,6 +709,17 @@ Read-Only:
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["FRESHCHAT"]
 - `view` (List of String) Only when Entity is related to Deals. Select which views you want Etleap to pull data from.
+
+
+<a id="nestedatt--source--freshdesk"></a>
+### Nested Schema for `source.freshdesk`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The Freshdesk resource. Example: Tickets
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["FRESHDESK"]
 
 
 <a id="nestedatt--source--freshsales"></a>
@@ -689,17 +734,6 @@ Read-Only:
 - `view` (List of String) Only when Entity is related to Deals. Select which views you want Etleap to pull data from.
 
 
-<a id="nestedatt--source--freshworks"></a>
-### Nested Schema for `source.freshworks`
-
-Read-Only:
-
-- `connection_id` (String) The universally unique identifier for the source.
-- `entity` (String)
-- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
-- `type` (String) must be one of ["FRESHWORKS"]
-
-
 <a id="nestedatt--source--ftp"></a>
 ### Nested Schema for `source.ftp`
 
@@ -710,9 +744,20 @@ Read-Only:
 - `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
-- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
+- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified.
 - `type` (String) must be one of ["FTP"]
+
+
+<a id="nestedatt--source--gitlab"></a>
+### Nested Schema for `source.gitlab`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The Gitlab resource. Example: projects
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["GITLAB"]
 
 
 <a id="nestedatt--source--gong"></a>
@@ -764,7 +809,7 @@ Read-Only:
 - `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
-- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
+- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified.
 - `type` (String) must be one of ["GOOGLE_CLOUD_STORAGE"]
 
@@ -797,7 +842,7 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
-- `entity` (String) The Impact Radius entity, spelled the same way as in the UI.
+- `entity` (String) The Impact entity, spelled the same way as in the UI.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["IMPACT_RADIUS"]
 
@@ -855,6 +900,17 @@ Read-Only:
 - `entity` (String) You can ingest data from Kafka topics.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["KAFKA"]
+
+
+<a id="nestedatt--source--kinesis"></a>
+### Nested Schema for `source.kinesis`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The Kinesis stream name.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["KINESIS"]
 
 
 <a id="nestedatt--source--kustomer"></a>
@@ -924,6 +980,17 @@ Read-Only:
 - `entity` (String) The Microsoft Entra ID entity.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["MICROSOFT_ENTRA_ID"]
+
+
+<a id="nestedatt--source--microsoft_lists"></a>
+### Nested Schema for `source.microsoft_lists`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The name of the list
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["MICROSOFT_LISTS"]
 
 
 <a id="nestedatt--source--mixpanel"></a>
@@ -1097,6 +1164,18 @@ Read-Only:
 - `type` (String) must be one of ["POSTGRES_SHARDED"]
 
 
+<a id="nestedatt--source--qualtrics"></a>
+### Nested Schema for `source.qualtrics`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The Qualtrics resource. Example: DIRECTORY
+- `filter` (String) Specify which filter to use when fetching responses
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["QUALTRICS"]
+
+
 <a id="nestedatt--source--quora_ads"></a>
 ### Nested Schema for `source.quora_ads`
 
@@ -1170,7 +1249,7 @@ Read-Only:
 - `files_can_change` (Boolean) Etleap can check whether files that were already processed have changed. If the file has changed, then Etleap fetches the new file and removes the old file's data in the destination and adds the changed data. <br> This can only be enabled when `newFileBehavior` is set to `APPEND`. Defaults to `false`.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
-- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
+- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here.
 - `triggered_by_event` (Boolean) Whether this source should be triggered by a `Batch Added` event (`true`) or Etleap should inspect the source to find new files to process (`false`). Defaults to `false`.
 - `type` (String) must be one of ["S3_INPUT"]
@@ -1185,7 +1264,7 @@ Read-Only:
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
-- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
+- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here.
 - `type` (String) must be one of ["S3_LEGACY"]
 
@@ -1253,6 +1332,18 @@ Read-Only:
 - `type` (String) must be one of ["SAP_HANA_SHARDED"]
 
 
+<a id="nestedatt--source--sap_odata"></a>
+### Nested Schema for `source.sap_odata`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The SAP resource. Example: 0FI_ACDOCA_20_SRV
+- `incremental_column` (String) Optionally, specify a column that is incremental and is updated as the record is updated. (STRING/TIMESTAMP/NUMBER)
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["SAP_ODATA"]
+
+
 <a id="nestedatt--source--seismic"></a>
 ### Nested Schema for `source.seismic`
 
@@ -1285,7 +1376,7 @@ Read-Only:
 - `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
-- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
+- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified.
 - `type` (String) must be one of ["SFTP"]
 
@@ -1418,7 +1509,7 @@ Read-Only:
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
-- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
+- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here.
 - `type` (String) must be one of ["STREAMING"]
 
@@ -1487,7 +1578,7 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
-- `entity` (String) The Twitter entity. Example values: [Account, Campaign, Funding Instrument, Line Item, Media Creative, Promoted Tweet, Followers, Tweets Likes, Tweets Quotes, Retweets, Recent Mentions,Tweets, Account Report, Campaign Report, Funding Instrument Report, Line Item Report, Media Creative Report, Promoted Tweet Report]
+- `entity` (String) The X entity. Example values: [Account, Campaign, Funding Instrument, Line Item, Media Creative, Promoted Tweet, Followers, Tweets Likes, Tweets Quotes, Retweets, Recent Mentions,Tweets, Account Report, Campaign Report, Funding Instrument Report, Line Item Report, Media Creative Report, Promoted Tweet Report]
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["TWITTER_ADS"]
 

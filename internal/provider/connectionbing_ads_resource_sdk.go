@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingInput() *shared.ConnectionBingInput {
+func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingAdsInput() *shared.ConnectionBingAdsInput {
 	name := r.Name.ValueString()
-	typeVar := shared.ConnectionBingType(r.Type.ValueString())
+	typeVar := shared.ConnectionBingAdsType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
@@ -87,7 +87,7 @@ func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingInput() *shared.C
 		}
 	}
 	code := r.Code.ValueString()
-	out := shared.ConnectionBingInput{
+	out := shared.ConnectionBingAdsInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -96,7 +96,7 @@ func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingInput() *shared.C
 	return &out
 }
 
-func (r *ConnectionBINGADSResourceModel) RefreshFromSharedConnectionBing(resp *shared.ConnectionBing) {
+func (r *ConnectionBINGADSResourceModel) RefreshFromSharedConnectionBingAds(resp *shared.ConnectionBingAds) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -186,14 +186,14 @@ func (r *ConnectionBINGADSResourceModel) RefreshFromSharedConnectionBing(resp *s
 	r.Username = types.StringValue(resp.Username)
 }
 
-func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingUpdate() *shared.ConnectionBingUpdate {
+func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingAdsUpdate() *shared.ConnectionBingAdsUpdate {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
 	}
-	typeVar := shared.ConnectionBingUpdateType(r.Type.ValueString())
+	typeVar := shared.ConnectionBingAdsUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
@@ -281,7 +281,7 @@ func (r *ConnectionBINGADSResourceModel) ToSharedConnectionBingUpdate() *shared.
 	} else {
 		code = nil
 	}
-	out := shared.ConnectionBingUpdate{
+	out := shared.ConnectionBingAdsUpdate{
 		Name:           name,
 		Type:           typeVar,
 		Active:         active,

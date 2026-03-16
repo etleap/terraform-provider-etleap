@@ -64,7 +64,8 @@ func (r *ConnectionFIFTEENFIVEResource) Schema(ctx context.Context, req resource
 
 		Attributes: map[string]schema.Attribute{
 			"access_token": schema.StringAttribute{
-				Required: true,
+				Required:    true,
+				Description: `Your Access Token can be found in your dashboard under "Features" > "Integrations".`,
 			},
 			"active": schema.BoolAttribute{
 				Computed: true,
@@ -95,7 +96,7 @@ func (r *ConnectionFIFTEENFIVEResource) Schema(ctx context.Context, req resource
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -310,7 +311,7 @@ func (r *ConnectionFIFTEENFIVEResource) Schema(ctx context.Context, req resource
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Optional:    true,
-				Description: `You company 15Five's subdomain, only required if your 15Five instance has a subdomain that's not https://(my).15five.com. Example: https://(subdomain).15Five.com`,
+				Description: `Your company's 15Five subdomain. Should only be specified if your 15Five instance has a URL that's not https://my.15five.com. Example: If your company's 15Five URL is https://mycompany.15Five.com you would specify 'mycompany' as the subdomain.`,
 			},
 			"type": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{

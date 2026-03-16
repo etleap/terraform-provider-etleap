@@ -15,7 +15,7 @@ type CreateQUORAADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionQuora *shared.ConnectionQuora
+	ConnectionQuoraAds *shared.ConnectionQuoraAds
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,11 +41,11 @@ func (o *CreateQUORAADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateQUORAADSConnectionResponse) GetConnectionQuora() *shared.ConnectionQuora {
+func (o *CreateQUORAADSConnectionResponse) GetConnectionQuoraAds() *shared.ConnectionQuoraAds {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionQuora
+	return o.ConnectionQuoraAds
 }
 
 func (o *CreateQUORAADSConnectionResponse) GetErrors() *shared.Errors {

@@ -77,7 +77,7 @@ func (e *ConnectionErpxStatus) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionErpxDefaultUpdateSchedule struct {
-	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
 	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
@@ -148,12 +148,12 @@ type ConnectionErpx struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionErpxDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	// Your ERPx tenant API URL
+	APIURL string `json:"apiUrl"`
+	// Your ERPx tenant authentication URL
+	TokenURL string `json:"tokenUrl"`
 	// Client ID
 	ClientID string `json:"clientId"`
-	// Your ERPx tenant authentication URL.
-	TokenURL string `json:"tokenUrl"`
-	// Your ERPx tenant API URL.
-	APIURL string `json:"apiUrl"`
 	// Company IDs from which this connection will extract data, separated by commas. If not specified, Etleap will use the default ID linked to your user account. Please note that this field cannot be edited after the connection is created. Example: COMPANY1,COMPANY2
 	CompanyIds *string `json:"companyIds,omitempty"`
 }
@@ -260,11 +260,11 @@ func (o *ConnectionErpx) GetDefaultUpdateSchedule() []ConnectionErpxDefaultUpdat
 	return o.DefaultUpdateSchedule
 }
 
-func (o *ConnectionErpx) GetClientID() string {
+func (o *ConnectionErpx) GetAPIURL() string {
 	if o == nil {
 		return ""
 	}
-	return o.ClientID
+	return o.APIURL
 }
 
 func (o *ConnectionErpx) GetTokenURL() string {
@@ -274,11 +274,11 @@ func (o *ConnectionErpx) GetTokenURL() string {
 	return o.TokenURL
 }
 
-func (o *ConnectionErpx) GetAPIURL() string {
+func (o *ConnectionErpx) GetClientID() string {
 	if o == nil {
 		return ""
 	}
-	return o.APIURL
+	return o.ClientID
 }
 
 func (o *ConnectionErpx) GetCompanyIds() *string {
@@ -294,14 +294,14 @@ type ConnectionErpxInput struct {
 	Type ConnectionErpxType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// Your ERPx tenant API URL
+	APIURL string `json:"apiUrl"`
+	// Your ERPx tenant authentication URL
+	TokenURL string `json:"tokenUrl"`
 	// Client ID
 	ClientID string `json:"clientId"`
 	// Client Secret
 	ClientSecret string `json:"clientSecret"`
-	// Your ERPx tenant authentication URL.
-	TokenURL string `json:"tokenUrl"`
-	// Your ERPx tenant API URL.
-	APIURL string `json:"apiUrl"`
 	// Company IDs from which this connection will extract data, separated by commas. If not specified, Etleap will use the default ID linked to your user account. Please note that this field cannot be edited after the connection is created. Example: COMPANY1,COMPANY2
 	CompanyIds *string `json:"companyIds,omitempty"`
 }
@@ -362,6 +362,20 @@ func (o *ConnectionErpxInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMont
 	return nil
 }
 
+func (o *ConnectionErpxInput) GetAPIURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIURL
+}
+
+func (o *ConnectionErpxInput) GetTokenURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenURL
+}
+
 func (o *ConnectionErpxInput) GetClientID() string {
 	if o == nil {
 		return ""
@@ -374,20 +388,6 @@ func (o *ConnectionErpxInput) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
-}
-
-func (o *ConnectionErpxInput) GetTokenURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.TokenURL
-}
-
-func (o *ConnectionErpxInput) GetAPIURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIURL
 }
 
 func (o *ConnectionErpxInput) GetCompanyIds() *string {

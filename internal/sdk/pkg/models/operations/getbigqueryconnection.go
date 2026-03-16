@@ -26,7 +26,7 @@ type GetBIGQUERYConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBigQuery *shared.ConnectionBigQuery
+	ConnectionBigquery *shared.ConnectionBigquery
 	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
@@ -52,11 +52,11 @@ func (o *GetBIGQUERYConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetBIGQUERYConnectionResponse) GetConnectionBigQuery() *shared.ConnectionBigQuery {
+func (o *GetBIGQUERYConnectionResponse) GetConnectionBigquery() *shared.ConnectionBigquery {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionBigQuery
+	return o.ConnectionBigquery
 }
 
 func (o *GetBIGQUERYConnectionResponse) GetErrors() *shared.Errors {
