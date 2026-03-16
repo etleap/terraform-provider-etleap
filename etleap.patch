@@ -397,7 +397,7 @@ index 91c53af..eb7b2b8 100644
  								PlanModifiers: []planmodifier.String{
 @@ -168,17 +169,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  								Default:     booldefault.StaticBool(false),
- 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
+ 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
  							},
 +							// [VIK-4496] Add support for schema and table renames
  							"schema": schema.StringAttribute{
@@ -448,7 +448,7 @@ index 91c53af..eb7b2b8 100644
  								Computed: true,
 @@ -389,10 +386,9 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  								Default:     booldefault.StaticBool(false),
- 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
+ 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
  							},
 +							// [VIK-4496] Add support for schema and table renames
  							"schema": schema.StringAttribute{
@@ -531,7 +531,7 @@ index 91c53af..eb7b2b8 100644
  							"clustering_keys": schema.ListAttribute{
  								PlanModifiers: []planmodifier.List{
 @@ -593,16 +584,12 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
- 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
+ 								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
  							},
  							"schema": schema.StringAttribute{
 -								PlanModifiers: []planmodifier.String{
