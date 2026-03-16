@@ -105,6 +105,28 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 						},
 						Description: `Authentication method that uses a header.`,
 					},
+					"oauth": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"client_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The OAuth 2.0 client identifier.`,
+							},
+							"client_secret": schema.StringAttribute{
+								Computed:    true,
+								Description: `The OAuth 2.0 client secret. This property is stored as a secret in Etleap.`,
+							},
+							"token_url": schema.StringAttribute{
+								Computed:    true,
+								Description: `The OAuth 2.0 token endpoint URL where Etleap will exchange client credentials for an access token.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["OAUTH"]`,
+							},
+						},
+						Description: `Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint.`,
+					},
 				},
 			},
 			"create_date": schema.StringAttribute{
@@ -117,7 +139,7 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
@@ -286,6 +308,28 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 										},
 									},
 									Description: `Paging strategy that is based on a result set offset.`,
+								},
+								"page_number": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"max_page_size": schema.Int64Attribute{
+											Computed:    true,
+											Description: `The maximum page size supported by the API.`,
+										},
+										"page_number_field_name": schema.StringAttribute{
+											Computed:    true,
+											Description: `The name of the request parameter used to specify the page number.`,
+										},
+										"page_size_field_name": schema.StringAttribute{
+											Computed:    true,
+											Description: `The name of the request parameter used to specify the page size.`,
+										},
+										"type": schema.StringAttribute{
+											Computed:    true,
+											Description: `must be one of ["PAGE_NUMBER"]`,
+										},
+									},
+									Description: `Paging strategy that uses page numbers to iterate through results.`,
 								},
 							},
 							Description: `The paging strategy.`,

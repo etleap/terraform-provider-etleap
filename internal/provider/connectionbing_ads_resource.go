@@ -97,7 +97,7 @@ func (r *ConnectionBINGADSResource) Schema(ctx context.Context, req resource.Sch
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -571,7 +571,7 @@ func (r *ConnectionBINGADSResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToSharedConnectionBingInput()
+	request := *data.ToSharedConnectionBingAdsInput()
 	res, err := r.client.Connection.CreateBINGADSConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -588,11 +588,11 @@ func (r *ConnectionBINGADSResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionBing == nil {
+	if res.ConnectionBingAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBing(res.ConnectionBing)
+	data.RefreshFromSharedConnectionBingAds(res.ConnectionBingAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetBINGADSConnectionRequest{
@@ -614,11 +614,11 @@ func (r *ConnectionBINGADSResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionBing == nil {
+	if res1.ConnectionBingAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBing(res1.ConnectionBing)
+	data.RefreshFromSharedConnectionBingAds(res1.ConnectionBingAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -663,11 +663,11 @@ func (r *ConnectionBINGADSResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionBing == nil {
+	if res.ConnectionBingAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBing(res.ConnectionBing)
+	data.RefreshFromSharedConnectionBingAds(res.ConnectionBingAds)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -688,10 +688,10 @@ func (r *ConnectionBINGADSResource) Update(ctx context.Context, req resource.Upd
 	}
 
 	id := data.ID.ValueString()
-	connectionBingUpdate := data.ToSharedConnectionBingUpdate()
+	connectionBingAdsUpdate := data.ToSharedConnectionBingAdsUpdate()
 	request := operations.UpdateBINGADSConnectionRequest{
-		ID:                   id,
-		ConnectionBingUpdate: connectionBingUpdate,
+		ID:                      id,
+		ConnectionBingAdsUpdate: connectionBingAdsUpdate,
 	}
 	res, err := r.client.Connection.UpdateBINGADSConnection(ctx, request)
 	if err != nil {
@@ -709,11 +709,11 @@ func (r *ConnectionBINGADSResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionBing == nil {
+	if res.ConnectionBingAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBing(res.ConnectionBing)
+	data.RefreshFromSharedConnectionBingAds(res.ConnectionBingAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetBINGADSConnectionRequest{
@@ -735,11 +735,11 @@ func (r *ConnectionBINGADSResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionBing == nil {
+	if res1.ConnectionBingAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBing(res1.ConnectionBing)
+	data.RefreshFromSharedConnectionBingAds(res1.ConnectionBingAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

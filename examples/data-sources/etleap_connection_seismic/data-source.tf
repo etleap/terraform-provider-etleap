@@ -1,3 +1,3 @@
 data "etleap_connection_seismic" "my_connectionseismic" {
-  id = "a77a6a52-f488-4da1-87d8-2370f0d28eab"
+  id = "02be8738-53f1-41b9-92c5-70b10edafda5"
 }

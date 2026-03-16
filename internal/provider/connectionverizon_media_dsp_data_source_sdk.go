@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionVERIZONMEDIADSPDataSourceModel) RefreshFromSharedConnectionVerizonMedia(resp *shared.ConnectionVerizonMedia) {
+func (r *ConnectionVERIZONMEDIADSPDataSourceModel) RefreshFromSharedConnectionVerizonMediaDsp(resp *shared.ConnectionVerizonMediaDsp) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {

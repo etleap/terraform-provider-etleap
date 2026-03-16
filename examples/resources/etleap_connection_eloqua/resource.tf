@@ -1,8 +1,8 @@
 resource "etleap_connection_eloqua" "my_connectioneloqua" {
-  company                     = "Grant - Orn"
+  company                     = "Greenholt Group"
   deletion_of_export_products = true
-  name                        = "Erick Bailey"
+  name                        = "Leroy Paucek"
   password                    = "...my_password..."
   type                        = "ELOQUA"
-  username                    = "Fidel29"
+  username                    = "Meredith59"
 }

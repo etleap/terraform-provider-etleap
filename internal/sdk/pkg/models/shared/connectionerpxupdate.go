@@ -39,14 +39,14 @@ type ConnectionErpxUpdate struct {
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// Your ERPx tenant API URL
+	APIURL *string `json:"apiUrl,omitempty"`
+	// Your ERPx tenant authentication URL
+	TokenURL *string `json:"tokenUrl,omitempty"`
 	// Client ID
 	ClientID *string `json:"clientId,omitempty"`
 	// Client Secret
 	ClientSecret *string `json:"clientSecret,omitempty"`
-	// Your ERPx tenant authentication URL.
-	TokenURL *string `json:"tokenUrl,omitempty"`
-	// Your ERPx tenant API URL.
-	APIURL *string `json:"apiUrl,omitempty"`
 }
 
 func (o *ConnectionErpxUpdate) GetName() *string {
@@ -112,6 +112,20 @@ func (o *ConnectionErpxUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMon
 	return nil
 }
 
+func (o *ConnectionErpxUpdate) GetAPIURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIURL
+}
+
+func (o *ConnectionErpxUpdate) GetTokenURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TokenURL
+}
+
 func (o *ConnectionErpxUpdate) GetClientID() *string {
 	if o == nil {
 		return nil
@@ -124,18 +138,4 @@ func (o *ConnectionErpxUpdate) GetClientSecret() *string {
 		return nil
 	}
 	return o.ClientSecret
-}
-
-func (o *ConnectionErpxUpdate) GetTokenURL() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TokenURL
-}
-
-func (o *ConnectionErpxUpdate) GetAPIURL() *string {
-	if o == nil {
-		return nil
-	}
-	return o.APIURL
 }

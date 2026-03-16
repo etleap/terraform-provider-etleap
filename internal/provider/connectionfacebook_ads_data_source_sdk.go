@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionFACEBOOKADSDataSourceModel) RefreshFromSharedConnectionFb(resp *shared.ConnectionFb) {
+func (r *ConnectionFACEBOOKADSDataSourceModel) RefreshFromSharedConnectionFacebookAds(resp *shared.ConnectionFacebookAds) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {

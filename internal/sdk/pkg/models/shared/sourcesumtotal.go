@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceSumTotalType string
+type SourceSumtotalType string
 
 const (
-	SourceSumTotalTypeSumtotal SourceSumTotalType = "SUMTOTAL"
+	SourceSumtotalTypeSumtotal SourceSumtotalType = "SUMTOTAL"
 )
 
-func (e SourceSumTotalType) ToPointer() *SourceSumTotalType {
+func (e SourceSumtotalType) ToPointer() *SourceSumtotalType {
 	return &e
 }
 
-func (e *SourceSumTotalType) UnmarshalJSON(data []byte) error {
+func (e *SourceSumtotalType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SUMTOTAL":
-		*e = SourceSumTotalType(v)
+		*e = SourceSumtotalType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSumTotalType: %v", v)
+		return fmt.Errorf("invalid value for SourceSumtotalType: %v", v)
 	}
 }
 
-type SourceSumTotal struct {
-	Type SourceSumTotalType `json:"type"`
+type SourceSumtotal struct {
+	Type SourceSumtotalType `json:"type"`
 	// The universally unique identifier for the source.
 	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
@@ -41,28 +41,28 @@ type SourceSumTotal struct {
 	Entity string `json:"entity"`
 }
 
-func (o *SourceSumTotal) GetType() SourceSumTotalType {
+func (o *SourceSumtotal) GetType() SourceSumtotalType {
 	if o == nil {
-		return SourceSumTotalType("")
+		return SourceSumtotalType("")
 	}
 	return o.Type
 }
 
-func (o *SourceSumTotal) GetConnectionID() string {
+func (o *SourceSumtotal) GetConnectionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ConnectionID
 }
 
-func (o *SourceSumTotal) GetLatencyThreshold() *int64 {
+func (o *SourceSumtotal) GetLatencyThreshold() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LatencyThreshold
 }
 
-func (o *SourceSumTotal) GetEntity() string {
+func (o *SourceSumtotal) GetEntity() string {
 	if o == nil {
 		return ""
 	}

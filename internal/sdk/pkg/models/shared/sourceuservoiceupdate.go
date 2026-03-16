@@ -7,44 +7,44 @@ import (
 	"fmt"
 )
 
-type SourceUserVoiceUpdateType string
+type SourceUservoiceUpdateType string
 
 const (
-	SourceUserVoiceUpdateTypeUservoice SourceUserVoiceUpdateType = "USERVOICE"
+	SourceUservoiceUpdateTypeUservoice SourceUservoiceUpdateType = "USERVOICE"
 )
 
-func (e SourceUserVoiceUpdateType) ToPointer() *SourceUserVoiceUpdateType {
+func (e SourceUservoiceUpdateType) ToPointer() *SourceUservoiceUpdateType {
 	return &e
 }
 
-func (e *SourceUserVoiceUpdateType) UnmarshalJSON(data []byte) error {
+func (e *SourceUservoiceUpdateType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "USERVOICE":
-		*e = SourceUserVoiceUpdateType(v)
+		*e = SourceUservoiceUpdateType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceUserVoiceUpdateType: %v", v)
+		return fmt.Errorf("invalid value for SourceUservoiceUpdateType: %v", v)
 	}
 }
 
-type SourceUserVoiceUpdate struct {
+type SourceUservoiceUpdate struct {
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64                     `json:"latencyThreshold,omitempty"`
-	Type             *SourceUserVoiceUpdateType `json:"type,omitempty"`
+	Type             *SourceUservoiceUpdateType `json:"type,omitempty"`
 }
 
-func (o *SourceUserVoiceUpdate) GetLatencyThreshold() *int64 {
+func (o *SourceUservoiceUpdate) GetLatencyThreshold() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LatencyThreshold
 }
 
-func (o *SourceUserVoiceUpdate) GetType() *SourceUserVoiceUpdateType {
+func (o *SourceUservoiceUpdate) GetType() *SourceUservoiceUpdateType {
 	if o == nil {
 		return nil
 	}

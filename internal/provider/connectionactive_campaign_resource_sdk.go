@@ -194,7 +194,12 @@ func (r *ConnectionACTIVECAMPAIGNResourceModel) ToSharedConnectionActiveCampaign
 	} else {
 		name = nil
 	}
-	typeVar := shared.ConnectionActiveCampaignUpdateType(r.Type.ValueString())
+	typeVar := new(shared.ConnectionActiveCampaignUpdateType)
+	if !r.Type.IsUnknown() && !r.Type.IsNull() {
+		*typeVar = shared.ConnectionActiveCampaignUpdateType(r.Type.ValueString())
+	} else {
+		typeVar = nil
+	}
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()

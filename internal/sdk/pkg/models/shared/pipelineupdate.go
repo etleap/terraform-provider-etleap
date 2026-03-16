@@ -887,9 +887,16 @@ func (o *PipelineUpdate) GetSourceActiveCampaign() *SourceActiveCampaignUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceBigquery() *SourceBigQueryUpdate {
+func (o *PipelineUpdate) GetSourceAzureBlobStorage() *SourceAzureBlobStorageUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceBigQueryUpdate
+		return v.SourceAzureBlobStorageUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceBigquery() *SourceBigqueryUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceBigqueryUpdate
 	}
 	return nil
 }
@@ -964,9 +971,9 @@ func (o *PipelineUpdate) GetSourceEgnyte() *SourceEgnyteUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceElasticsearch() *SourceElasticSearchUpdate {
+func (o *PipelineUpdate) GetSourceElasticsearch() *SourceElasticsearchUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceElasticSearchUpdate
+		return v.SourceElasticsearchUpdate
 	}
 	return nil
 }
@@ -1006,9 +1013,23 @@ func (o *PipelineUpdate) GetSourceFifteenFive() *SourceFifteenFiveUpdate {
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceFreshcaller() *SourceFreshcallerUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceFreshcallerUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceFreshchat() *SourceFreshchatUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceFreshchatUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceFreshdesk() *SourceFreshdeskUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceFreshdeskUpdate
 	}
 	return nil
 }
@@ -1020,13 +1041,6 @@ func (o *PipelineUpdate) GetSourceFreshsales() *SourceFreshsalesUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceFreshworks() *SourceFreshworksUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceFreshworksUpdate
-	}
-	return nil
-}
-
 func (o *PipelineUpdate) GetSourceFtp() *SourceFtpUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceFtpUpdate
@@ -1034,9 +1048,23 @@ func (o *PipelineUpdate) GetSourceFtp() *SourceFtpUpdate {
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceGitlab() *SourceGitlabUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceGitlabUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceGong() *SourceGongUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceGongUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceGoogleAds() *SourceGoogleAdsUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceGoogleAdsUpdate
 	}
 	return nil
 }
@@ -1055,13 +1083,6 @@ func (o *PipelineUpdate) GetSourceGoogleCloudStorage() *SourceGoogleCloudStorage
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceGoogleAds() *SourceGoogleAdsUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceGoogleAdsUpdate
-	}
-	return nil
-}
-
 func (o *PipelineUpdate) GetSourceGoogleSheets() *SourceGoogleSheetsUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceGoogleSheetsUpdate
@@ -1076,16 +1097,16 @@ func (o *PipelineUpdate) GetSourceHubspot() *SourceHubspotUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceIntercom() *SourceIntercomUpdate {
+func (o *PipelineUpdate) GetSourceImpactRadius() *SourceImpactRadiusUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceIntercomUpdate
+		return v.SourceImpactRadiusUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceImpactRadius() *SourceImpactRadiusUpdate {
+func (o *PipelineUpdate) GetSourceIntercom() *SourceIntercomUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceImpactRadiusUpdate
+		return v.SourceIntercomUpdate
 	}
 	return nil
 }
@@ -1114,6 +1135,13 @@ func (o *PipelineUpdate) GetSourceJiraCloud() *SourceJiraCloudUpdate {
 func (o *PipelineUpdate) GetSourceKafka() *SourceKafkaUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceKafkaUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceKinesis() *SourceKinesisUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceKinesisUpdate
 	}
 	return nil
 }
@@ -1160,6 +1188,13 @@ func (o *PipelineUpdate) GetSourceMicrosoftEntraID() *SourceMicrosoftEntraIDUpda
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceMicrosoftLists() *SourceMicrosoftListsUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceMicrosoftListsUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceMixpanel() *SourceMixpanelUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceMixpanelUpdate
@@ -1174,16 +1209,16 @@ func (o *PipelineUpdate) GetSourceMongodb() *SourceMongodbUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceMysqlSharded() *SourceMysqlShardedUpdate {
+func (o *PipelineUpdate) GetSourceMysql() *SourceMysqlUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceMysqlShardedUpdate
+		return v.SourceMysqlUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceMysql() *SourceMysqlUpdate {
+func (o *PipelineUpdate) GetSourceMysqlSharded() *SourceMysqlShardedUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceMysqlUpdate
+		return v.SourceMysqlShardedUpdate
 	}
 	return nil
 }
@@ -1216,16 +1251,16 @@ func (o *PipelineUpdate) GetSourceOracleSharded() *SourceOracleShardedUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceOutreach() *SourceOutreachUpdate {
+func (o *PipelineUpdate) GetSourceOutlook() *SourceOutlookUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceOutreachUpdate
+		return v.SourceOutlookUpdate
 	}
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceOutlook() *SourceOutlookUpdate {
+func (o *PipelineUpdate) GetSourceOutreach() *SourceOutreachUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceOutlookUpdate
+		return v.SourceOutreachUpdate
 	}
 	return nil
 }
@@ -1247,6 +1282,13 @@ func (o *PipelineUpdate) GetSourcePostgres() *SourcePostgresUpdate {
 func (o *PipelineUpdate) GetSourcePostgresSharded() *SourcePostgresShardedUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourcePostgresShardedUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceQualtrics() *SourceQualtricsUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceQualtricsUpdate
 	}
 	return nil
 }
@@ -1286,6 +1328,13 @@ func (o *PipelineUpdate) GetSourceRedshiftSharded() *SourceRedshiftShardedUpdate
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceS3Input() *SourceS3InputUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceS3InputUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceS3Legacy() *SourceS3LegacyUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceS3LegacyUpdate
@@ -1293,9 +1342,9 @@ func (o *PipelineUpdate) GetSourceS3Legacy() *SourceS3LegacyUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceS3Input() *SourceS3InputUpdate {
+func (o *PipelineUpdate) GetSourceSalesforce() *SourceSalesforceUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceS3InputUpdate
+		return v.SourceSalesforceUpdate
 	}
 	return nil
 }
@@ -1328,6 +1377,13 @@ func (o *PipelineUpdate) GetSourceSapHanaSharded() *SourceSapHanaShardedUpdate {
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceSapOdata() *SourceSapOdataUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSapOdataUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceSeismic() *SourceSeismicUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceSeismicUpdate
@@ -1338,6 +1394,13 @@ func (o *PipelineUpdate) GetSourceSeismic() *SourceSeismicUpdate {
 func (o *PipelineUpdate) GetSourceServiceNow() *SourceServiceNowUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceServiceNowUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSftp() *SourceSftpUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSftpUpdate
 	}
 	return nil
 }
@@ -1356,37 +1419,9 @@ func (o *PipelineUpdate) GetSourceSkyward() *SourceSkywardUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceSalesforce() *SourceSalesforceUpdate {
+func (o *PipelineUpdate) GetSourceSnapchatAds() *SourceSnapchatAdsUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceSalesforceUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSftp() *SourceSftpUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSftpUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSQLServer() *SourceSQLServerUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSQLServerUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceSQLServerSharded() *SourceSQLServerShardedUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceSQLServerShardedUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceStreaming() *SourceStreamingUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceStreamingUpdate
+		return v.SourceSnapchatAdsUpdate
 	}
 	return nil
 }
@@ -1405,6 +1440,20 @@ func (o *PipelineUpdate) GetSourceSnowflakeSharded() *SourceSnowflakeShardedUpda
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceSQLServer() *SourceSQLServerUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSQLServerUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceSQLServerSharded() *SourceSQLServerShardedUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSQLServerShardedUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceSqs() *SourceSqsUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceSqsUpdate
@@ -1419,9 +1468,9 @@ func (o *PipelineUpdate) GetSourceSquare() *SourceSquareUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceSnapchatAds() *SourceSnapchatAdsUpdate {
+func (o *PipelineUpdate) GetSourceStreaming() *SourceStreamingUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceSnapchatAdsUpdate
+		return v.SourceStreamingUpdate
 	}
 	return nil
 }
@@ -1433,9 +1482,9 @@ func (o *PipelineUpdate) GetSourceStripe() *SourceStripeUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceSumtotal() *SourceSumTotalUpdate {
+func (o *PipelineUpdate) GetSourceSumtotal() *SourceSumtotalUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceSumTotalUpdate
+		return v.SourceSumtotalUpdate
 	}
 	return nil
 }
@@ -1461,9 +1510,16 @@ func (o *PipelineUpdate) GetSourceTwilio() *SourceTwilioUpdate {
 	return nil
 }
 
-func (o *PipelineUpdate) GetSourceTwitterAds() *SourceTwitterUpdate {
+func (o *PipelineUpdate) GetSourceTwitterAds() *SourceTwitterAdsUpdate {
 	if v := o.GetSource(); v != nil {
-		return v.SourceTwitterUpdate
+		return v.SourceTwitterAdsUpdate
+	}
+	return nil
+}
+
+func (o *PipelineUpdate) GetSourceUservoice() *SourceUservoiceUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceUservoiceUpdate
 	}
 	return nil
 }
@@ -1471,13 +1527,6 @@ func (o *PipelineUpdate) GetSourceTwitterAds() *SourceTwitterUpdate {
 func (o *PipelineUpdate) GetSourceUserDefinedAPI() *SourceUserDefinedAPIUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceUserDefinedAPIUpdate
-	}
-	return nil
-}
-
-func (o *PipelineUpdate) GetSourceUservoice() *SourceUserVoiceUpdate {
-	if v := o.GetSource(); v != nil {
-		return v.SourceUserVoiceUpdate
 	}
 	return nil
 }

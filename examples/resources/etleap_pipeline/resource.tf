@@ -5,18 +5,18 @@ resource "etleap_pipeline" "my_pipeline" {
       automatic_schema_changes   = true
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
-      pre10_dot2_runtime_support = true
+      pre10_dot2_runtime_support = false
       primary_key = [
         "...",
       ]
-      retain_history         = false
+      retain_history         = true
       schema                 = "...my_schema..."
       table                  = "...my_table..."
       type                   = "DELTA_LAKE"
       wait_for_quality_check = true
     }
   }
-  name   = "Luis Bradtke II"
+  name   = "Andrew Dickens"
   paused = true
   script = {
     legacy_script = {
@@ -27,7 +27,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 6
+      latency_threshold = 4
       type              = "ACTIVE_CAMPAIGN"
     }
   }

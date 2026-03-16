@@ -14,18 +14,18 @@ ConnectionORACLE Resource
 
 ```terraform
 resource "etleap_connection_oracle" "my_connectionoracle" {
-  address                              = "943 Cormier Unions"
+  address                              = "25482 Eladio Branch"
   cdc_enabled                          = false
   certificate                          = "...my_certificate..."
   database                             = "...my_database..."
-  deletion_of_export_products          = true
-  name                                 = "Luke Bartoletti"
+  deletion_of_export_products          = false
+  name                                 = "Thelma Hamill PhD"
   password                             = "...my_password..."
-  port                                 = 5
+  port                                 = 10
   require_ssl_and_validate_certificate = false
   schema                               = "...my_schema..."
   type                                 = "ORACLE"
-  username                             = "Guadalupe_Grady93"
+  username                             = "Dean_Kub1"
 }
 ```
 
@@ -132,7 +132,7 @@ Optional:
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

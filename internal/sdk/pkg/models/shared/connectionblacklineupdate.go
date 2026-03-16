@@ -39,11 +39,11 @@ type ConnectionBlacklineUpdate struct {
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Your Blackline instance Client ID
+	// Your Blackline instance Client ID.
 	ClientID *string `json:"client_id,omitempty"`
-	// Your Blackline instance Client Secret
+	// Your Blackline instance Client Secret.
 	ClientSecret *string `json:"client_secret,omitempty"`
-	// Your Blackline instance base URL, i.e, https://<BASE_URL>.api.blackline.com
+	// Your Blackline instance base URL, i.e, https://BASE_URL.api.blackline.com
 	BaseURL *string `json:"base_url,omitempty"`
 	// Your Blackline instance authorization scope.
 	InstanceScope *string `json:"instance_scope,omitempty"`

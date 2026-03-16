@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionBIGQUERYDataSourceModel) RefreshFromSharedConnectionBigQuery(resp *shared.ConnectionBigQuery) {
+func (r *ConnectionBIGQUERYDataSourceModel) RefreshFromSharedConnectionBigquery(resp *shared.ConnectionBigquery) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Dataset = types.StringPointerValue(resp.Dataset)

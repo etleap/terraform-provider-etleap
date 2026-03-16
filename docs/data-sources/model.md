@@ -14,7 +14,7 @@ Model DataSource
 
 ```terraform
 data "etleap_model" "my_model" {
-  id = "a5614863-79fc-4be3-940b-5f3e9f554f95"
+  id = "55da31bb-b441-4af5-b69c-f88c0ec70d94"
 }
 ```
 
@@ -33,7 +33,7 @@ data "etleap_model" "my_model" {
 - `paused` (Boolean)
 - `query_and_triggers` (Attributes) (see [below for nested schema](#nestedatt--query_and_triggers))
 - `shares` (List of String) An array of users' emails that the model is shared with.  Once shared, a model cannot be unshared, and future calls to `PATCH` can only add to this list.
-- `update_schedule` (Attributes) How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-updates) for more information. (see [below for nested schema](#nestedatt--update_schedule))
+- `update_schedule` (Attributes) How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-updates) for more information. (see [below for nested schema](#nestedatt--update_schedule))
 - `warehouse` (Attributes) (see [below for nested schema](#nestedatt--warehouse))
 
 <a id="nestedatt--dependencies"></a>
@@ -76,7 +76,7 @@ becomes:
 SELECT col1, col2 FROM {{abcd1234}};
 ```
 
-[See the Model documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-dependencies) for more information on Model dependencies.
+[See the Model documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-dependencies) for more information on Model dependencies.
 - `triggers` (List of String) A list of model dependency ids. An update will be automatically triggered in this model if any of the dependencies listed here get new data. Any ids given here must be present as dependencies in the `query`.
 
 

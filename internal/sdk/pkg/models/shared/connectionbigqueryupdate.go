@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type ConnectionBigQueryUpdateType string
+type ConnectionBigqueryUpdateType string
 
 const (
-	ConnectionBigQueryUpdateTypeBigquery ConnectionBigQueryUpdateType = "BIGQUERY"
+	ConnectionBigqueryUpdateTypeBigquery ConnectionBigqueryUpdateType = "BIGQUERY"
 )
 
-func (e ConnectionBigQueryUpdateType) ToPointer() *ConnectionBigQueryUpdateType {
+func (e ConnectionBigqueryUpdateType) ToPointer() *ConnectionBigqueryUpdateType {
 	return &e
 }
 
-func (e *ConnectionBigQueryUpdateType) UnmarshalJSON(data []byte) error {
+func (e *ConnectionBigqueryUpdateType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "BIGQUERY":
-		*e = ConnectionBigQueryUpdateType(v)
+		*e = ConnectionBigqueryUpdateType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionBigQueryUpdateType: %v", v)
+		return fmt.Errorf("invalid value for ConnectionBigqueryUpdateType: %v", v)
 	}
 }
 
-type ConnectionBigQueryUpdate struct {
+type ConnectionBigqueryUpdate struct {
 	// The unique name of this connection.
 	Name *string                       `json:"name,omitempty"`
-	Type *ConnectionBigQueryUpdateType `json:"type"`
+	Type *ConnectionBigqueryUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
@@ -45,77 +45,77 @@ type ConnectionBigQueryUpdate struct {
 	JSONCredentials *string `json:"jsonCredentials,omitempty"`
 }
 
-func (o *ConnectionBigQueryUpdate) GetName() *string {
+func (o *ConnectionBigqueryUpdate) GetName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Name
 }
 
-func (o *ConnectionBigQueryUpdate) GetType() *ConnectionBigQueryUpdateType {
+func (o *ConnectionBigqueryUpdate) GetType() *ConnectionBigqueryUpdateType {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *ConnectionBigQueryUpdate) GetActive() *bool {
+func (o *ConnectionBigqueryUpdate) GetActive() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Active
 }
 
-func (o *ConnectionBigQueryUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionBigqueryUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBigQueryUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeDaily
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryUpdate) GetDataset() *string {
+func (o *ConnectionBigqueryUpdate) GetDataset() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dataset
 }
 
-func (o *ConnectionBigQueryUpdate) GetJSONCredentials() *string {
+func (o *ConnectionBigqueryUpdate) GetJSONCredentials() *string {
 	if o == nil {
 		return nil
 	}

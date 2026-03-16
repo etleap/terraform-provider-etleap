@@ -14,7 +14,7 @@ ConnectionFIFTEENFIVE DataSource
 
 ```terraform
 data "etleap_connection_fifteen_five" "my_connectionfifteen_five" {
-  id = "e204d5af-e1ad-4084-b03e-516169f5fefb"
+  id = "2b6d892a-3add-493e-bf46-8517a0d1d6c1"
 }
 ```
 
@@ -29,7 +29,7 @@ data "etleap_connection_fifteen_five" "my_connectionfifteen_five" {
 - `id` (String) The ID of this resource.
 - `name` (String) The unique name of this connection.
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]
-- `subdomain` (String) You company 15Five's subdomain, only required if your 15Five instance has a subdomain that's not https://(my).15five.com. Example: https://(subdomain).15Five.com
+- `subdomain` (String) Your company's 15Five subdomain. Should only be specified if your 15Five instance has a URL that's not https://my.15five.com. Example: If your company's 15Five URL is https://mycompany.15Five.com you would specify 'mycompany' as the subdomain.
 - `type` (String) must be one of ["FIFTEEN_FIVE"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
@@ -38,7 +38,7 @@ data "etleap_connection_fifteen_five" "my_connectionfifteen_five" {
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

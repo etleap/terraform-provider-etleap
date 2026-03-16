@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionSUMTOTALDataSourceModel) RefreshFromSharedConnectionSumTotal(resp *shared.ConnectionSumTotal) {
+func (r *ConnectionSUMTOTALDataSourceModel) RefreshFromSharedConnectionSumtotal(resp *shared.ConnectionSumtotal) {
 	r.Active = types.BoolValue(resp.Active)
 	r.ClientID = types.StringValue(resp.ClientID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))

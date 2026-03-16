@@ -6,8 +6,6 @@ package shared
 type UserDefinedAPIEntity struct {
 	// The unique identifier of the entity.
 	ID string `json:"id"`
-	// The columns of the entity.
-	Columns []interface{} `json:"columns"`
 	// The name of the entity.
 	DisplayName string `json:"displayName"`
 	// The base URL to fetch data. Note that query parameters for things like pagination and sorting will be appended.
@@ -24,6 +22,8 @@ type UserDefinedAPIEntity struct {
 	HeaderParameters []HeaderParameters `json:"headerParameters,omitempty"`
 	// Can be either the string `GET` or `POST`, which includes body parameters.
 	RestMethod RestMethod `json:"restMethod"`
+	// The columns of the entity.
+	Columns []interface{} `json:"columns"`
 }
 
 func (o *UserDefinedAPIEntity) GetID() string {
@@ -31,13 +31,6 @@ func (o *UserDefinedAPIEntity) GetID() string {
 		return ""
 	}
 	return o.ID
-}
-
-func (o *UserDefinedAPIEntity) GetColumns() []interface{} {
-	if o == nil {
-		return []interface{}{}
-	}
-	return o.Columns
 }
 
 func (o *UserDefinedAPIEntity) GetDisplayName() string {
@@ -89,6 +82,13 @@ func (o *UserDefinedAPIEntity) GetPagingStrategyOffset() *OffsetPagingStrategy {
 	return nil
 }
 
+func (o *UserDefinedAPIEntity) GetPagingStrategyPageNumber() *PageNumberPagingStrategy {
+	if v := o.GetPagingStrategy(); v != nil {
+		return v.PageNumberPagingStrategy
+	}
+	return nil
+}
+
 func (o *UserDefinedAPIEntity) GetQueryParameters() []QueryParameters {
 	if o == nil {
 		return nil
@@ -108,4 +108,11 @@ func (o *UserDefinedAPIEntity) GetRestMethod() RestMethod {
 		return RestMethod{}
 	}
 	return o.RestMethod
+}
+
+func (o *UserDefinedAPIEntity) GetColumns() []interface{} {
+	if o == nil {
+		return []interface{}{}
+	}
+	return o.Columns
 }

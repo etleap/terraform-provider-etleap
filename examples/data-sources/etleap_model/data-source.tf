@@ -1,3 +1,3 @@
 data "etleap_model" "my_model" {
-  id = "a5614863-79fc-4be3-940b-5f3e9f554f95"
+  id = "55da31bb-b441-4af5-b69c-f88c0ec70d94"
 }

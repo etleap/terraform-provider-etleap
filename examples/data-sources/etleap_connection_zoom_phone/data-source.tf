@@ -1,3 +1,3 @@
 data "etleap_connection_zoom_phone" "my_connectionzoom_phone" {
-  id = "cae8ba67-8d29-40e8-9d3f-67abc4041b16"
+  id = "1c55b22e-5eb9-425a-8ceb-cd7c624a2e4c"
 }

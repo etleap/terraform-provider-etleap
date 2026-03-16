@@ -7,44 +7,44 @@ import (
 	"fmt"
 )
 
-type SourceBigQueryUpdateType string
+type SourceBigqueryUpdateType string
 
 const (
-	SourceBigQueryUpdateTypeBigquery SourceBigQueryUpdateType = "BIGQUERY"
+	SourceBigqueryUpdateTypeBigquery SourceBigqueryUpdateType = "BIGQUERY"
 )
 
-func (e SourceBigQueryUpdateType) ToPointer() *SourceBigQueryUpdateType {
+func (e SourceBigqueryUpdateType) ToPointer() *SourceBigqueryUpdateType {
 	return &e
 }
 
-func (e *SourceBigQueryUpdateType) UnmarshalJSON(data []byte) error {
+func (e *SourceBigqueryUpdateType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "BIGQUERY":
-		*e = SourceBigQueryUpdateType(v)
+		*e = SourceBigqueryUpdateType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBigQueryUpdateType: %v", v)
+		return fmt.Errorf("invalid value for SourceBigqueryUpdateType: %v", v)
 	}
 }
 
-type SourceBigQueryUpdate struct {
+type SourceBigqueryUpdate struct {
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64                    `json:"latencyThreshold,omitempty"`
-	Type             *SourceBigQueryUpdateType `json:"type,omitempty"`
+	Type             *SourceBigqueryUpdateType `json:"type,omitempty"`
 }
 
-func (o *SourceBigQueryUpdate) GetLatencyThreshold() *int64 {
+func (o *SourceBigqueryUpdate) GetLatencyThreshold() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LatencyThreshold
 }
 
-func (o *SourceBigQueryUpdate) GetType() *SourceBigQueryUpdateType {
+func (o *SourceBigqueryUpdate) GetType() *SourceBigqueryUpdateType {
 	if o == nil {
 		return nil
 	}

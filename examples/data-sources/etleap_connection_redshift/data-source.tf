@@ -1,3 +1,3 @@
 data "etleap_connection_redshift" "my_connectionredshift" {
-  id = "2a39645e-03cb-467d-8c72-f29566e63755"
+  id = "6a52f488-da18-47d8-a370-f0d28eaba383"
 }

@@ -29,10 +29,8 @@ type ConnectionBLACKLINEDataSource struct {
 // ConnectionBLACKLINEDataSourceModel describes the data model.
 type ConnectionBLACKLINEDataSourceModel struct {
 	Active                types.Bool              `tfsdk:"active"`
-	APIKey                types.String            `tfsdk:"api_key"`
 	BaseURL               types.String            `tfsdk:"base_url"`
 	ClientID              types.String            `tfsdk:"client_id"`
-	ClientSecret          types.String            `tfsdk:"client_secret"`
 	CreateDate            types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	ID                    types.String            `tfsdk:"id"`
@@ -59,21 +57,13 @@ func (r *ConnectionBLACKLINEDataSource) Schema(ctx context.Context, req datasour
 				Computed:    true,
 				Description: `Whether this connection has been marked as active.`,
 			},
-			"api_key": schema.StringAttribute{
-				Computed:    true,
-				Description: `The Blackline API Key generated for your user`,
-			},
 			"base_url": schema.StringAttribute{
 				Computed:    true,
-				Description: `Your Blackline instance base URL, i.e, https://<BASE_URL>.api.blackline.com`,
+				Description: `Your Blackline instance base URL, i.e, https://BASE_URL.api.blackline.com`,
 			},
 			"client_id": schema.StringAttribute{
 				Computed:    true,
-				Description: `Your Blackline instance Client ID`,
-			},
-			"client_secret": schema.StringAttribute{
-				Computed:    true,
-				Description: `Your Blackline instance Client Secret`,
+				Description: `Your Blackline instance Client ID.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed:    true,
@@ -85,7 +75,7 @@ func (r *ConnectionBLACKLINEDataSource) Schema(ctx context.Context, req datasour
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,

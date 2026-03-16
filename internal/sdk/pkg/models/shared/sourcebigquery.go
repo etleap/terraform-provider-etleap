@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceBigQueryType string
+type SourceBigqueryType string
 
 const (
-	SourceBigQueryTypeBigquery SourceBigQueryType = "BIGQUERY"
+	SourceBigqueryTypeBigquery SourceBigqueryType = "BIGQUERY"
 )
 
-func (e SourceBigQueryType) ToPointer() *SourceBigQueryType {
+func (e SourceBigqueryType) ToPointer() *SourceBigqueryType {
 	return &e
 }
 
-func (e *SourceBigQueryType) UnmarshalJSON(data []byte) error {
+func (e *SourceBigqueryType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "BIGQUERY":
-		*e = SourceBigQueryType(v)
+		*e = SourceBigqueryType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBigQueryType: %v", v)
+		return fmt.Errorf("invalid value for SourceBigqueryType: %v", v)
 	}
 }
 
-type SourceBigQuery struct {
-	Type SourceBigQueryType `json:"type"`
+type SourceBigquery struct {
+	Type SourceBigqueryType `json:"type"`
 	// The universally unique identifier for the source.
 	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
@@ -49,56 +49,56 @@ type SourceBigQuery struct {
 	Dataset *string `json:"dataset,omitempty"`
 }
 
-func (o *SourceBigQuery) GetType() SourceBigQueryType {
+func (o *SourceBigquery) GetType() SourceBigqueryType {
 	if o == nil {
-		return SourceBigQueryType("")
+		return SourceBigqueryType("")
 	}
 	return o.Type
 }
 
-func (o *SourceBigQuery) GetConnectionID() string {
+func (o *SourceBigquery) GetConnectionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ConnectionID
 }
 
-func (o *SourceBigQuery) GetLatencyThreshold() *int64 {
+func (o *SourceBigquery) GetLatencyThreshold() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LatencyThreshold
 }
 
-func (o *SourceBigQuery) GetTable() *string {
+func (o *SourceBigquery) GetTable() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Table
 }
 
-func (o *SourceBigQuery) GetTableNameFilter() *string {
+func (o *SourceBigquery) GetTableNameFilter() *string {
 	if o == nil {
 		return nil
 	}
 	return o.TableNameFilter
 }
 
-func (o *SourceBigQuery) GetLastUpdatedColumn() *string {
+func (o *SourceBigquery) GetLastUpdatedColumn() *string {
 	if o == nil {
 		return nil
 	}
 	return o.LastUpdatedColumn
 }
 
-func (o *SourceBigQuery) GetPrimaryKeyColumns() []string {
+func (o *SourceBigquery) GetPrimaryKeyColumns() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.PrimaryKeyColumns
 }
 
-func (o *SourceBigQuery) GetDataset() *string {
+func (o *SourceBigquery) GetDataset() *string {
 	if o == nil {
 		return nil
 	}

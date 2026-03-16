@@ -8,8 +8,8 @@ import (
 )
 
 type UpdateTWITTERADSConnectionRequest struct {
-	ID                      string                          `pathParam:"style=simple,explode=false,name=id"`
-	ConnectionTwitterUpdate *shared.ConnectionTwitterUpdate `request:"mediaType=application/json"`
+	ID                         string                             `pathParam:"style=simple,explode=false,name=id"`
+	ConnectionTwitterAdsUpdate *shared.ConnectionTwitterAdsUpdate `request:"mediaType=application/json"`
 }
 
 func (o *UpdateTWITTERADSConnectionRequest) GetID() string {
@@ -19,11 +19,11 @@ func (o *UpdateTWITTERADSConnectionRequest) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateTWITTERADSConnectionRequest) GetConnectionTwitterUpdate() *shared.ConnectionTwitterUpdate {
+func (o *UpdateTWITTERADSConnectionRequest) GetConnectionTwitterAdsUpdate() *shared.ConnectionTwitterAdsUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionTwitterUpdate
+	return o.ConnectionTwitterAdsUpdate
 }
 
 type UpdateTWITTERADSConnectionResponse struct {
@@ -34,7 +34,7 @@ type UpdateTWITTERADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionTwitter *shared.ConnectionTwitter
+	ConnectionTwitterAds *shared.ConnectionTwitterAds
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -60,11 +60,11 @@ func (o *UpdateTWITTERADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateTWITTERADSConnectionResponse) GetConnectionTwitter() *shared.ConnectionTwitter {
+func (o *UpdateTWITTERADSConnectionResponse) GetConnectionTwitterAds() *shared.ConnectionTwitterAds {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionTwitter
+	return o.ConnectionTwitterAds
 }
 
 func (o *UpdateTWITTERADSConnectionResponse) GetErrors() *shared.Errors {

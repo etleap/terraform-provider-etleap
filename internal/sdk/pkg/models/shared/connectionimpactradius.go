@@ -77,7 +77,7 @@ func (e *ConnectionImpactRadiusStatus) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionImpactRadiusDefaultUpdateSchedule struct {
-	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
 	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
@@ -148,7 +148,7 @@ type ConnectionImpactRadius struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionImpactRadiusDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// To find the Account SID to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
+	// To find the Account SID to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
 	AccountSid string `json:"accountSid"`
 }
 
@@ -267,9 +267,9 @@ type ConnectionImpactRadiusInput struct {
 	Type ConnectionImpactRadiusType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// To find the Account SID to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
+	// To find the Account SID to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
 	AccountSid string `json:"accountSid"`
-	// To find the Auth Token to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
+	// To find the Auth Token to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
 	AuthToken string `json:"authToken"`
 }
 

@@ -102,7 +102,7 @@ func (r *ConnectionELASTICSEARCHResource) Schema(ctx context.Context, req resour
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -548,7 +548,7 @@ func (r *ConnectionELASTICSEARCHResource) Schema(ctx context.Context, req resour
 					`` + "\n" +
 					`Cluster privileges: <ul><li>monitor</li></ul>` + "\n" +
 					` Index privileges: <ul><li>read</li><li>monitor</li><li>view_index_metadata</li></ul>` + "\n" +
-					` Index privileges must be enabled for all indices you want Etleap to access. These permissions can be set up in Kibana or by consulting <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/authorization.html">the Elastic documentation</a> for the version of your cluster.`,
+					` Index privileges must be enabled for all indices you want Etleap to access. These permissions can be set up in Kibana or by consulting <a target="_blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/authorization.html">the Elastic documentation</a> for the version of your cluster.`,
 			},
 		},
 	}
@@ -592,7 +592,7 @@ func (r *ConnectionELASTICSEARCHResource) Create(ctx context.Context, req resour
 		return
 	}
 
-	request := *data.ToSharedConnectionElasticSearchInput()
+	request := *data.ToSharedConnectionElasticsearchInput()
 	res, err := r.client.Connection.CreateELASTICSEARCHConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -609,11 +609,11 @@ func (r *ConnectionELASTICSEARCHResource) Create(ctx context.Context, req resour
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionElasticSearch == nil {
+	if res.ConnectionElasticsearch == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionElasticSearch(res.ConnectionElasticSearch)
+	data.RefreshFromSharedConnectionElasticsearch(res.ConnectionElasticsearch)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetELASTICSEARCHConnectionRequest{
@@ -635,11 +635,11 @@ func (r *ConnectionELASTICSEARCHResource) Create(ctx context.Context, req resour
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionElasticSearch == nil {
+	if res1.ConnectionElasticsearch == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionElasticSearch(res1.ConnectionElasticSearch)
+	data.RefreshFromSharedConnectionElasticsearch(res1.ConnectionElasticsearch)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -684,11 +684,11 @@ func (r *ConnectionELASTICSEARCHResource) Read(ctx context.Context, req resource
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionElasticSearch == nil {
+	if res.ConnectionElasticsearch == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionElasticSearch(res.ConnectionElasticSearch)
+	data.RefreshFromSharedConnectionElasticsearch(res.ConnectionElasticsearch)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -709,10 +709,10 @@ func (r *ConnectionELASTICSEARCHResource) Update(ctx context.Context, req resour
 	}
 
 	id := data.ID.ValueString()
-	connectionElasticSearchUpdate := data.ToSharedConnectionElasticSearchUpdate()
+	connectionElasticsearchUpdate := data.ToSharedConnectionElasticsearchUpdate()
 	request := operations.UpdateELASTICSEARCHConnectionRequest{
 		ID:                            id,
-		ConnectionElasticSearchUpdate: connectionElasticSearchUpdate,
+		ConnectionElasticsearchUpdate: connectionElasticsearchUpdate,
 	}
 	res, err := r.client.Connection.UpdateELASTICSEARCHConnection(ctx, request)
 	if err != nil {
@@ -730,11 +730,11 @@ func (r *ConnectionELASTICSEARCHResource) Update(ctx context.Context, req resour
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionElasticSearch == nil {
+	if res.ConnectionElasticsearch == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionElasticSearch(res.ConnectionElasticSearch)
+	data.RefreshFromSharedConnectionElasticsearch(res.ConnectionElasticsearch)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetELASTICSEARCHConnectionRequest{
@@ -756,11 +756,11 @@ func (r *ConnectionELASTICSEARCHResource) Update(ctx context.Context, req resour
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionElasticSearch == nil {
+	if res1.ConnectionElasticsearch == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionElasticSearch(res1.ConnectionElasticSearch)
+	data.RefreshFromSharedConnectionElasticsearch(res1.ConnectionElasticsearch)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

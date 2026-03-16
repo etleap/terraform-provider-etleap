@@ -68,11 +68,11 @@ func (r *ConnectionTWITTERADSResource) Schema(ctx context.Context, req resource.
 		Attributes: map[string]schema.Attribute{
 			"access_token": schema.StringAttribute{
 				Required:    true,
-				Description: `This identifies your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.`,
+				Description: `This identifies your X account when generating Ad reports. Generated under 'Access token & access token secret'.`,
 			},
 			"access_token_secret": schema.StringAttribute{
 				Required:    true,
-				Description: `This authenticates your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.`,
+				Description: `This authenticates your X account when generating Ad reports. Generated under 'Access token & access token secret'.`,
 			},
 			"active": schema.BoolAttribute{
 				Computed: true,
@@ -86,11 +86,11 @@ func (r *ConnectionTWITTERADSResource) Schema(ctx context.Context, req resource.
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
-				Description: `This represents your Twitter developer app when making API requests. Generated under 'Consumer API keys'.`,
+				Description: `This represents your X developer app when making API requests. Generated under 'Consumer API keys'.`,
 			},
 			"app_secret_key": schema.StringAttribute{
 				Required:    true,
-				Description: `This authenticates your Twitter developer app when making API requests. Generated under 'Consumer API keys'.`,
+				Description: `This authenticates your X developer app when making API requests. Generated under 'Consumer API keys'.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,
@@ -114,7 +114,7 @@ func (r *ConnectionTWITTERADSResource) Schema(ctx context.Context, req resource.
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -329,7 +329,7 @@ func (r *ConnectionTWITTERADSResource) Schema(ctx context.Context, req resource.
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Optional:    true,
-				Description: `If you want to create pipelines from entities that uses Twitter API V2 endpoints you need to specify which Twitter accounts you want to retrieve data from. The usernames must be separated by comma and without the @`,
+				Description: `If you want to create pipelines from entities that uses X API V2 endpoints you need to specify which X accounts you want to retrieve data from. The usernames must be separated by comma and without the @`,
 			},
 			"type": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -584,7 +584,7 @@ func (r *ConnectionTWITTERADSResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	request := *data.ToSharedConnectionTwitterInput()
+	request := *data.ToSharedConnectionTwitterAdsInput()
 	res, err := r.client.Connection.CreateTWITTERADSConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -601,11 +601,11 @@ func (r *ConnectionTWITTERADSResource) Create(ctx context.Context, req resource.
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionTwitter == nil {
+	if res.ConnectionTwitterAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwitter(res.ConnectionTwitter)
+	data.RefreshFromSharedConnectionTwitterAds(res.ConnectionTwitterAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetTWITTERADSConnectionRequest{
@@ -627,11 +627,11 @@ func (r *ConnectionTWITTERADSResource) Create(ctx context.Context, req resource.
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionTwitter == nil {
+	if res1.ConnectionTwitterAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwitter(res1.ConnectionTwitter)
+	data.RefreshFromSharedConnectionTwitterAds(res1.ConnectionTwitterAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -676,11 +676,11 @@ func (r *ConnectionTWITTERADSResource) Read(ctx context.Context, req resource.Re
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionTwitter == nil {
+	if res.ConnectionTwitterAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwitter(res.ConnectionTwitter)
+	data.RefreshFromSharedConnectionTwitterAds(res.ConnectionTwitterAds)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -701,10 +701,10 @@ func (r *ConnectionTWITTERADSResource) Update(ctx context.Context, req resource.
 	}
 
 	id := data.ID.ValueString()
-	connectionTwitterUpdate := data.ToSharedConnectionTwitterUpdate()
+	connectionTwitterAdsUpdate := data.ToSharedConnectionTwitterAdsUpdate()
 	request := operations.UpdateTWITTERADSConnectionRequest{
-		ID:                      id,
-		ConnectionTwitterUpdate: connectionTwitterUpdate,
+		ID:                         id,
+		ConnectionTwitterAdsUpdate: connectionTwitterAdsUpdate,
 	}
 	res, err := r.client.Connection.UpdateTWITTERADSConnection(ctx, request)
 	if err != nil {
@@ -722,11 +722,11 @@ func (r *ConnectionTWITTERADSResource) Update(ctx context.Context, req resource.
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionTwitter == nil {
+	if res.ConnectionTwitterAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwitter(res.ConnectionTwitter)
+	data.RefreshFromSharedConnectionTwitterAds(res.ConnectionTwitterAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetTWITTERADSConnectionRequest{
@@ -748,11 +748,11 @@ func (r *ConnectionTWITTERADSResource) Update(ctx context.Context, req resource.
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionTwitter == nil {
+	if res1.ConnectionTwitterAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwitter(res1.ConnectionTwitter)
+	data.RefreshFromSharedConnectionTwitterAds(res1.ConnectionTwitterAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

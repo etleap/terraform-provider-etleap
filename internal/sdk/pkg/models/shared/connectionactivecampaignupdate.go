@@ -33,8 +33,8 @@ func (e *ConnectionActiveCampaignUpdateType) UnmarshalJSON(data []byte) error {
 
 type ConnectionActiveCampaignUpdate struct {
 	// The unique name of this connection.
-	Name *string                            `json:"name,omitempty"`
-	Type ConnectionActiveCampaignUpdateType `json:"type"`
+	Name *string                             `json:"name,omitempty"`
+	Type *ConnectionActiveCampaignUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
@@ -52,9 +52,9 @@ func (o *ConnectionActiveCampaignUpdate) GetName() *string {
 	return o.Name
 }
 
-func (o *ConnectionActiveCampaignUpdate) GetType() ConnectionActiveCampaignUpdateType {
+func (o *ConnectionActiveCampaignUpdate) GetType() *ConnectionActiveCampaignUpdateType {
 	if o == nil {
-		return ConnectionActiveCampaignUpdateType("")
+		return nil
 	}
 	return o.Type
 }

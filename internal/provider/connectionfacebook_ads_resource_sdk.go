@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbInput() *shared.ConnectionFbInput {
+func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFacebookAdsInput() *shared.ConnectionFacebookAdsInput {
 	name := r.Name.ValueString()
-	typeVar := shared.ConnectionFbType(r.Type.ValueString())
+	typeVar := shared.ConnectionFacebookAdsType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
@@ -87,7 +87,7 @@ func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbInput() *shared
 		}
 	}
 	code := r.Code.ValueString()
-	out := shared.ConnectionFbInput{
+	out := shared.ConnectionFacebookAdsInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -96,7 +96,7 @@ func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbInput() *shared
 	return &out
 }
 
-func (r *ConnectionFACEBOOKADSResourceModel) RefreshFromSharedConnectionFb(resp *shared.ConnectionFb) {
+func (r *ConnectionFACEBOOKADSResourceModel) RefreshFromSharedConnectionFacebookAds(resp *shared.ConnectionFacebookAds) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -185,14 +185,14 @@ func (r *ConnectionFACEBOOKADSResourceModel) RefreshFromSharedConnectionFb(resp 
 	r.Username = types.StringValue(resp.Username)
 }
 
-func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbUpdate() *shared.ConnectionFbUpdate {
+func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFacebookAdsUpdate() *shared.ConnectionFacebookAdsUpdate {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
 	}
-	typeVar := shared.ConnectionFbUpdateType(r.Type.ValueString())
+	typeVar := shared.ConnectionFacebookAdsUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
@@ -280,7 +280,7 @@ func (r *ConnectionFACEBOOKADSResourceModel) ToSharedConnectionFbUpdate() *share
 	} else {
 		code = nil
 	}
-	out := shared.ConnectionFbUpdate{
+	out := shared.ConnectionFacebookAdsUpdate{
 		Name:           name,
 		Type:           typeVar,
 		Active:         active,

@@ -287,19 +287,38 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.ActiveCampaign.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceActiveCampaign.LatencyThreshold)
 		r.Source.ActiveCampaign.Type = types.StringValue(string(resp.Source.SourceActiveCampaign.Type))
 	}
-	if resp.Source.SourceBigQuery != nil {
-		r.Source.Bigquery = &SourceBigQuery{}
-		r.Source.Bigquery.ConnectionID = types.StringValue(resp.Source.SourceBigQuery.ConnectionID)
-		r.Source.Bigquery.Dataset = types.StringPointerValue(resp.Source.SourceBigQuery.Dataset)
-		r.Source.Bigquery.LastUpdatedColumn = types.StringPointerValue(resp.Source.SourceBigQuery.LastUpdatedColumn)
-		r.Source.Bigquery.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceBigQuery.LatencyThreshold)
+	if resp.Source.SourceAzureBlobStorage != nil {
+		r.Source.AzureBlobStorage = &SourceAzureBlobStorage{}
+		r.Source.AzureBlobStorage.ConnectionID = types.StringValue(resp.Source.SourceAzureBlobStorage.ConnectionID)
+		r.Source.AzureBlobStorage.FileNameFilter = types.StringPointerValue(resp.Source.SourceAzureBlobStorage.FileNameFilter)
+		r.Source.AzureBlobStorage.FilesCanChange = types.BoolPointerValue(resp.Source.SourceAzureBlobStorage.FilesCanChange)
+		r.Source.AzureBlobStorage.GlobPattern = types.StringPointerValue(resp.Source.SourceAzureBlobStorage.GlobPattern)
+		r.Source.AzureBlobStorage.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceAzureBlobStorage.LatencyThreshold)
+		if resp.Source.SourceAzureBlobStorage.LowWatermark != nil {
+			r.Source.AzureBlobStorage.LowWatermark = types.StringValue(resp.Source.SourceAzureBlobStorage.LowWatermark.String())
+		} else {
+			r.Source.AzureBlobStorage.LowWatermark = types.StringNull()
+		}
+		r.Source.AzureBlobStorage.NewFileBehavior = types.StringValue(string(resp.Source.SourceAzureBlobStorage.NewFileBehavior))
+		r.Source.AzureBlobStorage.Paths = nil
+		for _, v := range resp.Source.SourceAzureBlobStorage.Paths {
+			r.Source.AzureBlobStorage.Paths = append(r.Source.AzureBlobStorage.Paths, types.StringValue(v))
+		}
+		r.Source.AzureBlobStorage.Type = types.StringValue(string(resp.Source.SourceAzureBlobStorage.Type))
+	}
+	if resp.Source.SourceBigquery != nil {
+		r.Source.Bigquery = &SourceBigquery{}
+		r.Source.Bigquery.ConnectionID = types.StringValue(resp.Source.SourceBigquery.ConnectionID)
+		r.Source.Bigquery.Dataset = types.StringPointerValue(resp.Source.SourceBigquery.Dataset)
+		r.Source.Bigquery.LastUpdatedColumn = types.StringPointerValue(resp.Source.SourceBigquery.LastUpdatedColumn)
+		r.Source.Bigquery.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceBigquery.LatencyThreshold)
 		r.Source.Bigquery.PrimaryKeyColumns = nil
-		for _, v := range resp.Source.SourceBigQuery.PrimaryKeyColumns {
+		for _, v := range resp.Source.SourceBigquery.PrimaryKeyColumns {
 			r.Source.Bigquery.PrimaryKeyColumns = append(r.Source.Bigquery.PrimaryKeyColumns, types.StringValue(v))
 		}
-		r.Source.Bigquery.Table = types.StringPointerValue(resp.Source.SourceBigQuery.Table)
-		r.Source.Bigquery.TableNameFilter = types.StringPointerValue(resp.Source.SourceBigQuery.TableNameFilter)
-		r.Source.Bigquery.Type = types.StringValue(string(resp.Source.SourceBigQuery.Type))
+		r.Source.Bigquery.Table = types.StringPointerValue(resp.Source.SourceBigquery.Table)
+		r.Source.Bigquery.TableNameFilter = types.StringPointerValue(resp.Source.SourceBigquery.TableNameFilter)
+		r.Source.Bigquery.Type = types.StringValue(string(resp.Source.SourceBigquery.Type))
 	}
 	if resp.Source.SourceBingAds != nil {
 		r.Source.BingAds = &SourceBingAds{}
@@ -412,12 +431,12 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Egnyte.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceEgnyte.LatencyThreshold)
 		r.Source.Egnyte.Type = types.StringValue(string(resp.Source.SourceEgnyte.Type))
 	}
-	if resp.Source.SourceElasticSearch != nil {
-		r.Source.Elasticsearch = &SourceElasticSearch{}
-		r.Source.Elasticsearch.ConnectionID = types.StringValue(resp.Source.SourceElasticSearch.ConnectionID)
-		r.Source.Elasticsearch.Entity = types.StringValue(resp.Source.SourceElasticSearch.Entity)
-		r.Source.Elasticsearch.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceElasticSearch.LatencyThreshold)
-		r.Source.Elasticsearch.Type = types.StringValue(string(resp.Source.SourceElasticSearch.Type))
+	if resp.Source.SourceElasticsearch != nil {
+		r.Source.Elasticsearch = &SourceElasticsearch{}
+		r.Source.Elasticsearch.ConnectionID = types.StringValue(resp.Source.SourceElasticsearch.ConnectionID)
+		r.Source.Elasticsearch.Entity = types.StringValue(resp.Source.SourceElasticsearch.Entity)
+		r.Source.Elasticsearch.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceElasticsearch.LatencyThreshold)
+		r.Source.Elasticsearch.Type = types.StringValue(string(resp.Source.SourceElasticsearch.Type))
 	}
 	if resp.Source.SourceElluminate != nil {
 		r.Source.Elluminate = &SourceElluminate{}
@@ -463,6 +482,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.FifteenFive.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFifteenFive.LatencyThreshold)
 		r.Source.FifteenFive.Type = types.StringValue(string(resp.Source.SourceFifteenFive.Type))
 	}
+	if resp.Source.SourceFreshcaller != nil {
+		r.Source.Freshcaller = &SourceFreshcaller{}
+		r.Source.Freshcaller.ConnectionID = types.StringValue(resp.Source.SourceFreshcaller.ConnectionID)
+		r.Source.Freshcaller.Entity = types.StringValue(resp.Source.SourceFreshcaller.Entity)
+		r.Source.Freshcaller.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFreshcaller.LatencyThreshold)
+		r.Source.Freshcaller.Type = types.StringValue(string(resp.Source.SourceFreshcaller.Type))
+	}
 	if resp.Source.SourceFreshchat != nil {
 		r.Source.Freshchat = &SourceFreshchat{}
 		r.Source.Freshchat.ConnectionID = types.StringValue(resp.Source.SourceFreshchat.ConnectionID)
@@ -474,6 +500,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 			r.Source.Freshchat.View = append(r.Source.Freshchat.View, types.StringValue(v))
 		}
 	}
+	if resp.Source.SourceFreshdesk != nil {
+		r.Source.Freshdesk = &SourceFreshdesk{}
+		r.Source.Freshdesk.ConnectionID = types.StringValue(resp.Source.SourceFreshdesk.ConnectionID)
+		r.Source.Freshdesk.Entity = types.StringValue(resp.Source.SourceFreshdesk.Entity)
+		r.Source.Freshdesk.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFreshdesk.LatencyThreshold)
+		r.Source.Freshdesk.Type = types.StringValue(string(resp.Source.SourceFreshdesk.Type))
+	}
 	if resp.Source.SourceFreshsales != nil {
 		r.Source.Freshsales = &SourceFreshsales{}
 		r.Source.Freshsales.ConnectionID = types.StringValue(resp.Source.SourceFreshsales.ConnectionID)
@@ -484,13 +517,6 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		for _, v := range resp.Source.SourceFreshsales.View {
 			r.Source.Freshsales.View = append(r.Source.Freshsales.View, types.StringValue(v))
 		}
-	}
-	if resp.Source.SourceFreshworks != nil {
-		r.Source.Freshworks = &SourceFreshworks{}
-		r.Source.Freshworks.ConnectionID = types.StringValue(resp.Source.SourceFreshworks.ConnectionID)
-		r.Source.Freshworks.Entity = types.StringValue(resp.Source.SourceFreshworks.Entity)
-		r.Source.Freshworks.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFreshworks.LatencyThreshold)
-		r.Source.Freshworks.Type = types.StringValue(string(resp.Source.SourceFreshworks.Type))
 	}
 	if resp.Source.SourceFtp != nil {
 		r.Source.Ftp = &SourceFtp{}
@@ -509,6 +535,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 			r.Source.Ftp.Paths = append(r.Source.Ftp.Paths, types.StringValue(v))
 		}
 		r.Source.Ftp.Type = types.StringValue(string(resp.Source.SourceFtp.Type))
+	}
+	if resp.Source.SourceGitlab != nil {
+		r.Source.Gitlab = &SourceGitlab{}
+		r.Source.Gitlab.ConnectionID = types.StringValue(resp.Source.SourceGitlab.ConnectionID)
+		r.Source.Gitlab.Entity = types.StringValue(resp.Source.SourceGitlab.Entity)
+		r.Source.Gitlab.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceGitlab.LatencyThreshold)
+		r.Source.Gitlab.Type = types.StringValue(string(resp.Source.SourceGitlab.Type))
 	}
 	if resp.Source.SourceGong != nil {
 		r.Source.Gong = &SourceGong{}
@@ -629,6 +662,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Kafka.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceKafka.LatencyThreshold)
 		r.Source.Kafka.Type = types.StringValue(string(resp.Source.SourceKafka.Type))
 	}
+	if resp.Source.SourceKinesis != nil {
+		r.Source.Kinesis = &SourceKinesis{}
+		r.Source.Kinesis.ConnectionID = types.StringValue(resp.Source.SourceKinesis.ConnectionID)
+		r.Source.Kinesis.Entity = types.StringValue(resp.Source.SourceKinesis.Entity)
+		r.Source.Kinesis.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceKinesis.LatencyThreshold)
+		r.Source.Kinesis.Type = types.StringValue(string(resp.Source.SourceKinesis.Type))
+	}
 	if resp.Source.SourceKustomer != nil {
 		r.Source.Kustomer = &SourceKustomer{}
 		r.Source.Kustomer.ConnectionID = types.StringValue(resp.Source.SourceKustomer.ConnectionID)
@@ -682,6 +722,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.MicrosoftEntraID.Entity = types.StringValue(resp.Source.SourceMicrosoftEntraID.Entity)
 		r.Source.MicrosoftEntraID.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceMicrosoftEntraID.LatencyThreshold)
 		r.Source.MicrosoftEntraID.Type = types.StringValue(string(resp.Source.SourceMicrosoftEntraID.Type))
+	}
+	if resp.Source.SourceMicrosoftLists != nil {
+		r.Source.MicrosoftLists = &SourceMicrosoftLists{}
+		r.Source.MicrosoftLists.ConnectionID = types.StringValue(resp.Source.SourceMicrosoftLists.ConnectionID)
+		r.Source.MicrosoftLists.Entity = types.StringValue(resp.Source.SourceMicrosoftLists.Entity)
+		r.Source.MicrosoftLists.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceMicrosoftLists.LatencyThreshold)
+		r.Source.MicrosoftLists.Type = types.StringValue(string(resp.Source.SourceMicrosoftLists.Type))
 	}
 	if resp.Source.SourceMixpanel != nil {
 		r.Source.Mixpanel = &SourceMixpanel{}
@@ -829,6 +876,14 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.PostgresSharded.TableNameFilter = types.StringPointerValue(resp.Source.SourcePostgresSharded.TableNameFilter)
 		r.Source.PostgresSharded.Type = types.StringValue(string(resp.Source.SourcePostgresSharded.Type))
 	}
+	if resp.Source.SourceQualtrics != nil {
+		r.Source.Qualtrics = &SourceQualtrics{}
+		r.Source.Qualtrics.ConnectionID = types.StringValue(resp.Source.SourceQualtrics.ConnectionID)
+		r.Source.Qualtrics.Entity = types.StringValue(resp.Source.SourceQualtrics.Entity)
+		r.Source.Qualtrics.Filter = types.StringPointerValue(resp.Source.SourceQualtrics.Filter)
+		r.Source.Qualtrics.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceQualtrics.LatencyThreshold)
+		r.Source.Qualtrics.Type = types.StringValue(string(resp.Source.SourceQualtrics.Type))
+	}
 	if resp.Source.SourceQuoraAds != nil {
 		r.Source.QuoraAds = &SourceQuoraAds{}
 		r.Source.QuoraAds.ConnectionID = types.StringValue(resp.Source.SourceQuoraAds.ConnectionID)
@@ -962,6 +1017,14 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.SapHanaSharded.Table = types.StringPointerValue(resp.Source.SourceSapHanaSharded.Table)
 		r.Source.SapHanaSharded.TableNameFilter = types.StringPointerValue(resp.Source.SourceSapHanaSharded.TableNameFilter)
 		r.Source.SapHanaSharded.Type = types.StringValue(string(resp.Source.SourceSapHanaSharded.Type))
+	}
+	if resp.Source.SourceSapOdata != nil {
+		r.Source.SapOdata = &SourceSapOdata{}
+		r.Source.SapOdata.ConnectionID = types.StringValue(resp.Source.SourceSapOdata.ConnectionID)
+		r.Source.SapOdata.Entity = types.StringValue(resp.Source.SourceSapOdata.Entity)
+		r.Source.SapOdata.IncrementalColumn = types.StringPointerValue(resp.Source.SourceSapOdata.IncrementalColumn)
+		r.Source.SapOdata.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSapOdata.LatencyThreshold)
+		r.Source.SapOdata.Type = types.StringValue(string(resp.Source.SourceSapOdata.Type))
 	}
 	if resp.Source.SourceSeismic != nil {
 		r.Source.Seismic = &SourceSeismic{}
@@ -1123,12 +1186,12 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Stripe.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceStripe.LatencyThreshold)
 		r.Source.Stripe.Type = types.StringValue(string(resp.Source.SourceStripe.Type))
 	}
-	if resp.Source.SourceSumTotal != nil {
-		r.Source.Sumtotal = &SourceSumTotal{}
-		r.Source.Sumtotal.ConnectionID = types.StringValue(resp.Source.SourceSumTotal.ConnectionID)
-		r.Source.Sumtotal.Entity = types.StringValue(resp.Source.SourceSumTotal.Entity)
-		r.Source.Sumtotal.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSumTotal.LatencyThreshold)
-		r.Source.Sumtotal.Type = types.StringValue(string(resp.Source.SourceSumTotal.Type))
+	if resp.Source.SourceSumtotal != nil {
+		r.Source.Sumtotal = &SourceSumtotal{}
+		r.Source.Sumtotal.ConnectionID = types.StringValue(resp.Source.SourceSumtotal.ConnectionID)
+		r.Source.Sumtotal.Entity = types.StringValue(resp.Source.SourceSumtotal.Entity)
+		r.Source.Sumtotal.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSumtotal.LatencyThreshold)
+		r.Source.Sumtotal.Type = types.StringValue(string(resp.Source.SourceSumtotal.Type))
 	}
 	if resp.Source.SourceTheTradeDesk != nil {
 		r.Source.TheTradeDesk = &SourceTheTradeDesk{}
@@ -1160,12 +1223,12 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Twilio.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceTwilio.LatencyThreshold)
 		r.Source.Twilio.Type = types.StringValue(string(resp.Source.SourceTwilio.Type))
 	}
-	if resp.Source.SourceTwitter != nil {
-		r.Source.TwitterAds = &SourceTwitter{}
-		r.Source.TwitterAds.ConnectionID = types.StringValue(resp.Source.SourceTwitter.ConnectionID)
-		r.Source.TwitterAds.Entity = types.StringValue(resp.Source.SourceTwitter.Entity)
-		r.Source.TwitterAds.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceTwitter.LatencyThreshold)
-		r.Source.TwitterAds.Type = types.StringValue(string(resp.Source.SourceTwitter.Type))
+	if resp.Source.SourceTwitterAds != nil {
+		r.Source.TwitterAds = &SourceTwitterAds{}
+		r.Source.TwitterAds.ConnectionID = types.StringValue(resp.Source.SourceTwitterAds.ConnectionID)
+		r.Source.TwitterAds.Entity = types.StringValue(resp.Source.SourceTwitterAds.Entity)
+		r.Source.TwitterAds.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceTwitterAds.LatencyThreshold)
+		r.Source.TwitterAds.Type = types.StringValue(string(resp.Source.SourceTwitterAds.Type))
 	}
 	if resp.Source.SourceUserDefinedAPI != nil {
 		r.Source.UserDefinedAPI = &SourceUserDefinedAPI{}
@@ -1174,12 +1237,12 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.UserDefinedAPI.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceUserDefinedAPI.LatencyThreshold)
 		r.Source.UserDefinedAPI.Type = types.StringValue(string(resp.Source.SourceUserDefinedAPI.Type))
 	}
-	if resp.Source.SourceUserVoice != nil {
-		r.Source.Uservoice = &SourceUserVoice{}
-		r.Source.Uservoice.ConnectionID = types.StringValue(resp.Source.SourceUserVoice.ConnectionID)
-		r.Source.Uservoice.Entity = types.StringValue(resp.Source.SourceUserVoice.Entity)
-		r.Source.Uservoice.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceUserVoice.LatencyThreshold)
-		r.Source.Uservoice.Type = types.StringValue(string(resp.Source.SourceUserVoice.Type))
+	if resp.Source.SourceUservoice != nil {
+		r.Source.Uservoice = &SourceUservoice{}
+		r.Source.Uservoice.ConnectionID = types.StringValue(resp.Source.SourceUservoice.ConnectionID)
+		r.Source.Uservoice.Entity = types.StringValue(resp.Source.SourceUservoice.Entity)
+		r.Source.Uservoice.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceUservoice.LatencyThreshold)
+		r.Source.Uservoice.Type = types.StringValue(string(resp.Source.SourceUservoice.Type))
 	}
 	if resp.Source.SourceVeeva != nil {
 		r.Source.Veeva = &SourceVeeva{}

@@ -14,7 +14,7 @@ ConnectionUSERDEFINEDAPI DataSource
 
 ```terraform
 data "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
-  id = "0bc52831-79fb-4ca0-bf66-6e3fd7ba260f"
+  id = "486379fc-be39-440b-9f3e-9f554f956de3"
 }
 ```
 
@@ -42,6 +42,7 @@ Read-Only:
 - `basic` (Attributes) Authentication method that uses a username/password pair. (see [below for nested schema](#nestedatt--authentication--basic))
 - `bearer` (Attributes) Authentication method that uses a Bearer token. (see [below for nested schema](#nestedatt--authentication--bearer))
 - `header` (Attributes) Authentication method that uses a header. (see [below for nested schema](#nestedatt--authentication--header))
+- `oauth` (Attributes) Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint. (see [below for nested schema](#nestedatt--authentication--oauth))
 
 <a id="nestedatt--authentication--basic"></a>
 ### Nested Schema for `authentication.basic`
@@ -72,13 +73,24 @@ Read-Only:
 - `value` (String)
 
 
+<a id="nestedatt--authentication--oauth"></a>
+### Nested Schema for `authentication.oauth`
+
+Read-Only:
+
+- `client_id` (String) The OAuth 2.0 client identifier.
+- `client_secret` (String) The OAuth 2.0 client secret. This property is stored as a secret in Etleap.
+- `token_url` (String) The OAuth 2.0 token endpoint URL where Etleap will exchange client credentials for an access token.
+- `type` (String) must be one of ["OAUTH"]
+
+
 
 <a id="nestedatt--default_update_schedule"></a>
 ### Nested Schema for `default_update_schedule`
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>
@@ -172,6 +184,7 @@ Read-Only:
 
 - `cursor_uri` (Attributes) Paging strategy that uses a cursor to iterate through the results (see [below for nested schema](#nestedatt--entities--paging_strategy--cursor_uri))
 - `offset` (Attributes) Paging strategy that is based on a result set offset. (see [below for nested schema](#nestedatt--entities--paging_strategy--offset))
+- `page_number` (Attributes) Paging strategy that uses page numbers to iterate through results. (see [below for nested schema](#nestedatt--entities--paging_strategy--page_number))
 
 <a id="nestedatt--entities--paging_strategy--cursor_uri"></a>
 ### Nested Schema for `entities.paging_strategy.cursor_uri`
@@ -194,6 +207,17 @@ Read-Only:
 - `offset_field_name` (String) The name of the request parameter used to specify the offset.
 - `page_size_field_name` (String) The name of the request parameter used to specify the page size.
 - `type` (String) must be one of ["OFFSET"]
+
+
+<a id="nestedatt--entities--paging_strategy--page_number"></a>
+### Nested Schema for `entities.paging_strategy.page_number`
+
+Read-Only:
+
+- `max_page_size` (Number) The maximum page size supported by the API.
+- `page_number_field_name` (String) The name of the request parameter used to specify the page number.
+- `page_size_field_name` (String) The name of the request parameter used to specify the page size.
+- `type` (String) must be one of ["PAGE_NUMBER"]
 
 
 

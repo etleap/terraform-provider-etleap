@@ -7,44 +7,44 @@ import (
 	"fmt"
 )
 
-type SourceElasticSearchUpdateType string
+type SourceElasticsearchUpdateType string
 
 const (
-	SourceElasticSearchUpdateTypeElasticsearch SourceElasticSearchUpdateType = "ELASTICSEARCH"
+	SourceElasticsearchUpdateTypeElasticsearch SourceElasticsearchUpdateType = "ELASTICSEARCH"
 )
 
-func (e SourceElasticSearchUpdateType) ToPointer() *SourceElasticSearchUpdateType {
+func (e SourceElasticsearchUpdateType) ToPointer() *SourceElasticsearchUpdateType {
 	return &e
 }
 
-func (e *SourceElasticSearchUpdateType) UnmarshalJSON(data []byte) error {
+func (e *SourceElasticsearchUpdateType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "ELASTICSEARCH":
-		*e = SourceElasticSearchUpdateType(v)
+		*e = SourceElasticsearchUpdateType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceElasticSearchUpdateType: %v", v)
+		return fmt.Errorf("invalid value for SourceElasticsearchUpdateType: %v", v)
 	}
 }
 
-type SourceElasticSearchUpdate struct {
+type SourceElasticsearchUpdate struct {
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64                         `json:"latencyThreshold,omitempty"`
-	Type             *SourceElasticSearchUpdateType `json:"type,omitempty"`
+	Type             *SourceElasticsearchUpdateType `json:"type,omitempty"`
 }
 
-func (o *SourceElasticSearchUpdate) GetLatencyThreshold() *int64 {
+func (o *SourceElasticsearchUpdate) GetLatencyThreshold() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LatencyThreshold
 }
 
-func (o *SourceElasticSearchUpdate) GetType() *SourceElasticSearchUpdateType {
+func (o *SourceElasticsearchUpdate) GetType() *SourceElasticsearchUpdateType {
 	if o == nil {
 		return nil
 	}

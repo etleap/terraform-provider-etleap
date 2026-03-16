@@ -9,48 +9,48 @@ import (
 	"time"
 )
 
-type ConnectionUserVoiceType string
+type ConnectionUservoiceType string
 
 const (
-	ConnectionUserVoiceTypeUservoice ConnectionUserVoiceType = "USERVOICE"
+	ConnectionUservoiceTypeUservoice ConnectionUservoiceType = "USERVOICE"
 )
 
-func (e ConnectionUserVoiceType) ToPointer() *ConnectionUserVoiceType {
+func (e ConnectionUservoiceType) ToPointer() *ConnectionUservoiceType {
 	return &e
 }
 
-func (e *ConnectionUserVoiceType) UnmarshalJSON(data []byte) error {
+func (e *ConnectionUservoiceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "USERVOICE":
-		*e = ConnectionUserVoiceType(v)
+		*e = ConnectionUservoiceType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionUserVoiceType: %v", v)
+		return fmt.Errorf("invalid value for ConnectionUservoiceType: %v", v)
 	}
 }
 
-// ConnectionUserVoiceStatus - The current status of the connection.
-type ConnectionUserVoiceStatus string
+// ConnectionUservoiceStatus - The current status of the connection.
+type ConnectionUservoiceStatus string
 
 const (
-	ConnectionUserVoiceStatusUnknown     ConnectionUserVoiceStatus = "UNKNOWN"
-	ConnectionUserVoiceStatusUp          ConnectionUserVoiceStatus = "UP"
-	ConnectionUserVoiceStatusDown        ConnectionUserVoiceStatus = "DOWN"
-	ConnectionUserVoiceStatusResize      ConnectionUserVoiceStatus = "RESIZE"
-	ConnectionUserVoiceStatusMaintenance ConnectionUserVoiceStatus = "MAINTENANCE"
-	ConnectionUserVoiceStatusQuota       ConnectionUserVoiceStatus = "QUOTA"
-	ConnectionUserVoiceStatusCreating    ConnectionUserVoiceStatus = "CREATING"
+	ConnectionUservoiceStatusUnknown     ConnectionUservoiceStatus = "UNKNOWN"
+	ConnectionUservoiceStatusUp          ConnectionUservoiceStatus = "UP"
+	ConnectionUservoiceStatusDown        ConnectionUservoiceStatus = "DOWN"
+	ConnectionUservoiceStatusResize      ConnectionUservoiceStatus = "RESIZE"
+	ConnectionUservoiceStatusMaintenance ConnectionUservoiceStatus = "MAINTENANCE"
+	ConnectionUservoiceStatusQuota       ConnectionUservoiceStatus = "QUOTA"
+	ConnectionUservoiceStatusCreating    ConnectionUservoiceStatus = "CREATING"
 )
 
-func (e ConnectionUserVoiceStatus) ToPointer() *ConnectionUserVoiceStatus {
+func (e ConnectionUservoiceStatus) ToPointer() *ConnectionUservoiceStatus {
 	return &e
 }
 
-func (e *ConnectionUserVoiceStatus) UnmarshalJSON(data []byte) error {
+func (e *ConnectionUservoiceStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -69,202 +69,202 @@ func (e *ConnectionUserVoiceStatus) UnmarshalJSON(data []byte) error {
 	case "QUOTA":
 		fallthrough
 	case "CREATING":
-		*e = ConnectionUserVoiceStatus(v)
+		*e = ConnectionUservoiceStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionUserVoiceStatus: %v", v)
+		return fmt.Errorf("invalid value for ConnectionUservoiceStatus: %v", v)
 	}
 }
 
-type ConnectionUserVoiceDefaultUpdateSchedule struct {
-	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+type ConnectionUservoiceDefaultUpdateSchedule struct {
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
 	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
-func (o *ConnectionUserVoiceDefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
+func (o *ConnectionUservoiceDefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
 	if o == nil {
 		return nil
 	}
 	return o.PipelineMode
 }
 
-func (o *ConnectionUserVoiceDefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionUservoiceDefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionUserVoiceDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionUservoiceDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoiceDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionUservoiceDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoiceDefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionUservoiceDefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeDaily
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoiceDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionUservoiceDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoiceDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionUservoiceDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
 
-type ConnectionUserVoice struct {
+type ConnectionUservoice struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
 	// The unique name of this connection.
 	Name string                  `json:"name"`
-	Type ConnectionUserVoiceType `json:"type"`
+	Type ConnectionUservoiceType `json:"type"`
 	// Whether this connection has been marked as active.
 	Active bool `json:"active"`
 	// The current status of the connection.
-	Status ConnectionUserVoiceStatus `json:"status"`
+	Status ConnectionUservoiceStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionUserVoiceDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	DefaultUpdateSchedule []ConnectionUservoiceDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Your current UserVoice subdomain (i.e. SUBDOMAIN.uservoice.com)
 	Subdomain string `json:"subdomain"`
 }
 
-func (c ConnectionUserVoice) MarshalJSON() ([]byte, error) {
+func (c ConnectionUservoice) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(c, "", false)
 }
 
-func (c *ConnectionUserVoice) UnmarshalJSON(data []byte) error {
+func (c *ConnectionUservoice) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoice) GetID() string {
+func (o *ConnectionUservoice) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *ConnectionUserVoice) GetName() string {
+func (o *ConnectionUservoice) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *ConnectionUserVoice) GetType() ConnectionUserVoiceType {
+func (o *ConnectionUservoice) GetType() ConnectionUservoiceType {
 	if o == nil {
-		return ConnectionUserVoiceType("")
+		return ConnectionUservoiceType("")
 	}
 	return o.Type
 }
 
-func (o *ConnectionUserVoice) GetActive() bool {
+func (o *ConnectionUservoice) GetActive() bool {
 	if o == nil {
 		return false
 	}
 	return o.Active
 }
 
-func (o *ConnectionUserVoice) GetStatus() ConnectionUserVoiceStatus {
+func (o *ConnectionUservoice) GetStatus() ConnectionUservoiceStatus {
 	if o == nil {
-		return ConnectionUserVoiceStatus("")
+		return ConnectionUservoiceStatus("")
 	}
 	return o.Status
 }
 
-func (o *ConnectionUserVoice) GetCreateDate() time.Time {
+func (o *ConnectionUservoice) GetCreateDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.CreateDate
 }
 
-func (o *ConnectionUserVoice) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionUservoice) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionUserVoice) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionUservoice) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoice) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionUservoice) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoice) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionUservoice) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeDaily
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoice) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionUservoice) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoice) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionUservoice) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoice) GetDefaultUpdateSchedule() []ConnectionUserVoiceDefaultUpdateSchedule {
+func (o *ConnectionUservoice) GetDefaultUpdateSchedule() []ConnectionUservoiceDefaultUpdateSchedule {
 	if o == nil {
-		return []ConnectionUserVoiceDefaultUpdateSchedule{}
+		return []ConnectionUservoiceDefaultUpdateSchedule{}
 	}
 	return o.DefaultUpdateSchedule
 }
 
-func (o *ConnectionUserVoice) GetSubdomain() string {
+func (o *ConnectionUservoice) GetSubdomain() string {
 	if o == nil {
 		return ""
 	}
 	return o.Subdomain
 }
 
-type ConnectionUserVoiceInput struct {
+type ConnectionUservoiceInput struct {
 	// The unique name of this connection.
 	Name string                  `json:"name"`
-	Type ConnectionUserVoiceType `json:"type"`
+	Type ConnectionUservoiceType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your current UserVoice subdomain (i.e. SUBDOMAIN.uservoice.com)
@@ -273,70 +273,70 @@ type ConnectionUserVoiceInput struct {
 	AccessToken string `json:"accessToken"`
 }
 
-func (o *ConnectionUserVoiceInput) GetName() string {
+func (o *ConnectionUservoiceInput) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *ConnectionUserVoiceInput) GetType() ConnectionUserVoiceType {
+func (o *ConnectionUservoiceInput) GetType() ConnectionUservoiceType {
 	if o == nil {
-		return ConnectionUserVoiceType("")
+		return ConnectionUservoiceType("")
 	}
 	return o.Type
 }
 
-func (o *ConnectionUserVoiceInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionUservoiceInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionUserVoiceInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionUservoiceInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoiceInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionUservoiceInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoiceInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionUservoiceInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeDaily
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoiceInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionUservoiceInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoiceInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionUservoiceInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
 
-func (o *ConnectionUserVoiceInput) GetSubdomain() string {
+func (o *ConnectionUservoiceInput) GetSubdomain() string {
 	if o == nil {
 		return ""
 	}
 	return o.Subdomain
 }
 
-func (o *ConnectionUserVoiceInput) GetAccessToken() string {
+func (o *ConnectionUservoiceInput) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}

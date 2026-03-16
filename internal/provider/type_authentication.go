@@ -3,7 +3,8 @@
 package provider
 
 type Authentication struct {
-	Basic  *BasicAuthentication  `tfsdk:"basic"`
-	Bearer *BearerAuthentication `tfsdk:"bearer"`
-	Header *HeaderAuthentication `tfsdk:"header"`
+	Basic  *BasicAuthentication                   `tfsdk:"basic"`
+	Bearer *BearerAuthentication                  `tfsdk:"bearer"`
+	Header *HeaderAuthentication                  `tfsdk:"header"`
+	Oauth  *Oauth2ClientCredentialsAuthentication `tfsdk:"oauth"`
 }

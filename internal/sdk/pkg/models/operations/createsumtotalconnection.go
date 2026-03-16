@@ -15,7 +15,7 @@ type CreateSUMTOTALConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSumTotal *shared.ConnectionSumTotal
+	ConnectionSumtotal *shared.ConnectionSumtotal
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,11 +41,11 @@ func (o *CreateSUMTOTALConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *CreateSUMTOTALConnectionResponse) GetConnectionSumTotal() *shared.ConnectionSumTotal {
+func (o *CreateSUMTOTALConnectionResponse) GetConnectionSumtotal() *shared.ConnectionSumtotal {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionSumTotal
+	return o.ConnectionSumtotal
 }
 
 func (o *CreateSUMTOTALConnectionResponse) GetErrors() *shared.Errors {

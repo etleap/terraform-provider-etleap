@@ -1,10 +1,10 @@
 resource "etleap_connection_zuora" "my_connectionzuora" {
   client_id                   = "...my_client_id..."
   client_secret               = "...my_client_secret..."
-  deletion_of_export_products = true
+  deletion_of_export_products = false
   endpoint                    = "...my_endpoint..."
   endpoint_hostname           = "...my_endpoint_hostname..."
-  name                        = "Lucille Smith"
-  sandbox                     = true
+  name                        = "Miss Scott Batz IV"
+  sandbox                     = false
   type                        = "ZUORA"
 }

@@ -63,6 +63,7 @@ func (r *ConnectionPOSTGRESDataSourceModel) RefreshFromSharedConnectionPostgres(
 			r.DefaultUpdateSchedule[defaultUpdateScheduleCount].UpdateSchedule = defaultUpdateSchedule1.UpdateSchedule
 		}
 	}
+	r.FetchLobsForUpdatedRows = types.BoolPointerValue(resp.FetchLobsForUpdatedRows)
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.Port = types.Int64Value(resp.Port)

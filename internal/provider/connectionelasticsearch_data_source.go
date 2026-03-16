@@ -71,7 +71,7 @@ func (r *ConnectionELASTICSEARCHDataSource) Schema(ctx context.Context, req data
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
@@ -261,7 +261,7 @@ func (r *ConnectionELASTICSEARCHDataSource) Schema(ctx context.Context, req data
 					`` + "\n" +
 					`Cluster privileges: <ul><li>monitor</li></ul>` + "\n" +
 					` Index privileges: <ul><li>read</li><li>monitor</li><li>view_index_metadata</li></ul>` + "\n" +
-					` Index privileges must be enabled for all indices you want Etleap to access. These permissions can be set up in Kibana or by consulting <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/authorization.html">the Elastic documentation</a> for the version of your cluster.`,
+					` Index privileges must be enabled for all indices you want Etleap to access. These permissions can be set up in Kibana or by consulting <a target="_blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/authorization.html">the Elastic documentation</a> for the version of your cluster.`,
 			},
 		},
 	}
@@ -325,11 +325,11 @@ func (r *ConnectionELASTICSEARCHDataSource) Read(ctx context.Context, req dataso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionElasticSearch == nil {
+	if res.ConnectionElasticsearch == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionElasticSearch(res.ConnectionElasticSearch)
+	data.RefreshFromSharedConnectionElasticsearch(res.ConnectionElasticsearch)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

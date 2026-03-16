@@ -86,24 +86,18 @@ func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoInput() *share
 			}
 		}
 	}
-	soapEndpoint := r.SoapEndpoint.ValueString()
-	soapUserID := r.SoapUserID.ValueString()
-	soapEncryptionKey := r.SoapEncryptionKey.ValueString()
 	restEndpoint := r.RestEndpoint.ValueString()
 	restClientID := r.RestClientID.ValueString()
 	restClientSecret := r.RestClientSecret.ValueString()
 	quotaLimit := r.QuotaLimit.ValueInt64()
 	out := shared.ConnectionMarketoInput{
-		Name:              name,
-		Type:              typeVar,
-		UpdateSchedule:    updateSchedule,
-		SoapEndpoint:      soapEndpoint,
-		SoapUserID:        soapUserID,
-		SoapEncryptionKey: soapEncryptionKey,
-		RestEndpoint:      restEndpoint,
-		RestClientID:      restClientID,
-		RestClientSecret:  restClientSecret,
-		QuotaLimit:        quotaLimit,
+		Name:             name,
+		Type:             typeVar,
+		UpdateSchedule:   updateSchedule,
+		RestEndpoint:     restEndpoint,
+		RestClientID:     restClientID,
+		RestClientSecret: restClientSecret,
+		QuotaLimit:       quotaLimit,
 	}
 	return &out
 }
@@ -164,8 +158,6 @@ func (r *ConnectionMARKETOResourceModel) RefreshFromSharedConnectionMarketo(resp
 	r.QuotaLimit = types.Int64Value(resp.QuotaLimit)
 	r.RestClientID = types.StringValue(resp.RestClientID)
 	r.RestEndpoint = types.StringValue(resp.RestEndpoint)
-	r.SoapEndpoint = types.StringValue(resp.SoapEndpoint)
-	r.SoapUserID = types.StringValue(resp.SoapUserID)
 	r.Status = types.StringValue(string(resp.Status))
 	r.Type = types.StringValue(string(resp.Type))
 	if resp.UpdateSchedule == nil {
@@ -295,24 +287,6 @@ func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoUpdate() *shar
 			}
 		}
 	}
-	soapEndpoint := new(string)
-	if !r.SoapEndpoint.IsUnknown() && !r.SoapEndpoint.IsNull() {
-		*soapEndpoint = r.SoapEndpoint.ValueString()
-	} else {
-		soapEndpoint = nil
-	}
-	soapUserID := new(string)
-	if !r.SoapUserID.IsUnknown() && !r.SoapUserID.IsNull() {
-		*soapUserID = r.SoapUserID.ValueString()
-	} else {
-		soapUserID = nil
-	}
-	soapEncryptionKey := new(string)
-	if !r.SoapEncryptionKey.IsUnknown() && !r.SoapEncryptionKey.IsNull() {
-		*soapEncryptionKey = r.SoapEncryptionKey.ValueString()
-	} else {
-		soapEncryptionKey = nil
-	}
 	restEndpoint := new(string)
 	if !r.RestEndpoint.IsUnknown() && !r.RestEndpoint.IsNull() {
 		*restEndpoint = r.RestEndpoint.ValueString()
@@ -338,17 +312,14 @@ func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoUpdate() *shar
 		quotaLimit = nil
 	}
 	out := shared.ConnectionMarketoUpdate{
-		Name:              name,
-		Type:              typeVar,
-		Active:            active,
-		UpdateSchedule:    updateSchedule,
-		SoapEndpoint:      soapEndpoint,
-		SoapUserID:        soapUserID,
-		SoapEncryptionKey: soapEncryptionKey,
-		RestEndpoint:      restEndpoint,
-		RestClientID:      restClientID,
-		RestClientSecret:  restClientSecret,
-		QuotaLimit:        quotaLimit,
+		Name:             name,
+		Type:             typeVar,
+		Active:           active,
+		UpdateSchedule:   updateSchedule,
+		RestEndpoint:     restEndpoint,
+		RestClientID:     restClientID,
+		RestClientSecret: restClientSecret,
+		QuotaLimit:       quotaLimit,
 	}
 	return &out
 }

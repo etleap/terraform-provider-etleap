@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func (r *ConnectionSUMTOTALResourceModel) ToSharedConnectionSumTotalInput() *shared.ConnectionSumTotalInput {
+func (r *ConnectionSUMTOTALResourceModel) ToSharedConnectionSumtotalInput() *shared.ConnectionSumtotalInput {
 	name := r.Name.ValueString()
-	typeVar := shared.ConnectionSumTotalType(r.Type.ValueString())
+	typeVar := shared.ConnectionSumtotalType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
@@ -89,7 +89,7 @@ func (r *ConnectionSUMTOTALResourceModel) ToSharedConnectionSumTotalInput() *sha
 	tenantURL := r.TenantURL.ValueString()
 	clientID := r.ClientID.ValueString()
 	clientSecret := r.ClientSecret.ValueString()
-	out := shared.ConnectionSumTotalInput{
+	out := shared.ConnectionSumtotalInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -100,7 +100,7 @@ func (r *ConnectionSUMTOTALResourceModel) ToSharedConnectionSumTotalInput() *sha
 	return &out
 }
 
-func (r *ConnectionSUMTOTALResourceModel) RefreshFromSharedConnectionSumTotal(resp *shared.ConnectionSumTotal) {
+func (r *ConnectionSUMTOTALResourceModel) RefreshFromSharedConnectionSumtotal(resp *shared.ConnectionSumtotal) {
 	r.Active = types.BoolValue(resp.Active)
 	r.ClientID = types.StringValue(resp.ClientID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -190,16 +190,16 @@ func (r *ConnectionSUMTOTALResourceModel) RefreshFromSharedConnectionSumTotal(re
 	}
 }
 
-func (r *ConnectionSUMTOTALResourceModel) ToSharedConnectionSumTotalUpdate() *shared.ConnectionSumTotalUpdate {
+func (r *ConnectionSUMTOTALResourceModel) ToSharedConnectionSumtotalUpdate() *shared.ConnectionSumtotalUpdate {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
 	}
-	typeVar := new(shared.ConnectionSumTotalUpdateType)
+	typeVar := new(shared.ConnectionSumtotalUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
-		*typeVar = shared.ConnectionSumTotalUpdateType(r.Type.ValueString())
+		*typeVar = shared.ConnectionSumtotalUpdateType(r.Type.ValueString())
 	} else {
 		typeVar = nil
 	}
@@ -302,7 +302,7 @@ func (r *ConnectionSUMTOTALResourceModel) ToSharedConnectionSumTotalUpdate() *sh
 	} else {
 		clientSecret = nil
 	}
-	out := shared.ConnectionSumTotalUpdate{
+	out := shared.ConnectionSumtotalUpdate{
 		Name:           name,
 		Type:           typeVar,
 		Active:         active,

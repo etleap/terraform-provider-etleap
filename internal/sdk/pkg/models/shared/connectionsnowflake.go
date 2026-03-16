@@ -77,7 +77,7 @@ func (e *ConnectionSnowflakeStatus) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionSnowflakeDefaultUpdateSchedule struct {
-	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
 	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
@@ -155,9 +155,11 @@ type ConnectionSnowflake struct {
 	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
 	Roles []string `json:"roles,omitempty"`
 	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
-	SourceOnly *bool  `default:"false" json:"sourceOnly"`
-	Address    string `json:"address"`
-	Database   string `json:"database"`
+	SourceOnly *bool `default:"false" json:"sourceOnly"`
+	// The name of the [Snowflake Storage Integration](https://docs.snowflake.com/en/user-guide/data-load-s3-config-storage-integration) object to use when Etleap creates temporary Snowflake Stages for loading data. When specified, Etleap uses the Storage Integration instead of passing in temporary AWS credentials for authentication. The Storage Integration must be pre-configured in your Snowflake account with appropriate permissions to access the Etleap S3 intermediate bucket.
+	StorageIntegration *string `json:"storageIntegration,omitempty"`
+	Address            string  `json:"address"`
+	Database           string  `json:"database"`
 	// The virtual warehouse to use once connected.
 	Warehouse string `json:"warehouse"`
 	Username  string `json:"username"`
@@ -290,6 +292,13 @@ func (o *ConnectionSnowflake) GetSourceOnly() *bool {
 	return o.SourceOnly
 }
 
+func (o *ConnectionSnowflake) GetStorageIntegration() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StorageIntegration
+}
+
 func (o *ConnectionSnowflake) GetAddress() string {
 	if o == nil {
 		return ""
@@ -359,9 +368,11 @@ type ConnectionSnowflakeInput struct {
 	// When Etleap creates Snowflake tables, SELECT privileges will be granted to roles specified here. Take into account that the roles are case sensitive.
 	Roles []string `json:"roles,omitempty"`
 	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
-	SourceOnly *bool  `default:"false" json:"sourceOnly"`
-	Address    string `json:"address"`
-	Database   string `json:"database"`
+	SourceOnly *bool `default:"false" json:"sourceOnly"`
+	// The name of the [Snowflake Storage Integration](https://docs.snowflake.com/en/user-guide/data-load-s3-config-storage-integration) object to use when Etleap creates temporary Snowflake Stages for loading data. When specified, Etleap uses the Storage Integration instead of passing in temporary AWS credentials for authentication. The Storage Integration must be pre-configured in your Snowflake account with appropriate permissions to access the Etleap S3 intermediate bucket.
+	StorageIntegration *string `json:"storageIntegration,omitempty"`
+	Address            string  `json:"address"`
+	Database           string  `json:"database"`
 	// The virtual warehouse to use once connected.
 	Warehouse string  `json:"warehouse"`
 	Username  string  `json:"username"`
@@ -458,6 +469,13 @@ func (o *ConnectionSnowflakeInput) GetSourceOnly() *bool {
 		return nil
 	}
 	return o.SourceOnly
+}
+
+func (o *ConnectionSnowflakeInput) GetStorageIntegration() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StorageIntegration
 }
 
 func (o *ConnectionSnowflakeInput) GetAddress() string {

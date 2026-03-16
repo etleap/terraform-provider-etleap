@@ -24,6 +24,8 @@ const (
 	StopReasonSourceInactive            StopReason = "SOURCE_INACTIVE"
 	StopReasonDestinationInactive       StopReason = "DESTINATION_INACTIVE"
 	StopReasonPipelineModeChange        StopReason = "PIPELINE_MODE_CHANGE"
+	StopReasonPipelineScriptError       StopReason = "PIPELINE_SCRIPT_ERROR"
+	StopReasonBrokenIngestError         StopReason = "BROKEN_INGEST_ERROR"
 )
 
 func (e StopReason) ToPointer() *StopReason {
@@ -61,6 +63,10 @@ func (e *StopReason) UnmarshalJSON(data []byte) error {
 	case "DESTINATION_INACTIVE":
 		fallthrough
 	case "PIPELINE_MODE_CHANGE":
+		fallthrough
+	case "PIPELINE_SCRIPT_ERROR":
+		fallthrough
+	case "BROKEN_INGEST_ERROR":
 		*e = StopReason(v)
 		return nil
 	default:

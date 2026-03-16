@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionTWITTERADSDataSourceModel) RefreshFromSharedConnectionTwitter(resp *shared.ConnectionTwitter) {
+func (r *ConnectionTWITTERADSDataSourceModel) RefreshFromSharedConnectionTwitterAds(resp *shared.ConnectionTwitterAds) {
 	r.Active = types.BoolValue(resp.Active)
 	r.AppKey = types.StringValue(resp.AppKey)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))

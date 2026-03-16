@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionMONGODBDataSourceModel) RefreshFromSharedConnectionMongo(resp *shared.ConnectionMongo) {
+func (r *ConnectionMONGODBDataSourceModel) RefreshFromSharedConnectionMongodb(resp *shared.ConnectionMongodb) {
 	r.Active = types.BoolValue(resp.Active)
 	r.AuthDatabaseName = types.StringPointerValue(resp.AuthDatabaseName)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))

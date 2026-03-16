@@ -1,3 +1,3 @@
 data "etleap_connection_iceberg" "my_connectioniceberg" {
-  id = "eb08764d-4cef-4e74-a31d-ce7ef02af672"
+  id = "ae5badb7-1678-4cc6-9dd7-ad9e688b9e08"
 }

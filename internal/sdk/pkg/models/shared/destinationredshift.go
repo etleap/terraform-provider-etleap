@@ -51,7 +51,7 @@ type DestinationRedshift struct {
 	DistributionStyle *DistributionStyle `json:"distributionStyle,omitempty"`
 	// Truncate strings to 64K characters, the max allowed by Redshift in a single column. Defaults to `false`.
 	TruncateStrings *bool `default:"false" json:"truncateStrings"`
-	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
+	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to `false`.
 	RetainHistory *bool `default:"false" json:"retainHistory"`
 	// Whether columns should be compressed. Defaults to `true`.
 	CompressColumns *bool `default:"true" json:"compressColumns"`

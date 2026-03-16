@@ -96,7 +96,7 @@ func (r *ConnectionQUORAADSResource) Schema(ctx context.Context, req resource.Sc
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -564,7 +564,7 @@ func (r *ConnectionQUORAADSResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := *data.ToSharedConnectionQuoraInput()
+	request := *data.ToSharedConnectionQuoraAdsInput()
 	res, err := r.client.Connection.CreateQUORAADSConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -581,11 +581,11 @@ func (r *ConnectionQUORAADSResource) Create(ctx context.Context, req resource.Cr
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionQuora == nil {
+	if res.ConnectionQuoraAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionQuora(res.ConnectionQuora)
+	data.RefreshFromSharedConnectionQuoraAds(res.ConnectionQuoraAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetQUORAADSConnectionRequest{
@@ -607,11 +607,11 @@ func (r *ConnectionQUORAADSResource) Create(ctx context.Context, req resource.Cr
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionQuora == nil {
+	if res1.ConnectionQuoraAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionQuora(res1.ConnectionQuora)
+	data.RefreshFromSharedConnectionQuoraAds(res1.ConnectionQuoraAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -656,11 +656,11 @@ func (r *ConnectionQUORAADSResource) Read(ctx context.Context, req resource.Read
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionQuora == nil {
+	if res.ConnectionQuoraAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionQuora(res.ConnectionQuora)
+	data.RefreshFromSharedConnectionQuoraAds(res.ConnectionQuoraAds)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -681,10 +681,10 @@ func (r *ConnectionQUORAADSResource) Update(ctx context.Context, req resource.Up
 	}
 
 	id := data.ID.ValueString()
-	connectionQuoraUpdate := data.ToSharedConnectionQuoraUpdate()
+	connectionQuoraAdsUpdate := data.ToSharedConnectionQuoraAdsUpdate()
 	request := operations.UpdateQUORAADSConnectionRequest{
-		ID:                    id,
-		ConnectionQuoraUpdate: connectionQuoraUpdate,
+		ID:                       id,
+		ConnectionQuoraAdsUpdate: connectionQuoraAdsUpdate,
 	}
 	res, err := r.client.Connection.UpdateQUORAADSConnection(ctx, request)
 	if err != nil {
@@ -702,11 +702,11 @@ func (r *ConnectionQUORAADSResource) Update(ctx context.Context, req resource.Up
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionQuora == nil {
+	if res.ConnectionQuoraAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionQuora(res.ConnectionQuora)
+	data.RefreshFromSharedConnectionQuoraAds(res.ConnectionQuoraAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetQUORAADSConnectionRequest{
@@ -728,11 +728,11 @@ func (r *ConnectionQUORAADSResource) Update(ctx context.Context, req resource.Up
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionQuora == nil {
+	if res1.ConnectionQuoraAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionQuora(res1.ConnectionQuora)
+	data.RefreshFromSharedConnectionQuoraAds(res1.ConnectionQuoraAds)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

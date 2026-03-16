@@ -194,7 +194,12 @@ func (r *ConnectionGOOGLEADSResourceModel) ToSharedConnectionGoogleAdsUpdate() *
 	} else {
 		name = nil
 	}
-	typeVar := shared.ConnectionGoogleAdsUpdateType(r.Type.ValueString())
+	typeVar := new(shared.ConnectionGoogleAdsUpdateType)
+	if !r.Type.IsUnknown() && !r.Type.IsNull() {
+		*typeVar = shared.ConnectionGoogleAdsUpdateType(r.Type.ValueString())
+	} else {
+		typeVar = nil
+	}
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()

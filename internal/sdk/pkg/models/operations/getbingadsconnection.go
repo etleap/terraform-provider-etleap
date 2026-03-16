@@ -26,7 +26,7 @@ type GetBINGADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBing *shared.ConnectionBing
+	ConnectionBingAds *shared.ConnectionBingAds
 	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
@@ -52,11 +52,11 @@ func (o *GetBINGADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetBINGADSConnectionResponse) GetConnectionBing() *shared.ConnectionBing {
+func (o *GetBINGADSConnectionResponse) GetConnectionBingAds() *shared.ConnectionBingAds {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionBing
+	return o.ConnectionBingAds
 }
 
 func (o *GetBINGADSConnectionResponse) GetErrors() *shared.Errors {

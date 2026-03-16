@@ -954,7 +954,7 @@ func (s *Pipeline) RemoveAccessToPipeline(ctx context.Context, request operation
 // Add a new destination to a pipeline. The destination that was added is returned by this endpoint on success.
 //
 // <!-- theme: warning -->
-// > Adding new destinations is currently in [preview](https://docs.etleap.com/docs/documentation/kn2fj3lprn9z9-preview-features) which means that this endpoint is subject to non-backwards-compatible and breaking changes.
+// > Adding new destinations is currently in [preview](https://docs.etleap.com/documentation/reference/preview-features/) which means that this endpoint is subject to non-backwards-compatible and breaking changes.
 func (s *Pipeline) AddDestinationToPipeline(ctx context.Context, request operations.AddDestinationToPipelineRequest) (*operations.AddDestinationToPipelineResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/pipelines/{id}/destinations", request, nil)
@@ -1041,7 +1041,7 @@ func (s *Pipeline) AddDestinationToPipeline(ctx context.Context, request operati
 // Remove a destination from a pipeline that has multiple destinations.
 //
 // <!-- theme: warning -->
-// > This feature is currently in [preview](https://docs.etleap.com/docs/documentation/kn2fj3lprn9z9-preview-features) which means that it is subject to non-backwards-compatible and breaking changes.
+// > This feature is currently in [preview](https://docs.etleap.com/documentation/reference/preview-features/) which means that it is subject to non-backwards-compatible and breaking changes.
 func (s *Pipeline) RemoveDestinationForPipeline(ctx context.Context, request operations.RemoveDestinationForPipelineRequest) (*operations.RemoveDestinationForPipelineResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/pipelines/{id}/destinations/{connectionId}", request, nil)

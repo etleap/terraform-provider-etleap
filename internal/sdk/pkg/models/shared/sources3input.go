@@ -33,7 +33,7 @@ func (e *SourceS3InputType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceS3InputNewFileBehavior - Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
+// SourceS3InputNewFileBehavior - Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details.
 type SourceS3InputNewFileBehavior string
 
 const (
@@ -72,7 +72,7 @@ type SourceS3Input struct {
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 	FileNameFilter *string `json:"fileNameFilter,omitempty"`
-	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
+	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details.
 	NewFileBehavior SourceS3InputNewFileBehavior `json:"newFileBehavior"`
 	// Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
 	LowWatermark *types.Date `json:"lowWatermark,omitempty"`

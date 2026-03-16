@@ -26,7 +26,7 @@ type GetSUMTOTALConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionSumTotal *shared.ConnectionSumTotal
+	ConnectionSumtotal *shared.ConnectionSumtotal
 	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
@@ -52,11 +52,11 @@ func (o *GetSUMTOTALConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetSUMTOTALConnectionResponse) GetConnectionSumTotal() *shared.ConnectionSumTotal {
+func (o *GetSUMTOTALConnectionResponse) GetConnectionSumtotal() *shared.ConnectionSumtotal {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionSumTotal
+	return o.ConnectionSumtotal
 }
 
 func (o *GetSUMTOTALConnectionResponse) GetErrors() *shared.Errors {

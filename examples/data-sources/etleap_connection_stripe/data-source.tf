@@ -1,3 +1,3 @@
 data "etleap_connection_stripe" "my_connectionstripe" {
-  id = "d36590d8-4228-406e-9428-55c71c1ec7a0"
+  id = "ce221b69-5365-411b-9f06-0b1a7d9be0d0"
 }

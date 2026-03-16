@@ -8,8 +8,8 @@ import (
 )
 
 type UpdateFACEBOOKADSConnectionRequest struct {
-	ID                 string                     `pathParam:"style=simple,explode=false,name=id"`
-	ConnectionFbUpdate *shared.ConnectionFbUpdate `request:"mediaType=application/json"`
+	ID                          string                              `pathParam:"style=simple,explode=false,name=id"`
+	ConnectionFacebookAdsUpdate *shared.ConnectionFacebookAdsUpdate `request:"mediaType=application/json"`
 }
 
 func (o *UpdateFACEBOOKADSConnectionRequest) GetID() string {
@@ -19,11 +19,11 @@ func (o *UpdateFACEBOOKADSConnectionRequest) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateFACEBOOKADSConnectionRequest) GetConnectionFbUpdate() *shared.ConnectionFbUpdate {
+func (o *UpdateFACEBOOKADSConnectionRequest) GetConnectionFacebookAdsUpdate() *shared.ConnectionFacebookAdsUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionFbUpdate
+	return o.ConnectionFacebookAdsUpdate
 }
 
 type UpdateFACEBOOKADSConnectionResponse struct {
@@ -34,7 +34,7 @@ type UpdateFACEBOOKADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionFb *shared.ConnectionFb
+	ConnectionFacebookAds *shared.ConnectionFacebookAds
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -60,11 +60,11 @@ func (o *UpdateFACEBOOKADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateFACEBOOKADSConnectionResponse) GetConnectionFb() *shared.ConnectionFb {
+func (o *UpdateFACEBOOKADSConnectionResponse) GetConnectionFacebookAds() *shared.ConnectionFacebookAds {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionFb
+	return o.ConnectionFacebookAds
 }
 
 func (o *UpdateFACEBOOKADSConnectionResponse) GetErrors() *shared.Errors {

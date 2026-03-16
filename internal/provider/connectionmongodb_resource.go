@@ -113,7 +113,7 @@ func (r *ConnectionMONGODBResource) Schema(ctx context.Context, req resource.Sch
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -659,7 +659,7 @@ func (r *ConnectionMONGODBResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := *data.ToSharedConnectionMongoInput()
+	request := *data.ToSharedConnectionMongodbInput()
 	res, err := r.client.Connection.CreateMONGODBConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -676,11 +676,11 @@ func (r *ConnectionMONGODBResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionMongo == nil {
+	if res.ConnectionMongodb == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongodb(res.ConnectionMongodb)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetMONGODBConnectionRequest{
@@ -702,11 +702,11 @@ func (r *ConnectionMONGODBResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionMongo == nil {
+	if res1.ConnectionMongodb == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res1.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongodb(res1.ConnectionMongodb)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -751,11 +751,11 @@ func (r *ConnectionMONGODBResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionMongo == nil {
+	if res.ConnectionMongodb == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongodb(res.ConnectionMongodb)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -776,10 +776,10 @@ func (r *ConnectionMONGODBResource) Update(ctx context.Context, req resource.Upd
 	}
 
 	id := data.ID.ValueString()
-	connectionMongoUpdate := data.ToSharedConnectionMongoUpdate()
+	connectionMongodbUpdate := data.ToSharedConnectionMongodbUpdate()
 	request := operations.UpdateMONGODBConnectionRequest{
-		ID:                    id,
-		ConnectionMongoUpdate: connectionMongoUpdate,
+		ID:                      id,
+		ConnectionMongodbUpdate: connectionMongodbUpdate,
 	}
 	res, err := r.client.Connection.UpdateMONGODBConnection(ctx, request)
 	if err != nil {
@@ -797,11 +797,11 @@ func (r *ConnectionMONGODBResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionMongo == nil {
+	if res.ConnectionMongodb == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongodb(res.ConnectionMongodb)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetMONGODBConnectionRequest{
@@ -823,11 +823,11 @@ func (r *ConnectionMONGODBResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionMongo == nil {
+	if res1.ConnectionMongodb == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionMongo(res1.ConnectionMongo)
+	data.RefreshFromSharedConnectionMongodb(res1.ConnectionMongodb)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

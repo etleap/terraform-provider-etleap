@@ -10,10 +10,8 @@ import (
 
 func (r *ConnectionBLACKLINEDataSourceModel) RefreshFromSharedConnectionBlackline(resp *shared.ConnectionBlackline) {
 	r.Active = types.BoolValue(resp.Active)
-	r.APIKey = types.StringValue(resp.APIKey)
 	r.BaseURL = types.StringValue(resp.BaseURL)
 	r.ClientID = types.StringValue(resp.ClientID)
-	r.ClientSecret = types.StringValue(resp.ClientSecret)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]

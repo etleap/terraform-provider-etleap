@@ -37,7 +37,7 @@ type SourceImpactRadius struct {
 	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-	// The Impact Radius entity, spelled the same way as in the UI.
+	// The Impact entity, spelled the same way as in the UI.
 	Entity string `json:"entity"`
 }
 
