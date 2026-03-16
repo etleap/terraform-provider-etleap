@@ -18,13 +18,14 @@ const (
 	Oauth2ConnectionTypeHubspot         Oauth2ConnectionType = "HUBSPOT"
 	Oauth2ConnectionTypeIntercom        Oauth2ConnectionType = "INTERCOM"
 	Oauth2ConnectionTypeJiraCloud       Oauth2ConnectionType = "JIRA_CLOUD"
+	Oauth2ConnectionTypeMicrosoftLists  Oauth2ConnectionType = "MICROSOFT_LISTS"
 	Oauth2ConnectionTypeOutlook         Oauth2ConnectionType = "OUTLOOK"
 	Oauth2ConnectionTypeOutreach        Oauth2ConnectionType = "OUTREACH"
 	Oauth2ConnectionTypeQuoraAds        Oauth2ConnectionType = "QUORA_ADS"
 	Oauth2ConnectionTypeSalesforce      Oauth2ConnectionType = "SALESFORCE"
 	Oauth2ConnectionTypeSeismic         Oauth2ConnectionType = "SEISMIC"
-	Oauth2ConnectionTypeSquare          Oauth2ConnectionType = "SQUARE"
 	Oauth2ConnectionTypeSnapchatAds     Oauth2ConnectionType = "SNAPCHAT_ADS"
+	Oauth2ConnectionTypeSquare          Oauth2ConnectionType = "SQUARE"
 	Oauth2ConnectionTypeVerizonMediaDsp Oauth2ConnectionType = "VERIZON_MEDIA_DSP"
 	Oauth2ConnectionTypeZendesk         Oauth2ConnectionType = "ZENDESK"
 	Oauth2ConnectionTypeZoomPhone       Oauth2ConnectionType = "ZOOM_PHONE"
@@ -56,6 +57,8 @@ func (e *Oauth2ConnectionType) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "JIRA_CLOUD":
 		fallthrough
+	case "MICROSOFT_LISTS":
+		fallthrough
 	case "OUTLOOK":
 		fallthrough
 	case "OUTREACH":
@@ -66,9 +69,9 @@ func (e *Oauth2ConnectionType) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "SEISMIC":
 		fallthrough
-	case "SQUARE":
-		fallthrough
 	case "SNAPCHAT_ADS":
+		fallthrough
+	case "SQUARE":
 		fallthrough
 	case "VERIZON_MEDIA_DSP":
 		fallthrough

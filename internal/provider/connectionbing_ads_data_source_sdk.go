@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionBINGADSDataSourceModel) RefreshFromSharedConnectionBing(resp *shared.ConnectionBing) {
+func (r *ConnectionBINGADSDataSourceModel) RefreshFromSharedConnectionBingAds(resp *shared.ConnectionBingAds) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {

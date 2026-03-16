@@ -39,12 +39,6 @@ type ConnectionMarketoUpdate struct {
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// E.g. 'https://259-ZDK-675.mktoapi.com/soap/mktows/2_9'. In the Marketo UI this is the 'Endpoint' value in the 'SOAP API' section.
-	SoapEndpoint *string `json:"soapEndpoint,omitempty"`
-	// E.g. 'MKTOWS_259-ZDK-675_1'. In the Marketo UI this is the 'User ID' value in the 'SOAP API' section.
-	SoapUserID *string `json:"soapUserId,omitempty"`
-	// In the Marketo UI this is the 'Encryption Key' value in the 'SOAP API' section.
-	SoapEncryptionKey *string `json:"soapEncryptionKey,omitempty"`
 	// E.g. 'https://259-ZDK-675.mktorest.com/rest'. In the Marketo UI this is the 'Endpoint' value in the 'REST API' section.
 	RestEndpoint *string `json:"restEndpoint,omitempty"`
 	// Under Admin -> Integration -> LaunchPoint, you can find this value by clicking 'View Details'.
@@ -116,27 +110,6 @@ func (o *ConnectionMarketoUpdate) GetUpdateScheduleMonthly() *UpdateScheduleMode
 		return v.UpdateScheduleModeMonthly
 	}
 	return nil
-}
-
-func (o *ConnectionMarketoUpdate) GetSoapEndpoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SoapEndpoint
-}
-
-func (o *ConnectionMarketoUpdate) GetSoapUserID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SoapUserID
-}
-
-func (o *ConnectionMarketoUpdate) GetSoapEncryptionKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SoapEncryptionKey
 }
 
 func (o *ConnectionMarketoUpdate) GetRestEndpoint() *string {

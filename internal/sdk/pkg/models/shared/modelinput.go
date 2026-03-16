@@ -6,7 +6,7 @@ type ModelInput struct {
 	Name             string              `json:"name"`
 	Warehouse        WarehouseTypesInput `json:"warehouse"`
 	QueryAndTriggers QueryAndTriggers    `json:"queryAndTriggers"`
-	// How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-updates) for more information.
+	// How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-updates) for more information.
 	UpdateSchedule RefreshScheduleTypes `json:"updateSchedule"`
 	// An array of users' emails to share the model with. Once shared, a model cannot be unshared, and future calls to `PATCH` can only add to this list.
 	//

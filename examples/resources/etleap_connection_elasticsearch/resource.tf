@@ -1,10 +1,10 @@
 resource "etleap_connection_elasticsearch" "my_connectionelasticsearch" {
-  address                     = "30987 Rosalia Inlet"
+  address                     = "27958 Reichert Loaf"
   deletion_of_export_products = false
-  name                        = "Louis Gerlach"
+  name                        = "Willie Bode"
   password                    = "...my_password..."
-  port                        = 5
+  port                        = 3
   ssl_enabled                 = false
   type                        = "ELASTICSEARCH"
-  username                    = "Valentine.Reichert"
+  username                    = "Edna98"
 }

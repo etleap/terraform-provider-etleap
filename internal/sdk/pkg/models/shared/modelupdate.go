@@ -24,7 +24,7 @@ type ModelQueryAndTriggers struct {
 	// SELECT col1, col2 FROM {{abcd1234}};
 	// ```
 	//
-	// [See the Model documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-dependencies) for more information on Model dependencies.
+	// [See the Model documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-dependencies) for more information on Model dependencies.
 	Query string `json:"query"`
 	// A list of model dependency ids. An update will be automatically triggered in this model if any of the dependencies listed here get new data. Any ids given here must be present as dependencies in the `query`.
 	Triggers []string `json:"triggers"`
@@ -274,7 +274,7 @@ const (
 	ModelUpdateScheduleTypesTypeMonthly ModelUpdateScheduleTypesType = "MONTHLY"
 )
 
-// ModelUpdateScheduleTypes - How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-updates) for more information.
+// ModelUpdateScheduleTypes - How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-updates) for more information.
 type ModelUpdateScheduleTypes struct {
 	RefreshScheduleModeNeverScheduleTypesNeverScheduleMode     *RefreshScheduleModeNeverScheduleTypesNeverScheduleMode
 	RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode   *RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode
@@ -437,7 +437,7 @@ type ModelUpdate struct {
 	Paused           *bool                  `json:"paused,omitempty"`
 	Warehouse        *WarehouseUpdateTypes  `json:"warehouse,omitempty"`
 	QueryAndTriggers *ModelQueryAndTriggers `json:"queryAndTriggers,omitempty"`
-	// How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-updates) for more information.
+	// How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-updates) for more information.
 	UpdateSchedule *ModelUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// A list of users' email to share the model with.
 	//

@@ -8,8 +8,8 @@ import (
 )
 
 type UpdateVERIZONMEDIADSPConnectionRequest struct {
-	ID                           string                               `pathParam:"style=simple,explode=false,name=id"`
-	ConnectionVerizonMediaUpdate *shared.ConnectionVerizonMediaUpdate `request:"mediaType=application/json"`
+	ID                              string                                  `pathParam:"style=simple,explode=false,name=id"`
+	ConnectionVerizonMediaDspUpdate *shared.ConnectionVerizonMediaDspUpdate `request:"mediaType=application/json"`
 }
 
 func (o *UpdateVERIZONMEDIADSPConnectionRequest) GetID() string {
@@ -19,11 +19,11 @@ func (o *UpdateVERIZONMEDIADSPConnectionRequest) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateVERIZONMEDIADSPConnectionRequest) GetConnectionVerizonMediaUpdate() *shared.ConnectionVerizonMediaUpdate {
+func (o *UpdateVERIZONMEDIADSPConnectionRequest) GetConnectionVerizonMediaDspUpdate() *shared.ConnectionVerizonMediaDspUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionVerizonMediaUpdate
+	return o.ConnectionVerizonMediaDspUpdate
 }
 
 type UpdateVERIZONMEDIADSPConnectionResponse struct {
@@ -34,7 +34,7 @@ type UpdateVERIZONMEDIADSPConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionVerizonMedia *shared.ConnectionVerizonMedia
+	ConnectionVerizonMediaDsp *shared.ConnectionVerizonMediaDsp
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -60,11 +60,11 @@ func (o *UpdateVERIZONMEDIADSPConnectionResponse) GetRawResponse() *http.Respons
 	return o.RawResponse
 }
 
-func (o *UpdateVERIZONMEDIADSPConnectionResponse) GetConnectionVerizonMedia() *shared.ConnectionVerizonMedia {
+func (o *UpdateVERIZONMEDIADSPConnectionResponse) GetConnectionVerizonMediaDsp() *shared.ConnectionVerizonMediaDsp {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionVerizonMedia
+	return o.ConnectionVerizonMediaDsp
 }
 
 func (o *UpdateVERIZONMEDIADSPConnectionResponse) GetErrors() *shared.Errors {

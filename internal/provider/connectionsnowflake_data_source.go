@@ -41,6 +41,7 @@ type ConnectionSNOWFLAKEDataSourceModel struct {
 	Schema                types.String                        `tfsdk:"schema"`
 	SourceOnly            types.Bool                          `tfsdk:"source_only"`
 	Status                types.String                        `tfsdk:"status"`
+	StorageIntegration    types.String                        `tfsdk:"storage_integration"`
 	Type                  types.String                        `tfsdk:"type"`
 	UpdateSchedule        *UpdateScheduleTypes                `tfsdk:"update_schedule"`
 	Username              types.String                        `tfsdk:"username"`
@@ -107,7 +108,7 @@ func (r *ConnectionSNOWFLAKEDataSource) Schema(ctx context.Context, req datasour
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
@@ -218,6 +219,10 @@ func (r *ConnectionSNOWFLAKEDataSource) Schema(ctx context.Context, req datasour
 			"status": schema.StringAttribute{
 				Computed:    true,
 				Description: `The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]`,
+			},
+			"storage_integration": schema.StringAttribute{
+				Computed:    true,
+				Description: `The name of the [Snowflake Storage Integration](https://docs.snowflake.com/en/user-guide/data-load-s3-config-storage-integration) object to use when Etleap creates temporary Snowflake Stages for loading data. When specified, Etleap uses the Storage Integration instead of passing in temporary AWS credentials for authentication. The Storage Integration must be pre-configured in your Snowflake account with appropriate permissions to access the Etleap S3 intermediate bucket.`,
 			},
 			"type": schema.StringAttribute{
 				Computed:    true,

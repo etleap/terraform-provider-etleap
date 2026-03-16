@@ -14,7 +14,7 @@ ConnectionTWITTERADS DataSource
 
 ```terraform
 data "etleap_connection_twitter_ads" "my_connectiontwitter_ads" {
-  id = "fc92ab87-587c-47ab-99fa-dbde2ab7b68e"
+  id = "70037a11-77d1-43b0-91b1-f0dee52da561"
 }
 ```
 
@@ -24,13 +24,13 @@ data "etleap_connection_twitter_ads" "my_connectiontwitter_ads" {
 ### Read-Only
 
 - `active` (Boolean) Whether this connection has been marked as active.
-- `app_key` (String) This represents your Twitter developer app when making API requests. Generated under 'Consumer API keys'.
+- `app_key` (String) This represents your X developer app when making API requests. Generated under 'Consumer API keys'.
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `id` (String) The ID of this resource.
 - `name` (String) The unique name of this connection.
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]
-- `twitter_usernames` (String) If you want to create pipelines from entities that uses Twitter API V2 endpoints you need to specify which Twitter accounts you want to retrieve data from. The usernames must be separated by comma and without the @
+- `twitter_usernames` (String) If you want to create pipelines from entities that uses X API V2 endpoints you need to specify which X accounts you want to retrieve data from. The usernames must be separated by comma and without the @
 - `type` (String) must be one of ["TWITTER_ADS"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
@@ -39,7 +39,7 @@ data "etleap_connection_twitter_ads" "my_connectiontwitter_ads" {
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

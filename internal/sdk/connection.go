@@ -1176,6 +1176,249 @@ func (s *Connection) RestartCdcProcess(ctx context.Context, request operations.R
 	return res, nil
 }
 
+// AddUserDefinedAPIEntity - Add a user-defined API connection entity
+// Adds a new entity to a User-Defined API connection. The entity definition must include all required fields such as display name, API URL, path to results, REST method, and pipeline mode.
+func (s *Connection) AddUserDefinedAPIEntity(ctx context.Context, request operations.AddUserDefinedAPIEntityRequest) (*operations.AddUserDefinedAPIEntityResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}/entities", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "UserDefinedAPIEntity", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.AddUserDefinedAPIEntityResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 201:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.UserDefinedAPIEntity
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.UserDefinedAPIEntity = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateUserDefinedAPIEntity - Update a user-defined API connection entity
+// Update a user-defined API connection.
+func (s *Connection) UpdateUserDefinedAPIEntity(ctx context.Context, request operations.UpdateUserDefinedAPIEntityRequest) (*operations.UpdateUserDefinedAPIEntityResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}/entities/{entityId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "UserDefinedAPIEntityUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateUserDefinedAPIEntityResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.UserDefinedAPIEntity
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.UserDefinedAPIEntity = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteUserDefinedAPIEntity - Delete a user-defined API connection entity
+// Deletes an entity from a User-Defined API connection. The entity cannot be deleted if it is being used by any pipelines or is the only one in the connection.
+func (s *Connection) DeleteUserDefinedAPIEntity(ctx context.Context, request operations.DeleteUserDefinedAPIEntityRequest) (*operations.DeleteUserDefinedAPIEntityResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}/entities/{entityId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteUserDefinedAPIEntityResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // UpdateACTIVECAMPAIGNConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateACTIVECAMPAIGNConnection(ctx context.Context, request operations.UpdateACTIVECAMPAIGNConnectionRequest) (*operations.UpdateACTIVECAMPAIGNConnectionResponse, error) {
@@ -1407,6 +1650,237 @@ func (s *Connection) DeleteACTIVECAMPAIGNConnection(ctx context.Context, request
 	return res, nil
 }
 
+// UpdateAZUREBLOBSTORAGEConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateAZUREBLOBSTORAGEConnection(ctx context.Context, request operations.UpdateAZUREBLOBSTORAGEConnectionRequest) (*operations.UpdateAZUREBLOBSTORAGEConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#AZURE_BLOB_STORAGE", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionAzureBlobStorageUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateAZUREBLOBSTORAGEConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionAzureBlobStorage
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionAzureBlobStorage = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetAZUREBLOBSTORAGEConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetAZUREBLOBSTORAGEConnection(ctx context.Context, request operations.GetAZUREBLOBSTORAGEConnectionRequest) (*operations.GetAZUREBLOBSTORAGEConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#AZURE_BLOB_STORAGE", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetAZUREBLOBSTORAGEConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionAzureBlobStorage
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionAzureBlobStorage = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteAZUREBLOBSTORAGEConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteAZUREBLOBSTORAGEConnection(ctx context.Context, request operations.DeleteAZUREBLOBSTORAGEConnectionRequest) (*operations.DeleteAZUREBLOBSTORAGEConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#AZURE_BLOB_STORAGE", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteAZUREBLOBSTORAGEConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // UpdateBIGQUERYConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateBIGQUERYConnection(ctx context.Context, request operations.UpdateBIGQUERYConnectionRequest) (*operations.UpdateBIGQUERYConnectionResponse, error) {
@@ -1416,7 +1890,7 @@ func (s *Connection) UpdateBIGQUERYConnection(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionBigQueryUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionBigqueryUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -1461,12 +1935,12 @@ func (s *Connection) UpdateBIGQUERYConnection(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionBigQuery
+			var out shared.ConnectionBigquery
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionBigQuery = &out
+			res.ConnectionBigquery = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -1535,12 +2009,12 @@ func (s *Connection) GetBIGQUERYConnection(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionBigQuery
+			var out shared.ConnectionBigquery
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionBigQuery = &out
+			res.ConnectionBigquery = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -1647,7 +2121,7 @@ func (s *Connection) UpdateBINGADSConnection(ctx context.Context, request operat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionBingUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionBingAdsUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -1692,12 +2166,12 @@ func (s *Connection) UpdateBINGADSConnection(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionBing
+			var out shared.ConnectionBingAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionBing = &out
+			res.ConnectionBingAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -1766,12 +2240,12 @@ func (s *Connection) GetBINGADSConnection(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionBing
+			var out shared.ConnectionBingAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionBing = &out
+			res.ConnectionBingAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -3024,237 +3498,6 @@ func (s *Connection) DeleteCRITEOConnection(ctx context.Context, request operati
 	return res, nil
 }
 
-// UpdateDb2Connection - Update a connection
-// Update connection.
-func (s *Connection) UpdateDb2Connection(ctx context.Context, request operations.UpdateDb2ConnectionRequest) (*operations.UpdateDb2ConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#DB2", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDb2Update", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.UpdateDb2ConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionDb2
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionDb2 = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// GetDb2Connection - Get a connection
-// Get the connection with the associated ID.
-func (s *Connection) GetDb2Connection(ctx context.Context, request operations.GetDb2ConnectionRequest) (*operations.GetDb2ConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#DB2", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.GetDb2ConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionDb2
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionDb2 = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// DeleteDb2Connection - Delete a connection
-// Delete a connection by its unique identifier.
-func (s *Connection) DeleteDb2Connection(ctx context.Context, request operations.DeleteDb2ConnectionRequest) (*operations.DeleteDb2ConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#DB2", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.DeleteDb2ConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 204:
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		fallthrough
-	case httpRes.StatusCode == 409:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
 // UpdateDb2SHARDEDConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateDb2SHARDEDConnection(ctx context.Context, request operations.UpdateDb2SHARDEDConnectionRequest) (*operations.UpdateDb2SHARDEDConnectionResponse, error) {
@@ -3457,6 +3700,237 @@ func (s *Connection) DeleteDb2SHARDEDConnection(ctx context.Context, request ope
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteDb2SHARDEDConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateDb2Connection - Update a connection
+// Update connection.
+func (s *Connection) UpdateDb2Connection(ctx context.Context, request operations.UpdateDb2ConnectionRequest) (*operations.UpdateDb2ConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#DB2", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDb2Update", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateDb2ConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionDb2
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionDb2 = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetDb2Connection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetDb2Connection(ctx context.Context, request operations.GetDb2ConnectionRequest) (*operations.GetDb2ConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#DB2", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetDb2ConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionDb2
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionDb2 = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteDb2Connection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteDb2Connection(ctx context.Context, request operations.DeleteDb2ConnectionRequest) (*operations.DeleteDb2ConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#DB2", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteDb2ConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -3957,7 +4431,7 @@ func (s *Connection) UpdateELASTICSEARCHConnection(ctx context.Context, request 
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionElasticSearchUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionElasticsearchUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -4002,12 +4476,12 @@ func (s *Connection) UpdateELASTICSEARCHConnection(ctx context.Context, request 
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionElasticSearch
+			var out shared.ConnectionElasticsearch
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionElasticSearch = &out
+			res.ConnectionElasticsearch = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -4076,12 +4550,12 @@ func (s *Connection) GetELASTICSEARCHConnection(ctx context.Context, request ope
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionElasticSearch
+			var out shared.ConnectionElasticsearch
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionElasticSearch = &out
+			res.ConnectionElasticsearch = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -4881,7 +5355,7 @@ func (s *Connection) UpdateFACEBOOKADSConnection(ctx context.Context, request op
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionFbUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionFacebookAdsUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -4926,12 +5400,12 @@ func (s *Connection) UpdateFACEBOOKADSConnection(ctx context.Context, request op
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionFb
+			var out shared.ConnectionFacebookAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionFb = &out
+			res.ConnectionFacebookAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -5000,12 +5474,12 @@ func (s *Connection) GetFACEBOOKADSConnection(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionFb
+			var out shared.ConnectionFacebookAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionFb = &out
+			res.ConnectionFacebookAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -5334,6 +5808,237 @@ func (s *Connection) DeleteFIFTEENFIVEConnection(ctx context.Context, request op
 	return res, nil
 }
 
+// UpdateFRESHCALLERConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateFRESHCALLERConnection(ctx context.Context, request operations.UpdateFRESHCALLERConnectionRequest) (*operations.UpdateFRESHCALLERConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#FRESHCALLER", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionFreshcallerUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateFRESHCALLERConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionFreshcaller
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionFreshcaller = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetFRESHCALLERConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetFRESHCALLERConnection(ctx context.Context, request operations.GetFRESHCALLERConnectionRequest) (*operations.GetFRESHCALLERConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#FRESHCALLER", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetFRESHCALLERConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionFreshcaller
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionFreshcaller = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteFRESHCALLERConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteFRESHCALLERConnection(ctx context.Context, request operations.DeleteFRESHCALLERConnectionRequest) (*operations.DeleteFRESHCALLERConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#FRESHCALLER", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteFRESHCALLERConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // UpdateFRESHCHATConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateFRESHCHATConnection(ctx context.Context, request operations.UpdateFRESHCHATConnectionRequest) (*operations.UpdateFRESHCHATConnectionResponse, error) {
@@ -5536,6 +6241,237 @@ func (s *Connection) DeleteFRESHCHATConnection(ctx context.Context, request oper
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteFRESHCHATConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateFRESHDESKConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateFRESHDESKConnection(ctx context.Context, request operations.UpdateFRESHDESKConnectionRequest) (*operations.UpdateFRESHDESKConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#FRESHDESK", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionFreshdeskUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateFRESHDESKConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionFreshdesk
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionFreshdesk = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetFRESHDESKConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetFRESHDESKConnection(ctx context.Context, request operations.GetFRESHDESKConnectionRequest) (*operations.GetFRESHDESKConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#FRESHDESK", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetFRESHDESKConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionFreshdesk
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionFreshdesk = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteFRESHDESKConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteFRESHDESKConnection(ctx context.Context, request operations.DeleteFRESHDESKConnectionRequest) (*operations.DeleteFRESHDESKConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#FRESHDESK", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteFRESHDESKConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -5796,237 +6732,6 @@ func (s *Connection) DeleteFRESHSALESConnection(ctx context.Context, request ope
 	return res, nil
 }
 
-// UpdateFRESHWORKSConnection - Update a connection
-// Update connection.
-func (s *Connection) UpdateFRESHWORKSConnection(ctx context.Context, request operations.UpdateFRESHWORKSConnectionRequest) (*operations.UpdateFRESHWORKSConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#FRESHWORKS", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionFreshworksUpdate", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.UpdateFRESHWORKSConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionFreshworks
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionFreshworks = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// GetFRESHWORKSConnection - Get a connection
-// Get the connection with the associated ID.
-func (s *Connection) GetFRESHWORKSConnection(ctx context.Context, request operations.GetFRESHWORKSConnectionRequest) (*operations.GetFRESHWORKSConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#FRESHWORKS", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.GetFRESHWORKSConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionFreshworks
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionFreshworks = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// DeleteFRESHWORKSConnection - Delete a connection
-// Delete a connection by its unique identifier.
-func (s *Connection) DeleteFRESHWORKSConnection(ctx context.Context, request operations.DeleteFRESHWORKSConnectionRequest) (*operations.DeleteFRESHWORKSConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#FRESHWORKS", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.DeleteFRESHWORKSConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 204:
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		fallthrough
-	case httpRes.StatusCode == 409:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
 // UpdateFTPConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateFTPConnection(ctx context.Context, request operations.UpdateFTPConnectionRequest) (*operations.UpdateFTPConnectionResponse, error) {
@@ -6229,6 +6934,237 @@ func (s *Connection) DeleteFTPConnection(ctx context.Context, request operations
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteFTPConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateGITLABConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateGITLABConnection(ctx context.Context, request operations.UpdateGITLABConnectionRequest) (*operations.UpdateGITLABConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#GITLAB", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionGitlabUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateGITLABConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionGitlab
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionGitlab = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetGITLABConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetGITLABConnection(ctx context.Context, request operations.GetGITLABConnectionRequest) (*operations.GetGITLABConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#GITLAB", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetGITLABConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionGitlab
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionGitlab = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteGITLABConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteGITLABConnection(ctx context.Context, request operations.DeleteGITLABConnectionRequest) (*operations.DeleteGITLABConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#GITLAB", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteGITLABConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -8799,6 +9735,237 @@ func (s *Connection) DeleteJIRACLOUDConnection(ctx context.Context, request oper
 	return res, nil
 }
 
+// UpdateJIRAConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateJIRAConnection(ctx context.Context, request operations.UpdateJIRAConnectionRequest) (*operations.UpdateJIRAConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#JIRA", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionJiraUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateJIRAConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionJira
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionJira = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetJIRAConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetJIRAConnection(ctx context.Context, request operations.GetJIRAConnectionRequest) (*operations.GetJIRAConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#JIRA", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetJIRAConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionJira
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionJira = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteJIRAConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteJIRAConnection(ctx context.Context, request operations.DeleteJIRAConnectionRequest) (*operations.DeleteJIRAConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#JIRA", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteJIRAConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // UpdateKAFKAConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateKAFKAConnection(ctx context.Context, request operations.UpdateKAFKAConnectionRequest) (*operations.UpdateKAFKAConnectionResponse, error) {
@@ -9001,6 +10168,237 @@ func (s *Connection) DeleteKAFKAConnection(ctx context.Context, request operatio
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteKAFKAConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateKINESISConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateKINESISConnection(ctx context.Context, request operations.UpdateKINESISConnectionRequest) (*operations.UpdateKINESISConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#KINESIS", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionKinesisUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateKINESISConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionKinesis
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionKinesis = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetKINESISConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetKINESISConnection(ctx context.Context, request operations.GetKINESISConnectionRequest) (*operations.GetKINESISConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#KINESIS", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetKINESISConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionKinesis
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionKinesis = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteKINESISConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteKINESISConnection(ctx context.Context, request operations.DeleteKINESISConnectionRequest) (*operations.DeleteKINESISConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#KINESIS", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteKINESISConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -10416,6 +11814,237 @@ func (s *Connection) DeleteMICROSOFTENTRAIDConnection(ctx context.Context, reque
 	return res, nil
 }
 
+// UpdateMICROSOFTLISTSConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateMICROSOFTLISTSConnection(ctx context.Context, request operations.UpdateMICROSOFTLISTSConnectionRequest) (*operations.UpdateMICROSOFTLISTSConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#MICROSOFT_LISTS", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionMicrosoftListsUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateMICROSOFTLISTSConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionMicrosoftLists
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionMicrosoftLists = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetMICROSOFTLISTSConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetMICROSOFTLISTSConnection(ctx context.Context, request operations.GetMICROSOFTLISTSConnectionRequest) (*operations.GetMICROSOFTLISTSConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#MICROSOFT_LISTS", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetMICROSOFTLISTSConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionMicrosoftLists
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionMicrosoftLists = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteMICROSOFTLISTSConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteMICROSOFTLISTSConnection(ctx context.Context, request operations.DeleteMICROSOFTLISTSConnectionRequest) (*operations.DeleteMICROSOFTLISTSConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#MICROSOFT_LISTS", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteMICROSOFTLISTSConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // UpdateMIXPANELConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateMIXPANELConnection(ctx context.Context, request operations.UpdateMIXPANELConnectionRequest) (*operations.UpdateMIXPANELConnectionResponse, error) {
@@ -10656,7 +12285,7 @@ func (s *Connection) UpdateMONGODBConnection(ctx context.Context, request operat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionMongoUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionMongodbUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -10701,12 +12330,12 @@ func (s *Connection) UpdateMONGODBConnection(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionMongo
+			var out shared.ConnectionMongodb
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionMongo = &out
+			res.ConnectionMongodb = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -10775,12 +12404,12 @@ func (s *Connection) GetMONGODBConnection(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionMongo
+			var out shared.ConnectionMongodb
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionMongo = &out
+			res.ConnectionMongodb = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -10849,237 +12478,6 @@ func (s *Connection) DeleteMONGODBConnection(ctx context.Context, request operat
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteMONGODBConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 204:
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		fallthrough
-	case httpRes.StatusCode == 409:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// UpdateMYSQLConnection - Update a connection
-// Update connection.
-func (s *Connection) UpdateMYSQLConnection(ctx context.Context, request operations.UpdateMYSQLConnectionRequest) (*operations.UpdateMYSQLConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#MYSQL", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionMysqlUpdate", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.UpdateMYSQLConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionMysql
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionMysql = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// GetMYSQLConnection - Get a connection
-// Get the connection with the associated ID.
-func (s *Connection) GetMYSQLConnection(ctx context.Context, request operations.GetMYSQLConnectionRequest) (*operations.GetMYSQLConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#MYSQL", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.GetMYSQLConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionMysql
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionMysql = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// DeleteMYSQLConnection - Delete a connection
-// Delete a connection by its unique identifier.
-func (s *Connection) DeleteMYSQLConnection(ctx context.Context, request operations.DeleteMYSQLConnectionRequest) (*operations.DeleteMYSQLConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#MYSQL", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.DeleteMYSQLConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -11311,6 +12709,237 @@ func (s *Connection) DeleteMYSQLSHARDEDConnection(ctx context.Context, request o
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteMYSQLSHARDEDConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateMYSQLConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateMYSQLConnection(ctx context.Context, request operations.UpdateMYSQLConnectionRequest) (*operations.UpdateMYSQLConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#MYSQL", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionMysqlUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateMYSQLConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionMysql
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionMysql = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetMYSQLConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetMYSQLConnection(ctx context.Context, request operations.GetMYSQLConnectionRequest) (*operations.GetMYSQLConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#MYSQL", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetMYSQLConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionMysql
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionMysql = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteMYSQLConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteMYSQLConnection(ctx context.Context, request operations.DeleteMYSQLConnectionRequest) (*operations.DeleteMYSQLConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#MYSQL", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteMYSQLConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -11802,237 +13431,6 @@ func (s *Connection) DeleteNETSUITEV2Connection(ctx context.Context, request ope
 	return res, nil
 }
 
-// UpdateORACLEConnection - Update a connection
-// Update connection.
-func (s *Connection) UpdateORACLEConnection(ctx context.Context, request operations.UpdateORACLEConnectionRequest) (*operations.UpdateORACLEConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#ORACLE", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionOracleUpdate", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.UpdateORACLEConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionOracle
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionOracle = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// GetORACLEConnection - Get a connection
-// Get the connection with the associated ID.
-func (s *Connection) GetORACLEConnection(ctx context.Context, request operations.GetORACLEConnectionRequest) (*operations.GetORACLEConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#ORACLE", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.GetORACLEConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionOracle
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionOracle = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// DeleteORACLEConnection - Delete a connection
-// Delete a connection by its unique identifier.
-func (s *Connection) DeleteORACLEConnection(ctx context.Context, request operations.DeleteORACLEConnectionRequest) (*operations.DeleteORACLEConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#ORACLE", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.DeleteORACLEConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 204:
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		fallthrough
-	case httpRes.StatusCode == 409:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
 // UpdateORACLESHARDEDConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateORACLESHARDEDConnection(ctx context.Context, request operations.UpdateORACLESHARDEDConnectionRequest) (*operations.UpdateORACLESHARDEDConnectionResponse, error) {
@@ -12235,6 +13633,237 @@ func (s *Connection) DeleteORACLESHARDEDConnection(ctx context.Context, request 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteORACLESHARDEDConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateORACLEConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateORACLEConnection(ctx context.Context, request operations.UpdateORACLEConnectionRequest) (*operations.UpdateORACLEConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#ORACLE", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionOracleUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateORACLEConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionOracle
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionOracle = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetORACLEConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetORACLEConnection(ctx context.Context, request operations.GetORACLEConnectionRequest) (*operations.GetORACLEConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#ORACLE", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetORACLEConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionOracle
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionOracle = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteORACLEConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteORACLEConnection(ctx context.Context, request operations.DeleteORACLEConnectionRequest) (*operations.DeleteORACLEConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#ORACLE", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteORACLEConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -12957,237 +14586,6 @@ func (s *Connection) DeletePINTERESTADSConnection(ctx context.Context, request o
 	return res, nil
 }
 
-// UpdatePOSTGRESConnection - Update a connection
-// Update connection.
-func (s *Connection) UpdatePOSTGRESConnection(ctx context.Context, request operations.UpdatePOSTGRESConnectionRequest) (*operations.UpdatePOSTGRESConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#POSTGRES", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionPostgresUpdate", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.UpdatePOSTGRESConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionPostgres
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionPostgres = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// GetPOSTGRESConnection - Get a connection
-// Get the connection with the associated ID.
-func (s *Connection) GetPOSTGRESConnection(ctx context.Context, request operations.GetPOSTGRESConnectionRequest) (*operations.GetPOSTGRESConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#POSTGRES", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.GetPOSTGRESConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionPostgres
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionPostgres = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// DeletePOSTGRESConnection - Delete a connection
-// Delete a connection by its unique identifier.
-func (s *Connection) DeletePOSTGRESConnection(ctx context.Context, request operations.DeletePOSTGRESConnectionRequest) (*operations.DeletePOSTGRESConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#POSTGRES", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.DeletePOSTGRESConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 204:
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		fallthrough
-	case httpRes.StatusCode == 409:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
 // UpdatePOSTGRESSHARDEDConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdatePOSTGRESSHARDEDConnection(ctx context.Context, request operations.UpdatePOSTGRESSHARDEDConnectionRequest) (*operations.UpdatePOSTGRESSHARDEDConnectionResponse, error) {
@@ -13419,6 +14817,468 @@ func (s *Connection) DeletePOSTGRESSHARDEDConnection(ctx context.Context, reques
 	return res, nil
 }
 
+// UpdatePOSTGRESConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdatePOSTGRESConnection(ctx context.Context, request operations.UpdatePOSTGRESConnectionRequest) (*operations.UpdatePOSTGRESConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#POSTGRES", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionPostgresUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdatePOSTGRESConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionPostgres
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionPostgres = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetPOSTGRESConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetPOSTGRESConnection(ctx context.Context, request operations.GetPOSTGRESConnectionRequest) (*operations.GetPOSTGRESConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#POSTGRES", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetPOSTGRESConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionPostgres
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionPostgres = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeletePOSTGRESConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeletePOSTGRESConnection(ctx context.Context, request operations.DeletePOSTGRESConnectionRequest) (*operations.DeletePOSTGRESConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#POSTGRES", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeletePOSTGRESConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateQUALTRICSConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateQUALTRICSConnection(ctx context.Context, request operations.UpdateQUALTRICSConnectionRequest) (*operations.UpdateQUALTRICSConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#QUALTRICS", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionQualtricsUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateQUALTRICSConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionQualtrics
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionQualtrics = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetQUALTRICSConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetQUALTRICSConnection(ctx context.Context, request operations.GetQUALTRICSConnectionRequest) (*operations.GetQUALTRICSConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#QUALTRICS", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetQUALTRICSConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionQualtrics
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionQualtrics = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteQUALTRICSConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteQUALTRICSConnection(ctx context.Context, request operations.DeleteQUALTRICSConnectionRequest) (*operations.DeleteQUALTRICSConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#QUALTRICS", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteQUALTRICSConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // UpdateQUORAADSConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateQUORAADSConnection(ctx context.Context, request operations.UpdateQUORAADSConnectionRequest) (*operations.UpdateQUORAADSConnectionResponse, error) {
@@ -13428,7 +15288,7 @@ func (s *Connection) UpdateQUORAADSConnection(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionQuoraUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionQuoraAdsUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -13473,12 +15333,12 @@ func (s *Connection) UpdateQUORAADSConnection(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionQuora
+			var out shared.ConnectionQuoraAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionQuora = &out
+			res.ConnectionQuoraAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -13547,12 +15407,12 @@ func (s *Connection) GetQUORAADSConnection(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionQuora
+			var out shared.ConnectionQuoraAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionQuora = &out
+			res.ConnectionQuoraAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -14112,237 +15972,6 @@ func (s *Connection) DeleteRECURLYConnection(ctx context.Context, request operat
 	return res, nil
 }
 
-// UpdateREDSHIFTConnection - Update a connection
-// Update connection.
-func (s *Connection) UpdateREDSHIFTConnection(ctx context.Context, request operations.UpdateREDSHIFTConnectionRequest) (*operations.UpdateREDSHIFTConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#REDSHIFT", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionRedshiftUpdate", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.UpdateREDSHIFTConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionRedshift
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionRedshift = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// GetREDSHIFTConnection - Get a connection
-// Get the connection with the associated ID.
-func (s *Connection) GetREDSHIFTConnection(ctx context.Context, request operations.GetREDSHIFTConnectionRequest) (*operations.GetREDSHIFTConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#REDSHIFT", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.GetREDSHIFTConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionRedshift
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionRedshift = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// DeleteREDSHIFTConnection - Delete a connection
-// Delete a connection by its unique identifier.
-func (s *Connection) DeleteREDSHIFTConnection(ctx context.Context, request operations.DeleteREDSHIFTConnectionRequest) (*operations.DeleteREDSHIFTConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#REDSHIFT", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.DeleteREDSHIFTConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 204:
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		fallthrough
-	case httpRes.StatusCode == 409:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
 // UpdateREDSHIFTSHARDEDConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateREDSHIFTSHARDEDConnection(ctx context.Context, request operations.UpdateREDSHIFTSHARDEDConnectionRequest) (*operations.UpdateREDSHIFTSHARDEDConnectionResponse, error) {
@@ -14545,6 +16174,237 @@ func (s *Connection) DeleteREDSHIFTSHARDEDConnection(ctx context.Context, reques
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteREDSHIFTSHARDEDConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateREDSHIFTConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateREDSHIFTConnection(ctx context.Context, request operations.UpdateREDSHIFTConnectionRequest) (*operations.UpdateREDSHIFTConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#REDSHIFT", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionRedshiftUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateREDSHIFTConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionRedshift
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionRedshift = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetREDSHIFTConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetREDSHIFTConnection(ctx context.Context, request operations.GetREDSHIFTConnectionRequest) (*operations.GetREDSHIFTConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#REDSHIFT", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetREDSHIFTConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionRedshift
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionRedshift = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteREDSHIFTConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteREDSHIFTConnection(ctx context.Context, request operations.DeleteREDSHIFTConnectionRequest) (*operations.DeleteREDSHIFTConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#REDSHIFT", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteREDSHIFTConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -15036,237 +16896,6 @@ func (s *Connection) DeleteS3INPUTConnection(ctx context.Context, request operat
 	return res, nil
 }
 
-// UpdateSALESFORCEConnection - Update a connection
-// Update connection.
-func (s *Connection) UpdateSALESFORCEConnection(ctx context.Context, request operations.UpdateSALESFORCEConnectionRequest) (*operations.UpdateSALESFORCEConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SALESFORCE", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSalesforceUpdate", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.UpdateSALESFORCEConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSalesforce
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionSalesforce = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// GetSALESFORCEConnection - Get a connection
-// Get the connection with the associated ID.
-func (s *Connection) GetSALESFORCEConnection(ctx context.Context, request operations.GetSALESFORCEConnectionRequest) (*operations.GetSALESFORCEConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SALESFORCE", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.GetSALESFORCEConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSalesforce
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionSalesforce = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// DeleteSALESFORCEConnection - Delete a connection
-// Delete a connection by its unique identifier.
-func (s *Connection) DeleteSALESFORCEConnection(ctx context.Context, request operations.DeleteSALESFORCEConnectionRequest) (*operations.DeleteSALESFORCEConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SALESFORCE", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.DeleteSALESFORCEConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 204:
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		fallthrough
-	case httpRes.StatusCode == 409:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
 // UpdateSALESFORCEMARKETINGCLOUDConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateSALESFORCEMARKETINGCLOUDConnection(ctx context.Context, request operations.UpdateSALESFORCEMARKETINGCLOUDConnectionRequest) (*operations.UpdateSALESFORCEMARKETINGCLOUDConnectionResponse, error) {
@@ -15469,6 +17098,237 @@ func (s *Connection) DeleteSALESFORCEMARKETINGCLOUDConnection(ctx context.Contex
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteSALESFORCEMARKETINGCLOUDConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateSALESFORCEConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateSALESFORCEConnection(ctx context.Context, request operations.UpdateSALESFORCEConnectionRequest) (*operations.UpdateSALESFORCEConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SALESFORCE", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSalesforceUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateSALESFORCEConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionSalesforce
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionSalesforce = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetSALESFORCEConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetSALESFORCEConnection(ctx context.Context, request operations.GetSALESFORCEConnectionRequest) (*operations.GetSALESFORCEConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SALESFORCE", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetSALESFORCEConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionSalesforce
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionSalesforce = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteSALESFORCEConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteSALESFORCEConnection(ctx context.Context, request operations.DeleteSALESFORCEConnectionRequest) (*operations.DeleteSALESFORCEConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SALESFORCE", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteSALESFORCEConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -15729,6 +17589,237 @@ func (s *Connection) DeleteSAPCONCURConnection(ctx context.Context, request oper
 	return res, nil
 }
 
+// UpdateSAPHANASHARDEDConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateSAPHANASHARDEDConnection(ctx context.Context, request operations.UpdateSAPHANASHARDEDConnectionRequest) (*operations.UpdateSAPHANASHARDEDConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SAP_HANA_SHARDED", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSapHanaShardedUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateSAPHANASHARDEDConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionSapHanaSharded
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionSapHanaSharded = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetSAPHANASHARDEDConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetSAPHANASHARDEDConnection(ctx context.Context, request operations.GetSAPHANASHARDEDConnectionRequest) (*operations.GetSAPHANASHARDEDConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SAP_HANA_SHARDED", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetSAPHANASHARDEDConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionSapHanaSharded
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionSapHanaSharded = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteSAPHANASHARDEDConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteSAPHANASHARDEDConnection(ctx context.Context, request operations.DeleteSAPHANASHARDEDConnectionRequest) (*operations.DeleteSAPHANASHARDEDConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SAP_HANA_SHARDED", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteSAPHANASHARDEDConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // UpdateSAPHANAConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateSAPHANAConnection(ctx context.Context, request operations.UpdateSAPHANAConnectionRequest) (*operations.UpdateSAPHANAConnectionResponse, error) {
@@ -15960,16 +18051,16 @@ func (s *Connection) DeleteSAPHANAConnection(ctx context.Context, request operat
 	return res, nil
 }
 
-// UpdateSAPHANASHARDEDConnection - Update a connection
+// UpdateSAPODATAConnection - Update a connection
 // Update connection.
-func (s *Connection) UpdateSAPHANASHARDEDConnection(ctx context.Context, request operations.UpdateSAPHANASHARDEDConnectionRequest) (*operations.UpdateSAPHANASHARDEDConnectionResponse, error) {
+func (s *Connection) UpdateSAPODATAConnection(ctx context.Context, request operations.UpdateSAPODATAConnectionRequest) (*operations.UpdateSAPODATAConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SAP_HANA_SHARDED", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SAP_ODATA", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSapHanaShardedUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSapOdataUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -16005,7 +18096,7 @@ func (s *Connection) UpdateSAPHANASHARDEDConnection(ctx context.Context, request
 
 	contentType := httpRes.Header.Get("Content-Type")
 
-	res := &operations.UpdateSAPHANASHARDEDConnectionResponse{
+	res := &operations.UpdateSAPODATAConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -16014,12 +18105,12 @@ func (s *Connection) UpdateSAPHANASHARDEDConnection(ctx context.Context, request
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSapHanaSharded
+			var out shared.ConnectionSapOdata
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionSapHanaSharded = &out
+			res.ConnectionSapOdata = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -16044,11 +18135,11 @@ func (s *Connection) UpdateSAPHANASHARDEDConnection(ctx context.Context, request
 	return res, nil
 }
 
-// GetSAPHANASHARDEDConnection - Get a connection
+// GetSAPODATAConnection - Get a connection
 // Get the connection with the associated ID.
-func (s *Connection) GetSAPHANASHARDEDConnection(ctx context.Context, request operations.GetSAPHANASHARDEDConnectionRequest) (*operations.GetSAPHANASHARDEDConnectionResponse, error) {
+func (s *Connection) GetSAPODATAConnection(ctx context.Context, request operations.GetSAPODATAConnectionRequest) (*operations.GetSAPODATAConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SAP_HANA_SHARDED", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SAP_ODATA", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
@@ -16079,7 +18170,7 @@ func (s *Connection) GetSAPHANASHARDEDConnection(ctx context.Context, request op
 
 	contentType := httpRes.Header.Get("Content-Type")
 
-	res := &operations.GetSAPHANASHARDEDConnectionResponse{
+	res := &operations.GetSAPODATAConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -16088,12 +18179,12 @@ func (s *Connection) GetSAPHANASHARDEDConnection(ctx context.Context, request op
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSapHanaSharded
+			var out shared.ConnectionSapOdata
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionSapHanaSharded = &out
+			res.ConnectionSapOdata = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -16116,11 +18207,11 @@ func (s *Connection) GetSAPHANASHARDEDConnection(ctx context.Context, request op
 	return res, nil
 }
 
-// DeleteSAPHANASHARDEDConnection - Delete a connection
+// DeleteSAPODATAConnection - Delete a connection
 // Delete a connection by its unique identifier.
-func (s *Connection) DeleteSAPHANASHARDEDConnection(ctx context.Context, request operations.DeleteSAPHANASHARDEDConnectionRequest) (*operations.DeleteSAPHANASHARDEDConnectionResponse, error) {
+func (s *Connection) DeleteSAPODATAConnection(ctx context.Context, request operations.DeleteSAPODATAConnectionRequest) (*operations.DeleteSAPODATAConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SAP_HANA_SHARDED", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SAP_ODATA", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
@@ -16161,7 +18252,7 @@ func (s *Connection) DeleteSAPHANASHARDEDConnection(ctx context.Context, request
 
 	contentType := httpRes.Header.Get("Content-Type")
 
-	res := &operations.DeleteSAPHANASHARDEDConnectionResponse{
+	res := &operations.DeleteSAPODATAConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -17577,237 +19668,6 @@ func (s *Connection) DeleteSNAPCHATADSConnection(ctx context.Context, request op
 	return res, nil
 }
 
-// UpdateSNOWFLAKEConnection - Update a connection
-// Update connection.
-func (s *Connection) UpdateSNOWFLAKEConnection(ctx context.Context, request operations.UpdateSNOWFLAKEConnectionRequest) (*operations.UpdateSNOWFLAKEConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SNOWFLAKE", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSnowflakeUpdate", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.UpdateSNOWFLAKEConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSnowflake
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionSnowflake = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// GetSNOWFLAKEConnection - Get a connection
-// Get the connection with the associated ID.
-func (s *Connection) GetSNOWFLAKEConnection(ctx context.Context, request operations.GetSNOWFLAKEConnectionRequest) (*operations.GetSNOWFLAKEConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SNOWFLAKE", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.GetSNOWFLAKEConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSnowflake
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionSnowflake = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
-// DeleteSNOWFLAKEConnection - Delete a connection
-// Delete a connection by its unique identifier.
-func (s *Connection) DeleteSNOWFLAKEConnection(ctx context.Context, request operations.DeleteSNOWFLAKEConnectionRequest) (*operations.DeleteSNOWFLAKEConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SNOWFLAKE", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.DeleteSNOWFLAKEConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 204:
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
-		fallthrough
-	case httpRes.StatusCode == 404:
-		fallthrough
-	case httpRes.StatusCode == 409:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
 // UpdateSNOWFLAKESHARDEDConnection - Update a connection
 // Update connection.
 func (s *Connection) UpdateSNOWFLAKESHARDEDConnection(ctx context.Context, request operations.UpdateSNOWFLAKESHARDEDConnectionRequest) (*operations.UpdateSNOWFLAKESHARDEDConnectionResponse, error) {
@@ -18039,16 +19899,16 @@ func (s *Connection) DeleteSNOWFLAKESHARDEDConnection(ctx context.Context, reque
 	return res, nil
 }
 
-// UpdateSQLSERVERConnection - Update a connection
+// UpdateSNOWFLAKEConnection - Update a connection
 // Update connection.
-func (s *Connection) UpdateSQLSERVERConnection(ctx context.Context, request operations.UpdateSQLSERVERConnectionRequest) (*operations.UpdateSQLSERVERConnectionResponse, error) {
+func (s *Connection) UpdateSNOWFLAKEConnection(ctx context.Context, request operations.UpdateSNOWFLAKEConnectionRequest) (*operations.UpdateSNOWFLAKEConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SQL_SERVER", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SNOWFLAKE", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSQLServerUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSnowflakeUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -18084,7 +19944,7 @@ func (s *Connection) UpdateSQLSERVERConnection(ctx context.Context, request oper
 
 	contentType := httpRes.Header.Get("Content-Type")
 
-	res := &operations.UpdateSQLSERVERConnectionResponse{
+	res := &operations.UpdateSNOWFLAKEConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -18093,12 +19953,12 @@ func (s *Connection) UpdateSQLSERVERConnection(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSQLServer
+			var out shared.ConnectionSnowflake
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionSQLServer = &out
+			res.ConnectionSnowflake = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -18123,11 +19983,11 @@ func (s *Connection) UpdateSQLSERVERConnection(ctx context.Context, request oper
 	return res, nil
 }
 
-// GetSQLSERVERConnection - Get a connection
+// GetSNOWFLAKEConnection - Get a connection
 // Get the connection with the associated ID.
-func (s *Connection) GetSQLSERVERConnection(ctx context.Context, request operations.GetSQLSERVERConnectionRequest) (*operations.GetSQLSERVERConnectionResponse, error) {
+func (s *Connection) GetSNOWFLAKEConnection(ctx context.Context, request operations.GetSNOWFLAKEConnectionRequest) (*operations.GetSNOWFLAKEConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SQL_SERVER", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SNOWFLAKE", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
@@ -18158,7 +20018,7 @@ func (s *Connection) GetSQLSERVERConnection(ctx context.Context, request operati
 
 	contentType := httpRes.Header.Get("Content-Type")
 
-	res := &operations.GetSQLSERVERConnectionResponse{
+	res := &operations.GetSNOWFLAKEConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -18167,12 +20027,12 @@ func (s *Connection) GetSQLSERVERConnection(ctx context.Context, request operati
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSQLServer
+			var out shared.ConnectionSnowflake
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionSQLServer = &out
+			res.ConnectionSnowflake = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -18195,11 +20055,11 @@ func (s *Connection) GetSQLSERVERConnection(ctx context.Context, request operati
 	return res, nil
 }
 
-// DeleteSQLSERVERConnection - Delete a connection
+// DeleteSNOWFLAKEConnection - Delete a connection
 // Delete a connection by its unique identifier.
-func (s *Connection) DeleteSQLSERVERConnection(ctx context.Context, request operations.DeleteSQLSERVERConnectionRequest) (*operations.DeleteSQLSERVERConnectionResponse, error) {
+func (s *Connection) DeleteSNOWFLAKEConnection(ctx context.Context, request operations.DeleteSNOWFLAKEConnectionRequest) (*operations.DeleteSNOWFLAKEConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SQL_SERVER", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SNOWFLAKE", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
@@ -18240,7 +20100,7 @@ func (s *Connection) DeleteSQLSERVERConnection(ctx context.Context, request oper
 
 	contentType := httpRes.Header.Get("Content-Type")
 
-	res := &operations.DeleteSQLSERVERConnectionResponse{
+	res := &operations.DeleteSNOWFLAKEConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -18472,6 +20332,237 @@ func (s *Connection) DeleteSQLSERVERSHARDEDConnection(ctx context.Context, reque
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteSQLSERVERSHARDEDConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		fallthrough
+	case httpRes.StatusCode == 409:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// UpdateSQLSERVERConnection - Update a connection
+// Update connection.
+func (s *Connection) UpdateSQLSERVERConnection(ctx context.Context, request operations.UpdateSQLSERVERConnectionRequest) (*operations.UpdateSQLSERVERConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SQL_SERVER", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSQLServerUpdate", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.UpdateSQLSERVERConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionSQLServer
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionSQLServer = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// GetSQLSERVERConnection - Get a connection
+// Get the connection with the associated ID.
+func (s *Connection) GetSQLSERVERConnection(ctx context.Context, request operations.GetSQLSERVERConnectionRequest) (*operations.GetSQLSERVERConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SQL_SERVER", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.GetSQLSERVERConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionSQLServer
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionSQLServer = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// DeleteSQLSERVERConnection - Delete a connection
+// Delete a connection by its unique identifier.
+func (s *Connection) DeleteSQLSERVERConnection(ctx context.Context, request operations.DeleteSQLSERVERConnectionRequest) (*operations.DeleteSQLSERVERConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{id}#SQL_SERVER", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionDelete", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.DeleteSQLSERVERConnectionResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -19203,7 +21294,7 @@ func (s *Connection) UpdateSUMTOTALConnection(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSumTotalUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionSumtotalUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -19248,12 +21339,12 @@ func (s *Connection) UpdateSUMTOTALConnection(ctx context.Context, request opera
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSumTotal
+			var out shared.ConnectionSumtotal
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionSumTotal = &out
+			res.ConnectionSumtotal = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -19322,12 +21413,12 @@ func (s *Connection) GetSUMTOTALConnection(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSumTotal
+			var out shared.ConnectionSumtotal
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionSumTotal = &out
+			res.ConnectionSumtotal = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -20127,7 +22218,7 @@ func (s *Connection) UpdateTWITTERADSConnection(ctx context.Context, request ope
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionTwitterUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionTwitterAdsUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -20172,12 +22263,12 @@ func (s *Connection) UpdateTWITTERADSConnection(ctx context.Context, request ope
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionTwitter
+			var out shared.ConnectionTwitterAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionTwitter = &out
+			res.ConnectionTwitterAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -20246,12 +22337,12 @@ func (s *Connection) GetTWITTERADSConnection(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionTwitter
+			var out shared.ConnectionTwitterAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionTwitter = &out
+			res.ConnectionTwitterAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -20589,7 +22680,7 @@ func (s *Connection) UpdateUSERVOICEConnection(ctx context.Context, request oper
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionUserVoiceUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionUservoiceUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -20634,12 +22725,12 @@ func (s *Connection) UpdateUSERVOICEConnection(ctx context.Context, request oper
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionUserVoice
+			var out shared.ConnectionUservoice
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionUserVoice = &out
+			res.ConnectionUservoice = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -20708,12 +22799,12 @@ func (s *Connection) GetUSERVOICEConnection(ctx context.Context, request operati
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionUserVoice
+			var out shared.ConnectionUservoice
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionUserVoice = &out
+			res.ConnectionUservoice = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -21051,7 +23142,7 @@ func (s *Connection) UpdateVERIZONMEDIADSPConnection(ctx context.Context, reques
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionVerizonMediaUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectionVerizonMediaDspUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -21096,12 +23187,12 @@ func (s *Connection) UpdateVERIZONMEDIADSPConnection(ctx context.Context, reques
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionVerizonMedia
+			var out shared.ConnectionVerizonMediaDsp
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionVerizonMedia = &out
+			res.ConnectionVerizonMediaDsp = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -21170,12 +23261,12 @@ func (s *Connection) GetVERIZONMEDIADSPConnection(ctx context.Context, request o
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionVerizonMedia
+			var out shared.ConnectionVerizonMediaDsp
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionVerizonMedia = &out
+			res.ConnectionVerizonMediaDsp = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -22509,9 +24600,90 @@ func (s *Connection) CreateACTIVECAMPAIGNConnection(ctx context.Context, request
 	return res, nil
 }
 
+// CreateAZUREBLOBSTORAGEConnection - Create a connection
+// Create a new connection.
+func (s *Connection) CreateAZUREBLOBSTORAGEConnection(ctx context.Context, request shared.ConnectionAzureBlobStorageInput) (*operations.CreateAZUREBLOBSTORAGEConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url := strings.TrimSuffix(baseURL, "/") + "/connections#AZURE_BLOB_STORAGE"
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.CreateAZUREBLOBSTORAGEConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionAzureBlobStorage
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionAzureBlobStorage = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // CreateBIGQUERYConnection - Create a connection
 // Create a new connection.
-func (s *Connection) CreateBIGQUERYConnection(ctx context.Context, request shared.ConnectionBigQueryInput) (*operations.CreateBIGQUERYConnectionResponse, error) {
+func (s *Connection) CreateBIGQUERYConnection(ctx context.Context, request shared.ConnectionBigqueryInput) (*operations.CreateBIGQUERYConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/connections#BIGQUERY"
 
@@ -22564,12 +24736,12 @@ func (s *Connection) CreateBIGQUERYConnection(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionBigQuery
+			var out shared.ConnectionBigquery
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionBigQuery = &out
+			res.ConnectionBigquery = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -22592,7 +24764,7 @@ func (s *Connection) CreateBIGQUERYConnection(ctx context.Context, request share
 
 // CreateBINGADSConnection - Create a connection
 // Create a new connection.
-func (s *Connection) CreateBINGADSConnection(ctx context.Context, request shared.ConnectionBingInput) (*operations.CreateBINGADSConnectionResponse, error) {
+func (s *Connection) CreateBINGADSConnection(ctx context.Context, request shared.ConnectionBingAdsInput) (*operations.CreateBINGADSConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/connections#BING_ADS"
 
@@ -22645,12 +24817,12 @@ func (s *Connection) CreateBINGADSConnection(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionBing
+			var out shared.ConnectionBingAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionBing = &out
+			res.ConnectionBingAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -23402,7 +25574,7 @@ func (s *Connection) CreateEGNYTEConnection(ctx context.Context, request shared.
 
 // CreateELASTICSEARCHConnection - Create a connection
 // Create a new connection.
-func (s *Connection) CreateELASTICSEARCHConnection(ctx context.Context, request shared.ConnectionElasticSearchInput) (*operations.CreateELASTICSEARCHConnectionResponse, error) {
+func (s *Connection) CreateELASTICSEARCHConnection(ctx context.Context, request shared.ConnectionElasticsearchInput) (*operations.CreateELASTICSEARCHConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/connections#ELASTICSEARCH"
 
@@ -23455,12 +25627,12 @@ func (s *Connection) CreateELASTICSEARCHConnection(ctx context.Context, request 
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionElasticSearch
+			var out shared.ConnectionElasticsearch
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionElasticSearch = &out
+			res.ConnectionElasticsearch = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -23726,7 +25898,7 @@ func (s *Connection) CreateERPXConnection(ctx context.Context, request shared.Co
 
 // CreateFACEBOOKADSConnection - Create a connection
 // Create a new connection.
-func (s *Connection) CreateFACEBOOKADSConnection(ctx context.Context, request shared.ConnectionFbInput) (*operations.CreateFACEBOOKADSConnectionResponse, error) {
+func (s *Connection) CreateFACEBOOKADSConnection(ctx context.Context, request shared.ConnectionFacebookAdsInput) (*operations.CreateFACEBOOKADSConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/connections#FACEBOOK_ADS"
 
@@ -23779,12 +25951,12 @@ func (s *Connection) CreateFACEBOOKADSConnection(ctx context.Context, request sh
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionFb
+			var out shared.ConnectionFacebookAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionFb = &out
+			res.ConnectionFacebookAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -23886,6 +26058,87 @@ func (s *Connection) CreateFIFTEENFIVEConnection(ctx context.Context, request sh
 	return res, nil
 }
 
+// CreateFRESHCALLERConnection - Create a connection
+// Create a new connection.
+func (s *Connection) CreateFRESHCALLERConnection(ctx context.Context, request shared.ConnectionFreshcallerInput) (*operations.CreateFRESHCALLERConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url := strings.TrimSuffix(baseURL, "/") + "/connections#FRESHCALLER"
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.CreateFRESHCALLERConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionFreshcaller
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionFreshcaller = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // CreateFRESHCHATConnection - Create a connection
 // Create a new connection.
 func (s *Connection) CreateFRESHCHATConnection(ctx context.Context, request shared.ConnectionFreshchatInput) (*operations.CreateFRESHCHATConnectionResponse, error) {
@@ -23947,6 +26200,87 @@ func (s *Connection) CreateFRESHCHATConnection(ctx context.Context, request shar
 			}
 
 			res.ConnectionFreshchat = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// CreateFRESHDESKConnection - Create a connection
+// Create a new connection.
+func (s *Connection) CreateFRESHDESKConnection(ctx context.Context, request shared.ConnectionFreshdeskInput) (*operations.CreateFRESHDESKConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url := strings.TrimSuffix(baseURL, "/") + "/connections#FRESHDESK"
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.CreateFRESHDESKConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionFreshdesk
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionFreshdesk = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -24048,87 +26382,6 @@ func (s *Connection) CreateFRESHSALESConnection(ctx context.Context, request sha
 	return res, nil
 }
 
-// CreateFRESHWORKSConnection - Create a connection
-// Create a new connection.
-func (s *Connection) CreateFRESHWORKSConnection(ctx context.Context, request shared.ConnectionFreshworksInput) (*operations.CreateFRESHWORKSConnectionResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url := strings.TrimSuffix(baseURL, "/") + "/connections#FRESHWORKS"
-
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, fmt.Errorf("error serializing request body: %w", err)
-	}
-	if bodyReader == nil {
-		return nil, fmt.Errorf("request body is required")
-	}
-
-	debugBody := bytes.NewBuffer([]byte{})
-	debugReader := io.TeeReader(bodyReader, debugBody)
-
-	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
-
-	req.Header.Set("Content-Type", reqContentType)
-
-	client := s.sdkConfiguration.SecurityClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Request.Body = io.NopCloser(debugBody)
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.CreateFRESHWORKSConnectionResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionFreshworks
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.ConnectionFreshworks = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.Errors
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.Errors = &out
-		default:
-			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	}
-
-	return res, nil
-}
-
 // CreateFTPConnection - Create a connection
 // Create a new connection.
 func (s *Connection) CreateFTPConnection(ctx context.Context, request shared.ConnectionFtpInput) (*operations.CreateFTPConnectionResponse, error) {
@@ -24190,6 +26443,87 @@ func (s *Connection) CreateFTPConnection(ctx context.Context, request shared.Con
 			}
 
 			res.ConnectionFtp = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// CreateGITLABConnection - Create a connection
+// Create a new connection.
+func (s *Connection) CreateGITLABConnection(ctx context.Context, request shared.ConnectionGitlabInput) (*operations.CreateGITLABConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url := strings.TrimSuffix(baseURL, "/") + "/connections#GITLAB"
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.CreateGITLABConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionGitlab
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionGitlab = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -24939,6 +27273,87 @@ func (s *Connection) CreateINTERCOMConnection(ctx context.Context, request share
 	return res, nil
 }
 
+// CreateJIRAConnection - Create a connection
+// Create a new connection.
+func (s *Connection) CreateJIRAConnection(ctx context.Context, request shared.ConnectionJiraInput) (*operations.CreateJIRAConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url := strings.TrimSuffix(baseURL, "/") + "/connections#JIRA"
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.CreateJIRAConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionJira
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionJira = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // CreateJIRAALIGNConnection - Create a connection
 // Create a new connection.
 func (s *Connection) CreateJIRAALIGNConnection(ctx context.Context, request shared.ConnectionJiraAlignInput) (*operations.CreateJIRAALIGNConnectionResponse, error) {
@@ -25162,6 +27577,87 @@ func (s *Connection) CreateKAFKAConnection(ctx context.Context, request shared.C
 			}
 
 			res.ConnectionKafka = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// CreateKINESISConnection - Create a connection
+// Create a new connection.
+func (s *Connection) CreateKINESISConnection(ctx context.Context, request shared.ConnectionKinesisInput) (*operations.CreateKINESISConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url := strings.TrimSuffix(baseURL, "/") + "/connections#KINESIS"
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.CreateKINESISConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionKinesis
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionKinesis = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -25668,6 +28164,87 @@ func (s *Connection) CreateMICROSOFTENTRAIDConnection(ctx context.Context, reque
 	return res, nil
 }
 
+// CreateMICROSOFTLISTSConnection - Create a connection
+// Create a new connection.
+func (s *Connection) CreateMICROSOFTLISTSConnection(ctx context.Context, request shared.ConnectionMicrosoftListsInput) (*operations.CreateMICROSOFTLISTSConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url := strings.TrimSuffix(baseURL, "/") + "/connections#MICROSOFT_LISTS"
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.CreateMICROSOFTLISTSConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionMicrosoftLists
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionMicrosoftLists = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // CreateMIXPANELConnection - Create a connection
 // Create a new connection.
 func (s *Connection) CreateMIXPANELConnection(ctx context.Context, request shared.ConnectionMixpanelInput) (*operations.CreateMIXPANELConnectionResponse, error) {
@@ -25751,7 +28328,7 @@ func (s *Connection) CreateMIXPANELConnection(ctx context.Context, request share
 
 // CreateMONGODBConnection - Create a connection
 // Create a new connection.
-func (s *Connection) CreateMONGODBConnection(ctx context.Context, request shared.ConnectionMongoInput) (*operations.CreateMONGODBConnectionResponse, error) {
+func (s *Connection) CreateMONGODBConnection(ctx context.Context, request shared.ConnectionMongodbInput) (*operations.CreateMONGODBConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/connections#MONGODB"
 
@@ -25804,12 +28381,12 @@ func (s *Connection) CreateMONGODBConnection(ctx context.Context, request shared
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionMongo
+			var out shared.ConnectionMongodb
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionMongo = &out
+			res.ConnectionMongodb = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -26721,9 +29298,90 @@ func (s *Connection) CreatePOSTGRESSHARDEDConnection(ctx context.Context, reques
 	return res, nil
 }
 
+// CreateQUALTRICSConnection - Create a connection
+// Create a new connection.
+func (s *Connection) CreateQUALTRICSConnection(ctx context.Context, request shared.ConnectionQualtricsInput) (*operations.CreateQUALTRICSConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url := strings.TrimSuffix(baseURL, "/") + "/connections#QUALTRICS"
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.CreateQUALTRICSConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionQualtrics
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionQualtrics = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
 // CreateQUORAADSConnection - Create a connection
 // Create a new connection.
-func (s *Connection) CreateQUORAADSConnection(ctx context.Context, request shared.ConnectionQuoraInput) (*operations.CreateQUORAADSConnectionResponse, error) {
+func (s *Connection) CreateQUORAADSConnection(ctx context.Context, request shared.ConnectionQuoraAdsInput) (*operations.CreateQUORAADSConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/connections#QUORA_ADS"
 
@@ -26776,12 +29434,12 @@ func (s *Connection) CreateQUORAADSConnection(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionQuora
+			var out shared.ConnectionQuoraAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionQuora = &out
+			res.ConnectionQuoraAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -27673,6 +30331,87 @@ func (s *Connection) CreateSAPHANASHARDEDConnection(ctx context.Context, request
 			}
 
 			res.ConnectionSapHanaSharded = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.Errors
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.Errors = &out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	}
+
+	return res, nil
+}
+
+// CreateSAPODATAConnection - Create a connection
+// Create a new connection.
+func (s *Connection) CreateSAPODATAConnection(ctx context.Context, request shared.ConnectionSapOdataInput) (*operations.CreateSAPODATAConnectionResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url := strings.TrimSuffix(baseURL, "/") + "/connections#SAP_ODATA"
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, fmt.Errorf("error serializing request body: %w", err)
+	}
+	if bodyReader == nil {
+		return nil, fmt.Errorf("request body is required")
+	}
+
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
+
+	req.Header.Set("Content-Type", reqContentType)
+
+	client := s.sdkConfiguration.SecurityClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.CreateSAPODATAConnectionResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out shared.ConnectionSapOdata
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.ConnectionSapOdata = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -28748,7 +31487,7 @@ func (s *Connection) CreateSTRIPEConnection(ctx context.Context, request shared.
 
 // CreateSUMTOTALConnection - Create a connection
 // Create a new connection.
-func (s *Connection) CreateSUMTOTALConnection(ctx context.Context, request shared.ConnectionSumTotalInput) (*operations.CreateSUMTOTALConnectionResponse, error) {
+func (s *Connection) CreateSUMTOTALConnection(ctx context.Context, request shared.ConnectionSumtotalInput) (*operations.CreateSUMTOTALConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/connections#SUMTOTAL"
 
@@ -28801,12 +31540,12 @@ func (s *Connection) CreateSUMTOTALConnection(ctx context.Context, request share
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionSumTotal
+			var out shared.ConnectionSumtotal
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionSumTotal = &out
+			res.ConnectionSumtotal = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -29072,7 +31811,7 @@ func (s *Connection) CreateTWILIOConnection(ctx context.Context, request shared.
 
 // CreateTWITTERADSConnection - Create a connection
 // Create a new connection.
-func (s *Connection) CreateTWITTERADSConnection(ctx context.Context, request shared.ConnectionTwitterInput) (*operations.CreateTWITTERADSConnectionResponse, error) {
+func (s *Connection) CreateTWITTERADSConnection(ctx context.Context, request shared.ConnectionTwitterAdsInput) (*operations.CreateTWITTERADSConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/connections#TWITTER_ADS"
 
@@ -29125,12 +31864,12 @@ func (s *Connection) CreateTWITTERADSConnection(ctx context.Context, request sha
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionTwitter
+			var out shared.ConnectionTwitterAds
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionTwitter = &out
+			res.ConnectionTwitterAds = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -29234,7 +31973,7 @@ func (s *Connection) CreateUSERDEFINEDAPIConnection(ctx context.Context, request
 
 // CreateUSERVOICEConnection - Create a connection
 // Create a new connection.
-func (s *Connection) CreateUSERVOICEConnection(ctx context.Context, request shared.ConnectionUserVoiceInput) (*operations.CreateUSERVOICEConnectionResponse, error) {
+func (s *Connection) CreateUSERVOICEConnection(ctx context.Context, request shared.ConnectionUservoiceInput) (*operations.CreateUSERVOICEConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/connections#USERVOICE"
 
@@ -29287,12 +32026,12 @@ func (s *Connection) CreateUSERVOICEConnection(ctx context.Context, request shar
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionUserVoice
+			var out shared.ConnectionUservoice
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionUserVoice = &out
+			res.ConnectionUservoice = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -29396,7 +32135,7 @@ func (s *Connection) CreateVEEVAConnection(ctx context.Context, request shared.C
 
 // CreateVERIZONMEDIADSPConnection - Create a connection
 // Create a new connection.
-func (s *Connection) CreateVERIZONMEDIADSPConnection(ctx context.Context, request shared.ConnectionVerizonMediaInput) (*operations.CreateVERIZONMEDIADSPConnectionResponse, error) {
+func (s *Connection) CreateVERIZONMEDIADSPConnection(ctx context.Context, request shared.ConnectionVerizonMediaDspInput) (*operations.CreateVERIZONMEDIADSPConnectionResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/connections#VERIZON_MEDIA_DSP"
 
@@ -29449,12 +32188,12 @@ func (s *Connection) CreateVERIZONMEDIADSPConnection(ctx context.Context, reques
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out shared.ConnectionVerizonMedia
+			var out shared.ConnectionVerizonMediaDsp
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ConnectionVerizonMedia = &out
+			res.ConnectionVerizonMediaDsp = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

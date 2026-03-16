@@ -1,3 +1,3 @@
 data "etleap_connection_rave_medidata" "my_connectionrave_medidata" {
-  id = "c590a20e-cd60-4eba-bf3a-bf5fceaabb36"
+  id = "533d6105-cd66-4bfe-854e-4c41fe244f8a"
 }

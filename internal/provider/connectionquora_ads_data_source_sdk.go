@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionQUORAADSDataSourceModel) RefreshFromSharedConnectionQuora(resp *shared.ConnectionQuora) {
+func (r *ConnectionQUORAADSDataSourceModel) RefreshFromSharedConnectionQuoraAds(resp *shared.ConnectionQuoraAds) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {

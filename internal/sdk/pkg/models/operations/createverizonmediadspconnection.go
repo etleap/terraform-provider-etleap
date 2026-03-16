@@ -15,7 +15,7 @@ type CreateVERIZONMEDIADSPConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionVerizonMedia *shared.ConnectionVerizonMedia
+	ConnectionVerizonMediaDsp *shared.ConnectionVerizonMediaDsp
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -41,11 +41,11 @@ func (o *CreateVERIZONMEDIADSPConnectionResponse) GetRawResponse() *http.Respons
 	return o.RawResponse
 }
 
-func (o *CreateVERIZONMEDIADSPConnectionResponse) GetConnectionVerizonMedia() *shared.ConnectionVerizonMedia {
+func (o *CreateVERIZONMEDIADSPConnectionResponse) GetConnectionVerizonMediaDsp() *shared.ConnectionVerizonMediaDsp {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionVerizonMedia
+	return o.ConnectionVerizonMediaDsp
 }
 
 func (o *CreateVERIZONMEDIADSPConnectionResponse) GetErrors() *shared.Errors {

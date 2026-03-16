@@ -16,20 +16,20 @@ ConnectionDb2SHARDED Resource
 resource "etleap_connection_db2_sharded" "my_connectiondb2_sharded" {
   certificate                 = "...my_certificate..."
   deletion_of_export_products = true
-  name                        = "Marilyn Abbott"
+  name                        = "Gerald Greenholt"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "08361 Buckridge Forks"
+      address  = "744 Howe Passage"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 2
+      port     = 1
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "774 Maybell Hills"
-        username = "Lindsay80"
+        address  = "86526 Khalid Bypass"
+        username = "Lenore.Leffler39"
       }
-      username = "Marina65"
+      username = "Ceasar.Reilly"
     },
   ]
   type = "DB2_SHARDED"
@@ -146,7 +146,7 @@ Optional:
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

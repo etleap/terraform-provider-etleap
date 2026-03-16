@@ -11,6 +11,7 @@ type SourceTypeEnum string
 
 const (
 	SourceTypeEnumActiveCampaign           SourceTypeEnum = "ACTIVE_CAMPAIGN"
+	SourceTypeEnumAzureBlobStorage         SourceTypeEnum = "AZURE_BLOB_STORAGE"
 	SourceTypeEnumBigquery                 SourceTypeEnum = "BIGQUERY"
 	SourceTypeEnumBingAds                  SourceTypeEnum = "BING_ADS"
 	SourceTypeEnumBlackline                SourceTypeEnum = "BLACKLINE"
@@ -28,28 +29,32 @@ const (
 	SourceTypeEnumErpx                     SourceTypeEnum = "ERPX"
 	SourceTypeEnumFacebookAds              SourceTypeEnum = "FACEBOOK_ADS"
 	SourceTypeEnumFifteenFive              SourceTypeEnum = "FIFTEEN_FIVE"
+	SourceTypeEnumFreshcaller              SourceTypeEnum = "FRESHCALLER"
 	SourceTypeEnumFreshchat                SourceTypeEnum = "FRESHCHAT"
+	SourceTypeEnumFreshdesk                SourceTypeEnum = "FRESHDESK"
 	SourceTypeEnumFreshsales               SourceTypeEnum = "FRESHSALES"
-	SourceTypeEnumFreshworks               SourceTypeEnum = "FRESHWORKS"
 	SourceTypeEnumFtp                      SourceTypeEnum = "FTP"
+	SourceTypeEnumGitlab                   SourceTypeEnum = "GITLAB"
 	SourceTypeEnumGong                     SourceTypeEnum = "GONG"
+	SourceTypeEnumGoogleAds                SourceTypeEnum = "GOOGLE_ADS"
 	SourceTypeEnumGoogleAnalyticsGa4       SourceTypeEnum = "GOOGLE_ANALYTICS_GA4"
 	SourceTypeEnumGoogleCloudStorage       SourceTypeEnum = "GOOGLE_CLOUD_STORAGE"
-	SourceTypeEnumGoogleAds                SourceTypeEnum = "GOOGLE_ADS"
 	SourceTypeEnumGoogleSheets             SourceTypeEnum = "GOOGLE_SHEETS"
 	SourceTypeEnumHubspot                  SourceTypeEnum = "HUBSPOT"
-	SourceTypeEnumIntercom                 SourceTypeEnum = "INTERCOM"
 	SourceTypeEnumImpactRadius             SourceTypeEnum = "IMPACT_RADIUS"
+	SourceTypeEnumIntercom                 SourceTypeEnum = "INTERCOM"
 	SourceTypeEnumJira                     SourceTypeEnum = "JIRA"
 	SourceTypeEnumJiraAlign                SourceTypeEnum = "JIRA_ALIGN"
 	SourceTypeEnumJiraCloud                SourceTypeEnum = "JIRA_CLOUD"
 	SourceTypeEnumKafka                    SourceTypeEnum = "KAFKA"
+	SourceTypeEnumKinesis                  SourceTypeEnum = "KINESIS"
 	SourceTypeEnumKustomer                 SourceTypeEnum = "KUSTOMER"
 	SourceTypeEnumLdap                     SourceTypeEnum = "LDAP"
 	SourceTypeEnumLdapVirtualListView      SourceTypeEnum = "LDAP_VIRTUAL_LIST_VIEW"
 	SourceTypeEnumLinkedInAds              SourceTypeEnum = "LINKED_IN_ADS"
 	SourceTypeEnumMarketo                  SourceTypeEnum = "MARKETO"
 	SourceTypeEnumMicrosoftEntraID         SourceTypeEnum = "MICROSOFT_ENTRA_ID"
+	SourceTypeEnumMicrosoftLists           SourceTypeEnum = "MICROSOFT_LISTS"
 	SourceTypeEnumMixpanel                 SourceTypeEnum = "MIXPANEL"
 	SourceTypeEnumMongodb                  SourceTypeEnum = "MONGODB"
 	SourceTypeEnumMysql                    SourceTypeEnum = "MYSQL"
@@ -58,36 +63,38 @@ const (
 	SourceTypeEnumNetsuiteV2               SourceTypeEnum = "NETSUITE_V2"
 	SourceTypeEnumOracle                   SourceTypeEnum = "ORACLE"
 	SourceTypeEnumOracleSharded            SourceTypeEnum = "ORACLE_SHARDED"
-	SourceTypeEnumOutreach                 SourceTypeEnum = "OUTREACH"
 	SourceTypeEnumOutlook                  SourceTypeEnum = "OUTLOOK"
+	SourceTypeEnumOutreach                 SourceTypeEnum = "OUTREACH"
 	SourceTypeEnumPinterestAds             SourceTypeEnum = "PINTEREST_ADS"
 	SourceTypeEnumPostgres                 SourceTypeEnum = "POSTGRES"
 	SourceTypeEnumPostgresSharded          SourceTypeEnum = "POSTGRES_SHARDED"
+	SourceTypeEnumQualtrics                SourceTypeEnum = "QUALTRICS"
 	SourceTypeEnumQuoraAds                 SourceTypeEnum = "QUORA_ADS"
 	SourceTypeEnumRaveMedidata             SourceTypeEnum = "RAVE_MEDIDATA"
 	SourceTypeEnumRecurly                  SourceTypeEnum = "RECURLY"
 	SourceTypeEnumRedshift                 SourceTypeEnum = "REDSHIFT"
 	SourceTypeEnumRedshiftSharded          SourceTypeEnum = "REDSHIFT_SHARDED"
-	SourceTypeEnumS3Legacy                 SourceTypeEnum = "S3_LEGACY"
 	SourceTypeEnumS3Input                  SourceTypeEnum = "S3_INPUT"
+	SourceTypeEnumS3Legacy                 SourceTypeEnum = "S3_LEGACY"
+	SourceTypeEnumSalesforce               SourceTypeEnum = "SALESFORCE"
 	SourceTypeEnumSalesforceMarketingCloud SourceTypeEnum = "SALESFORCE_MARKETING_CLOUD"
 	SourceTypeEnumSapConcur                SourceTypeEnum = "SAP_CONCUR"
 	SourceTypeEnumSapHana                  SourceTypeEnum = "SAP_HANA"
 	SourceTypeEnumSapHanaSharded           SourceTypeEnum = "SAP_HANA_SHARDED"
+	SourceTypeEnumSapOdata                 SourceTypeEnum = "SAP_ODATA"
 	SourceTypeEnumSeismic                  SourceTypeEnum = "SEISMIC"
 	SourceTypeEnumServiceNow               SourceTypeEnum = "SERVICE_NOW"
+	SourceTypeEnumSftp                     SourceTypeEnum = "SFTP"
 	SourceTypeEnumShopify                  SourceTypeEnum = "SHOPIFY"
 	SourceTypeEnumSkyward                  SourceTypeEnum = "SKYWARD"
-	SourceTypeEnumSalesforce               SourceTypeEnum = "SALESFORCE"
-	SourceTypeEnumSftp                     SourceTypeEnum = "SFTP"
-	SourceTypeEnumSQLServer                SourceTypeEnum = "SQL_SERVER"
-	SourceTypeEnumSQLServerSharded         SourceTypeEnum = "SQL_SERVER_SHARDED"
-	SourceTypeEnumStreaming                SourceTypeEnum = "STREAMING"
+	SourceTypeEnumSnapchatAds              SourceTypeEnum = "SNAPCHAT_ADS"
 	SourceTypeEnumSnowflake                SourceTypeEnum = "SNOWFLAKE"
 	SourceTypeEnumSnowflakeSharded         SourceTypeEnum = "SNOWFLAKE_SHARDED"
+	SourceTypeEnumSQLServer                SourceTypeEnum = "SQL_SERVER"
+	SourceTypeEnumSQLServerSharded         SourceTypeEnum = "SQL_SERVER_SHARDED"
 	SourceTypeEnumSqs                      SourceTypeEnum = "SQS"
 	SourceTypeEnumSquare                   SourceTypeEnum = "SQUARE"
-	SourceTypeEnumSnapchatAds              SourceTypeEnum = "SNAPCHAT_ADS"
+	SourceTypeEnumStreaming                SourceTypeEnum = "STREAMING"
 	SourceTypeEnumStripe                   SourceTypeEnum = "STRIPE"
 	SourceTypeEnumSumtotal                 SourceTypeEnum = "SUMTOTAL"
 	SourceTypeEnumTheTradeDesk             SourceTypeEnum = "THE_TRADE_DESK"
@@ -116,6 +123,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	}
 	switch v {
 	case "ACTIVE_CAMPAIGN":
+		fallthrough
+	case "AZURE_BLOB_STORAGE":
 		fallthrough
 	case "BIGQUERY":
 		fallthrough
@@ -151,29 +160,33 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "FIFTEEN_FIVE":
 		fallthrough
+	case "FRESHCALLER":
+		fallthrough
 	case "FRESHCHAT":
+		fallthrough
+	case "FRESHDESK":
 		fallthrough
 	case "FRESHSALES":
 		fallthrough
-	case "FRESHWORKS":
-		fallthrough
 	case "FTP":
 		fallthrough
+	case "GITLAB":
+		fallthrough
 	case "GONG":
+		fallthrough
+	case "GOOGLE_ADS":
 		fallthrough
 	case "GOOGLE_ANALYTICS_GA4":
 		fallthrough
 	case "GOOGLE_CLOUD_STORAGE":
 		fallthrough
-	case "GOOGLE_ADS":
-		fallthrough
 	case "GOOGLE_SHEETS":
 		fallthrough
 	case "HUBSPOT":
 		fallthrough
-	case "INTERCOM":
-		fallthrough
 	case "IMPACT_RADIUS":
+		fallthrough
+	case "INTERCOM":
 		fallthrough
 	case "JIRA":
 		fallthrough
@@ -182,6 +195,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	case "JIRA_CLOUD":
 		fallthrough
 	case "KAFKA":
+		fallthrough
+	case "KINESIS":
 		fallthrough
 	case "KUSTOMER":
 		fallthrough
@@ -194,6 +209,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	case "MARKETO":
 		fallthrough
 	case "MICROSOFT_ENTRA_ID":
+		fallthrough
+	case "MICROSOFT_LISTS":
 		fallthrough
 	case "MIXPANEL":
 		fallthrough
@@ -211,15 +228,17 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "ORACLE_SHARDED":
 		fallthrough
-	case "OUTREACH":
-		fallthrough
 	case "OUTLOOK":
+		fallthrough
+	case "OUTREACH":
 		fallthrough
 	case "PINTEREST_ADS":
 		fallthrough
 	case "POSTGRES":
 		fallthrough
 	case "POSTGRES_SHARDED":
+		fallthrough
+	case "QUALTRICS":
 		fallthrough
 	case "QUORA_ADS":
 		fallthrough
@@ -231,9 +250,11 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "REDSHIFT_SHARDED":
 		fallthrough
+	case "S3_INPUT":
+		fallthrough
 	case "S3_LEGACY":
 		fallthrough
-	case "S3_INPUT":
+	case "SALESFORCE":
 		fallthrough
 	case "SALESFORCE_MARKETING_CLOUD":
 		fallthrough
@@ -243,33 +264,33 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "SAP_HANA_SHARDED":
 		fallthrough
+	case "SAP_ODATA":
+		fallthrough
 	case "SEISMIC":
 		fallthrough
 	case "SERVICE_NOW":
+		fallthrough
+	case "SFTP":
 		fallthrough
 	case "SHOPIFY":
 		fallthrough
 	case "SKYWARD":
 		fallthrough
-	case "SALESFORCE":
-		fallthrough
-	case "SFTP":
-		fallthrough
-	case "SQL_SERVER":
-		fallthrough
-	case "SQL_SERVER_SHARDED":
-		fallthrough
-	case "STREAMING":
+	case "SNAPCHAT_ADS":
 		fallthrough
 	case "SNOWFLAKE":
 		fallthrough
 	case "SNOWFLAKE_SHARDED":
 		fallthrough
+	case "SQL_SERVER":
+		fallthrough
+	case "SQL_SERVER_SHARDED":
+		fallthrough
 	case "SQS":
 		fallthrough
 	case "SQUARE":
 		fallthrough
-	case "SNAPCHAT_ADS":
+	case "STREAMING":
 		fallthrough
 	case "STRIPE":
 		fallthrough

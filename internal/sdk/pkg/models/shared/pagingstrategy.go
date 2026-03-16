@@ -9,23 +9,25 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-type PagingStrategyType string
+type PagingStrategyUnionType string
 
 const (
-	PagingStrategyTypeCursorURI PagingStrategyType = "CURSOR_URI"
-	PagingStrategyTypeOffset    PagingStrategyType = "OFFSET"
+	PagingStrategyUnionTypeCursorURI  PagingStrategyUnionType = "CURSOR_URI"
+	PagingStrategyUnionTypeOffset     PagingStrategyUnionType = "OFFSET"
+	PagingStrategyUnionTypePageNumber PagingStrategyUnionType = "PAGE_NUMBER"
 )
 
 // PagingStrategy - The paging strategy.
 type PagingStrategy struct {
-	CursorURIPagingStrategy *CursorURIPagingStrategy
-	OffsetPagingStrategy    *OffsetPagingStrategy
+	CursorURIPagingStrategy  *CursorURIPagingStrategy
+	OffsetPagingStrategy     *OffsetPagingStrategy
+	PageNumberPagingStrategy *PageNumberPagingStrategy
 
-	Type PagingStrategyType
+	Type PagingStrategyUnionType
 }
 
 func CreatePagingStrategyCursorURI(cursorURI CursorURIPagingStrategy) PagingStrategy {
-	typ := PagingStrategyTypeCursorURI
+	typ := PagingStrategyUnionTypeCursorURI
 
 	typStr := CursorURIPagingStrategyType(typ)
 	cursorURI.Type = &typStr
@@ -37,7 +39,7 @@ func CreatePagingStrategyCursorURI(cursorURI CursorURIPagingStrategy) PagingStra
 }
 
 func CreatePagingStrategyOffset(offset OffsetPagingStrategy) PagingStrategy {
-	typ := PagingStrategyTypeOffset
+	typ := PagingStrategyUnionTypeOffset
 
 	typStr := OffsetPagingStrategyType(typ)
 	offset.Type = &typStr
@@ -45,6 +47,18 @@ func CreatePagingStrategyOffset(offset OffsetPagingStrategy) PagingStrategy {
 	return PagingStrategy{
 		OffsetPagingStrategy: &offset,
 		Type:                 typ,
+	}
+}
+
+func CreatePagingStrategyPageNumber(pageNumber PageNumberPagingStrategy) PagingStrategy {
+	typ := PagingStrategyUnionTypePageNumber
+
+	typStr := PageNumberPagingStrategyType(typ)
+	pageNumber.Type = &typStr
+
+	return PagingStrategy{
+		PageNumberPagingStrategy: &pageNumber,
+		Type:                     typ,
 	}
 }
 
@@ -67,7 +81,7 @@ func (u *PagingStrategy) UnmarshalJSON(data []byte) error {
 		}
 
 		u.CursorURIPagingStrategy = cursorURIPagingStrategy
-		u.Type = PagingStrategyTypeCursorURI
+		u.Type = PagingStrategyUnionTypeCursorURI
 		return nil
 	case "OFFSET":
 		offsetPagingStrategy := new(OffsetPagingStrategy)
@@ -76,7 +90,16 @@ func (u *PagingStrategy) UnmarshalJSON(data []byte) error {
 		}
 
 		u.OffsetPagingStrategy = offsetPagingStrategy
-		u.Type = PagingStrategyTypeOffset
+		u.Type = PagingStrategyUnionTypeOffset
+		return nil
+	case "PAGE_NUMBER":
+		pageNumberPagingStrategy := new(PageNumberPagingStrategy)
+		if err := utils.UnmarshalJSON(data, &pageNumberPagingStrategy, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.PageNumberPagingStrategy = pageNumberPagingStrategy
+		u.Type = PagingStrategyUnionTypePageNumber
 		return nil
 	}
 
@@ -90,6 +113,10 @@ func (u PagingStrategy) MarshalJSON() ([]byte, error) {
 
 	if u.OffsetPagingStrategy != nil {
 		return utils.MarshalJSON(u.OffsetPagingStrategy, "", true)
+	}
+
+	if u.PageNumberPagingStrategy != nil {
+		return utils.MarshalJSON(u.PageNumberPagingStrategy, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

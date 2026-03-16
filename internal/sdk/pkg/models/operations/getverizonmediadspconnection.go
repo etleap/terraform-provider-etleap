@@ -26,7 +26,7 @@ type GetVERIZONMEDIADSPConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionVerizonMedia *shared.ConnectionVerizonMedia
+	ConnectionVerizonMediaDsp *shared.ConnectionVerizonMediaDsp
 	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
@@ -52,11 +52,11 @@ func (o *GetVERIZONMEDIADSPConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetVERIZONMEDIADSPConnectionResponse) GetConnectionVerizonMedia() *shared.ConnectionVerizonMedia {
+func (o *GetVERIZONMEDIADSPConnectionResponse) GetConnectionVerizonMediaDsp() *shared.ConnectionVerizonMediaDsp {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionVerizonMedia
+	return o.ConnectionVerizonMediaDsp
 }
 
 func (o *GetVERIZONMEDIADSPConnectionResponse) GetErrors() *shared.Errors {

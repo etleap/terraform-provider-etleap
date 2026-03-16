@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceUserVoiceType string
+type SourceUservoiceType string
 
 const (
-	SourceUserVoiceTypeUservoice SourceUserVoiceType = "USERVOICE"
+	SourceUservoiceTypeUservoice SourceUservoiceType = "USERVOICE"
 )
 
-func (e SourceUserVoiceType) ToPointer() *SourceUserVoiceType {
+func (e SourceUservoiceType) ToPointer() *SourceUservoiceType {
 	return &e
 }
 
-func (e *SourceUserVoiceType) UnmarshalJSON(data []byte) error {
+func (e *SourceUservoiceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "USERVOICE":
-		*e = SourceUserVoiceType(v)
+		*e = SourceUservoiceType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceUserVoiceType: %v", v)
+		return fmt.Errorf("invalid value for SourceUservoiceType: %v", v)
 	}
 }
 
-type SourceUserVoice struct {
-	Type SourceUserVoiceType `json:"type"`
+type SourceUservoice struct {
+	Type SourceUservoiceType `json:"type"`
 	// The universally unique identifier for the source.
 	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
@@ -41,28 +41,28 @@ type SourceUserVoice struct {
 	Entity string `json:"entity"`
 }
 
-func (o *SourceUserVoice) GetType() SourceUserVoiceType {
+func (o *SourceUservoice) GetType() SourceUservoiceType {
 	if o == nil {
-		return SourceUserVoiceType("")
+		return SourceUservoiceType("")
 	}
 	return o.Type
 }
 
-func (o *SourceUserVoice) GetConnectionID() string {
+func (o *SourceUservoice) GetConnectionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ConnectionID
 }
 
-func (o *SourceUserVoice) GetLatencyThreshold() *int64 {
+func (o *SourceUservoice) GetLatencyThreshold() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LatencyThreshold
 }
 
-func (o *SourceUserVoice) GetEntity() string {
+func (o *SourceUservoice) GetEntity() string {
 	if o == nil {
 		return ""
 	}

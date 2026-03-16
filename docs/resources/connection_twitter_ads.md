@@ -18,8 +18,8 @@ resource "etleap_connection_twitter_ads" "my_connectiontwitter_ads" {
   access_token_secret         = "...my_access_token_secret..."
   app_key                     = "...my_app_key..."
   app_secret_key              = "...my_app_secret_key..."
-  deletion_of_export_products = false
-  name                        = "Maggie Wuckert"
+  deletion_of_export_products = true
+  name                        = "Spencer Bailey"
   twitter_usernames           = "...my_twitter_usernames..."
   type                        = "TWITTER_ADS"
 }
@@ -30,17 +30,17 @@ resource "etleap_connection_twitter_ads" "my_connectiontwitter_ads" {
 
 ### Required
 
-- `access_token` (String) This identifies your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.
-- `access_token_secret` (String) This authenticates your Twitter account when generating Ad reports. Generated under 'Access token & access token secret'.
-- `app_key` (String) This represents your Twitter developer app when making API requests. Generated under 'Consumer API keys'.
-- `app_secret_key` (String) This authenticates your Twitter developer app when making API requests. Generated under 'Consumer API keys'.
+- `access_token` (String) This identifies your X account when generating Ad reports. Generated under 'Access token & access token secret'.
+- `access_token_secret` (String) This authenticates your X account when generating Ad reports. Generated under 'Access token & access token secret'.
+- `app_key` (String) This represents your X developer app when making API requests. Generated under 'Consumer API keys'.
+- `app_secret_key` (String) This authenticates your X developer app when making API requests. Generated under 'Consumer API keys'.
 - `name` (String) The unique name of this connection.
 - `type` (String) must be one of ["TWITTER_ADS"]
 
 ### Optional
 
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
-- `twitter_usernames` (String) If you want to create pipelines from entities that uses Twitter API V2 endpoints you need to specify which Twitter accounts you want to retrieve data from. The usernames must be separated by comma and without the @
+- `twitter_usernames` (String) If you want to create pipelines from entities that uses X API V2 endpoints you need to specify which X accounts you want to retrieve data from. The usernames must be separated by comma and without the @
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
 ### Read-Only
@@ -114,7 +114,7 @@ Optional:
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

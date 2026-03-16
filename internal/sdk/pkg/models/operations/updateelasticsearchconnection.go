@@ -9,7 +9,7 @@ import (
 
 type UpdateELASTICSEARCHConnectionRequest struct {
 	ID                            string                                `pathParam:"style=simple,explode=false,name=id"`
-	ConnectionElasticSearchUpdate *shared.ConnectionElasticSearchUpdate `request:"mediaType=application/json"`
+	ConnectionElasticsearchUpdate *shared.ConnectionElasticsearchUpdate `request:"mediaType=application/json"`
 }
 
 func (o *UpdateELASTICSEARCHConnectionRequest) GetID() string {
@@ -19,11 +19,11 @@ func (o *UpdateELASTICSEARCHConnectionRequest) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateELASTICSEARCHConnectionRequest) GetConnectionElasticSearchUpdate() *shared.ConnectionElasticSearchUpdate {
+func (o *UpdateELASTICSEARCHConnectionRequest) GetConnectionElasticsearchUpdate() *shared.ConnectionElasticsearchUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionElasticSearchUpdate
+	return o.ConnectionElasticsearchUpdate
 }
 
 type UpdateELASTICSEARCHConnectionResponse struct {
@@ -34,7 +34,7 @@ type UpdateELASTICSEARCHConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionElasticSearch *shared.ConnectionElasticSearch
+	ConnectionElasticsearch *shared.ConnectionElasticsearch
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -60,11 +60,11 @@ func (o *UpdateELASTICSEARCHConnectionResponse) GetRawResponse() *http.Response 
 	return o.RawResponse
 }
 
-func (o *UpdateELASTICSEARCHConnectionResponse) GetConnectionElasticSearch() *shared.ConnectionElasticSearch {
+func (o *UpdateELASTICSEARCHConnectionResponse) GetConnectionElasticsearch() *shared.ConnectionElasticsearch {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionElasticSearch
+	return o.ConnectionElasticsearch
 }
 
 func (o *UpdateELASTICSEARCHConnectionResponse) GetErrors() *shared.Errors {

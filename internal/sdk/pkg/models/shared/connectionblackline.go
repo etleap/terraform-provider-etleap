@@ -77,7 +77,7 @@ func (e *ConnectionBlacklineStatus) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionBlacklineDefaultUpdateSchedule struct {
-	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
 	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
@@ -148,18 +148,14 @@ type ConnectionBlackline struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionBlacklineDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Your Blackline instance Client ID
+	// Your Blackline instance Client ID.
 	ClientID string `json:"client_id"`
-	// Your Blackline instance Client Secret
-	ClientSecret string `json:"client_secret"`
-	// Your Blackline instance base URL, i.e, https://<BASE_URL>.api.blackline.com
+	// Your Blackline instance base URL, i.e, https://BASE_URL.api.blackline.com
 	BaseURL string `json:"base_url"`
 	// Your Blackline instance authorization scope.
 	InstanceScope string `json:"instance_scope"`
 	// Your Blackline username
 	Username string `json:"username"`
-	// The Blackline API Key generated for your user
-	APIKey string `json:"api_key"`
 }
 
 func (c ConnectionBlackline) MarshalJSON() ([]byte, error) {
@@ -271,13 +267,6 @@ func (o *ConnectionBlackline) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *ConnectionBlackline) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *ConnectionBlackline) GetBaseURL() string {
 	if o == nil {
 		return ""
@@ -299,24 +288,17 @@ func (o *ConnectionBlackline) GetUsername() string {
 	return o.Username
 }
 
-func (o *ConnectionBlackline) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 type ConnectionBlacklineInput struct {
 	// The unique name of this connection.
 	Name string                  `json:"name"`
 	Type ConnectionBlacklineType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Your Blackline instance Client ID
+	// Your Blackline instance Client ID.
 	ClientID string `json:"client_id"`
-	// Your Blackline instance Client Secret
+	// Your Blackline instance Client Secret.
 	ClientSecret string `json:"client_secret"`
-	// Your Blackline instance base URL, i.e, https://<BASE_URL>.api.blackline.com
+	// Your Blackline instance base URL, i.e, https://BASE_URL.api.blackline.com
 	BaseURL string `json:"base_url"`
 	// Your Blackline instance authorization scope.
 	InstanceScope string `json:"instance_scope"`

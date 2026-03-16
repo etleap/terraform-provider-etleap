@@ -67,7 +67,7 @@ func (r *ConnectionBIGQUERYDataSource) Schema(ctx context.Context, req datasourc
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
@@ -306,11 +306,11 @@ func (r *ConnectionBIGQUERYDataSource) Read(ctx context.Context, req datasource.
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionBigQuery == nil {
+	if res.ConnectionBigquery == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionBigQuery(res.ConnectionBigQuery)
+	data.RefreshFromSharedConnectionBigquery(res.ConnectionBigquery)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

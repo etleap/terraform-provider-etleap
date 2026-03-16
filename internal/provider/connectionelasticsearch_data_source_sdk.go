@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *ConnectionELASTICSEARCHDataSourceModel) RefreshFromSharedConnectionElasticSearch(resp *shared.ConnectionElasticSearch) {
+func (r *ConnectionELASTICSEARCHDataSourceModel) RefreshFromSharedConnectionElasticsearch(resp *shared.ConnectionElasticsearch) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))

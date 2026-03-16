@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 7ed13d5d01a5b00d79e61fb7509c5db2
-  docVersion: 2.7.27
+  docChecksum: 90bc8cf68b846e0c2b82bb2c0ad45677
+  docVersion: 2.8.25
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.1.33
-  configChecksum: 3c817cc699351a2138b899a6ff688334
+  releaseVersion: 0.2.0
+  configChecksum: a6dfc817a4e45ea824ceecf04cbfdf59
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -127,9 +127,15 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updateprimarykey.go
   - internal/sdk/pkg/models/operations/initiateoauth2.go
   - internal/sdk/pkg/models/operations/restartcdcprocess.go
+  - internal/sdk/pkg/models/operations/adduserdefinedapientity.go
+  - internal/sdk/pkg/models/operations/updateuserdefinedapientity.go
+  - internal/sdk/pkg/models/operations/deleteuserdefinedapientity.go
   - internal/sdk/pkg/models/operations/updateactivecampaignconnection.go
   - internal/sdk/pkg/models/operations/getactivecampaignconnection.go
   - internal/sdk/pkg/models/operations/deleteactivecampaignconnection.go
+  - internal/sdk/pkg/models/operations/updateazureblobstorageconnection.go
+  - internal/sdk/pkg/models/operations/getazureblobstorageconnection.go
+  - internal/sdk/pkg/models/operations/deleteazureblobstorageconnection.go
   - internal/sdk/pkg/models/operations/updatebigqueryconnection.go
   - internal/sdk/pkg/models/operations/getbigqueryconnection.go
   - internal/sdk/pkg/models/operations/deletebigqueryconnection.go
@@ -151,12 +157,12 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatecriteoconnection.go
   - internal/sdk/pkg/models/operations/getcriteoconnection.go
   - internal/sdk/pkg/models/operations/deletecriteoconnection.go
-  - internal/sdk/pkg/models/operations/updatedb2connection.go
-  - internal/sdk/pkg/models/operations/getdb2connection.go
-  - internal/sdk/pkg/models/operations/deletedb2connection.go
   - internal/sdk/pkg/models/operations/updatedb2shardedconnection.go
   - internal/sdk/pkg/models/operations/getdb2shardedconnection.go
   - internal/sdk/pkg/models/operations/deletedb2shardedconnection.go
+  - internal/sdk/pkg/models/operations/updatedb2connection.go
+  - internal/sdk/pkg/models/operations/getdb2connection.go
+  - internal/sdk/pkg/models/operations/deletedb2connection.go
   - internal/sdk/pkg/models/operations/updatedeltalakeconnection.go
   - internal/sdk/pkg/models/operations/getdeltalakeconnection.go
   - internal/sdk/pkg/models/operations/deletedeltalakeconnection.go
@@ -181,18 +187,24 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatefifteenfiveconnection.go
   - internal/sdk/pkg/models/operations/getfifteenfiveconnection.go
   - internal/sdk/pkg/models/operations/deletefifteenfiveconnection.go
+  - internal/sdk/pkg/models/operations/updatefreshcallerconnection.go
+  - internal/sdk/pkg/models/operations/getfreshcallerconnection.go
+  - internal/sdk/pkg/models/operations/deletefreshcallerconnection.go
   - internal/sdk/pkg/models/operations/updatefreshchatconnection.go
   - internal/sdk/pkg/models/operations/getfreshchatconnection.go
   - internal/sdk/pkg/models/operations/deletefreshchatconnection.go
+  - internal/sdk/pkg/models/operations/updatefreshdeskconnection.go
+  - internal/sdk/pkg/models/operations/getfreshdeskconnection.go
+  - internal/sdk/pkg/models/operations/deletefreshdeskconnection.go
   - internal/sdk/pkg/models/operations/updatefreshsalesconnection.go
   - internal/sdk/pkg/models/operations/getfreshsalesconnection.go
   - internal/sdk/pkg/models/operations/deletefreshsalesconnection.go
-  - internal/sdk/pkg/models/operations/updatefreshworksconnection.go
-  - internal/sdk/pkg/models/operations/getfreshworksconnection.go
-  - internal/sdk/pkg/models/operations/deletefreshworksconnection.go
   - internal/sdk/pkg/models/operations/updateftpconnection.go
   - internal/sdk/pkg/models/operations/getftpconnection.go
   - internal/sdk/pkg/models/operations/deleteftpconnection.go
+  - internal/sdk/pkg/models/operations/updategitlabconnection.go
+  - internal/sdk/pkg/models/operations/getgitlabconnection.go
+  - internal/sdk/pkg/models/operations/deletegitlabconnection.go
   - internal/sdk/pkg/models/operations/updategongconnection.go
   - internal/sdk/pkg/models/operations/getgongconnection.go
   - internal/sdk/pkg/models/operations/deletegongconnection.go
@@ -226,9 +238,15 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatejiracloudconnection.go
   - internal/sdk/pkg/models/operations/getjiracloudconnection.go
   - internal/sdk/pkg/models/operations/deletejiracloudconnection.go
+  - internal/sdk/pkg/models/operations/updatejiraconnection.go
+  - internal/sdk/pkg/models/operations/getjiraconnection.go
+  - internal/sdk/pkg/models/operations/deletejiraconnection.go
   - internal/sdk/pkg/models/operations/updatekafkaconnection.go
   - internal/sdk/pkg/models/operations/getkafkaconnection.go
   - internal/sdk/pkg/models/operations/deletekafkaconnection.go
+  - internal/sdk/pkg/models/operations/updatekinesisconnection.go
+  - internal/sdk/pkg/models/operations/getkinesisconnection.go
+  - internal/sdk/pkg/models/operations/deletekinesisconnection.go
   - internal/sdk/pkg/models/operations/updatekustomerconnection.go
   - internal/sdk/pkg/models/operations/getkustomerconnection.go
   - internal/sdk/pkg/models/operations/deletekustomerconnection.go
@@ -247,30 +265,33 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatemicrosoftentraidconnection.go
   - internal/sdk/pkg/models/operations/getmicrosoftentraidconnection.go
   - internal/sdk/pkg/models/operations/deletemicrosoftentraidconnection.go
+  - internal/sdk/pkg/models/operations/updatemicrosoftlistsconnection.go
+  - internal/sdk/pkg/models/operations/getmicrosoftlistsconnection.go
+  - internal/sdk/pkg/models/operations/deletemicrosoftlistsconnection.go
   - internal/sdk/pkg/models/operations/updatemixpanelconnection.go
   - internal/sdk/pkg/models/operations/getmixpanelconnection.go
   - internal/sdk/pkg/models/operations/deletemixpanelconnection.go
   - internal/sdk/pkg/models/operations/updatemongodbconnection.go
   - internal/sdk/pkg/models/operations/getmongodbconnection.go
   - internal/sdk/pkg/models/operations/deletemongodbconnection.go
-  - internal/sdk/pkg/models/operations/updatemysqlconnection.go
-  - internal/sdk/pkg/models/operations/getmysqlconnection.go
-  - internal/sdk/pkg/models/operations/deletemysqlconnection.go
   - internal/sdk/pkg/models/operations/updatemysqlshardedconnection.go
   - internal/sdk/pkg/models/operations/getmysqlshardedconnection.go
   - internal/sdk/pkg/models/operations/deletemysqlshardedconnection.go
+  - internal/sdk/pkg/models/operations/updatemysqlconnection.go
+  - internal/sdk/pkg/models/operations/getmysqlconnection.go
+  - internal/sdk/pkg/models/operations/deletemysqlconnection.go
   - internal/sdk/pkg/models/operations/updatenetsuiteconnection.go
   - internal/sdk/pkg/models/operations/getnetsuiteconnection.go
   - internal/sdk/pkg/models/operations/deletenetsuiteconnection.go
   - internal/sdk/pkg/models/operations/updatenetsuitev2connection.go
   - internal/sdk/pkg/models/operations/getnetsuitev2connection.go
   - internal/sdk/pkg/models/operations/deletenetsuitev2connection.go
-  - internal/sdk/pkg/models/operations/updateoracleconnection.go
-  - internal/sdk/pkg/models/operations/getoracleconnection.go
-  - internal/sdk/pkg/models/operations/deleteoracleconnection.go
   - internal/sdk/pkg/models/operations/updateoracleshardedconnection.go
   - internal/sdk/pkg/models/operations/getoracleshardedconnection.go
   - internal/sdk/pkg/models/operations/deleteoracleshardedconnection.go
+  - internal/sdk/pkg/models/operations/updateoracleconnection.go
+  - internal/sdk/pkg/models/operations/getoracleconnection.go
+  - internal/sdk/pkg/models/operations/deleteoracleconnection.go
   - internal/sdk/pkg/models/operations/updateoutlookconnection.go
   - internal/sdk/pkg/models/operations/getoutlookconnection.go
   - internal/sdk/pkg/models/operations/deleteoutlookconnection.go
@@ -280,12 +301,15 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatepinterestadsconnection.go
   - internal/sdk/pkg/models/operations/getpinterestadsconnection.go
   - internal/sdk/pkg/models/operations/deletepinterestadsconnection.go
-  - internal/sdk/pkg/models/operations/updatepostgresconnection.go
-  - internal/sdk/pkg/models/operations/getpostgresconnection.go
-  - internal/sdk/pkg/models/operations/deletepostgresconnection.go
   - internal/sdk/pkg/models/operations/updatepostgresshardedconnection.go
   - internal/sdk/pkg/models/operations/getpostgresshardedconnection.go
   - internal/sdk/pkg/models/operations/deletepostgresshardedconnection.go
+  - internal/sdk/pkg/models/operations/updatepostgresconnection.go
+  - internal/sdk/pkg/models/operations/getpostgresconnection.go
+  - internal/sdk/pkg/models/operations/deletepostgresconnection.go
+  - internal/sdk/pkg/models/operations/updatequaltricsconnection.go
+  - internal/sdk/pkg/models/operations/getqualtricsconnection.go
+  - internal/sdk/pkg/models/operations/deletequaltricsconnection.go
   - internal/sdk/pkg/models/operations/updatequoraadsconnection.go
   - internal/sdk/pkg/models/operations/getquoraadsconnection.go
   - internal/sdk/pkg/models/operations/deletequoraadsconnection.go
@@ -295,33 +319,36 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updaterecurlyconnection.go
   - internal/sdk/pkg/models/operations/getrecurlyconnection.go
   - internal/sdk/pkg/models/operations/deleterecurlyconnection.go
-  - internal/sdk/pkg/models/operations/updateredshiftconnection.go
-  - internal/sdk/pkg/models/operations/getredshiftconnection.go
-  - internal/sdk/pkg/models/operations/deleteredshiftconnection.go
   - internal/sdk/pkg/models/operations/updateredshiftshardedconnection.go
   - internal/sdk/pkg/models/operations/getredshiftshardedconnection.go
   - internal/sdk/pkg/models/operations/deleteredshiftshardedconnection.go
+  - internal/sdk/pkg/models/operations/updateredshiftconnection.go
+  - internal/sdk/pkg/models/operations/getredshiftconnection.go
+  - internal/sdk/pkg/models/operations/deleteredshiftconnection.go
   - internal/sdk/pkg/models/operations/updates3datalakeconnection.go
   - internal/sdk/pkg/models/operations/gets3datalakeconnection.go
   - internal/sdk/pkg/models/operations/deletes3datalakeconnection.go
   - internal/sdk/pkg/models/operations/updates3inputconnection.go
   - internal/sdk/pkg/models/operations/gets3inputconnection.go
   - internal/sdk/pkg/models/operations/deletes3inputconnection.go
-  - internal/sdk/pkg/models/operations/updatesalesforceconnection.go
-  - internal/sdk/pkg/models/operations/getsalesforceconnection.go
-  - internal/sdk/pkg/models/operations/deletesalesforceconnection.go
   - internal/sdk/pkg/models/operations/updatesalesforcemarketingcloudconnection.go
   - internal/sdk/pkg/models/operations/getsalesforcemarketingcloudconnection.go
   - internal/sdk/pkg/models/operations/deletesalesforcemarketingcloudconnection.go
+  - internal/sdk/pkg/models/operations/updatesalesforceconnection.go
+  - internal/sdk/pkg/models/operations/getsalesforceconnection.go
+  - internal/sdk/pkg/models/operations/deletesalesforceconnection.go
   - internal/sdk/pkg/models/operations/updatesapconcurconnection.go
   - internal/sdk/pkg/models/operations/getsapconcurconnection.go
   - internal/sdk/pkg/models/operations/deletesapconcurconnection.go
-  - internal/sdk/pkg/models/operations/updatesaphanaconnection.go
-  - internal/sdk/pkg/models/operations/getsaphanaconnection.go
-  - internal/sdk/pkg/models/operations/deletesaphanaconnection.go
   - internal/sdk/pkg/models/operations/updatesaphanashardedconnection.go
   - internal/sdk/pkg/models/operations/getsaphanashardedconnection.go
   - internal/sdk/pkg/models/operations/deletesaphanashardedconnection.go
+  - internal/sdk/pkg/models/operations/updatesaphanaconnection.go
+  - internal/sdk/pkg/models/operations/getsaphanaconnection.go
+  - internal/sdk/pkg/models/operations/deletesaphanaconnection.go
+  - internal/sdk/pkg/models/operations/updatesapodataconnection.go
+  - internal/sdk/pkg/models/operations/getsapodataconnection.go
+  - internal/sdk/pkg/models/operations/deletesapodataconnection.go
   - internal/sdk/pkg/models/operations/updateseismicconnection.go
   - internal/sdk/pkg/models/operations/getseismicconnection.go
   - internal/sdk/pkg/models/operations/deleteseismicconnection.go
@@ -340,18 +367,18 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatesnapchatadsconnection.go
   - internal/sdk/pkg/models/operations/getsnapchatadsconnection.go
   - internal/sdk/pkg/models/operations/deletesnapchatadsconnection.go
-  - internal/sdk/pkg/models/operations/updatesnowflakeconnection.go
-  - internal/sdk/pkg/models/operations/getsnowflakeconnection.go
-  - internal/sdk/pkg/models/operations/deletesnowflakeconnection.go
   - internal/sdk/pkg/models/operations/updatesnowflakeshardedconnection.go
   - internal/sdk/pkg/models/operations/getsnowflakeshardedconnection.go
   - internal/sdk/pkg/models/operations/deletesnowflakeshardedconnection.go
-  - internal/sdk/pkg/models/operations/updatesqlserverconnection.go
-  - internal/sdk/pkg/models/operations/getsqlserverconnection.go
-  - internal/sdk/pkg/models/operations/deletesqlserverconnection.go
+  - internal/sdk/pkg/models/operations/updatesnowflakeconnection.go
+  - internal/sdk/pkg/models/operations/getsnowflakeconnection.go
+  - internal/sdk/pkg/models/operations/deletesnowflakeconnection.go
   - internal/sdk/pkg/models/operations/updatesqlservershardedconnection.go
   - internal/sdk/pkg/models/operations/getsqlservershardedconnection.go
   - internal/sdk/pkg/models/operations/deletesqlservershardedconnection.go
+  - internal/sdk/pkg/models/operations/updatesqlserverconnection.go
+  - internal/sdk/pkg/models/operations/getsqlserverconnection.go
+  - internal/sdk/pkg/models/operations/deletesqlserverconnection.go
   - internal/sdk/pkg/models/operations/updatesqsconnection.go
   - internal/sdk/pkg/models/operations/getsqsconnection.go
   - internal/sdk/pkg/models/operations/deletesqsconnection.go
@@ -404,6 +431,7 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/getzuoraconnection.go
   - internal/sdk/pkg/models/operations/deletezuoraconnection.go
   - internal/sdk/pkg/models/operations/createactivecampaignconnection.go
+  - internal/sdk/pkg/models/operations/createazureblobstorageconnection.go
   - internal/sdk/pkg/models/operations/createbigqueryconnection.go
   - internal/sdk/pkg/models/operations/createbingadsconnection.go
   - internal/sdk/pkg/models/operations/createblacklineconnection.go
@@ -421,10 +449,12 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/createerpxconnection.go
   - internal/sdk/pkg/models/operations/createfacebookadsconnection.go
   - internal/sdk/pkg/models/operations/createfifteenfiveconnection.go
+  - internal/sdk/pkg/models/operations/createfreshcallerconnection.go
   - internal/sdk/pkg/models/operations/createfreshchatconnection.go
+  - internal/sdk/pkg/models/operations/createfreshdeskconnection.go
   - internal/sdk/pkg/models/operations/createfreshsalesconnection.go
-  - internal/sdk/pkg/models/operations/createfreshworksconnection.go
   - internal/sdk/pkg/models/operations/createftpconnection.go
+  - internal/sdk/pkg/models/operations/creategitlabconnection.go
   - internal/sdk/pkg/models/operations/creategongconnection.go
   - internal/sdk/pkg/models/operations/creategoogleadsconnection.go
   - internal/sdk/pkg/models/operations/creategoogleanalyticsga4connection.go
@@ -434,15 +464,18 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/createicebergconnection.go
   - internal/sdk/pkg/models/operations/createimpactradiusconnection.go
   - internal/sdk/pkg/models/operations/createintercomconnection.go
+  - internal/sdk/pkg/models/operations/createjiraconnection.go
   - internal/sdk/pkg/models/operations/createjiraalignconnection.go
   - internal/sdk/pkg/models/operations/createjiracloudconnection.go
   - internal/sdk/pkg/models/operations/createkafkaconnection.go
+  - internal/sdk/pkg/models/operations/createkinesisconnection.go
   - internal/sdk/pkg/models/operations/createkustomerconnection.go
   - internal/sdk/pkg/models/operations/createldapconnection.go
   - internal/sdk/pkg/models/operations/createldapvirtuallistviewconnection.go
   - internal/sdk/pkg/models/operations/createlinkedinadsconnection.go
   - internal/sdk/pkg/models/operations/createmarketoconnection.go
   - internal/sdk/pkg/models/operations/createmicrosoftentraidconnection.go
+  - internal/sdk/pkg/models/operations/createmicrosoftlistsconnection.go
   - internal/sdk/pkg/models/operations/createmixpanelconnection.go
   - internal/sdk/pkg/models/operations/createmongodbconnection.go
   - internal/sdk/pkg/models/operations/createmysqlconnection.go
@@ -456,6 +489,7 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/createpinterestadsconnection.go
   - internal/sdk/pkg/models/operations/createpostgresconnection.go
   - internal/sdk/pkg/models/operations/createpostgresshardedconnection.go
+  - internal/sdk/pkg/models/operations/createqualtricsconnection.go
   - internal/sdk/pkg/models/operations/createquoraadsconnection.go
   - internal/sdk/pkg/models/operations/createravemedidataconnection.go
   - internal/sdk/pkg/models/operations/createrecurlyconnection.go
@@ -468,6 +502,7 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/createsapconcurconnection.go
   - internal/sdk/pkg/models/operations/createsaphanaconnection.go
   - internal/sdk/pkg/models/operations/createsaphanashardedconnection.go
+  - internal/sdk/pkg/models/operations/createsapodataconnection.go
   - internal/sdk/pkg/models/operations/createseismicconnection.go
   - internal/sdk/pkg/models/operations/createservicenowconnection.go
   - internal/sdk/pkg/models/operations/createsftpconnection.go
@@ -544,6 +579,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/destinationiceberg.go
   - internal/sdk/pkg/models/shared/sourcetypes.go
   - internal/sdk/pkg/models/shared/sourceactivecampaign.go
+  - internal/sdk/pkg/models/shared/sourceazureblobstorage.go
   - internal/sdk/pkg/models/shared/sourcebigquery.go
   - internal/sdk/pkg/models/shared/sourcebingads.go
   - internal/sdk/pkg/models/shared/sourceblackline.go
@@ -561,28 +597,32 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourceerpx.go
   - internal/sdk/pkg/models/shared/sourcefacebookads.go
   - internal/sdk/pkg/models/shared/sourcefifteenfive.go
+  - internal/sdk/pkg/models/shared/sourcefreshcaller.go
   - internal/sdk/pkg/models/shared/sourcefreshchat.go
+  - internal/sdk/pkg/models/shared/sourcefreshdesk.go
   - internal/sdk/pkg/models/shared/sourcefreshsales.go
-  - internal/sdk/pkg/models/shared/sourcefreshworks.go
   - internal/sdk/pkg/models/shared/sourceftp.go
+  - internal/sdk/pkg/models/shared/sourcegitlab.go
   - internal/sdk/pkg/models/shared/sourcegong.go
+  - internal/sdk/pkg/models/shared/sourcegoogleads.go
   - internal/sdk/pkg/models/shared/sourcegoogleanalyticsga4.go
   - internal/sdk/pkg/models/shared/sourcegooglecloudstorage.go
-  - internal/sdk/pkg/models/shared/sourcegoogleads.go
   - internal/sdk/pkg/models/shared/sourcegooglesheets.go
   - internal/sdk/pkg/models/shared/sourcehubspot.go
-  - internal/sdk/pkg/models/shared/sourceintercom.go
   - internal/sdk/pkg/models/shared/sourceimpactradius.go
+  - internal/sdk/pkg/models/shared/sourceintercom.go
   - internal/sdk/pkg/models/shared/sourcejira.go
   - internal/sdk/pkg/models/shared/sourcejiraalign.go
   - internal/sdk/pkg/models/shared/sourcejiracloud.go
   - internal/sdk/pkg/models/shared/sourcekafka.go
+  - internal/sdk/pkg/models/shared/sourcekinesis.go
   - internal/sdk/pkg/models/shared/sourcekustomer.go
   - internal/sdk/pkg/models/shared/sourceldap.go
   - internal/sdk/pkg/models/shared/sourceldapvirtuallistview.go
   - internal/sdk/pkg/models/shared/sourcelinkedinads.go
   - internal/sdk/pkg/models/shared/sourcemarketo.go
   - internal/sdk/pkg/models/shared/sourcemicrosoftentraid.go
+  - internal/sdk/pkg/models/shared/sourcemicrosoftlists.go
   - internal/sdk/pkg/models/shared/sourcemixpanel.go
   - internal/sdk/pkg/models/shared/sourcemongodb.go
   - internal/sdk/pkg/models/shared/sourcemysql.go
@@ -591,42 +631,44 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourcenetsuitev2.go
   - internal/sdk/pkg/models/shared/sourceoracle.go
   - internal/sdk/pkg/models/shared/sourceoraclesharded.go
-  - internal/sdk/pkg/models/shared/sourceoutreach.go
   - internal/sdk/pkg/models/shared/sourceoutlook.go
+  - internal/sdk/pkg/models/shared/sourceoutreach.go
   - internal/sdk/pkg/models/shared/sourcepinterestads.go
   - internal/sdk/pkg/models/shared/sourcepostgres.go
   - internal/sdk/pkg/models/shared/sourcepostgressharded.go
+  - internal/sdk/pkg/models/shared/sourcequaltrics.go
   - internal/sdk/pkg/models/shared/sourcequoraads.go
   - internal/sdk/pkg/models/shared/sourceravemedidata.go
   - internal/sdk/pkg/models/shared/sourcerecurly.go
   - internal/sdk/pkg/models/shared/sourceredshift.go
   - internal/sdk/pkg/models/shared/sourceredshiftsharded.go
-  - internal/sdk/pkg/models/shared/sources3legacy.go
   - internal/sdk/pkg/models/shared/sources3input.go
+  - internal/sdk/pkg/models/shared/sources3legacy.go
+  - internal/sdk/pkg/models/shared/sourcesalesforce.go
   - internal/sdk/pkg/models/shared/sourcesalesforcemarketingcloud.go
   - internal/sdk/pkg/models/shared/sourcesapconcur.go
   - internal/sdk/pkg/models/shared/sourcesaphana.go
   - internal/sdk/pkg/models/shared/sourcesaphanasharded.go
+  - internal/sdk/pkg/models/shared/sourcesapodata.go
   - internal/sdk/pkg/models/shared/sourceseismic.go
   - internal/sdk/pkg/models/shared/sourceservicenow.go
+  - internal/sdk/pkg/models/shared/sourcesftp.go
   - internal/sdk/pkg/models/shared/sourceshopify.go
   - internal/sdk/pkg/models/shared/sourceskyward.go
-  - internal/sdk/pkg/models/shared/sourcesalesforce.go
-  - internal/sdk/pkg/models/shared/sourcesftp.go
-  - internal/sdk/pkg/models/shared/sourcesqlserver.go
-  - internal/sdk/pkg/models/shared/sourcesqlserversharded.go
-  - internal/sdk/pkg/models/shared/sourcestreaming.go
+  - internal/sdk/pkg/models/shared/sourcesnapchatads.go
   - internal/sdk/pkg/models/shared/sourcesnowflake.go
   - internal/sdk/pkg/models/shared/sourcesnowflakesharded.go
+  - internal/sdk/pkg/models/shared/sourcesqlserver.go
+  - internal/sdk/pkg/models/shared/sourcesqlserversharded.go
   - internal/sdk/pkg/models/shared/sourcesqs.go
   - internal/sdk/pkg/models/shared/sourcesquare.go
-  - internal/sdk/pkg/models/shared/sourcesnapchatads.go
+  - internal/sdk/pkg/models/shared/sourcestreaming.go
   - internal/sdk/pkg/models/shared/sourcestripe.go
   - internal/sdk/pkg/models/shared/sourcesumtotal.go
   - internal/sdk/pkg/models/shared/sourcethetradedesk.go
   - internal/sdk/pkg/models/shared/sourcetiktokads.go
   - internal/sdk/pkg/models/shared/sourcetwilio.go
-  - internal/sdk/pkg/models/shared/sourcetwitter.go
+  - internal/sdk/pkg/models/shared/sourcetwitterads.go
   - internal/sdk/pkg/models/shared/sourceuserdefinedapi.go
   - internal/sdk/pkg/models/shared/sourceuservoice.go
   - internal/sdk/pkg/models/shared/sourceveeva.go
@@ -640,6 +682,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/destinationupdate.go
   - internal/sdk/pkg/models/shared/sourcetypesupdate.go
   - internal/sdk/pkg/models/shared/sourceactivecampaignupdate.go
+  - internal/sdk/pkg/models/shared/sourceazureblobstorageupdate.go
   - internal/sdk/pkg/models/shared/sourcebigqueryupdate.go
   - internal/sdk/pkg/models/shared/sourcebingadsupdate.go
   - internal/sdk/pkg/models/shared/sourceblacklineupdate.go
@@ -657,29 +700,33 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourceerpxupdate.go
   - internal/sdk/pkg/models/shared/sourcefacebookadsupdate.go
   - internal/sdk/pkg/models/shared/sourcefifteenfiveupdate.go
+  - internal/sdk/pkg/models/shared/sourcefreshcallerupdate.go
   - internal/sdk/pkg/models/shared/sourcefreshchatupdate.go
+  - internal/sdk/pkg/models/shared/sourcefreshdeskupdate.go
   - internal/sdk/pkg/models/shared/sourcefreshsalesupdate.go
-  - internal/sdk/pkg/models/shared/sourcefreshworksupdate.go
   - internal/sdk/pkg/models/shared/sourceftpupdate.go
+  - internal/sdk/pkg/models/shared/sourcegitlabupdate.go
   - internal/sdk/pkg/models/shared/sourcegongupdate.go
+  - internal/sdk/pkg/models/shared/sourcegoogleadsupdate.go
   - internal/sdk/pkg/models/shared/sourcegoogleanalyticsga4update.go
   - internal/sdk/pkg/models/shared/sourcegooglecloudstorageupdate.go
   - internal/sdk/pkg/models/shared/sourcetypeenum.go
-  - internal/sdk/pkg/models/shared/sourcegoogleadsupdate.go
   - internal/sdk/pkg/models/shared/sourcegooglesheetsupdate.go
   - internal/sdk/pkg/models/shared/sourcehubspotupdate.go
-  - internal/sdk/pkg/models/shared/sourceintercomupdate.go
   - internal/sdk/pkg/models/shared/sourceimpactradiusupdate.go
+  - internal/sdk/pkg/models/shared/sourceintercomupdate.go
   - internal/sdk/pkg/models/shared/sourcejiraupdate.go
   - internal/sdk/pkg/models/shared/sourcejiraalignupdate.go
   - internal/sdk/pkg/models/shared/sourcejiracloudupdate.go
   - internal/sdk/pkg/models/shared/sourcekafkaupdate.go
+  - internal/sdk/pkg/models/shared/sourcekinesisupdate.go
   - internal/sdk/pkg/models/shared/sourcekustomerupdate.go
   - internal/sdk/pkg/models/shared/sourceldapupdate.go
   - internal/sdk/pkg/models/shared/sourceldapvirtuallistviewupdate.go
   - internal/sdk/pkg/models/shared/sourcelinkedinadsupdate.go
   - internal/sdk/pkg/models/shared/sourcemarketoupdate.go
   - internal/sdk/pkg/models/shared/sourcemicrosoftentraidupdate.go
+  - internal/sdk/pkg/models/shared/sourcemicrosoftlistsupdate.go
   - internal/sdk/pkg/models/shared/sourcemixpanelupdate.go
   - internal/sdk/pkg/models/shared/sourcemongodbupdate.go
   - internal/sdk/pkg/models/shared/sourcemysqlupdate.go
@@ -688,42 +735,44 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourcenetsuitev2update.go
   - internal/sdk/pkg/models/shared/sourceoracleupdate.go
   - internal/sdk/pkg/models/shared/sourceoracleshardedupdate.go
-  - internal/sdk/pkg/models/shared/sourceoutreachupdate.go
   - internal/sdk/pkg/models/shared/sourceoutlookupdate.go
+  - internal/sdk/pkg/models/shared/sourceoutreachupdate.go
   - internal/sdk/pkg/models/shared/sourcepinterestadsupdate.go
   - internal/sdk/pkg/models/shared/sourcepostgresupdate.go
   - internal/sdk/pkg/models/shared/sourcepostgresshardedupdate.go
+  - internal/sdk/pkg/models/shared/sourcequaltricsupdate.go
   - internal/sdk/pkg/models/shared/sourcequoraadsupdate.go
   - internal/sdk/pkg/models/shared/sourceravemedidataupdate.go
   - internal/sdk/pkg/models/shared/sourcerecurlyupdate.go
   - internal/sdk/pkg/models/shared/sourceredshiftupdate.go
   - internal/sdk/pkg/models/shared/sourceredshiftshardedupdate.go
-  - internal/sdk/pkg/models/shared/sources3legacyupdate.go
   - internal/sdk/pkg/models/shared/sources3inputupdate.go
+  - internal/sdk/pkg/models/shared/sources3legacyupdate.go
+  - internal/sdk/pkg/models/shared/sourcesalesforceupdate.go
   - internal/sdk/pkg/models/shared/sourcesalesforcemarketingcloudupdate.go
   - internal/sdk/pkg/models/shared/sourcesapconcurupdate.go
   - internal/sdk/pkg/models/shared/sourcesaphanaupdate.go
   - internal/sdk/pkg/models/shared/sourcesaphanashardedupdate.go
+  - internal/sdk/pkg/models/shared/sourcesapodataupdate.go
   - internal/sdk/pkg/models/shared/sourceseismicupdate.go
   - internal/sdk/pkg/models/shared/sourceservicenowupdate.go
+  - internal/sdk/pkg/models/shared/sourcesftpupdate.go
   - internal/sdk/pkg/models/shared/sourceshopifyupdate.go
   - internal/sdk/pkg/models/shared/sourceskywardupdate.go
-  - internal/sdk/pkg/models/shared/sourcesalesforceupdate.go
-  - internal/sdk/pkg/models/shared/sourcesftpupdate.go
-  - internal/sdk/pkg/models/shared/sourcesqlserverupdate.go
-  - internal/sdk/pkg/models/shared/sourcesqlservershardedupdate.go
-  - internal/sdk/pkg/models/shared/sourcestreamingupdate.go
+  - internal/sdk/pkg/models/shared/sourcesnapchatadsupdate.go
   - internal/sdk/pkg/models/shared/sourcesnowflakeupdate.go
   - internal/sdk/pkg/models/shared/sourcesnowflakeshardedupdate.go
+  - internal/sdk/pkg/models/shared/sourcesqlserverupdate.go
+  - internal/sdk/pkg/models/shared/sourcesqlservershardedupdate.go
   - internal/sdk/pkg/models/shared/sourcesqsupdate.go
   - internal/sdk/pkg/models/shared/sourcesquareupdate.go
-  - internal/sdk/pkg/models/shared/sourcesnapchatadsupdate.go
+  - internal/sdk/pkg/models/shared/sourcestreamingupdate.go
   - internal/sdk/pkg/models/shared/sourcestripeupdate.go
   - internal/sdk/pkg/models/shared/sourcesumtotalupdate.go
   - internal/sdk/pkg/models/shared/sourcethetradedeskupdate.go
   - internal/sdk/pkg/models/shared/sourcetiktokadsupdate.go
   - internal/sdk/pkg/models/shared/sourcetwilioupdate.go
-  - internal/sdk/pkg/models/shared/sourcetwitterupdate.go
+  - internal/sdk/pkg/models/shared/sourcetwitteradsupdate.go
   - internal/sdk/pkg/models/shared/sourceuserdefinedapiupdate.go
   - internal/sdk/pkg/models/shared/sourceuservoiceupdate.go
   - internal/sdk/pkg/models/shared/sourceveevaupdate.go
@@ -790,12 +839,37 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/primarykeyoverride.go
   - internal/sdk/pkg/models/shared/oauth2connectiontype.go
   - internal/sdk/pkg/models/shared/cdcrestarts.go
+  - internal/sdk/pkg/models/shared/userdefinedapientity.go
+  - internal/sdk/pkg/models/shared/restmethod.go
+  - internal/sdk/pkg/models/shared/postmethod.go
+  - internal/sdk/pkg/models/shared/bodyparameters.go
+  - internal/sdk/pkg/models/shared/headerparameters.go
+  - internal/sdk/pkg/models/shared/queryparameters.go
+  - internal/sdk/pkg/models/shared/pagingstrategy.go
+  - internal/sdk/pkg/models/shared/cursoruripagingstrategy.go
+  - internal/sdk/pkg/models/shared/offsetpagingstrategy.go
+  - internal/sdk/pkg/models/shared/pagenumberpagingstrategy.go
+  - internal/sdk/pkg/models/shared/userdefinedapipipelinemode.go
+  - internal/sdk/pkg/models/shared/userdefinedapireplacemode.go
+  - internal/sdk/pkg/models/shared/schemav1foreignkeycolumn.go
+  - internal/sdk/pkg/models/shared/userdefinedapiupdatemode.go
+  - internal/sdk/pkg/models/shared/updatemodestrategytypes.go
+  - internal/sdk/pkg/models/shared/wallclockstrategy.go
+  - internal/sdk/pkg/models/shared/inclusiveorexclusivewatermarkdateonlykeyvaluepair.go
+  - internal/sdk/pkg/models/shared/watermarkdateonlykeyvaluepair.go
+  - internal/sdk/pkg/models/shared/extracteddatastrategy.go
+  - internal/sdk/pkg/models/shared/watermarkdatetimekeyvaluepair.go
+  - internal/sdk/pkg/models/shared/userdefinedapientityinput.go
+  - internal/sdk/pkg/models/shared/userdefinedapientityupdate.go
+  - internal/sdk/pkg/models/shared/userdefinedapiupdatemodeupdate.go
   - internal/sdk/pkg/models/shared/connectionactivecampaign.go
   - internal/sdk/pkg/models/shared/connectionactivecampaignupdate.go
+  - internal/sdk/pkg/models/shared/connectionazureblobstorage.go
+  - internal/sdk/pkg/models/shared/connectionazureblobstorageupdate.go
   - internal/sdk/pkg/models/shared/connectionbigquery.go
   - internal/sdk/pkg/models/shared/connectionbigqueryupdate.go
-  - internal/sdk/pkg/models/shared/connectionbing.go
-  - internal/sdk/pkg/models/shared/connectionbingupdate.go
+  - internal/sdk/pkg/models/shared/connectionbingads.go
+  - internal/sdk/pkg/models/shared/connectionbingadsupdate.go
   - internal/sdk/pkg/models/shared/connectionblackline.go
   - internal/sdk/pkg/models/shared/connectionblacklineupdate.go
   - internal/sdk/pkg/models/shared/connectionbraintree.go
@@ -806,13 +880,13 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectioncoupaupdate.go
   - internal/sdk/pkg/models/shared/connectioncriteo.go
   - internal/sdk/pkg/models/shared/connectioncriteoupdate.go
-  - internal/sdk/pkg/models/shared/connectiondb2.go
-  - internal/sdk/pkg/models/shared/sshconfig.go
-  - internal/sdk/pkg/models/shared/connectiondb2update.go
   - internal/sdk/pkg/models/shared/connectiondb2sharded.go
   - internal/sdk/pkg/models/shared/databaseshardoutput.go
+  - internal/sdk/pkg/models/shared/sshconfig.go
   - internal/sdk/pkg/models/shared/connectiondb2shardedupdate.go
   - internal/sdk/pkg/models/shared/databaseshard.go
+  - internal/sdk/pkg/models/shared/connectiondb2.go
+  - internal/sdk/pkg/models/shared/connectiondb2update.go
   - internal/sdk/pkg/models/shared/connectiondeltalake.go
   - internal/sdk/pkg/models/shared/connectiondeltalakeupdate.go
   - internal/sdk/pkg/models/shared/connectionegnyte.go
@@ -825,18 +899,22 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectioneloquaupdate.go
   - internal/sdk/pkg/models/shared/connectionerpx.go
   - internal/sdk/pkg/models/shared/connectionerpxupdate.go
-  - internal/sdk/pkg/models/shared/connectionfb.go
-  - internal/sdk/pkg/models/shared/connectionfbupdate.go
+  - internal/sdk/pkg/models/shared/connectionfacebookads.go
+  - internal/sdk/pkg/models/shared/connectionfacebookadsupdate.go
   - internal/sdk/pkg/models/shared/connectionfifteenfive.go
   - internal/sdk/pkg/models/shared/connectionfifteenfiveupdate.go
+  - internal/sdk/pkg/models/shared/connectionfreshcaller.go
+  - internal/sdk/pkg/models/shared/connectionfreshcallerupdate.go
   - internal/sdk/pkg/models/shared/connectionfreshchat.go
   - internal/sdk/pkg/models/shared/connectionfreshchatupdate.go
+  - internal/sdk/pkg/models/shared/connectionfreshdesk.go
+  - internal/sdk/pkg/models/shared/connectionfreshdeskupdate.go
   - internal/sdk/pkg/models/shared/connectionfreshsales.go
   - internal/sdk/pkg/models/shared/connectionfreshsalesupdate.go
-  - internal/sdk/pkg/models/shared/connectionfreshworks.go
-  - internal/sdk/pkg/models/shared/connectionfreshworksupdate.go
   - internal/sdk/pkg/models/shared/connectionftp.go
   - internal/sdk/pkg/models/shared/connectionftpupdate.go
+  - internal/sdk/pkg/models/shared/connectiongitlab.go
+  - internal/sdk/pkg/models/shared/connectiongitlabupdate.go
   - internal/sdk/pkg/models/shared/connectiongong.go
   - internal/sdk/pkg/models/shared/connectiongongupdate.go
   - internal/sdk/pkg/models/shared/connectiongoogleads.go
@@ -859,7 +937,11 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionjiraalignupdate.go
   - internal/sdk/pkg/models/shared/connectionjiracloud.go
   - internal/sdk/pkg/models/shared/connectionjiracloudupdate.go
+  - internal/sdk/pkg/models/shared/connectionjira.go
+  - internal/sdk/pkg/models/shared/connectionjiraupdate.go
   - internal/sdk/pkg/models/shared/connectionkafkaupdate.go
+  - internal/sdk/pkg/models/shared/connectionkinesis.go
+  - internal/sdk/pkg/models/shared/connectionkinesisupdate.go
   - internal/sdk/pkg/models/shared/connectionkustomer.go
   - internal/sdk/pkg/models/shared/connectionkustomerupdate.go
   - internal/sdk/pkg/models/shared/connectionldap.go
@@ -871,57 +953,63 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionmarketoupdate.go
   - internal/sdk/pkg/models/shared/connectionmicrosoftentraid.go
   - internal/sdk/pkg/models/shared/connectionmicrosoftentraidupdate.go
+  - internal/sdk/pkg/models/shared/connectionmicrosoftlists.go
+  - internal/sdk/pkg/models/shared/connectionmicrosoftlistsupdate.go
   - internal/sdk/pkg/models/shared/connectionmixpanel.go
   - internal/sdk/pkg/models/shared/connectionmixpanelupdate.go
-  - internal/sdk/pkg/models/shared/connectionmongoupdate.go
-  - internal/sdk/pkg/models/shared/connectionmysql.go
-  - internal/sdk/pkg/models/shared/connectionmysqlupdate.go
+  - internal/sdk/pkg/models/shared/connectionmongodbupdate.go
   - internal/sdk/pkg/models/shared/connectionmysqlsharded.go
   - internal/sdk/pkg/models/shared/mysqlshardoutput.go
   - internal/sdk/pkg/models/shared/connectionmysqlshardedupdate.go
   - internal/sdk/pkg/models/shared/mysqlshard.go
+  - internal/sdk/pkg/models/shared/connectionmysql.go
+  - internal/sdk/pkg/models/shared/connectionmysqlupdate.go
   - internal/sdk/pkg/models/shared/connectionnetsuite.go
   - internal/sdk/pkg/models/shared/connectionnetsuiteupdate.go
   - internal/sdk/pkg/models/shared/connectionnetsuitev2.go
   - internal/sdk/pkg/models/shared/connectionnetsuitev2update.go
-  - internal/sdk/pkg/models/shared/connectionoracle.go
-  - internal/sdk/pkg/models/shared/connectionoracleupdate.go
   - internal/sdk/pkg/models/shared/connectionoraclesharded.go
   - internal/sdk/pkg/models/shared/connectionoracleshardedupdate.go
+  - internal/sdk/pkg/models/shared/connectionoracle.go
+  - internal/sdk/pkg/models/shared/connectionoracleupdate.go
   - internal/sdk/pkg/models/shared/connectionoutlook.go
   - internal/sdk/pkg/models/shared/connectionoutlookupdate.go
   - internal/sdk/pkg/models/shared/connectionoutreach.go
   - internal/sdk/pkg/models/shared/connectionoutreachupdate.go
   - internal/sdk/pkg/models/shared/connectionpinterestads.go
   - internal/sdk/pkg/models/shared/connectionpinterestadsupdate.go
-  - internal/sdk/pkg/models/shared/connectionpostgres.go
-  - internal/sdk/pkg/models/shared/connectionpostgresupdate.go
   - internal/sdk/pkg/models/shared/connectionpostgressharded.go
   - internal/sdk/pkg/models/shared/connectionpostgresshardedupdate.go
-  - internal/sdk/pkg/models/shared/connectionquora.go
-  - internal/sdk/pkg/models/shared/connectionquoraupdate.go
+  - internal/sdk/pkg/models/shared/connectionpostgres.go
+  - internal/sdk/pkg/models/shared/connectionpostgresupdate.go
+  - internal/sdk/pkg/models/shared/connectionqualtrics.go
+  - internal/sdk/pkg/models/shared/connectionqualtricsupdate.go
+  - internal/sdk/pkg/models/shared/connectionquoraads.go
+  - internal/sdk/pkg/models/shared/connectionquoraadsupdate.go
   - internal/sdk/pkg/models/shared/connectionravemedidata.go
   - internal/sdk/pkg/models/shared/connectionravemedidataupdate.go
   - internal/sdk/pkg/models/shared/connectionrecurly.go
   - internal/sdk/pkg/models/shared/connectionrecurlyupdate.go
-  - internal/sdk/pkg/models/shared/connectionredshift.go
-  - internal/sdk/pkg/models/shared/connectionredshiftupdate.go
   - internal/sdk/pkg/models/shared/connectionredshiftsharded.go
   - internal/sdk/pkg/models/shared/connectionredshiftshardedupdate.go
+  - internal/sdk/pkg/models/shared/connectionredshift.go
+  - internal/sdk/pkg/models/shared/connectionredshiftupdate.go
   - internal/sdk/pkg/models/shared/connections3datalake.go
   - internal/sdk/pkg/models/shared/connections3datalakeupdate.go
   - internal/sdk/pkg/models/shared/connections3input.go
   - internal/sdk/pkg/models/shared/connections3inputupdate.go
-  - internal/sdk/pkg/models/shared/connectionsalesforce.go
-  - internal/sdk/pkg/models/shared/connectionsalesforceupdate.go
   - internal/sdk/pkg/models/shared/connectionsalesforcemarketingcloud.go
   - internal/sdk/pkg/models/shared/connectionsalesforcemarketingcloudupdate.go
+  - internal/sdk/pkg/models/shared/connectionsalesforce.go
+  - internal/sdk/pkg/models/shared/connectionsalesforceupdate.go
   - internal/sdk/pkg/models/shared/connectionsapconcur.go
   - internal/sdk/pkg/models/shared/connectionsapconcurupdate.go
-  - internal/sdk/pkg/models/shared/connectionsaphana.go
-  - internal/sdk/pkg/models/shared/connectionsaphanaupdate.go
   - internal/sdk/pkg/models/shared/connectionsaphanasharded.go
   - internal/sdk/pkg/models/shared/connectionsaphanashardedupdate.go
+  - internal/sdk/pkg/models/shared/connectionsaphana.go
+  - internal/sdk/pkg/models/shared/connectionsaphanaupdate.go
+  - internal/sdk/pkg/models/shared/connectionsapodata.go
+  - internal/sdk/pkg/models/shared/connectionsapodataupdate.go
   - internal/sdk/pkg/models/shared/connectionseismic.go
   - internal/sdk/pkg/models/shared/connectionseismicupdate.go
   - internal/sdk/pkg/models/shared/connectionservicenow.go
@@ -934,20 +1022,20 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionskywardupdate.go
   - internal/sdk/pkg/models/shared/connectionsnapchatads.go
   - internal/sdk/pkg/models/shared/connectionsnapchatadsupdate.go
-  - internal/sdk/pkg/models/shared/connectionsnowflake.go
+  - internal/sdk/pkg/models/shared/connectionsnowflakesharded.go
+  - internal/sdk/pkg/models/shared/snowflakeshardoutput.go
   - internal/sdk/pkg/models/shared/snowflakeauthenticationtypesoutput.go
   - internal/sdk/pkg/models/shared/snowflakeauthenticationkeypairoutput.go
   - internal/sdk/pkg/models/shared/snowflakeauthenticationpasswordoutput.go
-  - internal/sdk/pkg/models/shared/connectionsnowflakeupdate.go
-  - internal/sdk/pkg/models/shared/snowflakeauthenticationtypes.go
-  - internal/sdk/pkg/models/shared/connectionsnowflakesharded.go
-  - internal/sdk/pkg/models/shared/snowflakeshardoutput.go
   - internal/sdk/pkg/models/shared/connectionsnowflakeshardedupdate.go
   - internal/sdk/pkg/models/shared/snowflakeshard.go
-  - internal/sdk/pkg/models/shared/connectionsqlserver.go
-  - internal/sdk/pkg/models/shared/connectionsqlserverupdate.go
+  - internal/sdk/pkg/models/shared/snowflakeauthenticationtypes.go
+  - internal/sdk/pkg/models/shared/connectionsnowflake.go
+  - internal/sdk/pkg/models/shared/connectionsnowflakeupdate.go
   - internal/sdk/pkg/models/shared/connectionsqlserversharded.go
   - internal/sdk/pkg/models/shared/connectionsqlservershardedupdate.go
+  - internal/sdk/pkg/models/shared/connectionsqlserver.go
+  - internal/sdk/pkg/models/shared/connectionsqlserverupdate.go
   - internal/sdk/pkg/models/shared/connectionsqs.go
   - internal/sdk/pkg/models/shared/connectionsqsupdate.go
   - internal/sdk/pkg/models/shared/connectionsquare.go
@@ -962,38 +1050,20 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectiontiktokadsupdate.go
   - internal/sdk/pkg/models/shared/connectiontwilio.go
   - internal/sdk/pkg/models/shared/connectiontwilioupdate.go
-  - internal/sdk/pkg/models/shared/connectiontwitter.go
-  - internal/sdk/pkg/models/shared/connectiontwitterupdate.go
+  - internal/sdk/pkg/models/shared/connectiontwitterads.go
+  - internal/sdk/pkg/models/shared/connectiontwitteradsupdate.go
   - internal/sdk/pkg/models/shared/connectionuserdefinedapi.go
-  - internal/sdk/pkg/models/shared/userdefinedapientity.go
-  - internal/sdk/pkg/models/shared/restmethod.go
-  - internal/sdk/pkg/models/shared/postmethod.go
-  - internal/sdk/pkg/models/shared/bodyparameters.go
-  - internal/sdk/pkg/models/shared/headerparameters.go
-  - internal/sdk/pkg/models/shared/queryparameters.go
-  - internal/sdk/pkg/models/shared/pagingstrategy.go
-  - internal/sdk/pkg/models/shared/cursoruripagingstrategy.go
-  - internal/sdk/pkg/models/shared/offsetpagingstrategy.go
-  - internal/sdk/pkg/models/shared/userdefinedapipipelinemode.go
-  - internal/sdk/pkg/models/shared/userdefinedapireplacemode.go
-  - internal/sdk/pkg/models/shared/schemav1foreignkeycolumn.go
-  - internal/sdk/pkg/models/shared/userdefinedapiupdatemode.go
-  - internal/sdk/pkg/models/shared/updatemodestrategytypes.go
-  - internal/sdk/pkg/models/shared/wallclockstrategy.go
-  - internal/sdk/pkg/models/shared/inclusiveorexclusivewatermarkdateonlykeyvaluepair.go
-  - internal/sdk/pkg/models/shared/watermarkdateonlykeyvaluepair.go
-  - internal/sdk/pkg/models/shared/extracteddatastrategy.go
-  - internal/sdk/pkg/models/shared/watermarkdatetimekeyvaluepair.go
   - internal/sdk/pkg/models/shared/authentication.go
   - internal/sdk/pkg/models/shared/basicauthentication.go
   - internal/sdk/pkg/models/shared/bearerauthentication.go
   - internal/sdk/pkg/models/shared/headerauthentication.go
+  - internal/sdk/pkg/models/shared/oauth2clientcredentialsauthentication.go
   - internal/sdk/pkg/models/shared/connectionuserdefinedapiupdate.go
   - internal/sdk/pkg/models/shared/connectionuservoice.go
   - internal/sdk/pkg/models/shared/connectionuservoiceupdate.go
   - internal/sdk/pkg/models/shared/connectionveevaupdate.go
-  - internal/sdk/pkg/models/shared/connectionverizonmedia.go
-  - internal/sdk/pkg/models/shared/connectionverizonmediaupdate.go
+  - internal/sdk/pkg/models/shared/connectionverizonmediadsp.go
+  - internal/sdk/pkg/models/shared/connectionverizonmediadspupdate.go
   - internal/sdk/pkg/models/shared/connectionworkdayreport.go
   - internal/sdk/pkg/models/shared/connectionworkdayreportupdate.go
   - internal/sdk/pkg/models/shared/connectionworkfront.go
@@ -1006,7 +1076,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectionzuoraupdate.go
   - internal/sdk/pkg/models/shared/connectionkafka.go
   - internal/sdk/pkg/models/shared/connectionldapvirtuallistview.go
-  - internal/sdk/pkg/models/shared/connectionmongo.go
+  - internal/sdk/pkg/models/shared/connectionmongodb.go
   - internal/sdk/pkg/models/shared/connectionveeva.go
   - internal/sdk/pkg/models/shared/teamsoutput.go
   - internal/sdk/pkg/models/shared/teamoutput.go
@@ -1041,10 +1111,12 @@ generatedFiles:
   - internal/provider/type_basic_authentication.go
   - internal/provider/type_bearer_authentication.go
   - internal/provider/type_header_authentication.go
+  - internal/provider/type_oauth2_client_credentials_authentication.go
   - internal/provider/type_authentication.go
   - internal/provider/type_header_parameters.go
   - internal/provider/type_cursor_uri_paging_strategy.go
   - internal/provider/type_offset_paging_strategy.go
+  - internal/provider/type_page_number_paging_strategy.go
   - internal/provider/type_paging_strategy.go
   - internal/provider/type_foreign_column.go
   - internal/provider/type_top_level_foreign_key_column.go
@@ -1107,7 +1179,8 @@ generatedFiles:
   - internal/provider/type_script_input.go
   - internal/provider/type_script_or_legacy_script_input.go
   - internal/provider/type_source_active_campaign.go
-  - internal/provider/type_source_big_query.go
+  - internal/provider/type_source_azure_blob_storage.go
+  - internal/provider/type_source_bigquery.go
   - internal/provider/type_source_bing_ads.go
   - internal/provider/type_source_blackline.go
   - internal/provider/type_source_braintree.go
@@ -1118,16 +1191,18 @@ generatedFiles:
   - internal/provider/type_source_db2_sharded.go
   - internal/provider/type_source_delta_lake.go
   - internal/provider/type_source_egnyte.go
-  - internal/provider/type_source_elastic_search.go
+  - internal/provider/type_source_elasticsearch.go
   - internal/provider/type_source_elluminate.go
   - internal/provider/type_source_eloqua.go
   - internal/provider/type_source_erpx.go
   - internal/provider/type_source_facebook_ads.go
   - internal/provider/type_source_fifteen_five.go
+  - internal/provider/type_source_freshcaller.go
   - internal/provider/type_source_freshchat.go
+  - internal/provider/type_source_freshdesk.go
   - internal/provider/type_source_freshsales.go
-  - internal/provider/type_source_freshworks.go
   - internal/provider/type_source_ftp.go
+  - internal/provider/type_source_gitlab.go
   - internal/provider/type_source_gong.go
   - internal/provider/type_source_google_ads.go
   - internal/provider/type_source_google_analytics_ga4.go
@@ -1140,12 +1215,14 @@ generatedFiles:
   - internal/provider/type_source_jira_align.go
   - internal/provider/type_source_jira_cloud.go
   - internal/provider/type_source_kafka.go
+  - internal/provider/type_source_kinesis.go
   - internal/provider/type_source_kustomer.go
   - internal/provider/type_source_ldap.go
   - internal/provider/type_source_ldap_virtual_list_view.go
   - internal/provider/type_source_linked_in_ads.go
   - internal/provider/type_source_marketo.go
   - internal/provider/type_source_microsoft_entra_id.go
+  - internal/provider/type_source_microsoft_lists.go
   - internal/provider/type_source_mixpanel.go
   - internal/provider/type_source_mongodb.go
   - internal/provider/type_source_mysql.go
@@ -1159,6 +1236,7 @@ generatedFiles:
   - internal/provider/type_source_pinterest_ads.go
   - internal/provider/type_source_postgres.go
   - internal/provider/type_source_postgres_sharded.go
+  - internal/provider/type_source_qualtrics.go
   - internal/provider/type_source_quora_ads.go
   - internal/provider/type_source_rave_medidata.go
   - internal/provider/type_source_recurly.go
@@ -1171,6 +1249,7 @@ generatedFiles:
   - internal/provider/type_source_sap_concur.go
   - internal/provider/type_source_sap_hana.go
   - internal/provider/type_source_sap_hana_sharded.go
+  - internal/provider/type_source_sap_odata.go
   - internal/provider/type_source_seismic.go
   - internal/provider/type_source_service_now.go
   - internal/provider/type_source_sftp.go
@@ -1185,13 +1264,13 @@ generatedFiles:
   - internal/provider/type_source_square.go
   - internal/provider/type_source_streaming.go
   - internal/provider/type_source_stripe.go
-  - internal/provider/type_source_sum_total.go
+  - internal/provider/type_source_sumtotal.go
   - internal/provider/type_source_the_trade_desk.go
   - internal/provider/type_source_tik_tok_ads.go
   - internal/provider/type_source_twilio.go
-  - internal/provider/type_source_twitter.go
+  - internal/provider/type_source_twitter_ads.go
   - internal/provider/type_source_user_defined_api.go
-  - internal/provider/type_source_user_voice.go
+  - internal/provider/type_source_uservoice.go
   - internal/provider/type_source_veeva.go
   - internal/provider/type_source_verizon_media_dsp.go
   - internal/provider/type_source_workday_report.go
@@ -1212,6 +1291,9 @@ generatedFiles:
   - internal/provider/connectionactive_campaign_resource.go
   - internal/provider/connectionactive_campaign_resource_sdk.go
   - examples/resources/etleap_connection_active_campaign/resource.tf
+  - internal/provider/connectionazure_blob_storage_resource.go
+  - internal/provider/connectionazure_blob_storage_resource_sdk.go
+  - examples/resources/etleap_connection_azure_blob_storage/resource.tf
   - internal/provider/connectionbigquery_resource.go
   - internal/provider/connectionbigquery_resource_sdk.go
   - examples/resources/etleap_connection_bigquery/resource.tf
@@ -1263,18 +1345,24 @@ generatedFiles:
   - internal/provider/connectionfifteen_five_resource.go
   - internal/provider/connectionfifteen_five_resource_sdk.go
   - examples/resources/etleap_connection_fifteen_five/resource.tf
+  - internal/provider/connectionfreshcaller_resource.go
+  - internal/provider/connectionfreshcaller_resource_sdk.go
+  - examples/resources/etleap_connection_freshcaller/resource.tf
   - internal/provider/connectionfreshchat_resource.go
   - internal/provider/connectionfreshchat_resource_sdk.go
   - examples/resources/etleap_connection_freshchat/resource.tf
+  - internal/provider/connectionfreshdesk_resource.go
+  - internal/provider/connectionfreshdesk_resource_sdk.go
+  - examples/resources/etleap_connection_freshdesk/resource.tf
   - internal/provider/connectionfreshsales_resource.go
   - internal/provider/connectionfreshsales_resource_sdk.go
   - examples/resources/etleap_connection_freshsales/resource.tf
-  - internal/provider/connectionfreshworks_resource.go
-  - internal/provider/connectionfreshworks_resource_sdk.go
-  - examples/resources/etleap_connection_freshworks/resource.tf
   - internal/provider/connectionftp_resource.go
   - internal/provider/connectionftp_resource_sdk.go
   - examples/resources/etleap_connection_ftp/resource.tf
+  - internal/provider/connectiongitlab_resource.go
+  - internal/provider/connectiongitlab_resource_sdk.go
+  - examples/resources/etleap_connection_gitlab/resource.tf
   - internal/provider/connectiongong_resource.go
   - internal/provider/connectiongong_resource_sdk.go
   - examples/resources/etleap_connection_gong/resource.tf
@@ -1302,6 +1390,9 @@ generatedFiles:
   - internal/provider/connectionintercom_resource.go
   - internal/provider/connectionintercom_resource_sdk.go
   - examples/resources/etleap_connection_intercom/resource.tf
+  - internal/provider/connectionjira_resource.go
+  - internal/provider/connectionjira_resource_sdk.go
+  - examples/resources/etleap_connection_jira/resource.tf
   - internal/provider/connectionjira_align_resource.go
   - internal/provider/connectionjira_align_resource_sdk.go
   - examples/resources/etleap_connection_jira_align/resource.tf
@@ -1311,6 +1402,9 @@ generatedFiles:
   - internal/provider/connectionkafka_resource.go
   - internal/provider/connectionkafka_resource_sdk.go
   - examples/resources/etleap_connection_kafka/resource.tf
+  - internal/provider/connectionkinesis_resource.go
+  - internal/provider/connectionkinesis_resource_sdk.go
+  - examples/resources/etleap_connection_kinesis/resource.tf
   - internal/provider/connectionkustomer_resource.go
   - internal/provider/connectionkustomer_resource_sdk.go
   - examples/resources/etleap_connection_kustomer/resource.tf
@@ -1329,6 +1423,9 @@ generatedFiles:
   - internal/provider/connectionmicrosoft_entra_id_resource.go
   - internal/provider/connectionmicrosoft_entra_id_resource_sdk.go
   - examples/resources/etleap_connection_microsoft_entra_id/resource.tf
+  - internal/provider/connectionmicrosoft_lists_resource.go
+  - internal/provider/connectionmicrosoft_lists_resource_sdk.go
+  - examples/resources/etleap_connection_microsoft_lists/resource.tf
   - internal/provider/connectionmixpanel_resource.go
   - internal/provider/connectionmixpanel_resource_sdk.go
   - examples/resources/etleap_connection_mixpanel/resource.tf
@@ -1368,6 +1465,9 @@ generatedFiles:
   - internal/provider/connectionpostgres_sharded_resource.go
   - internal/provider/connectionpostgres_sharded_resource_sdk.go
   - examples/resources/etleap_connection_postgres_sharded/resource.tf
+  - internal/provider/connectionqualtrics_resource.go
+  - internal/provider/connectionqualtrics_resource_sdk.go
+  - examples/resources/etleap_connection_qualtrics/resource.tf
   - internal/provider/connectionquora_ads_resource.go
   - internal/provider/connectionquora_ads_resource_sdk.go
   - examples/resources/etleap_connection_quora_ads/resource.tf
@@ -1404,6 +1504,9 @@ generatedFiles:
   - internal/provider/connectionsap_hana_sharded_resource.go
   - internal/provider/connectionsap_hana_sharded_resource_sdk.go
   - examples/resources/etleap_connection_sap_hana_sharded/resource.tf
+  - internal/provider/connectionsap_odata_resource.go
+  - internal/provider/connectionsap_odata_resource_sdk.go
+  - examples/resources/etleap_connection_sap_odata/resource.tf
   - internal/provider/connectionseismic_resource.go
   - internal/provider/connectionseismic_resource_sdk.go
   - examples/resources/etleap_connection_seismic/resource.tf
@@ -1500,6 +1603,9 @@ generatedFiles:
   - internal/provider/connectionactive_campaign_data_source.go
   - internal/provider/connectionactive_campaign_data_source_sdk.go
   - examples/data-sources/etleap_connection_active_campaign/data-source.tf
+  - internal/provider/connectionazure_blob_storage_data_source.go
+  - internal/provider/connectionazure_blob_storage_data_source_sdk.go
+  - examples/data-sources/etleap_connection_azure_blob_storage/data-source.tf
   - internal/provider/connectionbigquery_data_source.go
   - internal/provider/connectionbigquery_data_source_sdk.go
   - examples/data-sources/etleap_connection_bigquery/data-source.tf
@@ -1551,18 +1657,24 @@ generatedFiles:
   - internal/provider/connectionfifteen_five_data_source.go
   - internal/provider/connectionfifteen_five_data_source_sdk.go
   - examples/data-sources/etleap_connection_fifteen_five/data-source.tf
+  - internal/provider/connectionfreshcaller_data_source.go
+  - internal/provider/connectionfreshcaller_data_source_sdk.go
+  - examples/data-sources/etleap_connection_freshcaller/data-source.tf
   - internal/provider/connectionfreshchat_data_source.go
   - internal/provider/connectionfreshchat_data_source_sdk.go
   - examples/data-sources/etleap_connection_freshchat/data-source.tf
+  - internal/provider/connectionfreshdesk_data_source.go
+  - internal/provider/connectionfreshdesk_data_source_sdk.go
+  - examples/data-sources/etleap_connection_freshdesk/data-source.tf
   - internal/provider/connectionfreshsales_data_source.go
   - internal/provider/connectionfreshsales_data_source_sdk.go
   - examples/data-sources/etleap_connection_freshsales/data-source.tf
-  - internal/provider/connectionfreshworks_data_source.go
-  - internal/provider/connectionfreshworks_data_source_sdk.go
-  - examples/data-sources/etleap_connection_freshworks/data-source.tf
   - internal/provider/connectionftp_data_source.go
   - internal/provider/connectionftp_data_source_sdk.go
   - examples/data-sources/etleap_connection_ftp/data-source.tf
+  - internal/provider/connectiongitlab_data_source.go
+  - internal/provider/connectiongitlab_data_source_sdk.go
+  - examples/data-sources/etleap_connection_gitlab/data-source.tf
   - internal/provider/connectiongong_data_source.go
   - internal/provider/connectiongong_data_source_sdk.go
   - examples/data-sources/etleap_connection_gong/data-source.tf
@@ -1590,6 +1702,9 @@ generatedFiles:
   - internal/provider/connectionintercom_data_source.go
   - internal/provider/connectionintercom_data_source_sdk.go
   - examples/data-sources/etleap_connection_intercom/data-source.tf
+  - internal/provider/connectionjira_data_source.go
+  - internal/provider/connectionjira_data_source_sdk.go
+  - examples/data-sources/etleap_connection_jira/data-source.tf
   - internal/provider/connectionjira_align_data_source.go
   - internal/provider/connectionjira_align_data_source_sdk.go
   - examples/data-sources/etleap_connection_jira_align/data-source.tf
@@ -1599,6 +1714,9 @@ generatedFiles:
   - internal/provider/connectionkafka_data_source.go
   - internal/provider/connectionkafka_data_source_sdk.go
   - examples/data-sources/etleap_connection_kafka/data-source.tf
+  - internal/provider/connectionkinesis_data_source.go
+  - internal/provider/connectionkinesis_data_source_sdk.go
+  - examples/data-sources/etleap_connection_kinesis/data-source.tf
   - internal/provider/connectionkustomer_data_source.go
   - internal/provider/connectionkustomer_data_source_sdk.go
   - examples/data-sources/etleap_connection_kustomer/data-source.tf
@@ -1617,6 +1735,9 @@ generatedFiles:
   - internal/provider/connectionmicrosoft_entra_id_data_source.go
   - internal/provider/connectionmicrosoft_entra_id_data_source_sdk.go
   - examples/data-sources/etleap_connection_microsoft_entra_id/data-source.tf
+  - internal/provider/connectionmicrosoft_lists_data_source.go
+  - internal/provider/connectionmicrosoft_lists_data_source_sdk.go
+  - examples/data-sources/etleap_connection_microsoft_lists/data-source.tf
   - internal/provider/connectionmixpanel_data_source.go
   - internal/provider/connectionmixpanel_data_source_sdk.go
   - examples/data-sources/etleap_connection_mixpanel/data-source.tf
@@ -1656,6 +1777,9 @@ generatedFiles:
   - internal/provider/connectionpostgres_sharded_data_source.go
   - internal/provider/connectionpostgres_sharded_data_source_sdk.go
   - examples/data-sources/etleap_connection_postgres_sharded/data-source.tf
+  - internal/provider/connectionqualtrics_data_source.go
+  - internal/provider/connectionqualtrics_data_source_sdk.go
+  - examples/data-sources/etleap_connection_qualtrics/data-source.tf
   - internal/provider/connectionquora_ads_data_source.go
   - internal/provider/connectionquora_ads_data_source_sdk.go
   - examples/data-sources/etleap_connection_quora_ads/data-source.tf
@@ -1692,6 +1816,9 @@ generatedFiles:
   - internal/provider/connectionsap_hana_sharded_data_source.go
   - internal/provider/connectionsap_hana_sharded_data_source_sdk.go
   - examples/data-sources/etleap_connection_sap_hana_sharded/data-source.tf
+  - internal/provider/connectionsap_odata_data_source.go
+  - internal/provider/connectionsap_odata_data_source_sdk.go
+  - examples/data-sources/etleap_connection_sap_odata/data-source.tf
   - internal/provider/connectionseismic_data_source.go
   - internal/provider/connectionseismic_data_source_sdk.go
   - examples/data-sources/etleap_connection_seismic/data-source.tf

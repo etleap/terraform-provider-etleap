@@ -26,7 +26,7 @@ type GetQUORAADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionQuora *shared.ConnectionQuora
+	ConnectionQuoraAds *shared.ConnectionQuoraAds
 	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
@@ -52,11 +52,11 @@ func (o *GetQUORAADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetQUORAADSConnectionResponse) GetConnectionQuora() *shared.ConnectionQuora {
+func (o *GetQUORAADSConnectionResponse) GetConnectionQuoraAds() *shared.ConnectionQuoraAds {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionQuora
+	return o.ConnectionQuoraAds
 }
 
 func (o *GetQUORAADSConnectionResponse) GetErrors() *shared.Errors {

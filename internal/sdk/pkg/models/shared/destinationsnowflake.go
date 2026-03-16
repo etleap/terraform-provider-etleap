@@ -45,7 +45,7 @@ type DestinationSnowflake struct {
 	// The schema in the destination that the tables will be created in. If this is not specified or set to `null` then the schema specified on the connection is used.
 	Schema *string `json:"schema,omitempty"`
 	Table  string  `json:"table"`
-	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/docs/documentation/56a1503dc499e-update-with-history-retention-mode. Defaults to `false`.
+	// If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to `false`.
 	RetainHistory *bool `default:"false" json:"retainHistory"`
 	// Keys to cluster the table on. If unspecified, the table will use "automatic clustering".
 	ClusteringKeys []string `json:"clusteringKeys,omitempty"`

@@ -52,7 +52,7 @@ func (r *ConnectionIMPACTRADIUSDataSource) Schema(ctx context.Context, req datas
 		Attributes: map[string]schema.Attribute{
 			"account_sid": schema.StringAttribute{
 				Computed:    true,
-				Description: `To find the Account SID to Impact Radius, click on the Cloud Icon in the bottom left > Click API > Find Rest API information`,
+				Description: `To find the Account SID to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information`,
 			},
 			"active": schema.BoolAttribute{
 				Computed:    true,
@@ -68,7 +68,7 @@ func (r *ConnectionIMPACTRADIUSDataSource) Schema(ctx context.Context, req datas
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,

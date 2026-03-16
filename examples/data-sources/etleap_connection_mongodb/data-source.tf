@@ -1,3 +1,3 @@
 data "etleap_connection_mongodb" "my_connectionmongodb" {
-  id = "ded9244d-c200-4dcb-bb6f-cd8e3f9da6ff"
+  id = "d6f36f3d-3d34-4062-9eba-4b52e1ac4edc"
 }

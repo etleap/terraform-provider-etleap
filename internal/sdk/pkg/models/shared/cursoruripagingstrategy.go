@@ -42,7 +42,7 @@ type CursorURIPagingStrategy struct {
 	// The path to the paging cursor inside the response body.
 	PathToCursor string `json:"pathToCursor"`
 	// String prepended to the paging cursor string to turn it into a URL, e.g. because the cursor only contains the URL path.
-	URLPrefix string `json:"urlPrefix"`
+	URLPrefix *string `json:"urlPrefix,omitempty"`
 }
 
 func (c CursorURIPagingStrategy) MarshalJSON() ([]byte, error) {
@@ -84,9 +84,9 @@ func (o *CursorURIPagingStrategy) GetPathToCursor() string {
 	return o.PathToCursor
 }
 
-func (o *CursorURIPagingStrategy) GetURLPrefix() string {
+func (o *CursorURIPagingStrategy) GetURLPrefix() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.URLPrefix
 }

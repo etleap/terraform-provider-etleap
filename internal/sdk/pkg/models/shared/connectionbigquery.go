@@ -9,48 +9,48 @@ import (
 	"time"
 )
 
-type ConnectionBigQueryType string
+type ConnectionBigqueryType string
 
 const (
-	ConnectionBigQueryTypeBigquery ConnectionBigQueryType = "BIGQUERY"
+	ConnectionBigqueryTypeBigquery ConnectionBigqueryType = "BIGQUERY"
 )
 
-func (e ConnectionBigQueryType) ToPointer() *ConnectionBigQueryType {
+func (e ConnectionBigqueryType) ToPointer() *ConnectionBigqueryType {
 	return &e
 }
 
-func (e *ConnectionBigQueryType) UnmarshalJSON(data []byte) error {
+func (e *ConnectionBigqueryType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "BIGQUERY":
-		*e = ConnectionBigQueryType(v)
+		*e = ConnectionBigqueryType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionBigQueryType: %v", v)
+		return fmt.Errorf("invalid value for ConnectionBigqueryType: %v", v)
 	}
 }
 
-// ConnectionBigQueryStatus - The current status of the connection.
-type ConnectionBigQueryStatus string
+// ConnectionBigqueryStatus - The current status of the connection.
+type ConnectionBigqueryStatus string
 
 const (
-	ConnectionBigQueryStatusUnknown     ConnectionBigQueryStatus = "UNKNOWN"
-	ConnectionBigQueryStatusUp          ConnectionBigQueryStatus = "UP"
-	ConnectionBigQueryStatusDown        ConnectionBigQueryStatus = "DOWN"
-	ConnectionBigQueryStatusResize      ConnectionBigQueryStatus = "RESIZE"
-	ConnectionBigQueryStatusMaintenance ConnectionBigQueryStatus = "MAINTENANCE"
-	ConnectionBigQueryStatusQuota       ConnectionBigQueryStatus = "QUOTA"
-	ConnectionBigQueryStatusCreating    ConnectionBigQueryStatus = "CREATING"
+	ConnectionBigqueryStatusUnknown     ConnectionBigqueryStatus = "UNKNOWN"
+	ConnectionBigqueryStatusUp          ConnectionBigqueryStatus = "UP"
+	ConnectionBigqueryStatusDown        ConnectionBigqueryStatus = "DOWN"
+	ConnectionBigqueryStatusResize      ConnectionBigqueryStatus = "RESIZE"
+	ConnectionBigqueryStatusMaintenance ConnectionBigqueryStatus = "MAINTENANCE"
+	ConnectionBigqueryStatusQuota       ConnectionBigqueryStatus = "QUOTA"
+	ConnectionBigqueryStatusCreating    ConnectionBigqueryStatus = "CREATING"
 )
 
-func (e ConnectionBigQueryStatus) ToPointer() *ConnectionBigQueryStatus {
+func (e ConnectionBigqueryStatus) ToPointer() *ConnectionBigqueryStatus {
 	return &e
 }
 
-func (e *ConnectionBigQueryStatus) UnmarshalJSON(data []byte) error {
+func (e *ConnectionBigqueryStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -69,202 +69,202 @@ func (e *ConnectionBigQueryStatus) UnmarshalJSON(data []byte) error {
 	case "QUOTA":
 		fallthrough
 	case "CREATING":
-		*e = ConnectionBigQueryStatus(v)
+		*e = ConnectionBigqueryStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionBigQueryStatus: %v", v)
+		return fmt.Errorf("invalid value for ConnectionBigqueryStatus: %v", v)
 	}
 }
 
-type ConnectionBigQueryDefaultUpdateSchedule struct {
-	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+type ConnectionBigqueryDefaultUpdateSchedule struct {
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
 	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
-func (o *ConnectionBigQueryDefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
+func (o *ConnectionBigqueryDefaultUpdateSchedule) GetPipelineMode() *PipelineUpdateModes {
 	if o == nil {
 		return nil
 	}
 	return o.PipelineMode
 }
 
-func (o *ConnectionBigQueryDefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionBigqueryDefaultUpdateSchedule) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBigQueryDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBigqueryDefaultUpdateSchedule) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionBigqueryDefaultUpdateSchedule) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryDefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionBigqueryDefaultUpdateSchedule) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeDaily
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionBigqueryDefaultUpdateSchedule) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBigqueryDefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
 
-type ConnectionBigQuery struct {
+type ConnectionBigquery struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
 	// The unique name of this connection.
 	Name string                 `json:"name"`
-	Type ConnectionBigQueryType `json:"type"`
+	Type ConnectionBigqueryType `json:"type"`
 	// Whether this connection has been marked as active.
 	Active bool `json:"active"`
 	// The current status of the connection.
-	Status ConnectionBigQueryStatus `json:"status"`
+	Status ConnectionBigqueryStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
-	DefaultUpdateSchedule []ConnectionBigQueryDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
+	DefaultUpdateSchedule []ConnectionBigqueryDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Dataset *string `json:"dataset,omitempty"`
 }
 
-func (c ConnectionBigQuery) MarshalJSON() ([]byte, error) {
+func (c ConnectionBigquery) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(c, "", false)
 }
 
-func (c *ConnectionBigQuery) UnmarshalJSON(data []byte) error {
+func (c *ConnectionBigquery) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConnectionBigQuery) GetID() string {
+func (o *ConnectionBigquery) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *ConnectionBigQuery) GetName() string {
+func (o *ConnectionBigquery) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *ConnectionBigQuery) GetType() ConnectionBigQueryType {
+func (o *ConnectionBigquery) GetType() ConnectionBigqueryType {
 	if o == nil {
-		return ConnectionBigQueryType("")
+		return ConnectionBigqueryType("")
 	}
 	return o.Type
 }
 
-func (o *ConnectionBigQuery) GetActive() bool {
+func (o *ConnectionBigquery) GetActive() bool {
 	if o == nil {
 		return false
 	}
 	return o.Active
 }
 
-func (o *ConnectionBigQuery) GetStatus() ConnectionBigQueryStatus {
+func (o *ConnectionBigquery) GetStatus() ConnectionBigqueryStatus {
 	if o == nil {
-		return ConnectionBigQueryStatus("")
+		return ConnectionBigqueryStatus("")
 	}
 	return o.Status
 }
 
-func (o *ConnectionBigQuery) GetCreateDate() time.Time {
+func (o *ConnectionBigquery) GetCreateDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.CreateDate
 }
 
-func (o *ConnectionBigQuery) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionBigquery) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBigQuery) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBigquery) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
 
-func (o *ConnectionBigQuery) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionBigquery) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQuery) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionBigquery) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeDaily
 	}
 	return nil
 }
 
-func (o *ConnectionBigQuery) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionBigquery) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQuery) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBigquery) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQuery) GetDefaultUpdateSchedule() []ConnectionBigQueryDefaultUpdateSchedule {
+func (o *ConnectionBigquery) GetDefaultUpdateSchedule() []ConnectionBigqueryDefaultUpdateSchedule {
 	if o == nil {
-		return []ConnectionBigQueryDefaultUpdateSchedule{}
+		return []ConnectionBigqueryDefaultUpdateSchedule{}
 	}
 	return o.DefaultUpdateSchedule
 }
 
-func (o *ConnectionBigQuery) GetDataset() *string {
+func (o *ConnectionBigquery) GetDataset() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dataset
 }
 
-type ConnectionBigQueryInput struct {
+type ConnectionBigqueryInput struct {
 	// The unique name of this connection.
 	Name string                 `json:"name"`
-	Type ConnectionBigQueryType `json:"type"`
+	Type ConnectionBigqueryType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -273,70 +273,70 @@ type ConnectionBigQueryInput struct {
 	JSONCredentials string `json:"jsonCredentials"`
 }
 
-func (o *ConnectionBigQueryInput) GetName() string {
+func (o *ConnectionBigqueryInput) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *ConnectionBigQueryInput) GetType() ConnectionBigQueryType {
+func (o *ConnectionBigqueryInput) GetType() ConnectionBigqueryType {
 	if o == nil {
-		return ConnectionBigQueryType("")
+		return ConnectionBigqueryType("")
 	}
 	return o.Type
 }
 
-func (o *ConnectionBigQueryInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionBigqueryInput) GetUpdateSchedule() *UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBigQueryInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBigqueryInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeInterval
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionBigqueryInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeHourly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionBigqueryInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeDaily
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionBigqueryInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeWeekly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBigqueryInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
 	if v := o.GetUpdateSchedule(); v != nil {
 		return v.UpdateScheduleModeMonthly
 	}
 	return nil
 }
 
-func (o *ConnectionBigQueryInput) GetDataset() *string {
+func (o *ConnectionBigqueryInput) GetDataset() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Dataset
 }
 
-func (o *ConnectionBigQueryInput) GetJSONCredentials() string {
+func (o *ConnectionBigqueryInput) GetJSONCredentials() string {
 	if o == nil {
 		return ""
 	}

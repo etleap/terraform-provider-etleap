@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchInput() *shared.ConnectionElasticSearchInput {
+func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticsearchInput() *shared.ConnectionElasticsearchInput {
 	name := r.Name.ValueString()
-	typeVar := shared.ConnectionElasticSearchType(r.Type.ValueString())
+	typeVar := shared.ConnectionElasticsearchType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
@@ -101,7 +101,7 @@ func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchIn
 	} else {
 		password = nil
 	}
-	out := shared.ConnectionElasticSearchInput{
+	out := shared.ConnectionElasticsearchInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -114,7 +114,7 @@ func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchIn
 	return &out
 }
 
-func (r *ConnectionELASTICSEARCHResourceModel) RefreshFromSharedConnectionElasticSearch(resp *shared.ConnectionElasticSearch) {
+func (r *ConnectionELASTICSEARCHResourceModel) RefreshFromSharedConnectionElasticsearch(resp *shared.ConnectionElasticsearch) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
@@ -206,16 +206,16 @@ func (r *ConnectionELASTICSEARCHResourceModel) RefreshFromSharedConnectionElasti
 	r.Username = types.StringPointerValue(resp.Username)
 }
 
-func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchUpdate() *shared.ConnectionElasticSearchUpdate {
+func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticsearchUpdate() *shared.ConnectionElasticsearchUpdate {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
 	}
-	typeVar := new(shared.ConnectionElasticSearchUpdateType)
+	typeVar := new(shared.ConnectionElasticsearchUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
-		*typeVar = shared.ConnectionElasticSearchUpdateType(r.Type.ValueString())
+		*typeVar = shared.ConnectionElasticsearchUpdateType(r.Type.ValueString())
 	} else {
 		typeVar = nil
 	}
@@ -330,7 +330,7 @@ func (r *ConnectionELASTICSEARCHResourceModel) ToSharedConnectionElasticSearchUp
 	} else {
 		password = nil
 	}
-	out := shared.ConnectionElasticSearchUpdate{
+	out := shared.ConnectionElasticsearchUpdate{
 		Name:           name,
 		Type:           typeVar,
 		Active:         active,

@@ -33,7 +33,7 @@ func (e *SourceGoogleCloudStorageType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGoogleCloudStorageNewFileBehavior - Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
+// SourceGoogleCloudStorageNewFileBehavior - Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details.
 type SourceGoogleCloudStorageNewFileBehavior string
 
 const (
@@ -72,7 +72,7 @@ type SourceGoogleCloudStorage struct {
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 	FileNameFilter *string `json:"fileNameFilter,omitempty"`
-	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
+	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details.
 	NewFileBehavior SourceGoogleCloudStorageNewFileBehavior `json:"newFileBehavior"`
 	// Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
 	LowWatermark *types.Date `json:"lowWatermark,omitempty"`

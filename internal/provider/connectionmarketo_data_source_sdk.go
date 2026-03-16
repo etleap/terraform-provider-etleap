@@ -64,8 +64,6 @@ func (r *ConnectionMARKETODataSourceModel) RefreshFromSharedConnectionMarketo(re
 	r.QuotaLimit = types.Int64Value(resp.QuotaLimit)
 	r.RestClientID = types.StringValue(resp.RestClientID)
 	r.RestEndpoint = types.StringValue(resp.RestEndpoint)
-	r.SoapEndpoint = types.StringValue(resp.SoapEndpoint)
-	r.SoapUserID = types.StringValue(resp.SoapUserID)
 	r.Status = types.StringValue(string(resp.Status))
 	r.Type = types.StringValue(string(resp.Type))
 	if resp.UpdateSchedule == nil {

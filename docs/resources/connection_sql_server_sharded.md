@@ -15,21 +15,21 @@ ConnectionSQLSERVERSHARDED Resource
 ```terraform
 resource "etleap_connection_sql_server_sharded" "my_connectionsql_server_sharded" {
   cdc_enabled                 = false
-  deletion_of_export_products = false
-  name                        = "Lewis Batz"
+  deletion_of_export_products = true
+  name                        = "Terry Moen"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "7178 Schaden Ridge"
+      address  = "58219 Schiller Mills"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 2
+      port     = 0
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "433 Lonzo Valleys"
-        username = "Lelia_Gorczany51"
+        address  = "3926 Franey Tunnel"
+        username = "Jaqueline.Morissette24"
       }
-      username = "Lauryn_Will6"
+      username = "Brando.Volkman0"
     },
   ]
   type = "SQL_SERVER_SHARDED"
@@ -146,7 +146,7 @@ Optional:
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

@@ -4,7 +4,8 @@ package provider
 
 type SourceTypes struct {
 	ActiveCampaign           *SourceActiveCampaign           `tfsdk:"active_campaign"`
-	Bigquery                 *SourceBigQuery                 `tfsdk:"bigquery"`
+	AzureBlobStorage         *SourceAzureBlobStorage         `tfsdk:"azure_blob_storage"`
+	Bigquery                 *SourceBigquery                 `tfsdk:"bigquery"`
 	BingAds                  *SourceBingAds                  `tfsdk:"bing_ads"`
 	Blackline                *SourceBlackline                `tfsdk:"blackline"`
 	Braintree                *SourceBraintree                `tfsdk:"braintree"`
@@ -15,16 +16,18 @@ type SourceTypes struct {
 	Db2Sharded               *SourceDb2Sharded               `tfsdk:"db2_sharded"`
 	DeltaLake                *SourceDeltaLake                `tfsdk:"delta_lake"`
 	Egnyte                   *SourceEgnyte                   `tfsdk:"egnyte"`
-	Elasticsearch            *SourceElasticSearch            `tfsdk:"elasticsearch"`
+	Elasticsearch            *SourceElasticsearch            `tfsdk:"elasticsearch"`
 	Elluminate               *SourceElluminate               `tfsdk:"elluminate"`
 	Eloqua                   *SourceEloqua                   `tfsdk:"eloqua"`
 	Erpx                     *SourceErpx                     `tfsdk:"erpx"`
 	FacebookAds              *SourceFacebookAds              `tfsdk:"facebook_ads"`
 	FifteenFive              *SourceFifteenFive              `tfsdk:"fifteen_five"`
+	Freshcaller              *SourceFreshcaller              `tfsdk:"freshcaller"`
 	Freshchat                *SourceFreshchat                `tfsdk:"freshchat"`
+	Freshdesk                *SourceFreshdesk                `tfsdk:"freshdesk"`
 	Freshsales               *SourceFreshsales               `tfsdk:"freshsales"`
-	Freshworks               *SourceFreshworks               `tfsdk:"freshworks"`
 	Ftp                      *SourceFtp                      `tfsdk:"ftp"`
+	Gitlab                   *SourceGitlab                   `tfsdk:"gitlab"`
 	Gong                     *SourceGong                     `tfsdk:"gong"`
 	GoogleAds                *SourceGoogleAds                `tfsdk:"google_ads"`
 	GoogleAnalyticsGa4       *SourceGoogleAnalyticsGa4       `tfsdk:"google_analytics_ga4"`
@@ -37,12 +40,14 @@ type SourceTypes struct {
 	JiraAlign                *SourceJiraAlign                `tfsdk:"jira_align"`
 	JiraCloud                *SourceJiraCloud                `tfsdk:"jira_cloud"`
 	Kafka                    *SourceKafka                    `tfsdk:"kafka"`
+	Kinesis                  *SourceKinesis                  `tfsdk:"kinesis"`
 	Kustomer                 *SourceKustomer                 `tfsdk:"kustomer"`
 	Ldap                     *SourceLdap                     `tfsdk:"ldap"`
 	LdapVirtualListView      *SourceLdapVirtualListView      `tfsdk:"ldap_virtual_list_view"`
 	LinkedInAds              *SourceLinkedInAds              `tfsdk:"linked_in_ads"`
 	Marketo                  *SourceMarketo                  `tfsdk:"marketo"`
 	MicrosoftEntraID         *SourceMicrosoftEntraID         `tfsdk:"microsoft_entra_id"`
+	MicrosoftLists           *SourceMicrosoftLists           `tfsdk:"microsoft_lists"`
 	Mixpanel                 *SourceMixpanel                 `tfsdk:"mixpanel"`
 	Mongodb                  *SourceMongodb                  `tfsdk:"mongodb"`
 	Mysql                    *SourceMysql                    `tfsdk:"mysql"`
@@ -56,6 +61,7 @@ type SourceTypes struct {
 	PinterestAds             *SourcePinterestAds             `tfsdk:"pinterest_ads"`
 	Postgres                 *SourcePostgres                 `tfsdk:"postgres"`
 	PostgresSharded          *SourcePostgresSharded          `tfsdk:"postgres_sharded"`
+	Qualtrics                *SourceQualtrics                `tfsdk:"qualtrics"`
 	QuoraAds                 *SourceQuoraAds                 `tfsdk:"quora_ads"`
 	RaveMedidata             *SourceRaveMedidata             `tfsdk:"rave_medidata"`
 	Recurly                  *SourceRecurly                  `tfsdk:"recurly"`
@@ -68,6 +74,7 @@ type SourceTypes struct {
 	SapConcur                *SourceSapConcur                `tfsdk:"sap_concur"`
 	SapHana                  *SourceSapHana                  `tfsdk:"sap_hana"`
 	SapHanaSharded           *SourceSapHanaSharded           `tfsdk:"sap_hana_sharded"`
+	SapOdata                 *SourceSapOdata                 `tfsdk:"sap_odata"`
 	Seismic                  *SourceSeismic                  `tfsdk:"seismic"`
 	ServiceNow               *SourceServiceNow               `tfsdk:"service_now"`
 	Sftp                     *SourceSftp                     `tfsdk:"sftp"`
@@ -82,13 +89,13 @@ type SourceTypes struct {
 	Square                   *SourceSquare                   `tfsdk:"square"`
 	Streaming                *SourceStreaming                `tfsdk:"streaming"`
 	Stripe                   *SourceStripe                   `tfsdk:"stripe"`
-	Sumtotal                 *SourceSumTotal                 `tfsdk:"sumtotal"`
+	Sumtotal                 *SourceSumtotal                 `tfsdk:"sumtotal"`
 	TheTradeDesk             *SourceTheTradeDesk             `tfsdk:"the_trade_desk"`
 	TikTokAds                *SourceTikTokAds                `tfsdk:"tik_tok_ads"`
 	Twilio                   *SourceTwilio                   `tfsdk:"twilio"`
-	TwitterAds               *SourceTwitter                  `tfsdk:"twitter_ads"`
+	TwitterAds               *SourceTwitterAds               `tfsdk:"twitter_ads"`
 	UserDefinedAPI           *SourceUserDefinedAPI           `tfsdk:"user_defined_api"`
-	Uservoice                *SourceUserVoice                `tfsdk:"uservoice"`
+	Uservoice                *SourceUservoice                `tfsdk:"uservoice"`
 	Veeva                    *SourceVeeva                    `tfsdk:"veeva"`
 	VerizonMediaDsp          *SourceVerizonMediaDsp          `tfsdk:"verizon_media_dsp"`
 	WorkdayReport            *SourceWorkdayReport            `tfsdk:"workday_report"`

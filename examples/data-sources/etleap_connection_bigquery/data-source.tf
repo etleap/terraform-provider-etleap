@@ -1,3 +1,3 @@
 data "etleap_connection_bigquery" "my_connectionbigquery" {
-  id = "642ba38b-c737-4d2b-9c6d-83a7c137cf6f"
+  id = "3a3e616b-6f0b-4aa3-a2cf-5048df6c7ef0"
 }

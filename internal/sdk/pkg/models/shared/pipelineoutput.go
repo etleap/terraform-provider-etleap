@@ -15,14 +15,14 @@ type PipelineOutput struct {
 	// A pipeline may have multiple destinations if it is in the process of being migrated from one to another.
 	Destinations []DestinationInfoAndPipelineVersions `json:"destinations"`
 	Owner        User                                 `json:"owner"`
-	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
 	PipelineMode PipelineUpdateModes `json:"pipelineMode"`
 	// If the pipeline is paused. Defaults to `false`.
 	Paused               bool                  `json:"paused"`
 	ParsingErrorSettings *ParsingErrorSettings `json:"parsingErrorSettings,omitempty"`
 	// Valid script versions are whole numbers and range from 1 to this number.
 	LatestScriptVersion int64 `json:"latestScriptVersion"`
-	// The end-to-end latency in seconds for this pipeline. Not `null` if the pipeline is running (not paused or stopped) and if the initial backfill has finished. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMTU3NTQ3-latency#end-to-end-latency">the documentation</a> for more details.
+	// The end-to-end latency in seconds for this pipeline. Not `null` if the pipeline is running (not paused or stopped) and if the initial backfill has finished. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/latency/#end-to-end-latency">the documentation</a> for more details.
 	Latency *int64 `json:"latency,omitempty"`
 	// Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline.
 	StopReason *StopReason `json:"stopReason,omitempty"`
@@ -80,8 +80,12 @@ func (o *PipelineOutput) GetSourceActiveCampaign() *SourceActiveCampaign {
 	return o.GetSource().SourceActiveCampaign
 }
 
-func (o *PipelineOutput) GetSourceBigquery() *SourceBigQuery {
-	return o.GetSource().SourceBigQuery
+func (o *PipelineOutput) GetSourceAzureBlobStorage() *SourceAzureBlobStorage {
+	return o.GetSource().SourceAzureBlobStorage
+}
+
+func (o *PipelineOutput) GetSourceBigquery() *SourceBigquery {
+	return o.GetSource().SourceBigquery
 }
 
 func (o *PipelineOutput) GetSourceBingAds() *SourceBingAds {
@@ -124,8 +128,8 @@ func (o *PipelineOutput) GetSourceEgnyte() *SourceEgnyte {
 	return o.GetSource().SourceEgnyte
 }
 
-func (o *PipelineOutput) GetSourceElasticsearch() *SourceElasticSearch {
-	return o.GetSource().SourceElasticSearch
+func (o *PipelineOutput) GetSourceElasticsearch() *SourceElasticsearch {
+	return o.GetSource().SourceElasticsearch
 }
 
 func (o *PipelineOutput) GetSourceElluminate() *SourceElluminate {
@@ -148,24 +152,36 @@ func (o *PipelineOutput) GetSourceFifteenFive() *SourceFifteenFive {
 	return o.GetSource().SourceFifteenFive
 }
 
+func (o *PipelineOutput) GetSourceFreshcaller() *SourceFreshcaller {
+	return o.GetSource().SourceFreshcaller
+}
+
 func (o *PipelineOutput) GetSourceFreshchat() *SourceFreshchat {
 	return o.GetSource().SourceFreshchat
+}
+
+func (o *PipelineOutput) GetSourceFreshdesk() *SourceFreshdesk {
+	return o.GetSource().SourceFreshdesk
 }
 
 func (o *PipelineOutput) GetSourceFreshsales() *SourceFreshsales {
 	return o.GetSource().SourceFreshsales
 }
 
-func (o *PipelineOutput) GetSourceFreshworks() *SourceFreshworks {
-	return o.GetSource().SourceFreshworks
-}
-
 func (o *PipelineOutput) GetSourceFtp() *SourceFtp {
 	return o.GetSource().SourceFtp
 }
 
+func (o *PipelineOutput) GetSourceGitlab() *SourceGitlab {
+	return o.GetSource().SourceGitlab
+}
+
 func (o *PipelineOutput) GetSourceGong() *SourceGong {
 	return o.GetSource().SourceGong
+}
+
+func (o *PipelineOutput) GetSourceGoogleAds() *SourceGoogleAds {
+	return o.GetSource().SourceGoogleAds
 }
 
 func (o *PipelineOutput) GetSourceGoogleAnalyticsGa4() *SourceGoogleAnalyticsGa4 {
@@ -176,10 +192,6 @@ func (o *PipelineOutput) GetSourceGoogleCloudStorage() *SourceGoogleCloudStorage
 	return o.GetSource().SourceGoogleCloudStorage
 }
 
-func (o *PipelineOutput) GetSourceGoogleAds() *SourceGoogleAds {
-	return o.GetSource().SourceGoogleAds
-}
-
 func (o *PipelineOutput) GetSourceGoogleSheets() *SourceGoogleSheets {
 	return o.GetSource().SourceGoogleSheets
 }
@@ -188,12 +200,12 @@ func (o *PipelineOutput) GetSourceHubspot() *SourceHubspot {
 	return o.GetSource().SourceHubspot
 }
 
-func (o *PipelineOutput) GetSourceIntercom() *SourceIntercom {
-	return o.GetSource().SourceIntercom
-}
-
 func (o *PipelineOutput) GetSourceImpactRadius() *SourceImpactRadius {
 	return o.GetSource().SourceImpactRadius
+}
+
+func (o *PipelineOutput) GetSourceIntercom() *SourceIntercom {
+	return o.GetSource().SourceIntercom
 }
 
 func (o *PipelineOutput) GetSourceJira() *SourceJira {
@@ -210,6 +222,10 @@ func (o *PipelineOutput) GetSourceJiraCloud() *SourceJiraCloud {
 
 func (o *PipelineOutput) GetSourceKafka() *SourceKafka {
 	return o.GetSource().SourceKafka
+}
+
+func (o *PipelineOutput) GetSourceKinesis() *SourceKinesis {
+	return o.GetSource().SourceKinesis
 }
 
 func (o *PipelineOutput) GetSourceKustomer() *SourceKustomer {
@@ -236,6 +252,10 @@ func (o *PipelineOutput) GetSourceMicrosoftEntraID() *SourceMicrosoftEntraID {
 	return o.GetSource().SourceMicrosoftEntraID
 }
 
+func (o *PipelineOutput) GetSourceMicrosoftLists() *SourceMicrosoftLists {
+	return o.GetSource().SourceMicrosoftLists
+}
+
 func (o *PipelineOutput) GetSourceMixpanel() *SourceMixpanel {
 	return o.GetSource().SourceMixpanel
 }
@@ -244,12 +264,12 @@ func (o *PipelineOutput) GetSourceMongodb() *SourceMongodb {
 	return o.GetSource().SourceMongodb
 }
 
-func (o *PipelineOutput) GetSourceMysqlSharded() *SourceMysqlSharded {
-	return o.GetSource().SourceMysqlSharded
-}
-
 func (o *PipelineOutput) GetSourceMysql() *SourceMysql {
 	return o.GetSource().SourceMysql
+}
+
+func (o *PipelineOutput) GetSourceMysqlSharded() *SourceMysqlSharded {
+	return o.GetSource().SourceMysqlSharded
 }
 
 func (o *PipelineOutput) GetSourceNetsuite() *SourceNetsuite {
@@ -268,12 +288,12 @@ func (o *PipelineOutput) GetSourceOracleSharded() *SourceOracleSharded {
 	return o.GetSource().SourceOracleSharded
 }
 
-func (o *PipelineOutput) GetSourceOutreach() *SourceOutreach {
-	return o.GetSource().SourceOutreach
-}
-
 func (o *PipelineOutput) GetSourceOutlook() *SourceOutlook {
 	return o.GetSource().SourceOutlook
+}
+
+func (o *PipelineOutput) GetSourceOutreach() *SourceOutreach {
+	return o.GetSource().SourceOutreach
 }
 
 func (o *PipelineOutput) GetSourcePinterestAds() *SourcePinterestAds {
@@ -286,6 +306,10 @@ func (o *PipelineOutput) GetSourcePostgres() *SourcePostgres {
 
 func (o *PipelineOutput) GetSourcePostgresSharded() *SourcePostgresSharded {
 	return o.GetSource().SourcePostgresSharded
+}
+
+func (o *PipelineOutput) GetSourceQualtrics() *SourceQualtrics {
+	return o.GetSource().SourceQualtrics
 }
 
 func (o *PipelineOutput) GetSourceQuoraAds() *SourceQuoraAds {
@@ -308,12 +332,16 @@ func (o *PipelineOutput) GetSourceRedshiftSharded() *SourceRedshiftSharded {
 	return o.GetSource().SourceRedshiftSharded
 }
 
+func (o *PipelineOutput) GetSourceS3Input() *SourceS3Input {
+	return o.GetSource().SourceS3Input
+}
+
 func (o *PipelineOutput) GetSourceS3Legacy() *SourceS3Legacy {
 	return o.GetSource().SourceS3Legacy
 }
 
-func (o *PipelineOutput) GetSourceS3Input() *SourceS3Input {
-	return o.GetSource().SourceS3Input
+func (o *PipelineOutput) GetSourceSalesforce() *SourceSalesforce {
+	return o.GetSource().SourceSalesforce
 }
 
 func (o *PipelineOutput) GetSourceSalesforceMarketingCloud() *SourceSalesforceMarketingCloud {
@@ -332,12 +360,20 @@ func (o *PipelineOutput) GetSourceSapHanaSharded() *SourceSapHanaSharded {
 	return o.GetSource().SourceSapHanaSharded
 }
 
+func (o *PipelineOutput) GetSourceSapOdata() *SourceSapOdata {
+	return o.GetSource().SourceSapOdata
+}
+
 func (o *PipelineOutput) GetSourceSeismic() *SourceSeismic {
 	return o.GetSource().SourceSeismic
 }
 
 func (o *PipelineOutput) GetSourceServiceNow() *SourceServiceNow {
 	return o.GetSource().SourceServiceNow
+}
+
+func (o *PipelineOutput) GetSourceSftp() *SourceSftp {
+	return o.GetSource().SourceSftp
 }
 
 func (o *PipelineOutput) GetSourceShopify() *SourceShopify {
@@ -348,24 +384,8 @@ func (o *PipelineOutput) GetSourceSkyward() *SourceSkyward {
 	return o.GetSource().SourceSkyward
 }
 
-func (o *PipelineOutput) GetSourceSalesforce() *SourceSalesforce {
-	return o.GetSource().SourceSalesforce
-}
-
-func (o *PipelineOutput) GetSourceSftp() *SourceSftp {
-	return o.GetSource().SourceSftp
-}
-
-func (o *PipelineOutput) GetSourceSQLServer() *SourceSQLServer {
-	return o.GetSource().SourceSQLServer
-}
-
-func (o *PipelineOutput) GetSourceSQLServerSharded() *SourceSQLServerSharded {
-	return o.GetSource().SourceSQLServerSharded
-}
-
-func (o *PipelineOutput) GetSourceStreaming() *SourceStreaming {
-	return o.GetSource().SourceStreaming
+func (o *PipelineOutput) GetSourceSnapchatAds() *SourceSnapchatAds {
+	return o.GetSource().SourceSnapchatAds
 }
 
 func (o *PipelineOutput) GetSourceSnowflake() *SourceSnowflake {
@@ -376,6 +396,14 @@ func (o *PipelineOutput) GetSourceSnowflakeSharded() *SourceSnowflakeSharded {
 	return o.GetSource().SourceSnowflakeSharded
 }
 
+func (o *PipelineOutput) GetSourceSQLServer() *SourceSQLServer {
+	return o.GetSource().SourceSQLServer
+}
+
+func (o *PipelineOutput) GetSourceSQLServerSharded() *SourceSQLServerSharded {
+	return o.GetSource().SourceSQLServerSharded
+}
+
 func (o *PipelineOutput) GetSourceSqs() *SourceSqs {
 	return o.GetSource().SourceSqs
 }
@@ -384,16 +412,16 @@ func (o *PipelineOutput) GetSourceSquare() *SourceSquare {
 	return o.GetSource().SourceSquare
 }
 
-func (o *PipelineOutput) GetSourceSnapchatAds() *SourceSnapchatAds {
-	return o.GetSource().SourceSnapchatAds
+func (o *PipelineOutput) GetSourceStreaming() *SourceStreaming {
+	return o.GetSource().SourceStreaming
 }
 
 func (o *PipelineOutput) GetSourceStripe() *SourceStripe {
 	return o.GetSource().SourceStripe
 }
 
-func (o *PipelineOutput) GetSourceSumtotal() *SourceSumTotal {
-	return o.GetSource().SourceSumTotal
+func (o *PipelineOutput) GetSourceSumtotal() *SourceSumtotal {
+	return o.GetSource().SourceSumtotal
 }
 
 func (o *PipelineOutput) GetSourceTheTradeDesk() *SourceTheTradeDesk {
@@ -408,16 +436,16 @@ func (o *PipelineOutput) GetSourceTwilio() *SourceTwilio {
 	return o.GetSource().SourceTwilio
 }
 
-func (o *PipelineOutput) GetSourceTwitterAds() *SourceTwitter {
-	return o.GetSource().SourceTwitter
+func (o *PipelineOutput) GetSourceTwitterAds() *SourceTwitterAds {
+	return o.GetSource().SourceTwitterAds
+}
+
+func (o *PipelineOutput) GetSourceUservoice() *SourceUservoice {
+	return o.GetSource().SourceUservoice
 }
 
 func (o *PipelineOutput) GetSourceUserDefinedAPI() *SourceUserDefinedAPI {
 	return o.GetSource().SourceUserDefinedAPI
-}
-
-func (o *PipelineOutput) GetSourceUservoice() *SourceUserVoice {
-	return o.GetSource().SourceUserVoice
 }
 
 func (o *PipelineOutput) GetSourceVeeva() *SourceVeeva {

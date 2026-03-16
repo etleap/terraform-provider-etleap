@@ -102,6 +102,12 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 	} else {
 		sourceOnly = nil
 	}
+	storageIntegration := new(string)
+	if !r.StorageIntegration.IsUnknown() && !r.StorageIntegration.IsNull() {
+		*storageIntegration = r.StorageIntegration.ValueString()
+	} else {
+		storageIntegration = nil
+	}
 	var shards []shared.SnowflakeShard = nil
 	for _, shardsItem := range r.Shards {
 		shardID := shardsItem.ShardID.ValueString()
@@ -171,13 +177,14 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 		})
 	}
 	out := shared.ConnectionSnowflakeShardedInput{
-		Name:           name,
-		Type:           typeVar,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		Roles:          roles,
-		SourceOnly:     sourceOnly,
-		Shards:         shards,
+		Name:               name,
+		Type:               typeVar,
+		UpdateSchedule:     updateSchedule,
+		Schema:             schema,
+		Roles:              roles,
+		SourceOnly:         sourceOnly,
+		StorageIntegration: storageIntegration,
+		Shards:             shards,
 	}
 	return &out
 }
@@ -279,6 +286,7 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) RefreshFromSharedConnectionSno
 	}
 	r.SourceOnly = types.BoolPointerValue(resp.SourceOnly)
 	r.Status = types.StringValue(string(resp.Status))
+	r.StorageIntegration = types.StringPointerValue(resp.StorageIntegration)
 	r.Type = types.StringValue(string(resp.Type))
 	if resp.UpdateSchedule == nil {
 		r.UpdateSchedule = nil
@@ -418,6 +426,12 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 	} else {
 		sourceOnly = nil
 	}
+	storageIntegration := new(string)
+	if !r.StorageIntegration.IsUnknown() && !r.StorageIntegration.IsNull() {
+		*storageIntegration = r.StorageIntegration.ValueString()
+	} else {
+		storageIntegration = nil
+	}
 	var shards []shared.SnowflakeShard = nil
 	for _, shardsItem := range r.Shards {
 		shardID := shardsItem.ShardID.ValueString()
@@ -487,14 +501,15 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 		})
 	}
 	out := shared.ConnectionSnowflakeShardedUpdate{
-		Name:           name,
-		Type:           typeVar,
-		Active:         active,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		Roles:          roles,
-		SourceOnly:     sourceOnly,
-		Shards:         shards,
+		Name:               name,
+		Type:               typeVar,
+		Active:             active,
+		UpdateSchedule:     updateSchedule,
+		Schema:             schema,
+		Roles:              roles,
+		SourceOnly:         sourceOnly,
+		StorageIntegration: storageIntegration,
+		Shards:             shards,
 	}
 	return &out
 }

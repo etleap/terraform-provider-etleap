@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func (r *ConnectionUSERVOICEResourceModel) ToSharedConnectionUserVoiceInput() *shared.ConnectionUserVoiceInput {
+func (r *ConnectionUSERVOICEResourceModel) ToSharedConnectionUservoiceInput() *shared.ConnectionUservoiceInput {
 	name := r.Name.ValueString()
-	typeVar := shared.ConnectionUserVoiceType(r.Type.ValueString())
+	typeVar := shared.ConnectionUservoiceType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
@@ -88,7 +88,7 @@ func (r *ConnectionUSERVOICEResourceModel) ToSharedConnectionUserVoiceInput() *s
 	}
 	subdomain := r.Subdomain.ValueString()
 	accessToken := r.AccessToken.ValueString()
-	out := shared.ConnectionUserVoiceInput{
+	out := shared.ConnectionUservoiceInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -98,7 +98,7 @@ func (r *ConnectionUSERVOICEResourceModel) ToSharedConnectionUserVoiceInput() *s
 	return &out
 }
 
-func (r *ConnectionUSERVOICEResourceModel) RefreshFromSharedConnectionUserVoice(resp *shared.ConnectionUserVoice) {
+func (r *ConnectionUSERVOICEResourceModel) RefreshFromSharedConnectionUservoice(resp *shared.ConnectionUservoice) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -187,16 +187,16 @@ func (r *ConnectionUSERVOICEResourceModel) RefreshFromSharedConnectionUserVoice(
 	}
 }
 
-func (r *ConnectionUSERVOICEResourceModel) ToSharedConnectionUserVoiceUpdate() *shared.ConnectionUserVoiceUpdate {
+func (r *ConnectionUSERVOICEResourceModel) ToSharedConnectionUservoiceUpdate() *shared.ConnectionUservoiceUpdate {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
 	}
-	typeVar := new(shared.ConnectionUserVoiceUpdateType)
+	typeVar := new(shared.ConnectionUservoiceUpdateType)
 	if !r.Type.IsUnknown() && !r.Type.IsNull() {
-		*typeVar = shared.ConnectionUserVoiceUpdateType(r.Type.ValueString())
+		*typeVar = shared.ConnectionUservoiceUpdateType(r.Type.ValueString())
 	} else {
 		typeVar = nil
 	}
@@ -293,7 +293,7 @@ func (r *ConnectionUSERVOICEResourceModel) ToSharedConnectionUserVoiceUpdate() *
 	} else {
 		accessToken = nil
 	}
-	out := shared.ConnectionUserVoiceUpdate{
+	out := shared.ConnectionUservoiceUpdate{
 		Name:           name,
 		Type:           typeVar,
 		Active:         active,

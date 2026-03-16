@@ -96,7 +96,7 @@ func (r *ConnectionUSERVOICEResource) Schema(ctx context.Context, req resource.S
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -565,7 +565,7 @@ func (r *ConnectionUSERVOICEResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := *data.ToSharedConnectionUserVoiceInput()
+	request := *data.ToSharedConnectionUservoiceInput()
 	res, err := r.client.Connection.CreateUSERVOICEConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -582,11 +582,11 @@ func (r *ConnectionUSERVOICEResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionUserVoice == nil {
+	if res.ConnectionUservoice == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionUserVoice(res.ConnectionUserVoice)
+	data.RefreshFromSharedConnectionUservoice(res.ConnectionUservoice)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id := data.ID.ValueString()
 	request1 := operations.GetUSERVOICEConnectionRequest{
@@ -608,11 +608,11 @@ func (r *ConnectionUSERVOICEResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionUserVoice == nil {
+	if res1.ConnectionUservoice == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionUserVoice(res1.ConnectionUserVoice)
+	data.RefreshFromSharedConnectionUservoice(res1.ConnectionUservoice)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -657,11 +657,11 @@ func (r *ConnectionUSERVOICEResource) Read(ctx context.Context, req resource.Rea
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionUserVoice == nil {
+	if res.ConnectionUservoice == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionUserVoice(res.ConnectionUserVoice)
+	data.RefreshFromSharedConnectionUservoice(res.ConnectionUservoice)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -682,10 +682,10 @@ func (r *ConnectionUSERVOICEResource) Update(ctx context.Context, req resource.U
 	}
 
 	id := data.ID.ValueString()
-	connectionUserVoiceUpdate := data.ToSharedConnectionUserVoiceUpdate()
+	connectionUservoiceUpdate := data.ToSharedConnectionUservoiceUpdate()
 	request := operations.UpdateUSERVOICEConnectionRequest{
 		ID:                        id,
-		ConnectionUserVoiceUpdate: connectionUserVoiceUpdate,
+		ConnectionUservoiceUpdate: connectionUservoiceUpdate,
 	}
 	res, err := r.client.Connection.UpdateUSERVOICEConnection(ctx, request)
 	if err != nil {
@@ -703,11 +703,11 @@ func (r *ConnectionUSERVOICEResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionUserVoice == nil {
+	if res.ConnectionUservoice == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionUserVoice(res.ConnectionUserVoice)
+	data.RefreshFromSharedConnectionUservoice(res.ConnectionUservoice)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	id1 := data.ID.ValueString()
 	request1 := operations.GetUSERVOICEConnectionRequest{
@@ -729,11 +729,11 @@ func (r *ConnectionUSERVOICEResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.ConnectionUserVoice == nil {
+	if res1.ConnectionUservoice == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionUserVoice(res1.ConnectionUserVoice)
+	data.RefreshFromSharedConnectionUservoice(res1.ConnectionUservoice)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

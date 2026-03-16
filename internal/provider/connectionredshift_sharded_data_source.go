@@ -75,7 +75,7 @@ func (r *ConnectionREDSHIFTSHARDEDDataSource) Schema(ctx context.Context, req da
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
@@ -161,7 +161,7 @@ func (r *ConnectionREDSHIFTSHARDEDDataSource) Schema(ctx context.Context, req da
 			},
 			"dynamic_varchar_width_enabled": schema.BoolAttribute{
 				Computed:    true,
-				Description: `Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to ` + "`" + `true` + "`" + `, it can't later be updated to ` + "`" + `false` + "`" + `.`,
+				Description: `Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to ` + "`" + `true` + "`" + `, it can't later be updated to ` + "`" + `false` + "`" + `.`,
 			},
 			"id": schema.StringAttribute{
 				Required: true,
@@ -172,7 +172,7 @@ func (r *ConnectionREDSHIFTSHARDEDDataSource) Schema(ctx context.Context, req da
 			},
 			"query_tags_enabled": schema.BoolAttribute{
 				Computed:    true,
-				Description: `Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#include-query-tags">here</a>.`,
+				Description: `Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#include-query-tags">here</a>.`,
 			},
 			"schema": schema.StringAttribute{
 				Computed:    true,

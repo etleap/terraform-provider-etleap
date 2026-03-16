@@ -39,8 +39,9 @@ type ConnectionFifteenFiveUpdate struct {
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	AccessToken    *string              `json:"accessToken,omitempty"`
-	// You company 15Five's subdomain, only required if your 15Five instance has a subdomain that's not https://(my).15five.com. Example: https://(subdomain).15Five.com
+	// Your Access Token can be found in your dashboard under "Features" > "Integrations".
+	AccessToken *string `json:"accessToken,omitempty"`
+	// Your company's 15Five subdomain. Should only be specified if your 15Five instance has a URL that's not https://my.15five.com. Example: If your company's 15Five URL is https://mycompany.15Five.com you would specify 'mycompany' as the subdomain.
 	Subdomain *string `json:"subdomain,omitempty"`
 }
 

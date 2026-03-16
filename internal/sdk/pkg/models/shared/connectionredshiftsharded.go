@@ -77,7 +77,7 @@ func (e *ConnectionRedshiftShardedStatus) UnmarshalJSON(data []byte) error {
 }
 
 type ConnectionRedshiftShardedDefaultUpdateSchedule struct {
-	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details.
+	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
 	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
@@ -156,11 +156,11 @@ type ConnectionRedshiftSharded struct {
 	UserGroups []string `json:"userGroups,omitempty"`
 	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
 	SourceOnly *bool `default:"false" json:"sourceOnly"`
-	// Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#include-query-tags">here</a>.
+	// Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#include-query-tags">here</a>.
 	QueryTagsEnabled *bool `default:"false" json:"queryTagsEnabled"`
 	// The id of another Etleap Redshift connection. If specified, Etleap will make the data loaded available to the other cluster via Redshift Data Sharing.
 	DataSharingDestinations []string `json:"dataSharingDestinations,omitempty"`
-	// Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`.
+	// Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`.
 	DynamicVarcharWidthEnabled *bool                 `default:"false" json:"dynamicVarcharWidthEnabled"`
 	Shards                     []DatabaseShardOutput `json:"shards"`
 }
@@ -330,11 +330,11 @@ type ConnectionRedshiftShardedInput struct {
 	UserGroups []string `json:"userGroups,omitempty"`
 	// Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
 	SourceOnly *bool `default:"false" json:"sourceOnly"`
-	// Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#include-query-tags">here</a>.
+	// Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#include-query-tags">here</a>.
 	QueryTagsEnabled *bool `default:"false" json:"queryTagsEnabled"`
 	// The id of another Etleap Redshift connection. If specified, Etleap will make the data loaded available to the other cluster via Redshift Data Sharing.
 	DataSharingDestinations []string `json:"dataSharingDestinations,omitempty"`
-	// Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`.
+	// Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`.
 	DynamicVarcharWidthEnabled *bool           `default:"false" json:"dynamicVarcharWidthEnabled"`
 	Shards                     []DatabaseShard `json:"shards"`
 }

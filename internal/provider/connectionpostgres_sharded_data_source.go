@@ -28,18 +28,19 @@ type ConnectionPOSTGRESSHARDEDDataSource struct {
 
 // ConnectionPOSTGRESSHARDEDDataSourceModel describes the data model.
 type ConnectionPOSTGRESSHARDEDDataSourceModel struct {
-	Active                types.Bool              `tfsdk:"active"`
-	AutoReplicate         types.String            `tfsdk:"auto_replicate"`
-	CdcEnabled            types.Bool              `tfsdk:"cdc_enabled"`
-	CreateDate            types.String            `tfsdk:"create_date"`
-	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	ID                    types.String            `tfsdk:"id"`
-	Name                  types.String            `tfsdk:"name"`
-	Schema                types.String            `tfsdk:"schema"`
-	Shards                []DatabaseShardOutput   `tfsdk:"shards"`
-	Status                types.String            `tfsdk:"status"`
-	Type                  types.String            `tfsdk:"type"`
-	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
+	Active                  types.Bool              `tfsdk:"active"`
+	AutoReplicate           types.String            `tfsdk:"auto_replicate"`
+	CdcEnabled              types.Bool              `tfsdk:"cdc_enabled"`
+	CreateDate              types.String            `tfsdk:"create_date"`
+	DefaultUpdateSchedule   []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
+	FetchLobsForUpdatedRows types.Bool              `tfsdk:"fetch_lobs_for_updated_rows"`
+	ID                      types.String            `tfsdk:"id"`
+	Name                    types.String            `tfsdk:"name"`
+	Schema                  types.String            `tfsdk:"schema"`
+	Shards                  []DatabaseShardOutput   `tfsdk:"shards"`
+	Status                  types.String            `tfsdk:"status"`
+	Type                    types.String            `tfsdk:"type"`
+	UpdateSchedule          *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
 // Metadata returns the data source type name.
@@ -63,7 +64,7 @@ func (r *ConnectionPOSTGRESSHARDEDDataSource) Schema(ctx context.Context, req da
 			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed:    true,
-				Description: `Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/docs/documentation/ZG9jOjM3MjY3NzM5-postgres) and ensure that all requirements are met.`,
+				Description: `Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed:    true,
@@ -75,7 +76,7 @@ func (r *ConnectionPOSTGRESSHARDEDDataSource) Schema(ctx context.Context, req da
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
@@ -158,6 +159,10 @@ func (r *ConnectionPOSTGRESSHARDEDDataSource) Schema(ctx context.Context, req da
 					},
 				},
 				Description: `When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per ` + "`" + `pipelineMode` + "`" + ` and may be subject to change.`,
+			},
+			"fetch_lobs_for_updated_rows": schema.BoolAttribute{
+				Computed:    true,
+				Description: `Can only be specified when ` + "`" + `cdcEnabled` + "`" + ` is set to ` + "`" + `true` + "`" + `. When enabled, tables with LOB columns (` + "`" + `text` + "`" + `, ` + "`" + `bytea` + "`" + `, ` + "`" + `jsonb` + "`" + `, etc.) are eligible as sources for Etleap pipelines even when ` + "`" + `REPLICA IDENTITY` + "`" + ` is not set to ` + "`" + `FULL` + "`" + `, i.e. the LOB values are not guaranteed to be included in the WAL log for updated rows. Etleap executes a database query for each updated row during the CDC phase to fetch the LOB values. Note that this reduces CDC throughput and adds additional load on the source database.`,
 			},
 			"id": schema.StringAttribute{
 				Required: true,

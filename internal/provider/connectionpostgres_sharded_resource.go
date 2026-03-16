@@ -49,6 +49,7 @@ type ConnectionPOSTGRESSHARDEDResourceModel struct {
 	CreateDate               types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	FetchLobsForUpdatedRows  types.Bool              `tfsdk:"fetch_lobs_for_updated_rows"`
 	ID                       types.String            `tfsdk:"id"`
 	Name                     types.String            `tfsdk:"name"`
 	Schema                   types.String            `tfsdk:"schema"`
@@ -90,7 +91,7 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 				},
 				Optional:    true,
 				Default:     booldefault.StaticBool(false),
-				Description: `Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/docs/documentation/ZG9jOjM3MjY3NzM5-postgres) and ensure that all requirements are met. Requires replacement if changed. ; Default: false`,
+				Description: `Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met. Requires replacement if changed. ; Default: false`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,
@@ -114,7 +115,7 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 							PlanModifiers: []planmodifier.String{
 								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 							},
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 							Validators: []validator.String{
 								stringvalidator.OneOf(
 									"APPEND",
@@ -290,6 +291,15 @@ func (r *ConnectionPOSTGRESSHARDEDResource) Schema(ctx context.Context, req reso
 				Optional:    true,
 				Default:     booldefault.StaticBool(false),
 				Description: `Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
+			},
+			"fetch_lobs_for_updated_rows": schema.BoolAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Bool{
+					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Default:     booldefault.StaticBool(false),
+				Description: `Can only be specified when ` + "`" + `cdcEnabled` + "`" + ` is set to ` + "`" + `true` + "`" + `. When enabled, tables with LOB columns (` + "`" + `text` + "`" + `, ` + "`" + `bytea` + "`" + `, ` + "`" + `jsonb` + "`" + `, etc.) are eligible as sources for Etleap pipelines even when ` + "`" + `REPLICA IDENTITY` + "`" + ` is not set to ` + "`" + `FULL` + "`" + `, i.e. the LOB values are not guaranteed to be included in the WAL log for updated rows. Etleap executes a database query for each updated row during the CDC phase to fetch the LOB values. Note that this reduces CDC throughput and adds additional load on the source database. Default: false`,
 			},
 			"id": schema.StringAttribute{
 				Computed: true,

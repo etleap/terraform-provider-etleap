@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceElasticSearchType string
+type SourceElasticsearchType string
 
 const (
-	SourceElasticSearchTypeElasticsearch SourceElasticSearchType = "ELASTICSEARCH"
+	SourceElasticsearchTypeElasticsearch SourceElasticsearchType = "ELASTICSEARCH"
 )
 
-func (e SourceElasticSearchType) ToPointer() *SourceElasticSearchType {
+func (e SourceElasticsearchType) ToPointer() *SourceElasticsearchType {
 	return &e
 }
 
-func (e *SourceElasticSearchType) UnmarshalJSON(data []byte) error {
+func (e *SourceElasticsearchType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "ELASTICSEARCH":
-		*e = SourceElasticSearchType(v)
+		*e = SourceElasticsearchType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceElasticSearchType: %v", v)
+		return fmt.Errorf("invalid value for SourceElasticsearchType: %v", v)
 	}
 }
 
-type SourceElasticSearch struct {
-	Type SourceElasticSearchType `json:"type"`
+type SourceElasticsearch struct {
+	Type SourceElasticsearchType `json:"type"`
 	// The universally unique identifier for the source.
 	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
@@ -41,28 +41,28 @@ type SourceElasticSearch struct {
 	Entity string `json:"entity"`
 }
 
-func (o *SourceElasticSearch) GetType() SourceElasticSearchType {
+func (o *SourceElasticsearch) GetType() SourceElasticsearchType {
 	if o == nil {
-		return SourceElasticSearchType("")
+		return SourceElasticsearchType("")
 	}
 	return o.Type
 }
 
-func (o *SourceElasticSearch) GetConnectionID() string {
+func (o *SourceElasticsearch) GetConnectionID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ConnectionID
 }
 
-func (o *SourceElasticSearch) GetLatencyThreshold() *int64 {
+func (o *SourceElasticsearch) GetLatencyThreshold() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LatencyThreshold
 }
 
-func (o *SourceElasticSearch) GetEntity() string {
+func (o *SourceElasticsearch) GetEntity() string {
 	if o == nil {
 		return ""
 	}

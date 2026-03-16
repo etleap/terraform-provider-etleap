@@ -33,20 +33,20 @@ func (e *SourceFtpType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// NewFileBehavior - Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
-type NewFileBehavior string
+// SourceFtpNewFileBehavior - Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details.
+type SourceFtpNewFileBehavior string
 
 const (
-	NewFileBehaviorUpdate  NewFileBehavior = "UPDATE"
-	NewFileBehaviorAppend  NewFileBehavior = "APPEND"
-	NewFileBehaviorReplace NewFileBehavior = "REPLACE"
+	SourceFtpNewFileBehaviorUpdate  SourceFtpNewFileBehavior = "UPDATE"
+	SourceFtpNewFileBehaviorAppend  SourceFtpNewFileBehavior = "APPEND"
+	SourceFtpNewFileBehaviorReplace SourceFtpNewFileBehavior = "REPLACE"
 )
 
-func (e NewFileBehavior) ToPointer() *NewFileBehavior {
+func (e SourceFtpNewFileBehavior) ToPointer() *SourceFtpNewFileBehavior {
 	return &e
 }
 
-func (e *NewFileBehavior) UnmarshalJSON(data []byte) error {
+func (e *SourceFtpNewFileBehavior) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -57,10 +57,10 @@ func (e *NewFileBehavior) UnmarshalJSON(data []byte) error {
 	case "APPEND":
 		fallthrough
 	case "REPLACE":
-		*e = NewFileBehavior(v)
+		*e = SourceFtpNewFileBehavior(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for NewFileBehavior: %v", v)
+		return fmt.Errorf("invalid value for SourceFtpNewFileBehavior: %v", v)
 	}
 }
 
@@ -72,8 +72,8 @@ type SourceFtp struct {
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 	FileNameFilter *string `json:"fileNameFilter,omitempty"`
-	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjI0NTQwNzI2-create-a-file-based-pipeline#update-method">the documentation</a> for more details.
-	NewFileBehavior NewFileBehavior `json:"newFileBehavior"`
+	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details.
+	NewFileBehavior SourceFtpNewFileBehavior `json:"newFileBehavior"`
 	// Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
 	LowWatermark *types.Date `json:"lowWatermark,omitempty"`
 	// File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified.
@@ -121,9 +121,9 @@ func (o *SourceFtp) GetFileNameFilter() *string {
 	return o.FileNameFilter
 }
 
-func (o *SourceFtp) GetNewFileBehavior() NewFileBehavior {
+func (o *SourceFtp) GetNewFileBehavior() SourceFtpNewFileBehavior {
 	if o == nil {
-		return NewFileBehavior("")
+		return SourceFtpNewFileBehavior("")
 	}
 	return o.NewFileBehavior
 }

@@ -162,7 +162,7 @@ func (r *ModelResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 							`SELECT col1, col2 FROM {{"{{"}}abcd1234{{"}}"}};` + "\n" +
 							`` + "```" + `` + "\n" +
 							`` + "\n" +
-							`[See the Model documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-dependencies) for more information on Model dependencies.`,
+							`[See the Model documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-dependencies) for more information on Model dependencies.`,
 					},
 					"triggers": schema.ListAttribute{
 						Required:    true,
@@ -309,7 +309,7 @@ func (r *ModelResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 						},
 					},
 				},
-				Description: `How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-updates) for more information.`,
+				Description: `How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-updates) for more information.`,
 				Validators: []validator.Object{
 					validators.ExactlyOneChild(),
 				},

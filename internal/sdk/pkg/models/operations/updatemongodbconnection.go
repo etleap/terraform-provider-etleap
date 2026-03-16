@@ -8,8 +8,8 @@ import (
 )
 
 type UpdateMONGODBConnectionRequest struct {
-	ID                    string                        `pathParam:"style=simple,explode=false,name=id"`
-	ConnectionMongoUpdate *shared.ConnectionMongoUpdate `request:"mediaType=application/json"`
+	ID                      string                          `pathParam:"style=simple,explode=false,name=id"`
+	ConnectionMongodbUpdate *shared.ConnectionMongodbUpdate `request:"mediaType=application/json"`
 }
 
 func (o *UpdateMONGODBConnectionRequest) GetID() string {
@@ -19,11 +19,11 @@ func (o *UpdateMONGODBConnectionRequest) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateMONGODBConnectionRequest) GetConnectionMongoUpdate() *shared.ConnectionMongoUpdate {
+func (o *UpdateMONGODBConnectionRequest) GetConnectionMongodbUpdate() *shared.ConnectionMongodbUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionMongoUpdate
+	return o.ConnectionMongodbUpdate
 }
 
 type UpdateMONGODBConnectionResponse struct {
@@ -34,7 +34,7 @@ type UpdateMONGODBConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionMongo *shared.ConnectionMongo
+	ConnectionMongodb *shared.ConnectionMongodb
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -60,11 +60,11 @@ func (o *UpdateMONGODBConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateMONGODBConnectionResponse) GetConnectionMongo() *shared.ConnectionMongo {
+func (o *UpdateMONGODBConnectionResponse) GetConnectionMongodb() *shared.ConnectionMongodb {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionMongo
+	return o.ConnectionMongodb
 }
 
 func (o *UpdateMONGODBConnectionResponse) GetErrors() *shared.Errors {

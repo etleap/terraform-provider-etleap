@@ -1,3 +1,3 @@
 data "etleap_connection_square" "my_connectionsquare" {
-  id = "fda56231-37d1-4085-a785-064975d0e682"
+  id = "31bc1c43-6b9a-443f-bb29-1456421624c5"
 }

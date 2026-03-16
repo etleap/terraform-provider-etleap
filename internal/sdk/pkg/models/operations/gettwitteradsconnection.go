@@ -26,7 +26,7 @@ type GetTWITTERADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionTwitter *shared.ConnectionTwitter
+	ConnectionTwitterAds *shared.ConnectionTwitterAds
 	// Forbidden. You don't have access to view this connection.
 	Errors *shared.Errors
 }
@@ -52,11 +52,11 @@ func (o *GetTWITTERADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *GetTWITTERADSConnectionResponse) GetConnectionTwitter() *shared.ConnectionTwitter {
+func (o *GetTWITTERADSConnectionResponse) GetConnectionTwitterAds() *shared.ConnectionTwitterAds {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionTwitter
+	return o.ConnectionTwitterAds
 }
 
 func (o *GetTWITTERADSConnectionResponse) GetErrors() *shared.Errors {

@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func (r *ConnectionQUORAADSResourceModel) ToSharedConnectionQuoraInput() *shared.ConnectionQuoraInput {
+func (r *ConnectionQUORAADSResourceModel) ToSharedConnectionQuoraAdsInput() *shared.ConnectionQuoraAdsInput {
 	name := r.Name.ValueString()
-	typeVar := shared.ConnectionQuoraType(r.Type.ValueString())
+	typeVar := shared.ConnectionQuoraAdsType(r.Type.ValueString())
 	var updateSchedule *shared.UpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
@@ -87,7 +87,7 @@ func (r *ConnectionQUORAADSResourceModel) ToSharedConnectionQuoraInput() *shared
 		}
 	}
 	code := r.Code.ValueString()
-	out := shared.ConnectionQuoraInput{
+	out := shared.ConnectionQuoraAdsInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
@@ -96,7 +96,7 @@ func (r *ConnectionQUORAADSResourceModel) ToSharedConnectionQuoraInput() *shared
 	return &out
 }
 
-func (r *ConnectionQUORAADSResourceModel) RefreshFromSharedConnectionQuora(resp *shared.ConnectionQuora) {
+func (r *ConnectionQUORAADSResourceModel) RefreshFromSharedConnectionQuoraAds(resp *shared.ConnectionQuoraAds) {
 	r.Active = types.BoolValue(resp.Active)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -185,14 +185,14 @@ func (r *ConnectionQUORAADSResourceModel) RefreshFromSharedConnectionQuora(resp 
 	r.Username = types.StringValue(resp.Username)
 }
 
-func (r *ConnectionQUORAADSResourceModel) ToSharedConnectionQuoraUpdate() *shared.ConnectionQuoraUpdate {
+func (r *ConnectionQUORAADSResourceModel) ToSharedConnectionQuoraAdsUpdate() *shared.ConnectionQuoraAdsUpdate {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
 	}
-	typeVar := shared.ConnectionQuoraUpdateType(r.Type.ValueString())
+	typeVar := shared.ConnectionQuoraAdsUpdateType(r.Type.ValueString())
 	active := new(bool)
 	if !r.Active.IsUnknown() && !r.Active.IsNull() {
 		*active = r.Active.ValueBool()
@@ -280,7 +280,7 @@ func (r *ConnectionQUORAADSResourceModel) ToSharedConnectionQuoraUpdate() *share
 	} else {
 		code = nil
 	}
-	out := shared.ConnectionQuoraUpdate{
+	out := shared.ConnectionQuoraAdsUpdate{
 		Name:           name,
 		Type:           typeVar,
 		Active:         active,

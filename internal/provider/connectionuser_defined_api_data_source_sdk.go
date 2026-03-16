@@ -40,6 +40,17 @@ func (r *ConnectionUSERDEFINEDAPIDataSourceModel) RefreshFromSharedConnectionUse
 		}
 		r.Authentication.Header.Value = types.StringValue(resp.Authentication.HeaderAuthentication.Value)
 	}
+	if resp.Authentication.Oauth2ClientCredentialsAuthentication != nil {
+		r.Authentication.Oauth = &Oauth2ClientCredentialsAuthentication{}
+		r.Authentication.Oauth.ClientID = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthentication.ClientID)
+		r.Authentication.Oauth.ClientSecret = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthentication.ClientSecret)
+		r.Authentication.Oauth.TokenURL = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthentication.TokenURL)
+		if resp.Authentication.Oauth2ClientCredentialsAuthentication.Type != nil {
+			r.Authentication.Oauth.Type = types.StringValue(string(*resp.Authentication.Oauth2ClientCredentialsAuthentication.Type))
+		} else {
+			r.Authentication.Oauth.Type = types.StringNull()
+		}
+	}
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
@@ -129,7 +140,7 @@ func (r *ConnectionUSERDEFINEDAPIDataSourceModel) RefreshFromSharedConnectionUse
 				} else {
 					entities1.PagingStrategy.CursorURI.Type = types.StringNull()
 				}
-				entities1.PagingStrategy.CursorURI.URLPrefix = types.StringValue(entitiesItem.PagingStrategy.CursorURIPagingStrategy.URLPrefix)
+				entities1.PagingStrategy.CursorURI.URLPrefix = types.StringPointerValue(entitiesItem.PagingStrategy.CursorURIPagingStrategy.URLPrefix)
 			}
 			if entitiesItem.PagingStrategy.OffsetPagingStrategy != nil {
 				entities1.PagingStrategy.Offset = &OffsetPagingStrategy{}
@@ -140,6 +151,17 @@ func (r *ConnectionUSERDEFINEDAPIDataSourceModel) RefreshFromSharedConnectionUse
 					entities1.PagingStrategy.Offset.Type = types.StringValue(string(*entitiesItem.PagingStrategy.OffsetPagingStrategy.Type))
 				} else {
 					entities1.PagingStrategy.Offset.Type = types.StringNull()
+				}
+			}
+			if entitiesItem.PagingStrategy.PageNumberPagingStrategy != nil {
+				entities1.PagingStrategy.PageNumber = &PageNumberPagingStrategy{}
+				entities1.PagingStrategy.PageNumber.MaxPageSize = types.Int64Value(entitiesItem.PagingStrategy.PageNumberPagingStrategy.MaxPageSize)
+				entities1.PagingStrategy.PageNumber.PageNumberFieldName = types.StringValue(entitiesItem.PagingStrategy.PageNumberPagingStrategy.PageNumberFieldName)
+				entities1.PagingStrategy.PageNumber.PageSizeFieldName = types.StringValue(entitiesItem.PagingStrategy.PageNumberPagingStrategy.PageSizeFieldName)
+				if entitiesItem.PagingStrategy.PageNumberPagingStrategy.Type != nil {
+					entities1.PagingStrategy.PageNumber.Type = types.StringValue(string(*entitiesItem.PagingStrategy.PageNumberPagingStrategy.Type))
+				} else {
+					entities1.PagingStrategy.PageNumber.Type = types.StringNull()
 				}
 			}
 		}
@@ -213,70 +235,65 @@ func (r *ConnectionUSERDEFINEDAPIDataSourceModel) RefreshFromSharedConnectionUse
 			for _, v := range entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.PrimaryKeyColumns {
 				entities1.PipelineMode.UserDefinedAPIUpdateMode.PrimaryKeyColumns = append(entities1.PipelineMode.UserDefinedAPIUpdateMode.PrimaryKeyColumns, types.StringValue(v))
 			}
-			if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy == nil {
-				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy = nil
-			} else {
-				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy = &UpdateModeStrategyTypes{}
-				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy != nil {
-					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData = &ExtractedDataStrategy{}
-					if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Format != nil {
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Format = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Format))
-					} else {
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Format = types.StringNull()
-					}
-					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Key)
-					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Value = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Value)
-					if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter == nil {
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter = nil
-					} else {
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter = &WatermarkDatetimeKeyValuePair{}
-						if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter.Format != nil {
-							entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter.Format = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter.Format))
-						} else {
-							entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter.Format = types.StringNull()
-						}
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter.Key)
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter.Value = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter.Value)
-					}
-					for highWatermarkQueryParametersCount, highWatermarkQueryParametersItem := range entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.HighWatermarkQueryParameters {
-						var highWatermarkQueryParameters1 HeaderParameters
-						highWatermarkQueryParameters1.Key = types.StringValue(highWatermarkQueryParametersItem.Key)
-						highWatermarkQueryParameters1.Value = types.StringValue(highWatermarkQueryParametersItem.Value)
-						if highWatermarkQueryParametersCount+1 > len(entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters) {
-							entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters = append(entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters, highWatermarkQueryParameters1)
-						} else {
-							entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters[highWatermarkQueryParametersCount].Key = highWatermarkQueryParameters1.Key
-							entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters[highWatermarkQueryParametersCount].Value = highWatermarkQueryParameters1.Value
-						}
-					}
-					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.LastUpdatedColumn = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.LastUpdatedColumn)
-					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.Type = types.StringValue(string(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.Type))
+			if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy != nil {
+				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData = &ExtractedDataStrategy{}
+				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Format != nil {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Format = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Format))
+				} else {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Format = types.StringNull()
 				}
-				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy != nil {
-					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock = &WallClockStrategy{}
-					if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.BeginDateParameter.Format != nil {
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.BeginDateParameter.Format = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.BeginDateParameter.Format))
+				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Key)
+				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Value = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Value)
+				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter == nil {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter = nil
+				} else {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter = &WatermarkDatetimeKeyValuePair{}
+					if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter.Format != nil {
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter.Format = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter.Format))
 					} else {
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.BeginDateParameter.Format = types.StringNull()
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter.Format = types.StringNull()
 					}
-					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.BeginDateParameter.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.BeginDateParameter.Key)
-					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.BeginDateParameter.Value = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.BeginDateParameter.Value)
-					if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter == nil {
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter = nil
-					} else {
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter = &InclusiveOrExclusiveWatermarkDateonlyKeyValuePair{}
-						if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter.Format != nil {
-							entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter.Format = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter.Format))
-						} else {
-							entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter.Format = types.StringNull()
-						}
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter.Inclusive = types.BoolPointerValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter.Inclusive)
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter.Key)
-						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter.Value = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter.Value)
-					}
-					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.LookbackWindow = types.Int64Value(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.LookbackWindow)
-					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.Type = types.StringValue(string(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.Type))
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter.Key)
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter.Value = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter.Value)
 				}
+				for highWatermarkQueryParametersCount, highWatermarkQueryParametersItem := range entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.HighWatermarkQueryParameters {
+					var highWatermarkQueryParameters1 HeaderParameters
+					highWatermarkQueryParameters1.Key = types.StringValue(highWatermarkQueryParametersItem.Key)
+					highWatermarkQueryParameters1.Value = types.StringValue(highWatermarkQueryParametersItem.Value)
+					if highWatermarkQueryParametersCount+1 > len(entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters) {
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters = append(entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters, highWatermarkQueryParameters1)
+					} else {
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters[highWatermarkQueryParametersCount].Key = highWatermarkQueryParameters1.Key
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters[highWatermarkQueryParametersCount].Value = highWatermarkQueryParameters1.Value
+					}
+				}
+				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.LastUpdatedColumn = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.LastUpdatedColumn)
+				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.Type = types.StringValue(string(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.Type))
+			}
+			if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy != nil {
+				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock = &WallClockStrategy{}
+				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.BeginDateParameter.Format != nil {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.BeginDateParameter.Format = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.BeginDateParameter.Format))
+				} else {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.BeginDateParameter.Format = types.StringNull()
+				}
+				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.BeginDateParameter.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.BeginDateParameter.Key)
+				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.BeginDateParameter.Value = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.BeginDateParameter.Value)
+				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter == nil {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter = nil
+				} else {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter = &InclusiveOrExclusiveWatermarkDateonlyKeyValuePair{}
+					if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter.Format != nil {
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter.Format = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter.Format))
+					} else {
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter.Format = types.StringNull()
+					}
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter.Inclusive = types.BoolPointerValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter.Inclusive)
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter.Key)
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.EndDateParameter.Value = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.EndDateParameter.Value)
+				}
+				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.LookbackWindow = types.Int64Value(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.LookbackWindow)
+				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.Type = types.StringValue(string(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClockStrategy.Type))
 			}
 			if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Type != nil {
 				entities1.PipelineMode.UserDefinedAPIUpdateMode.Type = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Type))

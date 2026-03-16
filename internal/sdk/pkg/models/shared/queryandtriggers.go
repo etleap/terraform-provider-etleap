@@ -17,7 +17,7 @@ type QueryAndTriggers struct {
 	// SELECT col1, col2 FROM {{abcd1234}};
 	// ```
 	//
-	// [See the Model documentation](https://docs.etleap.com/docs/documentation/ZG9jOjI0MzU2NDY3-introduction-to-models#model-dependencies) for more information on Model dependencies.
+	// [See the Model documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-dependencies) for more information on Model dependencies.
 	Query string `json:"query"`
 	// A list of model dependency ids. An update will be automatically triggered in this model if any of the dependencies listed here get new data. Any ids given here must be present as dependencies in the `query`.
 	Triggers []string `json:"triggers"`

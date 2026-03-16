@@ -14,7 +14,7 @@ ConnectionSNOWFLAKESHARDED DataSource
 
 ```terraform
 data "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" {
-  id = "d33c7714-3d4b-45f2-ac91-31e3bff7395b"
+  id = "ab87587c-7abd-49fa-9bde-2ab7b68e0bc5"
 }
 ```
 
@@ -33,6 +33,7 @@ data "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" {
 - `shards` (Attributes List) (see [below for nested schema](#nestedatt--shards))
 - `source_only` (Boolean) Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database.
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]
+- `storage_integration` (String) The name of the [Snowflake Storage Integration](https://docs.snowflake.com/en/user-guide/data-load-s3-config-storage-integration) object to use when Etleap creates temporary Snowflake Stages for loading data. When specified, Etleap uses the Storage Integration instead of passing in temporary AWS credentials for authentication. The Storage Integration must be pre-configured in your Snowflake account with appropriate permissions to access the Etleap S3 intermediate bucket.
 - `type` (String) must be one of ["SNOWFLAKE_SHARDED"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
@@ -41,7 +42,7 @@ data "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" {
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

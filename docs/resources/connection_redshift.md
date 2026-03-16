@@ -14,18 +14,18 @@ ConnectionREDSHIFT Resource
 
 ```terraform
 resource "etleap_connection_redshift" "my_connectionredshift" {
-  address                       = "70982 Denesik Glen"
+  address                       = "87214 Danika Lights"
   database                      = "...my_database..."
   deletion_of_export_products   = true
   dynamic_varchar_width_enabled = true
-  name                          = "Jodi Nitzsche"
+  name                          = "Lionel Lebsack"
   password                      = "...my_password..."
-  port                          = 8
-  query_tags_enabled            = false
+  port                          = 9
+  query_tags_enabled            = true
   schema                        = "...my_schema..."
   source_only                   = true
   type                          = "REDSHIFT"
-  username                      = "Jaycee3"
+  username                      = "Earline_Wilkinson42"
 }
 ```
 
@@ -46,8 +46,8 @@ resource "etleap_connection_redshift" "my_connectionredshift" {
 
 - `data_sharing_destinations` (List of String) The id of another Etleap Redshift connection. If specified, Etleap will make the data loaded available to the other cluster via Redshift Data Sharing.
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
-- `dynamic_varchar_width_enabled` (Boolean) Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`. Default: false
-- `query_tags_enabled` (Boolean) Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/docs/documentation/ba7744fcf6114-redshift-optional-connection-settings#include-query-tags">here</a>. Default: false
+- `dynamic_varchar_width_enabled` (Boolean) Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`. Default: false
+- `query_tags_enabled` (Boolean) Should Etleap prefix each load query with metadata? More info can be found <a href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#include-query-tags">here</a>. Default: false
 - `schema` (String) If not specified, the default schema will be used.
 - `source_only` (Boolean) Are you going to use this connection only as a source for pipelines? When `true`, this connection will only be available as an ETL source only, and Etleap will skip the creation of an audit table in the database. Default: false
 - `ssh_config` (Attributes) (see [below for nested schema](#nestedatt--ssh_config))
@@ -134,7 +134,7 @@ Optional:
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

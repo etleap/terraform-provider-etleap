@@ -14,7 +14,7 @@ ConnectionMARKETO DataSource
 
 ```terraform
 data "etleap_connection_marketo" "my_connectionmarketo" {
-  id = "4465a2cc-a01b-4090-a1e4-b12f84c2b57f"
+  id = "a5adde64-c5d6-44a5-a210-0fdeba531f4b"
 }
 ```
 
@@ -31,8 +31,6 @@ data "etleap_connection_marketo" "my_connectionmarketo" {
 - `quota_limit` (Number) The maximum number of requests Etleap will use per day. Your Marketo account's daily quota is the 'Daily Request Limit' number under Admin -> Integration -> Web Services. We recommend setting this to 75% of your Marketo limit.
 - `rest_client_id` (String) Under Admin -> Integration -> LaunchPoint, you can find this value by clicking 'View Details'.
 - `rest_endpoint` (String) E.g. 'https://259-ZDK-675.mktorest.com/rest'. In the Marketo UI this is the 'Endpoint' value in the 'REST API' section.
-- `soap_endpoint` (String) E.g. 'https://259-ZDK-675.mktoapi.com/soap/mktows/2_9'. In the Marketo UI this is the 'Endpoint' value in the 'SOAP API' section.
-- `soap_user_id` (String) E.g. 'MKTOWS_259-ZDK-675_1'. In the Marketo UI this is the 'User ID' value in the 'SOAP API' section.
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]
 - `type` (String) must be one of ["MARKETO"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
@@ -42,7 +40,7 @@ data "etleap_connection_marketo" "my_connectionmarketo" {
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

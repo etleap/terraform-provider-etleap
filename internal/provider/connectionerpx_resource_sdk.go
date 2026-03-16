@@ -86,10 +86,10 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxInput() *shared.Conn
 			}
 		}
 	}
+	apiURL := r.APIURL.ValueString()
+	tokenURL := r.TokenURL.ValueString()
 	clientID := r.ClientID.ValueString()
 	clientSecret := r.ClientSecret.ValueString()
-	tokenURL := r.TokenURL.ValueString()
-	apiURL := r.APIURL.ValueString()
 	companyIds := new(string)
 	if !r.CompanyIds.IsUnknown() && !r.CompanyIds.IsNull() {
 		*companyIds = r.CompanyIds.ValueString()
@@ -100,10 +100,10 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxInput() *shared.Conn
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
+		APIURL:         apiURL,
+		TokenURL:       tokenURL,
 		ClientID:       clientID,
 		ClientSecret:   clientSecret,
-		TokenURL:       tokenURL,
-		APIURL:         apiURL,
 		CompanyIds:     companyIds,
 	}
 	return &out
@@ -295,6 +295,12 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxUpdate() *shared.Con
 			}
 		}
 	}
+	tokenURL := new(string)
+	if !r.TokenURL.IsUnknown() && !r.TokenURL.IsNull() {
+		*tokenURL = r.TokenURL.ValueString()
+	} else {
+		tokenURL = nil
+	}
 	clientID := new(string)
 	if !r.ClientID.IsUnknown() && !r.ClientID.IsNull() {
 		*clientID = r.ClientID.ValueString()
@@ -307,20 +313,14 @@ func (r *ConnectionERPXResourceModel) ToSharedConnectionErpxUpdate() *shared.Con
 	} else {
 		clientSecret = nil
 	}
-	tokenURL := new(string)
-	if !r.TokenURL.IsUnknown() && !r.TokenURL.IsNull() {
-		*tokenURL = r.TokenURL.ValueString()
-	} else {
-		tokenURL = nil
-	}
 	out := shared.ConnectionErpxUpdate{
 		Name:           name,
 		Type:           typeVar,
 		Active:         active,
 		UpdateSchedule: updateSchedule,
+		TokenURL:       tokenURL,
 		ClientID:       clientID,
 		ClientSecret:   clientSecret,
-		TokenURL:       tokenURL,
 	}
 	return &out
 }

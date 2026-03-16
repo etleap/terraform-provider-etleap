@@ -57,7 +57,7 @@ func (r *ConnectionTWITTERADSDataSource) Schema(ctx context.Context, req datasou
 			},
 			"app_key": schema.StringAttribute{
 				Computed:    true,
-				Description: `This represents your Twitter developer app when making API requests. Generated under 'Consumer API keys'.`,
+				Description: `This represents your X developer app when making API requests. Generated under 'Consumer API keys'.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed:    true,
@@ -69,7 +69,7 @@ func (r *ConnectionTWITTERADSDataSource) Schema(ctx context.Context, req datasou
 					Attributes: map[string]schema.Attribute{
 						"pipeline_mode": schema.StringAttribute{
 							Computed:    true,
-							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
+							Description: `The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]`,
 						},
 						"update_schedule": schema.SingleNestedAttribute{
 							Computed: true,
@@ -166,7 +166,7 @@ func (r *ConnectionTWITTERADSDataSource) Schema(ctx context.Context, req datasou
 			},
 			"twitter_usernames": schema.StringAttribute{
 				Computed:    true,
-				Description: `If you want to create pipelines from entities that uses Twitter API V2 endpoints you need to specify which Twitter accounts you want to retrieve data from. The usernames must be separated by comma and without the @`,
+				Description: `If you want to create pipelines from entities that uses X API V2 endpoints you need to specify which X accounts you want to retrieve data from. The usernames must be separated by comma and without the @`,
 			},
 			"type": schema.StringAttribute{
 				Computed:    true,
@@ -312,11 +312,11 @@ func (r *ConnectionTWITTERADSDataSource) Read(ctx context.Context, req datasourc
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionTwitter == nil {
+	if res.ConnectionTwitterAds == nil {
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionTwitter(res.ConnectionTwitter)
+	data.RefreshFromSharedConnectionTwitterAds(res.ConnectionTwitterAds)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

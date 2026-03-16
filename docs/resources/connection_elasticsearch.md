@@ -14,14 +14,14 @@ ConnectionELASTICSEARCH Resource
 
 ```terraform
 resource "etleap_connection_elasticsearch" "my_connectionelasticsearch" {
-  address                     = "30987 Rosalia Inlet"
+  address                     = "27958 Reichert Loaf"
   deletion_of_export_products = false
-  name                        = "Louis Gerlach"
+  name                        = "Willie Bode"
   password                    = "...my_password..."
-  port                        = 5
+  port                        = 3
   ssl_enabled                 = false
   type                        = "ELASTICSEARCH"
-  username                    = "Valentine.Reichert"
+  username                    = "Edna98"
 }
 ```
 
@@ -45,7 +45,7 @@ resource "etleap_connection_elasticsearch" "my_connectionelasticsearch" {
 
 Cluster privileges: <ul><li>monitor</li></ul>
  Index privileges: <ul><li>read</li><li>monitor</li><li>view_index_metadata</li></ul>
- Index privileges must be enabled for all indices you want Etleap to access. These permissions can be set up in Kibana or by consulting <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/authorization.html">the Elastic documentation</a> for the version of your cluster.
+ Index privileges must be enabled for all indices you want Etleap to access. These permissions can be set up in Kibana or by consulting <a target="_blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/authorization.html">the Elastic documentation</a> for the version of your cluster.
 
 ### Read-Only
 
@@ -118,7 +118,7 @@ Optional:
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>

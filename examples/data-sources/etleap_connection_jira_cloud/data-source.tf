@@ -1,3 +1,3 @@
 data "etleap_connection_jira_cloud" "my_connectionjira_cloud" {
-  id = "b5fe3409-a36c-4c6a-a5c7-a3d4a0e5ce4e"
+  id = "a2cca01b-090a-41e4-b12f-84c2b57f4c62"
 }

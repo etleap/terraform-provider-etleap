@@ -102,6 +102,12 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeInput() *s
 	} else {
 		sourceOnly = nil
 	}
+	storageIntegration := new(string)
+	if !r.StorageIntegration.IsUnknown() && !r.StorageIntegration.IsNull() {
+		*storageIntegration = r.StorageIntegration.ValueString()
+	} else {
+		storageIntegration = nil
+	}
 	address := r.Address.ValueString()
 	database := r.Database.ValueString()
 	warehouse := r.Warehouse.ValueString()
@@ -157,19 +163,20 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeInput() *s
 		}
 	}
 	out := shared.ConnectionSnowflakeInput{
-		Name:           name,
-		Type:           typeVar,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		Roles:          roles,
-		SourceOnly:     sourceOnly,
-		Address:        address,
-		Database:       database,
-		Warehouse:      warehouse,
-		Username:       username,
-		Password:       password,
-		Role:           role,
-		Authentication: authentication,
+		Name:               name,
+		Type:               typeVar,
+		UpdateSchedule:     updateSchedule,
+		Schema:             schema,
+		Roles:              roles,
+		SourceOnly:         sourceOnly,
+		StorageIntegration: storageIntegration,
+		Address:            address,
+		Database:           database,
+		Warehouse:          warehouse,
+		Username:           username,
+		Password:           password,
+		Role:               role,
+		Authentication:     authentication,
 	}
 	return &out
 }
@@ -251,6 +258,7 @@ func (r *ConnectionSNOWFLAKEResourceModel) RefreshFromSharedConnectionSnowflake(
 	r.Schema = types.StringPointerValue(resp.Schema)
 	r.SourceOnly = types.BoolPointerValue(resp.SourceOnly)
 	r.Status = types.StringValue(string(resp.Status))
+	r.StorageIntegration = types.StringPointerValue(resp.StorageIntegration)
 	r.Type = types.StringValue(string(resp.Type))
 	if resp.UpdateSchedule == nil {
 		r.UpdateSchedule = nil
@@ -392,6 +400,12 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeUpdate() *
 	} else {
 		sourceOnly = nil
 	}
+	storageIntegration := new(string)
+	if !r.StorageIntegration.IsUnknown() && !r.StorageIntegration.IsNull() {
+		*storageIntegration = r.StorageIntegration.ValueString()
+	} else {
+		storageIntegration = nil
+	}
 	address := new(string)
 	if !r.Address.IsUnknown() && !r.Address.IsNull() {
 		*address = r.Address.ValueString()
@@ -467,20 +481,21 @@ func (r *ConnectionSNOWFLAKEResourceModel) ToSharedConnectionSnowflakeUpdate() *
 		}
 	}
 	out := shared.ConnectionSnowflakeUpdate{
-		Name:           name,
-		Type:           typeVar,
-		Active:         active,
-		UpdateSchedule: updateSchedule,
-		Schema:         schema,
-		Roles:          roles,
-		SourceOnly:     sourceOnly,
-		Address:        address,
-		Database:       database,
-		Warehouse:      warehouse,
-		Username:       username,
-		Password:       password,
-		Role:           role,
-		Authentication: authentication,
+		Name:               name,
+		Type:               typeVar,
+		Active:             active,
+		UpdateSchedule:     updateSchedule,
+		Schema:             schema,
+		Roles:              roles,
+		SourceOnly:         sourceOnly,
+		StorageIntegration: storageIntegration,
+		Address:            address,
+		Database:           database,
+		Warehouse:          warehouse,
+		Username:           username,
+		Password:           password,
+		Role:               role,
+		Authentication:     authentication,
 	}
 	return &out
 }

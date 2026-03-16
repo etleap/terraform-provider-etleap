@@ -34,10 +34,10 @@ func (e *UserDefinedAPIUpdateModeType) UnmarshalJSON(data []byte) error {
 
 type UserDefinedAPIUpdateMode struct {
 	Type              *UserDefinedAPIUpdateModeType `default:"UPDATE" json:"type"`
-	PrimaryKeyColumns []string                      `json:"primaryKeyColumns,omitempty"`
+	PrimaryKeyColumns []string                      `json:"primaryKeyColumns"`
 	// The foreign columns of the entity.
 	ForeignKeyColumns []SchemaV1ForeignKeyColumn `json:"foreignKeyColumns,omitempty"`
-	Strategy          *UpdateModeStrategyTypes   `json:"strategy,omitempty"`
+	Strategy          UpdateModeStrategyTypes    `json:"strategy"`
 }
 
 func (u UserDefinedAPIUpdateMode) MarshalJSON() ([]byte, error) {
@@ -60,7 +60,7 @@ func (o *UserDefinedAPIUpdateMode) GetType() *UserDefinedAPIUpdateModeType {
 
 func (o *UserDefinedAPIUpdateMode) GetPrimaryKeyColumns() []string {
 	if o == nil {
-		return nil
+		return []string{}
 	}
 	return o.PrimaryKeyColumns
 }
@@ -72,23 +72,17 @@ func (o *UserDefinedAPIUpdateMode) GetForeignKeyColumns() []SchemaV1ForeignKeyCo
 	return o.ForeignKeyColumns
 }
 
-func (o *UserDefinedAPIUpdateMode) GetStrategy() *UpdateModeStrategyTypes {
+func (o *UserDefinedAPIUpdateMode) GetStrategy() UpdateModeStrategyTypes {
 	if o == nil {
-		return nil
+		return UpdateModeStrategyTypes{}
 	}
 	return o.Strategy
 }
 
 func (o *UserDefinedAPIUpdateMode) GetStrategyWallClock() *WallClockStrategy {
-	if v := o.GetStrategy(); v != nil {
-		return v.WallClockStrategy
-	}
-	return nil
+	return o.GetStrategy().WallClockStrategy
 }
 
 func (o *UserDefinedAPIUpdateMode) GetStrategyExtractedData() *ExtractedDataStrategy {
-	if v := o.GetStrategy(); v != nil {
-		return v.ExtractedDataStrategy
-	}
-	return nil
+	return o.GetStrategy().ExtractedDataStrategy
 }

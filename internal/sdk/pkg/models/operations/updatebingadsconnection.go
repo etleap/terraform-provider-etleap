@@ -8,8 +8,8 @@ import (
 )
 
 type UpdateBINGADSConnectionRequest struct {
-	ID                   string                       `pathParam:"style=simple,explode=false,name=id"`
-	ConnectionBingUpdate *shared.ConnectionBingUpdate `request:"mediaType=application/json"`
+	ID                      string                          `pathParam:"style=simple,explode=false,name=id"`
+	ConnectionBingAdsUpdate *shared.ConnectionBingAdsUpdate `request:"mediaType=application/json"`
 }
 
 func (o *UpdateBINGADSConnectionRequest) GetID() string {
@@ -19,11 +19,11 @@ func (o *UpdateBINGADSConnectionRequest) GetID() string {
 	return o.ID
 }
 
-func (o *UpdateBINGADSConnectionRequest) GetConnectionBingUpdate() *shared.ConnectionBingUpdate {
+func (o *UpdateBINGADSConnectionRequest) GetConnectionBingAdsUpdate() *shared.ConnectionBingAdsUpdate {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionBingUpdate
+	return o.ConnectionBingAdsUpdate
 }
 
 type UpdateBINGADSConnectionResponse struct {
@@ -34,7 +34,7 @@ type UpdateBINGADSConnectionResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// OK.
-	ConnectionBing *shared.ConnectionBing
+	ConnectionBingAds *shared.ConnectionBingAds
 	// Bad Request
 	Errors *shared.Errors
 }
@@ -60,11 +60,11 @@ func (o *UpdateBINGADSConnectionResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *UpdateBINGADSConnectionResponse) GetConnectionBing() *shared.ConnectionBing {
+func (o *UpdateBINGADSConnectionResponse) GetConnectionBingAds() *shared.ConnectionBingAds {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectionBing
+	return o.ConnectionBingAds
 }
 
 func (o *UpdateBINGADSConnectionResponse) GetErrors() *shared.Errors {

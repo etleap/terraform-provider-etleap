@@ -15,14 +15,11 @@ ConnectionMARKETO Resource
 ```terraform
 resource "etleap_connection_marketo" "my_connectionmarketo" {
   deletion_of_export_products = true
-  name                        = "Eleanor Hoeger"
-  quota_limit                 = 0
+  name                        = "Kellie Schowalter"
+  quota_limit                 = 9
   rest_client_id              = "...my_rest_client_id..."
   rest_client_secret          = "...my_rest_client_secret..."
   rest_endpoint               = "...my_rest_endpoint..."
-  soap_encryption_key         = "...my_soap_encryption_key..."
-  soap_endpoint               = "...my_soap_endpoint..."
-  soap_user_id                = "...my_soap_user_id..."
   type                        = "MARKETO"
 }
 ```
@@ -37,9 +34,6 @@ resource "etleap_connection_marketo" "my_connectionmarketo" {
 - `rest_client_id` (String) Under Admin -> Integration -> LaunchPoint, you can find this value by clicking 'View Details'.
 - `rest_client_secret` (String) Under Admin -> Integration -> LaunchPoint, you can find this value by clicking 'View Details'.
 - `rest_endpoint` (String) E.g. 'https://259-ZDK-675.mktorest.com/rest'. In the Marketo UI this is the 'Endpoint' value in the 'REST API' section.
-- `soap_encryption_key` (String) In the Marketo UI this is the 'Encryption Key' value in the 'SOAP API' section.
-- `soap_endpoint` (String) E.g. 'https://259-ZDK-675.mktoapi.com/soap/mktows/2_9'. In the Marketo UI this is the 'Endpoint' value in the 'SOAP API' section.
-- `soap_user_id` (String) E.g. 'MKTOWS_259-ZDK-675_1'. In the Marketo UI this is the 'User ID' value in the 'SOAP API' section.
 - `type` (String) must be one of ["MARKETO"]
 
 ### Optional
@@ -118,7 +112,7 @@ Optional:
 
 Read-Only:
 
-- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/docs/documentation/ZG9jOjIyMjE3ODA2-introduction">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
+- `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>
