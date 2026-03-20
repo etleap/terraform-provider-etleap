@@ -50,6 +50,7 @@ type ConnectionSFTPResourceModel struct {
 	ID                         types.String            `tfsdk:"id"`
 	Name                       types.String            `tfsdk:"name"`
 	Password                   types.String            `tfsdk:"password"`
+	PgpSecretKey               types.String            `tfsdk:"pgp_secret_key"`
 	Port                       types.Int64             `tfsdk:"port"`
 	Status                     types.String            `tfsdk:"status"`
 	Type                       types.String            `tfsdk:"type"`
@@ -304,6 +305,10 @@ func (r *ConnectionSFTPResource) Schema(ctx context.Context, req resource.Schema
 			"password": schema.StringAttribute{
 				Optional:    true,
 				Description: `If set to ` + "`" + `null` + "`" + `, Public Key Authentication will be used.`,
+			},
+			"pgp_secret_key": schema.StringAttribute{
+				Optional:    true,
+				Description: `ASCII-armored PGP private key used to decrypt PGP-encrypted files. If provided, Etleap will automatically decrypt any PGP-encrypted files before processing.`,
 			},
 			"port": schema.Int64Attribute{
 				PlanModifiers: []planmodifier.Int64{

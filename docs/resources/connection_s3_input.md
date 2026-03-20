@@ -19,6 +19,7 @@ resource "etleap_connection_s3_input" "my_connections3_input" {
   iam_role                    = "...my_iam_role..."
   input_bucket                = "...my_input_bucket..."
   name                        = "Kristy Hoeger"
+  pgp_secret_key              = "...my_pgp_secret_key..."
   type                        = "S3_INPUT"
 }
 ```
@@ -37,6 +38,7 @@ resource "etleap_connection_s3_input" "my_connections3_input" {
 ### Optional
 
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
+- `pgp_secret_key` (String) ASCII-armored PGP private key used to decrypt PGP-encrypted files. If provided, Etleap will automatically decrypt any PGP-encrypted files before processing.
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
 ### Read-Only

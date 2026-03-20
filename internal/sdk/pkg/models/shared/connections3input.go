@@ -291,6 +291,8 @@ type ConnectionS3InputInput struct {
 	InputBucket string `json:"inputBucket"`
 	// The base directory to read from within the S3 bucket.
 	BaseDirectory string `json:"baseDirectory"`
+	// ASCII-armored PGP private key used to decrypt PGP-encrypted files. If provided, Etleap will automatically decrypt any PGP-encrypted files before processing.
+	PgpSecretKey *string `json:"pgpSecretKey,omitempty"`
 }
 
 func (o *ConnectionS3InputInput) GetName() string {
@@ -368,4 +370,11 @@ func (o *ConnectionS3InputInput) GetBaseDirectory() string {
 		return ""
 	}
 	return o.BaseDirectory
+}
+
+func (o *ConnectionS3InputInput) GetPgpSecretKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PgpSecretKey
 }

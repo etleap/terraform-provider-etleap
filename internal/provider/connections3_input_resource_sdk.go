@@ -89,6 +89,12 @@ func (r *ConnectionS3INPUTResourceModel) ToSharedConnectionS3InputInput() *share
 	iamRole := r.IamRole.ValueString()
 	inputBucket := r.InputBucket.ValueString()
 	baseDirectory := r.BaseDirectory.ValueString()
+	pgpSecretKey := new(string)
+	if !r.PgpSecretKey.IsUnknown() && !r.PgpSecretKey.IsNull() {
+		*pgpSecretKey = r.PgpSecretKey.ValueString()
+	} else {
+		pgpSecretKey = nil
+	}
 	out := shared.ConnectionS3InputInput{
 		Name:           name,
 		Type:           typeVar,
@@ -96,6 +102,7 @@ func (r *ConnectionS3INPUTResourceModel) ToSharedConnectionS3InputInput() *share
 		IamRole:        iamRole,
 		InputBucket:    inputBucket,
 		BaseDirectory:  baseDirectory,
+		PgpSecretKey:   pgpSecretKey,
 	}
 	return &out
 }
@@ -303,6 +310,12 @@ func (r *ConnectionS3INPUTResourceModel) ToSharedConnectionS3InputUpdate() *shar
 	} else {
 		baseDirectory = nil
 	}
+	pgpSecretKey := new(string)
+	if !r.PgpSecretKey.IsUnknown() && !r.PgpSecretKey.IsNull() {
+		*pgpSecretKey = r.PgpSecretKey.ValueString()
+	} else {
+		pgpSecretKey = nil
+	}
 	out := shared.ConnectionS3InputUpdate{
 		Name:           name,
 		Type:           typeVar,
@@ -311,6 +324,7 @@ func (r *ConnectionS3INPUTResourceModel) ToSharedConnectionS3InputUpdate() *shar
 		IamRole:        iamRole,
 		InputBucket:    inputBucket,
 		BaseDirectory:  baseDirectory,
+		PgpSecretKey:   pgpSecretKey,
 	}
 	return &out
 }

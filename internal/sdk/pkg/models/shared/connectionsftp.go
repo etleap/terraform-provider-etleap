@@ -309,6 +309,8 @@ type ConnectionSftpInput struct {
 	Username      string `json:"username"`
 	// If set to `null`, Public Key Authentication will be used.
 	Password *string `json:"password,omitempty"`
+	// ASCII-armored PGP private key used to decrypt PGP-encrypted files. If provided, Etleap will automatically decrypt any PGP-encrypted files before processing.
+	PgpSecretKey *string `json:"pgpSecretKey,omitempty"`
 }
 
 func (o *ConnectionSftpInput) GetName() string {
@@ -400,4 +402,11 @@ func (o *ConnectionSftpInput) GetPassword() *string {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *ConnectionSftpInput) GetPgpSecretKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PgpSecretKey
 }

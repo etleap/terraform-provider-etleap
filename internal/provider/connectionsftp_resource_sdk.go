@@ -96,6 +96,12 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpInput() *shared.Conn
 	} else {
 		password = nil
 	}
+	pgpSecretKey := new(string)
+	if !r.PgpSecretKey.IsUnknown() && !r.PgpSecretKey.IsNull() {
+		*pgpSecretKey = r.PgpSecretKey.ValueString()
+	} else {
+		pgpSecretKey = nil
+	}
 	out := shared.ConnectionSftpInput{
 		Name:           name,
 		Type:           typeVar,
@@ -105,6 +111,7 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpInput() *shared.Conn
 		BaseDirectory:  baseDirectory,
 		Username:       username,
 		Password:       password,
+		PgpSecretKey:   pgpSecretKey,
 	}
 	return &out
 }
@@ -326,6 +333,12 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpUpdate() *shared.Con
 	} else {
 		password = nil
 	}
+	pgpSecretKey := new(string)
+	if !r.PgpSecretKey.IsUnknown() && !r.PgpSecretKey.IsNull() {
+		*pgpSecretKey = r.PgpSecretKey.ValueString()
+	} else {
+		pgpSecretKey = nil
+	}
 	out := shared.ConnectionSftpUpdate{
 		Name:           name,
 		Type:           typeVar,
@@ -336,6 +349,7 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpUpdate() *shared.Con
 		BaseDirectory:  baseDirectory,
 		Username:       username,
 		Password:       password,
+		PgpSecretKey:   pgpSecretKey,
 	}
 	return &out
 }

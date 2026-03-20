@@ -50,6 +50,7 @@ type ConnectionS3INPUTResourceModel struct {
 	ID                       types.String            `tfsdk:"id"`
 	InputBucket              types.String            `tfsdk:"input_bucket"`
 	Name                     types.String            `tfsdk:"name"`
+	PgpSecretKey             types.String            `tfsdk:"pgp_secret_key"`
 	Status                   types.String            `tfsdk:"status"`
 	Type                     types.String            `tfsdk:"type"`
 	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
@@ -304,6 +305,10 @@ func (r *ConnectionS3INPUTResource) Schema(ctx context.Context, req resource.Sch
 				},
 				Required:    true,
 				Description: `The unique name of this connection.`,
+			},
+			"pgp_secret_key": schema.StringAttribute{
+				Optional:    true,
+				Description: `ASCII-armored PGP private key used to decrypt PGP-encrypted files. If provided, Etleap will automatically decrypt any PGP-encrypted files before processing.`,
 			},
 			"status": schema.StringAttribute{
 				Computed: true,
@@ -599,6 +604,32 @@ func (r *ConnectionS3INPUTResource) Create(ctx context.Context, req resource.Cre
 	}
 	data.RefreshFromSharedConnectionS3Input(res.ConnectionS3Input)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	id := data.ID.ValueString()
+	request1 := operations.GetS3INPUTConnectionRequest{
+		ID: id,
+	}
+	res1, err := r.client.Connection.GetS3INPUTConnection(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.ConnectionS3Input == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedConnectionS3Input(res1.ConnectionS3Input)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -693,6 +724,32 @@ func (r *ConnectionS3INPUTResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 	data.RefreshFromSharedConnectionS3Input(res.ConnectionS3Input)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	id1 := data.ID.ValueString()
+	request1 := operations.GetS3INPUTConnectionRequest{
+		ID: id1,
+	}
+	res1, err := r.client.Connection.GetS3INPUTConnection(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.ConnectionS3Input == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedConnectionS3Input(res1.ConnectionS3Input)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
