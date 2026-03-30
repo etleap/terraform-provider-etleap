@@ -558,11 +558,16 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			latencyThreshold15 = nil
 		}
 		entity10 := r.Source.Eloqua.Entity.ValueString()
+		var fields1 []string = nil
+		for _, fieldsItem1 := range r.Source.Eloqua.Fields {
+			fields1 = append(fields1, fieldsItem1.ValueString())
+		}
 		sourceEloqua = &shared.SourceEloqua{
 			Type:             typeVar15,
 			ConnectionID:     connectionId15,
 			LatencyThreshold: latencyThreshold15,
 			Entity:           entity10,
+			Fields:           fields1,
 		}
 	}
 	if sourceEloqua != nil {
@@ -852,9 +857,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			latencyThreshold26 = nil
 		}
 		entity20 := r.Source.GoogleAds.Entity.ValueString()
-		var fields1 []string = nil
-		for _, fieldsItem1 := range r.Source.GoogleAds.Fields {
-			fields1 = append(fields1, fieldsItem1.ValueString())
+		var fields2 []string = nil
+		for _, fieldsItem2 := range r.Source.GoogleAds.Fields {
+			fields2 = append(fields2, fieldsItem2.ValueString())
 		}
 		var segments []string = nil
 		for _, segmentsItem := range r.Source.GoogleAds.Segments {
@@ -873,7 +878,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			ConnectionID:        connectionId26,
 			LatencyThreshold:    latencyThreshold26,
 			Entity:              entity20,
-			Fields:              fields1,
+			Fields:              fields2,
 			Segments:            segments,
 			AttributedResources: attributedResources,
 			Metrics:             metrics1,
@@ -4304,6 +4309,10 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 		r.Source.Eloqua = &SourceEloqua{}
 		r.Source.Eloqua.ConnectionID = types.StringValue(resp.Source.SourceEloqua.ConnectionID)
 		r.Source.Eloqua.Entity = types.StringValue(resp.Source.SourceEloqua.Entity)
+		r.Source.Eloqua.Fields = nil
+		for _, v := range resp.Source.SourceEloqua.Fields {
+			r.Source.Eloqua.Fields = append(r.Source.Eloqua.Fields, types.StringValue(v))
+		}
 		r.Source.Eloqua.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceEloqua.LatencyThreshold)
 		r.Source.Eloqua.Type = types.StringValue(string(resp.Source.SourceEloqua.Type))
 	}

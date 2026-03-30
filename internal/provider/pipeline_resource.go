@@ -3303,6 +3303,20 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringvalidators.NotNull(),
 								},
 							},
+							"fields": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									listplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								ElementType: types.StringType,
+								Description: `The fields to extract. Eloqua's Export API has a limit of 250 fields per export. Requires replacement if changed. `,
+								Validators: []validator.List{
+									listvalidator.SizeAtLeast(1),
+									listvalidator.SizeAtMost(250),
+								},
+							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.Int64{

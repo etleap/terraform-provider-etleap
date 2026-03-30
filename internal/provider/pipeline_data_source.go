@@ -1040,6 +1040,11 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed:    true,
 								Description: `The Eloqua resource, spelled as it is shown in the Eloqua UI. Each ActivityType is a different entity and is spelled without spaces like EmailClickthrough and EmailSend.`,
 							},
+							"fields": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `The fields to extract. Eloqua's Export API has a limit of 250 fields per export.`,
+							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,
 								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,

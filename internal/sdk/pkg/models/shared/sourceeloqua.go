@@ -39,6 +39,8 @@ type SourceEloqua struct {
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Eloqua resource, spelled as it is shown in the Eloqua UI. Each ActivityType is a different entity and is spelled without spaces like EmailClickthrough and EmailSend.
 	Entity string `json:"entity"`
+	// The fields to extract. Eloqua's Export API has a limit of 250 fields per export.
+	Fields []string `json:"fields,omitempty"`
 }
 
 func (o *SourceEloqua) GetType() SourceEloquaType {
@@ -67,4 +69,11 @@ func (o *SourceEloqua) GetEntity() string {
 		return ""
 	}
 	return o.Entity
+}
+
+func (o *SourceEloqua) GetFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Fields
 }

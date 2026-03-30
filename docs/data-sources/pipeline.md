@@ -650,6 +650,7 @@ Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
 - `entity` (String) The Eloqua resource, spelled as it is shown in the Eloqua UI. Each ActivityType is a different entity and is spelled without spaces like EmailClickthrough and EmailSend.
+- `fields` (List of String) The fields to extract. Eloqua's Export API has a limit of 250 fields per export.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["ELOQUA"]
 

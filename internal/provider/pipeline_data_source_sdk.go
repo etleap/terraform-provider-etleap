@@ -454,6 +454,10 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Eloqua = &SourceEloqua{}
 		r.Source.Eloqua.ConnectionID = types.StringValue(resp.Source.SourceEloqua.ConnectionID)
 		r.Source.Eloqua.Entity = types.StringValue(resp.Source.SourceEloqua.Entity)
+		r.Source.Eloqua.Fields = nil
+		for _, v := range resp.Source.SourceEloqua.Fields {
+			r.Source.Eloqua.Fields = append(r.Source.Eloqua.Fields, types.StringValue(v))
+		}
 		r.Source.Eloqua.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceEloqua.LatencyThreshold)
 		r.Source.Eloqua.Type = types.StringValue(string(resp.Source.SourceEloqua.Type))
 	}
