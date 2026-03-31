@@ -149,6 +149,10 @@ jobs:
       - run: 
           name: Tag if needed
           command: |
+            if [[ "$CIRCLE_PROJECT_REPONAME" == "terraform-provider-etleap-private" ]]; then
+              echo "Skipping release on private repo; cherry-pick to public repo to publish"
+              circleci-agent step halt
+            fi
             if [[ "$(git name-rev --name-only --tags HEAD)" == "undefined" ]]; then
               echo "No tag found at HEAD; trying to tag and release"
               NEW_TAG=v$(yq .terraform.version .speakeasy/gen.yaml)
@@ -157,11 +161,6 @@ jobs:
                 circleci-agent step halt
               else
                 git tag "$NEW_TAG"
-                if [[ "$CIRCLE_PROJECT_REPONAME" == "terraform-provider-etleap-private" ]]; then
-                  echo "Syncing to public repo; release will be published there"
-                  git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" "$NEW_TAG"
-                  circleci-agent step halt
-                fi
               fi
             else
               echo "Tag exists; Publishing existing tag"
