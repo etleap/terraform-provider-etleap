@@ -202,7 +202,4 @@ workflows:
             - CircleCI context
           requires:
             - test
-          filters:
-            branches:
-              only: main
           
