@@ -156,8 +156,12 @@ jobs:
                 echo "Tag already exists; skipping."
                 circleci-agent step halt
               else
-                git tag v$(yq .terraform.version .speakeasy/gen.yaml)
-                git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" --tags
+                git tag "$NEW_TAG"
+                if [[ "$CIRCLE_PROJECT_REPONAME" == "terraform-provider-etleap-private" ]]; then
+                  echo "Syncing to public repo; release will be published there"
+                  git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" "$NEW_TAG"
+                  circleci-agent step halt
+                fi
               fi
             else
               echo "Tag exists; Publishing existing tag"
