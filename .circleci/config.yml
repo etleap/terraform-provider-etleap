@@ -160,7 +160,8 @@ jobs:
                 echo "Tag already exists; skipping."
                 circleci-agent step halt
               else
-                git tag "$NEW_TAG"
+                git tag v$(yq .terraform.version .speakeasy/gen.yaml)
+                git push -q https://${GITHUB_TOKEN}@github.com/etleap/terraform-provider-etleap.git "$CIRCLE_BRANCH" --tags
               fi
             else
               echo "Tag exists; Publishing existing tag"
