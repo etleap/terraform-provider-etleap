@@ -149,6 +149,11 @@ jobs:
       - run: 
           name: Tag if needed
           command: |
+            if [[ "$CIRCLE_PROJECT_REPONAME" == "terraform-provider-etleap-private" ]]; then
+              echo "Skipping release on private repo; cherry-pick to public repo to publish"
+              circleci-agent step halt
+              exit 0
+            fi
             if [[ "$(git name-rev --name-only --tags HEAD)" == "undefined" ]]; then
               echo "No tag found at HEAD; trying to tag and release"
               NEW_TAG=v$(yq .terraform.version .speakeasy/gen.yaml)
