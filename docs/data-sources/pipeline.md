@@ -467,6 +467,7 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
+- `excel_sheet_name` (String) The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 - `files_can_change` (Boolean) Etleap can check whether files that were already processed have changed. If the file has changed, then Etleap fetches the new file and removes the old file's data in the destination and adds the changed data. <br> This can only be enabled when `newFileBehavior` is set to `APPEND`. Defaults to `false`.
 - `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both.
@@ -741,6 +742,7 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
+- `excel_sheet_name` (String) The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 - `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
@@ -806,6 +808,7 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
+- `excel_sheet_name` (String) The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 - `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
@@ -1246,6 +1249,7 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
+- `excel_sheet_name` (String) The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 - `files_can_change` (Boolean) Etleap can check whether files that were already processed have changed. If the file has changed, then Etleap fetches the new file and removes the old file's data in the destination and adds the changed data. <br> This can only be enabled when `newFileBehavior` is set to `APPEND`. Defaults to `false`.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
@@ -1262,6 +1266,7 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
+- `excel_sheet_name` (String) The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
@@ -1373,6 +1378,7 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
+- `excel_sheet_name` (String) The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 - `glob_pattern` (String) A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
@@ -1507,6 +1513,7 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
+- `excel_sheet_name` (String) The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.
 - `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.

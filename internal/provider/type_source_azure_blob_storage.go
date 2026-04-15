@@ -6,6 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAzureBlobStorage struct {
 	ConnectionID     types.String   `tfsdk:"connection_id"`
+	ExcelSheetName   types.String   `tfsdk:"excel_sheet_name"`
 	FileNameFilter   types.String   `tfsdk:"file_name_filter"`
 	FilesCanChange   types.Bool     `tfsdk:"files_can_change"`
 	GlobPattern      types.String   `tfsdk:"glob_pattern"`

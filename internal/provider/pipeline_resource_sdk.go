@@ -52,6 +52,12 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		} else {
 			fileNameFilter = nil
 		}
+		excelSheetName := new(string)
+		if !r.Source.AzureBlobStorage.ExcelSheetName.IsUnknown() && !r.Source.AzureBlobStorage.ExcelSheetName.IsNull() {
+			*excelSheetName = r.Source.AzureBlobStorage.ExcelSheetName.ValueString()
+		} else {
+			excelSheetName = nil
+		}
 		newFileBehavior := shared.NewFileBehavior(r.Source.AzureBlobStorage.NewFileBehavior.ValueString())
 		lowWatermark := new(customTypes.Date)
 		if !r.Source.AzureBlobStorage.LowWatermark.IsUnknown() && !r.Source.AzureBlobStorage.LowWatermark.IsNull() {
@@ -80,6 +86,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			ConnectionID:     connectionId1,
 			LatencyThreshold: latencyThreshold1,
 			FileNameFilter:   fileNameFilter,
+			ExcelSheetName:   excelSheetName,
 			NewFileBehavior:  newFileBehavior,
 			LowWatermark:     lowWatermark,
 			Paths:            paths,
@@ -767,6 +774,12 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		} else {
 			fileNameFilter1 = nil
 		}
+		excelSheetName1 := new(string)
+		if !r.Source.Ftp.ExcelSheetName.IsUnknown() && !r.Source.Ftp.ExcelSheetName.IsNull() {
+			*excelSheetName1 = r.Source.Ftp.ExcelSheetName.ValueString()
+		} else {
+			excelSheetName1 = nil
+		}
 		newFileBehavior1 := shared.SourceFtpNewFileBehavior(r.Source.Ftp.NewFileBehavior.ValueString())
 		lowWatermark1 := new(customTypes.Date)
 		if !r.Source.Ftp.LowWatermark.IsUnknown() && !r.Source.Ftp.LowWatermark.IsNull() {
@@ -789,6 +802,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			ConnectionID:     connectionId23,
 			LatencyThreshold: latencyThreshold23,
 			FileNameFilter:   fileNameFilter1,
+			ExcelSheetName:   excelSheetName1,
 			NewFileBehavior:  newFileBehavior1,
 			LowWatermark:     lowWatermark1,
 			Paths:            paths1,
@@ -938,6 +952,12 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		} else {
 			fileNameFilter2 = nil
 		}
+		excelSheetName2 := new(string)
+		if !r.Source.GoogleCloudStorage.ExcelSheetName.IsUnknown() && !r.Source.GoogleCloudStorage.ExcelSheetName.IsNull() {
+			*excelSheetName2 = r.Source.GoogleCloudStorage.ExcelSheetName.ValueString()
+		} else {
+			excelSheetName2 = nil
+		}
 		newFileBehavior2 := shared.SourceGoogleCloudStorageNewFileBehavior(r.Source.GoogleCloudStorage.NewFileBehavior.ValueString())
 		lowWatermark2 := new(customTypes.Date)
 		if !r.Source.GoogleCloudStorage.LowWatermark.IsUnknown() && !r.Source.GoogleCloudStorage.LowWatermark.IsNull() {
@@ -960,6 +980,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			ConnectionID:     connectionId28,
 			LatencyThreshold: latencyThreshold28,
 			FileNameFilter:   fileNameFilter2,
+			ExcelSheetName:   excelSheetName2,
 			NewFileBehavior:  newFileBehavior2,
 			LowWatermark:     lowWatermark2,
 			Paths:            paths2,
@@ -2089,6 +2110,12 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		} else {
 			fileNameFilter3 = nil
 		}
+		excelSheetName3 := new(string)
+		if !r.Source.S3Input.ExcelSheetName.IsUnknown() && !r.Source.S3Input.ExcelSheetName.IsNull() {
+			*excelSheetName3 = r.Source.S3Input.ExcelSheetName.ValueString()
+		} else {
+			excelSheetName3 = nil
+		}
 		newFileBehavior3 := shared.SourceS3InputNewFileBehavior(r.Source.S3Input.NewFileBehavior.ValueString())
 		lowWatermark3 := new(customTypes.Date)
 		if !r.Source.S3Input.LowWatermark.IsUnknown() && !r.Source.S3Input.LowWatermark.IsNull() {
@@ -2117,6 +2144,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			ConnectionID:     connectionId64,
 			LatencyThreshold: latencyThreshold64,
 			FileNameFilter:   fileNameFilter3,
+			ExcelSheetName:   excelSheetName3,
 			NewFileBehavior:  newFileBehavior3,
 			LowWatermark:     lowWatermark3,
 			Paths:            paths3,
@@ -2145,6 +2173,12 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		} else {
 			fileNameFilter4 = nil
 		}
+		excelSheetName4 := new(string)
+		if !r.Source.S3Legacy.ExcelSheetName.IsUnknown() && !r.Source.S3Legacy.ExcelSheetName.IsNull() {
+			*excelSheetName4 = r.Source.S3Legacy.ExcelSheetName.ValueString()
+		} else {
+			excelSheetName4 = nil
+		}
 		newFileBehavior4 := shared.SourceS3LegacyNewFileBehavior(r.Source.S3Legacy.NewFileBehavior.ValueString())
 		lowWatermark4 := new(customTypes.Date)
 		if !r.Source.S3Legacy.LowWatermark.IsUnknown() && !r.Source.S3Legacy.LowWatermark.IsNull() {
@@ -2161,6 +2195,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			ConnectionID:     connectionId65,
 			LatencyThreshold: latencyThreshold65,
 			FileNameFilter:   fileNameFilter4,
+			ExcelSheetName:   excelSheetName4,
 			NewFileBehavior:  newFileBehavior4,
 			LowWatermark:     lowWatermark4,
 			Paths:            paths4,
@@ -2440,6 +2475,12 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		} else {
 			fileNameFilter5 = nil
 		}
+		excelSheetName5 := new(string)
+		if !r.Source.Sftp.ExcelSheetName.IsUnknown() && !r.Source.Sftp.ExcelSheetName.IsNull() {
+			*excelSheetName5 = r.Source.Sftp.ExcelSheetName.ValueString()
+		} else {
+			excelSheetName5 = nil
+		}
 		newFileBehavior5 := shared.SourceSftpNewFileBehavior(r.Source.Sftp.NewFileBehavior.ValueString())
 		lowWatermark5 := new(customTypes.Date)
 		if !r.Source.Sftp.LowWatermark.IsUnknown() && !r.Source.Sftp.LowWatermark.IsNull() {
@@ -2462,6 +2503,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			ConnectionID:     connectionId74,
 			LatencyThreshold: latencyThreshold74,
 			FileNameFilter:   fileNameFilter5,
+			ExcelSheetName:   excelSheetName5,
 			NewFileBehavior:  newFileBehavior5,
 			LowWatermark:     lowWatermark5,
 			Paths:            paths5,
@@ -2842,6 +2884,12 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		} else {
 			fileNameFilter6 = nil
 		}
+		excelSheetName6 := new(string)
+		if !r.Source.Streaming.ExcelSheetName.IsUnknown() && !r.Source.Streaming.ExcelSheetName.IsNull() {
+			*excelSheetName6 = r.Source.Streaming.ExcelSheetName.ValueString()
+		} else {
+			excelSheetName6 = nil
+		}
 		newFileBehavior6 := shared.SourceStreamingNewFileBehavior(r.Source.Streaming.NewFileBehavior.ValueString())
 		lowWatermark6 := new(customTypes.Date)
 		if !r.Source.Streaming.LowWatermark.IsUnknown() && !r.Source.Streaming.LowWatermark.IsNull() {
@@ -2858,6 +2906,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			ConnectionID:     connectionId84,
 			LatencyThreshold: latencyThreshold84,
 			FileNameFilter:   fileNameFilter6,
+			ExcelSheetName:   excelSheetName6,
 			NewFileBehavior:  newFileBehavior6,
 			LowWatermark:     lowWatermark6,
 			Paths:            paths6,
@@ -4145,6 +4194,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 	if resp.Source.SourceAzureBlobStorage != nil {
 		r.Source.AzureBlobStorage = &SourceAzureBlobStorage{}
 		r.Source.AzureBlobStorage.ConnectionID = types.StringValue(resp.Source.SourceAzureBlobStorage.ConnectionID)
+		r.Source.AzureBlobStorage.ExcelSheetName = types.StringPointerValue(resp.Source.SourceAzureBlobStorage.ExcelSheetName)
 		r.Source.AzureBlobStorage.FileNameFilter = types.StringPointerValue(resp.Source.SourceAzureBlobStorage.FileNameFilter)
 		r.Source.AzureBlobStorage.FilesCanChange = types.BoolPointerValue(resp.Source.SourceAzureBlobStorage.FilesCanChange)
 		r.Source.AzureBlobStorage.GlobPattern = types.StringPointerValue(resp.Source.SourceAzureBlobStorage.GlobPattern)
@@ -4380,6 +4430,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 	if resp.Source.SourceFtp != nil {
 		r.Source.Ftp = &SourceFtp{}
 		r.Source.Ftp.ConnectionID = types.StringValue(resp.Source.SourceFtp.ConnectionID)
+		r.Source.Ftp.ExcelSheetName = types.StringPointerValue(resp.Source.SourceFtp.ExcelSheetName)
 		r.Source.Ftp.FileNameFilter = types.StringPointerValue(resp.Source.SourceFtp.FileNameFilter)
 		r.Source.Ftp.GlobPattern = types.StringPointerValue(resp.Source.SourceFtp.GlobPattern)
 		r.Source.Ftp.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFtp.LatencyThreshold)
@@ -4450,6 +4501,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 	if resp.Source.SourceGoogleCloudStorage != nil {
 		r.Source.GoogleCloudStorage = &SourceGoogleCloudStorage{}
 		r.Source.GoogleCloudStorage.ConnectionID = types.StringValue(resp.Source.SourceGoogleCloudStorage.ConnectionID)
+		r.Source.GoogleCloudStorage.ExcelSheetName = types.StringPointerValue(resp.Source.SourceGoogleCloudStorage.ExcelSheetName)
 		r.Source.GoogleCloudStorage.FileNameFilter = types.StringPointerValue(resp.Source.SourceGoogleCloudStorage.FileNameFilter)
 		r.Source.GoogleCloudStorage.GlobPattern = types.StringPointerValue(resp.Source.SourceGoogleCloudStorage.GlobPattern)
 		r.Source.GoogleCloudStorage.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceGoogleCloudStorage.LatencyThreshold)
@@ -4795,6 +4847,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 	if resp.Source.SourceS3Input != nil {
 		r.Source.S3Input = &SourceS3Input{}
 		r.Source.S3Input.ConnectionID = types.StringValue(resp.Source.SourceS3Input.ConnectionID)
+		r.Source.S3Input.ExcelSheetName = types.StringPointerValue(resp.Source.SourceS3Input.ExcelSheetName)
 		r.Source.S3Input.FileNameFilter = types.StringPointerValue(resp.Source.SourceS3Input.FileNameFilter)
 		r.Source.S3Input.FilesCanChange = types.BoolPointerValue(resp.Source.SourceS3Input.FilesCanChange)
 		r.Source.S3Input.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceS3Input.LatencyThreshold)
@@ -4814,6 +4867,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 	if resp.Source.SourceS3Legacy != nil {
 		r.Source.S3Legacy = &SourceS3Legacy{}
 		r.Source.S3Legacy.ConnectionID = types.StringValue(resp.Source.SourceS3Legacy.ConnectionID)
+		r.Source.S3Legacy.ExcelSheetName = types.StringPointerValue(resp.Source.SourceS3Legacy.ExcelSheetName)
 		r.Source.S3Legacy.FileNameFilter = types.StringPointerValue(resp.Source.SourceS3Legacy.FileNameFilter)
 		r.Source.S3Legacy.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceS3Legacy.LatencyThreshold)
 		if resp.Source.SourceS3Legacy.LowWatermark != nil {
@@ -4902,6 +4956,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 	if resp.Source.SourceSftp != nil {
 		r.Source.Sftp = &SourceSftp{}
 		r.Source.Sftp.ConnectionID = types.StringValue(resp.Source.SourceSftp.ConnectionID)
+		r.Source.Sftp.ExcelSheetName = types.StringPointerValue(resp.Source.SourceSftp.ExcelSheetName)
 		r.Source.Sftp.FileNameFilter = types.StringPointerValue(resp.Source.SourceSftp.FileNameFilter)
 		r.Source.Sftp.GlobPattern = types.StringPointerValue(resp.Source.SourceSftp.GlobPattern)
 		r.Source.Sftp.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSftp.LatencyThreshold)
@@ -5024,6 +5079,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 	if resp.Source.SourceStreaming != nil {
 		r.Source.Streaming = &SourceStreaming{}
 		r.Source.Streaming.ConnectionID = types.StringValue(resp.Source.SourceStreaming.ConnectionID)
+		r.Source.Streaming.ExcelSheetName = types.StringPointerValue(resp.Source.SourceStreaming.ExcelSheetName)
 		r.Source.Streaming.FileNameFilter = types.StringPointerValue(resp.Source.SourceStreaming.FileNameFilter)
 		r.Source.Streaming.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceStreaming.LatencyThreshold)
 		if resp.Source.SourceStreaming.LowWatermark != nil {

@@ -290,6 +290,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	if resp.Source.SourceAzureBlobStorage != nil {
 		r.Source.AzureBlobStorage = &SourceAzureBlobStorage{}
 		r.Source.AzureBlobStorage.ConnectionID = types.StringValue(resp.Source.SourceAzureBlobStorage.ConnectionID)
+		r.Source.AzureBlobStorage.ExcelSheetName = types.StringPointerValue(resp.Source.SourceAzureBlobStorage.ExcelSheetName)
 		r.Source.AzureBlobStorage.FileNameFilter = types.StringPointerValue(resp.Source.SourceAzureBlobStorage.FileNameFilter)
 		r.Source.AzureBlobStorage.FilesCanChange = types.BoolPointerValue(resp.Source.SourceAzureBlobStorage.FilesCanChange)
 		r.Source.AzureBlobStorage.GlobPattern = types.StringPointerValue(resp.Source.SourceAzureBlobStorage.GlobPattern)
@@ -525,6 +526,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	if resp.Source.SourceFtp != nil {
 		r.Source.Ftp = &SourceFtp{}
 		r.Source.Ftp.ConnectionID = types.StringValue(resp.Source.SourceFtp.ConnectionID)
+		r.Source.Ftp.ExcelSheetName = types.StringPointerValue(resp.Source.SourceFtp.ExcelSheetName)
 		r.Source.Ftp.FileNameFilter = types.StringPointerValue(resp.Source.SourceFtp.FileNameFilter)
 		r.Source.Ftp.GlobPattern = types.StringPointerValue(resp.Source.SourceFtp.GlobPattern)
 		r.Source.Ftp.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceFtp.LatencyThreshold)
@@ -595,6 +597,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	if resp.Source.SourceGoogleCloudStorage != nil {
 		r.Source.GoogleCloudStorage = &SourceGoogleCloudStorage{}
 		r.Source.GoogleCloudStorage.ConnectionID = types.StringValue(resp.Source.SourceGoogleCloudStorage.ConnectionID)
+		r.Source.GoogleCloudStorage.ExcelSheetName = types.StringPointerValue(resp.Source.SourceGoogleCloudStorage.ExcelSheetName)
 		r.Source.GoogleCloudStorage.FileNameFilter = types.StringPointerValue(resp.Source.SourceGoogleCloudStorage.FileNameFilter)
 		r.Source.GoogleCloudStorage.GlobPattern = types.StringPointerValue(resp.Source.SourceGoogleCloudStorage.GlobPattern)
 		r.Source.GoogleCloudStorage.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceGoogleCloudStorage.LatencyThreshold)
@@ -940,6 +943,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	if resp.Source.SourceS3Input != nil {
 		r.Source.S3Input = &SourceS3Input{}
 		r.Source.S3Input.ConnectionID = types.StringValue(resp.Source.SourceS3Input.ConnectionID)
+		r.Source.S3Input.ExcelSheetName = types.StringPointerValue(resp.Source.SourceS3Input.ExcelSheetName)
 		r.Source.S3Input.FileNameFilter = types.StringPointerValue(resp.Source.SourceS3Input.FileNameFilter)
 		r.Source.S3Input.FilesCanChange = types.BoolPointerValue(resp.Source.SourceS3Input.FilesCanChange)
 		r.Source.S3Input.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceS3Input.LatencyThreshold)
@@ -959,6 +963,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	if resp.Source.SourceS3Legacy != nil {
 		r.Source.S3Legacy = &SourceS3Legacy{}
 		r.Source.S3Legacy.ConnectionID = types.StringValue(resp.Source.SourceS3Legacy.ConnectionID)
+		r.Source.S3Legacy.ExcelSheetName = types.StringPointerValue(resp.Source.SourceS3Legacy.ExcelSheetName)
 		r.Source.S3Legacy.FileNameFilter = types.StringPointerValue(resp.Source.SourceS3Legacy.FileNameFilter)
 		r.Source.S3Legacy.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceS3Legacy.LatencyThreshold)
 		if resp.Source.SourceS3Legacy.LowWatermark != nil {
@@ -1047,6 +1052,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	if resp.Source.SourceSftp != nil {
 		r.Source.Sftp = &SourceSftp{}
 		r.Source.Sftp.ConnectionID = types.StringValue(resp.Source.SourceSftp.ConnectionID)
+		r.Source.Sftp.ExcelSheetName = types.StringPointerValue(resp.Source.SourceSftp.ExcelSheetName)
 		r.Source.Sftp.FileNameFilter = types.StringPointerValue(resp.Source.SourceSftp.FileNameFilter)
 		r.Source.Sftp.GlobPattern = types.StringPointerValue(resp.Source.SourceSftp.GlobPattern)
 		r.Source.Sftp.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSftp.LatencyThreshold)
@@ -1169,6 +1175,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	if resp.Source.SourceStreaming != nil {
 		r.Source.Streaming = &SourceStreaming{}
 		r.Source.Streaming.ConnectionID = types.StringValue(resp.Source.SourceStreaming.ConnectionID)
+		r.Source.Streaming.ExcelSheetName = types.StringPointerValue(resp.Source.SourceStreaming.ExcelSheetName)
 		r.Source.Streaming.FileNameFilter = types.StringPointerValue(resp.Source.SourceStreaming.FileNameFilter)
 		r.Source.Streaming.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceStreaming.LatencyThreshold)
 		if resp.Source.SourceStreaming.LowWatermark != nil {

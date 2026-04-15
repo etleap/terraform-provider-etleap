@@ -72,6 +72,8 @@ type SourceAzureBlobStorage struct {
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
 	FileNameFilter *string `json:"fileNameFilter,omitempty"`
+	// The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.
+	ExcelSheetName *string `json:"excelSheetName,omitempty"`
 	// Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details.
 	NewFileBehavior NewFileBehavior `json:"newFileBehavior"`
 	// Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
@@ -121,6 +123,13 @@ func (o *SourceAzureBlobStorage) GetFileNameFilter() *string {
 		return nil
 	}
 	return o.FileNameFilter
+}
+
+func (o *SourceAzureBlobStorage) GetExcelSheetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcelSheetName
 }
 
 func (o *SourceAzureBlobStorage) GetNewFileBehavior() NewFileBehavior {

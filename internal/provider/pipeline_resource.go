@@ -2226,6 +2226,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringvalidators.NotNull(),
 								},
 							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
@@ -3779,6 +3788,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringvalidators.NotNull(),
 								},
 							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
@@ -4181,6 +4199,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 								},
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
@@ -6596,6 +6623,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringvalidators.NotNull(),
 								},
 							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
@@ -6708,6 +6744,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 								},
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
@@ -7326,6 +7371,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 								},
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
@@ -8114,6 +8168,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 								},
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,

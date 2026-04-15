@@ -619,6 +619,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed:    true,
 								Description: `The universally unique identifier for the source.`,
 							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.`,
+							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
 								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
@@ -1224,6 +1228,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed:    true,
 								Description: `The universally unique identifier for the source.`,
 							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.`,
+							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
 								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
@@ -1375,6 +1383,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"connection_id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The universally unique identifier for the source.`,
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.`,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
@@ -2320,6 +2332,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed:    true,
 								Description: `The universally unique identifier for the source.`,
 							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.`,
+							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
 								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
@@ -2361,6 +2377,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"connection_id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The universally unique identifier for the source.`,
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.`,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
@@ -2601,6 +2621,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"connection_id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The universally unique identifier for the source.`,
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.`,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,
@@ -2915,6 +2939,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"connection_id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The universally unique identifier for the source.`,
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.`,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed:    true,

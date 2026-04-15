@@ -6,6 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceStreaming struct {
 	ConnectionID     types.String   `tfsdk:"connection_id"`
+	ExcelSheetName   types.String   `tfsdk:"excel_sheet_name"`
 	FileNameFilter   types.String   `tfsdk:"file_name_filter"`
 	LatencyThreshold types.Int64    `tfsdk:"latency_threshold"`
 	LowWatermark     types.String   `tfsdk:"low_watermark"`
