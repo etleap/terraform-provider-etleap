@@ -195,6 +195,10 @@ func (r *ConnectionPOSTGRESDataSource) Schema(ctx context.Context, req datasourc
 						Computed:    true,
 						Description: `The server address for the SSH connection.`,
 					},
+					"port": schema.Int64Attribute{
+						Computed:    true,
+						Description: `The port for the SSH connection. Defaults to 22.`,
+					},
 					"username": schema.StringAttribute{
 						Computed:    true,
 						Description: `The username for the SSH connection.`,

@@ -14,16 +14,16 @@ ConnectionSQLSERVER Resource
 
 ```terraform
 resource "etleap_connection_sql_server" "my_connectionsql_server" {
-  address                     = "861 Dulce Corner"
-  cdc_enabled                 = true
+  address                     = "102 Louisa Branch"
+  cdc_enabled                 = false
   database                    = "...my_database..."
-  deletion_of_export_products = false
-  name                        = "Miss Kelly Howell"
+  deletion_of_export_products = true
+  name                        = "Martha Nicolas"
   password                    = "...my_password..."
-  port                        = 2
+  port                        = 6
   schema                      = "...my_schema..."
   type                        = "SQL_SERVER"
-  username                    = "Kole_Littel"
+  username                    = "Kari.Labadie88"
 }
 ```
 
@@ -62,6 +62,7 @@ resource "etleap_connection_sql_server" "my_connectionsql_server" {
 Optional:
 
 - `address` (String) The server address for the SSH connection. Not Null
+- `port` (Number) The port for the SSH connection. Defaults to 22. Default: 22
 - `username` (String) The username for the SSH connection. Not Null
 
 

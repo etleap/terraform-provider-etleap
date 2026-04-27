@@ -16,13 +16,13 @@ ConnectionSFTP Resource
 resource "etleap_connection_sftp" "my_connectionsftp" {
   base_directory              = "...my_base_directory..."
   deletion_of_export_products = true
-  hostname                    = "delirious-making.info"
-  name                        = "Jody Beer"
+  hostname                    = "minor-feeling.org"
+  name                        = "Jeffrey Ryan"
   password                    = "...my_password..."
   pgp_secret_key              = "...my_pgp_secret_key..."
-  port                        = 5
+  port                        = 4
   type                        = "SFTP"
-  username                    = "Icie74"
+  username                    = "Woodrow.DAmore6"
 }
 ```
 

@@ -114,6 +114,7 @@ Read-Only:
 Read-Only:
 
 - `address` (String) The server address for the SSH connection.
+- `port` (Number) The port for the SSH connection. Defaults to 22.
 - `username` (String) The username for the SSH connection.
 
 

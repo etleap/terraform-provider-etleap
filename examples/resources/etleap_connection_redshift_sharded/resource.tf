@@ -13,9 +13,10 @@ resource "etleap_connection_redshift_sharded" "my_connectionredshift_sharded" {
       shard_id = "...my_shard_id..."
       ssh_config = {
         address  = "3105 Hiram Ramp"
-        username = "Shyann24"
+        port     = 9
+        username = "Richmond22"
       }
-      username = "Dameon_Hermann"
+      username = "Fern.Howe96"
     },
   ]
   source_only = true

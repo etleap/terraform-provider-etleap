@@ -21,6 +21,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -367,6 +368,15 @@ func (r *ConnectionMYSQLResource) Schema(ctx context.Context, req resource.Schem
 						Validators: []validator.String{
 							speakeasy_stringvalidators.NotNull(),
 						},
+					},
+					"port": schema.Int64Attribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+						},
+						Optional:    true,
+						Default:     int64default.StaticInt64(22),
+						Description: `The port for the SSH connection. Defaults to 22. Default: 22`,
 					},
 					"username": schema.StringAttribute{
 						Computed: true,

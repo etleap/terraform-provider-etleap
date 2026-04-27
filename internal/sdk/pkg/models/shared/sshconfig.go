@@ -2,11 +2,28 @@
 
 package shared
 
+import (
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
+)
+
 type SSHConfig struct {
 	// The server address for the SSH connection.
 	Address string `json:"address"`
 	// The username for the SSH connection.
 	Username string `json:"username"`
+	// The port for the SSH connection. Defaults to 22.
+	Port *int64 `default:"22" json:"port"`
+}
+
+func (s SSHConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SSHConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SSHConfig) GetAddress() string {
@@ -21,4 +38,11 @@ func (o *SSHConfig) GetUsername() string {
 		return ""
 	}
 	return o.Username
+}
+
+func (o *SSHConfig) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
 }

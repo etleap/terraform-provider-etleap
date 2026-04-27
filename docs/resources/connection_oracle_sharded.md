@@ -29,7 +29,8 @@ resource "etleap_connection_oracle_sharded" "my_connectionoracle_sharded" {
       shard_id = "...my_shard_id..."
       ssh_config = {
         address  = "5338 Wiley Drive"
-        username = "Elinore.Metz73"
+        port     = 3
+        username = "Lavina73"
       }
       username = "Andy.Vandervort79"
     },
@@ -83,6 +84,7 @@ Optional:
 Optional:
 
 - `address` (String) The server address for the SSH connection. Not Null
+- `port` (Number) The port for the SSH connection. Defaults to 22. Default: 22
 - `username` (String) The username for the SSH connection. Not Null
 
 

@@ -15,7 +15,8 @@ resource "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
       shard_id = "...my_shard_id..."
       ssh_config = {
         address  = "608 Jolie Prairie"
-        username = "Guadalupe_Grady93"
+        port     = 4
+        username = "Earnest_Terry"
       }
       username = "Elinor_Kuhn"
     },

@@ -27,7 +27,8 @@ resource "etleap_connection_db2_sharded" "my_connectiondb2_sharded" {
       shard_id = "...my_shard_id..."
       ssh_config = {
         address  = "86526 Khalid Bypass"
-        username = "Lenore.Leffler39"
+        port     = 6
+        username = "Judson39"
       }
       username = "Ceasar.Reilly"
     },
@@ -79,6 +80,7 @@ Optional:
 Optional:
 
 - `address` (String) The server address for the SSH connection. Not Null
+- `port` (Number) The port for the SSH connection. Defaults to 22. Default: 22
 - `username` (String) The username for the SSH connection. Not Null
 
 

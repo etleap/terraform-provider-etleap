@@ -120,9 +120,16 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 		if shardsItem.SSHConfig != nil {
 			address1 := shardsItem.SSHConfig.Address.ValueString()
 			username1 := shardsItem.SSHConfig.Username.ValueString()
+			port1 := new(int64)
+			if !shardsItem.SSHConfig.Port.IsUnknown() && !shardsItem.SSHConfig.Port.IsNull() {
+				*port1 = shardsItem.SSHConfig.Port.ValueInt64()
+			} else {
+				port1 = nil
+			}
 			sshConfig = &shared.SSHConfig{
 				Address:  address1,
 				Username: username1,
+				Port:     port1,
 			}
 		}
 		database := shardsItem.Database.ValueString()
@@ -221,6 +228,7 @@ func (r *ConnectionORACLESHARDEDResourceModel) RefreshFromSharedConnectionOracle
 		} else {
 			shards1.SSHConfig = &SSHConfig{}
 			shards1.SSHConfig.Address = types.StringValue(shardsItem.SSHConfig.Address)
+			shards1.SSHConfig.Port = types.Int64PointerValue(shardsItem.SSHConfig.Port)
 			shards1.SSHConfig.Username = types.StringValue(shardsItem.SSHConfig.Username)
 		}
 		shards1.Username = types.StringValue(shardsItem.Username)
@@ -387,9 +395,16 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedUp
 		if shardsItem.SSHConfig != nil {
 			address1 := shardsItem.SSHConfig.Address.ValueString()
 			username1 := shardsItem.SSHConfig.Username.ValueString()
+			port1 := new(int64)
+			if !shardsItem.SSHConfig.Port.IsUnknown() && !shardsItem.SSHConfig.Port.IsNull() {
+				*port1 = shardsItem.SSHConfig.Port.ValueInt64()
+			} else {
+				port1 = nil
+			}
 			sshConfig = &shared.SSHConfig{
 				Address:  address1,
 				Username: username1,
+				Port:     port1,
 			}
 		}
 		database := shardsItem.Database.ValueString()

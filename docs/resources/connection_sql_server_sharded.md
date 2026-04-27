@@ -14,20 +14,21 @@ ConnectionSQLSERVERSHARDED Resource
 
 ```terraform
 resource "etleap_connection_sql_server_sharded" "my_connectionsql_server_sharded" {
-  cdc_enabled                 = false
-  deletion_of_export_products = true
-  name                        = "Terry Moen"
+  cdc_enabled                 = true
+  deletion_of_export_products = false
+  name                        = "Bernard Herman"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "58219 Schiller Mills"
+      address  = "219 Schiller Mills"
       database = "...my_database..."
       password = "...my_password..."
       port     = 0
       shard_id = "...my_shard_id..."
       ssh_config = {
         address  = "3926 Franey Tunnel"
-        username = "Jaqueline.Morissette24"
+        port     = 5
+        username = "Lew.Tromp"
       }
       username = "Brando.Volkman0"
     },
@@ -79,6 +80,7 @@ Optional:
 Optional:
 
 - `address` (String) The server address for the SSH connection. Not Null
+- `port` (Number) The port for the SSH connection. Defaults to 22. Default: 22
 - `username` (String) The username for the SSH connection. Not Null
 
 

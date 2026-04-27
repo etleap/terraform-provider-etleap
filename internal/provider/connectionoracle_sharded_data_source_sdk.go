@@ -79,6 +79,7 @@ func (r *ConnectionORACLESHARDEDDataSourceModel) RefreshFromSharedConnectionOrac
 		} else {
 			shards1.SSHConfig = &SSHConfig{}
 			shards1.SSHConfig.Address = types.StringValue(shardsItem.SSHConfig.Address)
+			shards1.SSHConfig.Port = types.Int64PointerValue(shardsItem.SSHConfig.Port)
 			shards1.SSHConfig.Username = types.StringValue(shardsItem.SSHConfig.Username)
 		}
 		shards1.Username = types.StringValue(shardsItem.Username)

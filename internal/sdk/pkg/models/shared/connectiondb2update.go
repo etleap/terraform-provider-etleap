@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
 type ConnectionDb2UpdateType string
@@ -36,6 +37,19 @@ type SSHConfigurationUpdate struct {
 	Address *string `json:"address,omitempty"`
 	// The username for the SSH connection.
 	Username *string `json:"username,omitempty"`
+	// The port for the SSH connection. Defaults to 22.
+	Port *int64 `default:"22" json:"port"`
+}
+
+func (s SSHConfigurationUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SSHConfigurationUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SSHConfigurationUpdate) GetAddress() *string {
@@ -50,6 +64,13 @@ func (o *SSHConfigurationUpdate) GetUsername() *string {
 		return nil
 	}
 	return o.Username
+}
+
+func (o *SSHConfigurationUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
 }
 
 // ConnectionDb2Update - Specifies the location of a database.

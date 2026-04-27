@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
 type ConnectionSapHanaUpdateType string
@@ -36,6 +37,19 @@ type ConnectionSapHanaUpdateSSHConfigurationUpdate struct {
 	Address *string `json:"address,omitempty"`
 	// The username for the SSH connection.
 	Username *string `json:"username,omitempty"`
+	// The port for the SSH connection. Defaults to 22.
+	Port *int64 `default:"22" json:"port"`
+}
+
+func (c ConnectionSapHanaUpdateSSHConfigurationUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *ConnectionSapHanaUpdateSSHConfigurationUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ConnectionSapHanaUpdateSSHConfigurationUpdate) GetAddress() *string {
@@ -50,6 +64,13 @@ func (o *ConnectionSapHanaUpdateSSHConfigurationUpdate) GetUsername() *string {
 		return nil
 	}
 	return o.Username
+}
+
+func (o *ConnectionSapHanaUpdateSSHConfigurationUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
 }
 
 // ConnectionSapHanaUpdate - Specifies the location of a database.

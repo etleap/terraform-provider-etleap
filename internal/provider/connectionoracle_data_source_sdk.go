@@ -73,6 +73,7 @@ func (r *ConnectionORACLEDataSourceModel) RefreshFromSharedConnectionOracle(resp
 	} else {
 		r.SSHConfig = &SSHConfig{}
 		r.SSHConfig.Address = types.StringValue(resp.SSHConfig.Address)
+		r.SSHConfig.Port = types.Int64PointerValue(resp.SSHConfig.Port)
 		r.SSHConfig.Username = types.StringValue(resp.SSHConfig.Username)
 	}
 	r.Status = types.StringValue(string(resp.Status))

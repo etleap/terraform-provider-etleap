@@ -12,9 +12,10 @@ resource "etleap_connection_sap_hana_sharded" "my_connectionsap_hana_sharded" {
       shard_id = "...my_shard_id..."
       ssh_config = {
         address  = "562 King Tunnel"
-        username = "Osvaldo_Halvorson"
+        port     = 8
+        username = "Emery_Kihn7"
       }
-      username = "Juana.Bins"
+      username = "Gerry.Boyle"
     },
   ]
   type = "SAP_HANA_SHARDED"

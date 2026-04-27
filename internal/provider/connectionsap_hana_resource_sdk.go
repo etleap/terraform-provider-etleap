@@ -106,9 +106,16 @@ func (r *ConnectionSAPHANAResourceModel) ToSharedConnectionSapHanaInput() *share
 	if r.SSHConfig != nil {
 		address1 := r.SSHConfig.Address.ValueString()
 		username1 := r.SSHConfig.Username.ValueString()
+		port1 := new(int64)
+		if !r.SSHConfig.Port.IsUnknown() && !r.SSHConfig.Port.IsNull() {
+			*port1 = r.SSHConfig.Port.ValueInt64()
+		} else {
+			port1 = nil
+		}
 		sshConfig = &shared.SSHConfig{
 			Address:  address1,
 			Username: username1,
+			Port:     port1,
 		}
 	}
 	database := r.Database.ValueString()
@@ -191,6 +198,7 @@ func (r *ConnectionSAPHANAResourceModel) RefreshFromSharedConnectionSapHana(resp
 	} else {
 		r.SSHConfig = &SSHConfig{}
 		r.SSHConfig.Address = types.StringValue(resp.SSHConfig.Address)
+		r.SSHConfig.Port = types.Int64PointerValue(resp.SSHConfig.Port)
 		r.SSHConfig.Username = types.StringValue(resp.SSHConfig.Username)
 	}
 	r.Status = types.StringValue(string(resp.Status))
@@ -362,9 +370,16 @@ func (r *ConnectionSAPHANAResourceModel) ToSharedConnectionSapHanaUpdate() *shar
 		} else {
 			username1 = nil
 		}
+		port1 := new(int64)
+		if !r.SSHConfig.Port.IsUnknown() && !r.SSHConfig.Port.IsNull() {
+			*port1 = r.SSHConfig.Port.ValueInt64()
+		} else {
+			port1 = nil
+		}
 		sshConfig = &shared.ConnectionSapHanaUpdateSSHConfigurationUpdate{
 			Address:  address1,
 			Username: username1,
+			Port:     port1,
 		}
 	}
 	database := new(string)

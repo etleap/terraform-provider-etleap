@@ -28,9 +28,10 @@ resource "etleap_connection_redshift_sharded" "my_connectionredshift_sharded" {
       shard_id = "...my_shard_id..."
       ssh_config = {
         address  = "3105 Hiram Ramp"
-        username = "Shyann24"
+        port     = 9
+        username = "Richmond22"
       }
-      username = "Dameon_Hermann"
+      username = "Fern.Howe96"
     },
   ]
   source_only = true
@@ -85,6 +86,7 @@ Optional:
 Optional:
 
 - `address` (String) The server address for the SSH connection. Not Null
+- `port` (Number) The port for the SSH connection. Defaults to 22. Default: 22
 - `username` (String) The username for the SSH connection. Not Null
 
 

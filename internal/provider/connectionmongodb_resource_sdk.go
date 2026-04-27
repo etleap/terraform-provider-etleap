@@ -90,18 +90,25 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongodbInput() *share
 	if r.SSHConfig != nil {
 		address := r.SSHConfig.Address.ValueString()
 		username := r.SSHConfig.Username.ValueString()
+		port := new(int64)
+		if !r.SSHConfig.Port.IsUnknown() && !r.SSHConfig.Port.IsNull() {
+			*port = r.SSHConfig.Port.ValueInt64()
+		} else {
+			port = nil
+		}
 		sshConfig = &shared.SSHConfig{
 			Address:  address,
 			Username: username,
+			Port:     port,
 		}
 	}
 	var replicaSet []shared.ConnectionMongodbReplicaSet = nil
 	for _, replicaSetItem := range r.ReplicaSet {
 		address1 := replicaSetItem.Address.ValueString()
-		port := replicaSetItem.Port.ValueInt64()
+		port1 := replicaSetItem.Port.ValueInt64()
 		replicaSet = append(replicaSet, shared.ConnectionMongodbReplicaSet{
 			Address: address1,
-			Port:    port,
+			Port:    port1,
 		})
 	}
 	databaseName := r.DatabaseName.ValueString()
@@ -208,6 +215,7 @@ func (r *ConnectionMONGODBResourceModel) RefreshFromSharedConnectionMongodb(resp
 	} else {
 		r.SSHConfig = &SSHConfig{}
 		r.SSHConfig.Address = types.StringValue(resp.SSHConfig.Address)
+		r.SSHConfig.Port = types.Int64PointerValue(resp.SSHConfig.Port)
 		r.SSHConfig.Username = types.StringValue(resp.SSHConfig.Username)
 	}
 	r.Status = types.StringValue(string(resp.Status))
@@ -355,18 +363,25 @@ func (r *ConnectionMONGODBResourceModel) ToSharedConnectionMongodbUpdate() *shar
 		} else {
 			username = nil
 		}
+		port := new(int64)
+		if !r.SSHConfig.Port.IsUnknown() && !r.SSHConfig.Port.IsNull() {
+			*port = r.SSHConfig.Port.ValueInt64()
+		} else {
+			port = nil
+		}
 		sshConfig = &shared.ConnectionMongodbUpdateSSHConfigurationUpdate{
 			Address:  address,
 			Username: username,
+			Port:     port,
 		}
 	}
 	var replicaSet []shared.ReplicaSet = nil
 	for _, replicaSetItem := range r.ReplicaSet {
 		address1 := replicaSetItem.Address.ValueString()
-		port := replicaSetItem.Port.ValueInt64()
+		port1 := replicaSetItem.Port.ValueInt64()
 		replicaSet = append(replicaSet, shared.ReplicaSet{
 			Address: address1,
-			Port:    port,
+			Port:    port1,
 		})
 	}
 	databaseName := new(string)

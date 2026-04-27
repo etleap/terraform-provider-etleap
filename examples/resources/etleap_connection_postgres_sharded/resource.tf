@@ -14,7 +14,8 @@ resource "etleap_connection_postgres_sharded" "my_connectionpostgres_sharded" {
       shard_id = "...my_shard_id..."
       ssh_config = {
         address  = "32316 Orn Prairie"
-        username = "Mozell.Sporer27"
+        port     = 8
+        username = "Rosamond.Ruecker"
       }
       username = "Antwan.Barton"
     },

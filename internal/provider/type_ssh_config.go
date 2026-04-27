@@ -6,5 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SSHConfig struct {
 	Address  types.String `tfsdk:"address"`
+	Port     types.Int64  `tfsdk:"port"`
 	Username types.String `tfsdk:"username"`
 }
