@@ -72,6 +72,7 @@ const (
 	SourceTypeEnumQuoraAds                 SourceTypeEnum = "QUORA_ADS"
 	SourceTypeEnumRaveMedidata             SourceTypeEnum = "RAVE_MEDIDATA"
 	SourceTypeEnumRecurly                  SourceTypeEnum = "RECURLY"
+	SourceTypeEnumRedditAds                SourceTypeEnum = "REDDIT_ADS"
 	SourceTypeEnumRedshift                 SourceTypeEnum = "REDSHIFT"
 	SourceTypeEnumRedshiftSharded          SourceTypeEnum = "REDSHIFT_SHARDED"
 	SourceTypeEnumS3Input                  SourceTypeEnum = "S3_INPUT"
@@ -245,6 +246,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	case "RAVE_MEDIDATA":
 		fallthrough
 	case "RECURLY":
+		fallthrough
+	case "REDDIT_ADS":
 		fallthrough
 	case "REDSHIFT":
 		fallthrough

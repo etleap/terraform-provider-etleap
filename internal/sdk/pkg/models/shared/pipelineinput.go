@@ -693,6 +693,10 @@ func (o *PipelineInput) GetSourceRecurly() *SourceRecurly {
 	return o.GetSource().SourceRecurly
 }
 
+func (o *PipelineInput) GetSourceRedditAds() *SourceRedditAds {
+	return o.GetSource().SourceRedditAds
+}
+
 func (o *PipelineInput) GetSourceRedshift() *SourceRedshift {
 	return o.GetSource().SourceRedshift
 }

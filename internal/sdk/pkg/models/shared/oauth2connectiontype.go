@@ -22,6 +22,7 @@ const (
 	Oauth2ConnectionTypeOutlook         Oauth2ConnectionType = "OUTLOOK"
 	Oauth2ConnectionTypeOutreach        Oauth2ConnectionType = "OUTREACH"
 	Oauth2ConnectionTypeQuoraAds        Oauth2ConnectionType = "QUORA_ADS"
+	Oauth2ConnectionTypeRedditAds       Oauth2ConnectionType = "REDDIT_ADS"
 	Oauth2ConnectionTypeSalesforce      Oauth2ConnectionType = "SALESFORCE"
 	Oauth2ConnectionTypeSeismic         Oauth2ConnectionType = "SEISMIC"
 	Oauth2ConnectionTypeSnapchatAds     Oauth2ConnectionType = "SNAPCHAT_ADS"
@@ -64,6 +65,8 @@ func (e *Oauth2ConnectionType) UnmarshalJSON(data []byte) error {
 	case "OUTREACH":
 		fallthrough
 	case "QUORA_ADS":
+		fallthrough
+	case "REDDIT_ADS":
 		fallthrough
 	case "SALESFORCE":
 		fallthrough

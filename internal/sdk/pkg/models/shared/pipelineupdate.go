@@ -1314,6 +1314,13 @@ func (o *PipelineUpdate) GetSourceRecurly() *SourceRecurlyUpdate {
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceRedditAds() *SourceRedditAdsUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceRedditAdsUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceRedshift() *SourceRedshiftUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceRedshiftUpdate

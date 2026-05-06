@@ -912,6 +912,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Recurly.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceRecurly.LatencyThreshold)
 		r.Source.Recurly.Type = types.StringValue(string(resp.Source.SourceRecurly.Type))
 	}
+	if resp.Source.SourceRedditAds != nil {
+		r.Source.RedditAds = &SourceRedditAds{}
+		r.Source.RedditAds.ConnectionID = types.StringValue(resp.Source.SourceRedditAds.ConnectionID)
+		r.Source.RedditAds.Entity = types.StringValue(resp.Source.SourceRedditAds.Entity)
+		r.Source.RedditAds.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceRedditAds.LatencyThreshold)
+		r.Source.RedditAds.Type = types.StringValue(string(resp.Source.SourceRedditAds.Type))
+	}
 	if resp.Source.SourceRedshift != nil {
 		r.Source.Redshift = &SourceRedshift{}
 		r.Source.Redshift.ConnectionID = types.StringValue(resp.Source.SourceRedshift.ConnectionID)

@@ -74,6 +74,7 @@ const (
 	SourceTypesTypeQuoraAds                 SourceTypesType = "QUORA_ADS"
 	SourceTypesTypeRaveMedidata             SourceTypesType = "RAVE_MEDIDATA"
 	SourceTypesTypeRecurly                  SourceTypesType = "RECURLY"
+	SourceTypesTypeRedditAds                SourceTypesType = "REDDIT_ADS"
 	SourceTypesTypeRedshift                 SourceTypesType = "REDSHIFT"
 	SourceTypesTypeRedshiftSharded          SourceTypesType = "REDSHIFT_SHARDED"
 	SourceTypesTypeS3Input                  SourceTypesType = "S3_INPUT"
@@ -177,6 +178,7 @@ type SourceTypes struct {
 	SourceQuoraAds                 *SourceQuoraAds
 	SourceRaveMedidata             *SourceRaveMedidata
 	SourceRecurly                  *SourceRecurly
+	SourceRedditAds                *SourceRedditAds
 	SourceRedshift                 *SourceRedshift
 	SourceRedshiftSharded          *SourceRedshiftSharded
 	SourceS3Input                  *SourceS3Input
@@ -960,6 +962,18 @@ func CreateSourceTypesRecurly(recurly SourceRecurly) SourceTypes {
 	return SourceTypes{
 		SourceRecurly: &recurly,
 		Type:          typ,
+	}
+}
+
+func CreateSourceTypesRedditAds(redditAds SourceRedditAds) SourceTypes {
+	typ := SourceTypesTypeRedditAds
+
+	typStr := SourceRedditAdsType(typ)
+	redditAds.Type = typStr
+
+	return SourceTypes{
+		SourceRedditAds: &redditAds,
+		Type:            typ,
 	}
 }
 
@@ -1989,6 +2003,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceRecurly = sourceRecurly
 		u.Type = SourceTypesTypeRecurly
 		return nil
+	case "REDDIT_ADS":
+		sourceRedditAds := new(SourceRedditAds)
+		if err := utils.UnmarshalJSON(data, &sourceRedditAds, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceRedditAds = sourceRedditAds
+		u.Type = SourceTypesTypeRedditAds
+		return nil
 	case "REDSHIFT":
 		sourceRedshift := new(SourceRedshift)
 		if err := utils.UnmarshalJSON(data, &sourceRedshift, "", true, true); err != nil {
@@ -2583,6 +2606,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceRecurly != nil {
 		return utils.MarshalJSON(u.SourceRecurly, "", true)
+	}
+
+	if u.SourceRedditAds != nil {
+		return utils.MarshalJSON(u.SourceRedditAds, "", true)
 	}
 
 	if u.SourceRedshift != nil {

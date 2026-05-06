@@ -14,7 +14,7 @@ Model DataSource
 
 ```terraform
 data "etleap_model" "my_model" {
-  id = "55da31bb-b441-4af5-b69c-f88c0ec70d94"
+  id = "f518b415-fdf7-4bd6-aeb5-f72e1171d176"
 }
 ```
 

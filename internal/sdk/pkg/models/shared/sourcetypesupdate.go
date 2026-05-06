@@ -74,6 +74,7 @@ const (
 	SourceTypesUpdateTypeQuoraAds                 SourceTypesUpdateType = "QUORA_ADS"
 	SourceTypesUpdateTypeRaveMedidata             SourceTypesUpdateType = "RAVE_MEDIDATA"
 	SourceTypesUpdateTypeRecurly                  SourceTypesUpdateType = "RECURLY"
+	SourceTypesUpdateTypeRedditAds                SourceTypesUpdateType = "REDDIT_ADS"
 	SourceTypesUpdateTypeRedshift                 SourceTypesUpdateType = "REDSHIFT"
 	SourceTypesUpdateTypeRedshiftSharded          SourceTypesUpdateType = "REDSHIFT_SHARDED"
 	SourceTypesUpdateTypeS3Input                  SourceTypesUpdateType = "S3_INPUT"
@@ -177,6 +178,7 @@ type SourceTypesUpdate struct {
 	SourceQuoraAdsUpdate                 *SourceQuoraAdsUpdate
 	SourceRaveMedidataUpdate             *SourceRaveMedidataUpdate
 	SourceRecurlyUpdate                  *SourceRecurlyUpdate
+	SourceRedditAdsUpdate                *SourceRedditAdsUpdate
 	SourceRedshiftUpdate                 *SourceRedshiftUpdate
 	SourceRedshiftShardedUpdate          *SourceRedshiftShardedUpdate
 	SourceS3InputUpdate                  *SourceS3InputUpdate
@@ -960,6 +962,18 @@ func CreateSourceTypesUpdateRecurly(recurly SourceRecurlyUpdate) SourceTypesUpda
 	return SourceTypesUpdate{
 		SourceRecurlyUpdate: &recurly,
 		Type:                typ,
+	}
+}
+
+func CreateSourceTypesUpdateRedditAds(redditAds SourceRedditAdsUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeRedditAds
+
+	typStr := SourceRedditAdsUpdateType(typ)
+	redditAds.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceRedditAdsUpdate: &redditAds,
+		Type:                  typ,
 	}
 }
 
@@ -1989,6 +2003,15 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceRecurlyUpdate = sourceRecurlyUpdate
 		u.Type = SourceTypesUpdateTypeRecurly
 		return nil
+	case "REDDIT_ADS":
+		sourceRedditAdsUpdate := new(SourceRedditAdsUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceRedditAdsUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceRedditAdsUpdate = sourceRedditAdsUpdate
+		u.Type = SourceTypesUpdateTypeRedditAds
+		return nil
 	case "REDSHIFT":
 		sourceRedshiftUpdate := new(SourceRedshiftUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceRedshiftUpdate, "", true, true); err != nil {
@@ -2583,6 +2606,10 @@ func (u SourceTypesUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.SourceRecurlyUpdate != nil {
 		return utils.MarshalJSON(u.SourceRecurlyUpdate, "", true)
+	}
+
+	if u.SourceRedditAdsUpdate != nil {
+		return utils.MarshalJSON(u.SourceRedditAdsUpdate, "", true)
 	}
 
 	if u.SourceRedshiftUpdate != nil {

@@ -14,13 +14,13 @@ ConnectionSAPHANASHARDED Resource
 
 ```terraform
 resource "etleap_connection_sap_hana_sharded" "my_connectionsap_hana_sharded" {
-  cdc_enabled                 = false
-  deletion_of_export_products = false
-  name                        = "Karla West"
+  cdc_enabled                 = true
+  deletion_of_export_products = true
+  name                        = "Emmett Osinski"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "57169 Terry Run"
+      address  = "169 Terry Run"
       database = "...my_database..."
       password = "...my_password..."
       port     = 7

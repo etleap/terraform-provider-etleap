@@ -14,7 +14,7 @@ ConnectionSHOPIFY DataSource
 
 ```terraform
 data "etleap_connection_shopify" "my_connectionshopify" {
-  id = "ba5c2775-2eec-40b9-849f-acc1fd5a8bdd"
+  id = "21ad42f4-1522-4f4a-8314-c6b6a6149d2a"
 }
 ```
 

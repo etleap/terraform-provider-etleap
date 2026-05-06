@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "f518b415-fdf7-4bd6-aeb5-f72e1171d176"
+  id = "dd07e067-3f46-499d-b1c9-d2b9601c2697"
 }
 ```
 
@@ -411,6 +411,7 @@ Read-Only:
 - `quora_ads` (Attributes) (see [below for nested schema](#nestedatt--source--quora_ads))
 - `rave_medidata` (Attributes) (see [below for nested schema](#nestedatt--source--rave_medidata))
 - `recurly` (Attributes) (see [below for nested schema](#nestedatt--source--recurly))
+- `reddit_ads` (Attributes) (see [below for nested schema](#nestedatt--source--reddit_ads))
 - `redshift` (Attributes) (see [below for nested schema](#nestedatt--source--redshift))
 - `redshift_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--redshift_sharded))
 - `s3_input` (Attributes) (see [below for nested schema](#nestedatt--source--s3_input))
@@ -1211,6 +1212,17 @@ Read-Only:
 - `entity` (String) The Recurly entity. Example values: [Account, Account Acquisition, Line Item, Coupon, Coupon Redemption, Credit Payment, Invoice, Measured Unit, Plan, Plan Add-On, Subscription, Transaction]
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["RECURLY"]
+
+
+<a id="nestedatt--source--reddit_ads"></a>
+### Nested Schema for `source.reddit_ads`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The Reddit Ads resource. Example: campaigns
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["REDDIT_ADS"]
 
 
 <a id="nestedatt--source--redshift"></a>

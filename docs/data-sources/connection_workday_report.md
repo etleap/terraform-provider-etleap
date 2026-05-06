@@ -14,7 +14,7 @@ ConnectionWORKDAYREPORT DataSource
 
 ```terraform
 data "etleap_connection_workday_report" "my_connectionworkday_report" {
-  id = "2f9ab54c-4ada-4511-b6db-0cab57f9fd02"
+  id = "17fcbfa1-adca-4598-b5f0-9924f6ee3394"
 }
 ```
 

@@ -14,7 +14,7 @@ ConnectionSQS DataSource
 
 ```terraform
 data "etleap_connection_sqs" "my_connectionsqs" {
-  id = "08277985-3211-45ef-a784-07227818efaa"
+  id = "31bc1c43-6b9a-443f-bb29-1456421624c5"
 }
 ```
 

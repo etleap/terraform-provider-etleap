@@ -65,6 +65,7 @@ type SourceTypes struct {
 	QuoraAds                 *SourceQuoraAds                 `tfsdk:"quora_ads"`
 	RaveMedidata             *SourceRaveMedidata             `tfsdk:"rave_medidata"`
 	Recurly                  *SourceRecurly                  `tfsdk:"recurly"`
+	RedditAds                *SourceRedditAds                `tfsdk:"reddit_ads"`
 	Redshift                 *SourceRedshift                 `tfsdk:"redshift"`
 	RedshiftSharded          *SourceRedshiftSharded          `tfsdk:"redshift_sharded"`
 	S3Input                  *SourceS3Input                  `tfsdk:"s3_input"`
