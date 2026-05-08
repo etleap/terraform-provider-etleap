@@ -69,7 +69,6 @@ type SDK struct {
 	Team        *Team
 	User        *User
 	DbtSchedule *DbtSchedule
-	DbtSettings *DbtSettings
 
 	sdkConfiguration sdkConfiguration
 }
@@ -145,10 +144,10 @@ func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
-			OpenAPIDocVersion: "2.9.4",
-			SDKVersion:        "0.3.4",
+			OpenAPIDocVersion: "2.9.5",
+			SDKVersion:        "0.3.5",
 			GenVersion:        "2.248.6",
-			UserAgent:         "speakeasy-sdk/go 0.3.4 2.248.6 2.9.4 etleap",
+			UserAgent:         "speakeasy-sdk/go 0.3.5 2.248.6 2.9.5 etleap",
 		},
 	}
 	for _, opt := range opts {
@@ -178,8 +177,6 @@ func New(opts ...SDKOption) *SDK {
 	sdk.User = newUser(sdk.sdkConfiguration)
 
 	sdk.DbtSchedule = newDbtSchedule(sdk.sdkConfiguration)
-
-	sdk.DbtSettings = newDbtSettings(sdk.sdkConfiguration)
 
 	return sdk
 }

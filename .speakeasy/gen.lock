@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: c39f577dc2d12f363952f0e2765da3ca
-  docVersion: 2.9.4
+  docChecksum: b73cd4b931671fa8eb3f1e6764d56f1b
+  docVersion: 2.9.5
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.3.4
-  configChecksum: e46344e62ad7a5e95911066243c7e7f8
+  releaseVersion: 0.3.5
+  configChecksum: bbf52effbc3c2d904ccf731440024455
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -28,7 +28,6 @@ generatedFiles:
   - internal/sdk/team.go
   - internal/sdk/user.go
   - internal/sdk/dbtschedule.go
-  - internal/sdk/dbtsettings.go
   - internal/sdk/sdk.go
   - examples/README.md
   - go.mod
@@ -546,8 +545,6 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/getdbtschedule.go
   - internal/sdk/pkg/models/operations/updatedbtschedule.go
   - internal/sdk/pkg/models/operations/deletedbtschedule.go
-  - internal/sdk/pkg/models/operations/getdbtsettings.go
-  - internal/sdk/pkg/models/operations/updatedbtsettings.go
   - internal/sdk/pkg/models/shared/errors.go
   - internal/sdk/pkg/models/shared/pipelineoutput.go
   - internal/sdk/pkg/models/shared/refreshscheduletypes.go
@@ -1103,10 +1100,6 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/dbtrunstatus.go
   - internal/sdk/pkg/models/shared/dbtscheduleinput.go
   - internal/sdk/pkg/models/shared/dbtscheduleupdate.go
-  - internal/sdk/pkg/models/shared/dbtsettingsoutput.go
-  - internal/sdk/pkg/models/shared/dbtenvironmentvariableoutput.go
-  - internal/sdk/pkg/models/shared/dbtsettingsinput.go
-  - internal/sdk/pkg/models/shared/dbtenvironmentvariableinput.go
   - internal/sdk/pkg/models/shared/security.go
   - internal/provider/type_update_schedule_mode_daily.go
   - internal/provider/type_update_schedule_mode_hourly.go
