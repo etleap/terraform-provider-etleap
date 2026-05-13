@@ -39,6 +39,8 @@ type SourceRedditAds struct {
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The Reddit Ads resource. Example: campaigns
 	Entity string `json:"entity"`
+	// Specify the report `breakdowns`. Breakdowns must include DATE. A maximum of 3 fields are allowed (or 4 with country and region).
+	Breakdowns []string `json:"breakdowns,omitempty"`
 }
 
 func (o *SourceRedditAds) GetType() SourceRedditAdsType {
@@ -67,4 +69,11 @@ func (o *SourceRedditAds) GetEntity() string {
 		return ""
 	}
 	return o.Entity
+}
+
+func (o *SourceRedditAds) GetBreakdowns() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Breakdowns
 }

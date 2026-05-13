@@ -1093,6 +1093,7 @@ Optional:
 
 Optional:
 
+- `breakdowns` (List of String) Specify the report `breakdowns`. Breakdowns must include DATE. A maximum of 3 fields are allowed (or 4 with country and region). Requires replacement if changed.
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The Reddit Ads resource. Example: campaigns. Requires replacement if changed. ; Not Null
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.

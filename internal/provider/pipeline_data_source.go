@@ -2252,6 +2252,11 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 					"reddit_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
+							"breakdowns": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `Specify the report ` + "`" + `breakdowns` + "`" + `. Breakdowns must include DATE. A maximum of 3 fields are allowed (or 4 with country and region).`,
+							},
 							"connection_id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The universally unique identifier for the source.`,

@@ -1997,11 +1997,16 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			latencyThreshold62 = nil
 		}
 		entity48 := r.Source.RedditAds.Entity.ValueString()
+		var breakdowns1 []string = nil
+		for _, breakdownsItem1 := range r.Source.RedditAds.Breakdowns {
+			breakdowns1 = append(breakdowns1, breakdownsItem1.ValueString())
+		}
 		sourceRedditAds = &shared.SourceRedditAds{
 			Type:             typeVar62,
 			ConnectionID:     connectionId62,
 			LatencyThreshold: latencyThreshold62,
 			Entity:           entity48,
+			Breakdowns:       breakdowns1,
 		}
 	}
 	if sourceRedditAds != nil {
@@ -4841,6 +4846,10 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 	}
 	if resp.Source.SourceRedditAds != nil {
 		r.Source.RedditAds = &SourceRedditAds{}
+		r.Source.RedditAds.Breakdowns = nil
+		for _, v := range resp.Source.SourceRedditAds.Breakdowns {
+			r.Source.RedditAds.Breakdowns = append(r.Source.RedditAds.Breakdowns, types.StringValue(v))
+		}
 		r.Source.RedditAds.ConnectionID = types.StringValue(resp.Source.SourceRedditAds.ConnectionID)
 		r.Source.RedditAds.Entity = types.StringValue(resp.Source.SourceRedditAds.Entity)
 		r.Source.RedditAds.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceRedditAds.LatencyThreshold)

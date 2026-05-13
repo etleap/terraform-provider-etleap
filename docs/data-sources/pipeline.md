@@ -1219,6 +1219,7 @@ Read-Only:
 
 Read-Only:
 
+- `breakdowns` (List of String) Specify the report `breakdowns`. Breakdowns must include DATE. A maximum of 3 fields are allowed (or 4 with country and region).
 - `connection_id` (String) The universally unique identifier for the source.
 - `entity` (String) The Reddit Ads resource. Example: campaigns
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.

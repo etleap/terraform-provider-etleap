@@ -6427,6 +6427,19 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"breakdowns": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									listplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								ElementType: types.StringType,
+								Description: `Specify the report ` + "`" + `breakdowns` + "`" + `. Breakdowns must include DATE. A maximum of 3 fields are allowed (or 4 with country and region). Requires replacement if changed. `,
+								Validators: []validator.List{
+									listvalidator.SizeAtLeast(1),
+								},
+							},
 							"connection_id": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{

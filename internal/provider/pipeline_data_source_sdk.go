@@ -914,6 +914,10 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	}
 	if resp.Source.SourceRedditAds != nil {
 		r.Source.RedditAds = &SourceRedditAds{}
+		r.Source.RedditAds.Breakdowns = nil
+		for _, v := range resp.Source.SourceRedditAds.Breakdowns {
+			r.Source.RedditAds.Breakdowns = append(r.Source.RedditAds.Breakdowns, types.StringValue(v))
+		}
 		r.Source.RedditAds.ConnectionID = types.StringValue(resp.Source.SourceRedditAds.ConnectionID)
 		r.Source.RedditAds.Entity = types.StringValue(resp.Source.SourceRedditAds.Entity)
 		r.Source.RedditAds.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceRedditAds.LatencyThreshold)
