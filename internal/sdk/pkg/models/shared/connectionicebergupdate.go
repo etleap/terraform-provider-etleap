@@ -38,13 +38,16 @@ type ConnectionIcebergUpdate struct {
 	// Whether this connection should be marked as active.
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule      *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	IamRole             *string              `json:"iamRole,omitempty"`
-	DataBucket          *string              `json:"dataBucket,omitempty"`
-	BaseDirectory       *string              `json:"baseDirectory,omitempty"`
-	GlueDatabase        *string              `json:"glueDatabase,omitempty"`
-	GlueRegion          *string              `json:"glueRegion,omitempty"`
-	WarehouseConnection *string              `json:"warehouseConnection,omitempty"`
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	IamRole        *string              `json:"iamRole,omitempty"`
+	DataBucket     *string              `json:"dataBucket,omitempty"`
+	BaseDirectory  *string              `json:"baseDirectory,omitempty"`
+	// Deprecated: specify the Glue database when creating a pipeline via the `destination.schema` property on the `POST /api/v2/pipelines` endpoint.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	GlueDatabase        *string `json:"glueDatabase,omitempty"`
+	GlueRegion          *string `json:"glueRegion,omitempty"`
+	WarehouseConnection *string `json:"warehouseConnection,omitempty"`
 }
 
 func (o *ConnectionIcebergUpdate) GetName() *string {

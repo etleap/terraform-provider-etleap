@@ -112,6 +112,10 @@ func (o *PipelineOutput) GetSourceCriteo() *SourceCriteo {
 	return o.GetSource().SourceCriteo
 }
 
+func (o *PipelineOutput) GetSourceDayforce() *SourceDayforce {
+	return o.GetSource().SourceDayforce
+}
+
 func (o *PipelineOutput) GetSourceDb2() *SourceDb2 {
 	return o.GetSource().SourceDb2
 }

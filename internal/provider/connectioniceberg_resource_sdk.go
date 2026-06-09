@@ -89,7 +89,12 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergInput() *share
 	iamRole := r.IamRole.ValueString()
 	dataBucket := r.DataBucket.ValueString()
 	baseDirectory := r.BaseDirectory.ValueString()
-	glueDatabase := r.GlueDatabase.ValueString()
+	glueDatabase := new(string)
+	if !r.GlueDatabase.IsUnknown() && !r.GlueDatabase.IsNull() {
+		*glueDatabase = r.GlueDatabase.ValueString()
+	} else {
+		glueDatabase = nil
+	}
 	glueRegion := r.GlueRegion.ValueString()
 	warehouseConnection := new(string)
 	if !r.WarehouseConnection.IsUnknown() && !r.WarehouseConnection.IsNull() {
@@ -164,7 +169,7 @@ func (r *ConnectionICEBERGResourceModel) RefreshFromSharedConnectionIceberg(resp
 			r.DefaultUpdateSchedule[defaultUpdateScheduleCount].UpdateSchedule = defaultUpdateSchedule1.UpdateSchedule
 		}
 	}
-	r.GlueDatabase = types.StringValue(resp.GlueDatabase)
+	r.GlueDatabase = types.StringPointerValue(resp.GlueDatabase)
 	r.GlueRegion = types.StringValue(resp.GlueRegion)
 	r.IamRole = types.StringValue(resp.IamRole)
 	r.ID = types.StringValue(resp.ID)

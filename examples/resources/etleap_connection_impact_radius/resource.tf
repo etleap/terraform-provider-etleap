@@ -2,6 +2,6 @@ resource "etleap_connection_impact_radius" "my_connectionimpact_radius" {
   account_sid                 = "...my_account_sid..."
   auth_token                  = "...my_auth_token..."
   deletion_of_export_products = false
-  name                        = "Victoria Nienow Jr."
+  name                        = "Arlene Sporer"
   type                        = "IMPACT_RADIUS"
 }

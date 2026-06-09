@@ -21,6 +21,7 @@ const (
 	SourceTypesTypeConfluentCloud           SourceTypesType = "CONFLUENT_CLOUD"
 	SourceTypesTypeCoupa                    SourceTypesType = "COUPA"
 	SourceTypesTypeCriteo                   SourceTypesType = "CRITEO"
+	SourceTypesTypeDayforce                 SourceTypesType = "DAYFORCE"
 	SourceTypesTypeDb2                      SourceTypesType = "DB2"
 	SourceTypesTypeDb2Sharded               SourceTypesType = "DB2_SHARDED"
 	SourceTypesTypeDeltaLake                SourceTypesType = "DELTA_LAKE"
@@ -125,6 +126,7 @@ type SourceTypes struct {
 	SourceConfluentCloud           *SourceConfluentCloud
 	SourceCoupa                    *SourceCoupa
 	SourceCriteo                   *SourceCriteo
+	SourceDayforce                 *SourceDayforce
 	SourceDb2                      *SourceDb2
 	SourceDb2Sharded               *SourceDb2Sharded
 	SourceDeltaLake                *SourceDeltaLake
@@ -326,6 +328,18 @@ func CreateSourceTypesCriteo(criteo SourceCriteo) SourceTypes {
 	return SourceTypes{
 		SourceCriteo: &criteo,
 		Type:         typ,
+	}
+}
+
+func CreateSourceTypesDayforce(dayforce SourceDayforce) SourceTypes {
+	typ := SourceTypesTypeDayforce
+
+	typStr := SourceDayforceType(typ)
+	dayforce.Type = typStr
+
+	return SourceTypes{
+		SourceDayforce: &dayforce,
+		Type:           typ,
 	}
 }
 
@@ -1526,6 +1540,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceCriteo = sourceCriteo
 		u.Type = SourceTypesTypeCriteo
 		return nil
+	case "DAYFORCE":
+		sourceDayforce := new(SourceDayforce)
+		if err := utils.UnmarshalJSON(data, &sourceDayforce, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceDayforce = sourceDayforce
+		u.Type = SourceTypesTypeDayforce
+		return nil
 	case "DB2":
 		sourceDb2 := new(SourceDb2)
 		if err := utils.UnmarshalJSON(data, &sourceDb2, "", true, true); err != nil {
@@ -2394,6 +2417,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceCriteo != nil {
 		return utils.MarshalJSON(u.SourceCriteo, "", true)
+	}
+
+	if u.SourceDayforce != nil {
+		return utils.MarshalJSON(u.SourceDayforce, "", true)
 	}
 
 	if u.SourceDb2 != nil {

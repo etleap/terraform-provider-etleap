@@ -1,3 +1,3 @@
 data "etleap_connection_erpx" "my_connectionerpx" {
-  id = "da3ac72a-6989-485c-a4c7-4d03f5dc7ff8"
+  id = "36b3e275-2b6d-4892-a3ad-d93e7f468517"
 }

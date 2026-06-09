@@ -1,7 +1,7 @@
 resource "etleap_connection_recurly" "my_connectionrecurly" {
   api_key                     = "...my_api_key..."
   deletion_of_export_products = true
-  name                        = "Cory Kshlerin"
+  name                        = "Morris Spencer"
   subdomain                   = "...my_subdomain..."
   type                        = "RECURLY"
 }

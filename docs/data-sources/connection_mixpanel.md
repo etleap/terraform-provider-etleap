@@ -14,7 +14,7 @@ ConnectionMIXPANEL DataSource
 
 ```terraform
 data "etleap_connection_mixpanel" "my_connectionmixpanel" {
-  id = "d927f15c-11db-42e4-b27a-6f57fb63219e"
+  id = "e1ac4edc-e8c5-48a2-b3c0-985a453323d7"
 }
 ```
 

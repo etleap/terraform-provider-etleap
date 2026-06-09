@@ -943,6 +943,13 @@ func (o *PipelineUpdate) GetSourceCriteo() *SourceCriteoUpdate {
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceDayforce() *SourceDayforceUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceDayforceUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceDb2() *SourceDb2Update {
 	if v := o.GetSource(); v != nil {
 		return v.SourceDb2Update

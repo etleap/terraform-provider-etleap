@@ -14,18 +14,18 @@ ConnectionREDSHIFT Resource
 
 ```terraform
 resource "etleap_connection_redshift" "my_connectionredshift" {
-  address                       = "24185 Lebsack Ramp"
+  address                       = "745 Veum Motorway"
   database                      = "...my_database..."
-  deletion_of_export_products   = true
-  dynamic_varchar_width_enabled = true
-  name                          = "Kristin Grady"
+  deletion_of_export_products   = false
+  dynamic_varchar_width_enabled = false
+  name                          = "Judy Nader"
   password                      = "...my_password..."
-  port                          = 7
-  query_tags_enabled            = true
+  port                          = 6
+  query_tags_enabled            = false
   schema                        = "...my_schema..."
   source_only                   = false
   type                          = "REDSHIFT"
-  username                      = "Loy_Veum"
+  username                      = "Fay64"
 }
 ```
 

@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "dd07e067-3f46-499d-b1c9-d2b9601c2697"
+  id = "aa2ae1e3-ec7a-4bc9-b418-1ea555c7d227"
 }
 ```
 
@@ -358,6 +358,7 @@ Read-Only:
 - `confluent_cloud` (Attributes) (see [below for nested schema](#nestedatt--source--confluent_cloud))
 - `coupa` (Attributes) (see [below for nested schema](#nestedatt--source--coupa))
 - `criteo` (Attributes) (see [below for nested schema](#nestedatt--source--criteo))
+- `dayforce` (Attributes) (see [below for nested schema](#nestedatt--source--dayforce))
 - `db2` (Attributes) (see [below for nested schema](#nestedatt--source--db2))
 - `db2_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--db2_sharded))
 - `delta_lake` (Attributes) (see [below for nested schema](#nestedatt--source--delta_lake))
@@ -563,6 +564,17 @@ Read-Only:
 - `metrics` (List of String) Specify the report `metric` if and only if the entity is 'report_placement' or 'report_statistics'. Example values: [clicks, displays]
 - `timezone` (List of String) Specify the report `timezone` if and only if the entity is 'report_placement' or 'report_transactions'. Example values: [UTC, ETC/GMT-3]
 - `type` (String) must be one of ["CRITEO"]
+
+
+<a id="nestedatt--source--dayforce"></a>
+### Nested Schema for `source.dayforce`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The Dayforce resource. Example: Departments
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["DAYFORCE"]
 
 
 <a id="nestedatt--source--db2"></a>

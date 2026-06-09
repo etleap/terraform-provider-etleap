@@ -16,21 +16,21 @@ ConnectionDb2SHARDED Resource
 resource "etleap_connection_db2_sharded" "my_connectiondb2_sharded" {
   certificate                 = "...my_certificate..."
   deletion_of_export_products = true
-  name                        = "Gerald Greenholt"
+  name                        = "Henry Beatty"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "744 Howe Passage"
+      address  = "2625 Lenore Meadow"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 1
+      port     = 8
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "86526 Khalid Bypass"
-        port     = 6
-        username = "Judson39"
+        address  = "31764 Baylee Pass"
+        port     = 7
+        username = "Cleveland90"
       }
-      username = "Ceasar.Reilly"
+      username = "Sandrine84"
     },
   ]
   type = "DB2_SHARDED"

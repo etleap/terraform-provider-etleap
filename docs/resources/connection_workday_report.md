@@ -14,12 +14,12 @@ ConnectionWORKDAYREPORT Resource
 
 ```terraform
 resource "etleap_connection_workday_report" "my_connectionworkday_report" {
-  deletion_of_export_products = true
-  name                        = "Frederick Glover"
+  deletion_of_export_products = false
+  name                        = "Cheryl Larkin"
   password                    = "...my_password..."
   report_url                  = "...my_report_url..."
   type                        = "WORKDAY_REPORT"
-  username                    = "Billie.Schimmel92"
+  username                    = "Eladio3"
 }
 ```
 

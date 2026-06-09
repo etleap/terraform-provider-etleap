@@ -1,3 +1,3 @@
 data "etleap_connection_qualtrics" "my_connectionqualtrics" {
-  id = "e63ca81c-6a66-4008-9f1e-39ec2967e50f"
+  id = "5d4af3c8-533d-4610-9cd6-6bfe854e4c41"
 }

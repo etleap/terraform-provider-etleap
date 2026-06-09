@@ -1,3 +1,3 @@
 data "etleap_connection_gong" "my_connectiongong" {
-  id = "cc82ea9c-b435-4d40-8f97-f1fadd5beb08"
+  id = "f672b5e4-0d25-4a1b-9c84-0ce559de8d07"
 }

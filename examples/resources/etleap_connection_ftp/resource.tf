@@ -1,10 +1,10 @@
 resource "etleap_connection_ftp" "my_connectionftp" {
-  deletion_of_export_products = true
-  hostname                    = "weepy-moron.biz"
-  name                        = "Ronald Heller"
-  passive_mode                = false
+  deletion_of_export_products = false
+  hostname                    = "buzzing-maintainer.info"
+  name                        = "Mrs. Jana Wiegand MD"
+  passive_mode                = true
   password                    = "...my_password..."
-  port                        = 9
+  port                        = 2
   type                        = "FTP"
-  username                    = "Hilbert.Veum"
+  username                    = "Wallace53"
 }

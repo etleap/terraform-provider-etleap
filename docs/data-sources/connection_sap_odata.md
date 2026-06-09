@@ -14,7 +14,7 @@ ConnectionSAPODATA DataSource
 
 ```terraform
 data "etleap_connection_sap_odata" "my_connectionsap_odata" {
-  id = "02be8738-53f1-41b9-92c5-70b10edafda5"
+  id = "e682d365-90d8-4422-806e-542855c71c1e"
 }
 ```
 

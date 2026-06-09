@@ -15,8 +15,8 @@ ConnectionJIRACLOUD Resource
 ```terraform
 resource "etleap_connection_jira_cloud" "my_connectionjira_cloud" {
   code                        = "...my_code..."
-  deletion_of_export_products = false
-  name                        = "Joyce Grimes"
+  deletion_of_export_products = true
+  name                        = "Mrs. Clara Waters"
   type                        = "JIRA_CLOUD"
 }
 ```

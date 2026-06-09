@@ -14,7 +14,7 @@ ConnectionS3DATALAKE DataSource
 
 ```terraform
 data "etleap_connection_s3_data_lake" "my_connections3_data_lake" {
-  id = "48314bee-70d6-4297-85e9-1b1d750d84f3"
+  id = "7b3b16a3-4687-4ced-85f2-babd6292eb3c"
 }
 ```
 

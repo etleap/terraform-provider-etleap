@@ -14,16 +14,16 @@ ConnectionDb2 Resource
 
 ```terraform
 resource "etleap_connection_db2" "my_connectiondb2" {
-  address                     = "089 Irwin Spur"
+  address                     = "05110 Hilll Pines"
   certificate                 = "...my_certificate..."
   database                    = "...my_database..."
   deletion_of_export_products = true
-  name                        = "Kelly Conroy V"
+  name                        = "Gerald Greenholt"
   password                    = "...my_password..."
-  port                        = 1
+  port                        = 8
   schema                      = "...my_schema..."
   type                        = "DB2"
-  username                    = "Bernardo.Bartell64"
+  username                    = "Nya_Johns"
 }
 ```
 

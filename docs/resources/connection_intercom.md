@@ -15,8 +15,8 @@ ConnectionINTERCOM Resource
 ```terraform
 resource "etleap_connection_intercom" "my_connectionintercom" {
   code                        = "...my_code..."
-  deletion_of_export_products = false
-  name                        = "Josefina Emard"
+  deletion_of_export_products = true
+  name                        = "Mrs. Renee Jakubowski"
   type                        = "INTERCOM"
 }
 ```

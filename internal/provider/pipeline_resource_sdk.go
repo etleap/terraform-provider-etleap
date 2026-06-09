@@ -316,15 +316,38 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			SourceCriteo: sourceCriteo,
 		}
 	}
-	var sourceDb2 *shared.SourceDb2
-	if r.Source.Db2 != nil {
-		typeVar9 := shared.SourceDb2Type(r.Source.Db2.Type.ValueString())
-		connectionId9 := r.Source.Db2.ConnectionID.ValueString()
+	var sourceDayforce *shared.SourceDayforce
+	if r.Source.Dayforce != nil {
+		typeVar9 := shared.SourceDayforceType(r.Source.Dayforce.Type.ValueString())
+		connectionId9 := r.Source.Dayforce.ConnectionID.ValueString()
 		latencyThreshold9 := new(int64)
-		if !r.Source.Db2.LatencyThreshold.IsUnknown() && !r.Source.Db2.LatencyThreshold.IsNull() {
-			*latencyThreshold9 = r.Source.Db2.LatencyThreshold.ValueInt64()
+		if !r.Source.Dayforce.LatencyThreshold.IsUnknown() && !r.Source.Dayforce.LatencyThreshold.IsNull() {
+			*latencyThreshold9 = r.Source.Dayforce.LatencyThreshold.ValueInt64()
 		} else {
 			latencyThreshold9 = nil
+		}
+		entity7 := r.Source.Dayforce.Entity.ValueString()
+		sourceDayforce = &shared.SourceDayforce{
+			Type:             typeVar9,
+			ConnectionID:     connectionId9,
+			LatencyThreshold: latencyThreshold9,
+			Entity:           entity7,
+		}
+	}
+	if sourceDayforce != nil {
+		source = shared.SourceTypes{
+			SourceDayforce: sourceDayforce,
+		}
+	}
+	var sourceDb2 *shared.SourceDb2
+	if r.Source.Db2 != nil {
+		typeVar10 := shared.SourceDb2Type(r.Source.Db2.Type.ValueString())
+		connectionId10 := r.Source.Db2.ConnectionID.ValueString()
+		latencyThreshold10 := new(int64)
+		if !r.Source.Db2.LatencyThreshold.IsUnknown() && !r.Source.Db2.LatencyThreshold.IsNull() {
+			*latencyThreshold10 = r.Source.Db2.LatencyThreshold.ValueInt64()
+		} else {
+			latencyThreshold10 = nil
 		}
 		table1 := new(string)
 		if !r.Source.Db2.Table.IsUnknown() && !r.Source.Db2.Table.IsNull() {
@@ -355,9 +378,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema = nil
 		}
 		sourceDb2 = &shared.SourceDb2{
-			Type:              typeVar9,
-			ConnectionID:      connectionId9,
-			LatencyThreshold:  latencyThreshold9,
+			Type:              typeVar10,
+			ConnectionID:      connectionId10,
+			LatencyThreshold:  latencyThreshold10,
 			Table:             table1,
 			TableNameFilter:   tableNameFilter1,
 			LastUpdatedColumn: lastUpdatedColumn1,
@@ -372,13 +395,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceDb2Sharded *shared.SourceDb2Sharded
 	if r.Source.Db2Sharded != nil {
-		typeVar10 := shared.SourceDb2ShardedType(r.Source.Db2Sharded.Type.ValueString())
-		connectionId10 := r.Source.Db2Sharded.ConnectionID.ValueString()
-		latencyThreshold10 := new(int64)
+		typeVar11 := shared.SourceDb2ShardedType(r.Source.Db2Sharded.Type.ValueString())
+		connectionId11 := r.Source.Db2Sharded.ConnectionID.ValueString()
+		latencyThreshold11 := new(int64)
 		if !r.Source.Db2Sharded.LatencyThreshold.IsUnknown() && !r.Source.Db2Sharded.LatencyThreshold.IsNull() {
-			*latencyThreshold10 = r.Source.Db2Sharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold11 = r.Source.Db2Sharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold10 = nil
+			latencyThreshold11 = nil
 		}
 		table2 := new(string)
 		if !r.Source.Db2Sharded.Table.IsUnknown() && !r.Source.Db2Sharded.Table.IsNull() {
@@ -409,9 +432,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema1 = nil
 		}
 		sourceDb2Sharded = &shared.SourceDb2Sharded{
-			Type:              typeVar10,
-			ConnectionID:      connectionId10,
-			LatencyThreshold:  latencyThreshold10,
+			Type:              typeVar11,
+			ConnectionID:      connectionId11,
+			LatencyThreshold:  latencyThreshold11,
 			Table:             table2,
 			TableNameFilter:   tableNameFilter2,
 			LastUpdatedColumn: lastUpdatedColumn2,
@@ -426,13 +449,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceDeltaLake *shared.SourceDeltaLake
 	if r.Source.DeltaLake != nil {
-		typeVar11 := shared.SourceDeltaLakeType(r.Source.DeltaLake.Type.ValueString())
-		connectionId11 := r.Source.DeltaLake.ConnectionID.ValueString()
-		latencyThreshold11 := new(int64)
+		typeVar12 := shared.SourceDeltaLakeType(r.Source.DeltaLake.Type.ValueString())
+		connectionId12 := r.Source.DeltaLake.ConnectionID.ValueString()
+		latencyThreshold12 := new(int64)
 		if !r.Source.DeltaLake.LatencyThreshold.IsUnknown() && !r.Source.DeltaLake.LatencyThreshold.IsNull() {
-			*latencyThreshold11 = r.Source.DeltaLake.LatencyThreshold.ValueInt64()
+			*latencyThreshold12 = r.Source.DeltaLake.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold11 = nil
+			latencyThreshold12 = nil
 		}
 		table3 := new(string)
 		if !r.Source.DeltaLake.Table.IsUnknown() && !r.Source.DeltaLake.Table.IsNull() {
@@ -463,9 +486,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema2 = nil
 		}
 		sourceDeltaLake = &shared.SourceDeltaLake{
-			Type:              typeVar11,
-			ConnectionID:      connectionId11,
-			LatencyThreshold:  latencyThreshold11,
+			Type:              typeVar12,
+			ConnectionID:      connectionId12,
+			LatencyThreshold:  latencyThreshold12,
 			Table:             table3,
 			TableNameFilter:   tableNameFilter3,
 			LastUpdatedColumn: lastUpdatedColumn3,
@@ -480,20 +503,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceEgnyte *shared.SourceEgnyte
 	if r.Source.Egnyte != nil {
-		typeVar12 := shared.SourceEgnyteType(r.Source.Egnyte.Type.ValueString())
-		connectionId12 := r.Source.Egnyte.ConnectionID.ValueString()
-		latencyThreshold12 := new(int64)
+		typeVar13 := shared.SourceEgnyteType(r.Source.Egnyte.Type.ValueString())
+		connectionId13 := r.Source.Egnyte.ConnectionID.ValueString()
+		latencyThreshold13 := new(int64)
 		if !r.Source.Egnyte.LatencyThreshold.IsUnknown() && !r.Source.Egnyte.LatencyThreshold.IsNull() {
-			*latencyThreshold12 = r.Source.Egnyte.LatencyThreshold.ValueInt64()
+			*latencyThreshold13 = r.Source.Egnyte.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold12 = nil
+			latencyThreshold13 = nil
 		}
-		entity7 := r.Source.Egnyte.Entity.ValueString()
+		entity8 := r.Source.Egnyte.Entity.ValueString()
 		sourceEgnyte = &shared.SourceEgnyte{
-			Type:             typeVar12,
-			ConnectionID:     connectionId12,
-			LatencyThreshold: latencyThreshold12,
-			Entity:           entity7,
+			Type:             typeVar13,
+			ConnectionID:     connectionId13,
+			LatencyThreshold: latencyThreshold13,
+			Entity:           entity8,
 		}
 	}
 	if sourceEgnyte != nil {
@@ -503,20 +526,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceElasticsearch *shared.SourceElasticsearch
 	if r.Source.Elasticsearch != nil {
-		typeVar13 := shared.SourceElasticsearchType(r.Source.Elasticsearch.Type.ValueString())
-		connectionId13 := r.Source.Elasticsearch.ConnectionID.ValueString()
-		latencyThreshold13 := new(int64)
+		typeVar14 := shared.SourceElasticsearchType(r.Source.Elasticsearch.Type.ValueString())
+		connectionId14 := r.Source.Elasticsearch.ConnectionID.ValueString()
+		latencyThreshold14 := new(int64)
 		if !r.Source.Elasticsearch.LatencyThreshold.IsUnknown() && !r.Source.Elasticsearch.LatencyThreshold.IsNull() {
-			*latencyThreshold13 = r.Source.Elasticsearch.LatencyThreshold.ValueInt64()
+			*latencyThreshold14 = r.Source.Elasticsearch.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold13 = nil
+			latencyThreshold14 = nil
 		}
-		entity8 := r.Source.Elasticsearch.Entity.ValueString()
+		entity9 := r.Source.Elasticsearch.Entity.ValueString()
 		sourceElasticsearch = &shared.SourceElasticsearch{
-			Type:             typeVar13,
-			ConnectionID:     connectionId13,
-			LatencyThreshold: latencyThreshold13,
-			Entity:           entity8,
+			Type:             typeVar14,
+			ConnectionID:     connectionId14,
+			LatencyThreshold: latencyThreshold14,
+			Entity:           entity9,
 		}
 	}
 	if sourceElasticsearch != nil {
@@ -526,25 +549,25 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceElluminate *shared.SourceElluminate
 	if r.Source.Elluminate != nil {
-		typeVar14 := shared.SourceElluminateType(r.Source.Elluminate.Type.ValueString())
-		connectionId14 := r.Source.Elluminate.ConnectionID.ValueString()
-		latencyThreshold14 := new(int64)
+		typeVar15 := shared.SourceElluminateType(r.Source.Elluminate.Type.ValueString())
+		connectionId15 := r.Source.Elluminate.ConnectionID.ValueString()
+		latencyThreshold15 := new(int64)
 		if !r.Source.Elluminate.LatencyThreshold.IsUnknown() && !r.Source.Elluminate.LatencyThreshold.IsNull() {
-			*latencyThreshold14 = r.Source.Elluminate.LatencyThreshold.ValueInt64()
+			*latencyThreshold15 = r.Source.Elluminate.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold14 = nil
+			latencyThreshold15 = nil
 		}
-		entity9 := r.Source.Elluminate.Entity.ValueString()
+		entity10 := r.Source.Elluminate.Entity.ValueString()
 		schemaName := r.Source.Elluminate.SchemaName.ValueString()
 		var domainName []string = nil
 		for _, domainNameItem := range r.Source.Elluminate.DomainName {
 			domainName = append(domainName, domainNameItem.ValueString())
 		}
 		sourceElluminate = &shared.SourceElluminate{
-			Type:             typeVar14,
-			ConnectionID:     connectionId14,
-			LatencyThreshold: latencyThreshold14,
-			Entity:           entity9,
+			Type:             typeVar15,
+			ConnectionID:     connectionId15,
+			LatencyThreshold: latencyThreshold15,
+			Entity:           entity10,
 			SchemaName:       schemaName,
 			DomainName:       domainName,
 		}
@@ -556,24 +579,24 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceEloqua *shared.SourceEloqua
 	if r.Source.Eloqua != nil {
-		typeVar15 := shared.SourceEloquaType(r.Source.Eloqua.Type.ValueString())
-		connectionId15 := r.Source.Eloqua.ConnectionID.ValueString()
-		latencyThreshold15 := new(int64)
+		typeVar16 := shared.SourceEloquaType(r.Source.Eloqua.Type.ValueString())
+		connectionId16 := r.Source.Eloqua.ConnectionID.ValueString()
+		latencyThreshold16 := new(int64)
 		if !r.Source.Eloqua.LatencyThreshold.IsUnknown() && !r.Source.Eloqua.LatencyThreshold.IsNull() {
-			*latencyThreshold15 = r.Source.Eloqua.LatencyThreshold.ValueInt64()
+			*latencyThreshold16 = r.Source.Eloqua.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold15 = nil
+			latencyThreshold16 = nil
 		}
-		entity10 := r.Source.Eloqua.Entity.ValueString()
+		entity11 := r.Source.Eloqua.Entity.ValueString()
 		var fields1 []string = nil
 		for _, fieldsItem1 := range r.Source.Eloqua.Fields {
 			fields1 = append(fields1, fieldsItem1.ValueString())
 		}
 		sourceEloqua = &shared.SourceEloqua{
-			Type:             typeVar15,
-			ConnectionID:     connectionId15,
-			LatencyThreshold: latencyThreshold15,
-			Entity:           entity10,
+			Type:             typeVar16,
+			ConnectionID:     connectionId16,
+			LatencyThreshold: latencyThreshold16,
+			Entity:           entity11,
 			Fields:           fields1,
 		}
 	}
@@ -584,20 +607,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceErpx *shared.SourceErpx
 	if r.Source.Erpx != nil {
-		typeVar16 := shared.SourceErpxType(r.Source.Erpx.Type.ValueString())
-		connectionId16 := r.Source.Erpx.ConnectionID.ValueString()
-		latencyThreshold16 := new(int64)
+		typeVar17 := shared.SourceErpxType(r.Source.Erpx.Type.ValueString())
+		connectionId17 := r.Source.Erpx.ConnectionID.ValueString()
+		latencyThreshold17 := new(int64)
 		if !r.Source.Erpx.LatencyThreshold.IsUnknown() && !r.Source.Erpx.LatencyThreshold.IsNull() {
-			*latencyThreshold16 = r.Source.Erpx.LatencyThreshold.ValueInt64()
+			*latencyThreshold17 = r.Source.Erpx.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold16 = nil
+			latencyThreshold17 = nil
 		}
-		entity11 := r.Source.Erpx.Entity.ValueString()
+		entity12 := r.Source.Erpx.Entity.ValueString()
 		sourceErpx = &shared.SourceErpx{
-			Type:             typeVar16,
-			ConnectionID:     connectionId16,
-			LatencyThreshold: latencyThreshold16,
-			Entity:           entity11,
+			Type:             typeVar17,
+			ConnectionID:     connectionId17,
+			LatencyThreshold: latencyThreshold17,
+			Entity:           entity12,
 		}
 	}
 	if sourceErpx != nil {
@@ -607,24 +630,24 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceFacebookAds *shared.SourceFacebookAds
 	if r.Source.FacebookAds != nil {
-		typeVar17 := shared.SourceFacebookAdsType(r.Source.FacebookAds.Type.ValueString())
-		connectionId17 := r.Source.FacebookAds.ConnectionID.ValueString()
-		latencyThreshold17 := new(int64)
+		typeVar18 := shared.SourceFacebookAdsType(r.Source.FacebookAds.Type.ValueString())
+		connectionId18 := r.Source.FacebookAds.ConnectionID.ValueString()
+		latencyThreshold18 := new(int64)
 		if !r.Source.FacebookAds.LatencyThreshold.IsUnknown() && !r.Source.FacebookAds.LatencyThreshold.IsNull() {
-			*latencyThreshold17 = r.Source.FacebookAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold18 = r.Source.FacebookAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold17 = nil
+			latencyThreshold18 = nil
 		}
-		entity12 := r.Source.FacebookAds.Entity.ValueString()
+		entity13 := r.Source.FacebookAds.Entity.ValueString()
 		var breakdowns []string = nil
 		for _, breakdownsItem := range r.Source.FacebookAds.Breakdowns {
 			breakdowns = append(breakdowns, breakdownsItem.ValueString())
 		}
 		sourceFacebookAds = &shared.SourceFacebookAds{
-			Type:             typeVar17,
-			ConnectionID:     connectionId17,
-			LatencyThreshold: latencyThreshold17,
-			Entity:           entity12,
+			Type:             typeVar18,
+			ConnectionID:     connectionId18,
+			LatencyThreshold: latencyThreshold18,
+			Entity:           entity13,
 			Breakdowns:       breakdowns,
 		}
 	}
@@ -635,20 +658,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceFifteenFive *shared.SourceFifteenFive
 	if r.Source.FifteenFive != nil {
-		typeVar18 := shared.SourceFifteenFiveType(r.Source.FifteenFive.Type.ValueString())
-		connectionId18 := r.Source.FifteenFive.ConnectionID.ValueString()
-		latencyThreshold18 := new(int64)
+		typeVar19 := shared.SourceFifteenFiveType(r.Source.FifteenFive.Type.ValueString())
+		connectionId19 := r.Source.FifteenFive.ConnectionID.ValueString()
+		latencyThreshold19 := new(int64)
 		if !r.Source.FifteenFive.LatencyThreshold.IsUnknown() && !r.Source.FifteenFive.LatencyThreshold.IsNull() {
-			*latencyThreshold18 = r.Source.FifteenFive.LatencyThreshold.ValueInt64()
+			*latencyThreshold19 = r.Source.FifteenFive.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold18 = nil
+			latencyThreshold19 = nil
 		}
-		entity13 := r.Source.FifteenFive.Entity.ValueString()
+		entity14 := r.Source.FifteenFive.Entity.ValueString()
 		sourceFifteenFive = &shared.SourceFifteenFive{
-			Type:             typeVar18,
-			ConnectionID:     connectionId18,
-			LatencyThreshold: latencyThreshold18,
-			Entity:           entity13,
+			Type:             typeVar19,
+			ConnectionID:     connectionId19,
+			LatencyThreshold: latencyThreshold19,
+			Entity:           entity14,
 		}
 	}
 	if sourceFifteenFive != nil {
@@ -658,20 +681,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceFreshcaller *shared.SourceFreshcaller
 	if r.Source.Freshcaller != nil {
-		typeVar19 := shared.SourceFreshcallerType(r.Source.Freshcaller.Type.ValueString())
-		connectionId19 := r.Source.Freshcaller.ConnectionID.ValueString()
-		latencyThreshold19 := new(int64)
+		typeVar20 := shared.SourceFreshcallerType(r.Source.Freshcaller.Type.ValueString())
+		connectionId20 := r.Source.Freshcaller.ConnectionID.ValueString()
+		latencyThreshold20 := new(int64)
 		if !r.Source.Freshcaller.LatencyThreshold.IsUnknown() && !r.Source.Freshcaller.LatencyThreshold.IsNull() {
-			*latencyThreshold19 = r.Source.Freshcaller.LatencyThreshold.ValueInt64()
+			*latencyThreshold20 = r.Source.Freshcaller.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold19 = nil
+			latencyThreshold20 = nil
 		}
-		entity14 := r.Source.Freshcaller.Entity.ValueString()
+		entity15 := r.Source.Freshcaller.Entity.ValueString()
 		sourceFreshcaller = &shared.SourceFreshcaller{
-			Type:             typeVar19,
-			ConnectionID:     connectionId19,
-			LatencyThreshold: latencyThreshold19,
-			Entity:           entity14,
+			Type:             typeVar20,
+			ConnectionID:     connectionId20,
+			LatencyThreshold: latencyThreshold20,
+			Entity:           entity15,
 		}
 	}
 	if sourceFreshcaller != nil {
@@ -681,24 +704,24 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceFreshchat *shared.SourceFreshchat
 	if r.Source.Freshchat != nil {
-		typeVar20 := shared.SourceFreshchatType(r.Source.Freshchat.Type.ValueString())
-		connectionId20 := r.Source.Freshchat.ConnectionID.ValueString()
-		latencyThreshold20 := new(int64)
+		typeVar21 := shared.SourceFreshchatType(r.Source.Freshchat.Type.ValueString())
+		connectionId21 := r.Source.Freshchat.ConnectionID.ValueString()
+		latencyThreshold21 := new(int64)
 		if !r.Source.Freshchat.LatencyThreshold.IsUnknown() && !r.Source.Freshchat.LatencyThreshold.IsNull() {
-			*latencyThreshold20 = r.Source.Freshchat.LatencyThreshold.ValueInt64()
+			*latencyThreshold21 = r.Source.Freshchat.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold20 = nil
+			latencyThreshold21 = nil
 		}
-		entity15 := r.Source.Freshchat.Entity.ValueString()
+		entity16 := r.Source.Freshchat.Entity.ValueString()
 		var view []string = nil
 		for _, viewItem := range r.Source.Freshchat.View {
 			view = append(view, viewItem.ValueString())
 		}
 		sourceFreshchat = &shared.SourceFreshchat{
-			Type:             typeVar20,
-			ConnectionID:     connectionId20,
-			LatencyThreshold: latencyThreshold20,
-			Entity:           entity15,
+			Type:             typeVar21,
+			ConnectionID:     connectionId21,
+			LatencyThreshold: latencyThreshold21,
+			Entity:           entity16,
 			View:             view,
 		}
 	}
@@ -709,20 +732,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceFreshdesk *shared.SourceFreshdesk
 	if r.Source.Freshdesk != nil {
-		typeVar21 := shared.SourceFreshdeskType(r.Source.Freshdesk.Type.ValueString())
-		connectionId21 := r.Source.Freshdesk.ConnectionID.ValueString()
-		latencyThreshold21 := new(int64)
+		typeVar22 := shared.SourceFreshdeskType(r.Source.Freshdesk.Type.ValueString())
+		connectionId22 := r.Source.Freshdesk.ConnectionID.ValueString()
+		latencyThreshold22 := new(int64)
 		if !r.Source.Freshdesk.LatencyThreshold.IsUnknown() && !r.Source.Freshdesk.LatencyThreshold.IsNull() {
-			*latencyThreshold21 = r.Source.Freshdesk.LatencyThreshold.ValueInt64()
+			*latencyThreshold22 = r.Source.Freshdesk.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold21 = nil
+			latencyThreshold22 = nil
 		}
-		entity16 := r.Source.Freshdesk.Entity.ValueString()
+		entity17 := r.Source.Freshdesk.Entity.ValueString()
 		sourceFreshdesk = &shared.SourceFreshdesk{
-			Type:             typeVar21,
-			ConnectionID:     connectionId21,
-			LatencyThreshold: latencyThreshold21,
-			Entity:           entity16,
+			Type:             typeVar22,
+			ConnectionID:     connectionId22,
+			LatencyThreshold: latencyThreshold22,
+			Entity:           entity17,
 		}
 	}
 	if sourceFreshdesk != nil {
@@ -732,24 +755,24 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceFreshsales *shared.SourceFreshsales
 	if r.Source.Freshsales != nil {
-		typeVar22 := shared.SourceFreshsalesType(r.Source.Freshsales.Type.ValueString())
-		connectionId22 := r.Source.Freshsales.ConnectionID.ValueString()
-		latencyThreshold22 := new(int64)
+		typeVar23 := shared.SourceFreshsalesType(r.Source.Freshsales.Type.ValueString())
+		connectionId23 := r.Source.Freshsales.ConnectionID.ValueString()
+		latencyThreshold23 := new(int64)
 		if !r.Source.Freshsales.LatencyThreshold.IsUnknown() && !r.Source.Freshsales.LatencyThreshold.IsNull() {
-			*latencyThreshold22 = r.Source.Freshsales.LatencyThreshold.ValueInt64()
+			*latencyThreshold23 = r.Source.Freshsales.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold22 = nil
+			latencyThreshold23 = nil
 		}
-		entity17 := r.Source.Freshsales.Entity.ValueString()
+		entity18 := r.Source.Freshsales.Entity.ValueString()
 		var view1 []string = nil
 		for _, viewItem1 := range r.Source.Freshsales.View {
 			view1 = append(view1, viewItem1.ValueString())
 		}
 		sourceFreshsales = &shared.SourceFreshsales{
-			Type:             typeVar22,
-			ConnectionID:     connectionId22,
-			LatencyThreshold: latencyThreshold22,
-			Entity:           entity17,
+			Type:             typeVar23,
+			ConnectionID:     connectionId23,
+			LatencyThreshold: latencyThreshold23,
+			Entity:           entity18,
 			View:             view1,
 		}
 	}
@@ -760,13 +783,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceFtp *shared.SourceFtp
 	if r.Source.Ftp != nil {
-		typeVar23 := shared.SourceFtpType(r.Source.Ftp.Type.ValueString())
-		connectionId23 := r.Source.Ftp.ConnectionID.ValueString()
-		latencyThreshold23 := new(int64)
+		typeVar24 := shared.SourceFtpType(r.Source.Ftp.Type.ValueString())
+		connectionId24 := r.Source.Ftp.ConnectionID.ValueString()
+		latencyThreshold24 := new(int64)
 		if !r.Source.Ftp.LatencyThreshold.IsUnknown() && !r.Source.Ftp.LatencyThreshold.IsNull() {
-			*latencyThreshold23 = r.Source.Ftp.LatencyThreshold.ValueInt64()
+			*latencyThreshold24 = r.Source.Ftp.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold23 = nil
+			latencyThreshold24 = nil
 		}
 		fileNameFilter1 := new(string)
 		if !r.Source.Ftp.FileNameFilter.IsUnknown() && !r.Source.Ftp.FileNameFilter.IsNull() {
@@ -798,9 +821,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			globPattern1 = nil
 		}
 		sourceFtp = &shared.SourceFtp{
-			Type:             typeVar23,
-			ConnectionID:     connectionId23,
-			LatencyThreshold: latencyThreshold23,
+			Type:             typeVar24,
+			ConnectionID:     connectionId24,
+			LatencyThreshold: latencyThreshold24,
 			FileNameFilter:   fileNameFilter1,
 			ExcelSheetName:   excelSheetName1,
 			NewFileBehavior:  newFileBehavior1,
@@ -816,20 +839,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceGitlab *shared.SourceGitlab
 	if r.Source.Gitlab != nil {
-		typeVar24 := shared.SourceGitlabType(r.Source.Gitlab.Type.ValueString())
-		connectionId24 := r.Source.Gitlab.ConnectionID.ValueString()
-		latencyThreshold24 := new(int64)
+		typeVar25 := shared.SourceGitlabType(r.Source.Gitlab.Type.ValueString())
+		connectionId25 := r.Source.Gitlab.ConnectionID.ValueString()
+		latencyThreshold25 := new(int64)
 		if !r.Source.Gitlab.LatencyThreshold.IsUnknown() && !r.Source.Gitlab.LatencyThreshold.IsNull() {
-			*latencyThreshold24 = r.Source.Gitlab.LatencyThreshold.ValueInt64()
+			*latencyThreshold25 = r.Source.Gitlab.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold24 = nil
+			latencyThreshold25 = nil
 		}
-		entity18 := r.Source.Gitlab.Entity.ValueString()
+		entity19 := r.Source.Gitlab.Entity.ValueString()
 		sourceGitlab = &shared.SourceGitlab{
-			Type:             typeVar24,
-			ConnectionID:     connectionId24,
-			LatencyThreshold: latencyThreshold24,
-			Entity:           entity18,
+			Type:             typeVar25,
+			ConnectionID:     connectionId25,
+			LatencyThreshold: latencyThreshold25,
+			Entity:           entity19,
 		}
 	}
 	if sourceGitlab != nil {
@@ -839,20 +862,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceGong *shared.SourceGong
 	if r.Source.Gong != nil {
-		typeVar25 := shared.SourceGongType(r.Source.Gong.Type.ValueString())
-		connectionId25 := r.Source.Gong.ConnectionID.ValueString()
-		latencyThreshold25 := new(int64)
+		typeVar26 := shared.SourceGongType(r.Source.Gong.Type.ValueString())
+		connectionId26 := r.Source.Gong.ConnectionID.ValueString()
+		latencyThreshold26 := new(int64)
 		if !r.Source.Gong.LatencyThreshold.IsUnknown() && !r.Source.Gong.LatencyThreshold.IsNull() {
-			*latencyThreshold25 = r.Source.Gong.LatencyThreshold.ValueInt64()
+			*latencyThreshold26 = r.Source.Gong.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold25 = nil
+			latencyThreshold26 = nil
 		}
-		entity19 := r.Source.Gong.Entity.ValueString()
+		entity20 := r.Source.Gong.Entity.ValueString()
 		sourceGong = &shared.SourceGong{
-			Type:             typeVar25,
-			ConnectionID:     connectionId25,
-			LatencyThreshold: latencyThreshold25,
-			Entity:           entity19,
+			Type:             typeVar26,
+			ConnectionID:     connectionId26,
+			LatencyThreshold: latencyThreshold26,
+			Entity:           entity20,
 		}
 	}
 	if sourceGong != nil {
@@ -862,15 +885,15 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceGoogleAds *shared.SourceGoogleAds
 	if r.Source.GoogleAds != nil {
-		typeVar26 := shared.SourceGoogleAdsType(r.Source.GoogleAds.Type.ValueString())
-		connectionId26 := r.Source.GoogleAds.ConnectionID.ValueString()
-		latencyThreshold26 := new(int64)
+		typeVar27 := shared.SourceGoogleAdsType(r.Source.GoogleAds.Type.ValueString())
+		connectionId27 := r.Source.GoogleAds.ConnectionID.ValueString()
+		latencyThreshold27 := new(int64)
 		if !r.Source.GoogleAds.LatencyThreshold.IsUnknown() && !r.Source.GoogleAds.LatencyThreshold.IsNull() {
-			*latencyThreshold26 = r.Source.GoogleAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold27 = r.Source.GoogleAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold26 = nil
+			latencyThreshold27 = nil
 		}
-		entity20 := r.Source.GoogleAds.Entity.ValueString()
+		entity21 := r.Source.GoogleAds.Entity.ValueString()
 		var fields2 []string = nil
 		for _, fieldsItem2 := range r.Source.GoogleAds.Fields {
 			fields2 = append(fields2, fieldsItem2.ValueString())
@@ -888,10 +911,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			metrics1 = append(metrics1, metricsItem1.ValueString())
 		}
 		sourceGoogleAds = &shared.SourceGoogleAds{
-			Type:                typeVar26,
-			ConnectionID:        connectionId26,
-			LatencyThreshold:    latencyThreshold26,
-			Entity:              entity20,
+			Type:                typeVar27,
+			ConnectionID:        connectionId27,
+			LatencyThreshold:    latencyThreshold27,
+			Entity:              entity21,
 			Fields:              fields2,
 			Segments:            segments,
 			AttributedResources: attributedResources,
@@ -905,15 +928,15 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceGoogleAnalyticsGa4 *shared.SourceGoogleAnalyticsGa4
 	if r.Source.GoogleAnalyticsGa4 != nil {
-		typeVar27 := shared.SourceGoogleAnalyticsGa4Type(r.Source.GoogleAnalyticsGa4.Type.ValueString())
-		connectionId27 := r.Source.GoogleAnalyticsGa4.ConnectionID.ValueString()
-		latencyThreshold27 := new(int64)
+		typeVar28 := shared.SourceGoogleAnalyticsGa4Type(r.Source.GoogleAnalyticsGa4.Type.ValueString())
+		connectionId28 := r.Source.GoogleAnalyticsGa4.ConnectionID.ValueString()
+		latencyThreshold28 := new(int64)
 		if !r.Source.GoogleAnalyticsGa4.LatencyThreshold.IsUnknown() && !r.Source.GoogleAnalyticsGa4.LatencyThreshold.IsNull() {
-			*latencyThreshold27 = r.Source.GoogleAnalyticsGa4.LatencyThreshold.ValueInt64()
+			*latencyThreshold28 = r.Source.GoogleAnalyticsGa4.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold27 = nil
+			latencyThreshold28 = nil
 		}
-		entity21 := r.Source.GoogleAnalyticsGa4.Entity.ValueString()
+		entity22 := r.Source.GoogleAnalyticsGa4.Entity.ValueString()
 		var dimensions1 []string = nil
 		for _, dimensionsItem1 := range r.Source.GoogleAnalyticsGa4.Dimensions {
 			dimensions1 = append(dimensions1, dimensionsItem1.ValueString())
@@ -923,10 +946,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			metrics2 = append(metrics2, metricsItem2.ValueString())
 		}
 		sourceGoogleAnalyticsGa4 = &shared.SourceGoogleAnalyticsGa4{
-			Type:             typeVar27,
-			ConnectionID:     connectionId27,
-			LatencyThreshold: latencyThreshold27,
-			Entity:           entity21,
+			Type:             typeVar28,
+			ConnectionID:     connectionId28,
+			LatencyThreshold: latencyThreshold28,
+			Entity:           entity22,
 			Dimensions:       dimensions1,
 			Metrics:          metrics2,
 		}
@@ -938,13 +961,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceGoogleCloudStorage *shared.SourceGoogleCloudStorage
 	if r.Source.GoogleCloudStorage != nil {
-		typeVar28 := shared.SourceGoogleCloudStorageType(r.Source.GoogleCloudStorage.Type.ValueString())
-		connectionId28 := r.Source.GoogleCloudStorage.ConnectionID.ValueString()
-		latencyThreshold28 := new(int64)
+		typeVar29 := shared.SourceGoogleCloudStorageType(r.Source.GoogleCloudStorage.Type.ValueString())
+		connectionId29 := r.Source.GoogleCloudStorage.ConnectionID.ValueString()
+		latencyThreshold29 := new(int64)
 		if !r.Source.GoogleCloudStorage.LatencyThreshold.IsUnknown() && !r.Source.GoogleCloudStorage.LatencyThreshold.IsNull() {
-			*latencyThreshold28 = r.Source.GoogleCloudStorage.LatencyThreshold.ValueInt64()
+			*latencyThreshold29 = r.Source.GoogleCloudStorage.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold28 = nil
+			latencyThreshold29 = nil
 		}
 		fileNameFilter2 := new(string)
 		if !r.Source.GoogleCloudStorage.FileNameFilter.IsUnknown() && !r.Source.GoogleCloudStorage.FileNameFilter.IsNull() {
@@ -976,9 +999,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			globPattern2 = nil
 		}
 		sourceGoogleCloudStorage = &shared.SourceGoogleCloudStorage{
-			Type:             typeVar28,
-			ConnectionID:     connectionId28,
-			LatencyThreshold: latencyThreshold28,
+			Type:             typeVar29,
+			ConnectionID:     connectionId29,
+			LatencyThreshold: latencyThreshold29,
 			FileNameFilter:   fileNameFilter2,
 			ExcelSheetName:   excelSheetName2,
 			NewFileBehavior:  newFileBehavior2,
@@ -994,20 +1017,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceGoogleSheets *shared.SourceGoogleSheets
 	if r.Source.GoogleSheets != nil {
-		typeVar29 := shared.SourceGoogleSheetsType(r.Source.GoogleSheets.Type.ValueString())
-		connectionId29 := r.Source.GoogleSheets.ConnectionID.ValueString()
-		latencyThreshold29 := new(int64)
+		typeVar30 := shared.SourceGoogleSheetsType(r.Source.GoogleSheets.Type.ValueString())
+		connectionId30 := r.Source.GoogleSheets.ConnectionID.ValueString()
+		latencyThreshold30 := new(int64)
 		if !r.Source.GoogleSheets.LatencyThreshold.IsUnknown() && !r.Source.GoogleSheets.LatencyThreshold.IsNull() {
-			*latencyThreshold29 = r.Source.GoogleSheets.LatencyThreshold.ValueInt64()
+			*latencyThreshold30 = r.Source.GoogleSheets.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold29 = nil
+			latencyThreshold30 = nil
 		}
-		entity22 := r.Source.GoogleSheets.Entity.ValueString()
+		entity23 := r.Source.GoogleSheets.Entity.ValueString()
 		sourceGoogleSheets = &shared.SourceGoogleSheets{
-			Type:             typeVar29,
-			ConnectionID:     connectionId29,
-			LatencyThreshold: latencyThreshold29,
-			Entity:           entity22,
+			Type:             typeVar30,
+			ConnectionID:     connectionId30,
+			LatencyThreshold: latencyThreshold30,
+			Entity:           entity23,
 		}
 	}
 	if sourceGoogleSheets != nil {
@@ -1017,20 +1040,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceHubspot *shared.SourceHubspot
 	if r.Source.Hubspot != nil {
-		typeVar30 := shared.SourceHubspotType(r.Source.Hubspot.Type.ValueString())
-		connectionId30 := r.Source.Hubspot.ConnectionID.ValueString()
-		latencyThreshold30 := new(int64)
+		typeVar31 := shared.SourceHubspotType(r.Source.Hubspot.Type.ValueString())
+		connectionId31 := r.Source.Hubspot.ConnectionID.ValueString()
+		latencyThreshold31 := new(int64)
 		if !r.Source.Hubspot.LatencyThreshold.IsUnknown() && !r.Source.Hubspot.LatencyThreshold.IsNull() {
-			*latencyThreshold30 = r.Source.Hubspot.LatencyThreshold.ValueInt64()
+			*latencyThreshold31 = r.Source.Hubspot.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold30 = nil
+			latencyThreshold31 = nil
 		}
-		entity23 := r.Source.Hubspot.Entity.ValueString()
+		entity24 := r.Source.Hubspot.Entity.ValueString()
 		sourceHubspot = &shared.SourceHubspot{
-			Type:             typeVar30,
-			ConnectionID:     connectionId30,
-			LatencyThreshold: latencyThreshold30,
-			Entity:           entity23,
+			Type:             typeVar31,
+			ConnectionID:     connectionId31,
+			LatencyThreshold: latencyThreshold31,
+			Entity:           entity24,
 		}
 	}
 	if sourceHubspot != nil {
@@ -1040,20 +1063,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceImpactRadius *shared.SourceImpactRadius
 	if r.Source.ImpactRadius != nil {
-		typeVar31 := shared.SourceImpactRadiusType(r.Source.ImpactRadius.Type.ValueString())
-		connectionId31 := r.Source.ImpactRadius.ConnectionID.ValueString()
-		latencyThreshold31 := new(int64)
+		typeVar32 := shared.SourceImpactRadiusType(r.Source.ImpactRadius.Type.ValueString())
+		connectionId32 := r.Source.ImpactRadius.ConnectionID.ValueString()
+		latencyThreshold32 := new(int64)
 		if !r.Source.ImpactRadius.LatencyThreshold.IsUnknown() && !r.Source.ImpactRadius.LatencyThreshold.IsNull() {
-			*latencyThreshold31 = r.Source.ImpactRadius.LatencyThreshold.ValueInt64()
+			*latencyThreshold32 = r.Source.ImpactRadius.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold31 = nil
+			latencyThreshold32 = nil
 		}
-		entity24 := r.Source.ImpactRadius.Entity.ValueString()
+		entity25 := r.Source.ImpactRadius.Entity.ValueString()
 		sourceImpactRadius = &shared.SourceImpactRadius{
-			Type:             typeVar31,
-			ConnectionID:     connectionId31,
-			LatencyThreshold: latencyThreshold31,
-			Entity:           entity24,
+			Type:             typeVar32,
+			ConnectionID:     connectionId32,
+			LatencyThreshold: latencyThreshold32,
+			Entity:           entity25,
 		}
 	}
 	if sourceImpactRadius != nil {
@@ -1063,20 +1086,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceIntercom *shared.SourceIntercom
 	if r.Source.Intercom != nil {
-		typeVar32 := shared.SourceIntercomType(r.Source.Intercom.Type.ValueString())
-		connectionId32 := r.Source.Intercom.ConnectionID.ValueString()
-		latencyThreshold32 := new(int64)
+		typeVar33 := shared.SourceIntercomType(r.Source.Intercom.Type.ValueString())
+		connectionId33 := r.Source.Intercom.ConnectionID.ValueString()
+		latencyThreshold33 := new(int64)
 		if !r.Source.Intercom.LatencyThreshold.IsUnknown() && !r.Source.Intercom.LatencyThreshold.IsNull() {
-			*latencyThreshold32 = r.Source.Intercom.LatencyThreshold.ValueInt64()
+			*latencyThreshold33 = r.Source.Intercom.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold32 = nil
+			latencyThreshold33 = nil
 		}
-		entity25 := r.Source.Intercom.Entity.ValueString()
+		entity26 := r.Source.Intercom.Entity.ValueString()
 		sourceIntercom = &shared.SourceIntercom{
-			Type:             typeVar32,
-			ConnectionID:     connectionId32,
-			LatencyThreshold: latencyThreshold32,
-			Entity:           entity25,
+			Type:             typeVar33,
+			ConnectionID:     connectionId33,
+			LatencyThreshold: latencyThreshold33,
+			Entity:           entity26,
 		}
 	}
 	if sourceIntercom != nil {
@@ -1086,20 +1109,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceJira *shared.SourceJira
 	if r.Source.Jira != nil {
-		typeVar33 := shared.SourceJiraType(r.Source.Jira.Type.ValueString())
-		connectionId33 := r.Source.Jira.ConnectionID.ValueString()
-		latencyThreshold33 := new(int64)
+		typeVar34 := shared.SourceJiraType(r.Source.Jira.Type.ValueString())
+		connectionId34 := r.Source.Jira.ConnectionID.ValueString()
+		latencyThreshold34 := new(int64)
 		if !r.Source.Jira.LatencyThreshold.IsUnknown() && !r.Source.Jira.LatencyThreshold.IsNull() {
-			*latencyThreshold33 = r.Source.Jira.LatencyThreshold.ValueInt64()
+			*latencyThreshold34 = r.Source.Jira.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold33 = nil
+			latencyThreshold34 = nil
 		}
-		entity26 := r.Source.Jira.Entity.ValueString()
+		entity27 := r.Source.Jira.Entity.ValueString()
 		sourceJira = &shared.SourceJira{
-			Type:             typeVar33,
-			ConnectionID:     connectionId33,
-			LatencyThreshold: latencyThreshold33,
-			Entity:           entity26,
+			Type:             typeVar34,
+			ConnectionID:     connectionId34,
+			LatencyThreshold: latencyThreshold34,
+			Entity:           entity27,
 		}
 	}
 	if sourceJira != nil {
@@ -1109,20 +1132,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceJiraAlign *shared.SourceJiraAlign
 	if r.Source.JiraAlign != nil {
-		typeVar34 := shared.SourceJiraAlignType(r.Source.JiraAlign.Type.ValueString())
-		connectionId34 := r.Source.JiraAlign.ConnectionID.ValueString()
-		latencyThreshold34 := new(int64)
+		typeVar35 := shared.SourceJiraAlignType(r.Source.JiraAlign.Type.ValueString())
+		connectionId35 := r.Source.JiraAlign.ConnectionID.ValueString()
+		latencyThreshold35 := new(int64)
 		if !r.Source.JiraAlign.LatencyThreshold.IsUnknown() && !r.Source.JiraAlign.LatencyThreshold.IsNull() {
-			*latencyThreshold34 = r.Source.JiraAlign.LatencyThreshold.ValueInt64()
+			*latencyThreshold35 = r.Source.JiraAlign.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold34 = nil
+			latencyThreshold35 = nil
 		}
-		entity27 := r.Source.JiraAlign.Entity.ValueString()
+		entity28 := r.Source.JiraAlign.Entity.ValueString()
 		sourceJiraAlign = &shared.SourceJiraAlign{
-			Type:             typeVar34,
-			ConnectionID:     connectionId34,
-			LatencyThreshold: latencyThreshold34,
-			Entity:           entity27,
+			Type:             typeVar35,
+			ConnectionID:     connectionId35,
+			LatencyThreshold: latencyThreshold35,
+			Entity:           entity28,
 		}
 	}
 	if sourceJiraAlign != nil {
@@ -1132,20 +1155,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceJiraCloud *shared.SourceJiraCloud
 	if r.Source.JiraCloud != nil {
-		typeVar35 := shared.SourceJiraCloudType(r.Source.JiraCloud.Type.ValueString())
-		connectionId35 := r.Source.JiraCloud.ConnectionID.ValueString()
-		latencyThreshold35 := new(int64)
+		typeVar36 := shared.SourceJiraCloudType(r.Source.JiraCloud.Type.ValueString())
+		connectionId36 := r.Source.JiraCloud.ConnectionID.ValueString()
+		latencyThreshold36 := new(int64)
 		if !r.Source.JiraCloud.LatencyThreshold.IsUnknown() && !r.Source.JiraCloud.LatencyThreshold.IsNull() {
-			*latencyThreshold35 = r.Source.JiraCloud.LatencyThreshold.ValueInt64()
+			*latencyThreshold36 = r.Source.JiraCloud.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold35 = nil
+			latencyThreshold36 = nil
 		}
-		entity28 := r.Source.JiraCloud.Entity.ValueString()
+		entity29 := r.Source.JiraCloud.Entity.ValueString()
 		sourceJiraCloud = &shared.SourceJiraCloud{
-			Type:             typeVar35,
-			ConnectionID:     connectionId35,
-			LatencyThreshold: latencyThreshold35,
-			Entity:           entity28,
+			Type:             typeVar36,
+			ConnectionID:     connectionId36,
+			LatencyThreshold: latencyThreshold36,
+			Entity:           entity29,
 		}
 	}
 	if sourceJiraCloud != nil {
@@ -1155,20 +1178,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceKafka *shared.SourceKafka
 	if r.Source.Kafka != nil {
-		typeVar36 := shared.SourceKafkaType(r.Source.Kafka.Type.ValueString())
-		connectionId36 := r.Source.Kafka.ConnectionID.ValueString()
-		latencyThreshold36 := new(int64)
+		typeVar37 := shared.SourceKafkaType(r.Source.Kafka.Type.ValueString())
+		connectionId37 := r.Source.Kafka.ConnectionID.ValueString()
+		latencyThreshold37 := new(int64)
 		if !r.Source.Kafka.LatencyThreshold.IsUnknown() && !r.Source.Kafka.LatencyThreshold.IsNull() {
-			*latencyThreshold36 = r.Source.Kafka.LatencyThreshold.ValueInt64()
+			*latencyThreshold37 = r.Source.Kafka.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold36 = nil
+			latencyThreshold37 = nil
 		}
-		entity29 := r.Source.Kafka.Entity.ValueString()
+		entity30 := r.Source.Kafka.Entity.ValueString()
 		sourceKafka = &shared.SourceKafka{
-			Type:             typeVar36,
-			ConnectionID:     connectionId36,
-			LatencyThreshold: latencyThreshold36,
-			Entity:           entity29,
+			Type:             typeVar37,
+			ConnectionID:     connectionId37,
+			LatencyThreshold: latencyThreshold37,
+			Entity:           entity30,
 		}
 	}
 	if sourceKafka != nil {
@@ -1178,20 +1201,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceKinesis *shared.SourceKinesis
 	if r.Source.Kinesis != nil {
-		typeVar37 := shared.SourceKinesisType(r.Source.Kinesis.Type.ValueString())
-		connectionId37 := r.Source.Kinesis.ConnectionID.ValueString()
-		latencyThreshold37 := new(int64)
+		typeVar38 := shared.SourceKinesisType(r.Source.Kinesis.Type.ValueString())
+		connectionId38 := r.Source.Kinesis.ConnectionID.ValueString()
+		latencyThreshold38 := new(int64)
 		if !r.Source.Kinesis.LatencyThreshold.IsUnknown() && !r.Source.Kinesis.LatencyThreshold.IsNull() {
-			*latencyThreshold37 = r.Source.Kinesis.LatencyThreshold.ValueInt64()
+			*latencyThreshold38 = r.Source.Kinesis.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold37 = nil
+			latencyThreshold38 = nil
 		}
-		entity30 := r.Source.Kinesis.Entity.ValueString()
+		entity31 := r.Source.Kinesis.Entity.ValueString()
 		sourceKinesis = &shared.SourceKinesis{
-			Type:             typeVar37,
-			ConnectionID:     connectionId37,
-			LatencyThreshold: latencyThreshold37,
-			Entity:           entity30,
+			Type:             typeVar38,
+			ConnectionID:     connectionId38,
+			LatencyThreshold: latencyThreshold38,
+			Entity:           entity31,
 		}
 	}
 	if sourceKinesis != nil {
@@ -1201,20 +1224,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceKustomer *shared.SourceKustomer
 	if r.Source.Kustomer != nil {
-		typeVar38 := shared.SourceKustomerType(r.Source.Kustomer.Type.ValueString())
-		connectionId38 := r.Source.Kustomer.ConnectionID.ValueString()
-		latencyThreshold38 := new(int64)
+		typeVar39 := shared.SourceKustomerType(r.Source.Kustomer.Type.ValueString())
+		connectionId39 := r.Source.Kustomer.ConnectionID.ValueString()
+		latencyThreshold39 := new(int64)
 		if !r.Source.Kustomer.LatencyThreshold.IsUnknown() && !r.Source.Kustomer.LatencyThreshold.IsNull() {
-			*latencyThreshold38 = r.Source.Kustomer.LatencyThreshold.ValueInt64()
+			*latencyThreshold39 = r.Source.Kustomer.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold38 = nil
+			latencyThreshold39 = nil
 		}
-		entity31 := r.Source.Kustomer.Entity.ValueString()
+		entity32 := r.Source.Kustomer.Entity.ValueString()
 		sourceKustomer = &shared.SourceKustomer{
-			Type:             typeVar38,
-			ConnectionID:     connectionId38,
-			LatencyThreshold: latencyThreshold38,
-			Entity:           entity31,
+			Type:             typeVar39,
+			ConnectionID:     connectionId39,
+			LatencyThreshold: latencyThreshold39,
+			Entity:           entity32,
 		}
 	}
 	if sourceKustomer != nil {
@@ -1224,20 +1247,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceLdap *shared.SourceLdap
 	if r.Source.Ldap != nil {
-		typeVar39 := shared.SourceLdapType(r.Source.Ldap.Type.ValueString())
-		connectionId39 := r.Source.Ldap.ConnectionID.ValueString()
-		latencyThreshold39 := new(int64)
+		typeVar40 := shared.SourceLdapType(r.Source.Ldap.Type.ValueString())
+		connectionId40 := r.Source.Ldap.ConnectionID.ValueString()
+		latencyThreshold40 := new(int64)
 		if !r.Source.Ldap.LatencyThreshold.IsUnknown() && !r.Source.Ldap.LatencyThreshold.IsNull() {
-			*latencyThreshold39 = r.Source.Ldap.LatencyThreshold.ValueInt64()
+			*latencyThreshold40 = r.Source.Ldap.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold39 = nil
+			latencyThreshold40 = nil
 		}
-		entity32 := r.Source.Ldap.Entity.ValueString()
+		entity33 := r.Source.Ldap.Entity.ValueString()
 		sourceLdap = &shared.SourceLdap{
-			Type:             typeVar39,
-			ConnectionID:     connectionId39,
-			LatencyThreshold: latencyThreshold39,
-			Entity:           entity32,
+			Type:             typeVar40,
+			ConnectionID:     connectionId40,
+			LatencyThreshold: latencyThreshold40,
+			Entity:           entity33,
 		}
 	}
 	if sourceLdap != nil {
@@ -1247,20 +1270,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceLdapVirtualListView *shared.SourceLdapVirtualListView
 	if r.Source.LdapVirtualListView != nil {
-		typeVar40 := shared.SourceLdapVirtualListViewType(r.Source.LdapVirtualListView.Type.ValueString())
-		connectionId40 := r.Source.LdapVirtualListView.ConnectionID.ValueString()
-		latencyThreshold40 := new(int64)
+		typeVar41 := shared.SourceLdapVirtualListViewType(r.Source.LdapVirtualListView.Type.ValueString())
+		connectionId41 := r.Source.LdapVirtualListView.ConnectionID.ValueString()
+		latencyThreshold41 := new(int64)
 		if !r.Source.LdapVirtualListView.LatencyThreshold.IsUnknown() && !r.Source.LdapVirtualListView.LatencyThreshold.IsNull() {
-			*latencyThreshold40 = r.Source.LdapVirtualListView.LatencyThreshold.ValueInt64()
+			*latencyThreshold41 = r.Source.LdapVirtualListView.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold40 = nil
+			latencyThreshold41 = nil
 		}
-		entity33 := r.Source.LdapVirtualListView.Entity.ValueString()
+		entity34 := r.Source.LdapVirtualListView.Entity.ValueString()
 		sourceLdapVirtualListView = &shared.SourceLdapVirtualListView{
-			Type:             typeVar40,
-			ConnectionID:     connectionId40,
-			LatencyThreshold: latencyThreshold40,
-			Entity:           entity33,
+			Type:             typeVar41,
+			ConnectionID:     connectionId41,
+			LatencyThreshold: latencyThreshold41,
+			Entity:           entity34,
 		}
 	}
 	if sourceLdapVirtualListView != nil {
@@ -1270,15 +1293,15 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceLinkedInAds *shared.SourceLinkedInAds
 	if r.Source.LinkedInAds != nil {
-		typeVar41 := shared.SourceLinkedInAdsType(r.Source.LinkedInAds.Type.ValueString())
-		connectionId41 := r.Source.LinkedInAds.ConnectionID.ValueString()
-		latencyThreshold41 := new(int64)
+		typeVar42 := shared.SourceLinkedInAdsType(r.Source.LinkedInAds.Type.ValueString())
+		connectionId42 := r.Source.LinkedInAds.ConnectionID.ValueString()
+		latencyThreshold42 := new(int64)
 		if !r.Source.LinkedInAds.LatencyThreshold.IsUnknown() && !r.Source.LinkedInAds.LatencyThreshold.IsNull() {
-			*latencyThreshold41 = r.Source.LinkedInAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold42 = r.Source.LinkedInAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold41 = nil
+			latencyThreshold42 = nil
 		}
-		entity34 := r.Source.LinkedInAds.Entity.ValueString()
+		entity35 := r.Source.LinkedInAds.Entity.ValueString()
 		var metrics3 []string = nil
 		for _, metricsItem3 := range r.Source.LinkedInAds.Metrics {
 			metrics3 = append(metrics3, metricsItem3.ValueString())
@@ -1288,10 +1311,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			pivots = append(pivots, pivotsItem.ValueString())
 		}
 		sourceLinkedInAds = &shared.SourceLinkedInAds{
-			Type:             typeVar41,
-			ConnectionID:     connectionId41,
-			LatencyThreshold: latencyThreshold41,
-			Entity:           entity34,
+			Type:             typeVar42,
+			ConnectionID:     connectionId42,
+			LatencyThreshold: latencyThreshold42,
+			Entity:           entity35,
 			Metrics:          metrics3,
 			Pivots:           pivots,
 		}
@@ -1303,24 +1326,24 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceMarketo *shared.SourceMarketo
 	if r.Source.Marketo != nil {
-		typeVar42 := shared.SourceMarketoType(r.Source.Marketo.Type.ValueString())
-		connectionId42 := r.Source.Marketo.ConnectionID.ValueString()
-		latencyThreshold42 := new(int64)
+		typeVar43 := shared.SourceMarketoType(r.Source.Marketo.Type.ValueString())
+		connectionId43 := r.Source.Marketo.ConnectionID.ValueString()
+		latencyThreshold43 := new(int64)
 		if !r.Source.Marketo.LatencyThreshold.IsUnknown() && !r.Source.Marketo.LatencyThreshold.IsNull() {
-			*latencyThreshold42 = r.Source.Marketo.LatencyThreshold.ValueInt64()
+			*latencyThreshold43 = r.Source.Marketo.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold42 = nil
+			latencyThreshold43 = nil
 		}
-		entity35 := r.Source.Marketo.Entity.ValueString()
+		entity36 := r.Source.Marketo.Entity.ValueString()
 		var activityTypes []string = nil
 		for _, activityTypesItem := range r.Source.Marketo.ActivityTypes {
 			activityTypes = append(activityTypes, activityTypesItem.ValueString())
 		}
 		sourceMarketo = &shared.SourceMarketo{
-			Type:             typeVar42,
-			ConnectionID:     connectionId42,
-			LatencyThreshold: latencyThreshold42,
-			Entity:           entity35,
+			Type:             typeVar43,
+			ConnectionID:     connectionId43,
+			LatencyThreshold: latencyThreshold43,
+			Entity:           entity36,
 			ActivityTypes:    activityTypes,
 		}
 	}
@@ -1331,20 +1354,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceMicrosoftEntraID *shared.SourceMicrosoftEntraID
 	if r.Source.MicrosoftEntraID != nil {
-		typeVar43 := shared.SourceMicrosoftEntraIDType(r.Source.MicrosoftEntraID.Type.ValueString())
-		connectionId43 := r.Source.MicrosoftEntraID.ConnectionID.ValueString()
-		latencyThreshold43 := new(int64)
+		typeVar44 := shared.SourceMicrosoftEntraIDType(r.Source.MicrosoftEntraID.Type.ValueString())
+		connectionId44 := r.Source.MicrosoftEntraID.ConnectionID.ValueString()
+		latencyThreshold44 := new(int64)
 		if !r.Source.MicrosoftEntraID.LatencyThreshold.IsUnknown() && !r.Source.MicrosoftEntraID.LatencyThreshold.IsNull() {
-			*latencyThreshold43 = r.Source.MicrosoftEntraID.LatencyThreshold.ValueInt64()
+			*latencyThreshold44 = r.Source.MicrosoftEntraID.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold43 = nil
+			latencyThreshold44 = nil
 		}
-		entity36 := r.Source.MicrosoftEntraID.Entity.ValueString()
+		entity37 := r.Source.MicrosoftEntraID.Entity.ValueString()
 		sourceMicrosoftEntraID = &shared.SourceMicrosoftEntraID{
-			Type:             typeVar43,
-			ConnectionID:     connectionId43,
-			LatencyThreshold: latencyThreshold43,
-			Entity:           entity36,
+			Type:             typeVar44,
+			ConnectionID:     connectionId44,
+			LatencyThreshold: latencyThreshold44,
+			Entity:           entity37,
 		}
 	}
 	if sourceMicrosoftEntraID != nil {
@@ -1354,20 +1377,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceMicrosoftLists *shared.SourceMicrosoftLists
 	if r.Source.MicrosoftLists != nil {
-		typeVar44 := shared.SourceMicrosoftListsType(r.Source.MicrosoftLists.Type.ValueString())
-		connectionId44 := r.Source.MicrosoftLists.ConnectionID.ValueString()
-		latencyThreshold44 := new(int64)
+		typeVar45 := shared.SourceMicrosoftListsType(r.Source.MicrosoftLists.Type.ValueString())
+		connectionId45 := r.Source.MicrosoftLists.ConnectionID.ValueString()
+		latencyThreshold45 := new(int64)
 		if !r.Source.MicrosoftLists.LatencyThreshold.IsUnknown() && !r.Source.MicrosoftLists.LatencyThreshold.IsNull() {
-			*latencyThreshold44 = r.Source.MicrosoftLists.LatencyThreshold.ValueInt64()
+			*latencyThreshold45 = r.Source.MicrosoftLists.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold44 = nil
+			latencyThreshold45 = nil
 		}
-		entity37 := r.Source.MicrosoftLists.Entity.ValueString()
+		entity38 := r.Source.MicrosoftLists.Entity.ValueString()
 		sourceMicrosoftLists = &shared.SourceMicrosoftLists{
-			Type:             typeVar44,
-			ConnectionID:     connectionId44,
-			LatencyThreshold: latencyThreshold44,
-			Entity:           entity37,
+			Type:             typeVar45,
+			ConnectionID:     connectionId45,
+			LatencyThreshold: latencyThreshold45,
+			Entity:           entity38,
 		}
 	}
 	if sourceMicrosoftLists != nil {
@@ -1377,20 +1400,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceMixpanel *shared.SourceMixpanel
 	if r.Source.Mixpanel != nil {
-		typeVar45 := shared.SourceMixpanelType(r.Source.Mixpanel.Type.ValueString())
-		connectionId45 := r.Source.Mixpanel.ConnectionID.ValueString()
-		latencyThreshold45 := new(int64)
+		typeVar46 := shared.SourceMixpanelType(r.Source.Mixpanel.Type.ValueString())
+		connectionId46 := r.Source.Mixpanel.ConnectionID.ValueString()
+		latencyThreshold46 := new(int64)
 		if !r.Source.Mixpanel.LatencyThreshold.IsUnknown() && !r.Source.Mixpanel.LatencyThreshold.IsNull() {
-			*latencyThreshold45 = r.Source.Mixpanel.LatencyThreshold.ValueInt64()
+			*latencyThreshold46 = r.Source.Mixpanel.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold45 = nil
+			latencyThreshold46 = nil
 		}
-		entity38 := r.Source.Mixpanel.Entity.ValueString()
+		entity39 := r.Source.Mixpanel.Entity.ValueString()
 		sourceMixpanel = &shared.SourceMixpanel{
-			Type:             typeVar45,
-			ConnectionID:     connectionId45,
-			LatencyThreshold: latencyThreshold45,
-			Entity:           entity38,
+			Type:             typeVar46,
+			ConnectionID:     connectionId46,
+			LatencyThreshold: latencyThreshold46,
+			Entity:           entity39,
 		}
 	}
 	if sourceMixpanel != nil {
@@ -1400,13 +1423,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceMongodb *shared.SourceMongodb
 	if r.Source.Mongodb != nil {
-		typeVar46 := shared.SourceMongodbType(r.Source.Mongodb.Type.ValueString())
-		connectionId46 := r.Source.Mongodb.ConnectionID.ValueString()
-		latencyThreshold46 := new(int64)
+		typeVar47 := shared.SourceMongodbType(r.Source.Mongodb.Type.ValueString())
+		connectionId47 := r.Source.Mongodb.ConnectionID.ValueString()
+		latencyThreshold47 := new(int64)
 		if !r.Source.Mongodb.LatencyThreshold.IsUnknown() && !r.Source.Mongodb.LatencyThreshold.IsNull() {
-			*latencyThreshold46 = r.Source.Mongodb.LatencyThreshold.ValueInt64()
+			*latencyThreshold47 = r.Source.Mongodb.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold46 = nil
+			latencyThreshold47 = nil
 		}
 		table4 := new(string)
 		if !r.Source.Mongodb.Table.IsUnknown() && !r.Source.Mongodb.Table.IsNull() {
@@ -1421,9 +1444,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			tableNameFilter4 = nil
 		}
 		sourceMongodb = &shared.SourceMongodb{
-			Type:             typeVar46,
-			ConnectionID:     connectionId46,
-			LatencyThreshold: latencyThreshold46,
+			Type:             typeVar47,
+			ConnectionID:     connectionId47,
+			LatencyThreshold: latencyThreshold47,
 			Table:            table4,
 			TableNameFilter:  tableNameFilter4,
 		}
@@ -1435,13 +1458,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceMysql *shared.SourceMysql
 	if r.Source.Mysql != nil {
-		typeVar47 := shared.SourceMysqlType(r.Source.Mysql.Type.ValueString())
-		connectionId47 := r.Source.Mysql.ConnectionID.ValueString()
-		latencyThreshold47 := new(int64)
+		typeVar48 := shared.SourceMysqlType(r.Source.Mysql.Type.ValueString())
+		connectionId48 := r.Source.Mysql.ConnectionID.ValueString()
+		latencyThreshold48 := new(int64)
 		if !r.Source.Mysql.LatencyThreshold.IsUnknown() && !r.Source.Mysql.LatencyThreshold.IsNull() {
-			*latencyThreshold47 = r.Source.Mysql.LatencyThreshold.ValueInt64()
+			*latencyThreshold48 = r.Source.Mysql.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold47 = nil
+			latencyThreshold48 = nil
 		}
 		table5 := new(string)
 		if !r.Source.Mysql.Table.IsUnknown() && !r.Source.Mysql.Table.IsNull() {
@@ -1472,9 +1495,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			database = nil
 		}
 		sourceMysql = &shared.SourceMysql{
-			Type:              typeVar47,
-			ConnectionID:      connectionId47,
-			LatencyThreshold:  latencyThreshold47,
+			Type:              typeVar48,
+			ConnectionID:      connectionId48,
+			LatencyThreshold:  latencyThreshold48,
 			Table:             table5,
 			TableNameFilter:   tableNameFilter5,
 			LastUpdatedColumn: lastUpdatedColumn4,
@@ -1489,13 +1512,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceMysqlSharded *shared.SourceMysqlSharded
 	if r.Source.MysqlSharded != nil {
-		typeVar48 := shared.SourceMysqlShardedType(r.Source.MysqlSharded.Type.ValueString())
-		connectionId48 := r.Source.MysqlSharded.ConnectionID.ValueString()
-		latencyThreshold48 := new(int64)
+		typeVar49 := shared.SourceMysqlShardedType(r.Source.MysqlSharded.Type.ValueString())
+		connectionId49 := r.Source.MysqlSharded.ConnectionID.ValueString()
+		latencyThreshold49 := new(int64)
 		if !r.Source.MysqlSharded.LatencyThreshold.IsUnknown() && !r.Source.MysqlSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold48 = r.Source.MysqlSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold49 = r.Source.MysqlSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold48 = nil
+			latencyThreshold49 = nil
 		}
 		table6 := new(string)
 		if !r.Source.MysqlSharded.Table.IsUnknown() && !r.Source.MysqlSharded.Table.IsNull() {
@@ -1526,9 +1549,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			database1 = nil
 		}
 		sourceMysqlSharded = &shared.SourceMysqlSharded{
-			Type:              typeVar48,
-			ConnectionID:      connectionId48,
-			LatencyThreshold:  latencyThreshold48,
+			Type:              typeVar49,
+			ConnectionID:      connectionId49,
+			LatencyThreshold:  latencyThreshold49,
 			Table:             table6,
 			TableNameFilter:   tableNameFilter6,
 			LastUpdatedColumn: lastUpdatedColumn5,
@@ -1543,20 +1566,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceNetsuite *shared.SourceNetsuite
 	if r.Source.Netsuite != nil {
-		typeVar49 := shared.SourceNetsuiteType(r.Source.Netsuite.Type.ValueString())
-		connectionId49 := r.Source.Netsuite.ConnectionID.ValueString()
-		latencyThreshold49 := new(int64)
+		typeVar50 := shared.SourceNetsuiteType(r.Source.Netsuite.Type.ValueString())
+		connectionId50 := r.Source.Netsuite.ConnectionID.ValueString()
+		latencyThreshold50 := new(int64)
 		if !r.Source.Netsuite.LatencyThreshold.IsUnknown() && !r.Source.Netsuite.LatencyThreshold.IsNull() {
-			*latencyThreshold49 = r.Source.Netsuite.LatencyThreshold.ValueInt64()
+			*latencyThreshold50 = r.Source.Netsuite.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold49 = nil
+			latencyThreshold50 = nil
 		}
-		entity39 := r.Source.Netsuite.Entity.ValueString()
+		entity40 := r.Source.Netsuite.Entity.ValueString()
 		sourceNetsuite = &shared.SourceNetsuite{
-			Type:             typeVar49,
-			ConnectionID:     connectionId49,
-			LatencyThreshold: latencyThreshold49,
-			Entity:           entity39,
+			Type:             typeVar50,
+			ConnectionID:     connectionId50,
+			LatencyThreshold: latencyThreshold50,
+			Entity:           entity40,
 		}
 	}
 	if sourceNetsuite != nil {
@@ -1566,20 +1589,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceNetsuiteV2 *shared.SourceNetsuiteV2
 	if r.Source.NetsuiteV2 != nil {
-		typeVar50 := shared.SourceNetsuiteV2Type(r.Source.NetsuiteV2.Type.ValueString())
-		connectionId50 := r.Source.NetsuiteV2.ConnectionID.ValueString()
-		latencyThreshold50 := new(int64)
+		typeVar51 := shared.SourceNetsuiteV2Type(r.Source.NetsuiteV2.Type.ValueString())
+		connectionId51 := r.Source.NetsuiteV2.ConnectionID.ValueString()
+		latencyThreshold51 := new(int64)
 		if !r.Source.NetsuiteV2.LatencyThreshold.IsUnknown() && !r.Source.NetsuiteV2.LatencyThreshold.IsNull() {
-			*latencyThreshold50 = r.Source.NetsuiteV2.LatencyThreshold.ValueInt64()
+			*latencyThreshold51 = r.Source.NetsuiteV2.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold50 = nil
+			latencyThreshold51 = nil
 		}
-		entity40 := r.Source.NetsuiteV2.Entity.ValueString()
+		entity41 := r.Source.NetsuiteV2.Entity.ValueString()
 		sourceNetsuiteV2 = &shared.SourceNetsuiteV2{
-			Type:             typeVar50,
-			ConnectionID:     connectionId50,
-			LatencyThreshold: latencyThreshold50,
-			Entity:           entity40,
+			Type:             typeVar51,
+			ConnectionID:     connectionId51,
+			LatencyThreshold: latencyThreshold51,
+			Entity:           entity41,
 		}
 	}
 	if sourceNetsuiteV2 != nil {
@@ -1589,13 +1612,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceOracle *shared.SourceOracle
 	if r.Source.Oracle != nil {
-		typeVar51 := shared.SourceOracleType(r.Source.Oracle.Type.ValueString())
-		connectionId51 := r.Source.Oracle.ConnectionID.ValueString()
-		latencyThreshold51 := new(int64)
+		typeVar52 := shared.SourceOracleType(r.Source.Oracle.Type.ValueString())
+		connectionId52 := r.Source.Oracle.ConnectionID.ValueString()
+		latencyThreshold52 := new(int64)
 		if !r.Source.Oracle.LatencyThreshold.IsUnknown() && !r.Source.Oracle.LatencyThreshold.IsNull() {
-			*latencyThreshold51 = r.Source.Oracle.LatencyThreshold.ValueInt64()
+			*latencyThreshold52 = r.Source.Oracle.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold51 = nil
+			latencyThreshold52 = nil
 		}
 		table7 := new(string)
 		if !r.Source.Oracle.Table.IsUnknown() && !r.Source.Oracle.Table.IsNull() {
@@ -1626,9 +1649,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema3 = nil
 		}
 		sourceOracle = &shared.SourceOracle{
-			Type:              typeVar51,
-			ConnectionID:      connectionId51,
-			LatencyThreshold:  latencyThreshold51,
+			Type:              typeVar52,
+			ConnectionID:      connectionId52,
+			LatencyThreshold:  latencyThreshold52,
 			Table:             table7,
 			TableNameFilter:   tableNameFilter7,
 			LastUpdatedColumn: lastUpdatedColumn6,
@@ -1643,13 +1666,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceOracleSharded *shared.SourceOracleSharded
 	if r.Source.OracleSharded != nil {
-		typeVar52 := shared.SourceOracleShardedType(r.Source.OracleSharded.Type.ValueString())
-		connectionId52 := r.Source.OracleSharded.ConnectionID.ValueString()
-		latencyThreshold52 := new(int64)
+		typeVar53 := shared.SourceOracleShardedType(r.Source.OracleSharded.Type.ValueString())
+		connectionId53 := r.Source.OracleSharded.ConnectionID.ValueString()
+		latencyThreshold53 := new(int64)
 		if !r.Source.OracleSharded.LatencyThreshold.IsUnknown() && !r.Source.OracleSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold52 = r.Source.OracleSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold53 = r.Source.OracleSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold52 = nil
+			latencyThreshold53 = nil
 		}
 		table8 := new(string)
 		if !r.Source.OracleSharded.Table.IsUnknown() && !r.Source.OracleSharded.Table.IsNull() {
@@ -1680,9 +1703,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema4 = nil
 		}
 		sourceOracleSharded = &shared.SourceOracleSharded{
-			Type:              typeVar52,
-			ConnectionID:      connectionId52,
-			LatencyThreshold:  latencyThreshold52,
+			Type:              typeVar53,
+			ConnectionID:      connectionId53,
+			LatencyThreshold:  latencyThreshold53,
 			Table:             table8,
 			TableNameFilter:   tableNameFilter8,
 			LastUpdatedColumn: lastUpdatedColumn7,
@@ -1697,20 +1720,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceOutlook *shared.SourceOutlook
 	if r.Source.Outlook != nil {
-		typeVar53 := shared.SourceOutlookType(r.Source.Outlook.Type.ValueString())
-		connectionId53 := r.Source.Outlook.ConnectionID.ValueString()
-		latencyThreshold53 := new(int64)
+		typeVar54 := shared.SourceOutlookType(r.Source.Outlook.Type.ValueString())
+		connectionId54 := r.Source.Outlook.ConnectionID.ValueString()
+		latencyThreshold54 := new(int64)
 		if !r.Source.Outlook.LatencyThreshold.IsUnknown() && !r.Source.Outlook.LatencyThreshold.IsNull() {
-			*latencyThreshold53 = r.Source.Outlook.LatencyThreshold.ValueInt64()
+			*latencyThreshold54 = r.Source.Outlook.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold53 = nil
+			latencyThreshold54 = nil
 		}
-		entity41 := r.Source.Outlook.Entity.ValueString()
+		entity42 := r.Source.Outlook.Entity.ValueString()
 		sourceOutlook = &shared.SourceOutlook{
-			Type:             typeVar53,
-			ConnectionID:     connectionId53,
-			LatencyThreshold: latencyThreshold53,
-			Entity:           entity41,
+			Type:             typeVar54,
+			ConnectionID:     connectionId54,
+			LatencyThreshold: latencyThreshold54,
+			Entity:           entity42,
 		}
 	}
 	if sourceOutlook != nil {
@@ -1720,20 +1743,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceOutreach *shared.SourceOutreach
 	if r.Source.Outreach != nil {
-		typeVar54 := shared.SourceOutreachType(r.Source.Outreach.Type.ValueString())
-		connectionId54 := r.Source.Outreach.ConnectionID.ValueString()
-		latencyThreshold54 := new(int64)
+		typeVar55 := shared.SourceOutreachType(r.Source.Outreach.Type.ValueString())
+		connectionId55 := r.Source.Outreach.ConnectionID.ValueString()
+		latencyThreshold55 := new(int64)
 		if !r.Source.Outreach.LatencyThreshold.IsUnknown() && !r.Source.Outreach.LatencyThreshold.IsNull() {
-			*latencyThreshold54 = r.Source.Outreach.LatencyThreshold.ValueInt64()
+			*latencyThreshold55 = r.Source.Outreach.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold54 = nil
+			latencyThreshold55 = nil
 		}
-		entity42 := r.Source.Outreach.Entity.ValueString()
+		entity43 := r.Source.Outreach.Entity.ValueString()
 		sourceOutreach = &shared.SourceOutreach{
-			Type:             typeVar54,
-			ConnectionID:     connectionId54,
-			LatencyThreshold: latencyThreshold54,
-			Entity:           entity42,
+			Type:             typeVar55,
+			ConnectionID:     connectionId55,
+			LatencyThreshold: latencyThreshold55,
+			Entity:           entity43,
 		}
 	}
 	if sourceOutreach != nil {
@@ -1743,15 +1766,15 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourcePinterestAds *shared.SourcePinterestAds
 	if r.Source.PinterestAds != nil {
-		typeVar55 := shared.SourcePinterestAdsType(r.Source.PinterestAds.Type.ValueString())
-		connectionId55 := r.Source.PinterestAds.ConnectionID.ValueString()
-		latencyThreshold55 := new(int64)
+		typeVar56 := shared.SourcePinterestAdsType(r.Source.PinterestAds.Type.ValueString())
+		connectionId56 := r.Source.PinterestAds.ConnectionID.ValueString()
+		latencyThreshold56 := new(int64)
 		if !r.Source.PinterestAds.LatencyThreshold.IsUnknown() && !r.Source.PinterestAds.LatencyThreshold.IsNull() {
-			*latencyThreshold55 = r.Source.PinterestAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold56 = r.Source.PinterestAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold55 = nil
+			latencyThreshold56 = nil
 		}
-		entity43 := r.Source.PinterestAds.Entity.ValueString()
+		entity44 := r.Source.PinterestAds.Entity.ValueString()
 		var level []string = nil
 		for _, levelItem := range r.Source.PinterestAds.Level {
 			level = append(level, levelItem.ValueString())
@@ -1765,10 +1788,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			targetingTypes = append(targetingTypes, targetingTypesItem.ValueString())
 		}
 		sourcePinterestAds = &shared.SourcePinterestAds{
-			Type:             typeVar55,
-			ConnectionID:     connectionId55,
-			LatencyThreshold: latencyThreshold55,
-			Entity:           entity43,
+			Type:             typeVar56,
+			ConnectionID:     connectionId56,
+			LatencyThreshold: latencyThreshold56,
+			Entity:           entity44,
 			Level:            level,
 			Columns:          columns,
 			TargetingTypes:   targetingTypes,
@@ -1781,13 +1804,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourcePostgres *shared.SourcePostgres
 	if r.Source.Postgres != nil {
-		typeVar56 := shared.SourcePostgresType(r.Source.Postgres.Type.ValueString())
-		connectionId56 := r.Source.Postgres.ConnectionID.ValueString()
-		latencyThreshold56 := new(int64)
+		typeVar57 := shared.SourcePostgresType(r.Source.Postgres.Type.ValueString())
+		connectionId57 := r.Source.Postgres.ConnectionID.ValueString()
+		latencyThreshold57 := new(int64)
 		if !r.Source.Postgres.LatencyThreshold.IsUnknown() && !r.Source.Postgres.LatencyThreshold.IsNull() {
-			*latencyThreshold56 = r.Source.Postgres.LatencyThreshold.ValueInt64()
+			*latencyThreshold57 = r.Source.Postgres.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold56 = nil
+			latencyThreshold57 = nil
 		}
 		table9 := new(string)
 		if !r.Source.Postgres.Table.IsUnknown() && !r.Source.Postgres.Table.IsNull() {
@@ -1818,9 +1841,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema5 = nil
 		}
 		sourcePostgres = &shared.SourcePostgres{
-			Type:              typeVar56,
-			ConnectionID:      connectionId56,
-			LatencyThreshold:  latencyThreshold56,
+			Type:              typeVar57,
+			ConnectionID:      connectionId57,
+			LatencyThreshold:  latencyThreshold57,
 			Table:             table9,
 			TableNameFilter:   tableNameFilter9,
 			LastUpdatedColumn: lastUpdatedColumn8,
@@ -1835,13 +1858,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourcePostgresSharded *shared.SourcePostgresSharded
 	if r.Source.PostgresSharded != nil {
-		typeVar57 := shared.SourcePostgresShardedType(r.Source.PostgresSharded.Type.ValueString())
-		connectionId57 := r.Source.PostgresSharded.ConnectionID.ValueString()
-		latencyThreshold57 := new(int64)
+		typeVar58 := shared.SourcePostgresShardedType(r.Source.PostgresSharded.Type.ValueString())
+		connectionId58 := r.Source.PostgresSharded.ConnectionID.ValueString()
+		latencyThreshold58 := new(int64)
 		if !r.Source.PostgresSharded.LatencyThreshold.IsUnknown() && !r.Source.PostgresSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold57 = r.Source.PostgresSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold58 = r.Source.PostgresSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold57 = nil
+			latencyThreshold58 = nil
 		}
 		table10 := new(string)
 		if !r.Source.PostgresSharded.Table.IsUnknown() && !r.Source.PostgresSharded.Table.IsNull() {
@@ -1872,9 +1895,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema6 = nil
 		}
 		sourcePostgresSharded = &shared.SourcePostgresSharded{
-			Type:              typeVar57,
-			ConnectionID:      connectionId57,
-			LatencyThreshold:  latencyThreshold57,
+			Type:              typeVar58,
+			ConnectionID:      connectionId58,
+			LatencyThreshold:  latencyThreshold58,
 			Table:             table10,
 			TableNameFilter:   tableNameFilter10,
 			LastUpdatedColumn: lastUpdatedColumn9,
@@ -1889,15 +1912,15 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceQualtrics *shared.SourceQualtrics
 	if r.Source.Qualtrics != nil {
-		typeVar58 := shared.SourceQualtricsType(r.Source.Qualtrics.Type.ValueString())
-		connectionId58 := r.Source.Qualtrics.ConnectionID.ValueString()
-		latencyThreshold58 := new(int64)
+		typeVar59 := shared.SourceQualtricsType(r.Source.Qualtrics.Type.ValueString())
+		connectionId59 := r.Source.Qualtrics.ConnectionID.ValueString()
+		latencyThreshold59 := new(int64)
 		if !r.Source.Qualtrics.LatencyThreshold.IsUnknown() && !r.Source.Qualtrics.LatencyThreshold.IsNull() {
-			*latencyThreshold58 = r.Source.Qualtrics.LatencyThreshold.ValueInt64()
+			*latencyThreshold59 = r.Source.Qualtrics.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold58 = nil
+			latencyThreshold59 = nil
 		}
-		entity44 := r.Source.Qualtrics.Entity.ValueString()
+		entity45 := r.Source.Qualtrics.Entity.ValueString()
 		filter := new(string)
 		if !r.Source.Qualtrics.Filter.IsUnknown() && !r.Source.Qualtrics.Filter.IsNull() {
 			*filter = r.Source.Qualtrics.Filter.ValueString()
@@ -1905,10 +1928,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			filter = nil
 		}
 		sourceQualtrics = &shared.SourceQualtrics{
-			Type:             typeVar58,
-			ConnectionID:     connectionId58,
-			LatencyThreshold: latencyThreshold58,
-			Entity:           entity44,
+			Type:             typeVar59,
+			ConnectionID:     connectionId59,
+			LatencyThreshold: latencyThreshold59,
+			Entity:           entity45,
 			Filter:           filter,
 		}
 	}
@@ -1919,20 +1942,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceQuoraAds *shared.SourceQuoraAds
 	if r.Source.QuoraAds != nil {
-		typeVar59 := shared.SourceQuoraAdsType(r.Source.QuoraAds.Type.ValueString())
-		connectionId59 := r.Source.QuoraAds.ConnectionID.ValueString()
-		latencyThreshold59 := new(int64)
+		typeVar60 := shared.SourceQuoraAdsType(r.Source.QuoraAds.Type.ValueString())
+		connectionId60 := r.Source.QuoraAds.ConnectionID.ValueString()
+		latencyThreshold60 := new(int64)
 		if !r.Source.QuoraAds.LatencyThreshold.IsUnknown() && !r.Source.QuoraAds.LatencyThreshold.IsNull() {
-			*latencyThreshold59 = r.Source.QuoraAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold60 = r.Source.QuoraAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold59 = nil
+			latencyThreshold60 = nil
 		}
-		entity45 := r.Source.QuoraAds.Entity.ValueString()
+		entity46 := r.Source.QuoraAds.Entity.ValueString()
 		sourceQuoraAds = &shared.SourceQuoraAds{
-			Type:             typeVar59,
-			ConnectionID:     connectionId59,
-			LatencyThreshold: latencyThreshold59,
-			Entity:           entity45,
+			Type:             typeVar60,
+			ConnectionID:     connectionId60,
+			LatencyThreshold: latencyThreshold60,
+			Entity:           entity46,
 		}
 	}
 	if sourceQuoraAds != nil {
@@ -1942,20 +1965,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceRaveMedidata *shared.SourceRaveMedidata
 	if r.Source.RaveMedidata != nil {
-		typeVar60 := shared.SourceRaveMedidataType(r.Source.RaveMedidata.Type.ValueString())
-		connectionId60 := r.Source.RaveMedidata.ConnectionID.ValueString()
-		latencyThreshold60 := new(int64)
+		typeVar61 := shared.SourceRaveMedidataType(r.Source.RaveMedidata.Type.ValueString())
+		connectionId61 := r.Source.RaveMedidata.ConnectionID.ValueString()
+		latencyThreshold61 := new(int64)
 		if !r.Source.RaveMedidata.LatencyThreshold.IsUnknown() && !r.Source.RaveMedidata.LatencyThreshold.IsNull() {
-			*latencyThreshold60 = r.Source.RaveMedidata.LatencyThreshold.ValueInt64()
+			*latencyThreshold61 = r.Source.RaveMedidata.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold60 = nil
+			latencyThreshold61 = nil
 		}
-		entity46 := r.Source.RaveMedidata.Entity.ValueString()
+		entity47 := r.Source.RaveMedidata.Entity.ValueString()
 		sourceRaveMedidata = &shared.SourceRaveMedidata{
-			Type:             typeVar60,
-			ConnectionID:     connectionId60,
-			LatencyThreshold: latencyThreshold60,
-			Entity:           entity46,
+			Type:             typeVar61,
+			ConnectionID:     connectionId61,
+			LatencyThreshold: latencyThreshold61,
+			Entity:           entity47,
 		}
 	}
 	if sourceRaveMedidata != nil {
@@ -1965,20 +1988,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceRecurly *shared.SourceRecurly
 	if r.Source.Recurly != nil {
-		typeVar61 := shared.SourceRecurlyType(r.Source.Recurly.Type.ValueString())
-		connectionId61 := r.Source.Recurly.ConnectionID.ValueString()
-		latencyThreshold61 := new(int64)
+		typeVar62 := shared.SourceRecurlyType(r.Source.Recurly.Type.ValueString())
+		connectionId62 := r.Source.Recurly.ConnectionID.ValueString()
+		latencyThreshold62 := new(int64)
 		if !r.Source.Recurly.LatencyThreshold.IsUnknown() && !r.Source.Recurly.LatencyThreshold.IsNull() {
-			*latencyThreshold61 = r.Source.Recurly.LatencyThreshold.ValueInt64()
+			*latencyThreshold62 = r.Source.Recurly.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold61 = nil
+			latencyThreshold62 = nil
 		}
-		entity47 := r.Source.Recurly.Entity.ValueString()
+		entity48 := r.Source.Recurly.Entity.ValueString()
 		sourceRecurly = &shared.SourceRecurly{
-			Type:             typeVar61,
-			ConnectionID:     connectionId61,
-			LatencyThreshold: latencyThreshold61,
-			Entity:           entity47,
+			Type:             typeVar62,
+			ConnectionID:     connectionId62,
+			LatencyThreshold: latencyThreshold62,
+			Entity:           entity48,
 		}
 	}
 	if sourceRecurly != nil {
@@ -1988,24 +2011,24 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceRedditAds *shared.SourceRedditAds
 	if r.Source.RedditAds != nil {
-		typeVar62 := shared.SourceRedditAdsType(r.Source.RedditAds.Type.ValueString())
-		connectionId62 := r.Source.RedditAds.ConnectionID.ValueString()
-		latencyThreshold62 := new(int64)
+		typeVar63 := shared.SourceRedditAdsType(r.Source.RedditAds.Type.ValueString())
+		connectionId63 := r.Source.RedditAds.ConnectionID.ValueString()
+		latencyThreshold63 := new(int64)
 		if !r.Source.RedditAds.LatencyThreshold.IsUnknown() && !r.Source.RedditAds.LatencyThreshold.IsNull() {
-			*latencyThreshold62 = r.Source.RedditAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold63 = r.Source.RedditAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold62 = nil
+			latencyThreshold63 = nil
 		}
-		entity48 := r.Source.RedditAds.Entity.ValueString()
+		entity49 := r.Source.RedditAds.Entity.ValueString()
 		var breakdowns1 []string = nil
 		for _, breakdownsItem1 := range r.Source.RedditAds.Breakdowns {
 			breakdowns1 = append(breakdowns1, breakdownsItem1.ValueString())
 		}
 		sourceRedditAds = &shared.SourceRedditAds{
-			Type:             typeVar62,
-			ConnectionID:     connectionId62,
-			LatencyThreshold: latencyThreshold62,
-			Entity:           entity48,
+			Type:             typeVar63,
+			ConnectionID:     connectionId63,
+			LatencyThreshold: latencyThreshold63,
+			Entity:           entity49,
 			Breakdowns:       breakdowns1,
 		}
 	}
@@ -2016,13 +2039,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceRedshift *shared.SourceRedshift
 	if r.Source.Redshift != nil {
-		typeVar63 := shared.SourceRedshiftType(r.Source.Redshift.Type.ValueString())
-		connectionId63 := r.Source.Redshift.ConnectionID.ValueString()
-		latencyThreshold63 := new(int64)
+		typeVar64 := shared.SourceRedshiftType(r.Source.Redshift.Type.ValueString())
+		connectionId64 := r.Source.Redshift.ConnectionID.ValueString()
+		latencyThreshold64 := new(int64)
 		if !r.Source.Redshift.LatencyThreshold.IsUnknown() && !r.Source.Redshift.LatencyThreshold.IsNull() {
-			*latencyThreshold63 = r.Source.Redshift.LatencyThreshold.ValueInt64()
+			*latencyThreshold64 = r.Source.Redshift.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold63 = nil
+			latencyThreshold64 = nil
 		}
 		table11 := new(string)
 		if !r.Source.Redshift.Table.IsUnknown() && !r.Source.Redshift.Table.IsNull() {
@@ -2053,9 +2076,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema7 = nil
 		}
 		sourceRedshift = &shared.SourceRedshift{
-			Type:              typeVar63,
-			ConnectionID:      connectionId63,
-			LatencyThreshold:  latencyThreshold63,
+			Type:              typeVar64,
+			ConnectionID:      connectionId64,
+			LatencyThreshold:  latencyThreshold64,
 			Table:             table11,
 			TableNameFilter:   tableNameFilter11,
 			LastUpdatedColumn: lastUpdatedColumn10,
@@ -2070,13 +2093,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceRedshiftSharded *shared.SourceRedshiftSharded
 	if r.Source.RedshiftSharded != nil {
-		typeVar64 := shared.SourceRedshiftShardedType(r.Source.RedshiftSharded.Type.ValueString())
-		connectionId64 := r.Source.RedshiftSharded.ConnectionID.ValueString()
-		latencyThreshold64 := new(int64)
+		typeVar65 := shared.SourceRedshiftShardedType(r.Source.RedshiftSharded.Type.ValueString())
+		connectionId65 := r.Source.RedshiftSharded.ConnectionID.ValueString()
+		latencyThreshold65 := new(int64)
 		if !r.Source.RedshiftSharded.LatencyThreshold.IsUnknown() && !r.Source.RedshiftSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold64 = r.Source.RedshiftSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold65 = r.Source.RedshiftSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold64 = nil
+			latencyThreshold65 = nil
 		}
 		table12 := new(string)
 		if !r.Source.RedshiftSharded.Table.IsUnknown() && !r.Source.RedshiftSharded.Table.IsNull() {
@@ -2107,9 +2130,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema8 = nil
 		}
 		sourceRedshiftSharded = &shared.SourceRedshiftSharded{
-			Type:              typeVar64,
-			ConnectionID:      connectionId64,
-			LatencyThreshold:  latencyThreshold64,
+			Type:              typeVar65,
+			ConnectionID:      connectionId65,
+			LatencyThreshold:  latencyThreshold65,
 			Table:             table12,
 			TableNameFilter:   tableNameFilter12,
 			LastUpdatedColumn: lastUpdatedColumn11,
@@ -2124,13 +2147,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceS3Input *shared.SourceS3Input
 	if r.Source.S3Input != nil {
-		typeVar65 := shared.SourceS3InputType(r.Source.S3Input.Type.ValueString())
-		connectionId65 := r.Source.S3Input.ConnectionID.ValueString()
-		latencyThreshold65 := new(int64)
+		typeVar66 := shared.SourceS3InputType(r.Source.S3Input.Type.ValueString())
+		connectionId66 := r.Source.S3Input.ConnectionID.ValueString()
+		latencyThreshold66 := new(int64)
 		if !r.Source.S3Input.LatencyThreshold.IsUnknown() && !r.Source.S3Input.LatencyThreshold.IsNull() {
-			*latencyThreshold65 = r.Source.S3Input.LatencyThreshold.ValueInt64()
+			*latencyThreshold66 = r.Source.S3Input.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold65 = nil
+			latencyThreshold66 = nil
 		}
 		fileNameFilter3 := new(string)
 		if !r.Source.S3Input.FileNameFilter.IsUnknown() && !r.Source.S3Input.FileNameFilter.IsNull() {
@@ -2168,9 +2191,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			triggeredByEvent = nil
 		}
 		sourceS3Input = &shared.SourceS3Input{
-			Type:             typeVar65,
-			ConnectionID:     connectionId65,
-			LatencyThreshold: latencyThreshold65,
+			Type:             typeVar66,
+			ConnectionID:     connectionId66,
+			LatencyThreshold: latencyThreshold66,
 			FileNameFilter:   fileNameFilter3,
 			ExcelSheetName:   excelSheetName3,
 			NewFileBehavior:  newFileBehavior3,
@@ -2187,13 +2210,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceS3Legacy *shared.SourceS3Legacy
 	if r.Source.S3Legacy != nil {
-		typeVar66 := shared.SourceS3LegacyType(r.Source.S3Legacy.Type.ValueString())
-		connectionId66 := r.Source.S3Legacy.ConnectionID.ValueString()
-		latencyThreshold66 := new(int64)
+		typeVar67 := shared.SourceS3LegacyType(r.Source.S3Legacy.Type.ValueString())
+		connectionId67 := r.Source.S3Legacy.ConnectionID.ValueString()
+		latencyThreshold67 := new(int64)
 		if !r.Source.S3Legacy.LatencyThreshold.IsUnknown() && !r.Source.S3Legacy.LatencyThreshold.IsNull() {
-			*latencyThreshold66 = r.Source.S3Legacy.LatencyThreshold.ValueInt64()
+			*latencyThreshold67 = r.Source.S3Legacy.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold66 = nil
+			latencyThreshold67 = nil
 		}
 		fileNameFilter4 := new(string)
 		if !r.Source.S3Legacy.FileNameFilter.IsUnknown() && !r.Source.S3Legacy.FileNameFilter.IsNull() {
@@ -2219,9 +2242,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			paths4 = append(paths4, pathsItem4.ValueString())
 		}
 		sourceS3Legacy = &shared.SourceS3Legacy{
-			Type:             typeVar66,
-			ConnectionID:     connectionId66,
-			LatencyThreshold: latencyThreshold66,
+			Type:             typeVar67,
+			ConnectionID:     connectionId67,
+			LatencyThreshold: latencyThreshold67,
 			FileNameFilter:   fileNameFilter4,
 			ExcelSheetName:   excelSheetName4,
 			NewFileBehavior:  newFileBehavior4,
@@ -2236,20 +2259,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSalesforce *shared.SourceSalesforce
 	if r.Source.Salesforce != nil {
-		typeVar67 := shared.SourceSalesforceType(r.Source.Salesforce.Type.ValueString())
-		connectionId67 := r.Source.Salesforce.ConnectionID.ValueString()
-		latencyThreshold67 := new(int64)
+		typeVar68 := shared.SourceSalesforceType(r.Source.Salesforce.Type.ValueString())
+		connectionId68 := r.Source.Salesforce.ConnectionID.ValueString()
+		latencyThreshold68 := new(int64)
 		if !r.Source.Salesforce.LatencyThreshold.IsUnknown() && !r.Source.Salesforce.LatencyThreshold.IsNull() {
-			*latencyThreshold67 = r.Source.Salesforce.LatencyThreshold.ValueInt64()
+			*latencyThreshold68 = r.Source.Salesforce.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold67 = nil
+			latencyThreshold68 = nil
 		}
-		entity49 := r.Source.Salesforce.Entity.ValueString()
+		entity50 := r.Source.Salesforce.Entity.ValueString()
 		sourceSalesforce = &shared.SourceSalesforce{
-			Type:             typeVar67,
-			ConnectionID:     connectionId67,
-			LatencyThreshold: latencyThreshold67,
-			Entity:           entity49,
+			Type:             typeVar68,
+			ConnectionID:     connectionId68,
+			LatencyThreshold: latencyThreshold68,
+			Entity:           entity50,
 		}
 	}
 	if sourceSalesforce != nil {
@@ -2259,20 +2282,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSalesforceMarketingCloud *shared.SourceSalesforceMarketingCloud
 	if r.Source.SalesforceMarketingCloud != nil {
-		typeVar68 := shared.SourceSalesforceMarketingCloudType(r.Source.SalesforceMarketingCloud.Type.ValueString())
-		connectionId68 := r.Source.SalesforceMarketingCloud.ConnectionID.ValueString()
-		latencyThreshold68 := new(int64)
+		typeVar69 := shared.SourceSalesforceMarketingCloudType(r.Source.SalesforceMarketingCloud.Type.ValueString())
+		connectionId69 := r.Source.SalesforceMarketingCloud.ConnectionID.ValueString()
+		latencyThreshold69 := new(int64)
 		if !r.Source.SalesforceMarketingCloud.LatencyThreshold.IsUnknown() && !r.Source.SalesforceMarketingCloud.LatencyThreshold.IsNull() {
-			*latencyThreshold68 = r.Source.SalesforceMarketingCloud.LatencyThreshold.ValueInt64()
+			*latencyThreshold69 = r.Source.SalesforceMarketingCloud.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold68 = nil
+			latencyThreshold69 = nil
 		}
-		entity50 := r.Source.SalesforceMarketingCloud.Entity.ValueString()
+		entity51 := r.Source.SalesforceMarketingCloud.Entity.ValueString()
 		sourceSalesforceMarketingCloud = &shared.SourceSalesforceMarketingCloud{
-			Type:             typeVar68,
-			ConnectionID:     connectionId68,
-			LatencyThreshold: latencyThreshold68,
-			Entity:           entity50,
+			Type:             typeVar69,
+			ConnectionID:     connectionId69,
+			LatencyThreshold: latencyThreshold69,
+			Entity:           entity51,
 		}
 	}
 	if sourceSalesforceMarketingCloud != nil {
@@ -2282,20 +2305,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSapConcur *shared.SourceSapConcur
 	if r.Source.SapConcur != nil {
-		typeVar69 := shared.SourceSapConcurType(r.Source.SapConcur.Type.ValueString())
-		connectionId69 := r.Source.SapConcur.ConnectionID.ValueString()
-		latencyThreshold69 := new(int64)
+		typeVar70 := shared.SourceSapConcurType(r.Source.SapConcur.Type.ValueString())
+		connectionId70 := r.Source.SapConcur.ConnectionID.ValueString()
+		latencyThreshold70 := new(int64)
 		if !r.Source.SapConcur.LatencyThreshold.IsUnknown() && !r.Source.SapConcur.LatencyThreshold.IsNull() {
-			*latencyThreshold69 = r.Source.SapConcur.LatencyThreshold.ValueInt64()
+			*latencyThreshold70 = r.Source.SapConcur.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold69 = nil
+			latencyThreshold70 = nil
 		}
-		entity51 := r.Source.SapConcur.Entity.ValueString()
+		entity52 := r.Source.SapConcur.Entity.ValueString()
 		sourceSapConcur = &shared.SourceSapConcur{
-			Type:             typeVar69,
-			ConnectionID:     connectionId69,
-			LatencyThreshold: latencyThreshold69,
-			Entity:           entity51,
+			Type:             typeVar70,
+			ConnectionID:     connectionId70,
+			LatencyThreshold: latencyThreshold70,
+			Entity:           entity52,
 		}
 	}
 	if sourceSapConcur != nil {
@@ -2305,13 +2328,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSapHana *shared.SourceSapHana
 	if r.Source.SapHana != nil {
-		typeVar70 := shared.SourceSapHanaType(r.Source.SapHana.Type.ValueString())
-		connectionId70 := r.Source.SapHana.ConnectionID.ValueString()
-		latencyThreshold70 := new(int64)
+		typeVar71 := shared.SourceSapHanaType(r.Source.SapHana.Type.ValueString())
+		connectionId71 := r.Source.SapHana.ConnectionID.ValueString()
+		latencyThreshold71 := new(int64)
 		if !r.Source.SapHana.LatencyThreshold.IsUnknown() && !r.Source.SapHana.LatencyThreshold.IsNull() {
-			*latencyThreshold70 = r.Source.SapHana.LatencyThreshold.ValueInt64()
+			*latencyThreshold71 = r.Source.SapHana.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold70 = nil
+			latencyThreshold71 = nil
 		}
 		table13 := new(string)
 		if !r.Source.SapHana.Table.IsUnknown() && !r.Source.SapHana.Table.IsNull() {
@@ -2342,9 +2365,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema9 = nil
 		}
 		sourceSapHana = &shared.SourceSapHana{
-			Type:              typeVar70,
-			ConnectionID:      connectionId70,
-			LatencyThreshold:  latencyThreshold70,
+			Type:              typeVar71,
+			ConnectionID:      connectionId71,
+			LatencyThreshold:  latencyThreshold71,
 			Table:             table13,
 			TableNameFilter:   tableNameFilter13,
 			LastUpdatedColumn: lastUpdatedColumn12,
@@ -2359,13 +2382,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSapHanaSharded *shared.SourceSapHanaSharded
 	if r.Source.SapHanaSharded != nil {
-		typeVar71 := shared.SourceSapHanaShardedType(r.Source.SapHanaSharded.Type.ValueString())
-		connectionId71 := r.Source.SapHanaSharded.ConnectionID.ValueString()
-		latencyThreshold71 := new(int64)
+		typeVar72 := shared.SourceSapHanaShardedType(r.Source.SapHanaSharded.Type.ValueString())
+		connectionId72 := r.Source.SapHanaSharded.ConnectionID.ValueString()
+		latencyThreshold72 := new(int64)
 		if !r.Source.SapHanaSharded.LatencyThreshold.IsUnknown() && !r.Source.SapHanaSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold71 = r.Source.SapHanaSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold72 = r.Source.SapHanaSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold71 = nil
+			latencyThreshold72 = nil
 		}
 		table14 := new(string)
 		if !r.Source.SapHanaSharded.Table.IsUnknown() && !r.Source.SapHanaSharded.Table.IsNull() {
@@ -2396,9 +2419,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema10 = nil
 		}
 		sourceSapHanaSharded = &shared.SourceSapHanaSharded{
-			Type:              typeVar71,
-			ConnectionID:      connectionId71,
-			LatencyThreshold:  latencyThreshold71,
+			Type:              typeVar72,
+			ConnectionID:      connectionId72,
+			LatencyThreshold:  latencyThreshold72,
 			Table:             table14,
 			TableNameFilter:   tableNameFilter14,
 			LastUpdatedColumn: lastUpdatedColumn13,
@@ -2413,15 +2436,15 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSapOdata *shared.SourceSapOdata
 	if r.Source.SapOdata != nil {
-		typeVar72 := shared.SourceSapOdataType(r.Source.SapOdata.Type.ValueString())
-		connectionId72 := r.Source.SapOdata.ConnectionID.ValueString()
-		latencyThreshold72 := new(int64)
+		typeVar73 := shared.SourceSapOdataType(r.Source.SapOdata.Type.ValueString())
+		connectionId73 := r.Source.SapOdata.ConnectionID.ValueString()
+		latencyThreshold73 := new(int64)
 		if !r.Source.SapOdata.LatencyThreshold.IsUnknown() && !r.Source.SapOdata.LatencyThreshold.IsNull() {
-			*latencyThreshold72 = r.Source.SapOdata.LatencyThreshold.ValueInt64()
+			*latencyThreshold73 = r.Source.SapOdata.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold72 = nil
+			latencyThreshold73 = nil
 		}
-		entity52 := r.Source.SapOdata.Entity.ValueString()
+		entity53 := r.Source.SapOdata.Entity.ValueString()
 		incrementalColumn := new(string)
 		if !r.Source.SapOdata.IncrementalColumn.IsUnknown() && !r.Source.SapOdata.IncrementalColumn.IsNull() {
 			*incrementalColumn = r.Source.SapOdata.IncrementalColumn.ValueString()
@@ -2429,10 +2452,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			incrementalColumn = nil
 		}
 		sourceSapOdata = &shared.SourceSapOdata{
-			Type:              typeVar72,
-			ConnectionID:      connectionId72,
-			LatencyThreshold:  latencyThreshold72,
-			Entity:            entity52,
+			Type:              typeVar73,
+			ConnectionID:      connectionId73,
+			LatencyThreshold:  latencyThreshold73,
+			Entity:            entity53,
 			IncrementalColumn: incrementalColumn,
 		}
 	}
@@ -2443,20 +2466,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSeismic *shared.SourceSeismic
 	if r.Source.Seismic != nil {
-		typeVar73 := shared.SourceSeismicType(r.Source.Seismic.Type.ValueString())
-		connectionId73 := r.Source.Seismic.ConnectionID.ValueString()
-		latencyThreshold73 := new(int64)
+		typeVar74 := shared.SourceSeismicType(r.Source.Seismic.Type.ValueString())
+		connectionId74 := r.Source.Seismic.ConnectionID.ValueString()
+		latencyThreshold74 := new(int64)
 		if !r.Source.Seismic.LatencyThreshold.IsUnknown() && !r.Source.Seismic.LatencyThreshold.IsNull() {
-			*latencyThreshold73 = r.Source.Seismic.LatencyThreshold.ValueInt64()
+			*latencyThreshold74 = r.Source.Seismic.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold73 = nil
+			latencyThreshold74 = nil
 		}
-		entity53 := r.Source.Seismic.Entity.ValueString()
+		entity54 := r.Source.Seismic.Entity.ValueString()
 		sourceSeismic = &shared.SourceSeismic{
-			Type:             typeVar73,
-			ConnectionID:     connectionId73,
-			LatencyThreshold: latencyThreshold73,
-			Entity:           entity53,
+			Type:             typeVar74,
+			ConnectionID:     connectionId74,
+			LatencyThreshold: latencyThreshold74,
+			Entity:           entity54,
 		}
 	}
 	if sourceSeismic != nil {
@@ -2466,20 +2489,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceServiceNow *shared.SourceServiceNow
 	if r.Source.ServiceNow != nil {
-		typeVar74 := shared.SourceServiceNowType(r.Source.ServiceNow.Type.ValueString())
-		connectionId74 := r.Source.ServiceNow.ConnectionID.ValueString()
-		latencyThreshold74 := new(int64)
+		typeVar75 := shared.SourceServiceNowType(r.Source.ServiceNow.Type.ValueString())
+		connectionId75 := r.Source.ServiceNow.ConnectionID.ValueString()
+		latencyThreshold75 := new(int64)
 		if !r.Source.ServiceNow.LatencyThreshold.IsUnknown() && !r.Source.ServiceNow.LatencyThreshold.IsNull() {
-			*latencyThreshold74 = r.Source.ServiceNow.LatencyThreshold.ValueInt64()
+			*latencyThreshold75 = r.Source.ServiceNow.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold74 = nil
+			latencyThreshold75 = nil
 		}
-		entity54 := r.Source.ServiceNow.Entity.ValueString()
+		entity55 := r.Source.ServiceNow.Entity.ValueString()
 		sourceServiceNow = &shared.SourceServiceNow{
-			Type:             typeVar74,
-			ConnectionID:     connectionId74,
-			LatencyThreshold: latencyThreshold74,
-			Entity:           entity54,
+			Type:             typeVar75,
+			ConnectionID:     connectionId75,
+			LatencyThreshold: latencyThreshold75,
+			Entity:           entity55,
 		}
 	}
 	if sourceServiceNow != nil {
@@ -2489,13 +2512,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSftp *shared.SourceSftp
 	if r.Source.Sftp != nil {
-		typeVar75 := shared.SourceSftpType(r.Source.Sftp.Type.ValueString())
-		connectionId75 := r.Source.Sftp.ConnectionID.ValueString()
-		latencyThreshold75 := new(int64)
+		typeVar76 := shared.SourceSftpType(r.Source.Sftp.Type.ValueString())
+		connectionId76 := r.Source.Sftp.ConnectionID.ValueString()
+		latencyThreshold76 := new(int64)
 		if !r.Source.Sftp.LatencyThreshold.IsUnknown() && !r.Source.Sftp.LatencyThreshold.IsNull() {
-			*latencyThreshold75 = r.Source.Sftp.LatencyThreshold.ValueInt64()
+			*latencyThreshold76 = r.Source.Sftp.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold75 = nil
+			latencyThreshold76 = nil
 		}
 		fileNameFilter5 := new(string)
 		if !r.Source.Sftp.FileNameFilter.IsUnknown() && !r.Source.Sftp.FileNameFilter.IsNull() {
@@ -2527,9 +2550,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			globPattern3 = nil
 		}
 		sourceSftp = &shared.SourceSftp{
-			Type:             typeVar75,
-			ConnectionID:     connectionId75,
-			LatencyThreshold: latencyThreshold75,
+			Type:             typeVar76,
+			ConnectionID:     connectionId76,
+			LatencyThreshold: latencyThreshold76,
 			FileNameFilter:   fileNameFilter5,
 			ExcelSheetName:   excelSheetName5,
 			NewFileBehavior:  newFileBehavior5,
@@ -2545,20 +2568,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceShopify *shared.SourceShopify
 	if r.Source.Shopify != nil {
-		typeVar76 := shared.SourceShopifyType(r.Source.Shopify.Type.ValueString())
-		connectionId76 := r.Source.Shopify.ConnectionID.ValueString()
-		latencyThreshold76 := new(int64)
+		typeVar77 := shared.SourceShopifyType(r.Source.Shopify.Type.ValueString())
+		connectionId77 := r.Source.Shopify.ConnectionID.ValueString()
+		latencyThreshold77 := new(int64)
 		if !r.Source.Shopify.LatencyThreshold.IsUnknown() && !r.Source.Shopify.LatencyThreshold.IsNull() {
-			*latencyThreshold76 = r.Source.Shopify.LatencyThreshold.ValueInt64()
+			*latencyThreshold77 = r.Source.Shopify.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold76 = nil
+			latencyThreshold77 = nil
 		}
-		entity55 := r.Source.Shopify.Entity.ValueString()
+		entity56 := r.Source.Shopify.Entity.ValueString()
 		sourceShopify = &shared.SourceShopify{
-			Type:             typeVar76,
-			ConnectionID:     connectionId76,
-			LatencyThreshold: latencyThreshold76,
-			Entity:           entity55,
+			Type:             typeVar77,
+			ConnectionID:     connectionId77,
+			LatencyThreshold: latencyThreshold77,
+			Entity:           entity56,
 		}
 	}
 	if sourceShopify != nil {
@@ -2568,20 +2591,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSkyward *shared.SourceSkyward
 	if r.Source.Skyward != nil {
-		typeVar77 := shared.SourceSkywardType(r.Source.Skyward.Type.ValueString())
-		connectionId77 := r.Source.Skyward.ConnectionID.ValueString()
-		latencyThreshold77 := new(int64)
+		typeVar78 := shared.SourceSkywardType(r.Source.Skyward.Type.ValueString())
+		connectionId78 := r.Source.Skyward.ConnectionID.ValueString()
+		latencyThreshold78 := new(int64)
 		if !r.Source.Skyward.LatencyThreshold.IsUnknown() && !r.Source.Skyward.LatencyThreshold.IsNull() {
-			*latencyThreshold77 = r.Source.Skyward.LatencyThreshold.ValueInt64()
+			*latencyThreshold78 = r.Source.Skyward.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold77 = nil
+			latencyThreshold78 = nil
 		}
-		entity56 := r.Source.Skyward.Entity.ValueString()
+		entity57 := r.Source.Skyward.Entity.ValueString()
 		sourceSkyward = &shared.SourceSkyward{
-			Type:             typeVar77,
-			ConnectionID:     connectionId77,
-			LatencyThreshold: latencyThreshold77,
-			Entity:           entity56,
+			Type:             typeVar78,
+			ConnectionID:     connectionId78,
+			LatencyThreshold: latencyThreshold78,
+			Entity:           entity57,
 		}
 	}
 	if sourceSkyward != nil {
@@ -2591,15 +2614,15 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSnapchatAds *shared.SourceSnapchatAds
 	if r.Source.SnapchatAds != nil {
-		typeVar78 := shared.SourceSnapchatAdsType(r.Source.SnapchatAds.Type.ValueString())
-		connectionId78 := r.Source.SnapchatAds.ConnectionID.ValueString()
-		latencyThreshold78 := new(int64)
+		typeVar79 := shared.SourceSnapchatAdsType(r.Source.SnapchatAds.Type.ValueString())
+		connectionId79 := r.Source.SnapchatAds.ConnectionID.ValueString()
+		latencyThreshold79 := new(int64)
 		if !r.Source.SnapchatAds.LatencyThreshold.IsUnknown() && !r.Source.SnapchatAds.LatencyThreshold.IsNull() {
-			*latencyThreshold78 = r.Source.SnapchatAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold79 = r.Source.SnapchatAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold78 = nil
+			latencyThreshold79 = nil
 		}
-		entity57 := r.Source.SnapchatAds.Entity.ValueString()
+		entity58 := r.Source.SnapchatAds.Entity.ValueString()
 		breakdown := new(string)
 		if !r.Source.SnapchatAds.Breakdown.IsUnknown() && !r.Source.SnapchatAds.Breakdown.IsNull() {
 			*breakdown = r.Source.SnapchatAds.Breakdown.ValueString()
@@ -2619,10 +2642,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			reportDimension = append(reportDimension, reportDimensionItem.ValueString())
 		}
 		sourceSnapchatAds = &shared.SourceSnapchatAds{
-			Type:              typeVar78,
-			ConnectionID:      connectionId78,
-			LatencyThreshold:  latencyThreshold78,
-			Entity:            entity57,
+			Type:              typeVar79,
+			ConnectionID:      connectionId79,
+			LatencyThreshold:  latencyThreshold79,
+			Entity:            entity58,
 			Breakdown:         breakdown,
 			Metrics:           metrics4,
 			AdditionalMetrics: additionalMetrics,
@@ -2636,13 +2659,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSnowflake *shared.SourceSnowflake
 	if r.Source.Snowflake != nil {
-		typeVar79 := shared.SourceSnowflakeType(r.Source.Snowflake.Type.ValueString())
-		connectionId79 := r.Source.Snowflake.ConnectionID.ValueString()
-		latencyThreshold79 := new(int64)
+		typeVar80 := shared.SourceSnowflakeType(r.Source.Snowflake.Type.ValueString())
+		connectionId80 := r.Source.Snowflake.ConnectionID.ValueString()
+		latencyThreshold80 := new(int64)
 		if !r.Source.Snowflake.LatencyThreshold.IsUnknown() && !r.Source.Snowflake.LatencyThreshold.IsNull() {
-			*latencyThreshold79 = r.Source.Snowflake.LatencyThreshold.ValueInt64()
+			*latencyThreshold80 = r.Source.Snowflake.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold79 = nil
+			latencyThreshold80 = nil
 		}
 		table15 := new(string)
 		if !r.Source.Snowflake.Table.IsUnknown() && !r.Source.Snowflake.Table.IsNull() {
@@ -2673,9 +2696,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema11 = nil
 		}
 		sourceSnowflake = &shared.SourceSnowflake{
-			Type:              typeVar79,
-			ConnectionID:      connectionId79,
-			LatencyThreshold:  latencyThreshold79,
+			Type:              typeVar80,
+			ConnectionID:      connectionId80,
+			LatencyThreshold:  latencyThreshold80,
 			Table:             table15,
 			TableNameFilter:   tableNameFilter15,
 			LastUpdatedColumn: lastUpdatedColumn14,
@@ -2690,13 +2713,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSnowflakeSharded *shared.SourceSnowflakeSharded
 	if r.Source.SnowflakeSharded != nil {
-		typeVar80 := shared.SourceSnowflakeShardedType(r.Source.SnowflakeSharded.Type.ValueString())
-		connectionId80 := r.Source.SnowflakeSharded.ConnectionID.ValueString()
-		latencyThreshold80 := new(int64)
+		typeVar81 := shared.SourceSnowflakeShardedType(r.Source.SnowflakeSharded.Type.ValueString())
+		connectionId81 := r.Source.SnowflakeSharded.ConnectionID.ValueString()
+		latencyThreshold81 := new(int64)
 		if !r.Source.SnowflakeSharded.LatencyThreshold.IsUnknown() && !r.Source.SnowflakeSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold80 = r.Source.SnowflakeSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold81 = r.Source.SnowflakeSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold80 = nil
+			latencyThreshold81 = nil
 		}
 		table16 := new(string)
 		if !r.Source.SnowflakeSharded.Table.IsUnknown() && !r.Source.SnowflakeSharded.Table.IsNull() {
@@ -2727,9 +2750,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema12 = nil
 		}
 		sourceSnowflakeSharded = &shared.SourceSnowflakeSharded{
-			Type:              typeVar80,
-			ConnectionID:      connectionId80,
-			LatencyThreshold:  latencyThreshold80,
+			Type:              typeVar81,
+			ConnectionID:      connectionId81,
+			LatencyThreshold:  latencyThreshold81,
 			Table:             table16,
 			TableNameFilter:   tableNameFilter16,
 			LastUpdatedColumn: lastUpdatedColumn15,
@@ -2744,13 +2767,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSQLServer *shared.SourceSQLServer
 	if r.Source.SQLServer != nil {
-		typeVar81 := shared.SourceSQLServerType(r.Source.SQLServer.Type.ValueString())
-		connectionId81 := r.Source.SQLServer.ConnectionID.ValueString()
-		latencyThreshold81 := new(int64)
+		typeVar82 := shared.SourceSQLServerType(r.Source.SQLServer.Type.ValueString())
+		connectionId82 := r.Source.SQLServer.ConnectionID.ValueString()
+		latencyThreshold82 := new(int64)
 		if !r.Source.SQLServer.LatencyThreshold.IsUnknown() && !r.Source.SQLServer.LatencyThreshold.IsNull() {
-			*latencyThreshold81 = r.Source.SQLServer.LatencyThreshold.ValueInt64()
+			*latencyThreshold82 = r.Source.SQLServer.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold81 = nil
+			latencyThreshold82 = nil
 		}
 		table17 := new(string)
 		if !r.Source.SQLServer.Table.IsUnknown() && !r.Source.SQLServer.Table.IsNull() {
@@ -2781,9 +2804,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema13 = nil
 		}
 		sourceSQLServer = &shared.SourceSQLServer{
-			Type:              typeVar81,
-			ConnectionID:      connectionId81,
-			LatencyThreshold:  latencyThreshold81,
+			Type:              typeVar82,
+			ConnectionID:      connectionId82,
+			LatencyThreshold:  latencyThreshold82,
 			Table:             table17,
 			TableNameFilter:   tableNameFilter17,
 			LastUpdatedColumn: lastUpdatedColumn16,
@@ -2798,13 +2821,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSQLServerSharded *shared.SourceSQLServerSharded
 	if r.Source.SQLServerSharded != nil {
-		typeVar82 := shared.SourceSQLServerShardedType(r.Source.SQLServerSharded.Type.ValueString())
-		connectionId82 := r.Source.SQLServerSharded.ConnectionID.ValueString()
-		latencyThreshold82 := new(int64)
+		typeVar83 := shared.SourceSQLServerShardedType(r.Source.SQLServerSharded.Type.ValueString())
+		connectionId83 := r.Source.SQLServerSharded.ConnectionID.ValueString()
+		latencyThreshold83 := new(int64)
 		if !r.Source.SQLServerSharded.LatencyThreshold.IsUnknown() && !r.Source.SQLServerSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold82 = r.Source.SQLServerSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold83 = r.Source.SQLServerSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold82 = nil
+			latencyThreshold83 = nil
 		}
 		table18 := new(string)
 		if !r.Source.SQLServerSharded.Table.IsUnknown() && !r.Source.SQLServerSharded.Table.IsNull() {
@@ -2835,9 +2858,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			schema14 = nil
 		}
 		sourceSQLServerSharded = &shared.SourceSQLServerSharded{
-			Type:              typeVar82,
-			ConnectionID:      connectionId82,
-			LatencyThreshold:  latencyThreshold82,
+			Type:              typeVar83,
+			ConnectionID:      connectionId83,
+			LatencyThreshold:  latencyThreshold83,
 			Table:             table18,
 			TableNameFilter:   tableNameFilter18,
 			LastUpdatedColumn: lastUpdatedColumn17,
@@ -2852,20 +2875,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSqs *shared.SourceSqs
 	if r.Source.Sqs != nil {
-		typeVar83 := shared.SourceSqsType(r.Source.Sqs.Type.ValueString())
-		connectionId83 := r.Source.Sqs.ConnectionID.ValueString()
-		latencyThreshold83 := new(int64)
+		typeVar84 := shared.SourceSqsType(r.Source.Sqs.Type.ValueString())
+		connectionId84 := r.Source.Sqs.ConnectionID.ValueString()
+		latencyThreshold84 := new(int64)
 		if !r.Source.Sqs.LatencyThreshold.IsUnknown() && !r.Source.Sqs.LatencyThreshold.IsNull() {
-			*latencyThreshold83 = r.Source.Sqs.LatencyThreshold.ValueInt64()
+			*latencyThreshold84 = r.Source.Sqs.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold83 = nil
+			latencyThreshold84 = nil
 		}
-		entity58 := r.Source.Sqs.Entity.ValueString()
+		entity59 := r.Source.Sqs.Entity.ValueString()
 		sourceSqs = &shared.SourceSqs{
-			Type:             typeVar83,
-			ConnectionID:     connectionId83,
-			LatencyThreshold: latencyThreshold83,
-			Entity:           entity58,
+			Type:             typeVar84,
+			ConnectionID:     connectionId84,
+			LatencyThreshold: latencyThreshold84,
+			Entity:           entity59,
 		}
 	}
 	if sourceSqs != nil {
@@ -2875,20 +2898,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSquare *shared.SourceSquare
 	if r.Source.Square != nil {
-		typeVar84 := shared.SourceSquareType(r.Source.Square.Type.ValueString())
-		connectionId84 := r.Source.Square.ConnectionID.ValueString()
-		latencyThreshold84 := new(int64)
+		typeVar85 := shared.SourceSquareType(r.Source.Square.Type.ValueString())
+		connectionId85 := r.Source.Square.ConnectionID.ValueString()
+		latencyThreshold85 := new(int64)
 		if !r.Source.Square.LatencyThreshold.IsUnknown() && !r.Source.Square.LatencyThreshold.IsNull() {
-			*latencyThreshold84 = r.Source.Square.LatencyThreshold.ValueInt64()
+			*latencyThreshold85 = r.Source.Square.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold84 = nil
+			latencyThreshold85 = nil
 		}
-		entity59 := r.Source.Square.Entity.ValueString()
+		entity60 := r.Source.Square.Entity.ValueString()
 		sourceSquare = &shared.SourceSquare{
-			Type:             typeVar84,
-			ConnectionID:     connectionId84,
-			LatencyThreshold: latencyThreshold84,
-			Entity:           entity59,
+			Type:             typeVar85,
+			ConnectionID:     connectionId85,
+			LatencyThreshold: latencyThreshold85,
+			Entity:           entity60,
 		}
 	}
 	if sourceSquare != nil {
@@ -2898,13 +2921,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceStreaming *shared.SourceStreaming
 	if r.Source.Streaming != nil {
-		typeVar85 := shared.SourceStreamingType(r.Source.Streaming.Type.ValueString())
-		connectionId85 := r.Source.Streaming.ConnectionID.ValueString()
-		latencyThreshold85 := new(int64)
+		typeVar86 := shared.SourceStreamingType(r.Source.Streaming.Type.ValueString())
+		connectionId86 := r.Source.Streaming.ConnectionID.ValueString()
+		latencyThreshold86 := new(int64)
 		if !r.Source.Streaming.LatencyThreshold.IsUnknown() && !r.Source.Streaming.LatencyThreshold.IsNull() {
-			*latencyThreshold85 = r.Source.Streaming.LatencyThreshold.ValueInt64()
+			*latencyThreshold86 = r.Source.Streaming.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold85 = nil
+			latencyThreshold86 = nil
 		}
 		fileNameFilter6 := new(string)
 		if !r.Source.Streaming.FileNameFilter.IsUnknown() && !r.Source.Streaming.FileNameFilter.IsNull() {
@@ -2930,9 +2953,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			paths6 = append(paths6, pathsItem6.ValueString())
 		}
 		sourceStreaming = &shared.SourceStreaming{
-			Type:             typeVar85,
-			ConnectionID:     connectionId85,
-			LatencyThreshold: latencyThreshold85,
+			Type:             typeVar86,
+			ConnectionID:     connectionId86,
+			LatencyThreshold: latencyThreshold86,
 			FileNameFilter:   fileNameFilter6,
 			ExcelSheetName:   excelSheetName6,
 			NewFileBehavior:  newFileBehavior6,
@@ -2947,20 +2970,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceStripe *shared.SourceStripe
 	if r.Source.Stripe != nil {
-		typeVar86 := shared.SourceStripeType(r.Source.Stripe.Type.ValueString())
-		connectionId86 := r.Source.Stripe.ConnectionID.ValueString()
-		latencyThreshold86 := new(int64)
+		typeVar87 := shared.SourceStripeType(r.Source.Stripe.Type.ValueString())
+		connectionId87 := r.Source.Stripe.ConnectionID.ValueString()
+		latencyThreshold87 := new(int64)
 		if !r.Source.Stripe.LatencyThreshold.IsUnknown() && !r.Source.Stripe.LatencyThreshold.IsNull() {
-			*latencyThreshold86 = r.Source.Stripe.LatencyThreshold.ValueInt64()
+			*latencyThreshold87 = r.Source.Stripe.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold86 = nil
+			latencyThreshold87 = nil
 		}
-		entity60 := r.Source.Stripe.Entity.ValueString()
+		entity61 := r.Source.Stripe.Entity.ValueString()
 		sourceStripe = &shared.SourceStripe{
-			Type:             typeVar86,
-			ConnectionID:     connectionId86,
-			LatencyThreshold: latencyThreshold86,
-			Entity:           entity60,
+			Type:             typeVar87,
+			ConnectionID:     connectionId87,
+			LatencyThreshold: latencyThreshold87,
+			Entity:           entity61,
 		}
 	}
 	if sourceStripe != nil {
@@ -2970,20 +2993,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceSumtotal *shared.SourceSumtotal
 	if r.Source.Sumtotal != nil {
-		typeVar87 := shared.SourceSumtotalType(r.Source.Sumtotal.Type.ValueString())
-		connectionId87 := r.Source.Sumtotal.ConnectionID.ValueString()
-		latencyThreshold87 := new(int64)
+		typeVar88 := shared.SourceSumtotalType(r.Source.Sumtotal.Type.ValueString())
+		connectionId88 := r.Source.Sumtotal.ConnectionID.ValueString()
+		latencyThreshold88 := new(int64)
 		if !r.Source.Sumtotal.LatencyThreshold.IsUnknown() && !r.Source.Sumtotal.LatencyThreshold.IsNull() {
-			*latencyThreshold87 = r.Source.Sumtotal.LatencyThreshold.ValueInt64()
+			*latencyThreshold88 = r.Source.Sumtotal.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold87 = nil
+			latencyThreshold88 = nil
 		}
-		entity61 := r.Source.Sumtotal.Entity.ValueString()
+		entity62 := r.Source.Sumtotal.Entity.ValueString()
 		sourceSumtotal = &shared.SourceSumtotal{
-			Type:             typeVar87,
-			ConnectionID:     connectionId87,
-			LatencyThreshold: latencyThreshold87,
-			Entity:           entity61,
+			Type:             typeVar88,
+			ConnectionID:     connectionId88,
+			LatencyThreshold: latencyThreshold88,
+			Entity:           entity62,
 		}
 	}
 	if sourceSumtotal != nil {
@@ -2993,20 +3016,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceTheTradeDesk *shared.SourceTheTradeDesk
 	if r.Source.TheTradeDesk != nil {
-		typeVar88 := shared.SourceTheTradeDeskType(r.Source.TheTradeDesk.Type.ValueString())
-		connectionId88 := r.Source.TheTradeDesk.ConnectionID.ValueString()
-		latencyThreshold88 := new(int64)
+		typeVar89 := shared.SourceTheTradeDeskType(r.Source.TheTradeDesk.Type.ValueString())
+		connectionId89 := r.Source.TheTradeDesk.ConnectionID.ValueString()
+		latencyThreshold89 := new(int64)
 		if !r.Source.TheTradeDesk.LatencyThreshold.IsUnknown() && !r.Source.TheTradeDesk.LatencyThreshold.IsNull() {
-			*latencyThreshold88 = r.Source.TheTradeDesk.LatencyThreshold.ValueInt64()
+			*latencyThreshold89 = r.Source.TheTradeDesk.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold88 = nil
+			latencyThreshold89 = nil
 		}
-		entity62 := r.Source.TheTradeDesk.Entity.ValueString()
+		entity63 := r.Source.TheTradeDesk.Entity.ValueString()
 		sourceTheTradeDesk = &shared.SourceTheTradeDesk{
-			Type:             typeVar88,
-			ConnectionID:     connectionId88,
-			LatencyThreshold: latencyThreshold88,
-			Entity:           entity62,
+			Type:             typeVar89,
+			ConnectionID:     connectionId89,
+			LatencyThreshold: latencyThreshold89,
+			Entity:           entity63,
 		}
 	}
 	if sourceTheTradeDesk != nil {
@@ -3016,15 +3039,15 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceTikTokAds *shared.SourceTikTokAds
 	if r.Source.TikTokAds != nil {
-		typeVar89 := shared.SourceTikTokAdsType(r.Source.TikTokAds.Type.ValueString())
-		connectionId89 := r.Source.TikTokAds.ConnectionID.ValueString()
-		latencyThreshold89 := new(int64)
+		typeVar90 := shared.SourceTikTokAdsType(r.Source.TikTokAds.Type.ValueString())
+		connectionId90 := r.Source.TikTokAds.ConnectionID.ValueString()
+		latencyThreshold90 := new(int64)
 		if !r.Source.TikTokAds.LatencyThreshold.IsUnknown() && !r.Source.TikTokAds.LatencyThreshold.IsNull() {
-			*latencyThreshold89 = r.Source.TikTokAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold90 = r.Source.TikTokAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold89 = nil
+			latencyThreshold90 = nil
 		}
-		entity63 := r.Source.TikTokAds.Entity.ValueString()
+		entity64 := r.Source.TikTokAds.Entity.ValueString()
 		dataLevel := new(string)
 		if !r.Source.TikTokAds.DataLevel.IsUnknown() && !r.Source.TikTokAds.DataLevel.IsNull() {
 			*dataLevel = r.Source.TikTokAds.DataLevel.ValueString()
@@ -3040,10 +3063,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			metrics5 = append(metrics5, metricsItem5.ValueString())
 		}
 		sourceTikTokAds = &shared.SourceTikTokAds{
-			Type:             typeVar89,
-			ConnectionID:     connectionId89,
-			LatencyThreshold: latencyThreshold89,
-			Entity:           entity63,
+			Type:             typeVar90,
+			ConnectionID:     connectionId90,
+			LatencyThreshold: latencyThreshold90,
+			Entity:           entity64,
 			DataLevel:        dataLevel,
 			Dimensions:       dimensions2,
 			Metrics:          metrics5,
@@ -3056,20 +3079,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceTwilio *shared.SourceTwilio
 	if r.Source.Twilio != nil {
-		typeVar90 := shared.SourceTwilioType(r.Source.Twilio.Type.ValueString())
-		connectionId90 := r.Source.Twilio.ConnectionID.ValueString()
-		latencyThreshold90 := new(int64)
+		typeVar91 := shared.SourceTwilioType(r.Source.Twilio.Type.ValueString())
+		connectionId91 := r.Source.Twilio.ConnectionID.ValueString()
+		latencyThreshold91 := new(int64)
 		if !r.Source.Twilio.LatencyThreshold.IsUnknown() && !r.Source.Twilio.LatencyThreshold.IsNull() {
-			*latencyThreshold90 = r.Source.Twilio.LatencyThreshold.ValueInt64()
+			*latencyThreshold91 = r.Source.Twilio.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold90 = nil
+			latencyThreshold91 = nil
 		}
-		entity64 := r.Source.Twilio.Entity.ValueString()
+		entity65 := r.Source.Twilio.Entity.ValueString()
 		sourceTwilio = &shared.SourceTwilio{
-			Type:             typeVar90,
-			ConnectionID:     connectionId90,
-			LatencyThreshold: latencyThreshold90,
-			Entity:           entity64,
+			Type:             typeVar91,
+			ConnectionID:     connectionId91,
+			LatencyThreshold: latencyThreshold91,
+			Entity:           entity65,
 		}
 	}
 	if sourceTwilio != nil {
@@ -3079,20 +3102,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceTwitterAds *shared.SourceTwitterAds
 	if r.Source.TwitterAds != nil {
-		typeVar91 := shared.SourceTwitterAdsType(r.Source.TwitterAds.Type.ValueString())
-		connectionId91 := r.Source.TwitterAds.ConnectionID.ValueString()
-		latencyThreshold91 := new(int64)
+		typeVar92 := shared.SourceTwitterAdsType(r.Source.TwitterAds.Type.ValueString())
+		connectionId92 := r.Source.TwitterAds.ConnectionID.ValueString()
+		latencyThreshold92 := new(int64)
 		if !r.Source.TwitterAds.LatencyThreshold.IsUnknown() && !r.Source.TwitterAds.LatencyThreshold.IsNull() {
-			*latencyThreshold91 = r.Source.TwitterAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold92 = r.Source.TwitterAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold91 = nil
+			latencyThreshold92 = nil
 		}
-		entity65 := r.Source.TwitterAds.Entity.ValueString()
+		entity66 := r.Source.TwitterAds.Entity.ValueString()
 		sourceTwitterAds = &shared.SourceTwitterAds{
-			Type:             typeVar91,
-			ConnectionID:     connectionId91,
-			LatencyThreshold: latencyThreshold91,
-			Entity:           entity65,
+			Type:             typeVar92,
+			ConnectionID:     connectionId92,
+			LatencyThreshold: latencyThreshold92,
+			Entity:           entity66,
 		}
 	}
 	if sourceTwitterAds != nil {
@@ -3102,20 +3125,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceUserDefinedAPI *shared.SourceUserDefinedAPI
 	if r.Source.UserDefinedAPI != nil {
-		typeVar92 := shared.SourceUserDefinedAPIType(r.Source.UserDefinedAPI.Type.ValueString())
-		connectionId92 := r.Source.UserDefinedAPI.ConnectionID.ValueString()
-		latencyThreshold92 := new(int64)
+		typeVar93 := shared.SourceUserDefinedAPIType(r.Source.UserDefinedAPI.Type.ValueString())
+		connectionId93 := r.Source.UserDefinedAPI.ConnectionID.ValueString()
+		latencyThreshold93 := new(int64)
 		if !r.Source.UserDefinedAPI.LatencyThreshold.IsUnknown() && !r.Source.UserDefinedAPI.LatencyThreshold.IsNull() {
-			*latencyThreshold92 = r.Source.UserDefinedAPI.LatencyThreshold.ValueInt64()
+			*latencyThreshold93 = r.Source.UserDefinedAPI.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold92 = nil
+			latencyThreshold93 = nil
 		}
-		entity66 := r.Source.UserDefinedAPI.Entity.ValueString()
+		entity67 := r.Source.UserDefinedAPI.Entity.ValueString()
 		sourceUserDefinedAPI = &shared.SourceUserDefinedAPI{
-			Type:             typeVar92,
-			ConnectionID:     connectionId92,
-			LatencyThreshold: latencyThreshold92,
-			Entity:           entity66,
+			Type:             typeVar93,
+			ConnectionID:     connectionId93,
+			LatencyThreshold: latencyThreshold93,
+			Entity:           entity67,
 		}
 	}
 	if sourceUserDefinedAPI != nil {
@@ -3125,20 +3148,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceUservoice *shared.SourceUservoice
 	if r.Source.Uservoice != nil {
-		typeVar93 := shared.SourceUservoiceType(r.Source.Uservoice.Type.ValueString())
-		connectionId93 := r.Source.Uservoice.ConnectionID.ValueString()
-		latencyThreshold93 := new(int64)
+		typeVar94 := shared.SourceUservoiceType(r.Source.Uservoice.Type.ValueString())
+		connectionId94 := r.Source.Uservoice.ConnectionID.ValueString()
+		latencyThreshold94 := new(int64)
 		if !r.Source.Uservoice.LatencyThreshold.IsUnknown() && !r.Source.Uservoice.LatencyThreshold.IsNull() {
-			*latencyThreshold93 = r.Source.Uservoice.LatencyThreshold.ValueInt64()
+			*latencyThreshold94 = r.Source.Uservoice.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold93 = nil
+			latencyThreshold94 = nil
 		}
-		entity67 := r.Source.Uservoice.Entity.ValueString()
+		entity68 := r.Source.Uservoice.Entity.ValueString()
 		sourceUservoice = &shared.SourceUservoice{
-			Type:             typeVar93,
-			ConnectionID:     connectionId93,
-			LatencyThreshold: latencyThreshold93,
-			Entity:           entity67,
+			Type:             typeVar94,
+			ConnectionID:     connectionId94,
+			LatencyThreshold: latencyThreshold94,
+			Entity:           entity68,
 		}
 	}
 	if sourceUservoice != nil {
@@ -3148,20 +3171,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceVeeva *shared.SourceVeeva
 	if r.Source.Veeva != nil {
-		typeVar94 := shared.SourceVeevaType(r.Source.Veeva.Type.ValueString())
-		connectionId94 := r.Source.Veeva.ConnectionID.ValueString()
-		latencyThreshold94 := new(int64)
+		typeVar95 := shared.SourceVeevaType(r.Source.Veeva.Type.ValueString())
+		connectionId95 := r.Source.Veeva.ConnectionID.ValueString()
+		latencyThreshold95 := new(int64)
 		if !r.Source.Veeva.LatencyThreshold.IsUnknown() && !r.Source.Veeva.LatencyThreshold.IsNull() {
-			*latencyThreshold94 = r.Source.Veeva.LatencyThreshold.ValueInt64()
+			*latencyThreshold95 = r.Source.Veeva.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold94 = nil
+			latencyThreshold95 = nil
 		}
-		entity68 := r.Source.Veeva.Entity.ValueString()
+		entity69 := r.Source.Veeva.Entity.ValueString()
 		sourceVeeva = &shared.SourceVeeva{
-			Type:             typeVar94,
-			ConnectionID:     connectionId94,
-			LatencyThreshold: latencyThreshold94,
-			Entity:           entity68,
+			Type:             typeVar95,
+			ConnectionID:     connectionId95,
+			LatencyThreshold: latencyThreshold95,
+			Entity:           entity69,
 		}
 	}
 	if sourceVeeva != nil {
@@ -3171,15 +3194,15 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceVerizonMediaDsp *shared.SourceVerizonMediaDsp
 	if r.Source.VerizonMediaDsp != nil {
-		typeVar95 := shared.SourceVerizonMediaDspType(r.Source.VerizonMediaDsp.Type.ValueString())
-		connectionId95 := r.Source.VerizonMediaDsp.ConnectionID.ValueString()
-		latencyThreshold95 := new(int64)
+		typeVar96 := shared.SourceVerizonMediaDspType(r.Source.VerizonMediaDsp.Type.ValueString())
+		connectionId96 := r.Source.VerizonMediaDsp.ConnectionID.ValueString()
+		latencyThreshold96 := new(int64)
 		if !r.Source.VerizonMediaDsp.LatencyThreshold.IsUnknown() && !r.Source.VerizonMediaDsp.LatencyThreshold.IsNull() {
-			*latencyThreshold95 = r.Source.VerizonMediaDsp.LatencyThreshold.ValueInt64()
+			*latencyThreshold96 = r.Source.VerizonMediaDsp.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold95 = nil
+			latencyThreshold96 = nil
 		}
-		entity69 := r.Source.VerizonMediaDsp.Entity.ValueString()
+		entity70 := r.Source.VerizonMediaDsp.Entity.ValueString()
 		var dimensions3 []string = nil
 		for _, dimensionsItem3 := range r.Source.VerizonMediaDsp.Dimensions {
 			dimensions3 = append(dimensions3, dimensionsItem3.ValueString())
@@ -3189,10 +3212,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			metrics6 = append(metrics6, metricsItem6.ValueString())
 		}
 		sourceVerizonMediaDsp = &shared.SourceVerizonMediaDsp{
-			Type:             typeVar95,
-			ConnectionID:     connectionId95,
-			LatencyThreshold: latencyThreshold95,
-			Entity:           entity69,
+			Type:             typeVar96,
+			ConnectionID:     connectionId96,
+			LatencyThreshold: latencyThreshold96,
+			Entity:           entity70,
 			Dimensions:       dimensions3,
 			Metrics:          metrics6,
 		}
@@ -3204,20 +3227,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceWorkdayReport *shared.SourceWorkdayReport
 	if r.Source.WorkdayReport != nil {
-		typeVar96 := shared.SourceWorkdayReportType(r.Source.WorkdayReport.Type.ValueString())
-		connectionId96 := r.Source.WorkdayReport.ConnectionID.ValueString()
-		latencyThreshold96 := new(int64)
+		typeVar97 := shared.SourceWorkdayReportType(r.Source.WorkdayReport.Type.ValueString())
+		connectionId97 := r.Source.WorkdayReport.ConnectionID.ValueString()
+		latencyThreshold97 := new(int64)
 		if !r.Source.WorkdayReport.LatencyThreshold.IsUnknown() && !r.Source.WorkdayReport.LatencyThreshold.IsNull() {
-			*latencyThreshold96 = r.Source.WorkdayReport.LatencyThreshold.ValueInt64()
+			*latencyThreshold97 = r.Source.WorkdayReport.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold96 = nil
+			latencyThreshold97 = nil
 		}
-		entity70 := r.Source.WorkdayReport.Entity.ValueString()
+		entity71 := r.Source.WorkdayReport.Entity.ValueString()
 		sourceWorkdayReport = &shared.SourceWorkdayReport{
-			Type:             typeVar96,
-			ConnectionID:     connectionId96,
-			LatencyThreshold: latencyThreshold96,
-			Entity:           entity70,
+			Type:             typeVar97,
+			ConnectionID:     connectionId97,
+			LatencyThreshold: latencyThreshold97,
+			Entity:           entity71,
 		}
 	}
 	if sourceWorkdayReport != nil {
@@ -3227,20 +3250,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceWorkfront *shared.SourceWorkfront
 	if r.Source.Workfront != nil {
-		typeVar97 := shared.SourceWorkfrontType(r.Source.Workfront.Type.ValueString())
-		connectionId97 := r.Source.Workfront.ConnectionID.ValueString()
-		latencyThreshold97 := new(int64)
+		typeVar98 := shared.SourceWorkfrontType(r.Source.Workfront.Type.ValueString())
+		connectionId98 := r.Source.Workfront.ConnectionID.ValueString()
+		latencyThreshold98 := new(int64)
 		if !r.Source.Workfront.LatencyThreshold.IsUnknown() && !r.Source.Workfront.LatencyThreshold.IsNull() {
-			*latencyThreshold97 = r.Source.Workfront.LatencyThreshold.ValueInt64()
+			*latencyThreshold98 = r.Source.Workfront.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold97 = nil
+			latencyThreshold98 = nil
 		}
-		entity71 := r.Source.Workfront.Entity.ValueString()
+		entity72 := r.Source.Workfront.Entity.ValueString()
 		sourceWorkfront = &shared.SourceWorkfront{
-			Type:             typeVar97,
-			ConnectionID:     connectionId97,
-			LatencyThreshold: latencyThreshold97,
-			Entity:           entity71,
+			Type:             typeVar98,
+			ConnectionID:     connectionId98,
+			LatencyThreshold: latencyThreshold98,
+			Entity:           entity72,
 		}
 	}
 	if sourceWorkfront != nil {
@@ -3250,20 +3273,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceZendesk *shared.SourceZendesk
 	if r.Source.Zendesk != nil {
-		typeVar98 := shared.SourceZendeskType(r.Source.Zendesk.Type.ValueString())
-		connectionId98 := r.Source.Zendesk.ConnectionID.ValueString()
-		latencyThreshold98 := new(int64)
+		typeVar99 := shared.SourceZendeskType(r.Source.Zendesk.Type.ValueString())
+		connectionId99 := r.Source.Zendesk.ConnectionID.ValueString()
+		latencyThreshold99 := new(int64)
 		if !r.Source.Zendesk.LatencyThreshold.IsUnknown() && !r.Source.Zendesk.LatencyThreshold.IsNull() {
-			*latencyThreshold98 = r.Source.Zendesk.LatencyThreshold.ValueInt64()
+			*latencyThreshold99 = r.Source.Zendesk.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold98 = nil
+			latencyThreshold99 = nil
 		}
-		entity72 := r.Source.Zendesk.Entity.ValueString()
+		entity73 := r.Source.Zendesk.Entity.ValueString()
 		sourceZendesk = &shared.SourceZendesk{
-			Type:             typeVar98,
-			ConnectionID:     connectionId98,
-			LatencyThreshold: latencyThreshold98,
-			Entity:           entity72,
+			Type:             typeVar99,
+			ConnectionID:     connectionId99,
+			LatencyThreshold: latencyThreshold99,
+			Entity:           entity73,
 		}
 	}
 	if sourceZendesk != nil {
@@ -3273,20 +3296,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceZoomPhone *shared.SourceZoomPhone
 	if r.Source.ZoomPhone != nil {
-		typeVar99 := shared.SourceZoomPhoneType(r.Source.ZoomPhone.Type.ValueString())
-		connectionId99 := r.Source.ZoomPhone.ConnectionID.ValueString()
-		latencyThreshold99 := new(int64)
+		typeVar100 := shared.SourceZoomPhoneType(r.Source.ZoomPhone.Type.ValueString())
+		connectionId100 := r.Source.ZoomPhone.ConnectionID.ValueString()
+		latencyThreshold100 := new(int64)
 		if !r.Source.ZoomPhone.LatencyThreshold.IsUnknown() && !r.Source.ZoomPhone.LatencyThreshold.IsNull() {
-			*latencyThreshold99 = r.Source.ZoomPhone.LatencyThreshold.ValueInt64()
+			*latencyThreshold100 = r.Source.ZoomPhone.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold99 = nil
+			latencyThreshold100 = nil
 		}
-		entity73 := r.Source.ZoomPhone.Entity.ValueString()
+		entity74 := r.Source.ZoomPhone.Entity.ValueString()
 		sourceZoomPhone = &shared.SourceZoomPhone{
-			Type:             typeVar99,
-			ConnectionID:     connectionId99,
-			LatencyThreshold: latencyThreshold99,
-			Entity:           entity73,
+			Type:             typeVar100,
+			ConnectionID:     connectionId100,
+			LatencyThreshold: latencyThreshold100,
+			Entity:           entity74,
 		}
 	}
 	if sourceZoomPhone != nil {
@@ -3296,20 +3319,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var sourceZuora *shared.SourceZuora
 	if r.Source.Zuora != nil {
-		typeVar100 := shared.SourceZuoraType(r.Source.Zuora.Type.ValueString())
-		connectionId100 := r.Source.Zuora.ConnectionID.ValueString()
-		latencyThreshold100 := new(int64)
+		typeVar101 := shared.SourceZuoraType(r.Source.Zuora.Type.ValueString())
+		connectionId101 := r.Source.Zuora.ConnectionID.ValueString()
+		latencyThreshold101 := new(int64)
 		if !r.Source.Zuora.LatencyThreshold.IsUnknown() && !r.Source.Zuora.LatencyThreshold.IsNull() {
-			*latencyThreshold100 = r.Source.Zuora.LatencyThreshold.ValueInt64()
+			*latencyThreshold101 = r.Source.Zuora.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold100 = nil
+			latencyThreshold101 = nil
 		}
-		entity74 := r.Source.Zuora.Entity.ValueString()
+		entity75 := r.Source.Zuora.Entity.ValueString()
 		sourceZuora = &shared.SourceZuora{
-			Type:             typeVar100,
-			ConnectionID:     connectionId100,
-			LatencyThreshold: latencyThreshold100,
-			Entity:           entity74,
+			Type:             typeVar101,
+			ConnectionID:     connectionId101,
+			LatencyThreshold: latencyThreshold101,
+			Entity:           entity75,
 		}
 	}
 	if sourceZuora != nil {
@@ -3320,8 +3343,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	var destination shared.DestinationTypes
 	var destinationRedshift *shared.DestinationRedshift
 	if r.Destination.Redshift != nil {
-		typeVar101 := shared.DestinationRedshiftType(r.Destination.Redshift.Type.ValueString())
-		connectionId101 := r.Destination.Redshift.ConnectionID.ValueString()
+		typeVar102 := shared.DestinationRedshiftType(r.Destination.Redshift.Type.ValueString())
+		connectionId102 := r.Destination.Redshift.ConnectionID.ValueString()
 		waitForQualityCheck := new(bool)
 		if !r.Destination.Redshift.WaitForQualityCheck.IsUnknown() && !r.Destination.Redshift.WaitForQualityCheck.IsNull() {
 			*waitForQualityCheck = r.Destination.Redshift.WaitForQualityCheck.ValueBool()
@@ -3364,10 +3387,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			}
 			var distributionStyleKey *shared.DistributionStyleKey
 			if r.Destination.Redshift.DistributionStyle.DistributionStyleKey != nil {
-				typeVar102 := shared.DistributionStyleKeyType(r.Destination.Redshift.DistributionStyle.DistributionStyleKey.Type.ValueString())
+				typeVar103 := shared.DistributionStyleKeyType(r.Destination.Redshift.DistributionStyle.DistributionStyleKey.Type.ValueString())
 				column := r.Destination.Redshift.DistributionStyle.DistributionStyleKey.Column.ValueString()
 				distributionStyleKey = &shared.DistributionStyleKey{
-					Type:   typeVar102,
+					Type:   typeVar103,
 					Column: column,
 				}
 			}
@@ -3402,8 +3425,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			lastUpdatedColumn18 = nil
 		}
 		destinationRedshift = &shared.DestinationRedshift{
-			Type:                   typeVar101,
-			ConnectionID:           connectionId101,
+			Type:                   typeVar102,
+			ConnectionID:           connectionId102,
 			WaitForQualityCheck:    waitForQualityCheck,
 			PrimaryKey:             primaryKey,
 			AutomaticSchemaChanges: automaticSchemaChanges,
@@ -3424,8 +3447,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var destinationSnowflake *shared.DestinationSnowflake
 	if r.Destination.Snowflake != nil {
-		typeVar103 := shared.DestinationSnowflakeType(r.Destination.Snowflake.Type.ValueString())
-		connectionId102 := r.Destination.Snowflake.ConnectionID.ValueString()
+		typeVar104 := shared.DestinationSnowflakeType(r.Destination.Snowflake.Type.ValueString())
+		connectionId103 := r.Destination.Snowflake.ConnectionID.ValueString()
 		waitForQualityCheck1 := new(bool)
 		if !r.Destination.Snowflake.WaitForQualityCheck.IsUnknown() && !r.Destination.Snowflake.WaitForQualityCheck.IsNull() {
 			*waitForQualityCheck1 = r.Destination.Snowflake.WaitForQualityCheck.ValueBool()
@@ -3466,8 +3489,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			lastUpdatedColumn19 = nil
 		}
 		destinationSnowflake = &shared.DestinationSnowflake{
-			Type:                   typeVar103,
-			ConnectionID:           connectionId102,
+			Type:                   typeVar104,
+			ConnectionID:           connectionId103,
 			WaitForQualityCheck:    waitForQualityCheck1,
 			PrimaryKey:             primaryKey1,
 			AutomaticSchemaChanges: automaticSchemaChanges1,
@@ -3485,8 +3508,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var destinationDeltaLake *shared.DestinationDeltaLake
 	if r.Destination.DeltaLake != nil {
-		typeVar104 := shared.DestinationDeltaLakeType(r.Destination.DeltaLake.Type.ValueString())
-		connectionId103 := r.Destination.DeltaLake.ConnectionID.ValueString()
+		typeVar105 := shared.DestinationDeltaLakeType(r.Destination.DeltaLake.Type.ValueString())
+		connectionId104 := r.Destination.DeltaLake.ConnectionID.ValueString()
 		waitForQualityCheck2 := new(bool)
 		if !r.Destination.DeltaLake.WaitForQualityCheck.IsUnknown() && !r.Destination.DeltaLake.WaitForQualityCheck.IsNull() {
 			*waitForQualityCheck2 = r.Destination.DeltaLake.WaitForQualityCheck.ValueBool()
@@ -3524,8 +3547,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			pre10Dot2RuntimeSupport = nil
 		}
 		destinationDeltaLake = &shared.DestinationDeltaLake{
-			Type:                    typeVar104,
-			ConnectionID:            connectionId103,
+			Type:                    typeVar105,
+			ConnectionID:            connectionId104,
 			WaitForQualityCheck:     waitForQualityCheck2,
 			PrimaryKey:              primaryKey2,
 			AutomaticSchemaChanges:  automaticSchemaChanges2,
@@ -3543,8 +3566,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var destinationS3DataLake *shared.DestinationS3DataLake
 	if r.Destination.S3DataLake != nil {
-		typeVar105 := shared.DestinationS3DataLakeType(r.Destination.S3DataLake.Type.ValueString())
-		connectionId104 := r.Destination.S3DataLake.ConnectionID.ValueString()
+		typeVar106 := shared.DestinationS3DataLakeType(r.Destination.S3DataLake.Type.ValueString())
+		connectionId105 := r.Destination.S3DataLake.ConnectionID.ValueString()
 		waitForQualityCheck3 := new(bool)
 		if !r.Destination.S3DataLake.WaitForQualityCheck.IsUnknown() && !r.Destination.S3DataLake.WaitForQualityCheck.IsNull() {
 			*waitForQualityCheck3 = r.Destination.S3DataLake.WaitForQualityCheck.ValueBool()
@@ -3575,8 +3598,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			generateSnapshots = nil
 		}
 		destinationS3DataLake = &shared.DestinationS3DataLake{
-			Type:                   typeVar105,
-			ConnectionID:           connectionId104,
+			Type:                   typeVar106,
+			ConnectionID:           connectionId105,
 			WaitForQualityCheck:    waitForQualityCheck3,
 			PrimaryKey:             primaryKey3,
 			AutomaticSchemaChanges: automaticSchemaChanges3,
@@ -3592,8 +3615,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	var destinationIceberg *shared.DestinationIceberg
 	if r.Destination.Iceberg != nil {
-		typeVar106 := shared.DestinationIcebergType(r.Destination.Iceberg.Type.ValueString())
-		connectionId105 := r.Destination.Iceberg.ConnectionID.ValueString()
+		typeVar107 := shared.DestinationIcebergType(r.Destination.Iceberg.Type.ValueString())
+		connectionId106 := r.Destination.Iceberg.ConnectionID.ValueString()
 		waitForQualityCheck4 := new(bool)
 		if !r.Destination.Iceberg.WaitForQualityCheck.IsUnknown() && !r.Destination.Iceberg.WaitForQualityCheck.IsNull() {
 			*waitForQualityCheck4 = r.Destination.Iceberg.WaitForQualityCheck.ValueBool()
@@ -3618,8 +3641,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		}
 		table22 := r.Destination.Iceberg.Table.ValueString()
 		destinationIceberg = &shared.DestinationIceberg{
-			Type:                   typeVar106,
-			ConnectionID:           connectionId105,
+			Type:                   typeVar107,
+			ConnectionID:           connectionId106,
 			WaitForQualityCheck:    waitForQualityCheck4,
 			PrimaryKey:             primaryKey4,
 			AutomaticSchemaChanges: automaticSchemaChanges4,
@@ -3639,16 +3662,16 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			var transforms []shared.TransformTypes = nil
 			for _, transformsItem := range r.Script.Script.Transforms {
 				if transformsItem.AddFilePath != nil {
-					typeVar107 := shared.TransformAddFilePathType(transformsItem.AddFilePath.Type.ValueString())
+					typeVar108 := shared.TransformAddFilePathType(transformsItem.AddFilePath.Type.ValueString())
 					transformAddFilePath := shared.TransformAddFilePath{
-						Type: typeVar107,
+						Type: typeVar108,
 					}
 					transforms = append(transforms, shared.TransformTypes{
 						TransformAddFilePath: &transformAddFilePath,
 					})
 				}
 				if transformsItem.FlattenJSONObject != nil {
-					typeVar108 := shared.TransformExtractJSONFieldsType(transformsItem.FlattenJSONObject.Type.ValueString())
+					typeVar109 := shared.TransformExtractJSONFieldsType(transformsItem.FlattenJSONObject.Type.ValueString())
 					column1 := transformsItem.FlattenJSONObject.Column.ValueString()
 					var keys []shared.Keys = nil
 					for _, keysItem := range transformsItem.FlattenJSONObject.Keys {
@@ -3667,11 +3690,11 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 						}
 						var typeDecimal *shared.TypeDecimal
 						if keysItem.Type.TypeDecimal != nil {
-							typeVar109 := shared.TypeDecimalType(keysItem.Type.TypeDecimal.Type.ValueString())
+							typeVar110 := shared.TypeDecimalType(keysItem.Type.TypeDecimal.Type.ValueString())
 							precision := keysItem.Type.TypeDecimal.Precision.ValueInt64()
 							scale := keysItem.Type.TypeDecimal.Scale.ValueInt64()
 							typeDecimal = &shared.TypeDecimal{
-								Type:      typeVar109,
+								Type:      typeVar110,
 								Precision: precision,
 								Scale:     scale,
 							}
@@ -3683,10 +3706,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 						}
 						var typeStringWithMaxLength *shared.TypeStringWithMaxLength
 						if keysItem.Type.TypeStringWithMaxLength != nil {
-							typeVar110 := shared.TypeStringWithMaxLengthType(keysItem.Type.TypeStringWithMaxLength.Type.ValueString())
+							typeVar111 := shared.TypeStringWithMaxLengthType(keysItem.Type.TypeStringWithMaxLength.Type.ValueString())
 							length := keysItem.Type.TypeStringWithMaxLength.Length.ValueInt64()
 							typeStringWithMaxLength = &shared.TypeStringWithMaxLength{
-								Type:   typeVar110,
+								Type:   typeVar111,
 								Length: length,
 							}
 						}
@@ -3708,7 +3731,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 						prefix = nil
 					}
 					transformExtractJSONFields := shared.TransformExtractJSONFields{
-						Type:            typeVar108,
+						Type:            typeVar109,
 						Column:          column1,
 						Keys:            keys,
 						DiscoverNewKeys: discoverNewKeys,
@@ -3719,20 +3742,20 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 					})
 				}
 				if transformsItem.ParquetToRows != nil {
-					typeVar111 := shared.TransformParquetToRowsType(transformsItem.ParquetToRows.Type.ValueString())
+					typeVar112 := shared.TransformParquetToRowsType(transformsItem.ParquetToRows.Type.ValueString())
 					transformParquetToRows := shared.TransformParquetToRows{
-						Type: typeVar111,
+						Type: typeVar112,
 					}
 					transforms = append(transforms, shared.TransformTypes{
 						TransformParquetToRows: &transformParquetToRows,
 					})
 				}
 				if transformsItem.ParseByRegex != nil {
-					typeVar112 := shared.TransformParseByRegexType(transformsItem.ParseByRegex.Type.ValueString())
+					typeVar113 := shared.TransformParseByRegexType(transformsItem.ParseByRegex.Type.ValueString())
 					regex := transformsItem.ParseByRegex.Regex.ValueString()
 					column2 := transformsItem.ParseByRegex.Column.ValueString()
 					transformParseByRegex := shared.TransformParseByRegex{
-						Type:   typeVar112,
+						Type:   typeVar113,
 						Regex:  regex,
 						Column: column2,
 					}
@@ -3741,7 +3764,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 					})
 				}
 				if transformsItem.RenameColumns != nil {
-					typeVar113 := shared.TransformRenameColumnsType(transformsItem.RenameColumns.Type.ValueString())
+					typeVar114 := shared.TransformRenameColumnsType(transformsItem.RenameColumns.Type.ValueString())
 					var columns1 []shared.Columns = nil
 					for _, columnsItem1 := range transformsItem.RenameColumns.Columns {
 						column3 := columnsItem1.Column.ValueString()
@@ -3752,7 +3775,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 						})
 					}
 					transformRenameColumns := shared.TransformRenameColumns{
-						Type:    typeVar113,
+						Type:    typeVar114,
 						Columns: columns1,
 					}
 					transforms = append(transforms, shared.TransformTypes{
@@ -3776,11 +3799,11 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 				}
 				var typeDecimal1 *shared.TypeDecimal
 				if inferredColumnTypesValue.TypeDecimal != nil {
-					typeVar114 := shared.TypeDecimalType(inferredColumnTypesValue.TypeDecimal.Type.ValueString())
+					typeVar115 := shared.TypeDecimalType(inferredColumnTypesValue.TypeDecimal.Type.ValueString())
 					precision1 := inferredColumnTypesValue.TypeDecimal.Precision.ValueInt64()
 					scale1 := inferredColumnTypesValue.TypeDecimal.Scale.ValueInt64()
 					typeDecimal1 = &shared.TypeDecimal{
-						Type:      typeVar114,
+						Type:      typeVar115,
 						Precision: precision1,
 						Scale:     scale1,
 					}
@@ -3792,10 +3815,10 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 				}
 				var typeStringWithMaxLength1 *shared.TypeStringWithMaxLength
 				if inferredColumnTypesValue.TypeStringWithMaxLength != nil {
-					typeVar115 := shared.TypeStringWithMaxLengthType(inferredColumnTypesValue.TypeStringWithMaxLength.Type.ValueString())
+					typeVar116 := shared.TypeStringWithMaxLengthType(inferredColumnTypesValue.TypeStringWithMaxLength.Type.ValueString())
 					length1 := inferredColumnTypesValue.TypeStringWithMaxLength.Length.ValueInt64()
 					typeStringWithMaxLength1 = &shared.TypeStringWithMaxLength{
-						Type:   typeVar115,
+						Type:   typeVar116,
 						Length: length1,
 					}
 				}
@@ -4314,6 +4337,13 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 			r.Source.Criteo.Timezone = append(r.Source.Criteo.Timezone, types.StringValue(v))
 		}
 		r.Source.Criteo.Type = types.StringValue(string(resp.Source.SourceCriteo.Type))
+	}
+	if resp.Source.SourceDayforce != nil {
+		r.Source.Dayforce = &SourceDayforce{}
+		r.Source.Dayforce.ConnectionID = types.StringValue(resp.Source.SourceDayforce.ConnectionID)
+		r.Source.Dayforce.Entity = types.StringValue(resp.Source.SourceDayforce.Entity)
+		r.Source.Dayforce.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceDayforce.LatencyThreshold)
+		r.Source.Dayforce.Type = types.StringValue(string(resp.Source.SourceDayforce.Type))
 	}
 	if resp.Source.SourceDb2 != nil {
 		r.Source.Db2 = &SourceDb2{}
@@ -5517,23 +5547,47 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 			SourceCriteoUpdate: sourceCriteoUpdate,
 		}
 	}
-	var sourceDb2Update *shared.SourceDb2Update
-	if r.Source.Db2 != nil {
+	var sourceDayforceUpdate *shared.SourceDayforceUpdate
+	if r.Source.Dayforce != nil {
 		latencyThreshold9 := new(int64)
-		if !r.Source.Db2.LatencyThreshold.IsUnknown() && !r.Source.Db2.LatencyThreshold.IsNull() {
-			*latencyThreshold9 = r.Source.Db2.LatencyThreshold.ValueInt64()
+		if !r.Source.Dayforce.LatencyThreshold.IsUnknown() && !r.Source.Dayforce.LatencyThreshold.IsNull() {
+			*latencyThreshold9 = r.Source.Dayforce.LatencyThreshold.ValueInt64()
 		} else {
 			latencyThreshold9 = nil
 		}
-		typeVar9 := new(shared.SourceDb2UpdateType)
-		if !r.Source.Db2.Type.IsUnknown() && !r.Source.Db2.Type.IsNull() {
-			*typeVar9 = shared.SourceDb2UpdateType(r.Source.Db2.Type.ValueString())
+		typeVar9 := new(shared.SourceDayforceUpdateType)
+		if !r.Source.Dayforce.Type.IsUnknown() && !r.Source.Dayforce.Type.IsNull() {
+			*typeVar9 = shared.SourceDayforceUpdateType(r.Source.Dayforce.Type.ValueString())
 		} else {
 			typeVar9 = nil
 		}
-		sourceDb2Update = &shared.SourceDb2Update{
+		sourceDayforceUpdate = &shared.SourceDayforceUpdate{
 			LatencyThreshold: latencyThreshold9,
 			Type:             typeVar9,
+		}
+	}
+	if sourceDayforceUpdate != nil {
+		source = &shared.SourceTypesUpdate{
+			SourceDayforceUpdate: sourceDayforceUpdate,
+		}
+	}
+	var sourceDb2Update *shared.SourceDb2Update
+	if r.Source.Db2 != nil {
+		latencyThreshold10 := new(int64)
+		if !r.Source.Db2.LatencyThreshold.IsUnknown() && !r.Source.Db2.LatencyThreshold.IsNull() {
+			*latencyThreshold10 = r.Source.Db2.LatencyThreshold.ValueInt64()
+		} else {
+			latencyThreshold10 = nil
+		}
+		typeVar10 := new(shared.SourceDb2UpdateType)
+		if !r.Source.Db2.Type.IsUnknown() && !r.Source.Db2.Type.IsNull() {
+			*typeVar10 = shared.SourceDb2UpdateType(r.Source.Db2.Type.ValueString())
+		} else {
+			typeVar10 = nil
+		}
+		sourceDb2Update = &shared.SourceDb2Update{
+			LatencyThreshold: latencyThreshold10,
+			Type:             typeVar10,
 		}
 	}
 	if sourceDb2Update != nil {
@@ -5543,21 +5597,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceDb2ShardedUpdate *shared.SourceDb2ShardedUpdate
 	if r.Source.Db2Sharded != nil {
-		latencyThreshold10 := new(int64)
+		latencyThreshold11 := new(int64)
 		if !r.Source.Db2Sharded.LatencyThreshold.IsUnknown() && !r.Source.Db2Sharded.LatencyThreshold.IsNull() {
-			*latencyThreshold10 = r.Source.Db2Sharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold11 = r.Source.Db2Sharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold10 = nil
+			latencyThreshold11 = nil
 		}
-		typeVar10 := new(shared.SourceDb2ShardedUpdateType)
+		typeVar11 := new(shared.SourceDb2ShardedUpdateType)
 		if !r.Source.Db2Sharded.Type.IsUnknown() && !r.Source.Db2Sharded.Type.IsNull() {
-			*typeVar10 = shared.SourceDb2ShardedUpdateType(r.Source.Db2Sharded.Type.ValueString())
+			*typeVar11 = shared.SourceDb2ShardedUpdateType(r.Source.Db2Sharded.Type.ValueString())
 		} else {
-			typeVar10 = nil
+			typeVar11 = nil
 		}
 		sourceDb2ShardedUpdate = &shared.SourceDb2ShardedUpdate{
-			LatencyThreshold: latencyThreshold10,
-			Type:             typeVar10,
+			LatencyThreshold: latencyThreshold11,
+			Type:             typeVar11,
 		}
 	}
 	if sourceDb2ShardedUpdate != nil {
@@ -5567,21 +5621,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceDeltaLakeUpdate *shared.SourceDeltaLakeUpdate
 	if r.Source.DeltaLake != nil {
-		latencyThreshold11 := new(int64)
+		latencyThreshold12 := new(int64)
 		if !r.Source.DeltaLake.LatencyThreshold.IsUnknown() && !r.Source.DeltaLake.LatencyThreshold.IsNull() {
-			*latencyThreshold11 = r.Source.DeltaLake.LatencyThreshold.ValueInt64()
+			*latencyThreshold12 = r.Source.DeltaLake.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold11 = nil
+			latencyThreshold12 = nil
 		}
-		typeVar11 := new(shared.SourceDeltaLakeUpdateType)
+		typeVar12 := new(shared.SourceDeltaLakeUpdateType)
 		if !r.Source.DeltaLake.Type.IsUnknown() && !r.Source.DeltaLake.Type.IsNull() {
-			*typeVar11 = shared.SourceDeltaLakeUpdateType(r.Source.DeltaLake.Type.ValueString())
+			*typeVar12 = shared.SourceDeltaLakeUpdateType(r.Source.DeltaLake.Type.ValueString())
 		} else {
-			typeVar11 = nil
+			typeVar12 = nil
 		}
 		sourceDeltaLakeUpdate = &shared.SourceDeltaLakeUpdate{
-			LatencyThreshold: latencyThreshold11,
-			Type:             typeVar11,
+			LatencyThreshold: latencyThreshold12,
+			Type:             typeVar12,
 		}
 	}
 	if sourceDeltaLakeUpdate != nil {
@@ -5591,21 +5645,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceEgnyteUpdate *shared.SourceEgnyteUpdate
 	if r.Source.Egnyte != nil {
-		latencyThreshold12 := new(int64)
+		latencyThreshold13 := new(int64)
 		if !r.Source.Egnyte.LatencyThreshold.IsUnknown() && !r.Source.Egnyte.LatencyThreshold.IsNull() {
-			*latencyThreshold12 = r.Source.Egnyte.LatencyThreshold.ValueInt64()
+			*latencyThreshold13 = r.Source.Egnyte.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold12 = nil
+			latencyThreshold13 = nil
 		}
-		typeVar12 := new(shared.SourceEgnyteUpdateType)
+		typeVar13 := new(shared.SourceEgnyteUpdateType)
 		if !r.Source.Egnyte.Type.IsUnknown() && !r.Source.Egnyte.Type.IsNull() {
-			*typeVar12 = shared.SourceEgnyteUpdateType(r.Source.Egnyte.Type.ValueString())
+			*typeVar13 = shared.SourceEgnyteUpdateType(r.Source.Egnyte.Type.ValueString())
 		} else {
-			typeVar12 = nil
+			typeVar13 = nil
 		}
 		sourceEgnyteUpdate = &shared.SourceEgnyteUpdate{
-			LatencyThreshold: latencyThreshold12,
-			Type:             typeVar12,
+			LatencyThreshold: latencyThreshold13,
+			Type:             typeVar13,
 		}
 	}
 	if sourceEgnyteUpdate != nil {
@@ -5615,21 +5669,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceElasticsearchUpdate *shared.SourceElasticsearchUpdate
 	if r.Source.Elasticsearch != nil {
-		latencyThreshold13 := new(int64)
+		latencyThreshold14 := new(int64)
 		if !r.Source.Elasticsearch.LatencyThreshold.IsUnknown() && !r.Source.Elasticsearch.LatencyThreshold.IsNull() {
-			*latencyThreshold13 = r.Source.Elasticsearch.LatencyThreshold.ValueInt64()
+			*latencyThreshold14 = r.Source.Elasticsearch.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold13 = nil
+			latencyThreshold14 = nil
 		}
-		typeVar13 := new(shared.SourceElasticsearchUpdateType)
+		typeVar14 := new(shared.SourceElasticsearchUpdateType)
 		if !r.Source.Elasticsearch.Type.IsUnknown() && !r.Source.Elasticsearch.Type.IsNull() {
-			*typeVar13 = shared.SourceElasticsearchUpdateType(r.Source.Elasticsearch.Type.ValueString())
+			*typeVar14 = shared.SourceElasticsearchUpdateType(r.Source.Elasticsearch.Type.ValueString())
 		} else {
-			typeVar13 = nil
+			typeVar14 = nil
 		}
 		sourceElasticsearchUpdate = &shared.SourceElasticsearchUpdate{
-			LatencyThreshold: latencyThreshold13,
-			Type:             typeVar13,
+			LatencyThreshold: latencyThreshold14,
+			Type:             typeVar14,
 		}
 	}
 	if sourceElasticsearchUpdate != nil {
@@ -5639,21 +5693,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceElluminateUpdate *shared.SourceElluminateUpdate
 	if r.Source.Elluminate != nil {
-		latencyThreshold14 := new(int64)
+		latencyThreshold15 := new(int64)
 		if !r.Source.Elluminate.LatencyThreshold.IsUnknown() && !r.Source.Elluminate.LatencyThreshold.IsNull() {
-			*latencyThreshold14 = r.Source.Elluminate.LatencyThreshold.ValueInt64()
+			*latencyThreshold15 = r.Source.Elluminate.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold14 = nil
+			latencyThreshold15 = nil
 		}
-		typeVar14 := new(shared.SourceElluminateUpdateType)
+		typeVar15 := new(shared.SourceElluminateUpdateType)
 		if !r.Source.Elluminate.Type.IsUnknown() && !r.Source.Elluminate.Type.IsNull() {
-			*typeVar14 = shared.SourceElluminateUpdateType(r.Source.Elluminate.Type.ValueString())
+			*typeVar15 = shared.SourceElluminateUpdateType(r.Source.Elluminate.Type.ValueString())
 		} else {
-			typeVar14 = nil
+			typeVar15 = nil
 		}
 		sourceElluminateUpdate = &shared.SourceElluminateUpdate{
-			LatencyThreshold: latencyThreshold14,
-			Type:             typeVar14,
+			LatencyThreshold: latencyThreshold15,
+			Type:             typeVar15,
 		}
 	}
 	if sourceElluminateUpdate != nil {
@@ -5663,21 +5717,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceEloquaUpdate *shared.SourceEloquaUpdate
 	if r.Source.Eloqua != nil {
-		latencyThreshold15 := new(int64)
+		latencyThreshold16 := new(int64)
 		if !r.Source.Eloqua.LatencyThreshold.IsUnknown() && !r.Source.Eloqua.LatencyThreshold.IsNull() {
-			*latencyThreshold15 = r.Source.Eloqua.LatencyThreshold.ValueInt64()
+			*latencyThreshold16 = r.Source.Eloqua.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold15 = nil
+			latencyThreshold16 = nil
 		}
-		typeVar15 := new(shared.SourceEloquaUpdateType)
+		typeVar16 := new(shared.SourceEloquaUpdateType)
 		if !r.Source.Eloqua.Type.IsUnknown() && !r.Source.Eloqua.Type.IsNull() {
-			*typeVar15 = shared.SourceEloquaUpdateType(r.Source.Eloqua.Type.ValueString())
+			*typeVar16 = shared.SourceEloquaUpdateType(r.Source.Eloqua.Type.ValueString())
 		} else {
-			typeVar15 = nil
+			typeVar16 = nil
 		}
 		sourceEloquaUpdate = &shared.SourceEloquaUpdate{
-			LatencyThreshold: latencyThreshold15,
-			Type:             typeVar15,
+			LatencyThreshold: latencyThreshold16,
+			Type:             typeVar16,
 		}
 	}
 	if sourceEloquaUpdate != nil {
@@ -5687,21 +5741,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceErpxUpdate *shared.SourceErpxUpdate
 	if r.Source.Erpx != nil {
-		latencyThreshold16 := new(int64)
+		latencyThreshold17 := new(int64)
 		if !r.Source.Erpx.LatencyThreshold.IsUnknown() && !r.Source.Erpx.LatencyThreshold.IsNull() {
-			*latencyThreshold16 = r.Source.Erpx.LatencyThreshold.ValueInt64()
+			*latencyThreshold17 = r.Source.Erpx.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold16 = nil
+			latencyThreshold17 = nil
 		}
-		typeVar16 := new(shared.SourceErpxUpdateType)
+		typeVar17 := new(shared.SourceErpxUpdateType)
 		if !r.Source.Erpx.Type.IsUnknown() && !r.Source.Erpx.Type.IsNull() {
-			*typeVar16 = shared.SourceErpxUpdateType(r.Source.Erpx.Type.ValueString())
+			*typeVar17 = shared.SourceErpxUpdateType(r.Source.Erpx.Type.ValueString())
 		} else {
-			typeVar16 = nil
+			typeVar17 = nil
 		}
 		sourceErpxUpdate = &shared.SourceErpxUpdate{
-			LatencyThreshold: latencyThreshold16,
-			Type:             typeVar16,
+			LatencyThreshold: latencyThreshold17,
+			Type:             typeVar17,
 		}
 	}
 	if sourceErpxUpdate != nil {
@@ -5711,21 +5765,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceFacebookAdsUpdate *shared.SourceFacebookAdsUpdate
 	if r.Source.FacebookAds != nil {
-		latencyThreshold17 := new(int64)
+		latencyThreshold18 := new(int64)
 		if !r.Source.FacebookAds.LatencyThreshold.IsUnknown() && !r.Source.FacebookAds.LatencyThreshold.IsNull() {
-			*latencyThreshold17 = r.Source.FacebookAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold18 = r.Source.FacebookAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold17 = nil
+			latencyThreshold18 = nil
 		}
-		typeVar17 := new(shared.SourceFacebookAdsUpdateType)
+		typeVar18 := new(shared.SourceFacebookAdsUpdateType)
 		if !r.Source.FacebookAds.Type.IsUnknown() && !r.Source.FacebookAds.Type.IsNull() {
-			*typeVar17 = shared.SourceFacebookAdsUpdateType(r.Source.FacebookAds.Type.ValueString())
+			*typeVar18 = shared.SourceFacebookAdsUpdateType(r.Source.FacebookAds.Type.ValueString())
 		} else {
-			typeVar17 = nil
+			typeVar18 = nil
 		}
 		sourceFacebookAdsUpdate = &shared.SourceFacebookAdsUpdate{
-			LatencyThreshold: latencyThreshold17,
-			Type:             typeVar17,
+			LatencyThreshold: latencyThreshold18,
+			Type:             typeVar18,
 		}
 	}
 	if sourceFacebookAdsUpdate != nil {
@@ -5735,21 +5789,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceFifteenFiveUpdate *shared.SourceFifteenFiveUpdate
 	if r.Source.FifteenFive != nil {
-		latencyThreshold18 := new(int64)
+		latencyThreshold19 := new(int64)
 		if !r.Source.FifteenFive.LatencyThreshold.IsUnknown() && !r.Source.FifteenFive.LatencyThreshold.IsNull() {
-			*latencyThreshold18 = r.Source.FifteenFive.LatencyThreshold.ValueInt64()
+			*latencyThreshold19 = r.Source.FifteenFive.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold18 = nil
+			latencyThreshold19 = nil
 		}
-		typeVar18 := new(shared.SourceFifteenFiveUpdateType)
+		typeVar19 := new(shared.SourceFifteenFiveUpdateType)
 		if !r.Source.FifteenFive.Type.IsUnknown() && !r.Source.FifteenFive.Type.IsNull() {
-			*typeVar18 = shared.SourceFifteenFiveUpdateType(r.Source.FifteenFive.Type.ValueString())
+			*typeVar19 = shared.SourceFifteenFiveUpdateType(r.Source.FifteenFive.Type.ValueString())
 		} else {
-			typeVar18 = nil
+			typeVar19 = nil
 		}
 		sourceFifteenFiveUpdate = &shared.SourceFifteenFiveUpdate{
-			LatencyThreshold: latencyThreshold18,
-			Type:             typeVar18,
+			LatencyThreshold: latencyThreshold19,
+			Type:             typeVar19,
 		}
 	}
 	if sourceFifteenFiveUpdate != nil {
@@ -5759,21 +5813,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceFreshcallerUpdate *shared.SourceFreshcallerUpdate
 	if r.Source.Freshcaller != nil {
-		latencyThreshold19 := new(int64)
+		latencyThreshold20 := new(int64)
 		if !r.Source.Freshcaller.LatencyThreshold.IsUnknown() && !r.Source.Freshcaller.LatencyThreshold.IsNull() {
-			*latencyThreshold19 = r.Source.Freshcaller.LatencyThreshold.ValueInt64()
+			*latencyThreshold20 = r.Source.Freshcaller.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold19 = nil
+			latencyThreshold20 = nil
 		}
-		typeVar19 := new(shared.SourceFreshcallerUpdateType)
+		typeVar20 := new(shared.SourceFreshcallerUpdateType)
 		if !r.Source.Freshcaller.Type.IsUnknown() && !r.Source.Freshcaller.Type.IsNull() {
-			*typeVar19 = shared.SourceFreshcallerUpdateType(r.Source.Freshcaller.Type.ValueString())
+			*typeVar20 = shared.SourceFreshcallerUpdateType(r.Source.Freshcaller.Type.ValueString())
 		} else {
-			typeVar19 = nil
+			typeVar20 = nil
 		}
 		sourceFreshcallerUpdate = &shared.SourceFreshcallerUpdate{
-			LatencyThreshold: latencyThreshold19,
-			Type:             typeVar19,
+			LatencyThreshold: latencyThreshold20,
+			Type:             typeVar20,
 		}
 	}
 	if sourceFreshcallerUpdate != nil {
@@ -5783,21 +5837,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceFreshchatUpdate *shared.SourceFreshchatUpdate
 	if r.Source.Freshchat != nil {
-		latencyThreshold20 := new(int64)
+		latencyThreshold21 := new(int64)
 		if !r.Source.Freshchat.LatencyThreshold.IsUnknown() && !r.Source.Freshchat.LatencyThreshold.IsNull() {
-			*latencyThreshold20 = r.Source.Freshchat.LatencyThreshold.ValueInt64()
+			*latencyThreshold21 = r.Source.Freshchat.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold20 = nil
+			latencyThreshold21 = nil
 		}
-		typeVar20 := new(shared.SourceFreshchatUpdateType)
+		typeVar21 := new(shared.SourceFreshchatUpdateType)
 		if !r.Source.Freshchat.Type.IsUnknown() && !r.Source.Freshchat.Type.IsNull() {
-			*typeVar20 = shared.SourceFreshchatUpdateType(r.Source.Freshchat.Type.ValueString())
+			*typeVar21 = shared.SourceFreshchatUpdateType(r.Source.Freshchat.Type.ValueString())
 		} else {
-			typeVar20 = nil
+			typeVar21 = nil
 		}
 		sourceFreshchatUpdate = &shared.SourceFreshchatUpdate{
-			LatencyThreshold: latencyThreshold20,
-			Type:             typeVar20,
+			LatencyThreshold: latencyThreshold21,
+			Type:             typeVar21,
 		}
 	}
 	if sourceFreshchatUpdate != nil {
@@ -5807,21 +5861,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceFreshdeskUpdate *shared.SourceFreshdeskUpdate
 	if r.Source.Freshdesk != nil {
-		latencyThreshold21 := new(int64)
+		latencyThreshold22 := new(int64)
 		if !r.Source.Freshdesk.LatencyThreshold.IsUnknown() && !r.Source.Freshdesk.LatencyThreshold.IsNull() {
-			*latencyThreshold21 = r.Source.Freshdesk.LatencyThreshold.ValueInt64()
+			*latencyThreshold22 = r.Source.Freshdesk.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold21 = nil
+			latencyThreshold22 = nil
 		}
-		typeVar21 := new(shared.SourceFreshdeskUpdateType)
+		typeVar22 := new(shared.SourceFreshdeskUpdateType)
 		if !r.Source.Freshdesk.Type.IsUnknown() && !r.Source.Freshdesk.Type.IsNull() {
-			*typeVar21 = shared.SourceFreshdeskUpdateType(r.Source.Freshdesk.Type.ValueString())
+			*typeVar22 = shared.SourceFreshdeskUpdateType(r.Source.Freshdesk.Type.ValueString())
 		} else {
-			typeVar21 = nil
+			typeVar22 = nil
 		}
 		sourceFreshdeskUpdate = &shared.SourceFreshdeskUpdate{
-			LatencyThreshold: latencyThreshold21,
-			Type:             typeVar21,
+			LatencyThreshold: latencyThreshold22,
+			Type:             typeVar22,
 		}
 	}
 	if sourceFreshdeskUpdate != nil {
@@ -5831,21 +5885,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceFreshsalesUpdate *shared.SourceFreshsalesUpdate
 	if r.Source.Freshsales != nil {
-		latencyThreshold22 := new(int64)
+		latencyThreshold23 := new(int64)
 		if !r.Source.Freshsales.LatencyThreshold.IsUnknown() && !r.Source.Freshsales.LatencyThreshold.IsNull() {
-			*latencyThreshold22 = r.Source.Freshsales.LatencyThreshold.ValueInt64()
+			*latencyThreshold23 = r.Source.Freshsales.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold22 = nil
+			latencyThreshold23 = nil
 		}
-		typeVar22 := new(shared.SourceFreshsalesUpdateType)
+		typeVar23 := new(shared.SourceFreshsalesUpdateType)
 		if !r.Source.Freshsales.Type.IsUnknown() && !r.Source.Freshsales.Type.IsNull() {
-			*typeVar22 = shared.SourceFreshsalesUpdateType(r.Source.Freshsales.Type.ValueString())
+			*typeVar23 = shared.SourceFreshsalesUpdateType(r.Source.Freshsales.Type.ValueString())
 		} else {
-			typeVar22 = nil
+			typeVar23 = nil
 		}
 		sourceFreshsalesUpdate = &shared.SourceFreshsalesUpdate{
-			LatencyThreshold: latencyThreshold22,
-			Type:             typeVar22,
+			LatencyThreshold: latencyThreshold23,
+			Type:             typeVar23,
 		}
 	}
 	if sourceFreshsalesUpdate != nil {
@@ -5855,21 +5909,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceFtpUpdate *shared.SourceFtpUpdate
 	if r.Source.Ftp != nil {
-		latencyThreshold23 := new(int64)
+		latencyThreshold24 := new(int64)
 		if !r.Source.Ftp.LatencyThreshold.IsUnknown() && !r.Source.Ftp.LatencyThreshold.IsNull() {
-			*latencyThreshold23 = r.Source.Ftp.LatencyThreshold.ValueInt64()
+			*latencyThreshold24 = r.Source.Ftp.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold23 = nil
+			latencyThreshold24 = nil
 		}
-		typeVar23 := new(shared.SourceFtpUpdateType)
+		typeVar24 := new(shared.SourceFtpUpdateType)
 		if !r.Source.Ftp.Type.IsUnknown() && !r.Source.Ftp.Type.IsNull() {
-			*typeVar23 = shared.SourceFtpUpdateType(r.Source.Ftp.Type.ValueString())
+			*typeVar24 = shared.SourceFtpUpdateType(r.Source.Ftp.Type.ValueString())
 		} else {
-			typeVar23 = nil
+			typeVar24 = nil
 		}
 		sourceFtpUpdate = &shared.SourceFtpUpdate{
-			LatencyThreshold: latencyThreshold23,
-			Type:             typeVar23,
+			LatencyThreshold: latencyThreshold24,
+			Type:             typeVar24,
 		}
 	}
 	if sourceFtpUpdate != nil {
@@ -5879,21 +5933,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceGitlabUpdate *shared.SourceGitlabUpdate
 	if r.Source.Gitlab != nil {
-		latencyThreshold24 := new(int64)
+		latencyThreshold25 := new(int64)
 		if !r.Source.Gitlab.LatencyThreshold.IsUnknown() && !r.Source.Gitlab.LatencyThreshold.IsNull() {
-			*latencyThreshold24 = r.Source.Gitlab.LatencyThreshold.ValueInt64()
+			*latencyThreshold25 = r.Source.Gitlab.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold24 = nil
+			latencyThreshold25 = nil
 		}
-		typeVar24 := new(shared.SourceGitlabUpdateType)
+		typeVar25 := new(shared.SourceGitlabUpdateType)
 		if !r.Source.Gitlab.Type.IsUnknown() && !r.Source.Gitlab.Type.IsNull() {
-			*typeVar24 = shared.SourceGitlabUpdateType(r.Source.Gitlab.Type.ValueString())
+			*typeVar25 = shared.SourceGitlabUpdateType(r.Source.Gitlab.Type.ValueString())
 		} else {
-			typeVar24 = nil
+			typeVar25 = nil
 		}
 		sourceGitlabUpdate = &shared.SourceGitlabUpdate{
-			LatencyThreshold: latencyThreshold24,
-			Type:             typeVar24,
+			LatencyThreshold: latencyThreshold25,
+			Type:             typeVar25,
 		}
 	}
 	if sourceGitlabUpdate != nil {
@@ -5903,21 +5957,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceGongUpdate *shared.SourceGongUpdate
 	if r.Source.Gong != nil {
-		latencyThreshold25 := new(int64)
+		latencyThreshold26 := new(int64)
 		if !r.Source.Gong.LatencyThreshold.IsUnknown() && !r.Source.Gong.LatencyThreshold.IsNull() {
-			*latencyThreshold25 = r.Source.Gong.LatencyThreshold.ValueInt64()
+			*latencyThreshold26 = r.Source.Gong.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold25 = nil
+			latencyThreshold26 = nil
 		}
-		typeVar25 := new(shared.SourceGongUpdateType)
+		typeVar26 := new(shared.SourceGongUpdateType)
 		if !r.Source.Gong.Type.IsUnknown() && !r.Source.Gong.Type.IsNull() {
-			*typeVar25 = shared.SourceGongUpdateType(r.Source.Gong.Type.ValueString())
+			*typeVar26 = shared.SourceGongUpdateType(r.Source.Gong.Type.ValueString())
 		} else {
-			typeVar25 = nil
+			typeVar26 = nil
 		}
 		sourceGongUpdate = &shared.SourceGongUpdate{
-			LatencyThreshold: latencyThreshold25,
-			Type:             typeVar25,
+			LatencyThreshold: latencyThreshold26,
+			Type:             typeVar26,
 		}
 	}
 	if sourceGongUpdate != nil {
@@ -5927,21 +5981,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceGoogleAdsUpdate *shared.SourceGoogleAdsUpdate
 	if r.Source.GoogleAds != nil {
-		latencyThreshold26 := new(int64)
+		latencyThreshold27 := new(int64)
 		if !r.Source.GoogleAds.LatencyThreshold.IsUnknown() && !r.Source.GoogleAds.LatencyThreshold.IsNull() {
-			*latencyThreshold26 = r.Source.GoogleAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold27 = r.Source.GoogleAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold26 = nil
+			latencyThreshold27 = nil
 		}
-		typeVar26 := new(shared.SourceGoogleAdsUpdateType)
+		typeVar27 := new(shared.SourceGoogleAdsUpdateType)
 		if !r.Source.GoogleAds.Type.IsUnknown() && !r.Source.GoogleAds.Type.IsNull() {
-			*typeVar26 = shared.SourceGoogleAdsUpdateType(r.Source.GoogleAds.Type.ValueString())
+			*typeVar27 = shared.SourceGoogleAdsUpdateType(r.Source.GoogleAds.Type.ValueString())
 		} else {
-			typeVar26 = nil
+			typeVar27 = nil
 		}
 		sourceGoogleAdsUpdate = &shared.SourceGoogleAdsUpdate{
-			LatencyThreshold: latencyThreshold26,
-			Type:             typeVar26,
+			LatencyThreshold: latencyThreshold27,
+			Type:             typeVar27,
 		}
 	}
 	if sourceGoogleAdsUpdate != nil {
@@ -5951,21 +6005,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceGoogleAnalyticsGa4Update *shared.SourceGoogleAnalyticsGa4Update
 	if r.Source.GoogleAnalyticsGa4 != nil {
-		latencyThreshold27 := new(int64)
+		latencyThreshold28 := new(int64)
 		if !r.Source.GoogleAnalyticsGa4.LatencyThreshold.IsUnknown() && !r.Source.GoogleAnalyticsGa4.LatencyThreshold.IsNull() {
-			*latencyThreshold27 = r.Source.GoogleAnalyticsGa4.LatencyThreshold.ValueInt64()
+			*latencyThreshold28 = r.Source.GoogleAnalyticsGa4.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold27 = nil
+			latencyThreshold28 = nil
 		}
-		typeVar27 := new(shared.SourceGoogleAnalyticsGa4UpdateType)
+		typeVar28 := new(shared.SourceGoogleAnalyticsGa4UpdateType)
 		if !r.Source.GoogleAnalyticsGa4.Type.IsUnknown() && !r.Source.GoogleAnalyticsGa4.Type.IsNull() {
-			*typeVar27 = shared.SourceGoogleAnalyticsGa4UpdateType(r.Source.GoogleAnalyticsGa4.Type.ValueString())
+			*typeVar28 = shared.SourceGoogleAnalyticsGa4UpdateType(r.Source.GoogleAnalyticsGa4.Type.ValueString())
 		} else {
-			typeVar27 = nil
+			typeVar28 = nil
 		}
 		sourceGoogleAnalyticsGa4Update = &shared.SourceGoogleAnalyticsGa4Update{
-			LatencyThreshold: latencyThreshold27,
-			Type:             typeVar27,
+			LatencyThreshold: latencyThreshold28,
+			Type:             typeVar28,
 		}
 	}
 	if sourceGoogleAnalyticsGa4Update != nil {
@@ -5975,21 +6029,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceGoogleCloudStorageUpdate *shared.SourceGoogleCloudStorageUpdate
 	if r.Source.GoogleCloudStorage != nil {
-		typeVar28 := new(shared.SourceTypeEnum)
+		typeVar29 := new(shared.SourceTypeEnum)
 		if !r.Source.GoogleCloudStorage.Type.IsUnknown() && !r.Source.GoogleCloudStorage.Type.IsNull() {
-			*typeVar28 = shared.SourceTypeEnum(r.Source.GoogleCloudStorage.Type.ValueString())
+			*typeVar29 = shared.SourceTypeEnum(r.Source.GoogleCloudStorage.Type.ValueString())
 		} else {
-			typeVar28 = nil
+			typeVar29 = nil
 		}
-		latencyThreshold28 := new(int64)
+		latencyThreshold29 := new(int64)
 		if !r.Source.GoogleCloudStorage.LatencyThreshold.IsUnknown() && !r.Source.GoogleCloudStorage.LatencyThreshold.IsNull() {
-			*latencyThreshold28 = r.Source.GoogleCloudStorage.LatencyThreshold.ValueInt64()
+			*latencyThreshold29 = r.Source.GoogleCloudStorage.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold28 = nil
+			latencyThreshold29 = nil
 		}
 		sourceGoogleCloudStorageUpdate = &shared.SourceGoogleCloudStorageUpdate{
-			Type:             typeVar28,
-			LatencyThreshold: latencyThreshold28,
+			Type:             typeVar29,
+			LatencyThreshold: latencyThreshold29,
 		}
 	}
 	if sourceGoogleCloudStorageUpdate != nil {
@@ -5999,21 +6053,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceGoogleSheetsUpdate *shared.SourceGoogleSheetsUpdate
 	if r.Source.GoogleSheets != nil {
-		latencyThreshold29 := new(int64)
+		latencyThreshold30 := new(int64)
 		if !r.Source.GoogleSheets.LatencyThreshold.IsUnknown() && !r.Source.GoogleSheets.LatencyThreshold.IsNull() {
-			*latencyThreshold29 = r.Source.GoogleSheets.LatencyThreshold.ValueInt64()
+			*latencyThreshold30 = r.Source.GoogleSheets.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold29 = nil
+			latencyThreshold30 = nil
 		}
-		typeVar29 := new(shared.SourceGoogleSheetsUpdateType)
+		typeVar30 := new(shared.SourceGoogleSheetsUpdateType)
 		if !r.Source.GoogleSheets.Type.IsUnknown() && !r.Source.GoogleSheets.Type.IsNull() {
-			*typeVar29 = shared.SourceGoogleSheetsUpdateType(r.Source.GoogleSheets.Type.ValueString())
+			*typeVar30 = shared.SourceGoogleSheetsUpdateType(r.Source.GoogleSheets.Type.ValueString())
 		} else {
-			typeVar29 = nil
+			typeVar30 = nil
 		}
 		sourceGoogleSheetsUpdate = &shared.SourceGoogleSheetsUpdate{
-			LatencyThreshold: latencyThreshold29,
-			Type:             typeVar29,
+			LatencyThreshold: latencyThreshold30,
+			Type:             typeVar30,
 		}
 	}
 	if sourceGoogleSheetsUpdate != nil {
@@ -6023,21 +6077,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceHubspotUpdate *shared.SourceHubspotUpdate
 	if r.Source.Hubspot != nil {
-		latencyThreshold30 := new(int64)
+		latencyThreshold31 := new(int64)
 		if !r.Source.Hubspot.LatencyThreshold.IsUnknown() && !r.Source.Hubspot.LatencyThreshold.IsNull() {
-			*latencyThreshold30 = r.Source.Hubspot.LatencyThreshold.ValueInt64()
+			*latencyThreshold31 = r.Source.Hubspot.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold30 = nil
+			latencyThreshold31 = nil
 		}
-		typeVar30 := new(shared.SourceHubspotUpdateType)
+		typeVar31 := new(shared.SourceHubspotUpdateType)
 		if !r.Source.Hubspot.Type.IsUnknown() && !r.Source.Hubspot.Type.IsNull() {
-			*typeVar30 = shared.SourceHubspotUpdateType(r.Source.Hubspot.Type.ValueString())
+			*typeVar31 = shared.SourceHubspotUpdateType(r.Source.Hubspot.Type.ValueString())
 		} else {
-			typeVar30 = nil
+			typeVar31 = nil
 		}
 		sourceHubspotUpdate = &shared.SourceHubspotUpdate{
-			LatencyThreshold: latencyThreshold30,
-			Type:             typeVar30,
+			LatencyThreshold: latencyThreshold31,
+			Type:             typeVar31,
 		}
 	}
 	if sourceHubspotUpdate != nil {
@@ -6047,21 +6101,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceImpactRadiusUpdate *shared.SourceImpactRadiusUpdate
 	if r.Source.ImpactRadius != nil {
-		latencyThreshold31 := new(int64)
+		latencyThreshold32 := new(int64)
 		if !r.Source.ImpactRadius.LatencyThreshold.IsUnknown() && !r.Source.ImpactRadius.LatencyThreshold.IsNull() {
-			*latencyThreshold31 = r.Source.ImpactRadius.LatencyThreshold.ValueInt64()
+			*latencyThreshold32 = r.Source.ImpactRadius.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold31 = nil
+			latencyThreshold32 = nil
 		}
-		typeVar31 := new(shared.SourceImpactRadiusUpdateType)
+		typeVar32 := new(shared.SourceImpactRadiusUpdateType)
 		if !r.Source.ImpactRadius.Type.IsUnknown() && !r.Source.ImpactRadius.Type.IsNull() {
-			*typeVar31 = shared.SourceImpactRadiusUpdateType(r.Source.ImpactRadius.Type.ValueString())
+			*typeVar32 = shared.SourceImpactRadiusUpdateType(r.Source.ImpactRadius.Type.ValueString())
 		} else {
-			typeVar31 = nil
+			typeVar32 = nil
 		}
 		sourceImpactRadiusUpdate = &shared.SourceImpactRadiusUpdate{
-			LatencyThreshold: latencyThreshold31,
-			Type:             typeVar31,
+			LatencyThreshold: latencyThreshold32,
+			Type:             typeVar32,
 		}
 	}
 	if sourceImpactRadiusUpdate != nil {
@@ -6071,21 +6125,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceIntercomUpdate *shared.SourceIntercomUpdate
 	if r.Source.Intercom != nil {
-		latencyThreshold32 := new(int64)
+		latencyThreshold33 := new(int64)
 		if !r.Source.Intercom.LatencyThreshold.IsUnknown() && !r.Source.Intercom.LatencyThreshold.IsNull() {
-			*latencyThreshold32 = r.Source.Intercom.LatencyThreshold.ValueInt64()
+			*latencyThreshold33 = r.Source.Intercom.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold32 = nil
+			latencyThreshold33 = nil
 		}
-		typeVar32 := new(shared.SourceIntercomUpdateType)
+		typeVar33 := new(shared.SourceIntercomUpdateType)
 		if !r.Source.Intercom.Type.IsUnknown() && !r.Source.Intercom.Type.IsNull() {
-			*typeVar32 = shared.SourceIntercomUpdateType(r.Source.Intercom.Type.ValueString())
+			*typeVar33 = shared.SourceIntercomUpdateType(r.Source.Intercom.Type.ValueString())
 		} else {
-			typeVar32 = nil
+			typeVar33 = nil
 		}
 		sourceIntercomUpdate = &shared.SourceIntercomUpdate{
-			LatencyThreshold: latencyThreshold32,
-			Type:             typeVar32,
+			LatencyThreshold: latencyThreshold33,
+			Type:             typeVar33,
 		}
 	}
 	if sourceIntercomUpdate != nil {
@@ -6095,21 +6149,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceJiraUpdate *shared.SourceJiraUpdate
 	if r.Source.Jira != nil {
-		latencyThreshold33 := new(int64)
+		latencyThreshold34 := new(int64)
 		if !r.Source.Jira.LatencyThreshold.IsUnknown() && !r.Source.Jira.LatencyThreshold.IsNull() {
-			*latencyThreshold33 = r.Source.Jira.LatencyThreshold.ValueInt64()
+			*latencyThreshold34 = r.Source.Jira.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold33 = nil
+			latencyThreshold34 = nil
 		}
-		typeVar33 := new(shared.SourceJiraUpdateType)
+		typeVar34 := new(shared.SourceJiraUpdateType)
 		if !r.Source.Jira.Type.IsUnknown() && !r.Source.Jira.Type.IsNull() {
-			*typeVar33 = shared.SourceJiraUpdateType(r.Source.Jira.Type.ValueString())
+			*typeVar34 = shared.SourceJiraUpdateType(r.Source.Jira.Type.ValueString())
 		} else {
-			typeVar33 = nil
+			typeVar34 = nil
 		}
 		sourceJiraUpdate = &shared.SourceJiraUpdate{
-			LatencyThreshold: latencyThreshold33,
-			Type:             typeVar33,
+			LatencyThreshold: latencyThreshold34,
+			Type:             typeVar34,
 		}
 	}
 	if sourceJiraUpdate != nil {
@@ -6119,21 +6173,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceJiraAlignUpdate *shared.SourceJiraAlignUpdate
 	if r.Source.JiraAlign != nil {
-		latencyThreshold34 := new(int64)
+		latencyThreshold35 := new(int64)
 		if !r.Source.JiraAlign.LatencyThreshold.IsUnknown() && !r.Source.JiraAlign.LatencyThreshold.IsNull() {
-			*latencyThreshold34 = r.Source.JiraAlign.LatencyThreshold.ValueInt64()
+			*latencyThreshold35 = r.Source.JiraAlign.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold34 = nil
+			latencyThreshold35 = nil
 		}
-		typeVar34 := new(shared.SourceJiraAlignUpdateType)
+		typeVar35 := new(shared.SourceJiraAlignUpdateType)
 		if !r.Source.JiraAlign.Type.IsUnknown() && !r.Source.JiraAlign.Type.IsNull() {
-			*typeVar34 = shared.SourceJiraAlignUpdateType(r.Source.JiraAlign.Type.ValueString())
+			*typeVar35 = shared.SourceJiraAlignUpdateType(r.Source.JiraAlign.Type.ValueString())
 		} else {
-			typeVar34 = nil
+			typeVar35 = nil
 		}
 		sourceJiraAlignUpdate = &shared.SourceJiraAlignUpdate{
-			LatencyThreshold: latencyThreshold34,
-			Type:             typeVar34,
+			LatencyThreshold: latencyThreshold35,
+			Type:             typeVar35,
 		}
 	}
 	if sourceJiraAlignUpdate != nil {
@@ -6143,21 +6197,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceJiraCloudUpdate *shared.SourceJiraCloudUpdate
 	if r.Source.JiraCloud != nil {
-		latencyThreshold35 := new(int64)
+		latencyThreshold36 := new(int64)
 		if !r.Source.JiraCloud.LatencyThreshold.IsUnknown() && !r.Source.JiraCloud.LatencyThreshold.IsNull() {
-			*latencyThreshold35 = r.Source.JiraCloud.LatencyThreshold.ValueInt64()
+			*latencyThreshold36 = r.Source.JiraCloud.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold35 = nil
+			latencyThreshold36 = nil
 		}
-		typeVar35 := new(shared.SourceJiraCloudUpdateType)
+		typeVar36 := new(shared.SourceJiraCloudUpdateType)
 		if !r.Source.JiraCloud.Type.IsUnknown() && !r.Source.JiraCloud.Type.IsNull() {
-			*typeVar35 = shared.SourceJiraCloudUpdateType(r.Source.JiraCloud.Type.ValueString())
+			*typeVar36 = shared.SourceJiraCloudUpdateType(r.Source.JiraCloud.Type.ValueString())
 		} else {
-			typeVar35 = nil
+			typeVar36 = nil
 		}
 		sourceJiraCloudUpdate = &shared.SourceJiraCloudUpdate{
-			LatencyThreshold: latencyThreshold35,
-			Type:             typeVar35,
+			LatencyThreshold: latencyThreshold36,
+			Type:             typeVar36,
 		}
 	}
 	if sourceJiraCloudUpdate != nil {
@@ -6167,21 +6221,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceKafkaUpdate *shared.SourceKafkaUpdate
 	if r.Source.Kafka != nil {
-		latencyThreshold36 := new(int64)
+		latencyThreshold37 := new(int64)
 		if !r.Source.Kafka.LatencyThreshold.IsUnknown() && !r.Source.Kafka.LatencyThreshold.IsNull() {
-			*latencyThreshold36 = r.Source.Kafka.LatencyThreshold.ValueInt64()
+			*latencyThreshold37 = r.Source.Kafka.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold36 = nil
+			latencyThreshold37 = nil
 		}
-		typeVar36 := new(shared.SourceKafkaUpdateType)
+		typeVar37 := new(shared.SourceKafkaUpdateType)
 		if !r.Source.Kafka.Type.IsUnknown() && !r.Source.Kafka.Type.IsNull() {
-			*typeVar36 = shared.SourceKafkaUpdateType(r.Source.Kafka.Type.ValueString())
+			*typeVar37 = shared.SourceKafkaUpdateType(r.Source.Kafka.Type.ValueString())
 		} else {
-			typeVar36 = nil
+			typeVar37 = nil
 		}
 		sourceKafkaUpdate = &shared.SourceKafkaUpdate{
-			LatencyThreshold: latencyThreshold36,
-			Type:             typeVar36,
+			LatencyThreshold: latencyThreshold37,
+			Type:             typeVar37,
 		}
 	}
 	if sourceKafkaUpdate != nil {
@@ -6191,21 +6245,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceKinesisUpdate *shared.SourceKinesisUpdate
 	if r.Source.Kinesis != nil {
-		latencyThreshold37 := new(int64)
+		latencyThreshold38 := new(int64)
 		if !r.Source.Kinesis.LatencyThreshold.IsUnknown() && !r.Source.Kinesis.LatencyThreshold.IsNull() {
-			*latencyThreshold37 = r.Source.Kinesis.LatencyThreshold.ValueInt64()
+			*latencyThreshold38 = r.Source.Kinesis.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold37 = nil
+			latencyThreshold38 = nil
 		}
-		typeVar37 := new(shared.SourceKinesisUpdateType)
+		typeVar38 := new(shared.SourceKinesisUpdateType)
 		if !r.Source.Kinesis.Type.IsUnknown() && !r.Source.Kinesis.Type.IsNull() {
-			*typeVar37 = shared.SourceKinesisUpdateType(r.Source.Kinesis.Type.ValueString())
+			*typeVar38 = shared.SourceKinesisUpdateType(r.Source.Kinesis.Type.ValueString())
 		} else {
-			typeVar37 = nil
+			typeVar38 = nil
 		}
 		sourceKinesisUpdate = &shared.SourceKinesisUpdate{
-			LatencyThreshold: latencyThreshold37,
-			Type:             typeVar37,
+			LatencyThreshold: latencyThreshold38,
+			Type:             typeVar38,
 		}
 	}
 	if sourceKinesisUpdate != nil {
@@ -6215,21 +6269,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceKustomerUpdate *shared.SourceKustomerUpdate
 	if r.Source.Kustomer != nil {
-		latencyThreshold38 := new(int64)
+		latencyThreshold39 := new(int64)
 		if !r.Source.Kustomer.LatencyThreshold.IsUnknown() && !r.Source.Kustomer.LatencyThreshold.IsNull() {
-			*latencyThreshold38 = r.Source.Kustomer.LatencyThreshold.ValueInt64()
+			*latencyThreshold39 = r.Source.Kustomer.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold38 = nil
+			latencyThreshold39 = nil
 		}
-		typeVar38 := new(shared.SourceKustomerUpdateType)
+		typeVar39 := new(shared.SourceKustomerUpdateType)
 		if !r.Source.Kustomer.Type.IsUnknown() && !r.Source.Kustomer.Type.IsNull() {
-			*typeVar38 = shared.SourceKustomerUpdateType(r.Source.Kustomer.Type.ValueString())
+			*typeVar39 = shared.SourceKustomerUpdateType(r.Source.Kustomer.Type.ValueString())
 		} else {
-			typeVar38 = nil
+			typeVar39 = nil
 		}
 		sourceKustomerUpdate = &shared.SourceKustomerUpdate{
-			LatencyThreshold: latencyThreshold38,
-			Type:             typeVar38,
+			LatencyThreshold: latencyThreshold39,
+			Type:             typeVar39,
 		}
 	}
 	if sourceKustomerUpdate != nil {
@@ -6239,21 +6293,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceLdapUpdate *shared.SourceLdapUpdate
 	if r.Source.Ldap != nil {
-		latencyThreshold39 := new(int64)
+		latencyThreshold40 := new(int64)
 		if !r.Source.Ldap.LatencyThreshold.IsUnknown() && !r.Source.Ldap.LatencyThreshold.IsNull() {
-			*latencyThreshold39 = r.Source.Ldap.LatencyThreshold.ValueInt64()
+			*latencyThreshold40 = r.Source.Ldap.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold39 = nil
+			latencyThreshold40 = nil
 		}
-		typeVar39 := new(shared.SourceLdapUpdateType)
+		typeVar40 := new(shared.SourceLdapUpdateType)
 		if !r.Source.Ldap.Type.IsUnknown() && !r.Source.Ldap.Type.IsNull() {
-			*typeVar39 = shared.SourceLdapUpdateType(r.Source.Ldap.Type.ValueString())
+			*typeVar40 = shared.SourceLdapUpdateType(r.Source.Ldap.Type.ValueString())
 		} else {
-			typeVar39 = nil
+			typeVar40 = nil
 		}
 		sourceLdapUpdate = &shared.SourceLdapUpdate{
-			LatencyThreshold: latencyThreshold39,
-			Type:             typeVar39,
+			LatencyThreshold: latencyThreshold40,
+			Type:             typeVar40,
 		}
 	}
 	if sourceLdapUpdate != nil {
@@ -6263,21 +6317,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceLdapVirtualListViewUpdate *shared.SourceLdapVirtualListViewUpdate
 	if r.Source.LdapVirtualListView != nil {
-		latencyThreshold40 := new(int64)
+		latencyThreshold41 := new(int64)
 		if !r.Source.LdapVirtualListView.LatencyThreshold.IsUnknown() && !r.Source.LdapVirtualListView.LatencyThreshold.IsNull() {
-			*latencyThreshold40 = r.Source.LdapVirtualListView.LatencyThreshold.ValueInt64()
+			*latencyThreshold41 = r.Source.LdapVirtualListView.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold40 = nil
+			latencyThreshold41 = nil
 		}
-		typeVar40 := new(shared.SourceLdapVirtualListViewUpdateType)
+		typeVar41 := new(shared.SourceLdapVirtualListViewUpdateType)
 		if !r.Source.LdapVirtualListView.Type.IsUnknown() && !r.Source.LdapVirtualListView.Type.IsNull() {
-			*typeVar40 = shared.SourceLdapVirtualListViewUpdateType(r.Source.LdapVirtualListView.Type.ValueString())
+			*typeVar41 = shared.SourceLdapVirtualListViewUpdateType(r.Source.LdapVirtualListView.Type.ValueString())
 		} else {
-			typeVar40 = nil
+			typeVar41 = nil
 		}
 		sourceLdapVirtualListViewUpdate = &shared.SourceLdapVirtualListViewUpdate{
-			LatencyThreshold: latencyThreshold40,
-			Type:             typeVar40,
+			LatencyThreshold: latencyThreshold41,
+			Type:             typeVar41,
 		}
 	}
 	if sourceLdapVirtualListViewUpdate != nil {
@@ -6287,21 +6341,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceLinkedInAdsUpdate *shared.SourceLinkedInAdsUpdate
 	if r.Source.LinkedInAds != nil {
-		latencyThreshold41 := new(int64)
+		latencyThreshold42 := new(int64)
 		if !r.Source.LinkedInAds.LatencyThreshold.IsUnknown() && !r.Source.LinkedInAds.LatencyThreshold.IsNull() {
-			*latencyThreshold41 = r.Source.LinkedInAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold42 = r.Source.LinkedInAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold41 = nil
+			latencyThreshold42 = nil
 		}
-		typeVar41 := new(shared.SourceLinkedInAdsUpdateType)
+		typeVar42 := new(shared.SourceLinkedInAdsUpdateType)
 		if !r.Source.LinkedInAds.Type.IsUnknown() && !r.Source.LinkedInAds.Type.IsNull() {
-			*typeVar41 = shared.SourceLinkedInAdsUpdateType(r.Source.LinkedInAds.Type.ValueString())
+			*typeVar42 = shared.SourceLinkedInAdsUpdateType(r.Source.LinkedInAds.Type.ValueString())
 		} else {
-			typeVar41 = nil
+			typeVar42 = nil
 		}
 		sourceLinkedInAdsUpdate = &shared.SourceLinkedInAdsUpdate{
-			LatencyThreshold: latencyThreshold41,
-			Type:             typeVar41,
+			LatencyThreshold: latencyThreshold42,
+			Type:             typeVar42,
 		}
 	}
 	if sourceLinkedInAdsUpdate != nil {
@@ -6311,21 +6365,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceMarketoUpdate *shared.SourceMarketoUpdate
 	if r.Source.Marketo != nil {
-		latencyThreshold42 := new(int64)
+		latencyThreshold43 := new(int64)
 		if !r.Source.Marketo.LatencyThreshold.IsUnknown() && !r.Source.Marketo.LatencyThreshold.IsNull() {
-			*latencyThreshold42 = r.Source.Marketo.LatencyThreshold.ValueInt64()
+			*latencyThreshold43 = r.Source.Marketo.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold42 = nil
+			latencyThreshold43 = nil
 		}
-		typeVar42 := new(shared.SourceMarketoUpdateType)
+		typeVar43 := new(shared.SourceMarketoUpdateType)
 		if !r.Source.Marketo.Type.IsUnknown() && !r.Source.Marketo.Type.IsNull() {
-			*typeVar42 = shared.SourceMarketoUpdateType(r.Source.Marketo.Type.ValueString())
+			*typeVar43 = shared.SourceMarketoUpdateType(r.Source.Marketo.Type.ValueString())
 		} else {
-			typeVar42 = nil
+			typeVar43 = nil
 		}
 		sourceMarketoUpdate = &shared.SourceMarketoUpdate{
-			LatencyThreshold: latencyThreshold42,
-			Type:             typeVar42,
+			LatencyThreshold: latencyThreshold43,
+			Type:             typeVar43,
 		}
 	}
 	if sourceMarketoUpdate != nil {
@@ -6335,21 +6389,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceMicrosoftEntraIDUpdate *shared.SourceMicrosoftEntraIDUpdate
 	if r.Source.MicrosoftEntraID != nil {
-		latencyThreshold43 := new(int64)
+		latencyThreshold44 := new(int64)
 		if !r.Source.MicrosoftEntraID.LatencyThreshold.IsUnknown() && !r.Source.MicrosoftEntraID.LatencyThreshold.IsNull() {
-			*latencyThreshold43 = r.Source.MicrosoftEntraID.LatencyThreshold.ValueInt64()
+			*latencyThreshold44 = r.Source.MicrosoftEntraID.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold43 = nil
+			latencyThreshold44 = nil
 		}
-		typeVar43 := new(shared.SourceMicrosoftEntraIDUpdateType)
+		typeVar44 := new(shared.SourceMicrosoftEntraIDUpdateType)
 		if !r.Source.MicrosoftEntraID.Type.IsUnknown() && !r.Source.MicrosoftEntraID.Type.IsNull() {
-			*typeVar43 = shared.SourceMicrosoftEntraIDUpdateType(r.Source.MicrosoftEntraID.Type.ValueString())
+			*typeVar44 = shared.SourceMicrosoftEntraIDUpdateType(r.Source.MicrosoftEntraID.Type.ValueString())
 		} else {
-			typeVar43 = nil
+			typeVar44 = nil
 		}
 		sourceMicrosoftEntraIDUpdate = &shared.SourceMicrosoftEntraIDUpdate{
-			LatencyThreshold: latencyThreshold43,
-			Type:             typeVar43,
+			LatencyThreshold: latencyThreshold44,
+			Type:             typeVar44,
 		}
 	}
 	if sourceMicrosoftEntraIDUpdate != nil {
@@ -6359,21 +6413,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceMicrosoftListsUpdate *shared.SourceMicrosoftListsUpdate
 	if r.Source.MicrosoftLists != nil {
-		latencyThreshold44 := new(int64)
+		latencyThreshold45 := new(int64)
 		if !r.Source.MicrosoftLists.LatencyThreshold.IsUnknown() && !r.Source.MicrosoftLists.LatencyThreshold.IsNull() {
-			*latencyThreshold44 = r.Source.MicrosoftLists.LatencyThreshold.ValueInt64()
+			*latencyThreshold45 = r.Source.MicrosoftLists.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold44 = nil
+			latencyThreshold45 = nil
 		}
-		typeVar44 := new(shared.SourceMicrosoftListsUpdateType)
+		typeVar45 := new(shared.SourceMicrosoftListsUpdateType)
 		if !r.Source.MicrosoftLists.Type.IsUnknown() && !r.Source.MicrosoftLists.Type.IsNull() {
-			*typeVar44 = shared.SourceMicrosoftListsUpdateType(r.Source.MicrosoftLists.Type.ValueString())
+			*typeVar45 = shared.SourceMicrosoftListsUpdateType(r.Source.MicrosoftLists.Type.ValueString())
 		} else {
-			typeVar44 = nil
+			typeVar45 = nil
 		}
 		sourceMicrosoftListsUpdate = &shared.SourceMicrosoftListsUpdate{
-			LatencyThreshold: latencyThreshold44,
-			Type:             typeVar44,
+			LatencyThreshold: latencyThreshold45,
+			Type:             typeVar45,
 		}
 	}
 	if sourceMicrosoftListsUpdate != nil {
@@ -6383,21 +6437,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceMixpanelUpdate *shared.SourceMixpanelUpdate
 	if r.Source.Mixpanel != nil {
-		latencyThreshold45 := new(int64)
+		latencyThreshold46 := new(int64)
 		if !r.Source.Mixpanel.LatencyThreshold.IsUnknown() && !r.Source.Mixpanel.LatencyThreshold.IsNull() {
-			*latencyThreshold45 = r.Source.Mixpanel.LatencyThreshold.ValueInt64()
+			*latencyThreshold46 = r.Source.Mixpanel.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold45 = nil
+			latencyThreshold46 = nil
 		}
-		typeVar45 := new(shared.SourceMixpanelUpdateType)
+		typeVar46 := new(shared.SourceMixpanelUpdateType)
 		if !r.Source.Mixpanel.Type.IsUnknown() && !r.Source.Mixpanel.Type.IsNull() {
-			*typeVar45 = shared.SourceMixpanelUpdateType(r.Source.Mixpanel.Type.ValueString())
+			*typeVar46 = shared.SourceMixpanelUpdateType(r.Source.Mixpanel.Type.ValueString())
 		} else {
-			typeVar45 = nil
+			typeVar46 = nil
 		}
 		sourceMixpanelUpdate = &shared.SourceMixpanelUpdate{
-			LatencyThreshold: latencyThreshold45,
-			Type:             typeVar45,
+			LatencyThreshold: latencyThreshold46,
+			Type:             typeVar46,
 		}
 	}
 	if sourceMixpanelUpdate != nil {
@@ -6407,21 +6461,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceMongodbUpdate *shared.SourceMongodbUpdate
 	if r.Source.Mongodb != nil {
-		latencyThreshold46 := new(int64)
+		latencyThreshold47 := new(int64)
 		if !r.Source.Mongodb.LatencyThreshold.IsUnknown() && !r.Source.Mongodb.LatencyThreshold.IsNull() {
-			*latencyThreshold46 = r.Source.Mongodb.LatencyThreshold.ValueInt64()
+			*latencyThreshold47 = r.Source.Mongodb.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold46 = nil
+			latencyThreshold47 = nil
 		}
-		typeVar46 := new(shared.SourceMongodbUpdateType)
+		typeVar47 := new(shared.SourceMongodbUpdateType)
 		if !r.Source.Mongodb.Type.IsUnknown() && !r.Source.Mongodb.Type.IsNull() {
-			*typeVar46 = shared.SourceMongodbUpdateType(r.Source.Mongodb.Type.ValueString())
+			*typeVar47 = shared.SourceMongodbUpdateType(r.Source.Mongodb.Type.ValueString())
 		} else {
-			typeVar46 = nil
+			typeVar47 = nil
 		}
 		sourceMongodbUpdate = &shared.SourceMongodbUpdate{
-			LatencyThreshold: latencyThreshold46,
-			Type:             typeVar46,
+			LatencyThreshold: latencyThreshold47,
+			Type:             typeVar47,
 		}
 	}
 	if sourceMongodbUpdate != nil {
@@ -6431,21 +6485,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceMysqlUpdate *shared.SourceMysqlUpdate
 	if r.Source.Mysql != nil {
-		latencyThreshold47 := new(int64)
+		latencyThreshold48 := new(int64)
 		if !r.Source.Mysql.LatencyThreshold.IsUnknown() && !r.Source.Mysql.LatencyThreshold.IsNull() {
-			*latencyThreshold47 = r.Source.Mysql.LatencyThreshold.ValueInt64()
+			*latencyThreshold48 = r.Source.Mysql.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold47 = nil
+			latencyThreshold48 = nil
 		}
-		typeVar47 := new(shared.SourceMysqlUpdateType)
+		typeVar48 := new(shared.SourceMysqlUpdateType)
 		if !r.Source.Mysql.Type.IsUnknown() && !r.Source.Mysql.Type.IsNull() {
-			*typeVar47 = shared.SourceMysqlUpdateType(r.Source.Mysql.Type.ValueString())
+			*typeVar48 = shared.SourceMysqlUpdateType(r.Source.Mysql.Type.ValueString())
 		} else {
-			typeVar47 = nil
+			typeVar48 = nil
 		}
 		sourceMysqlUpdate = &shared.SourceMysqlUpdate{
-			LatencyThreshold: latencyThreshold47,
-			Type:             typeVar47,
+			LatencyThreshold: latencyThreshold48,
+			Type:             typeVar48,
 		}
 	}
 	if sourceMysqlUpdate != nil {
@@ -6455,21 +6509,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceMysqlShardedUpdate *shared.SourceMysqlShardedUpdate
 	if r.Source.MysqlSharded != nil {
-		latencyThreshold48 := new(int64)
+		latencyThreshold49 := new(int64)
 		if !r.Source.MysqlSharded.LatencyThreshold.IsUnknown() && !r.Source.MysqlSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold48 = r.Source.MysqlSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold49 = r.Source.MysqlSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold48 = nil
+			latencyThreshold49 = nil
 		}
-		typeVar48 := new(shared.SourceMysqlShardedUpdateType)
+		typeVar49 := new(shared.SourceMysqlShardedUpdateType)
 		if !r.Source.MysqlSharded.Type.IsUnknown() && !r.Source.MysqlSharded.Type.IsNull() {
-			*typeVar48 = shared.SourceMysqlShardedUpdateType(r.Source.MysqlSharded.Type.ValueString())
+			*typeVar49 = shared.SourceMysqlShardedUpdateType(r.Source.MysqlSharded.Type.ValueString())
 		} else {
-			typeVar48 = nil
+			typeVar49 = nil
 		}
 		sourceMysqlShardedUpdate = &shared.SourceMysqlShardedUpdate{
-			LatencyThreshold: latencyThreshold48,
-			Type:             typeVar48,
+			LatencyThreshold: latencyThreshold49,
+			Type:             typeVar49,
 		}
 	}
 	if sourceMysqlShardedUpdate != nil {
@@ -6479,21 +6533,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceNetsuiteUpdate *shared.SourceNetsuiteUpdate
 	if r.Source.Netsuite != nil {
-		latencyThreshold49 := new(int64)
+		latencyThreshold50 := new(int64)
 		if !r.Source.Netsuite.LatencyThreshold.IsUnknown() && !r.Source.Netsuite.LatencyThreshold.IsNull() {
-			*latencyThreshold49 = r.Source.Netsuite.LatencyThreshold.ValueInt64()
+			*latencyThreshold50 = r.Source.Netsuite.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold49 = nil
+			latencyThreshold50 = nil
 		}
-		typeVar49 := new(shared.SourceNetsuiteUpdateType)
+		typeVar50 := new(shared.SourceNetsuiteUpdateType)
 		if !r.Source.Netsuite.Type.IsUnknown() && !r.Source.Netsuite.Type.IsNull() {
-			*typeVar49 = shared.SourceNetsuiteUpdateType(r.Source.Netsuite.Type.ValueString())
+			*typeVar50 = shared.SourceNetsuiteUpdateType(r.Source.Netsuite.Type.ValueString())
 		} else {
-			typeVar49 = nil
+			typeVar50 = nil
 		}
 		sourceNetsuiteUpdate = &shared.SourceNetsuiteUpdate{
-			LatencyThreshold: latencyThreshold49,
-			Type:             typeVar49,
+			LatencyThreshold: latencyThreshold50,
+			Type:             typeVar50,
 		}
 	}
 	if sourceNetsuiteUpdate != nil {
@@ -6503,21 +6557,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceNetsuiteV2Update *shared.SourceNetsuiteV2Update
 	if r.Source.NetsuiteV2 != nil {
-		latencyThreshold50 := new(int64)
+		latencyThreshold51 := new(int64)
 		if !r.Source.NetsuiteV2.LatencyThreshold.IsUnknown() && !r.Source.NetsuiteV2.LatencyThreshold.IsNull() {
-			*latencyThreshold50 = r.Source.NetsuiteV2.LatencyThreshold.ValueInt64()
+			*latencyThreshold51 = r.Source.NetsuiteV2.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold50 = nil
+			latencyThreshold51 = nil
 		}
-		typeVar50 := new(shared.SourceNetsuiteV2UpdateType)
+		typeVar51 := new(shared.SourceNetsuiteV2UpdateType)
 		if !r.Source.NetsuiteV2.Type.IsUnknown() && !r.Source.NetsuiteV2.Type.IsNull() {
-			*typeVar50 = shared.SourceNetsuiteV2UpdateType(r.Source.NetsuiteV2.Type.ValueString())
+			*typeVar51 = shared.SourceNetsuiteV2UpdateType(r.Source.NetsuiteV2.Type.ValueString())
 		} else {
-			typeVar50 = nil
+			typeVar51 = nil
 		}
 		sourceNetsuiteV2Update = &shared.SourceNetsuiteV2Update{
-			LatencyThreshold: latencyThreshold50,
-			Type:             typeVar50,
+			LatencyThreshold: latencyThreshold51,
+			Type:             typeVar51,
 		}
 	}
 	if sourceNetsuiteV2Update != nil {
@@ -6527,21 +6581,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceOracleUpdate *shared.SourceOracleUpdate
 	if r.Source.Oracle != nil {
-		latencyThreshold51 := new(int64)
+		latencyThreshold52 := new(int64)
 		if !r.Source.Oracle.LatencyThreshold.IsUnknown() && !r.Source.Oracle.LatencyThreshold.IsNull() {
-			*latencyThreshold51 = r.Source.Oracle.LatencyThreshold.ValueInt64()
+			*latencyThreshold52 = r.Source.Oracle.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold51 = nil
+			latencyThreshold52 = nil
 		}
-		typeVar51 := new(shared.SourceOracleUpdateType)
+		typeVar52 := new(shared.SourceOracleUpdateType)
 		if !r.Source.Oracle.Type.IsUnknown() && !r.Source.Oracle.Type.IsNull() {
-			*typeVar51 = shared.SourceOracleUpdateType(r.Source.Oracle.Type.ValueString())
+			*typeVar52 = shared.SourceOracleUpdateType(r.Source.Oracle.Type.ValueString())
 		} else {
-			typeVar51 = nil
+			typeVar52 = nil
 		}
 		sourceOracleUpdate = &shared.SourceOracleUpdate{
-			LatencyThreshold: latencyThreshold51,
-			Type:             typeVar51,
+			LatencyThreshold: latencyThreshold52,
+			Type:             typeVar52,
 		}
 	}
 	if sourceOracleUpdate != nil {
@@ -6551,21 +6605,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceOracleShardedUpdate *shared.SourceOracleShardedUpdate
 	if r.Source.OracleSharded != nil {
-		latencyThreshold52 := new(int64)
+		latencyThreshold53 := new(int64)
 		if !r.Source.OracleSharded.LatencyThreshold.IsUnknown() && !r.Source.OracleSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold52 = r.Source.OracleSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold53 = r.Source.OracleSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold52 = nil
+			latencyThreshold53 = nil
 		}
-		typeVar52 := new(shared.SourceOracleShardedUpdateType)
+		typeVar53 := new(shared.SourceOracleShardedUpdateType)
 		if !r.Source.OracleSharded.Type.IsUnknown() && !r.Source.OracleSharded.Type.IsNull() {
-			*typeVar52 = shared.SourceOracleShardedUpdateType(r.Source.OracleSharded.Type.ValueString())
+			*typeVar53 = shared.SourceOracleShardedUpdateType(r.Source.OracleSharded.Type.ValueString())
 		} else {
-			typeVar52 = nil
+			typeVar53 = nil
 		}
 		sourceOracleShardedUpdate = &shared.SourceOracleShardedUpdate{
-			LatencyThreshold: latencyThreshold52,
-			Type:             typeVar52,
+			LatencyThreshold: latencyThreshold53,
+			Type:             typeVar53,
 		}
 	}
 	if sourceOracleShardedUpdate != nil {
@@ -6575,21 +6629,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceOutlookUpdate *shared.SourceOutlookUpdate
 	if r.Source.Outlook != nil {
-		latencyThreshold53 := new(int64)
+		latencyThreshold54 := new(int64)
 		if !r.Source.Outlook.LatencyThreshold.IsUnknown() && !r.Source.Outlook.LatencyThreshold.IsNull() {
-			*latencyThreshold53 = r.Source.Outlook.LatencyThreshold.ValueInt64()
+			*latencyThreshold54 = r.Source.Outlook.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold53 = nil
+			latencyThreshold54 = nil
 		}
-		typeVar53 := new(shared.SourceOutlookUpdateType)
+		typeVar54 := new(shared.SourceOutlookUpdateType)
 		if !r.Source.Outlook.Type.IsUnknown() && !r.Source.Outlook.Type.IsNull() {
-			*typeVar53 = shared.SourceOutlookUpdateType(r.Source.Outlook.Type.ValueString())
+			*typeVar54 = shared.SourceOutlookUpdateType(r.Source.Outlook.Type.ValueString())
 		} else {
-			typeVar53 = nil
+			typeVar54 = nil
 		}
 		sourceOutlookUpdate = &shared.SourceOutlookUpdate{
-			LatencyThreshold: latencyThreshold53,
-			Type:             typeVar53,
+			LatencyThreshold: latencyThreshold54,
+			Type:             typeVar54,
 		}
 	}
 	if sourceOutlookUpdate != nil {
@@ -6599,21 +6653,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceOutreachUpdate *shared.SourceOutreachUpdate
 	if r.Source.Outreach != nil {
-		latencyThreshold54 := new(int64)
+		latencyThreshold55 := new(int64)
 		if !r.Source.Outreach.LatencyThreshold.IsUnknown() && !r.Source.Outreach.LatencyThreshold.IsNull() {
-			*latencyThreshold54 = r.Source.Outreach.LatencyThreshold.ValueInt64()
+			*latencyThreshold55 = r.Source.Outreach.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold54 = nil
+			latencyThreshold55 = nil
 		}
-		typeVar54 := new(shared.SourceOutreachUpdateType)
+		typeVar55 := new(shared.SourceOutreachUpdateType)
 		if !r.Source.Outreach.Type.IsUnknown() && !r.Source.Outreach.Type.IsNull() {
-			*typeVar54 = shared.SourceOutreachUpdateType(r.Source.Outreach.Type.ValueString())
+			*typeVar55 = shared.SourceOutreachUpdateType(r.Source.Outreach.Type.ValueString())
 		} else {
-			typeVar54 = nil
+			typeVar55 = nil
 		}
 		sourceOutreachUpdate = &shared.SourceOutreachUpdate{
-			LatencyThreshold: latencyThreshold54,
-			Type:             typeVar54,
+			LatencyThreshold: latencyThreshold55,
+			Type:             typeVar55,
 		}
 	}
 	if sourceOutreachUpdate != nil {
@@ -6623,21 +6677,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourcePinterestAdsUpdate *shared.SourcePinterestAdsUpdate
 	if r.Source.PinterestAds != nil {
-		latencyThreshold55 := new(int64)
+		latencyThreshold56 := new(int64)
 		if !r.Source.PinterestAds.LatencyThreshold.IsUnknown() && !r.Source.PinterestAds.LatencyThreshold.IsNull() {
-			*latencyThreshold55 = r.Source.PinterestAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold56 = r.Source.PinterestAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold55 = nil
+			latencyThreshold56 = nil
 		}
-		typeVar55 := new(shared.SourcePinterestAdsUpdateType)
+		typeVar56 := new(shared.SourcePinterestAdsUpdateType)
 		if !r.Source.PinterestAds.Type.IsUnknown() && !r.Source.PinterestAds.Type.IsNull() {
-			*typeVar55 = shared.SourcePinterestAdsUpdateType(r.Source.PinterestAds.Type.ValueString())
+			*typeVar56 = shared.SourcePinterestAdsUpdateType(r.Source.PinterestAds.Type.ValueString())
 		} else {
-			typeVar55 = nil
+			typeVar56 = nil
 		}
 		sourcePinterestAdsUpdate = &shared.SourcePinterestAdsUpdate{
-			LatencyThreshold: latencyThreshold55,
-			Type:             typeVar55,
+			LatencyThreshold: latencyThreshold56,
+			Type:             typeVar56,
 		}
 	}
 	if sourcePinterestAdsUpdate != nil {
@@ -6647,21 +6701,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourcePostgresUpdate *shared.SourcePostgresUpdate
 	if r.Source.Postgres != nil {
-		latencyThreshold56 := new(int64)
+		latencyThreshold57 := new(int64)
 		if !r.Source.Postgres.LatencyThreshold.IsUnknown() && !r.Source.Postgres.LatencyThreshold.IsNull() {
-			*latencyThreshold56 = r.Source.Postgres.LatencyThreshold.ValueInt64()
+			*latencyThreshold57 = r.Source.Postgres.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold56 = nil
+			latencyThreshold57 = nil
 		}
-		typeVar56 := new(shared.SourcePostgresUpdateType)
+		typeVar57 := new(shared.SourcePostgresUpdateType)
 		if !r.Source.Postgres.Type.IsUnknown() && !r.Source.Postgres.Type.IsNull() {
-			*typeVar56 = shared.SourcePostgresUpdateType(r.Source.Postgres.Type.ValueString())
+			*typeVar57 = shared.SourcePostgresUpdateType(r.Source.Postgres.Type.ValueString())
 		} else {
-			typeVar56 = nil
+			typeVar57 = nil
 		}
 		sourcePostgresUpdate = &shared.SourcePostgresUpdate{
-			LatencyThreshold: latencyThreshold56,
-			Type:             typeVar56,
+			LatencyThreshold: latencyThreshold57,
+			Type:             typeVar57,
 		}
 	}
 	if sourcePostgresUpdate != nil {
@@ -6671,21 +6725,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourcePostgresShardedUpdate *shared.SourcePostgresShardedUpdate
 	if r.Source.PostgresSharded != nil {
-		latencyThreshold57 := new(int64)
+		latencyThreshold58 := new(int64)
 		if !r.Source.PostgresSharded.LatencyThreshold.IsUnknown() && !r.Source.PostgresSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold57 = r.Source.PostgresSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold58 = r.Source.PostgresSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold57 = nil
+			latencyThreshold58 = nil
 		}
-		typeVar57 := new(shared.SourcePostgresShardedUpdateType)
+		typeVar58 := new(shared.SourcePostgresShardedUpdateType)
 		if !r.Source.PostgresSharded.Type.IsUnknown() && !r.Source.PostgresSharded.Type.IsNull() {
-			*typeVar57 = shared.SourcePostgresShardedUpdateType(r.Source.PostgresSharded.Type.ValueString())
+			*typeVar58 = shared.SourcePostgresShardedUpdateType(r.Source.PostgresSharded.Type.ValueString())
 		} else {
-			typeVar57 = nil
+			typeVar58 = nil
 		}
 		sourcePostgresShardedUpdate = &shared.SourcePostgresShardedUpdate{
-			LatencyThreshold: latencyThreshold57,
-			Type:             typeVar57,
+			LatencyThreshold: latencyThreshold58,
+			Type:             typeVar58,
 		}
 	}
 	if sourcePostgresShardedUpdate != nil {
@@ -6695,21 +6749,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceQualtricsUpdate *shared.SourceQualtricsUpdate
 	if r.Source.Qualtrics != nil {
-		latencyThreshold58 := new(int64)
+		latencyThreshold59 := new(int64)
 		if !r.Source.Qualtrics.LatencyThreshold.IsUnknown() && !r.Source.Qualtrics.LatencyThreshold.IsNull() {
-			*latencyThreshold58 = r.Source.Qualtrics.LatencyThreshold.ValueInt64()
+			*latencyThreshold59 = r.Source.Qualtrics.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold58 = nil
+			latencyThreshold59 = nil
 		}
-		typeVar58 := new(shared.SourceQualtricsUpdateType)
+		typeVar59 := new(shared.SourceQualtricsUpdateType)
 		if !r.Source.Qualtrics.Type.IsUnknown() && !r.Source.Qualtrics.Type.IsNull() {
-			*typeVar58 = shared.SourceQualtricsUpdateType(r.Source.Qualtrics.Type.ValueString())
+			*typeVar59 = shared.SourceQualtricsUpdateType(r.Source.Qualtrics.Type.ValueString())
 		} else {
-			typeVar58 = nil
+			typeVar59 = nil
 		}
 		sourceQualtricsUpdate = &shared.SourceQualtricsUpdate{
-			LatencyThreshold: latencyThreshold58,
-			Type:             typeVar58,
+			LatencyThreshold: latencyThreshold59,
+			Type:             typeVar59,
 		}
 	}
 	if sourceQualtricsUpdate != nil {
@@ -6719,21 +6773,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceQuoraAdsUpdate *shared.SourceQuoraAdsUpdate
 	if r.Source.QuoraAds != nil {
-		latencyThreshold59 := new(int64)
+		latencyThreshold60 := new(int64)
 		if !r.Source.QuoraAds.LatencyThreshold.IsUnknown() && !r.Source.QuoraAds.LatencyThreshold.IsNull() {
-			*latencyThreshold59 = r.Source.QuoraAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold60 = r.Source.QuoraAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold59 = nil
+			latencyThreshold60 = nil
 		}
-		typeVar59 := new(shared.SourceQuoraAdsUpdateType)
+		typeVar60 := new(shared.SourceQuoraAdsUpdateType)
 		if !r.Source.QuoraAds.Type.IsUnknown() && !r.Source.QuoraAds.Type.IsNull() {
-			*typeVar59 = shared.SourceQuoraAdsUpdateType(r.Source.QuoraAds.Type.ValueString())
+			*typeVar60 = shared.SourceQuoraAdsUpdateType(r.Source.QuoraAds.Type.ValueString())
 		} else {
-			typeVar59 = nil
+			typeVar60 = nil
 		}
 		sourceQuoraAdsUpdate = &shared.SourceQuoraAdsUpdate{
-			LatencyThreshold: latencyThreshold59,
-			Type:             typeVar59,
+			LatencyThreshold: latencyThreshold60,
+			Type:             typeVar60,
 		}
 	}
 	if sourceQuoraAdsUpdate != nil {
@@ -6743,21 +6797,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceRaveMedidataUpdate *shared.SourceRaveMedidataUpdate
 	if r.Source.RaveMedidata != nil {
-		latencyThreshold60 := new(int64)
+		latencyThreshold61 := new(int64)
 		if !r.Source.RaveMedidata.LatencyThreshold.IsUnknown() && !r.Source.RaveMedidata.LatencyThreshold.IsNull() {
-			*latencyThreshold60 = r.Source.RaveMedidata.LatencyThreshold.ValueInt64()
+			*latencyThreshold61 = r.Source.RaveMedidata.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold60 = nil
+			latencyThreshold61 = nil
 		}
-		typeVar60 := new(shared.SourceRaveMedidataUpdateType)
+		typeVar61 := new(shared.SourceRaveMedidataUpdateType)
 		if !r.Source.RaveMedidata.Type.IsUnknown() && !r.Source.RaveMedidata.Type.IsNull() {
-			*typeVar60 = shared.SourceRaveMedidataUpdateType(r.Source.RaveMedidata.Type.ValueString())
+			*typeVar61 = shared.SourceRaveMedidataUpdateType(r.Source.RaveMedidata.Type.ValueString())
 		} else {
-			typeVar60 = nil
+			typeVar61 = nil
 		}
 		sourceRaveMedidataUpdate = &shared.SourceRaveMedidataUpdate{
-			LatencyThreshold: latencyThreshold60,
-			Type:             typeVar60,
+			LatencyThreshold: latencyThreshold61,
+			Type:             typeVar61,
 		}
 	}
 	if sourceRaveMedidataUpdate != nil {
@@ -6767,21 +6821,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceRecurlyUpdate *shared.SourceRecurlyUpdate
 	if r.Source.Recurly != nil {
-		latencyThreshold61 := new(int64)
+		latencyThreshold62 := new(int64)
 		if !r.Source.Recurly.LatencyThreshold.IsUnknown() && !r.Source.Recurly.LatencyThreshold.IsNull() {
-			*latencyThreshold61 = r.Source.Recurly.LatencyThreshold.ValueInt64()
+			*latencyThreshold62 = r.Source.Recurly.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold61 = nil
+			latencyThreshold62 = nil
 		}
-		typeVar61 := new(shared.SourceRecurlyUpdateType)
+		typeVar62 := new(shared.SourceRecurlyUpdateType)
 		if !r.Source.Recurly.Type.IsUnknown() && !r.Source.Recurly.Type.IsNull() {
-			*typeVar61 = shared.SourceRecurlyUpdateType(r.Source.Recurly.Type.ValueString())
+			*typeVar62 = shared.SourceRecurlyUpdateType(r.Source.Recurly.Type.ValueString())
 		} else {
-			typeVar61 = nil
+			typeVar62 = nil
 		}
 		sourceRecurlyUpdate = &shared.SourceRecurlyUpdate{
-			LatencyThreshold: latencyThreshold61,
-			Type:             typeVar61,
+			LatencyThreshold: latencyThreshold62,
+			Type:             typeVar62,
 		}
 	}
 	if sourceRecurlyUpdate != nil {
@@ -6791,21 +6845,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceRedditAdsUpdate *shared.SourceRedditAdsUpdate
 	if r.Source.RedditAds != nil {
-		latencyThreshold62 := new(int64)
+		latencyThreshold63 := new(int64)
 		if !r.Source.RedditAds.LatencyThreshold.IsUnknown() && !r.Source.RedditAds.LatencyThreshold.IsNull() {
-			*latencyThreshold62 = r.Source.RedditAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold63 = r.Source.RedditAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold62 = nil
+			latencyThreshold63 = nil
 		}
-		typeVar62 := new(shared.SourceRedditAdsUpdateType)
+		typeVar63 := new(shared.SourceRedditAdsUpdateType)
 		if !r.Source.RedditAds.Type.IsUnknown() && !r.Source.RedditAds.Type.IsNull() {
-			*typeVar62 = shared.SourceRedditAdsUpdateType(r.Source.RedditAds.Type.ValueString())
+			*typeVar63 = shared.SourceRedditAdsUpdateType(r.Source.RedditAds.Type.ValueString())
 		} else {
-			typeVar62 = nil
+			typeVar63 = nil
 		}
 		sourceRedditAdsUpdate = &shared.SourceRedditAdsUpdate{
-			LatencyThreshold: latencyThreshold62,
-			Type:             typeVar62,
+			LatencyThreshold: latencyThreshold63,
+			Type:             typeVar63,
 		}
 	}
 	if sourceRedditAdsUpdate != nil {
@@ -6815,21 +6869,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceRedshiftUpdate *shared.SourceRedshiftUpdate
 	if r.Source.Redshift != nil {
-		latencyThreshold63 := new(int64)
+		latencyThreshold64 := new(int64)
 		if !r.Source.Redshift.LatencyThreshold.IsUnknown() && !r.Source.Redshift.LatencyThreshold.IsNull() {
-			*latencyThreshold63 = r.Source.Redshift.LatencyThreshold.ValueInt64()
+			*latencyThreshold64 = r.Source.Redshift.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold63 = nil
+			latencyThreshold64 = nil
 		}
-		typeVar63 := new(shared.SourceRedshiftUpdateType)
+		typeVar64 := new(shared.SourceRedshiftUpdateType)
 		if !r.Source.Redshift.Type.IsUnknown() && !r.Source.Redshift.Type.IsNull() {
-			*typeVar63 = shared.SourceRedshiftUpdateType(r.Source.Redshift.Type.ValueString())
+			*typeVar64 = shared.SourceRedshiftUpdateType(r.Source.Redshift.Type.ValueString())
 		} else {
-			typeVar63 = nil
+			typeVar64 = nil
 		}
 		sourceRedshiftUpdate = &shared.SourceRedshiftUpdate{
-			LatencyThreshold: latencyThreshold63,
-			Type:             typeVar63,
+			LatencyThreshold: latencyThreshold64,
+			Type:             typeVar64,
 		}
 	}
 	if sourceRedshiftUpdate != nil {
@@ -6839,21 +6893,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceRedshiftShardedUpdate *shared.SourceRedshiftShardedUpdate
 	if r.Source.RedshiftSharded != nil {
-		latencyThreshold64 := new(int64)
+		latencyThreshold65 := new(int64)
 		if !r.Source.RedshiftSharded.LatencyThreshold.IsUnknown() && !r.Source.RedshiftSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold64 = r.Source.RedshiftSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold65 = r.Source.RedshiftSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold64 = nil
+			latencyThreshold65 = nil
 		}
-		typeVar64 := new(shared.SourceRedshiftShardedUpdateType)
+		typeVar65 := new(shared.SourceRedshiftShardedUpdateType)
 		if !r.Source.RedshiftSharded.Type.IsUnknown() && !r.Source.RedshiftSharded.Type.IsNull() {
-			*typeVar64 = shared.SourceRedshiftShardedUpdateType(r.Source.RedshiftSharded.Type.ValueString())
+			*typeVar65 = shared.SourceRedshiftShardedUpdateType(r.Source.RedshiftSharded.Type.ValueString())
 		} else {
-			typeVar64 = nil
+			typeVar65 = nil
 		}
 		sourceRedshiftShardedUpdate = &shared.SourceRedshiftShardedUpdate{
-			LatencyThreshold: latencyThreshold64,
-			Type:             typeVar64,
+			LatencyThreshold: latencyThreshold65,
+			Type:             typeVar65,
 		}
 	}
 	if sourceRedshiftShardedUpdate != nil {
@@ -6863,21 +6917,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceS3InputUpdate *shared.SourceS3InputUpdate
 	if r.Source.S3Input != nil {
-		latencyThreshold65 := new(int64)
+		latencyThreshold66 := new(int64)
 		if !r.Source.S3Input.LatencyThreshold.IsUnknown() && !r.Source.S3Input.LatencyThreshold.IsNull() {
-			*latencyThreshold65 = r.Source.S3Input.LatencyThreshold.ValueInt64()
+			*latencyThreshold66 = r.Source.S3Input.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold65 = nil
+			latencyThreshold66 = nil
 		}
-		typeVar65 := new(shared.SourceS3InputUpdateType)
+		typeVar66 := new(shared.SourceS3InputUpdateType)
 		if !r.Source.S3Input.Type.IsUnknown() && !r.Source.S3Input.Type.IsNull() {
-			*typeVar65 = shared.SourceS3InputUpdateType(r.Source.S3Input.Type.ValueString())
+			*typeVar66 = shared.SourceS3InputUpdateType(r.Source.S3Input.Type.ValueString())
 		} else {
-			typeVar65 = nil
+			typeVar66 = nil
 		}
 		sourceS3InputUpdate = &shared.SourceS3InputUpdate{
-			LatencyThreshold: latencyThreshold65,
-			Type:             typeVar65,
+			LatencyThreshold: latencyThreshold66,
+			Type:             typeVar66,
 		}
 	}
 	if sourceS3InputUpdate != nil {
@@ -6887,21 +6941,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceS3LegacyUpdate *shared.SourceS3LegacyUpdate
 	if r.Source.S3Legacy != nil {
-		latencyThreshold66 := new(int64)
+		latencyThreshold67 := new(int64)
 		if !r.Source.S3Legacy.LatencyThreshold.IsUnknown() && !r.Source.S3Legacy.LatencyThreshold.IsNull() {
-			*latencyThreshold66 = r.Source.S3Legacy.LatencyThreshold.ValueInt64()
+			*latencyThreshold67 = r.Source.S3Legacy.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold66 = nil
+			latencyThreshold67 = nil
 		}
-		typeVar66 := new(shared.SourceS3LegacyUpdateType)
+		typeVar67 := new(shared.SourceS3LegacyUpdateType)
 		if !r.Source.S3Legacy.Type.IsUnknown() && !r.Source.S3Legacy.Type.IsNull() {
-			*typeVar66 = shared.SourceS3LegacyUpdateType(r.Source.S3Legacy.Type.ValueString())
+			*typeVar67 = shared.SourceS3LegacyUpdateType(r.Source.S3Legacy.Type.ValueString())
 		} else {
-			typeVar66 = nil
+			typeVar67 = nil
 		}
 		sourceS3LegacyUpdate = &shared.SourceS3LegacyUpdate{
-			LatencyThreshold: latencyThreshold66,
-			Type:             typeVar66,
+			LatencyThreshold: latencyThreshold67,
+			Type:             typeVar67,
 		}
 	}
 	if sourceS3LegacyUpdate != nil {
@@ -6911,21 +6965,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSalesforceUpdate *shared.SourceSalesforceUpdate
 	if r.Source.Salesforce != nil {
-		latencyThreshold67 := new(int64)
+		latencyThreshold68 := new(int64)
 		if !r.Source.Salesforce.LatencyThreshold.IsUnknown() && !r.Source.Salesforce.LatencyThreshold.IsNull() {
-			*latencyThreshold67 = r.Source.Salesforce.LatencyThreshold.ValueInt64()
+			*latencyThreshold68 = r.Source.Salesforce.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold67 = nil
+			latencyThreshold68 = nil
 		}
-		typeVar67 := new(shared.SourceSalesforceUpdateType)
+		typeVar68 := new(shared.SourceSalesforceUpdateType)
 		if !r.Source.Salesforce.Type.IsUnknown() && !r.Source.Salesforce.Type.IsNull() {
-			*typeVar67 = shared.SourceSalesforceUpdateType(r.Source.Salesforce.Type.ValueString())
+			*typeVar68 = shared.SourceSalesforceUpdateType(r.Source.Salesforce.Type.ValueString())
 		} else {
-			typeVar67 = nil
+			typeVar68 = nil
 		}
 		sourceSalesforceUpdate = &shared.SourceSalesforceUpdate{
-			LatencyThreshold: latencyThreshold67,
-			Type:             typeVar67,
+			LatencyThreshold: latencyThreshold68,
+			Type:             typeVar68,
 		}
 	}
 	if sourceSalesforceUpdate != nil {
@@ -6935,21 +6989,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSalesforceMarketingCloudUpdate *shared.SourceSalesforceMarketingCloudUpdate
 	if r.Source.SalesforceMarketingCloud != nil {
-		latencyThreshold68 := new(int64)
+		latencyThreshold69 := new(int64)
 		if !r.Source.SalesforceMarketingCloud.LatencyThreshold.IsUnknown() && !r.Source.SalesforceMarketingCloud.LatencyThreshold.IsNull() {
-			*latencyThreshold68 = r.Source.SalesforceMarketingCloud.LatencyThreshold.ValueInt64()
+			*latencyThreshold69 = r.Source.SalesforceMarketingCloud.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold68 = nil
+			latencyThreshold69 = nil
 		}
-		typeVar68 := new(shared.SourceSalesforceMarketingCloudUpdateType)
+		typeVar69 := new(shared.SourceSalesforceMarketingCloudUpdateType)
 		if !r.Source.SalesforceMarketingCloud.Type.IsUnknown() && !r.Source.SalesforceMarketingCloud.Type.IsNull() {
-			*typeVar68 = shared.SourceSalesforceMarketingCloudUpdateType(r.Source.SalesforceMarketingCloud.Type.ValueString())
+			*typeVar69 = shared.SourceSalesforceMarketingCloudUpdateType(r.Source.SalesforceMarketingCloud.Type.ValueString())
 		} else {
-			typeVar68 = nil
+			typeVar69 = nil
 		}
 		sourceSalesforceMarketingCloudUpdate = &shared.SourceSalesforceMarketingCloudUpdate{
-			LatencyThreshold: latencyThreshold68,
-			Type:             typeVar68,
+			LatencyThreshold: latencyThreshold69,
+			Type:             typeVar69,
 		}
 	}
 	if sourceSalesforceMarketingCloudUpdate != nil {
@@ -6959,21 +7013,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSapConcurUpdate *shared.SourceSapConcurUpdate
 	if r.Source.SapConcur != nil {
-		latencyThreshold69 := new(int64)
+		latencyThreshold70 := new(int64)
 		if !r.Source.SapConcur.LatencyThreshold.IsUnknown() && !r.Source.SapConcur.LatencyThreshold.IsNull() {
-			*latencyThreshold69 = r.Source.SapConcur.LatencyThreshold.ValueInt64()
+			*latencyThreshold70 = r.Source.SapConcur.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold69 = nil
+			latencyThreshold70 = nil
 		}
-		typeVar69 := new(shared.SourceSapConcurUpdateType)
+		typeVar70 := new(shared.SourceSapConcurUpdateType)
 		if !r.Source.SapConcur.Type.IsUnknown() && !r.Source.SapConcur.Type.IsNull() {
-			*typeVar69 = shared.SourceSapConcurUpdateType(r.Source.SapConcur.Type.ValueString())
+			*typeVar70 = shared.SourceSapConcurUpdateType(r.Source.SapConcur.Type.ValueString())
 		} else {
-			typeVar69 = nil
+			typeVar70 = nil
 		}
 		sourceSapConcurUpdate = &shared.SourceSapConcurUpdate{
-			LatencyThreshold: latencyThreshold69,
-			Type:             typeVar69,
+			LatencyThreshold: latencyThreshold70,
+			Type:             typeVar70,
 		}
 	}
 	if sourceSapConcurUpdate != nil {
@@ -6983,21 +7037,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSapHanaUpdate *shared.SourceSapHanaUpdate
 	if r.Source.SapHana != nil {
-		latencyThreshold70 := new(int64)
+		latencyThreshold71 := new(int64)
 		if !r.Source.SapHana.LatencyThreshold.IsUnknown() && !r.Source.SapHana.LatencyThreshold.IsNull() {
-			*latencyThreshold70 = r.Source.SapHana.LatencyThreshold.ValueInt64()
+			*latencyThreshold71 = r.Source.SapHana.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold70 = nil
+			latencyThreshold71 = nil
 		}
-		typeVar70 := new(shared.SourceSapHanaUpdateType)
+		typeVar71 := new(shared.SourceSapHanaUpdateType)
 		if !r.Source.SapHana.Type.IsUnknown() && !r.Source.SapHana.Type.IsNull() {
-			*typeVar70 = shared.SourceSapHanaUpdateType(r.Source.SapHana.Type.ValueString())
+			*typeVar71 = shared.SourceSapHanaUpdateType(r.Source.SapHana.Type.ValueString())
 		} else {
-			typeVar70 = nil
+			typeVar71 = nil
 		}
 		sourceSapHanaUpdate = &shared.SourceSapHanaUpdate{
-			LatencyThreshold: latencyThreshold70,
-			Type:             typeVar70,
+			LatencyThreshold: latencyThreshold71,
+			Type:             typeVar71,
 		}
 	}
 	if sourceSapHanaUpdate != nil {
@@ -7007,21 +7061,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSapHanaShardedUpdate *shared.SourceSapHanaShardedUpdate
 	if r.Source.SapHanaSharded != nil {
-		latencyThreshold71 := new(int64)
+		latencyThreshold72 := new(int64)
 		if !r.Source.SapHanaSharded.LatencyThreshold.IsUnknown() && !r.Source.SapHanaSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold71 = r.Source.SapHanaSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold72 = r.Source.SapHanaSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold71 = nil
+			latencyThreshold72 = nil
 		}
-		typeVar71 := new(shared.SourceSapHanaShardedUpdateType)
+		typeVar72 := new(shared.SourceSapHanaShardedUpdateType)
 		if !r.Source.SapHanaSharded.Type.IsUnknown() && !r.Source.SapHanaSharded.Type.IsNull() {
-			*typeVar71 = shared.SourceSapHanaShardedUpdateType(r.Source.SapHanaSharded.Type.ValueString())
+			*typeVar72 = shared.SourceSapHanaShardedUpdateType(r.Source.SapHanaSharded.Type.ValueString())
 		} else {
-			typeVar71 = nil
+			typeVar72 = nil
 		}
 		sourceSapHanaShardedUpdate = &shared.SourceSapHanaShardedUpdate{
-			LatencyThreshold: latencyThreshold71,
-			Type:             typeVar71,
+			LatencyThreshold: latencyThreshold72,
+			Type:             typeVar72,
 		}
 	}
 	if sourceSapHanaShardedUpdate != nil {
@@ -7031,21 +7085,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSapOdataUpdate *shared.SourceSapOdataUpdate
 	if r.Source.SapOdata != nil {
-		latencyThreshold72 := new(int64)
+		latencyThreshold73 := new(int64)
 		if !r.Source.SapOdata.LatencyThreshold.IsUnknown() && !r.Source.SapOdata.LatencyThreshold.IsNull() {
-			*latencyThreshold72 = r.Source.SapOdata.LatencyThreshold.ValueInt64()
+			*latencyThreshold73 = r.Source.SapOdata.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold72 = nil
+			latencyThreshold73 = nil
 		}
-		typeVar72 := new(shared.SourceSapOdataUpdateType)
+		typeVar73 := new(shared.SourceSapOdataUpdateType)
 		if !r.Source.SapOdata.Type.IsUnknown() && !r.Source.SapOdata.Type.IsNull() {
-			*typeVar72 = shared.SourceSapOdataUpdateType(r.Source.SapOdata.Type.ValueString())
+			*typeVar73 = shared.SourceSapOdataUpdateType(r.Source.SapOdata.Type.ValueString())
 		} else {
-			typeVar72 = nil
+			typeVar73 = nil
 		}
 		sourceSapOdataUpdate = &shared.SourceSapOdataUpdate{
-			LatencyThreshold: latencyThreshold72,
-			Type:             typeVar72,
+			LatencyThreshold: latencyThreshold73,
+			Type:             typeVar73,
 		}
 	}
 	if sourceSapOdataUpdate != nil {
@@ -7055,21 +7109,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSeismicUpdate *shared.SourceSeismicUpdate
 	if r.Source.Seismic != nil {
-		latencyThreshold73 := new(int64)
+		latencyThreshold74 := new(int64)
 		if !r.Source.Seismic.LatencyThreshold.IsUnknown() && !r.Source.Seismic.LatencyThreshold.IsNull() {
-			*latencyThreshold73 = r.Source.Seismic.LatencyThreshold.ValueInt64()
+			*latencyThreshold74 = r.Source.Seismic.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold73 = nil
+			latencyThreshold74 = nil
 		}
-		typeVar73 := new(shared.SourceSeismicUpdateType)
+		typeVar74 := new(shared.SourceSeismicUpdateType)
 		if !r.Source.Seismic.Type.IsUnknown() && !r.Source.Seismic.Type.IsNull() {
-			*typeVar73 = shared.SourceSeismicUpdateType(r.Source.Seismic.Type.ValueString())
+			*typeVar74 = shared.SourceSeismicUpdateType(r.Source.Seismic.Type.ValueString())
 		} else {
-			typeVar73 = nil
+			typeVar74 = nil
 		}
 		sourceSeismicUpdate = &shared.SourceSeismicUpdate{
-			LatencyThreshold: latencyThreshold73,
-			Type:             typeVar73,
+			LatencyThreshold: latencyThreshold74,
+			Type:             typeVar74,
 		}
 	}
 	if sourceSeismicUpdate != nil {
@@ -7079,21 +7133,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceServiceNowUpdate *shared.SourceServiceNowUpdate
 	if r.Source.ServiceNow != nil {
-		latencyThreshold74 := new(int64)
+		latencyThreshold75 := new(int64)
 		if !r.Source.ServiceNow.LatencyThreshold.IsUnknown() && !r.Source.ServiceNow.LatencyThreshold.IsNull() {
-			*latencyThreshold74 = r.Source.ServiceNow.LatencyThreshold.ValueInt64()
+			*latencyThreshold75 = r.Source.ServiceNow.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold74 = nil
+			latencyThreshold75 = nil
 		}
-		typeVar74 := new(shared.SourceServiceNowUpdateType)
+		typeVar75 := new(shared.SourceServiceNowUpdateType)
 		if !r.Source.ServiceNow.Type.IsUnknown() && !r.Source.ServiceNow.Type.IsNull() {
-			*typeVar74 = shared.SourceServiceNowUpdateType(r.Source.ServiceNow.Type.ValueString())
+			*typeVar75 = shared.SourceServiceNowUpdateType(r.Source.ServiceNow.Type.ValueString())
 		} else {
-			typeVar74 = nil
+			typeVar75 = nil
 		}
 		sourceServiceNowUpdate = &shared.SourceServiceNowUpdate{
-			LatencyThreshold: latencyThreshold74,
-			Type:             typeVar74,
+			LatencyThreshold: latencyThreshold75,
+			Type:             typeVar75,
 		}
 	}
 	if sourceServiceNowUpdate != nil {
@@ -7103,21 +7157,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSftpUpdate *shared.SourceSftpUpdate
 	if r.Source.Sftp != nil {
-		latencyThreshold75 := new(int64)
+		latencyThreshold76 := new(int64)
 		if !r.Source.Sftp.LatencyThreshold.IsUnknown() && !r.Source.Sftp.LatencyThreshold.IsNull() {
-			*latencyThreshold75 = r.Source.Sftp.LatencyThreshold.ValueInt64()
+			*latencyThreshold76 = r.Source.Sftp.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold75 = nil
+			latencyThreshold76 = nil
 		}
-		typeVar75 := new(shared.SourceSftpUpdateType)
+		typeVar76 := new(shared.SourceSftpUpdateType)
 		if !r.Source.Sftp.Type.IsUnknown() && !r.Source.Sftp.Type.IsNull() {
-			*typeVar75 = shared.SourceSftpUpdateType(r.Source.Sftp.Type.ValueString())
+			*typeVar76 = shared.SourceSftpUpdateType(r.Source.Sftp.Type.ValueString())
 		} else {
-			typeVar75 = nil
+			typeVar76 = nil
 		}
 		sourceSftpUpdate = &shared.SourceSftpUpdate{
-			LatencyThreshold: latencyThreshold75,
-			Type:             typeVar75,
+			LatencyThreshold: latencyThreshold76,
+			Type:             typeVar76,
 		}
 	}
 	if sourceSftpUpdate != nil {
@@ -7127,21 +7181,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceShopifyUpdate *shared.SourceShopifyUpdate
 	if r.Source.Shopify != nil {
-		latencyThreshold76 := new(int64)
+		latencyThreshold77 := new(int64)
 		if !r.Source.Shopify.LatencyThreshold.IsUnknown() && !r.Source.Shopify.LatencyThreshold.IsNull() {
-			*latencyThreshold76 = r.Source.Shopify.LatencyThreshold.ValueInt64()
+			*latencyThreshold77 = r.Source.Shopify.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold76 = nil
+			latencyThreshold77 = nil
 		}
-		typeVar76 := new(shared.SourceShopifyUpdateType)
+		typeVar77 := new(shared.SourceShopifyUpdateType)
 		if !r.Source.Shopify.Type.IsUnknown() && !r.Source.Shopify.Type.IsNull() {
-			*typeVar76 = shared.SourceShopifyUpdateType(r.Source.Shopify.Type.ValueString())
+			*typeVar77 = shared.SourceShopifyUpdateType(r.Source.Shopify.Type.ValueString())
 		} else {
-			typeVar76 = nil
+			typeVar77 = nil
 		}
 		sourceShopifyUpdate = &shared.SourceShopifyUpdate{
-			LatencyThreshold: latencyThreshold76,
-			Type:             typeVar76,
+			LatencyThreshold: latencyThreshold77,
+			Type:             typeVar77,
 		}
 	}
 	if sourceShopifyUpdate != nil {
@@ -7151,21 +7205,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSkywardUpdate *shared.SourceSkywardUpdate
 	if r.Source.Skyward != nil {
-		latencyThreshold77 := new(int64)
+		latencyThreshold78 := new(int64)
 		if !r.Source.Skyward.LatencyThreshold.IsUnknown() && !r.Source.Skyward.LatencyThreshold.IsNull() {
-			*latencyThreshold77 = r.Source.Skyward.LatencyThreshold.ValueInt64()
+			*latencyThreshold78 = r.Source.Skyward.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold77 = nil
+			latencyThreshold78 = nil
 		}
-		typeVar77 := new(shared.SourceSkywardUpdateType)
+		typeVar78 := new(shared.SourceSkywardUpdateType)
 		if !r.Source.Skyward.Type.IsUnknown() && !r.Source.Skyward.Type.IsNull() {
-			*typeVar77 = shared.SourceSkywardUpdateType(r.Source.Skyward.Type.ValueString())
+			*typeVar78 = shared.SourceSkywardUpdateType(r.Source.Skyward.Type.ValueString())
 		} else {
-			typeVar77 = nil
+			typeVar78 = nil
 		}
 		sourceSkywardUpdate = &shared.SourceSkywardUpdate{
-			LatencyThreshold: latencyThreshold77,
-			Type:             typeVar77,
+			LatencyThreshold: latencyThreshold78,
+			Type:             typeVar78,
 		}
 	}
 	if sourceSkywardUpdate != nil {
@@ -7175,21 +7229,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSnapchatAdsUpdate *shared.SourceSnapchatAdsUpdate
 	if r.Source.SnapchatAds != nil {
-		latencyThreshold78 := new(int64)
+		latencyThreshold79 := new(int64)
 		if !r.Source.SnapchatAds.LatencyThreshold.IsUnknown() && !r.Source.SnapchatAds.LatencyThreshold.IsNull() {
-			*latencyThreshold78 = r.Source.SnapchatAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold79 = r.Source.SnapchatAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold78 = nil
+			latencyThreshold79 = nil
 		}
-		typeVar78 := new(shared.SourceSnapchatAdsUpdateType)
+		typeVar79 := new(shared.SourceSnapchatAdsUpdateType)
 		if !r.Source.SnapchatAds.Type.IsUnknown() && !r.Source.SnapchatAds.Type.IsNull() {
-			*typeVar78 = shared.SourceSnapchatAdsUpdateType(r.Source.SnapchatAds.Type.ValueString())
+			*typeVar79 = shared.SourceSnapchatAdsUpdateType(r.Source.SnapchatAds.Type.ValueString())
 		} else {
-			typeVar78 = nil
+			typeVar79 = nil
 		}
 		sourceSnapchatAdsUpdate = &shared.SourceSnapchatAdsUpdate{
-			LatencyThreshold: latencyThreshold78,
-			Type:             typeVar78,
+			LatencyThreshold: latencyThreshold79,
+			Type:             typeVar79,
 		}
 	}
 	if sourceSnapchatAdsUpdate != nil {
@@ -7199,21 +7253,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSnowflakeUpdate *shared.SourceSnowflakeUpdate
 	if r.Source.Snowflake != nil {
-		latencyThreshold79 := new(int64)
+		latencyThreshold80 := new(int64)
 		if !r.Source.Snowflake.LatencyThreshold.IsUnknown() && !r.Source.Snowflake.LatencyThreshold.IsNull() {
-			*latencyThreshold79 = r.Source.Snowflake.LatencyThreshold.ValueInt64()
+			*latencyThreshold80 = r.Source.Snowflake.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold79 = nil
+			latencyThreshold80 = nil
 		}
-		typeVar79 := new(shared.SourceSnowflakeUpdateType)
+		typeVar80 := new(shared.SourceSnowflakeUpdateType)
 		if !r.Source.Snowflake.Type.IsUnknown() && !r.Source.Snowflake.Type.IsNull() {
-			*typeVar79 = shared.SourceSnowflakeUpdateType(r.Source.Snowflake.Type.ValueString())
+			*typeVar80 = shared.SourceSnowflakeUpdateType(r.Source.Snowflake.Type.ValueString())
 		} else {
-			typeVar79 = nil
+			typeVar80 = nil
 		}
 		sourceSnowflakeUpdate = &shared.SourceSnowflakeUpdate{
-			LatencyThreshold: latencyThreshold79,
-			Type:             typeVar79,
+			LatencyThreshold: latencyThreshold80,
+			Type:             typeVar80,
 		}
 	}
 	if sourceSnowflakeUpdate != nil {
@@ -7223,21 +7277,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSnowflakeShardedUpdate *shared.SourceSnowflakeShardedUpdate
 	if r.Source.SnowflakeSharded != nil {
-		latencyThreshold80 := new(int64)
+		latencyThreshold81 := new(int64)
 		if !r.Source.SnowflakeSharded.LatencyThreshold.IsUnknown() && !r.Source.SnowflakeSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold80 = r.Source.SnowflakeSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold81 = r.Source.SnowflakeSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold80 = nil
+			latencyThreshold81 = nil
 		}
-		typeVar80 := new(shared.SourceSnowflakeShardedUpdateType)
+		typeVar81 := new(shared.SourceSnowflakeShardedUpdateType)
 		if !r.Source.SnowflakeSharded.Type.IsUnknown() && !r.Source.SnowflakeSharded.Type.IsNull() {
-			*typeVar80 = shared.SourceSnowflakeShardedUpdateType(r.Source.SnowflakeSharded.Type.ValueString())
+			*typeVar81 = shared.SourceSnowflakeShardedUpdateType(r.Source.SnowflakeSharded.Type.ValueString())
 		} else {
-			typeVar80 = nil
+			typeVar81 = nil
 		}
 		sourceSnowflakeShardedUpdate = &shared.SourceSnowflakeShardedUpdate{
-			LatencyThreshold: latencyThreshold80,
-			Type:             typeVar80,
+			LatencyThreshold: latencyThreshold81,
+			Type:             typeVar81,
 		}
 	}
 	if sourceSnowflakeShardedUpdate != nil {
@@ -7247,21 +7301,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSQLServerUpdate *shared.SourceSQLServerUpdate
 	if r.Source.SQLServer != nil {
-		latencyThreshold81 := new(int64)
+		latencyThreshold82 := new(int64)
 		if !r.Source.SQLServer.LatencyThreshold.IsUnknown() && !r.Source.SQLServer.LatencyThreshold.IsNull() {
-			*latencyThreshold81 = r.Source.SQLServer.LatencyThreshold.ValueInt64()
+			*latencyThreshold82 = r.Source.SQLServer.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold81 = nil
+			latencyThreshold82 = nil
 		}
-		typeVar81 := new(shared.SourceSQLServerUpdateType)
+		typeVar82 := new(shared.SourceSQLServerUpdateType)
 		if !r.Source.SQLServer.Type.IsUnknown() && !r.Source.SQLServer.Type.IsNull() {
-			*typeVar81 = shared.SourceSQLServerUpdateType(r.Source.SQLServer.Type.ValueString())
+			*typeVar82 = shared.SourceSQLServerUpdateType(r.Source.SQLServer.Type.ValueString())
 		} else {
-			typeVar81 = nil
+			typeVar82 = nil
 		}
 		sourceSQLServerUpdate = &shared.SourceSQLServerUpdate{
-			LatencyThreshold: latencyThreshold81,
-			Type:             typeVar81,
+			LatencyThreshold: latencyThreshold82,
+			Type:             typeVar82,
 		}
 	}
 	if sourceSQLServerUpdate != nil {
@@ -7271,21 +7325,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSQLServerShardedUpdate *shared.SourceSQLServerShardedUpdate
 	if r.Source.SQLServerSharded != nil {
-		latencyThreshold82 := new(int64)
+		latencyThreshold83 := new(int64)
 		if !r.Source.SQLServerSharded.LatencyThreshold.IsUnknown() && !r.Source.SQLServerSharded.LatencyThreshold.IsNull() {
-			*latencyThreshold82 = r.Source.SQLServerSharded.LatencyThreshold.ValueInt64()
+			*latencyThreshold83 = r.Source.SQLServerSharded.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold82 = nil
+			latencyThreshold83 = nil
 		}
-		typeVar82 := new(shared.SourceSQLServerShardedUpdateType)
+		typeVar83 := new(shared.SourceSQLServerShardedUpdateType)
 		if !r.Source.SQLServerSharded.Type.IsUnknown() && !r.Source.SQLServerSharded.Type.IsNull() {
-			*typeVar82 = shared.SourceSQLServerShardedUpdateType(r.Source.SQLServerSharded.Type.ValueString())
+			*typeVar83 = shared.SourceSQLServerShardedUpdateType(r.Source.SQLServerSharded.Type.ValueString())
 		} else {
-			typeVar82 = nil
+			typeVar83 = nil
 		}
 		sourceSQLServerShardedUpdate = &shared.SourceSQLServerShardedUpdate{
-			LatencyThreshold: latencyThreshold82,
-			Type:             typeVar82,
+			LatencyThreshold: latencyThreshold83,
+			Type:             typeVar83,
 		}
 	}
 	if sourceSQLServerShardedUpdate != nil {
@@ -7295,21 +7349,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSqsUpdate *shared.SourceSqsUpdate
 	if r.Source.Sqs != nil {
-		latencyThreshold83 := new(int64)
+		latencyThreshold84 := new(int64)
 		if !r.Source.Sqs.LatencyThreshold.IsUnknown() && !r.Source.Sqs.LatencyThreshold.IsNull() {
-			*latencyThreshold83 = r.Source.Sqs.LatencyThreshold.ValueInt64()
+			*latencyThreshold84 = r.Source.Sqs.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold83 = nil
+			latencyThreshold84 = nil
 		}
-		typeVar83 := new(shared.SourceSqsUpdateType)
+		typeVar84 := new(shared.SourceSqsUpdateType)
 		if !r.Source.Sqs.Type.IsUnknown() && !r.Source.Sqs.Type.IsNull() {
-			*typeVar83 = shared.SourceSqsUpdateType(r.Source.Sqs.Type.ValueString())
+			*typeVar84 = shared.SourceSqsUpdateType(r.Source.Sqs.Type.ValueString())
 		} else {
-			typeVar83 = nil
+			typeVar84 = nil
 		}
 		sourceSqsUpdate = &shared.SourceSqsUpdate{
-			LatencyThreshold: latencyThreshold83,
-			Type:             typeVar83,
+			LatencyThreshold: latencyThreshold84,
+			Type:             typeVar84,
 		}
 	}
 	if sourceSqsUpdate != nil {
@@ -7319,21 +7373,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSquareUpdate *shared.SourceSquareUpdate
 	if r.Source.Square != nil {
-		latencyThreshold84 := new(int64)
+		latencyThreshold85 := new(int64)
 		if !r.Source.Square.LatencyThreshold.IsUnknown() && !r.Source.Square.LatencyThreshold.IsNull() {
-			*latencyThreshold84 = r.Source.Square.LatencyThreshold.ValueInt64()
+			*latencyThreshold85 = r.Source.Square.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold84 = nil
+			latencyThreshold85 = nil
 		}
-		typeVar84 := new(shared.SourceSquareUpdateType)
+		typeVar85 := new(shared.SourceSquareUpdateType)
 		if !r.Source.Square.Type.IsUnknown() && !r.Source.Square.Type.IsNull() {
-			*typeVar84 = shared.SourceSquareUpdateType(r.Source.Square.Type.ValueString())
+			*typeVar85 = shared.SourceSquareUpdateType(r.Source.Square.Type.ValueString())
 		} else {
-			typeVar84 = nil
+			typeVar85 = nil
 		}
 		sourceSquareUpdate = &shared.SourceSquareUpdate{
-			LatencyThreshold: latencyThreshold84,
-			Type:             typeVar84,
+			LatencyThreshold: latencyThreshold85,
+			Type:             typeVar85,
 		}
 	}
 	if sourceSquareUpdate != nil {
@@ -7343,21 +7397,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceStreamingUpdate *shared.SourceStreamingUpdate
 	if r.Source.Streaming != nil {
-		latencyThreshold85 := new(int64)
+		latencyThreshold86 := new(int64)
 		if !r.Source.Streaming.LatencyThreshold.IsUnknown() && !r.Source.Streaming.LatencyThreshold.IsNull() {
-			*latencyThreshold85 = r.Source.Streaming.LatencyThreshold.ValueInt64()
+			*latencyThreshold86 = r.Source.Streaming.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold85 = nil
+			latencyThreshold86 = nil
 		}
-		typeVar85 := new(shared.SourceStreamingUpdateType)
+		typeVar86 := new(shared.SourceStreamingUpdateType)
 		if !r.Source.Streaming.Type.IsUnknown() && !r.Source.Streaming.Type.IsNull() {
-			*typeVar85 = shared.SourceStreamingUpdateType(r.Source.Streaming.Type.ValueString())
+			*typeVar86 = shared.SourceStreamingUpdateType(r.Source.Streaming.Type.ValueString())
 		} else {
-			typeVar85 = nil
+			typeVar86 = nil
 		}
 		sourceStreamingUpdate = &shared.SourceStreamingUpdate{
-			LatencyThreshold: latencyThreshold85,
-			Type:             typeVar85,
+			LatencyThreshold: latencyThreshold86,
+			Type:             typeVar86,
 		}
 	}
 	if sourceStreamingUpdate != nil {
@@ -7367,21 +7421,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceStripeUpdate *shared.SourceStripeUpdate
 	if r.Source.Stripe != nil {
-		latencyThreshold86 := new(int64)
+		latencyThreshold87 := new(int64)
 		if !r.Source.Stripe.LatencyThreshold.IsUnknown() && !r.Source.Stripe.LatencyThreshold.IsNull() {
-			*latencyThreshold86 = r.Source.Stripe.LatencyThreshold.ValueInt64()
+			*latencyThreshold87 = r.Source.Stripe.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold86 = nil
+			latencyThreshold87 = nil
 		}
-		typeVar86 := new(shared.SourceStripeUpdateType)
+		typeVar87 := new(shared.SourceStripeUpdateType)
 		if !r.Source.Stripe.Type.IsUnknown() && !r.Source.Stripe.Type.IsNull() {
-			*typeVar86 = shared.SourceStripeUpdateType(r.Source.Stripe.Type.ValueString())
+			*typeVar87 = shared.SourceStripeUpdateType(r.Source.Stripe.Type.ValueString())
 		} else {
-			typeVar86 = nil
+			typeVar87 = nil
 		}
 		sourceStripeUpdate = &shared.SourceStripeUpdate{
-			LatencyThreshold: latencyThreshold86,
-			Type:             typeVar86,
+			LatencyThreshold: latencyThreshold87,
+			Type:             typeVar87,
 		}
 	}
 	if sourceStripeUpdate != nil {
@@ -7391,21 +7445,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceSumtotalUpdate *shared.SourceSumtotalUpdate
 	if r.Source.Sumtotal != nil {
-		latencyThreshold87 := new(int64)
+		latencyThreshold88 := new(int64)
 		if !r.Source.Sumtotal.LatencyThreshold.IsUnknown() && !r.Source.Sumtotal.LatencyThreshold.IsNull() {
-			*latencyThreshold87 = r.Source.Sumtotal.LatencyThreshold.ValueInt64()
+			*latencyThreshold88 = r.Source.Sumtotal.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold87 = nil
+			latencyThreshold88 = nil
 		}
-		typeVar87 := new(shared.SourceSumtotalUpdateType)
+		typeVar88 := new(shared.SourceSumtotalUpdateType)
 		if !r.Source.Sumtotal.Type.IsUnknown() && !r.Source.Sumtotal.Type.IsNull() {
-			*typeVar87 = shared.SourceSumtotalUpdateType(r.Source.Sumtotal.Type.ValueString())
+			*typeVar88 = shared.SourceSumtotalUpdateType(r.Source.Sumtotal.Type.ValueString())
 		} else {
-			typeVar87 = nil
+			typeVar88 = nil
 		}
 		sourceSumtotalUpdate = &shared.SourceSumtotalUpdate{
-			LatencyThreshold: latencyThreshold87,
-			Type:             typeVar87,
+			LatencyThreshold: latencyThreshold88,
+			Type:             typeVar88,
 		}
 	}
 	if sourceSumtotalUpdate != nil {
@@ -7415,21 +7469,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceTheTradeDeskUpdate *shared.SourceTheTradeDeskUpdate
 	if r.Source.TheTradeDesk != nil {
-		latencyThreshold88 := new(int64)
+		latencyThreshold89 := new(int64)
 		if !r.Source.TheTradeDesk.LatencyThreshold.IsUnknown() && !r.Source.TheTradeDesk.LatencyThreshold.IsNull() {
-			*latencyThreshold88 = r.Source.TheTradeDesk.LatencyThreshold.ValueInt64()
+			*latencyThreshold89 = r.Source.TheTradeDesk.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold88 = nil
+			latencyThreshold89 = nil
 		}
-		typeVar88 := new(shared.SourceTheTradeDeskUpdateType)
+		typeVar89 := new(shared.SourceTheTradeDeskUpdateType)
 		if !r.Source.TheTradeDesk.Type.IsUnknown() && !r.Source.TheTradeDesk.Type.IsNull() {
-			*typeVar88 = shared.SourceTheTradeDeskUpdateType(r.Source.TheTradeDesk.Type.ValueString())
+			*typeVar89 = shared.SourceTheTradeDeskUpdateType(r.Source.TheTradeDesk.Type.ValueString())
 		} else {
-			typeVar88 = nil
+			typeVar89 = nil
 		}
 		sourceTheTradeDeskUpdate = &shared.SourceTheTradeDeskUpdate{
-			LatencyThreshold: latencyThreshold88,
-			Type:             typeVar88,
+			LatencyThreshold: latencyThreshold89,
+			Type:             typeVar89,
 		}
 	}
 	if sourceTheTradeDeskUpdate != nil {
@@ -7439,21 +7493,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceTikTokAdsUpdate *shared.SourceTikTokAdsUpdate
 	if r.Source.TikTokAds != nil {
-		latencyThreshold89 := new(int64)
+		latencyThreshold90 := new(int64)
 		if !r.Source.TikTokAds.LatencyThreshold.IsUnknown() && !r.Source.TikTokAds.LatencyThreshold.IsNull() {
-			*latencyThreshold89 = r.Source.TikTokAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold90 = r.Source.TikTokAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold89 = nil
+			latencyThreshold90 = nil
 		}
-		typeVar89 := new(shared.SourceTikTokAdsUpdateType)
+		typeVar90 := new(shared.SourceTikTokAdsUpdateType)
 		if !r.Source.TikTokAds.Type.IsUnknown() && !r.Source.TikTokAds.Type.IsNull() {
-			*typeVar89 = shared.SourceTikTokAdsUpdateType(r.Source.TikTokAds.Type.ValueString())
+			*typeVar90 = shared.SourceTikTokAdsUpdateType(r.Source.TikTokAds.Type.ValueString())
 		} else {
-			typeVar89 = nil
+			typeVar90 = nil
 		}
 		sourceTikTokAdsUpdate = &shared.SourceTikTokAdsUpdate{
-			LatencyThreshold: latencyThreshold89,
-			Type:             typeVar89,
+			LatencyThreshold: latencyThreshold90,
+			Type:             typeVar90,
 		}
 	}
 	if sourceTikTokAdsUpdate != nil {
@@ -7463,21 +7517,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceTwilioUpdate *shared.SourceTwilioUpdate
 	if r.Source.Twilio != nil {
-		latencyThreshold90 := new(int64)
+		latencyThreshold91 := new(int64)
 		if !r.Source.Twilio.LatencyThreshold.IsUnknown() && !r.Source.Twilio.LatencyThreshold.IsNull() {
-			*latencyThreshold90 = r.Source.Twilio.LatencyThreshold.ValueInt64()
+			*latencyThreshold91 = r.Source.Twilio.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold90 = nil
+			latencyThreshold91 = nil
 		}
-		typeVar90 := new(shared.SourceTwilioUpdateType)
+		typeVar91 := new(shared.SourceTwilioUpdateType)
 		if !r.Source.Twilio.Type.IsUnknown() && !r.Source.Twilio.Type.IsNull() {
-			*typeVar90 = shared.SourceTwilioUpdateType(r.Source.Twilio.Type.ValueString())
+			*typeVar91 = shared.SourceTwilioUpdateType(r.Source.Twilio.Type.ValueString())
 		} else {
-			typeVar90 = nil
+			typeVar91 = nil
 		}
 		sourceTwilioUpdate = &shared.SourceTwilioUpdate{
-			LatencyThreshold: latencyThreshold90,
-			Type:             typeVar90,
+			LatencyThreshold: latencyThreshold91,
+			Type:             typeVar91,
 		}
 	}
 	if sourceTwilioUpdate != nil {
@@ -7487,21 +7541,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceTwitterAdsUpdate *shared.SourceTwitterAdsUpdate
 	if r.Source.TwitterAds != nil {
-		latencyThreshold91 := new(int64)
+		latencyThreshold92 := new(int64)
 		if !r.Source.TwitterAds.LatencyThreshold.IsUnknown() && !r.Source.TwitterAds.LatencyThreshold.IsNull() {
-			*latencyThreshold91 = r.Source.TwitterAds.LatencyThreshold.ValueInt64()
+			*latencyThreshold92 = r.Source.TwitterAds.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold91 = nil
+			latencyThreshold92 = nil
 		}
-		typeVar91 := new(shared.SourceTwitterAdsUpdateType)
+		typeVar92 := new(shared.SourceTwitterAdsUpdateType)
 		if !r.Source.TwitterAds.Type.IsUnknown() && !r.Source.TwitterAds.Type.IsNull() {
-			*typeVar91 = shared.SourceTwitterAdsUpdateType(r.Source.TwitterAds.Type.ValueString())
+			*typeVar92 = shared.SourceTwitterAdsUpdateType(r.Source.TwitterAds.Type.ValueString())
 		} else {
-			typeVar91 = nil
+			typeVar92 = nil
 		}
 		sourceTwitterAdsUpdate = &shared.SourceTwitterAdsUpdate{
-			LatencyThreshold: latencyThreshold91,
-			Type:             typeVar91,
+			LatencyThreshold: latencyThreshold92,
+			Type:             typeVar92,
 		}
 	}
 	if sourceTwitterAdsUpdate != nil {
@@ -7511,21 +7565,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceUserDefinedAPIUpdate *shared.SourceUserDefinedAPIUpdate
 	if r.Source.UserDefinedAPI != nil {
-		latencyThreshold92 := new(int64)
+		latencyThreshold93 := new(int64)
 		if !r.Source.UserDefinedAPI.LatencyThreshold.IsUnknown() && !r.Source.UserDefinedAPI.LatencyThreshold.IsNull() {
-			*latencyThreshold92 = r.Source.UserDefinedAPI.LatencyThreshold.ValueInt64()
+			*latencyThreshold93 = r.Source.UserDefinedAPI.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold92 = nil
+			latencyThreshold93 = nil
 		}
-		typeVar92 := new(shared.SourceUserDefinedAPIUpdateType)
+		typeVar93 := new(shared.SourceUserDefinedAPIUpdateType)
 		if !r.Source.UserDefinedAPI.Type.IsUnknown() && !r.Source.UserDefinedAPI.Type.IsNull() {
-			*typeVar92 = shared.SourceUserDefinedAPIUpdateType(r.Source.UserDefinedAPI.Type.ValueString())
+			*typeVar93 = shared.SourceUserDefinedAPIUpdateType(r.Source.UserDefinedAPI.Type.ValueString())
 		} else {
-			typeVar92 = nil
+			typeVar93 = nil
 		}
 		sourceUserDefinedAPIUpdate = &shared.SourceUserDefinedAPIUpdate{
-			LatencyThreshold: latencyThreshold92,
-			Type:             typeVar92,
+			LatencyThreshold: latencyThreshold93,
+			Type:             typeVar93,
 		}
 	}
 	if sourceUserDefinedAPIUpdate != nil {
@@ -7535,21 +7589,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceUservoiceUpdate *shared.SourceUservoiceUpdate
 	if r.Source.Uservoice != nil {
-		latencyThreshold93 := new(int64)
+		latencyThreshold94 := new(int64)
 		if !r.Source.Uservoice.LatencyThreshold.IsUnknown() && !r.Source.Uservoice.LatencyThreshold.IsNull() {
-			*latencyThreshold93 = r.Source.Uservoice.LatencyThreshold.ValueInt64()
+			*latencyThreshold94 = r.Source.Uservoice.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold93 = nil
+			latencyThreshold94 = nil
 		}
-		typeVar93 := new(shared.SourceUservoiceUpdateType)
+		typeVar94 := new(shared.SourceUservoiceUpdateType)
 		if !r.Source.Uservoice.Type.IsUnknown() && !r.Source.Uservoice.Type.IsNull() {
-			*typeVar93 = shared.SourceUservoiceUpdateType(r.Source.Uservoice.Type.ValueString())
+			*typeVar94 = shared.SourceUservoiceUpdateType(r.Source.Uservoice.Type.ValueString())
 		} else {
-			typeVar93 = nil
+			typeVar94 = nil
 		}
 		sourceUservoiceUpdate = &shared.SourceUservoiceUpdate{
-			LatencyThreshold: latencyThreshold93,
-			Type:             typeVar93,
+			LatencyThreshold: latencyThreshold94,
+			Type:             typeVar94,
 		}
 	}
 	if sourceUservoiceUpdate != nil {
@@ -7559,21 +7613,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceVeevaUpdate *shared.SourceVeevaUpdate
 	if r.Source.Veeva != nil {
-		latencyThreshold94 := new(int64)
+		latencyThreshold95 := new(int64)
 		if !r.Source.Veeva.LatencyThreshold.IsUnknown() && !r.Source.Veeva.LatencyThreshold.IsNull() {
-			*latencyThreshold94 = r.Source.Veeva.LatencyThreshold.ValueInt64()
+			*latencyThreshold95 = r.Source.Veeva.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold94 = nil
+			latencyThreshold95 = nil
 		}
-		typeVar94 := new(shared.SourceVeevaUpdateType)
+		typeVar95 := new(shared.SourceVeevaUpdateType)
 		if !r.Source.Veeva.Type.IsUnknown() && !r.Source.Veeva.Type.IsNull() {
-			*typeVar94 = shared.SourceVeevaUpdateType(r.Source.Veeva.Type.ValueString())
+			*typeVar95 = shared.SourceVeevaUpdateType(r.Source.Veeva.Type.ValueString())
 		} else {
-			typeVar94 = nil
+			typeVar95 = nil
 		}
 		sourceVeevaUpdate = &shared.SourceVeevaUpdate{
-			LatencyThreshold: latencyThreshold94,
-			Type:             typeVar94,
+			LatencyThreshold: latencyThreshold95,
+			Type:             typeVar95,
 		}
 	}
 	if sourceVeevaUpdate != nil {
@@ -7583,21 +7637,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceVerizonMediaDspUpdate *shared.SourceVerizonMediaDspUpdate
 	if r.Source.VerizonMediaDsp != nil {
-		latencyThreshold95 := new(int64)
+		latencyThreshold96 := new(int64)
 		if !r.Source.VerizonMediaDsp.LatencyThreshold.IsUnknown() && !r.Source.VerizonMediaDsp.LatencyThreshold.IsNull() {
-			*latencyThreshold95 = r.Source.VerizonMediaDsp.LatencyThreshold.ValueInt64()
+			*latencyThreshold96 = r.Source.VerizonMediaDsp.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold95 = nil
+			latencyThreshold96 = nil
 		}
-		typeVar95 := new(shared.SourceVerizonMediaDspUpdateType)
+		typeVar96 := new(shared.SourceVerizonMediaDspUpdateType)
 		if !r.Source.VerizonMediaDsp.Type.IsUnknown() && !r.Source.VerizonMediaDsp.Type.IsNull() {
-			*typeVar95 = shared.SourceVerizonMediaDspUpdateType(r.Source.VerizonMediaDsp.Type.ValueString())
+			*typeVar96 = shared.SourceVerizonMediaDspUpdateType(r.Source.VerizonMediaDsp.Type.ValueString())
 		} else {
-			typeVar95 = nil
+			typeVar96 = nil
 		}
 		sourceVerizonMediaDspUpdate = &shared.SourceVerizonMediaDspUpdate{
-			LatencyThreshold: latencyThreshold95,
-			Type:             typeVar95,
+			LatencyThreshold: latencyThreshold96,
+			Type:             typeVar96,
 		}
 	}
 	if sourceVerizonMediaDspUpdate != nil {
@@ -7607,21 +7661,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceWorkdayReportUpdate *shared.SourceWorkdayReportUpdate
 	if r.Source.WorkdayReport != nil {
-		latencyThreshold96 := new(int64)
+		latencyThreshold97 := new(int64)
 		if !r.Source.WorkdayReport.LatencyThreshold.IsUnknown() && !r.Source.WorkdayReport.LatencyThreshold.IsNull() {
-			*latencyThreshold96 = r.Source.WorkdayReport.LatencyThreshold.ValueInt64()
+			*latencyThreshold97 = r.Source.WorkdayReport.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold96 = nil
+			latencyThreshold97 = nil
 		}
-		typeVar96 := new(shared.SourceWorkdayReportUpdateType)
+		typeVar97 := new(shared.SourceWorkdayReportUpdateType)
 		if !r.Source.WorkdayReport.Type.IsUnknown() && !r.Source.WorkdayReport.Type.IsNull() {
-			*typeVar96 = shared.SourceWorkdayReportUpdateType(r.Source.WorkdayReport.Type.ValueString())
+			*typeVar97 = shared.SourceWorkdayReportUpdateType(r.Source.WorkdayReport.Type.ValueString())
 		} else {
-			typeVar96 = nil
+			typeVar97 = nil
 		}
 		sourceWorkdayReportUpdate = &shared.SourceWorkdayReportUpdate{
-			LatencyThreshold: latencyThreshold96,
-			Type:             typeVar96,
+			LatencyThreshold: latencyThreshold97,
+			Type:             typeVar97,
 		}
 	}
 	if sourceWorkdayReportUpdate != nil {
@@ -7631,21 +7685,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceWorkfrontUpdate *shared.SourceWorkfrontUpdate
 	if r.Source.Workfront != nil {
-		latencyThreshold97 := new(int64)
+		latencyThreshold98 := new(int64)
 		if !r.Source.Workfront.LatencyThreshold.IsUnknown() && !r.Source.Workfront.LatencyThreshold.IsNull() {
-			*latencyThreshold97 = r.Source.Workfront.LatencyThreshold.ValueInt64()
+			*latencyThreshold98 = r.Source.Workfront.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold97 = nil
+			latencyThreshold98 = nil
 		}
-		typeVar97 := new(shared.SourceWorkfrontUpdateType)
+		typeVar98 := new(shared.SourceWorkfrontUpdateType)
 		if !r.Source.Workfront.Type.IsUnknown() && !r.Source.Workfront.Type.IsNull() {
-			*typeVar97 = shared.SourceWorkfrontUpdateType(r.Source.Workfront.Type.ValueString())
+			*typeVar98 = shared.SourceWorkfrontUpdateType(r.Source.Workfront.Type.ValueString())
 		} else {
-			typeVar97 = nil
+			typeVar98 = nil
 		}
 		sourceWorkfrontUpdate = &shared.SourceWorkfrontUpdate{
-			LatencyThreshold: latencyThreshold97,
-			Type:             typeVar97,
+			LatencyThreshold: latencyThreshold98,
+			Type:             typeVar98,
 		}
 	}
 	if sourceWorkfrontUpdate != nil {
@@ -7655,21 +7709,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceZendeskUpdate *shared.SourceZendeskUpdate
 	if r.Source.Zendesk != nil {
-		latencyThreshold98 := new(int64)
+		latencyThreshold99 := new(int64)
 		if !r.Source.Zendesk.LatencyThreshold.IsUnknown() && !r.Source.Zendesk.LatencyThreshold.IsNull() {
-			*latencyThreshold98 = r.Source.Zendesk.LatencyThreshold.ValueInt64()
+			*latencyThreshold99 = r.Source.Zendesk.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold98 = nil
+			latencyThreshold99 = nil
 		}
-		typeVar98 := new(shared.SourceZendeskUpdateType)
+		typeVar99 := new(shared.SourceZendeskUpdateType)
 		if !r.Source.Zendesk.Type.IsUnknown() && !r.Source.Zendesk.Type.IsNull() {
-			*typeVar98 = shared.SourceZendeskUpdateType(r.Source.Zendesk.Type.ValueString())
+			*typeVar99 = shared.SourceZendeskUpdateType(r.Source.Zendesk.Type.ValueString())
 		} else {
-			typeVar98 = nil
+			typeVar99 = nil
 		}
 		sourceZendeskUpdate = &shared.SourceZendeskUpdate{
-			LatencyThreshold: latencyThreshold98,
-			Type:             typeVar98,
+			LatencyThreshold: latencyThreshold99,
+			Type:             typeVar99,
 		}
 	}
 	if sourceZendeskUpdate != nil {
@@ -7679,21 +7733,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceZoomPhoneUpdate *shared.SourceZoomPhoneUpdate
 	if r.Source.ZoomPhone != nil {
-		latencyThreshold99 := new(int64)
+		latencyThreshold100 := new(int64)
 		if !r.Source.ZoomPhone.LatencyThreshold.IsUnknown() && !r.Source.ZoomPhone.LatencyThreshold.IsNull() {
-			*latencyThreshold99 = r.Source.ZoomPhone.LatencyThreshold.ValueInt64()
+			*latencyThreshold100 = r.Source.ZoomPhone.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold99 = nil
+			latencyThreshold100 = nil
 		}
-		typeVar99 := new(shared.SourceZoomPhoneUpdateType)
+		typeVar100 := new(shared.SourceZoomPhoneUpdateType)
 		if !r.Source.ZoomPhone.Type.IsUnknown() && !r.Source.ZoomPhone.Type.IsNull() {
-			*typeVar99 = shared.SourceZoomPhoneUpdateType(r.Source.ZoomPhone.Type.ValueString())
+			*typeVar100 = shared.SourceZoomPhoneUpdateType(r.Source.ZoomPhone.Type.ValueString())
 		} else {
-			typeVar99 = nil
+			typeVar100 = nil
 		}
 		sourceZoomPhoneUpdate = &shared.SourceZoomPhoneUpdate{
-			LatencyThreshold: latencyThreshold99,
-			Type:             typeVar99,
+			LatencyThreshold: latencyThreshold100,
+			Type:             typeVar100,
 		}
 	}
 	if sourceZoomPhoneUpdate != nil {
@@ -7703,21 +7757,21 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	var sourceZuoraUpdate *shared.SourceZuoraUpdate
 	if r.Source.Zuora != nil {
-		latencyThreshold100 := new(int64)
+		latencyThreshold101 := new(int64)
 		if !r.Source.Zuora.LatencyThreshold.IsUnknown() && !r.Source.Zuora.LatencyThreshold.IsNull() {
-			*latencyThreshold100 = r.Source.Zuora.LatencyThreshold.ValueInt64()
+			*latencyThreshold101 = r.Source.Zuora.LatencyThreshold.ValueInt64()
 		} else {
-			latencyThreshold100 = nil
+			latencyThreshold101 = nil
 		}
-		typeVar100 := new(shared.SourceZuoraUpdateType)
+		typeVar101 := new(shared.SourceZuoraUpdateType)
 		if !r.Source.Zuora.Type.IsUnknown() && !r.Source.Zuora.Type.IsNull() {
-			*typeVar100 = shared.SourceZuoraUpdateType(r.Source.Zuora.Type.ValueString())
+			*typeVar101 = shared.SourceZuoraUpdateType(r.Source.Zuora.Type.ValueString())
 		} else {
-			typeVar100 = nil
+			typeVar101 = nil
 		}
 		sourceZuoraUpdate = &shared.SourceZuoraUpdate{
-			LatencyThreshold: latencyThreshold100,
-			Type:             typeVar100,
+			LatencyThreshold: latencyThreshold101,
+			Type:             typeVar101,
 		}
 	}
 	if sourceZuoraUpdate != nil {

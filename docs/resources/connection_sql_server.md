@@ -14,16 +14,16 @@ ConnectionSQLSERVER Resource
 
 ```terraform
 resource "etleap_connection_sql_server" "my_connectionsql_server" {
-  address                     = "102 Louisa Branch"
+  address                     = "62315 Ferry Drives"
   cdc_enabled                 = false
   database                    = "...my_database..."
   deletion_of_export_products = true
-  name                        = "Martha Nicolas"
+  name                        = "Sidney Bailey"
   password                    = "...my_password..."
-  port                        = 6
+  port                        = 10
   schema                      = "...my_schema..."
   type                        = "SQL_SERVER"
-  username                    = "Kari.Labadie88"
+  username                    = "Dexter.Pacocha89"
 }
 ```
 

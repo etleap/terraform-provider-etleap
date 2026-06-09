@@ -14,7 +14,7 @@ ConnectionEGNYTE DataSource
 
 ```terraform
 data "etleap_connection_egnyte" "my_connectionegnyte" {
-  id = "4eea2a3b-bb60-42fd-9bde-daf753fdfec2"
+  id = "b263dd6c-13d1-49c3-b713-96f9ea63f8e7"
 }
 ```
 

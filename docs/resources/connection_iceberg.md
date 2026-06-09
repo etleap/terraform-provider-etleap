@@ -16,11 +16,11 @@ ConnectionICEBERG Resource
 resource "etleap_connection_iceberg" "my_connectioniceberg" {
   base_directory              = "...my_base_directory..."
   data_bucket                 = "...my_data_bucket..."
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   glue_database               = "...my_glue_database..."
   glue_region                 = "...my_glue_region..."
   iam_role                    = "...my_iam_role..."
-  name                        = "Marty Dooley"
+  name                        = "Chelsea Casper"
   type                        = "ICEBERG"
   warehouse_connection        = "...my_warehouse_connection..."
 }
@@ -33,7 +33,6 @@ resource "etleap_connection_iceberg" "my_connectioniceberg" {
 
 - `base_directory` (String)
 - `data_bucket` (String)
-- `glue_database` (String)
 - `glue_region` (String)
 - `iam_role` (String)
 - `name` (String) The unique name of this connection.
@@ -42,6 +41,7 @@ resource "etleap_connection_iceberg" "my_connectioniceberg" {
 ### Optional
 
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
+- `glue_database` (String) Deprecated: specify the Glue database when creating a pipeline via the `destination.schema` property on the `POST /api/v2/pipelines` endpoint.
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 - `warehouse_connection` (String)
 

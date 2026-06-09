@@ -14,7 +14,7 @@ ConnectionMYSQLSHARDED DataSource
 
 ```terraform
 data "etleap_connection_mysql_sharded" "my_connectionmysql_sharded" {
-  id = "5d708cec-f05b-44bb-bdb9-d56dbd7d1a56"
+  id = "f9493c4b-6888-4cb8-98c2-8832530ffd2d"
 }
 ```
 

@@ -383,6 +383,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		}
 		r.Source.Criteo.Type = types.StringValue(string(resp.Source.SourceCriteo.Type))
 	}
+	if resp.Source.SourceDayforce != nil {
+		r.Source.Dayforce = &SourceDayforce{}
+		r.Source.Dayforce.ConnectionID = types.StringValue(resp.Source.SourceDayforce.ConnectionID)
+		r.Source.Dayforce.Entity = types.StringValue(resp.Source.SourceDayforce.Entity)
+		r.Source.Dayforce.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceDayforce.LatencyThreshold)
+		r.Source.Dayforce.Type = types.StringValue(string(resp.Source.SourceDayforce.Type))
+	}
 	if resp.Source.SourceDb2 != nil {
 		r.Source.Db2 = &SourceDb2{}
 		r.Source.Db2.ConnectionID = types.StringValue(resp.Source.SourceDb2.ConnectionID)

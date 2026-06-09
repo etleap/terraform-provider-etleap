@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: d51a4a63454ee830fd558dffcf3b0b73
-  docVersion: 2.9.7
+  docChecksum: 8754eebc7f64b3573ee1efc3d31076ac
+  docVersion: 2.9.9
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.3.7
-  configChecksum: 29a3c59f54329f3684bf878e82a8db1a
+  releaseVersion: 0.3.8
+  configChecksum: a4699d72a93d50b392c4c04cb623a2c7
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -158,6 +158,9 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/updatecriteoconnection.go
   - internal/sdk/pkg/models/operations/getcriteoconnection.go
   - internal/sdk/pkg/models/operations/deletecriteoconnection.go
+  - internal/sdk/pkg/models/operations/updatedayforceconnection.go
+  - internal/sdk/pkg/models/operations/getdayforceconnection.go
+  - internal/sdk/pkg/models/operations/deletedayforceconnection.go
   - internal/sdk/pkg/models/operations/updatedb2shardedconnection.go
   - internal/sdk/pkg/models/operations/getdb2shardedconnection.go
   - internal/sdk/pkg/models/operations/deletedb2shardedconnection.go
@@ -443,6 +446,7 @@ generatedFiles:
   - internal/sdk/pkg/models/operations/createconfluentcloudconnection.go
   - internal/sdk/pkg/models/operations/createcoupaconnection.go
   - internal/sdk/pkg/models/operations/createcriteoconnection.go
+  - internal/sdk/pkg/models/operations/createdayforceconnection.go
   - internal/sdk/pkg/models/operations/createdb2connection.go
   - internal/sdk/pkg/models/operations/createdb2shardedconnection.go
   - internal/sdk/pkg/models/operations/createdeltalakeconnection.go
@@ -594,6 +598,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourceconfluentcloud.go
   - internal/sdk/pkg/models/shared/sourcecoupa.go
   - internal/sdk/pkg/models/shared/sourcecriteo.go
+  - internal/sdk/pkg/models/shared/sourcedayforce.go
   - internal/sdk/pkg/models/shared/sourcedb2.go
   - internal/sdk/pkg/models/shared/sourcedb2sharded.go
   - internal/sdk/pkg/models/shared/sourcedeltalake.go
@@ -698,6 +703,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/sourceconfluentcloudupdate.go
   - internal/sdk/pkg/models/shared/sourcecoupaupdate.go
   - internal/sdk/pkg/models/shared/sourcecriteoupdate.go
+  - internal/sdk/pkg/models/shared/sourcedayforceupdate.go
   - internal/sdk/pkg/models/shared/sourcedb2update.go
   - internal/sdk/pkg/models/shared/sourcedb2shardedupdate.go
   - internal/sdk/pkg/models/shared/sourcedeltalakeupdate.go
@@ -889,6 +895,8 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/connectioncoupaupdate.go
   - internal/sdk/pkg/models/shared/connectioncriteo.go
   - internal/sdk/pkg/models/shared/connectioncriteoupdate.go
+  - internal/sdk/pkg/models/shared/connectiondayforce.go
+  - internal/sdk/pkg/models/shared/connectiondayforceupdate.go
   - internal/sdk/pkg/models/shared/connectiondb2sharded.go
   - internal/sdk/pkg/models/shared/databaseshardoutput.go
   - internal/sdk/pkg/models/shared/sshconfig.go
@@ -1202,6 +1210,7 @@ generatedFiles:
   - internal/provider/type_source_confluent_cloud.go
   - internal/provider/type_source_coupa.go
   - internal/provider/type_source_criteo.go
+  - internal/provider/type_source_dayforce.go
   - internal/provider/type_source_db2.go
   - internal/provider/type_source_db2_sharded.go
   - internal/provider/type_source_delta_lake.go
@@ -1331,6 +1340,9 @@ generatedFiles:
   - internal/provider/connectioncriteo_resource.go
   - internal/provider/connectioncriteo_resource_sdk.go
   - examples/resources/etleap_connection_criteo/resource.tf
+  - internal/provider/connectiondayforce_resource.go
+  - internal/provider/connectiondayforce_resource_sdk.go
+  - examples/resources/etleap_connection_dayforce/resource.tf
   - internal/provider/connectiondb2_resource.go
   - internal/provider/connectiondb2_resource_sdk.go
   - examples/resources/etleap_connection_db2/resource.tf
@@ -1646,6 +1658,9 @@ generatedFiles:
   - internal/provider/connectioncriteo_data_source.go
   - internal/provider/connectioncriteo_data_source_sdk.go
   - examples/data-sources/etleap_connection_criteo/data-source.tf
+  - internal/provider/connectiondayforce_data_source.go
+  - internal/provider/connectiondayforce_data_source_sdk.go
+  - examples/data-sources/etleap_connection_dayforce/data-source.tf
   - internal/provider/connectiondb2_data_source.go
   - internal/provider/connectiondb2_data_source_sdk.go
   - examples/data-sources/etleap_connection_db2/data-source.tf

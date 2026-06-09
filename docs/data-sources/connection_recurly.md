@@ -14,7 +14,7 @@ ConnectionRECURLY DataSource
 
 ```terraform
 data "etleap_connection_recurly" "my_connectionrecurly" {
-  id = "0be6d5dc-7398-4998-ad77-21515137a77a"
+  id = "8eaba383-8198-497d-8872-841337b16d53"
 }
 ```
 

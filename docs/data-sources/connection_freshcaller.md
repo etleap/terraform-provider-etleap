@@ -14,7 +14,7 @@ ConnectionFRESHCALLER DataSource
 
 ```terraform
 data "etleap_connection_freshcaller" "my_connectionfreshcaller" {
-  id = "6b9c1280-5779-4f07-a660-b81a19e052a6"
+  id = "9280c1b7-e2b8-4361-9f59-182ce94a61d7"
 }
 ```
 

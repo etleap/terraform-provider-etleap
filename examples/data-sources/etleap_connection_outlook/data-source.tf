@@ -1,3 +1,3 @@
 data "etleap_connection_outlook" "my_connectionoutlook" {
-  id = "645e03cb-67dc-4c72-b295-66e6375518c0"
+  id = "9371dff9-cae2-42d2-b73a-7f0a47bbe450"
 }

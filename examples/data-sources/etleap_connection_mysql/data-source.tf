@@ -1,3 +1,3 @@
 data "etleap_connection_mysql" "my_connectionmysql" {
-  id = "e8c58a2b-3c09-485a-8533-23d709e4dc82"
+  id = "bd7d1a56-fc21-4269-8368-a0d2b2b31caf"
 }

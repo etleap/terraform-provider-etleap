@@ -14,12 +14,12 @@ ConnectionELOQUA Resource
 
 ```terraform
 resource "etleap_connection_eloqua" "my_connectioneloqua" {
-  company                     = "Greenholt Group"
+  company                     = "Roob, Orn and Tillman"
   deletion_of_export_products = true
-  name                        = "Leroy Paucek"
+  name                        = "Dr. Cory Green"
   password                    = "...my_password..."
   type                        = "ELOQUA"
-  username                    = "Meredith59"
+  username                    = "Emmalee39"
 }
 ```
 

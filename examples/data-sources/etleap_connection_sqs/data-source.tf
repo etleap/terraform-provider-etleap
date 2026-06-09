@@ -1,3 +1,3 @@
 data "etleap_connection_sqs" "my_connectionsqs" {
-  id = "31bc1c43-6b9a-443f-bb29-1456421624c5"
+  id = "7d9be0d0-5953-478e-bc8d-bec391d42cc5"
 }

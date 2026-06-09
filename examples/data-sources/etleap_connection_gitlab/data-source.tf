@@ -1,3 +1,3 @@
 data "etleap_connection_gitlab" "my_connectiongitlab" {
-  id = "49f3cbe3-43ad-4889-ae09-ea509815a625"
+  id = "dd5beb08-764d-44ce-be74-231dce7ef02a"
 }

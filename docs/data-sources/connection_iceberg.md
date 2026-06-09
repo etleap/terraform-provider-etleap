@@ -14,7 +14,7 @@ ConnectionICEBERG DataSource
 
 ```terraform
 data "etleap_connection_iceberg" "my_connectioniceberg" {
-  id = "ae5badb7-1678-4cc6-9dd7-ad9e688b9e08"
+  id = "ad0b19ac-2524-44a8-b6c8-0503daf018b9"
 }
 ```
 
@@ -28,7 +28,7 @@ data "etleap_connection_iceberg" "my_connectioniceberg" {
 - `create_date` (String) The date and time when then the connection was created.
 - `data_bucket` (String)
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
-- `glue_database` (String)
+- `glue_database` (String) Deprecated: specify the Glue database when creating a pipeline via the `destination.schema` property on the `POST /api/v2/pipelines` endpoint.
 - `glue_region` (String)
 - `iam_role` (String)
 - `id` (String) The ID of this resource.

@@ -1,3 +1,3 @@
 data "etleap_connection_freshdesk" "my_connectionfreshdesk" {
-  id = "e2b83615-f591-482c-a94a-61d7e2dadcd9"
+  id = "ce51fe0f-19d1-4464-871c-9462c46fc90b"
 }

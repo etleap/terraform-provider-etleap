@@ -17,22 +17,22 @@ resource "etleap_pipeline" "my_pipeline" {
   deletion_of_export_products = false
   destination = {
     delta_lake = {
-      automatic_schema_changes   = true
+      automatic_schema_changes   = false
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
-      pre10_dot2_runtime_support = false
+      pre10_dot2_runtime_support = true
       primary_key = [
         "...",
       ]
-      retain_history         = true
+      retain_history         = false
       schema                 = "...my_schema..."
       table                  = "...my_table..."
       type                   = "DELTA_LAKE"
-      wait_for_quality_check = true
+      wait_for_quality_check = false
     }
   }
-  name   = "Andrew Dickens"
-  paused = true
+  name   = "Ms. Diana Brown V"
+  paused = false
   script = {
     legacy_script = {
       legacy_script = "...my_legacy_script..."
@@ -42,7 +42,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 4
+      latency_threshold = 0
       type              = "ACTIVE_CAMPAIGN"
     }
   }
@@ -232,6 +232,7 @@ Optional:
 - `confluent_cloud` (Attributes) (see [below for nested schema](#nestedatt--source--confluent_cloud))
 - `coupa` (Attributes) (see [below for nested schema](#nestedatt--source--coupa))
 - `criteo` (Attributes) (see [below for nested schema](#nestedatt--source--criteo))
+- `dayforce` (Attributes) (see [below for nested schema](#nestedatt--source--dayforce))
 - `db2` (Attributes) (see [below for nested schema](#nestedatt--source--db2))
 - `db2_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--db2_sharded))
 - `delta_lake` (Attributes) (see [below for nested schema](#nestedatt--source--delta_lake))
@@ -437,6 +438,17 @@ Optional:
 - `metrics` (List of String) Specify the report `metric` if and only if the entity is 'report_placement' or 'report_statistics'. Example values: [clicks, displays]. Requires replacement if changed.
 - `timezone` (List of String) Specify the report `timezone` if and only if the entity is 'report_placement' or 'report_transactions'. Example values: [UTC, ETC/GMT-3]. Requires replacement if changed.
 - `type` (String) Not Null; must be one of ["CRITEO"]
+
+
+<a id="nestedatt--source--dayforce"></a>
+### Nested Schema for `source.dayforce`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The Dayforce resource. Example: Departments. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["DAYFORCE"]
 
 
 <a id="nestedatt--source--db2"></a>

@@ -16,7 +16,7 @@ ConnectionQUORAADS Resource
 resource "etleap_connection_quora_ads" "my_connectionquora_ads" {
   code                        = "...my_code..."
   deletion_of_export_products = false
-  name                        = "Tara Raynor"
+  name                        = "Marvin Ziemann"
   type                        = "QUORA_ADS"
 }
 ```

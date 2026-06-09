@@ -19,6 +19,7 @@ const (
 	SourceTypeEnumConfluentCloud           SourceTypeEnum = "CONFLUENT_CLOUD"
 	SourceTypeEnumCoupa                    SourceTypeEnum = "COUPA"
 	SourceTypeEnumCriteo                   SourceTypeEnum = "CRITEO"
+	SourceTypeEnumDayforce                 SourceTypeEnum = "DAYFORCE"
 	SourceTypeEnumDb2                      SourceTypeEnum = "DB2"
 	SourceTypeEnumDb2Sharded               SourceTypeEnum = "DB2_SHARDED"
 	SourceTypeEnumDeltaLake                SourceTypeEnum = "DELTA_LAKE"
@@ -140,6 +141,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	case "COUPA":
 		fallthrough
 	case "CRITEO":
+		fallthrough
+	case "DAYFORCE":
 		fallthrough
 	case "DB2":
 		fallthrough

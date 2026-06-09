@@ -14,7 +14,7 @@ DbtSchedule DataSource
 
 ```terraform
 data "etleap_dbt_schedule" "my_dbtschedule" {
-  id = "55da31bb-b441-4af5-b69c-f88c0ec70d94"
+  id = "1171d176-dd07-4e06-b3f4-699d31c9d2b9"
 }
 ```
 

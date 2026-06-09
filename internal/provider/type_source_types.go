@@ -12,6 +12,7 @@ type SourceTypes struct {
 	ConfluentCloud           *SourceConfluentCloud           `tfsdk:"confluent_cloud"`
 	Coupa                    *SourceCoupa                    `tfsdk:"coupa"`
 	Criteo                   *SourceCriteo                   `tfsdk:"criteo"`
+	Dayforce                 *SourceDayforce                 `tfsdk:"dayforce"`
 	Db2                      *SourceDb2                      `tfsdk:"db2"`
 	Db2Sharded               *SourceDb2Sharded               `tfsdk:"db2_sharded"`
 	DeltaLake                *SourceDeltaLake                `tfsdk:"delta_lake"`

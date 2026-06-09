@@ -18,7 +18,7 @@ resource "etleap_connection_egnyte" "my_connectionegnyte" {
   code                        = "...my_code..."
   deletion_of_export_products = true
   domain_name                 = "...my_domain_name..."
-  name                        = "Doreen Hyatt"
+  name                        = "Ms. Lonnie Dare MD"
   type                        = "EGNYTE"
 }
 ```

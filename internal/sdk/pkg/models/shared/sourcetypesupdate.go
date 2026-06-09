@@ -21,6 +21,7 @@ const (
 	SourceTypesUpdateTypeConfluentCloud           SourceTypesUpdateType = "CONFLUENT_CLOUD"
 	SourceTypesUpdateTypeCoupa                    SourceTypesUpdateType = "COUPA"
 	SourceTypesUpdateTypeCriteo                   SourceTypesUpdateType = "CRITEO"
+	SourceTypesUpdateTypeDayforce                 SourceTypesUpdateType = "DAYFORCE"
 	SourceTypesUpdateTypeDb2                      SourceTypesUpdateType = "DB2"
 	SourceTypesUpdateTypeDb2Sharded               SourceTypesUpdateType = "DB2_SHARDED"
 	SourceTypesUpdateTypeDeltaLake                SourceTypesUpdateType = "DELTA_LAKE"
@@ -125,6 +126,7 @@ type SourceTypesUpdate struct {
 	SourceConfluentCloudUpdate           *SourceConfluentCloudUpdate
 	SourceCoupaUpdate                    *SourceCoupaUpdate
 	SourceCriteoUpdate                   *SourceCriteoUpdate
+	SourceDayforceUpdate                 *SourceDayforceUpdate
 	SourceDb2Update                      *SourceDb2Update
 	SourceDb2ShardedUpdate               *SourceDb2ShardedUpdate
 	SourceDeltaLakeUpdate                *SourceDeltaLakeUpdate
@@ -326,6 +328,18 @@ func CreateSourceTypesUpdateCriteo(criteo SourceCriteoUpdate) SourceTypesUpdate 
 	return SourceTypesUpdate{
 		SourceCriteoUpdate: &criteo,
 		Type:               typ,
+	}
+}
+
+func CreateSourceTypesUpdateDayforce(dayforce SourceDayforceUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeDayforce
+
+	typStr := SourceDayforceUpdateType(typ)
+	dayforce.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceDayforceUpdate: &dayforce,
+		Type:                 typ,
 	}
 }
 
@@ -1526,6 +1540,15 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceCriteoUpdate = sourceCriteoUpdate
 		u.Type = SourceTypesUpdateTypeCriteo
 		return nil
+	case "DAYFORCE":
+		sourceDayforceUpdate := new(SourceDayforceUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceDayforceUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceDayforceUpdate = sourceDayforceUpdate
+		u.Type = SourceTypesUpdateTypeDayforce
+		return nil
 	case "DB2":
 		sourceDb2Update := new(SourceDb2Update)
 		if err := utils.UnmarshalJSON(data, &sourceDb2Update, "", true, true); err != nil {
@@ -2394,6 +2417,10 @@ func (u SourceTypesUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.SourceCriteoUpdate != nil {
 		return utils.MarshalJSON(u.SourceCriteoUpdate, "", true)
+	}
+
+	if u.SourceDayforceUpdate != nil {
+		return utils.MarshalJSON(u.SourceDayforceUpdate, "", true)
 	}
 
 	if u.SourceDb2Update != nil {
