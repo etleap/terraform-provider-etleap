@@ -1,3 +1,3 @@
 data "etleap_connection_ldap" "my_connectionldap" {
-  id = "29d5c434-02a6-4786-81b0-e55b0d42cf20"
+  id = "402a6786-c1b0-4e55-b0d4-2cf201e2376a"
 }

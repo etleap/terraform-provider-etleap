@@ -1,3 +1,3 @@
 data "etleap_pipeline" "my_pipeline" {
-  id = "aa2ae1e3-ec7a-4bc9-b418-1ea555c7d227"
+  id = "55fd06c2-ced0-4110-a8e1-805b90513602"
 }

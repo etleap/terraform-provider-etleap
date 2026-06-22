@@ -61,7 +61,6 @@ func (r *ConnectionICEBERGDataSourceModel) RefreshFromSharedConnectionIceberg(re
 			r.DefaultUpdateSchedule[defaultUpdateScheduleCount].UpdateSchedule = defaultUpdateSchedule1.UpdateSchedule
 		}
 	}
-	r.GlueDatabase = types.StringPointerValue(resp.GlueDatabase)
 	r.GlueRegion = types.StringValue(resp.GlueRegion)
 	r.IamRole = types.StringValue(resp.IamRole)
 	r.ID = types.StringValue(resp.ID)

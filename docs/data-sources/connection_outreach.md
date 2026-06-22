@@ -14,7 +14,7 @@ ConnectionOUTREACH DataSource
 
 ```terraform
 data "etleap_connection_outreach" "my_connectionoutreach" {
-  id = "6f3b478b-ccae-4f2d-b02d-5f3246d7bc4f"
+  id = "bccaef2d-b02d-45f3-a46d-7bc4ff471c63"
 }
 ```
 

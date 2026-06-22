@@ -47,7 +47,6 @@ type ConnectionICEBERGResourceModel struct {
 	DataBucket               types.String            `tfsdk:"data_bucket"`
 	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	GlueDatabase             types.String            `tfsdk:"glue_database"`
 	GlueRegion               types.String            `tfsdk:"glue_region"`
 	IamRole                  types.String            `tfsdk:"iam_role"`
 	ID                       types.String            `tfsdk:"id"`
@@ -284,14 +283,6 @@ func (r *ConnectionICEBERGResource) Schema(ctx context.Context, req resource.Sch
 				Optional:    true,
 				Default:     booldefault.StaticBool(false),
 				Description: `Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
-			},
-			"glue_database": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
-				Optional:    true,
-				Description: `Deprecated: specify the Glue database when creating a pipeline via the ` + "`" + `destination.schema` + "`" + ` property on the ` + "`" + `POST /api/v2/pipelines` + "`" + ` endpoint.`,
 			},
 			"glue_region": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{

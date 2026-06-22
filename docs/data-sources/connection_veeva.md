@@ -14,7 +14,7 @@ ConnectionVEEVA DataSource
 
 ```terraform
 data "etleap_connection_veeva" "my_connectionveeva" {
-  id = "57f9fd02-17fc-4bfa-9adc-a598b5f09924"
+  id = "42d54b77-7284-448f-bbd9-bfb6ee3908d0"
 }
 ```
 

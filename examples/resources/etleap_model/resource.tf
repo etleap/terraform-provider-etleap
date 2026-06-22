@@ -1,6 +1,6 @@
 resource "etleap_model" "my_model" {
   deletion_of_export_products = false
-  name                        = "Darrel Connelly"
+  name                        = "Shirley Gerlach"
   query_and_triggers = {
     query = "...my_query..."
     triggers = [
@@ -9,7 +9,7 @@ resource "etleap_model" "my_model" {
   }
   update_schedule = {
     daily = {
-      hour_of_day = 8
+      hour_of_day = 3
       mode        = "DAILY"
     }
   }

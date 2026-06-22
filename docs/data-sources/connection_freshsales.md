@@ -14,7 +14,7 @@ ConnectionFRESHSALES DataSource
 
 ```terraform
 data "etleap_connection_freshsales" "my_connectionfreshsales" {
-  id = "6e9f803e-49f3-4cbe-b43a-d889ee09ea50"
+  id = "e49f3cbe-343a-4d88-9ee0-9ea509815a62"
 }
 ```
 

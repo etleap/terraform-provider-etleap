@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "aa2ae1e3-ec7a-4bc9-b418-1ea555c7d227"
+  id = "55fd06c2-ced0-4110-a8e1-805b90513602"
 }
 ```
 
@@ -419,6 +419,7 @@ Read-Only:
 - `s3_legacy` (Attributes) (see [below for nested schema](#nestedatt--source--s3_legacy))
 - `salesforce` (Attributes) (see [below for nested schema](#nestedatt--source--salesforce))
 - `salesforce_marketing_cloud` (Attributes) (see [below for nested schema](#nestedatt--source--salesforce_marketing_cloud))
+- `salesloft` (Attributes) (see [below for nested schema](#nestedatt--source--salesloft))
 - `sap_concur` (Attributes) (see [below for nested schema](#nestedatt--source--sap_concur))
 - `sap_hana` (Attributes) (see [below for nested schema](#nestedatt--source--sap_hana))
 - `sap_hana_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--sap_hana_sharded))
@@ -1320,6 +1321,17 @@ Read-Only:
 - `entity` (String) The Salesforce Marketing Cloud entity. Example Values: [Bounce Event, Campaign, Click Event, Content Area, Data Extension, Data Extension Object, Email, Folders, List Subscriber, Lists, Open Event, Send, Sent Event, Subscribers, Unsub Event]
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["SALESFORCE_MARKETING_CLOUD"]
+
+
+<a id="nestedatt--source--salesloft"></a>
+### Nested Schema for `source.salesloft`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The Salesloft resource. Example: people
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["SALESLOFT"]
 
 
 <a id="nestedatt--source--sap_concur"></a>

@@ -82,6 +82,7 @@ const (
 	SourceTypesUpdateTypeS3Legacy                 SourceTypesUpdateType = "S3_LEGACY"
 	SourceTypesUpdateTypeSalesforce               SourceTypesUpdateType = "SALESFORCE"
 	SourceTypesUpdateTypeSalesforceMarketingCloud SourceTypesUpdateType = "SALESFORCE_MARKETING_CLOUD"
+	SourceTypesUpdateTypeSalesloft                SourceTypesUpdateType = "SALESLOFT"
 	SourceTypesUpdateTypeSapConcur                SourceTypesUpdateType = "SAP_CONCUR"
 	SourceTypesUpdateTypeSapHana                  SourceTypesUpdateType = "SAP_HANA"
 	SourceTypesUpdateTypeSapHanaSharded           SourceTypesUpdateType = "SAP_HANA_SHARDED"
@@ -187,6 +188,7 @@ type SourceTypesUpdate struct {
 	SourceS3LegacyUpdate                 *SourceS3LegacyUpdate
 	SourceSalesforceUpdate               *SourceSalesforceUpdate
 	SourceSalesforceMarketingCloudUpdate *SourceSalesforceMarketingCloudUpdate
+	SourceSalesloftUpdate                *SourceSalesloftUpdate
 	SourceSapConcurUpdate                *SourceSapConcurUpdate
 	SourceSapHanaUpdate                  *SourceSapHanaUpdate
 	SourceSapHanaShardedUpdate           *SourceSapHanaShardedUpdate
@@ -1060,6 +1062,18 @@ func CreateSourceTypesUpdateSalesforceMarketingCloud(salesforceMarketingCloud So
 	return SourceTypesUpdate{
 		SourceSalesforceMarketingCloudUpdate: &salesforceMarketingCloud,
 		Type:                                 typ,
+	}
+}
+
+func CreateSourceTypesUpdateSalesloft(salesloft SourceSalesloftUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSalesloft
+
+	typStr := SourceSalesloftUpdateType(typ)
+	salesloft.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSalesloftUpdate: &salesloft,
+		Type:                  typ,
 	}
 }
 
@@ -2089,6 +2103,15 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceSalesforceMarketingCloudUpdate = sourceSalesforceMarketingCloudUpdate
 		u.Type = SourceTypesUpdateTypeSalesforceMarketingCloud
 		return nil
+	case "SALESLOFT":
+		sourceSalesloftUpdate := new(SourceSalesloftUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSalesloftUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSalesloftUpdate = sourceSalesloftUpdate
+		u.Type = SourceTypesUpdateTypeSalesloft
+		return nil
 	case "SAP_CONCUR":
 		sourceSapConcurUpdate := new(SourceSapConcurUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceSapConcurUpdate, "", true, true); err != nil {
@@ -2661,6 +2684,10 @@ func (u SourceTypesUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.SourceSalesforceMarketingCloudUpdate != nil {
 		return utils.MarshalJSON(u.SourceSalesforceMarketingCloudUpdate, "", true)
+	}
+
+	if u.SourceSalesloftUpdate != nil {
+		return utils.MarshalJSON(u.SourceSalesloftUpdate, "", true)
 	}
 
 	if u.SourceSapConcurUpdate != nil {

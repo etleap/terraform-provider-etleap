@@ -1,3 +1,3 @@
 data "etleap_connection_kustomer" "my_connectionkustomer" {
-  id = "ec37aa66-10fb-419a-b73e-3aa22dd3c2cc"
+  id = "610fb19a-f73e-43aa-a2dd-3c2cc29d5c43"
 }

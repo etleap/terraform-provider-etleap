@@ -1,8 +1,8 @@
 resource "etleap_connection_service_now" "my_connectionservice_now" {
-  deletion_of_export_products = true
-  name                        = "Ora D'Amore"
+  deletion_of_export_products = false
+  name                        = "Tomas Breitenberg"
   password                    = "...my_password..."
   svn_instance_url            = "...my_svn_instance_url..."
   type                        = "SERVICE_NOW"
-  username                    = "Aniyah_Schmitt17"
+  username                    = "Kevon57"
 }

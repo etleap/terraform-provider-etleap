@@ -2,7 +2,7 @@ resource "etleap_pipeline" "my_pipeline" {
   deletion_of_export_products = false
   destination = {
     delta_lake = {
-      automatic_schema_changes   = false
+      automatic_schema_changes   = true
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
       pre10_dot2_runtime_support = true
@@ -16,7 +16,7 @@ resource "etleap_pipeline" "my_pipeline" {
       wait_for_quality_check = false
     }
   }
-  name   = "Ms. Diana Brown V"
+  name   = "Elsie Gutmann"
   paused = false
   script = {
     legacy_script = {
@@ -27,7 +27,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 0
+      latency_threshold = 1
       type              = "ACTIVE_CAMPAIGN"
     }
   }

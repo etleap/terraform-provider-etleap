@@ -14,7 +14,7 @@ ConnectionGITLAB DataSource
 
 ```terraform
 data "etleap_connection_gitlab" "my_connectiongitlab" {
-  id = "dd5beb08-764d-44ce-be74-231dce7ef02a"
+  id = "8764d4ce-fe74-4231-9ce7-ef02af672b5e"
 }
 ```
 

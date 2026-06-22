@@ -80,6 +80,7 @@ const (
 	SourceTypeEnumS3Legacy                 SourceTypeEnum = "S3_LEGACY"
 	SourceTypeEnumSalesforce               SourceTypeEnum = "SALESFORCE"
 	SourceTypeEnumSalesforceMarketingCloud SourceTypeEnum = "SALESFORCE_MARKETING_CLOUD"
+	SourceTypeEnumSalesloft                SourceTypeEnum = "SALESLOFT"
 	SourceTypeEnumSapConcur                SourceTypeEnum = "SAP_CONCUR"
 	SourceTypeEnumSapHana                  SourceTypeEnum = "SAP_HANA"
 	SourceTypeEnumSapHanaSharded           SourceTypeEnum = "SAP_HANA_SHARDED"
@@ -263,6 +264,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	case "SALESFORCE":
 		fallthrough
 	case "SALESFORCE_MARKETING_CLOUD":
+		fallthrough
+	case "SALESLOFT":
 		fallthrough
 	case "SAP_CONCUR":
 		fallthrough

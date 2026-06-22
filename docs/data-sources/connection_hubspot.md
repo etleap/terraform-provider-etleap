@@ -14,7 +14,7 @@ ConnectionHUBSPOT DataSource
 
 ```terraform
 data "etleap_connection_hubspot" "my_connectionhubspot" {
-  id = "688b9e08-03b5-4b2b-9c04-e7886ab4e467"
+  id = "803b5b2b-1c04-4e78-86ab-4e467ad0b19a"
 }
 ```
 

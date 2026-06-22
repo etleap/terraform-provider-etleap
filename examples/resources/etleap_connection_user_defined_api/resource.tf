@@ -3,10 +3,10 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
     basic = {
       password = "...my_password..."
       type     = "BASIC"
-      username = "Buster97"
+      username = "Edythe_Smith"
     }
   }
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   entities = [
     {
       api_url = "...my_api_url..."
@@ -20,7 +20,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      id = "a434d8ba-f069-4fe5-9e23-a3674e7f570e"
+      id = "f069fe55-e23a-4367-8e7f-570e3140589e"
       paging_strategy = {
         cursor_uri = {
           max_page_size        = 2
@@ -45,6 +45,6 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
       }
     },
   ]
-  name = "Anita Anderson"
+  name = "Miss Glenda Littel"
   type = "USER_DEFINED_API"
 }

@@ -14,7 +14,7 @@ ConnectionBLACKLINE DataSource
 
 ```terraform
 data "etleap_connection_blackline" "my_connectionblackline" {
-  id = "509980b3-b36e-4de7-8ecc-d4d3dc96cf98"
+  id = "3b36ede7-4ecc-4d4d-bdc9-6cf985c85ff2"
 }
 ```
 

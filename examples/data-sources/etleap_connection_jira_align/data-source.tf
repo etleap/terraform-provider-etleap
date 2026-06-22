@@ -1,3 +1,3 @@
 data "etleap_connection_jira_align" "my_connectionjira_align" {
-  id = "b57f4c62-1b02-4a88-9cc3-d9f5f04b497d"
+  id = "21b02a88-1cc3-4d9f-9f04-b497d346fb60"
 }

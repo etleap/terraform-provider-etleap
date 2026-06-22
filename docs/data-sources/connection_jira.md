@@ -14,7 +14,7 @@ ConnectionJIRA DataSource
 
 ```terraform
 data "etleap_connection_jira" "my_connectionjira" {
-  id = "18da4465-a2cc-4a01-b090-a1e4b12f84c2"
+  id = "5a2cca01-b090-4a1e-8b12-f84c2b57f4c6"
 }
 ```
 

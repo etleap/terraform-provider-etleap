@@ -1370,6 +1370,13 @@ func (o *PipelineUpdate) GetSourceSalesforceMarketingCloud() *SourceSalesforceMa
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceSalesloft() *SourceSalesloftUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSalesloftUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceSapConcur() *SourceSapConcurUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceSapConcurUpdate

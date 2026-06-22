@@ -16,7 +16,7 @@ ConnectionTIKTOKADS Resource
 resource "etleap_connection_tik_tok_ads" "my_connectiontik_tok_ads" {
   code                        = "...my_code..."
   deletion_of_export_products = true
-  name                        = "Faith Effertz"
+  name                        = "Dora Maggio V"
   type                        = "TIK_TOK_ADS"
 }
 ```

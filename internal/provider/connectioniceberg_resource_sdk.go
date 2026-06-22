@@ -89,12 +89,6 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergInput() *share
 	iamRole := r.IamRole.ValueString()
 	dataBucket := r.DataBucket.ValueString()
 	baseDirectory := r.BaseDirectory.ValueString()
-	glueDatabase := new(string)
-	if !r.GlueDatabase.IsUnknown() && !r.GlueDatabase.IsNull() {
-		*glueDatabase = r.GlueDatabase.ValueString()
-	} else {
-		glueDatabase = nil
-	}
 	glueRegion := r.GlueRegion.ValueString()
 	warehouseConnection := new(string)
 	if !r.WarehouseConnection.IsUnknown() && !r.WarehouseConnection.IsNull() {
@@ -109,7 +103,6 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergInput() *share
 		IamRole:             iamRole,
 		DataBucket:          dataBucket,
 		BaseDirectory:       baseDirectory,
-		GlueDatabase:        glueDatabase,
 		GlueRegion:          glueRegion,
 		WarehouseConnection: warehouseConnection,
 	}
@@ -169,7 +162,6 @@ func (r *ConnectionICEBERGResourceModel) RefreshFromSharedConnectionIceberg(resp
 			r.DefaultUpdateSchedule[defaultUpdateScheduleCount].UpdateSchedule = defaultUpdateSchedule1.UpdateSchedule
 		}
 	}
-	r.GlueDatabase = types.StringPointerValue(resp.GlueDatabase)
 	r.GlueRegion = types.StringValue(resp.GlueRegion)
 	r.IamRole = types.StringValue(resp.IamRole)
 	r.ID = types.StringValue(resp.ID)
@@ -322,12 +314,6 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergUpdate() *shar
 	} else {
 		baseDirectory = nil
 	}
-	glueDatabase := new(string)
-	if !r.GlueDatabase.IsUnknown() && !r.GlueDatabase.IsNull() {
-		*glueDatabase = r.GlueDatabase.ValueString()
-	} else {
-		glueDatabase = nil
-	}
 	glueRegion := new(string)
 	if !r.GlueRegion.IsUnknown() && !r.GlueRegion.IsNull() {
 		*glueRegion = r.GlueRegion.ValueString()
@@ -348,7 +334,6 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergUpdate() *shar
 		IamRole:             iamRole,
 		DataBucket:          dataBucket,
 		BaseDirectory:       baseDirectory,
-		GlueDatabase:        glueDatabase,
 		GlueRegion:          glueRegion,
 		WarehouseConnection: warehouseConnection,
 	}

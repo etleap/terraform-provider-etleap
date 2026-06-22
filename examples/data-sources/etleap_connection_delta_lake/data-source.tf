@@ -1,3 +1,3 @@
 data "etleap_connection_delta_lake" "my_connectiondelta_lake" {
-  id = "53fdfec2-63d6-46a3-b2a0-81ddc2811838"
+  id = "263d66a3-b2a0-481d-9c28-11838b263dd6"
 }

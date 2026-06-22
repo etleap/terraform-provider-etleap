@@ -16,13 +16,13 @@ ConnectionSFTP Resource
 resource "etleap_connection_sftp" "my_connectionsftp" {
   base_directory              = "...my_base_directory..."
   deletion_of_export_products = false
-  hostname                    = "sparkling-synergy.com"
-  name                        = "Camille Marks V"
+  hostname                    = "honorable-saving.biz"
+  name                        = "Mack Willms"
   password                    = "...my_password..."
   pgp_secret_key              = "...my_pgp_secret_key..."
-  port                        = 4
+  port                        = 2
   type                        = "SFTP"
-  username                    = "Gina73"
+  username                    = "Stanton39"
 }
 ```
 

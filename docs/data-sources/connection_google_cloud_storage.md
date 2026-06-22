@@ -14,7 +14,7 @@ ConnectionGOOGLECLOUDSTORAGE DataSource
 
 ```terraform
 data "etleap_connection_google_cloud_storage" "my_connectiongoogle_cloud_storage" {
-  id = "8ec9b5fe-3409-4a36-8c6a-25c7a3d4a0e5"
+  id = "e3409a36-cc6a-425c-ba3d-4a0e5ce4e0c2"
 }
 ```
 

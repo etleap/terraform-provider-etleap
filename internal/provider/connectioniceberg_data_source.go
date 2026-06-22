@@ -33,7 +33,6 @@ type ConnectionICEBERGDataSourceModel struct {
 	CreateDate            types.String            `tfsdk:"create_date"`
 	DataBucket            types.String            `tfsdk:"data_bucket"`
 	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	GlueDatabase          types.String            `tfsdk:"glue_database"`
 	GlueRegion            types.String            `tfsdk:"glue_region"`
 	IamRole               types.String            `tfsdk:"iam_role"`
 	ID                    types.String            `tfsdk:"id"`
@@ -158,10 +157,6 @@ func (r *ConnectionICEBERGDataSource) Schema(ctx context.Context, req datasource
 					},
 				},
 				Description: `When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per ` + "`" + `pipelineMode` + "`" + ` and may be subject to change.`,
-			},
-			"glue_database": schema.StringAttribute{
-				Computed:    true,
-				Description: `Deprecated: specify the Glue database when creating a pipeline via the ` + "`" + `destination.schema` + "`" + ` property on the ` + "`" + `POST /api/v2/pipelines` + "`" + ` endpoint.`,
 			},
 			"glue_region": schema.StringAttribute{
 				Computed: true,

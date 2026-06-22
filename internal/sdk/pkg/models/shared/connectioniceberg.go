@@ -151,12 +151,8 @@ type ConnectionIceberg struct {
 	IamRole               string                                   `json:"iamRole"`
 	DataBucket            string                                   `json:"dataBucket"`
 	BaseDirectory         string                                   `json:"baseDirectory"`
-	// Deprecated: specify the Glue database when creating a pipeline via the `destination.schema` property on the `POST /api/v2/pipelines` endpoint.
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	GlueDatabase        *string `json:"glueDatabase,omitempty"`
-	GlueRegion          string  `json:"glueRegion"`
-	WarehouseConnection *string `json:"warehouseConnection,omitempty"`
+	GlueRegion            string                                   `json:"glueRegion"`
+	WarehouseConnection   *string                                  `json:"warehouseConnection,omitempty"`
 }
 
 func (c ConnectionIceberg) MarshalJSON() ([]byte, error) {
@@ -282,13 +278,6 @@ func (o *ConnectionIceberg) GetBaseDirectory() string {
 	return o.BaseDirectory
 }
 
-func (o *ConnectionIceberg) GetGlueDatabase() *string {
-	if o == nil {
-		return nil
-	}
-	return o.GlueDatabase
-}
-
 func (o *ConnectionIceberg) GetGlueRegion() string {
 	if o == nil {
 		return ""
@@ -308,16 +297,12 @@ type ConnectionIcebergInput struct {
 	Name string                `json:"name"`
 	Type ConnectionIcebergType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	IamRole        string               `json:"iamRole"`
-	DataBucket     string               `json:"dataBucket"`
-	BaseDirectory  string               `json:"baseDirectory"`
-	// Deprecated: specify the Glue database when creating a pipeline via the `destination.schema` property on the `POST /api/v2/pipelines` endpoint.
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	GlueDatabase        *string `json:"glueDatabase,omitempty"`
-	GlueRegion          string  `json:"glueRegion"`
-	WarehouseConnection *string `json:"warehouseConnection,omitempty"`
+	UpdateSchedule      *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	IamRole             string               `json:"iamRole"`
+	DataBucket          string               `json:"dataBucket"`
+	BaseDirectory       string               `json:"baseDirectory"`
+	GlueRegion          string               `json:"glueRegion"`
+	WarehouseConnection *string              `json:"warehouseConnection,omitempty"`
 }
 
 func (o *ConnectionIcebergInput) GetName() string {
@@ -395,13 +380,6 @@ func (o *ConnectionIcebergInput) GetBaseDirectory() string {
 		return ""
 	}
 	return o.BaseDirectory
-}
-
-func (o *ConnectionIcebergInput) GetGlueDatabase() *string {
-	if o == nil {
-		return nil
-	}
-	return o.GlueDatabase
 }
 
 func (o *ConnectionIcebergInput) GetGlueRegion() string {

@@ -14,7 +14,7 @@ ConnectionSNOWFLAKESHARDED DataSource
 
 ```terraform
 data "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" {
-  id = "c47de46d-0827-4798-9321-15efe7840722"
+  id = "a31bc1c4-36b9-4a43-b3b2-91456421624c"
 }
 ```
 

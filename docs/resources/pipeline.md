@@ -17,7 +17,7 @@ resource "etleap_pipeline" "my_pipeline" {
   deletion_of_export_products = false
   destination = {
     delta_lake = {
-      automatic_schema_changes   = false
+      automatic_schema_changes   = true
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
       pre10_dot2_runtime_support = true
@@ -31,7 +31,7 @@ resource "etleap_pipeline" "my_pipeline" {
       wait_for_quality_check = false
     }
   }
-  name   = "Ms. Diana Brown V"
+  name   = "Elsie Gutmann"
   paused = false
   script = {
     legacy_script = {
@@ -42,7 +42,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 0
+      latency_threshold = 1
       type              = "ACTIVE_CAMPAIGN"
     }
   }
@@ -293,6 +293,7 @@ Optional:
 - `s3_legacy` (Attributes) (see [below for nested schema](#nestedatt--source--s3_legacy))
 - `salesforce` (Attributes) (see [below for nested schema](#nestedatt--source--salesforce))
 - `salesforce_marketing_cloud` (Attributes) (see [below for nested schema](#nestedatt--source--salesforce_marketing_cloud))
+- `salesloft` (Attributes) (see [below for nested schema](#nestedatt--source--salesloft))
 - `sap_concur` (Attributes) (see [below for nested schema](#nestedatt--source--sap_concur))
 - `sap_hana` (Attributes) (see [below for nested schema](#nestedatt--source--sap_hana))
 - `sap_hana_sharded` (Attributes) (see [below for nested schema](#nestedatt--source--sap_hana_sharded))
@@ -1194,6 +1195,17 @@ Optional:
 - `entity` (String) The Salesforce Marketing Cloud entity. Example Values: [Bounce Event, Campaign, Click Event, Content Area, Data Extension, Data Extension Object, Email, Folders, List Subscriber, Lists, Open Event, Send, Sent Event, Subscribers, Unsub Event]. Requires replacement if changed. ; Not Null
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) Not Null; must be one of ["SALESFORCE_MARKETING_CLOUD"]
+
+
+<a id="nestedatt--source--salesloft"></a>
+### Nested Schema for `source.salesloft`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The Salesloft resource. Example: people. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SALESLOFT"]
 
 
 <a id="nestedatt--source--sap_concur"></a>

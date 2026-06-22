@@ -1,3 +1,3 @@
 data "etleap_connection_quora_ads" "my_connectionquora_ads" {
-  id = "fe244f8a-0be6-4d5d-8739-89982d772151"
+  id = "a0be6d5d-c739-4899-82d7-721515137a77"
 }
