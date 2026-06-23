@@ -14,7 +14,7 @@ ConnectionSQLSERVER DataSource
 
 ```terraform
 data "etleap_connection_sql_server" "my_connectionsql_server" {
-  id = "5ce221b6-9536-4511-b1f0-60b1a7d9be0d"
+  id = "69536511-b1f0-460b-9a7d-9be0d0595378"
 }
 ```
 
@@ -25,7 +25,9 @@ data "etleap_connection_sql_server" "my_connectionsql_server" {
 
 - `active` (Boolean) Whether this connection has been marked as active.
 - `address` (String)
+- `cdc_address` (String) Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
 - `cdc_enabled` (Boolean) Should Etleap use the SQL Server transaction log to capture changes from this database? This setting cannot be changed later.
+- `cdc_port` (Number) Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
 - `create_date` (String) The date and time when then the connection was created.
 - `database` (String)
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))

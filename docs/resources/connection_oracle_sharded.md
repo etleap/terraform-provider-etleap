@@ -14,25 +14,27 @@ ConnectionORACLESHARDED Resource
 
 ```terraform
 resource "etleap_connection_oracle_sharded" "my_connectionoracle_sharded" {
+  cdc_address                          = "...my_cdc_address..."
   cdc_enabled                          = true
+  cdc_port                             = 3
   certificate                          = "...my_certificate..."
   deletion_of_export_products          = false
-  name                                 = "Brian Wolff"
+  name                                 = "Shawna Dickinson"
   require_ssl_and_validate_certificate = true
   schema                               = "...my_schema..."
   shards = [
     {
-      address  = "170 Schmidt Alley"
+      address  = "70970 Zemlak Lights"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 8
+      port     = 1
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "415 Tromp Overpass"
-        port     = 9
-        username = "Charlene.DuBuque96"
+        address  = "7958 Constantin Trace"
+        port     = 5
+        username = "Vincenzo_Dickens68"
       }
-      username = "Clara_Watsica83"
+      username = "Ricky22"
     },
   ]
   type = "ORACLE_SHARDED"
@@ -50,7 +52,9 @@ resource "etleap_connection_oracle_sharded" "my_connectionoracle_sharded" {
 
 ### Optional
 
+- `cdc_address` (String) Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
 - `cdc_enabled` (Boolean) Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later. Requires replacement if changed. ; Default: false
+- `cdc_port` (Number) Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
 - `certificate` (String) The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `require_ssl_and_validate_certificate` (Boolean) Default: true

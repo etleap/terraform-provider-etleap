@@ -49,6 +49,10 @@ type ConnectionMysqlShardedUpdate struct {
 	TinyInt1IsBoolean *bool `json:"tinyInt1IsBoolean,omitempty"`
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Database *string `json:"database,omitempty"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort *int64 `json:"cdcPort,omitempty"`
 	// All MySQL shards for a connection should specify the same database.
 	Shards []MysqlShard `json:"shards,omitempty"`
 }
@@ -149,6 +153,20 @@ func (o *ConnectionMysqlShardedUpdate) GetDatabase() *string {
 		return nil
 	}
 	return o.Database
+}
+
+func (o *ConnectionMysqlShardedUpdate) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionMysqlShardedUpdate) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
 }
 
 func (o *ConnectionMysqlShardedUpdate) GetShards() []MysqlShard {

@@ -14,7 +14,7 @@ ConnectionMICROSOFTLISTS DataSource
 
 ```terraform
 data "etleap_connection_microsoft_lists" "my_connectionmicrosoft_lists" {
-  id = "ed6f36f3-d3d3-4406-a5eb-a4b52e1ac4ed"
+  id = "3d3d3406-25eb-4a4b-92e1-ac4edce8c58a"
 }
 ```
 

@@ -46,7 +46,9 @@ type ConnectionPOSTGRESResourceModel struct {
 	Active                   types.Bool              `tfsdk:"active"`
 	Address                  types.String            `tfsdk:"address"`
 	AutoReplicate            types.String            `tfsdk:"auto_replicate"`
+	CdcAddress               types.String            `tfsdk:"cdc_address"`
 	CdcEnabled               types.Bool              `tfsdk:"cdc_enabled"`
+	CdcPort                  types.Int64             `tfsdk:"cdc_port"`
 	CreateDate               types.String            `tfsdk:"create_date"`
 	Database                 types.String            `tfsdk:"database"`
 	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
@@ -94,6 +96,14 @@ func (r *ConnectionPOSTGRESResource) Schema(ctx context.Context, req resource.Sc
 				Optional:    true,
 				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.`,
 			},
+			"cdc_address": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `Optional. The host Etleap reads change data (CDC) from, instead of ` + "`" + `address` + "`" + `. Use this when ` + "`" + `address` + "`" + ` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use ` + "`" + `address` + "`" + `. Set ` + "`" + `cdcPort` + "`" + ` to this host's port. Has no effect unless ` + "`" + `cdcEnabled` + "`" + ` is ` + "`" + `true` + "`" + `.`,
+			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.Bool{
@@ -103,6 +113,14 @@ func (r *ConnectionPOSTGRESResource) Schema(ctx context.Context, req resource.Sc
 				Optional:    true,
 				Default:     booldefault.StaticBool(false),
 				Description: `Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met. Requires replacement if changed. ; Default: false`,
+			},
+			"cdc_port": schema.Int64Attribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Int64{
+					speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `Optional. The port for ` + "`" + `cdcAddress` + "`" + `. Required when ` + "`" + `cdcAddress` + "`" + ` is set; ignored otherwise.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,

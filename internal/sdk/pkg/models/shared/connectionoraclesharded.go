@@ -156,8 +156,12 @@ type ConnectionOracleSharded struct {
 	CdcEnabled                       *bool `default:"false" json:"cdcEnabled"`
 	RequireSslAndValidateCertificate *bool `default:"true" json:"requireSslAndValidateCertificate"`
 	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
-	Certificate *string               `json:"certificate,omitempty"`
-	Shards      []DatabaseShardOutput `json:"shards"`
+	Certificate *string `json:"certificate,omitempty"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort *int64                `json:"cdcPort,omitempty"`
+	Shards  []DatabaseShardOutput `json:"shards"`
 }
 
 func (c ConnectionOracleSharded) MarshalJSON() ([]byte, error) {
@@ -290,6 +294,20 @@ func (o *ConnectionOracleSharded) GetCertificate() *string {
 	return o.Certificate
 }
 
+func (o *ConnectionOracleSharded) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionOracleSharded) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
+}
+
 func (o *ConnectionOracleSharded) GetShards() []DatabaseShardOutput {
 	if o == nil {
 		return []DatabaseShardOutput{}
@@ -311,8 +329,12 @@ type ConnectionOracleShardedInput struct {
 	CdcEnabled                       *bool `default:"false" json:"cdcEnabled"`
 	RequireSslAndValidateCertificate *bool `default:"true" json:"requireSslAndValidateCertificate"`
 	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
-	Certificate *string         `json:"certificate,omitempty"`
-	Shards      []DatabaseShard `json:"shards"`
+	Certificate *string `json:"certificate,omitempty"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort *int64          `json:"cdcPort,omitempty"`
+	Shards  []DatabaseShard `json:"shards"`
 }
 
 func (c ConnectionOracleShardedInput) MarshalJSON() ([]byte, error) {
@@ -408,6 +430,20 @@ func (o *ConnectionOracleShardedInput) GetCertificate() *string {
 		return nil
 	}
 	return o.Certificate
+}
+
+func (o *ConnectionOracleShardedInput) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionOracleShardedInput) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
 }
 
 func (o *ConnectionOracleShardedInput) GetShards() []DatabaseShard {

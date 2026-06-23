@@ -14,7 +14,7 @@ ConnectionS3INPUT DataSource
 
 ```terraform
 data "etleap_connection_s3_input" "my_connections3_input" {
-  id = "ca25be7a-bdee-4f93-b49a-cd5013e0cd33"
+  id = "abdeef93-349a-4cd5-813e-0cd33c77143d"
 }
 ```
 

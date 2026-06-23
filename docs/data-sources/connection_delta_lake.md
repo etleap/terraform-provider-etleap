@@ -14,7 +14,7 @@ ConnectionDELTALAKE DataSource
 
 ```terraform
 data "etleap_connection_delta_lake" "my_connectiondelta_lake" {
-  id = "263d66a3-b2a0-481d-9c28-11838b263dd6"
+  id = "3b2a081d-dc28-4118-b8b2-63dd6c13d19c"
 }
 ```
 

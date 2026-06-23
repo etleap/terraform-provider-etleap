@@ -14,7 +14,7 @@ ConnectionORACLE DataSource
 
 ```terraform
 data "etleap_connection_oracle" "my_connectionoracle" {
-  id = "9645e03c-b67d-4cc7-af29-566e6375518c"
+  id = "cb67dcc7-2f29-4566-a637-5518c08e448d"
 }
 ```
 
@@ -25,7 +25,9 @@ data "etleap_connection_oracle" "my_connectionoracle" {
 
 - `active` (Boolean) Whether this connection has been marked as active.
 - `address` (String)
+- `cdc_address` (String) Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
 - `cdc_enabled` (Boolean) Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later.
+- `cdc_port` (Number) Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
 - `certificate` (String) The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
 - `create_date` (String) The date and time when then the connection was created.
 - `database` (String)

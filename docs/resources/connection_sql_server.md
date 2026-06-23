@@ -14,16 +14,18 @@ ConnectionSQLSERVER Resource
 
 ```terraform
 resource "etleap_connection_sql_server" "my_connectionsql_server" {
-  address                     = "750 Hilll Unions"
+  address                     = "69284 Tromp Junctions"
+  cdc_address                 = "...my_cdc_address..."
   cdc_enabled                 = false
+  cdc_port                    = 1
   database                    = "...my_database..."
-  deletion_of_export_products = false
-  name                        = "Alfred Toy"
+  deletion_of_export_products = true
+  name                        = "Lester Abbott"
   password                    = "...my_password..."
-  port                        = 9
+  port                        = 6
   schema                      = "...my_schema..."
   type                        = "SQL_SERVER"
-  username                    = "Helene91"
+  username                    = "Adrianna_Mills54"
 }
 ```
 
@@ -42,7 +44,9 @@ resource "etleap_connection_sql_server" "my_connectionsql_server" {
 
 ### Optional
 
+- `cdc_address` (String) Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
 - `cdc_enabled` (Boolean) Should Etleap use the SQL Server transaction log to capture changes from this database? This setting cannot be changed later. Requires replacement if changed. ; Default: false
+- `cdc_port` (Number) Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `schema` (String) If not specified, the default schema will be used.
 - `ssh_config` (Attributes) (see [below for nested schema](#nestedatt--ssh_config))

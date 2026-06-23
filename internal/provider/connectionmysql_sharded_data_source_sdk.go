@@ -11,7 +11,9 @@ import (
 func (r *ConnectionMYSQLSHARDEDDataSourceModel) RefreshFromSharedConnectionMysqlSharded(resp *shared.ConnectionMysqlSharded) {
 	r.Active = types.BoolValue(resp.Active)
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
+	r.CdcAddress = types.StringPointerValue(resp.CdcAddress)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.CdcPort = types.Int64PointerValue(resp.CdcPort)
 	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringPointerValue(resp.Database)

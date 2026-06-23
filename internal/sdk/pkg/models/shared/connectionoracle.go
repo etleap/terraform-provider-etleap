@@ -157,12 +157,16 @@ type ConnectionOracle struct {
 	CdcEnabled                       *bool `default:"false" json:"cdcEnabled"`
 	RequireSslAndValidateCertificate *bool `default:"true" json:"requireSslAndValidateCertificate"`
 	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
-	Certificate *string    `json:"certificate,omitempty"`
-	Address     string     `json:"address"`
-	Port        int64      `json:"port"`
-	Username    string     `json:"username"`
-	SSHConfig   *SSHConfig `json:"sshConfig,omitempty"`
-	Database    string     `json:"database"`
+	Certificate *string `json:"certificate,omitempty"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort   *int64     `json:"cdcPort,omitempty"`
+	Address   string     `json:"address"`
+	Port      int64      `json:"port"`
+	Username  string     `json:"username"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionOracle) MarshalJSON() ([]byte, error) {
@@ -295,6 +299,20 @@ func (o *ConnectionOracle) GetCertificate() *string {
 	return o.Certificate
 }
 
+func (o *ConnectionOracle) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionOracle) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
+}
+
 func (o *ConnectionOracle) GetAddress() string {
 	if o == nil {
 		return ""
@@ -345,13 +363,17 @@ type ConnectionOracleInput struct {
 	CdcEnabled                       *bool `default:"false" json:"cdcEnabled"`
 	RequireSslAndValidateCertificate *bool `default:"true" json:"requireSslAndValidateCertificate"`
 	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
-	Certificate *string    `json:"certificate,omitempty"`
-	Address     string     `json:"address"`
-	Port        int64      `json:"port"`
-	Username    string     `json:"username"`
-	Password    string     `json:"password"`
-	SSHConfig   *SSHConfig `json:"sshConfig,omitempty"`
-	Database    string     `json:"database"`
+	Certificate *string `json:"certificate,omitempty"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort   *int64     `json:"cdcPort,omitempty"`
+	Address   string     `json:"address"`
+	Port      int64      `json:"port"`
+	Username  string     `json:"username"`
+	Password  string     `json:"password"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionOracleInput) MarshalJSON() ([]byte, error) {
@@ -447,6 +469,20 @@ func (o *ConnectionOracleInput) GetCertificate() *string {
 		return nil
 	}
 	return o.Certificate
+}
+
+func (o *ConnectionOracleInput) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionOracleInput) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
 }
 
 func (o *ConnectionOracleInput) GetAddress() string {

@@ -14,7 +14,7 @@ ConnectionMICROSOFTENTRAID DataSource
 
 ```terraform
 data "etleap_connection_microsoft_entra_id" "my_connectionmicrosoft_entra_id" {
-  id = "cd927f15-c11d-4b2e-8f27-a6f57fb63219"
+  id = "5c11db2e-4f27-4a6f-97fb-63219ed6f36f"
 }
 ```
 

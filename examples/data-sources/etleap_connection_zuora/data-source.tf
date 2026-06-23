@@ -1,3 +1,3 @@
 data "etleap_connection_zuora" "my_connectionzuora" {
-  id = "6dd07e06-73f4-4699-931c-9d2b9601c269"
+  id = "673f4699-d31c-49d2-b960-1c2697a42bd9"
 }

@@ -1,3 +1,3 @@
 data "etleap_connection_postgres" "my_connectionpostgres" {
-  id = "ee63ca81-c6a6-4600-8df1-e39ec2967e50"
+  id = "1c6a6600-8df1-4e39-ac29-67e50f3cf8af"
 }

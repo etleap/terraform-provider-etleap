@@ -157,8 +157,12 @@ type ConnectionPostgresSharded struct {
 	// Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
 	// Can only be specified when `cdcEnabled` is set to `true`. When enabled, tables with LOB columns (`text`, `bytea`, `jsonb`, etc.) are eligible as sources for Etleap pipelines even when `REPLICA IDENTITY` is not set to `FULL`, i.e. the LOB values are not guaranteed to be included in the WAL log for updated rows. Etleap executes a database query for each updated row during the CDC phase to fetch the LOB values. Note that this reduces CDC throughput and adds additional load on the source database.
-	FetchLobsForUpdatedRows *bool                 `default:"false" json:"fetchLobsForUpdatedRows"`
-	Shards                  []DatabaseShardOutput `json:"shards"`
+	FetchLobsForUpdatedRows *bool `default:"false" json:"fetchLobsForUpdatedRows"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort *int64                `json:"cdcPort,omitempty"`
+	Shards  []DatabaseShardOutput `json:"shards"`
 }
 
 func (c ConnectionPostgresSharded) MarshalJSON() ([]byte, error) {
@@ -291,6 +295,20 @@ func (o *ConnectionPostgresSharded) GetFetchLobsForUpdatedRows() *bool {
 	return o.FetchLobsForUpdatedRows
 }
 
+func (o *ConnectionPostgresSharded) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionPostgresSharded) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
+}
+
 func (o *ConnectionPostgresSharded) GetShards() []DatabaseShardOutput {
 	if o == nil {
 		return []DatabaseShardOutput{}
@@ -313,8 +331,12 @@ type ConnectionPostgresShardedInput struct {
 	// Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
 	// Can only be specified when `cdcEnabled` is set to `true`. When enabled, tables with LOB columns (`text`, `bytea`, `jsonb`, etc.) are eligible as sources for Etleap pipelines even when `REPLICA IDENTITY` is not set to `FULL`, i.e. the LOB values are not guaranteed to be included in the WAL log for updated rows. Etleap executes a database query for each updated row during the CDC phase to fetch the LOB values. Note that this reduces CDC throughput and adds additional load on the source database.
-	FetchLobsForUpdatedRows *bool           `default:"false" json:"fetchLobsForUpdatedRows"`
-	Shards                  []DatabaseShard `json:"shards"`
+	FetchLobsForUpdatedRows *bool `default:"false" json:"fetchLobsForUpdatedRows"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort *int64          `json:"cdcPort,omitempty"`
+	Shards  []DatabaseShard `json:"shards"`
 }
 
 func (c ConnectionPostgresShardedInput) MarshalJSON() ([]byte, error) {
@@ -410,6 +432,20 @@ func (o *ConnectionPostgresShardedInput) GetFetchLobsForUpdatedRows() *bool {
 		return nil
 	}
 	return o.FetchLobsForUpdatedRows
+}
+
+func (o *ConnectionPostgresShardedInput) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionPostgresShardedInput) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
 }
 
 func (o *ConnectionPostgresShardedInput) GetShards() []DatabaseShard {

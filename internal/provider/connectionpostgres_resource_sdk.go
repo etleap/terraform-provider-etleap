@@ -110,6 +110,18 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresInput() *sha
 	} else {
 		fetchLobsForUpdatedRows = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
 	username := r.Username.ValueString()
@@ -139,6 +151,8 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresInput() *sha
 		AutoReplicate:           autoReplicate,
 		CdcEnabled:              cdcEnabled,
 		FetchLobsForUpdatedRows: fetchLobsForUpdatedRows,
+		CdcAddress:              cdcAddress,
+		CdcPort:                 cdcPort,
 		Address:                 address,
 		Port:                    port,
 		Username:                username,
@@ -153,7 +167,9 @@ func (r *ConnectionPOSTGRESResourceModel) RefreshFromSharedConnectionPostgres(re
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
+	r.CdcAddress = types.StringPointerValue(resp.CdcAddress)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.CdcPort = types.Int64PointerValue(resp.CdcPort)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -360,6 +376,18 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 	} else {
 		fetchLobsForUpdatedRows = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	address := new(string)
 	if !r.Address.IsUnknown() && !r.Address.IsNull() {
 		*address = r.Address.ValueString()
@@ -424,6 +452,8 @@ func (r *ConnectionPOSTGRESResourceModel) ToSharedConnectionPostgresUpdate() *sh
 		Schema:                  schema,
 		AutoReplicate:           autoReplicate,
 		FetchLobsForUpdatedRows: fetchLobsForUpdatedRows,
+		CdcAddress:              cdcAddress,
+		CdcPort:                 cdcPort,
 		Address:                 address,
 		Port:                    port,
 		Username:                username,

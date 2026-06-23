@@ -5,7 +5,7 @@ resource "etleap_pipeline" "my_pipeline" {
       automatic_schema_changes   = true
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
-      pre10_dot2_runtime_support = true
+      pre10_dot2_runtime_support = false
       primary_key = [
         "...",
       ]
@@ -16,7 +16,7 @@ resource "etleap_pipeline" "my_pipeline" {
       wait_for_quality_check = false
     }
   }
-  name   = "Elsie Gutmann"
+  name   = "Sherman Gibson"
   paused = false
   script = {
     legacy_script = {
@@ -27,7 +27,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 1
+      latency_threshold = 8
       type              = "ACTIVE_CAMPAIGN"
     }
   }

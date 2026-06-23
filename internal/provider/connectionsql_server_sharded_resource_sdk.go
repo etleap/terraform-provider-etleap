@@ -98,6 +98,18 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerSha
 	} else {
 		cdcEnabled = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
 		address := shardsItem.Address.ValueString()
@@ -138,6 +150,8 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerSha
 		UpdateSchedule: updateSchedule,
 		Schema:         schema,
 		CdcEnabled:     cdcEnabled,
+		CdcAddress:     cdcAddress,
+		CdcPort:        cdcPort,
 		Shards:         shards,
 	}
 	return &out
@@ -145,7 +159,9 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerSha
 
 func (r *ConnectionSQLSERVERSHARDEDResourceModel) RefreshFromSharedConnectionSQLServerSharded(resp *shared.ConnectionSQLServerSharded) {
 	r.Active = types.BoolValue(resp.Active)
+	r.CdcAddress = types.StringPointerValue(resp.CdcAddress)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.CdcPort = types.Int64PointerValue(resp.CdcPort)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
@@ -357,6 +373,18 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerSha
 	} else {
 		schema = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
 		address := shardsItem.Address.ValueString()
@@ -397,6 +425,8 @@ func (r *ConnectionSQLSERVERSHARDEDResourceModel) ToSharedConnectionSQLServerSha
 		Active:         active,
 		UpdateSchedule: updateSchedule,
 		Schema:         schema,
+		CdcAddress:     cdcAddress,
+		CdcPort:        cdcPort,
 		Shards:         shards,
 	}
 	return &out

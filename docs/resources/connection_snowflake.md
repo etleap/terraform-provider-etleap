@@ -14,17 +14,17 @@ ConnectionSNOWFLAKE Resource
 
 ```terraform
 resource "etleap_connection_snowflake" "my_connectionsnowflake" {
-  address                     = "19192 Amina Glens"
+  address                     = "610 Berenice Pine"
   database                    = "...my_database..."
-  deletion_of_export_products = true
-  name                        = "Mrs. Neal Crist MD"
+  deletion_of_export_products = false
+  name                        = "Miss Kelly Howell"
   password                    = "...my_password..."
   role                        = "...my_role..."
   schema                      = "...my_schema..."
-  source_only                 = false
+  source_only                 = true
   storage_integration         = "...my_storage_integration..."
   type                        = "SNOWFLAKE"
-  username                    = "Raymond.Kunze"
+  username                    = "Kole_Littel"
   warehouse                   = "...my_warehouse..."
 }
 ```

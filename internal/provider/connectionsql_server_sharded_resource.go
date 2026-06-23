@@ -45,7 +45,9 @@ type ConnectionSQLSERVERSHARDEDResource struct {
 // ConnectionSQLSERVERSHARDEDResourceModel describes the resource data model.
 type ConnectionSQLSERVERSHARDEDResourceModel struct {
 	Active                   types.Bool              `tfsdk:"active"`
+	CdcAddress               types.String            `tfsdk:"cdc_address"`
 	CdcEnabled               types.Bool              `tfsdk:"cdc_enabled"`
+	CdcPort                  types.Int64             `tfsdk:"cdc_port"`
 	CreateDate               types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
@@ -74,6 +76,14 @@ func (r *ConnectionSQLSERVERSHARDEDResource) Schema(ctx context.Context, req res
 				},
 				Description: `Whether this connection has been marked as active.`,
 			},
+			"cdc_address": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `Optional. The host Etleap reads change data (CDC) from, instead of ` + "`" + `address` + "`" + `. Use this when ` + "`" + `address` + "`" + ` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use ` + "`" + `address` + "`" + `. Set ` + "`" + `cdcPort` + "`" + ` to this host's port. Has no effect unless ` + "`" + `cdcEnabled` + "`" + ` is ` + "`" + `true` + "`" + `.`,
+			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.Bool{
@@ -83,6 +93,14 @@ func (r *ConnectionSQLSERVERSHARDEDResource) Schema(ctx context.Context, req res
 				Optional:    true,
 				Default:     booldefault.StaticBool(false),
 				Description: `Should Etleap use the SQL Server transaction log to capture changes from this database? This setting cannot be changed later. Requires replacement if changed. ; Default: false`,
+			},
+			"cdc_port": schema.Int64Attribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Int64{
+					speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `Optional. The port for ` + "`" + `cdcAddress` + "`" + `. Required when ` + "`" + `cdcAddress` + "`" + ` is set; ignored otherwise.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,

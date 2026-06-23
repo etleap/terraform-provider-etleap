@@ -110,6 +110,18 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 	} else {
 		certificate = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
 		address := shardsItem.Address.ValueString()
@@ -152,6 +164,8 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 		CdcEnabled:                       cdcEnabled,
 		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
 		Certificate:                      certificate,
+		CdcAddress:                       cdcAddress,
+		CdcPort:                          cdcPort,
 		Shards:                           shards,
 	}
 	return &out
@@ -159,7 +173,9 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedIn
 
 func (r *ConnectionORACLESHARDEDResourceModel) RefreshFromSharedConnectionOracleSharded(resp *shared.ConnectionOracleSharded) {
 	r.Active = types.BoolValue(resp.Active)
+	r.CdcAddress = types.StringPointerValue(resp.CdcAddress)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.CdcPort = types.Int64PointerValue(resp.CdcPort)
 	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -385,6 +401,18 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedUp
 	} else {
 		certificate = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	var shards []shared.DatabaseShard = nil
 	for _, shardsItem := range r.Shards {
 		address := shardsItem.Address.ValueString()
@@ -427,6 +455,8 @@ func (r *ConnectionORACLESHARDEDResourceModel) ToSharedConnectionOracleShardedUp
 		Schema:                           schema,
 		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
 		Certificate:                      certificate,
+		CdcAddress:                       cdcAddress,
+		CdcPort:                          cdcPort,
 		Shards:                           shards,
 	}
 	return &out

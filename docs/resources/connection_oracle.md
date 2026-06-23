@@ -14,8 +14,10 @@ ConnectionORACLE Resource
 
 ```terraform
 resource "etleap_connection_oracle" "my_connectionoracle" {
-  address                              = "8805 Reynolds View"
+  address                              = "24880 Strosin Ridges"
+  cdc_address                          = "...my_cdc_address..."
   cdc_enabled                          = true
+  cdc_port                             = 5
   certificate                          = "...my_certificate..."
   database                             = "...my_database..."
   deletion_of_export_products          = true
@@ -44,7 +46,9 @@ resource "etleap_connection_oracle" "my_connectionoracle" {
 
 ### Optional
 
+- `cdc_address` (String) Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
 - `cdc_enabled` (Boolean) Should Etleap use replication logs to capture changes from this database? This setting cannot be changed later. Requires replacement if changed. ; Default: false
+- `cdc_port` (Number) Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
 - `certificate` (String) The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `require_ssl_and_validate_certificate` (Boolean) Default: true

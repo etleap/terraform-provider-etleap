@@ -154,12 +154,16 @@ type ConnectionSQLServer struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use the SQL Server transaction log to capture changes from this database? This setting cannot be changed later.
-	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
-	Address    string     `json:"address"`
-	Port       int64      `json:"port"`
-	Username   string     `json:"username"`
-	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
-	Database   string     `json:"database"`
+	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort   *int64     `json:"cdcPort,omitempty"`
+	Address   string     `json:"address"`
+	Port      int64      `json:"port"`
+	Username  string     `json:"username"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionSQLServer) MarshalJSON() ([]byte, error) {
@@ -278,6 +282,20 @@ func (o *ConnectionSQLServer) GetCdcEnabled() *bool {
 	return o.CdcEnabled
 }
 
+func (o *ConnectionSQLServer) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionSQLServer) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
+}
+
 func (o *ConnectionSQLServer) GetAddress() string {
 	if o == nil {
 		return ""
@@ -325,13 +343,17 @@ type ConnectionSQLServerInput struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use the SQL Server transaction log to capture changes from this database? This setting cannot be changed later.
-	CdcEnabled *bool      `default:"false" json:"cdcEnabled"`
-	Address    string     `json:"address"`
-	Port       int64      `json:"port"`
-	Username   string     `json:"username"`
-	Password   string     `json:"password"`
-	SSHConfig  *SSHConfig `json:"sshConfig,omitempty"`
-	Database   string     `json:"database"`
+	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort   *int64     `json:"cdcPort,omitempty"`
+	Address   string     `json:"address"`
+	Port      int64      `json:"port"`
+	Username  string     `json:"username"`
+	Password  string     `json:"password"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionSQLServerInput) MarshalJSON() ([]byte, error) {
@@ -413,6 +435,20 @@ func (o *ConnectionSQLServerInput) GetCdcEnabled() *bool {
 		return nil
 	}
 	return o.CdcEnabled
+}
+
+func (o *ConnectionSQLServerInput) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionSQLServerInput) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
 }
 
 func (o *ConnectionSQLServerInput) GetAddress() string {

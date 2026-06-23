@@ -110,6 +110,18 @@ func (r *ConnectionORACLEResourceModel) ToSharedConnectionOracleInput() *shared.
 	} else {
 		certificate = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
 	username := r.Username.ValueString()
@@ -139,6 +151,8 @@ func (r *ConnectionORACLEResourceModel) ToSharedConnectionOracleInput() *shared.
 		CdcEnabled:                       cdcEnabled,
 		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
 		Certificate:                      certificate,
+		CdcAddress:                       cdcAddress,
+		CdcPort:                          cdcPort,
 		Address:                          address,
 		Port:                             port,
 		Username:                         username,
@@ -152,7 +166,9 @@ func (r *ConnectionORACLEResourceModel) ToSharedConnectionOracleInput() *shared.
 func (r *ConnectionORACLEResourceModel) RefreshFromSharedConnectionOracle(resp *shared.ConnectionOracle) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
+	r.CdcAddress = types.StringPointerValue(resp.CdcAddress)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.CdcPort = types.Int64PointerValue(resp.CdcPort)
 	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringValue(resp.Database)
@@ -360,6 +376,18 @@ func (r *ConnectionORACLEResourceModel) ToSharedConnectionOracleUpdate() *shared
 	} else {
 		certificate = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	address := new(string)
 	if !r.Address.IsUnknown() && !r.Address.IsNull() {
 		*address = r.Address.ValueString()
@@ -424,6 +452,8 @@ func (r *ConnectionORACLEResourceModel) ToSharedConnectionOracleUpdate() *shared
 		Schema:                           schema,
 		RequireSslAndValidateCertificate: requireSslAndValidateCertificate,
 		Certificate:                      certificate,
+		CdcAddress:                       cdcAddress,
+		CdcPort:                          cdcPort,
 		Address:                          address,
 		Port:                             port,
 		Username:                         username,

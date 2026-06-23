@@ -159,7 +159,11 @@ type ConnectionMysql struct {
 	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
 	TinyInt1IsBoolean *bool `default:"false" json:"tinyInt1IsBoolean"`
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Database  *string    `json:"database,omitempty"`
+	Database *string `json:"database,omitempty"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort   *int64     `json:"cdcPort,omitempty"`
 	Address   string     `json:"address"`
 	Port      int64      `json:"port"`
 	Username  string     `json:"username"`
@@ -310,6 +314,20 @@ func (o *ConnectionMysql) GetDatabase() *string {
 	return o.Database
 }
 
+func (o *ConnectionMysql) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionMysql) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
+}
+
 func (o *ConnectionMysql) GetAddress() string {
 	if o == nil {
 		return ""
@@ -355,7 +373,11 @@ type ConnectionMysqlInput struct {
 	// Should Etleap interpret columns with type Tinyint(1) as Boolean (i.e. true/false)?
 	TinyInt1IsBoolean *bool `default:"false" json:"tinyInt1IsBoolean"`
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Database  *string    `json:"database,omitempty"`
+	Database *string `json:"database,omitempty"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort   *int64     `json:"cdcPort,omitempty"`
 	Address   string     `json:"address"`
 	Port      int64      `json:"port"`
 	Username  string     `json:"username"`
@@ -470,6 +492,20 @@ func (o *ConnectionMysqlInput) GetDatabase() *string {
 		return nil
 	}
 	return o.Database
+}
+
+func (o *ConnectionMysqlInput) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionMysqlInput) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
 }
 
 func (o *ConnectionMysqlInput) GetAddress() string {

@@ -1,6 +1,8 @@
 resource "etleap_connection_oracle" "my_connectionoracle" {
-  address                              = "8805 Reynolds View"
+  address                              = "24880 Strosin Ridges"
+  cdc_address                          = "...my_cdc_address..."
   cdc_enabled                          = true
+  cdc_port                             = 5
   certificate                          = "...my_certificate..."
   database                             = "...my_database..."
   deletion_of_export_products          = true

@@ -30,7 +30,9 @@ type ConnectionSQLSERVERDataSource struct {
 type ConnectionSQLSERVERDataSourceModel struct {
 	Active                types.Bool              `tfsdk:"active"`
 	Address               types.String            `tfsdk:"address"`
+	CdcAddress            types.String            `tfsdk:"cdc_address"`
 	CdcEnabled            types.Bool              `tfsdk:"cdc_enabled"`
+	CdcPort               types.Int64             `tfsdk:"cdc_port"`
 	CreateDate            types.String            `tfsdk:"create_date"`
 	Database              types.String            `tfsdk:"database"`
 	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
@@ -63,9 +65,17 @@ func (r *ConnectionSQLSERVERDataSource) Schema(ctx context.Context, req datasour
 			"address": schema.StringAttribute{
 				Computed: true,
 			},
+			"cdc_address": schema.StringAttribute{
+				Computed:    true,
+				Description: `Optional. The host Etleap reads change data (CDC) from, instead of ` + "`" + `address` + "`" + `. Use this when ` + "`" + `address` + "`" + ` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use ` + "`" + `address` + "`" + `. Set ` + "`" + `cdcPort` + "`" + ` to this host's port. Has no effect unless ` + "`" + `cdcEnabled` + "`" + ` is ` + "`" + `true` + "`" + `.`,
+			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed:    true,
 				Description: `Should Etleap use the SQL Server transaction log to capture changes from this database? This setting cannot be changed later.`,
+			},
+			"cdc_port": schema.Int64Attribute{
+				Computed:    true,
+				Description: `Optional. The port for ` + "`" + `cdcAddress` + "`" + `. Required when ` + "`" + `cdcAddress` + "`" + ` is set; ignored otherwise.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed:    true,

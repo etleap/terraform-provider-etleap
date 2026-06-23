@@ -14,7 +14,7 @@ ConnectionPOSTGRES DataSource
 
 ```terraform
 data "etleap_connection_postgres" "my_connectionpostgres" {
-  id = "ee63ca81-c6a6-4600-8df1-e39ec2967e50"
+  id = "1c6a6600-8df1-4e39-ac29-67e50f3cf8af"
 }
 ```
 
@@ -26,7 +26,9 @@ data "etleap_connection_postgres" "my_connectionpostgres" {
 - `active` (Boolean) Whether this connection has been marked as active.
 - `address` (String)
 - `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
+- `cdc_address` (String) Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
 - `cdc_enabled` (Boolean) Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met.
+- `cdc_port` (Number) Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
 - `create_date` (String) The date and time when then the connection was created.
 - `database` (String)
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))

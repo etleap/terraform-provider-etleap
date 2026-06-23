@@ -98,6 +98,18 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerInput() *s
 	} else {
 		cdcEnabled = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
 	username := r.Username.ValueString()
@@ -125,6 +137,8 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerInput() *s
 		UpdateSchedule: updateSchedule,
 		Schema:         schema,
 		CdcEnabled:     cdcEnabled,
+		CdcAddress:     cdcAddress,
+		CdcPort:        cdcPort,
 		Address:        address,
 		Port:           port,
 		Username:       username,
@@ -138,7 +152,9 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerInput() *s
 func (r *ConnectionSQLSERVERResourceModel) RefreshFromSharedConnectionSQLServer(resp *shared.ConnectionSQLServer) {
 	r.Active = types.BoolValue(resp.Active)
 	r.Address = types.StringValue(resp.Address)
+	r.CdcAddress = types.StringPointerValue(resp.CdcAddress)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.CdcPort = types.Int64PointerValue(resp.CdcPort)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringValue(resp.Database)
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
@@ -332,6 +348,18 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerUpdate() *
 	} else {
 		schema = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	address := new(string)
 	if !r.Address.IsUnknown() && !r.Address.IsNull() {
 		*address = r.Address.ValueString()
@@ -394,6 +422,8 @@ func (r *ConnectionSQLSERVERResourceModel) ToSharedConnectionSQLServerUpdate() *
 		Active:         active,
 		UpdateSchedule: updateSchedule,
 		Schema:         schema,
+		CdcAddress:     cdcAddress,
+		CdcPort:        cdcPort,
 		Address:        address,
 		Port:           port,
 		Username:       username,

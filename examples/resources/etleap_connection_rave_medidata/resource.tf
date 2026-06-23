@@ -1,8 +1,8 @@
 resource "etleap_connection_rave_medidata" "my_connectionrave_medidata" {
-  deletion_of_export_products = false
-  hostname                    = "lawful-licence.org"
-  name                        = "Elena Prosacco"
+  deletion_of_export_products = true
+  hostname                    = "extroverted-crunch.info"
+  name                        = "Lynette Luettgen"
   password                    = "...my_password..."
   type                        = "RAVE_MEDIDATA"
-  username                    = "Jerel48"
+  username                    = "Maximillian.Corwin42"
 }

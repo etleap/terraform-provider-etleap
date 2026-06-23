@@ -153,8 +153,12 @@ type ConnectionSQLServerSharded struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use the SQL Server transaction log to capture changes from this database? This setting cannot be changed later.
-	CdcEnabled *bool                 `default:"false" json:"cdcEnabled"`
-	Shards     []DatabaseShardOutput `json:"shards"`
+	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort *int64                `json:"cdcPort,omitempty"`
+	Shards  []DatabaseShardOutput `json:"shards"`
 }
 
 func (c ConnectionSQLServerSharded) MarshalJSON() ([]byte, error) {
@@ -273,6 +277,20 @@ func (o *ConnectionSQLServerSharded) GetCdcEnabled() *bool {
 	return o.CdcEnabled
 }
 
+func (o *ConnectionSQLServerSharded) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionSQLServerSharded) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
+}
+
 func (o *ConnectionSQLServerSharded) GetShards() []DatabaseShardOutput {
 	if o == nil {
 		return []DatabaseShardOutput{}
@@ -291,8 +309,12 @@ type ConnectionSQLServerShardedInput struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Schema *string `json:"schema,omitempty"`
 	// Should Etleap use the SQL Server transaction log to capture changes from this database? This setting cannot be changed later.
-	CdcEnabled *bool           `default:"false" json:"cdcEnabled"`
-	Shards     []DatabaseShard `json:"shards"`
+	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort *int64          `json:"cdcPort,omitempty"`
+	Shards  []DatabaseShard `json:"shards"`
 }
 
 func (c ConnectionSQLServerShardedInput) MarshalJSON() ([]byte, error) {
@@ -374,6 +396,20 @@ func (o *ConnectionSQLServerShardedInput) GetCdcEnabled() *bool {
 		return nil
 	}
 	return o.CdcEnabled
+}
+
+func (o *ConnectionSQLServerShardedInput) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionSQLServerShardedInput) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
 }
 
 func (o *ConnectionSQLServerShardedInput) GetShards() []DatabaseShard {

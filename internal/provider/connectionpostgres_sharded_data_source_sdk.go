@@ -11,7 +11,9 @@ import (
 func (r *ConnectionPOSTGRESSHARDEDDataSourceModel) RefreshFromSharedConnectionPostgresSharded(resp *shared.ConnectionPostgresSharded) {
 	r.Active = types.BoolValue(resp.Active)
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
+	r.CdcAddress = types.StringPointerValue(resp.CdcAddress)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.CdcPort = types.Int64PointerValue(resp.CdcPort)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]

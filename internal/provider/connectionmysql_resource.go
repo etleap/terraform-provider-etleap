@@ -46,7 +46,9 @@ type ConnectionMYSQLResourceModel struct {
 	Active                           types.Bool              `tfsdk:"active"`
 	Address                          types.String            `tfsdk:"address"`
 	AutoReplicate                    types.String            `tfsdk:"auto_replicate"`
+	CdcAddress                       types.String            `tfsdk:"cdc_address"`
 	CdcEnabled                       types.Bool              `tfsdk:"cdc_enabled"`
+	CdcPort                          types.Int64             `tfsdk:"cdc_port"`
 	Certificate                      types.String            `tfsdk:"certificate"`
 	CreateDate                       types.String            `tfsdk:"create_date"`
 	Database                         types.String            `tfsdk:"database"`
@@ -95,6 +97,14 @@ func (r *ConnectionMYSQLResource) Schema(ctx context.Context, req resource.Schem
 				Optional:    true,
 				Description: `If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.`,
 			},
+			"cdc_address": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `Optional. The host Etleap reads change data (CDC) from, instead of ` + "`" + `address` + "`" + `. Use this when ` + "`" + `address` + "`" + ` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use ` + "`" + `address` + "`" + `. Set ` + "`" + `cdcPort` + "`" + ` to this host's port. Has no effect unless ` + "`" + `cdcEnabled` + "`" + ` is ` + "`" + `true` + "`" + `.`,
+			},
 			"cdc_enabled": schema.BoolAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.Bool{
@@ -104,6 +114,14 @@ func (r *ConnectionMYSQLResource) Schema(ctx context.Context, req resource.Schem
 				Optional:    true,
 				Default:     booldefault.StaticBool(false),
 				Description: `Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later. Requires replacement if changed. ; Default: false`,
+			},
+			"cdc_port": schema.Int64Attribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Int64{
+					speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `Optional. The port for ` + "`" + `cdcAddress` + "`" + `. Required when ` + "`" + `cdcAddress` + "`" + ` is set; ignored otherwise.`,
 			},
 			"certificate": schema.StringAttribute{
 				Computed: true,

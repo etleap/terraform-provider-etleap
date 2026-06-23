@@ -15,24 +15,24 @@ ConnectionSNOWFLAKESHARDED Resource
 ```terraform
 resource "etleap_connection_snowflake_sharded" "my_connectionsnowflake_sharded" {
   deletion_of_export_products = false
-  name                        = "Norman Mayert"
+  name                        = "Noah Bruen"
   schema                      = "...my_schema..."
   shards = [
     {
-      address = "189 Lenna Forges"
+      address = "1582 Ulises Station"
       authentication = {
         key_pair = {
           private_key            = "...my_private_key..."
           private_key_passphrase = "...my_private_key_passphrase..."
           public_key             = "...my_public_key..."
-          type                   = "PASSWORD"
+          type                   = "KEY_PAIR"
         }
       }
       database  = "...my_database..."
       password  = "...my_password..."
       role      = "...my_role..."
       shard_id  = "...my_shard_id..."
-      username  = "Claud.Metz19"
+      username  = "Kasey.Bailey"
       warehouse = "...my_warehouse..."
     },
   ]

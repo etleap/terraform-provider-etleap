@@ -14,7 +14,7 @@ ConnectionKUSTOMER DataSource
 
 ```terraform
 data "etleap_connection_kustomer" "my_connectionkustomer" {
-  id = "610fb19a-f73e-43aa-a2dd-3c2cc29d5c43"
+  id = "af73e3aa-22dd-43c2-8c29-d5c43402a678"
 }
 ```
 

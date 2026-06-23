@@ -1,3 +1,3 @@
 data "etleap_connection_azure_blob_storage" "my_connectionazure_blob_storage" {
-  id = "f3a3e616-b6f0-4baa-be2c-f5048df6c7ef"
+  id = "6b6f0baa-3e2c-4f50-88df-6c7ef0f714d9"
 }

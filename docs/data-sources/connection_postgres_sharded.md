@@ -14,7 +14,7 @@ ConnectionPOSTGRESSHARDED DataSource
 
 ```terraform
 data "etleap_connection_postgres_sharded" "my_connectionpostgres_sharded" {
-  id = "f3cf8af6-87b2-4df9-bc48-0e1175d4af3c"
+  id = "687b2df9-3c48-40e1-975d-4af3c8533d61"
 }
 ```
 
@@ -25,7 +25,9 @@ data "etleap_connection_postgres_sharded" "my_connectionpostgres_sharded" {
 
 - `active` (Boolean) Whether this connection has been marked as active.
 - `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a schema is not specified on this connection, then all schemas will be replicated to the selected destination. Any schemas not present in the destination will be created as needed.<br/><br/>If a schema is specified on this connection, then only tables in that schema will be replicated to the selected destination. Tables will be created in the schema specified on the destination connection.
+- `cdc_address` (String) Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
 - `cdc_enabled` (Boolean) Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met.
+- `cdc_port` (Number) Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `fetch_lobs_for_updated_rows` (Boolean) Can only be specified when `cdcEnabled` is set to `true`. When enabled, tables with LOB columns (`text`, `bytea`, `jsonb`, etc.) are eligible as sources for Etleap pipelines even when `REPLICA IDENTITY` is not set to `FULL`, i.e. the LOB values are not guaranteed to be included in the WAL log for updated rows. Etleap executes a database query for each updated row during the CDC phase to fetch the LOB values. Note that this reduces CDC throughput and adds additional load on the source database.

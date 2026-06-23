@@ -158,12 +158,16 @@ type ConnectionPostgres struct {
 	// Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
 	// Can only be specified when `cdcEnabled` is set to `true`. When enabled, tables with LOB columns (`text`, `bytea`, `jsonb`, etc.) are eligible as sources for Etleap pipelines even when `REPLICA IDENTITY` is not set to `FULL`, i.e. the LOB values are not guaranteed to be included in the WAL log for updated rows. Etleap executes a database query for each updated row during the CDC phase to fetch the LOB values. Note that this reduces CDC throughput and adds additional load on the source database.
-	FetchLobsForUpdatedRows *bool      `default:"false" json:"fetchLobsForUpdatedRows"`
-	Address                 string     `json:"address"`
-	Port                    int64      `json:"port"`
-	Username                string     `json:"username"`
-	SSHConfig               *SSHConfig `json:"sshConfig,omitempty"`
-	Database                string     `json:"database"`
+	FetchLobsForUpdatedRows *bool `default:"false" json:"fetchLobsForUpdatedRows"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort   *int64     `json:"cdcPort,omitempty"`
+	Address   string     `json:"address"`
+	Port      int64      `json:"port"`
+	Username  string     `json:"username"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionPostgres) MarshalJSON() ([]byte, error) {
@@ -296,6 +300,20 @@ func (o *ConnectionPostgres) GetFetchLobsForUpdatedRows() *bool {
 	return o.FetchLobsForUpdatedRows
 }
 
+func (o *ConnectionPostgres) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionPostgres) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
+}
+
 func (o *ConnectionPostgres) GetAddress() string {
 	if o == nil {
 		return ""
@@ -347,13 +365,17 @@ type ConnectionPostgresInput struct {
 	// Should Etleap use PostgreSQL replication to capture changes from this database? This setting cannot be changed once the connection has been created. Follow [the setup instructions here](https://docs.etleap.com/documentation/sources/databases/postgre-sql/) and ensure that all requirements are met.
 	CdcEnabled *bool `default:"false" json:"cdcEnabled"`
 	// Can only be specified when `cdcEnabled` is set to `true`. When enabled, tables with LOB columns (`text`, `bytea`, `jsonb`, etc.) are eligible as sources for Etleap pipelines even when `REPLICA IDENTITY` is not set to `FULL`, i.e. the LOB values are not guaranteed to be included in the WAL log for updated rows. Etleap executes a database query for each updated row during the CDC phase to fetch the LOB values. Note that this reduces CDC throughput and adds additional load on the source database.
-	FetchLobsForUpdatedRows *bool      `default:"false" json:"fetchLobsForUpdatedRows"`
-	Address                 string     `json:"address"`
-	Port                    int64      `json:"port"`
-	Username                string     `json:"username"`
-	Password                string     `json:"password"`
-	SSHConfig               *SSHConfig `json:"sshConfig,omitempty"`
-	Database                string     `json:"database"`
+	FetchLobsForUpdatedRows *bool `default:"false" json:"fetchLobsForUpdatedRows"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort   *int64     `json:"cdcPort,omitempty"`
+	Address   string     `json:"address"`
+	Port      int64      `json:"port"`
+	Username  string     `json:"username"`
+	Password  string     `json:"password"`
+	SSHConfig *SSHConfig `json:"sshConfig,omitempty"`
+	Database  string     `json:"database"`
 }
 
 func (c ConnectionPostgresInput) MarshalJSON() ([]byte, error) {
@@ -449,6 +471,20 @@ func (o *ConnectionPostgresInput) GetFetchLobsForUpdatedRows() *bool {
 		return nil
 	}
 	return o.FetchLobsForUpdatedRows
+}
+
+func (o *ConnectionPostgresInput) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionPostgresInput) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
 }
 
 func (o *ConnectionPostgresInput) GetAddress() string {

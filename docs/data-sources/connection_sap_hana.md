@@ -14,7 +14,7 @@ ConnectionSAPHANA DataSource
 
 ```terraform
 data "etleap_connection_sap_hana" "my_connectionsap_hana" {
-  id = "5623137d-1085-4e78-9064-975d0e682d36"
+  id = "d1085e78-5064-4975-90e6-82d36590d842"
 }
 ```
 

@@ -1,3 +1,3 @@
 data "etleap_connection_sap_odata" "my_connectionsap_odata" {
-  id = "aba5c277-52ee-4c0b-9049-facc1fd5a8bd"
+  id = "752eec0b-9049-4fac-81fd-5a8bdd21ad42"
 }

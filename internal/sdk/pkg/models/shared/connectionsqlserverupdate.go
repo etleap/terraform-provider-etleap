@@ -85,7 +85,11 @@ type ConnectionSQLServerUpdate struct {
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	Schema    *string                                          `json:"schema,omitempty"`
+	Schema *string `json:"schema,omitempty"`
+	// Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
+	CdcAddress *string `json:"cdcAddress,omitempty"`
+	// Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
+	CdcPort   *int64                                           `json:"cdcPort,omitempty"`
 	Address   *string                                          `json:"address,omitempty"`
 	Port      *int64                                           `json:"port,omitempty"`
 	Username  *string                                          `json:"username,omitempty"`
@@ -162,6 +166,20 @@ func (o *ConnectionSQLServerUpdate) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *ConnectionSQLServerUpdate) GetCdcAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CdcAddress
+}
+
+func (o *ConnectionSQLServerUpdate) GetCdcPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CdcPort
 }
 
 func (o *ConnectionSQLServerUpdate) GetAddress() *string {

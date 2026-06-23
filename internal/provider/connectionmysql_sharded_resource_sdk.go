@@ -122,6 +122,18 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 	} else {
 		database = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	var shards []shared.MysqlShard = nil
 	for _, shardsItem := range r.Shards {
 		shardID := shardsItem.ShardID.ValueString()
@@ -171,6 +183,8 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 		AutoReplicate:                    autoReplicate,
 		TinyInt1IsBoolean:                tinyInt1IsBoolean,
 		Database:                         database,
+		CdcAddress:                       cdcAddress,
+		CdcPort:                          cdcPort,
 		Shards:                           shards,
 	}
 	return &out
@@ -179,7 +193,9 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedInpu
 func (r *ConnectionMYSQLSHARDEDResourceModel) RefreshFromSharedConnectionMysqlSharded(resp *shared.ConnectionMysqlSharded) {
 	r.Active = types.BoolValue(resp.Active)
 	r.AutoReplicate = types.StringPointerValue(resp.AutoReplicate)
+	r.CdcAddress = types.StringPointerValue(resp.CdcAddress)
 	r.CdcEnabled = types.BoolPointerValue(resp.CdcEnabled)
+	r.CdcPort = types.Int64PointerValue(resp.CdcPort)
 	r.Certificate = types.StringPointerValue(resp.Certificate)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	r.Database = types.StringPointerValue(resp.Database)
@@ -418,6 +434,18 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 	} else {
 		database = nil
 	}
+	cdcAddress := new(string)
+	if !r.CdcAddress.IsUnknown() && !r.CdcAddress.IsNull() {
+		*cdcAddress = r.CdcAddress.ValueString()
+	} else {
+		cdcAddress = nil
+	}
+	cdcPort := new(int64)
+	if !r.CdcPort.IsUnknown() && !r.CdcPort.IsNull() {
+		*cdcPort = r.CdcPort.ValueInt64()
+	} else {
+		cdcPort = nil
+	}
 	var shards []shared.MysqlShard = nil
 	for _, shardsItem := range r.Shards {
 		shardID := shardsItem.ShardID.ValueString()
@@ -467,6 +495,8 @@ func (r *ConnectionMYSQLSHARDEDResourceModel) ToSharedConnectionMysqlShardedUpda
 		AutoReplicate:                    autoReplicate,
 		TinyInt1IsBoolean:                tinyInt1IsBoolean,
 		Database:                         database,
+		CdcAddress:                       cdcAddress,
+		CdcPort:                          cdcPort,
 		Shards:                           shards,
 	}
 	return &out

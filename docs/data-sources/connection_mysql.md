@@ -14,7 +14,7 @@ ConnectionMYSQL DataSource
 
 ```terraform
 data "etleap_connection_mysql" "my_connectionmysql" {
-  id = "6fc21269-0368-4a0d-ab2b-31caff9493c4"
+  id = "90368a0d-2b2b-431c-aff9-493c4b6888cb"
 }
 ```
 
@@ -26,7 +26,9 @@ data "etleap_connection_mysql" "my_connectionmysql" {
 - `active` (Boolean) Whether this connection has been marked as active.
 - `address` (String)
 - `auto_replicate` (String) If you want Etleap to create pipelines for each source table automatically, specify the id of an Etleap destination connection here. If you want to create pipelines manually, omit this property.<br/><br/>If a database is not specified on this connection, then all databases will be replicated to the selected destination. Any databases not present in the destination will be created as needed.<br/><br/>If a database is specified on this connection, then only tables in that database will be replicated to the selected destination. Tables will be created in the database specified on the destination connection.
+- `cdc_address` (String) Optional. The host Etleap reads change data (CDC) from, instead of `address`. Use this when `address` points to a read replica used for catch-up and query extraction, so CDC reads from the primary. The initial historical load and query-based extractions always use `address`. Set `cdcPort` to this host's port. Has no effect unless `cdcEnabled` is `true`.
 - `cdc_enabled` (Boolean) Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
+- `cdc_port` (Number) Optional. The port for `cdcAddress`. Required when `cdcAddress` is set; ignored otherwise.
 - `certificate` (String) The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
 - `create_date` (String) The date and time when then the connection was created.
 - `database` (String)

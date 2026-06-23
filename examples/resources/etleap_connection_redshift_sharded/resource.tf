@@ -1,24 +1,24 @@
 resource "etleap_connection_redshift_sharded" "my_connectionredshift_sharded" {
-  deletion_of_export_products   = false
+  deletion_of_export_products   = true
   dynamic_varchar_width_enabled = true
-  name                          = "Mae Bartell"
-  query_tags_enabled            = true
+  name                          = "Faith Kris"
+  query_tags_enabled            = false
   schema                        = "...my_schema..."
   shards = [
     {
-      address  = "022 Gertrude Track"
+      address  = "47007 Whitney Motorway"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 4
+      port     = 7
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "455 Bins Junctions"
-        port     = 8
-        username = "Alyce.Anderson97"
+        address  = "8809 West Common"
+        port     = 9
+        username = "Kadin32"
       }
-      username = "Keaton_Prosacco"
+      username = "Martine94"
     },
   ]
-  source_only = true
+  source_only = false
   type        = "REDSHIFT_SHARDED"
 }

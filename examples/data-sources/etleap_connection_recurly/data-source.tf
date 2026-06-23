@@ -1,3 +1,3 @@
 data "etleap_connection_recurly" "my_connectionrecurly" {
-  id = "3819897d-4872-4841-b37b-16d53a79fac9"
+  id = "d4872841-337b-416d-93a7-9fac97692965"
 }

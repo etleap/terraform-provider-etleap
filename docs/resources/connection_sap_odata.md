@@ -14,12 +14,12 @@ ConnectionSAPODATA Resource
 
 ```terraform
 resource "etleap_connection_sap_odata" "my_connectionsap_odata" {
-  deletion_of_export_products = true
+  deletion_of_export_products = false
   domain                      = "...my_domain..."
-  name                        = "Miss Ollie Stracke"
+  name                        = "Luis Bergnaum"
   password                    = "...my_password..."
   type                        = "SAP_ODATA"
-  username                    = "Josiane.Kessler74"
+  username                    = "Lamont78"
 }
 ```
 

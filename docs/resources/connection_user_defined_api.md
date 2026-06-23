@@ -18,7 +18,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
     basic = {
       password = "...my_password..."
       type     = "BASIC"
-      username = "Edythe_Smith"
+      username = "Amber_Jast"
     }
   }
   deletion_of_export_products = true
@@ -35,10 +35,10 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      id = "f069fe55-e23a-4367-8e7f-570e3140589e"
+      id = "55e23a36-74e7-4f57-8e31-40589e44781c"
       paging_strategy = {
         cursor_uri = {
-          max_page_size        = 2
+          max_page_size        = 10
           page_size_field_name = "...my_page_size_field_name..."
           path_to_cursor       = "...my_path_to_cursor..."
           type                 = "CURSOR_URI"
@@ -60,7 +60,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
       }
     },
   ]
-  name = "Miss Glenda Littel"
+  name = "Delia Wilderman"
   type = "USER_DEFINED_API"
 }
 ```

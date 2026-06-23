@@ -4,7 +4,7 @@ resource "etleap_connection_twitter_ads" "my_connectiontwitter_ads" {
   app_key                     = "...my_app_key..."
   app_secret_key              = "...my_app_secret_key..."
   deletion_of_export_products = true
-  name                        = "Joe Nader"
+  name                        = "Clifton Ratke"
   twitter_usernames           = "...my_twitter_usernames..."
   type                        = "TWITTER_ADS"
 }
