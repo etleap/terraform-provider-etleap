@@ -208,6 +208,10 @@ func (o *PipelineOutput) GetSourceImpactRadius() *SourceImpactRadius {
 	return o.GetSource().SourceImpactRadius
 }
 
+func (o *PipelineOutput) GetSourceIncrease() *SourceIncrease {
+	return o.GetSource().SourceIncrease
+}
+
 func (o *PipelineOutput) GetSourceIntercom() *SourceIntercom {
 	return o.GetSource().SourceIntercom
 }

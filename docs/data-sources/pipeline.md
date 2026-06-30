@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "2ced0110-28e1-4805-b905-136028594d11"
+  id = "ba5dbb36-23df-4612-92e3-eb440cdcfb2a"
 }
 ```
 
@@ -382,6 +382,7 @@ Read-Only:
 - `google_sheets` (Attributes) (see [below for nested schema](#nestedatt--source--google_sheets))
 - `hubspot` (Attributes) (see [below for nested schema](#nestedatt--source--hubspot))
 - `impact_radius` (Attributes) (see [below for nested schema](#nestedatt--source--impact_radius))
+- `increase` (Attributes) (see [below for nested schema](#nestedatt--source--increase))
 - `intercom` (Attributes) (see [below for nested schema](#nestedatt--source--intercom))
 - `jira` (Attributes) (see [below for nested schema](#nestedatt--source--jira))
 - `jira_align` (Attributes) (see [below for nested schema](#nestedatt--source--jira_align))
@@ -863,6 +864,17 @@ Read-Only:
 - `entity` (String) The Impact entity, spelled the same way as in the UI.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["IMPACT_RADIUS"]
+
+
+<a id="nestedatt--source--increase"></a>
+### Nested Schema for `source.increase`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The Increase resource. Example: Transactions
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["INCREASE"]
 
 
 <a id="nestedatt--source--intercom"></a>

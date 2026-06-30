@@ -1,3 +1,3 @@
 data "etleap_connection_linked_in_ads" "my_connectionlinked_in_ads" {
-  id = "4c3ea710-653f-459f-a488-a539ef9a32ef"
+  id = "a3b901de-062d-41d1-bce2-3f5e3cd927f1"
 }

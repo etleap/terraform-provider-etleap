@@ -45,6 +45,7 @@ const (
 	SourceTypesUpdateTypeGoogleSheets             SourceTypesUpdateType = "GOOGLE_SHEETS"
 	SourceTypesUpdateTypeHubspot                  SourceTypesUpdateType = "HUBSPOT"
 	SourceTypesUpdateTypeImpactRadius             SourceTypesUpdateType = "IMPACT_RADIUS"
+	SourceTypesUpdateTypeIncrease                 SourceTypesUpdateType = "INCREASE"
 	SourceTypesUpdateTypeIntercom                 SourceTypesUpdateType = "INTERCOM"
 	SourceTypesUpdateTypeJira                     SourceTypesUpdateType = "JIRA"
 	SourceTypesUpdateTypeJiraAlign                SourceTypesUpdateType = "JIRA_ALIGN"
@@ -151,6 +152,7 @@ type SourceTypesUpdate struct {
 	SourceGoogleSheetsUpdate             *SourceGoogleSheetsUpdate
 	SourceHubspotUpdate                  *SourceHubspotUpdate
 	SourceImpactRadiusUpdate             *SourceImpactRadiusUpdate
+	SourceIncreaseUpdate                 *SourceIncreaseUpdate
 	SourceIntercomUpdate                 *SourceIntercomUpdate
 	SourceJiraUpdate                     *SourceJiraUpdate
 	SourceJiraAlignUpdate                *SourceJiraAlignUpdate
@@ -618,6 +620,18 @@ func CreateSourceTypesUpdateImpactRadius(impactRadius SourceImpactRadiusUpdate) 
 	return SourceTypesUpdate{
 		SourceImpactRadiusUpdate: &impactRadius,
 		Type:                     typ,
+	}
+}
+
+func CreateSourceTypesUpdateIncrease(increase SourceIncreaseUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeIncrease
+
+	typStr := SourceIncreaseUpdateType(typ)
+	increase.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceIncreaseUpdate: &increase,
+		Type:                 typ,
 	}
 }
 
@@ -1770,6 +1784,15 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceImpactRadiusUpdate = sourceImpactRadiusUpdate
 		u.Type = SourceTypesUpdateTypeImpactRadius
 		return nil
+	case "INCREASE":
+		sourceIncreaseUpdate := new(SourceIncreaseUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceIncreaseUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceIncreaseUpdate = sourceIncreaseUpdate
+		u.Type = SourceTypesUpdateTypeIncrease
+		return nil
 	case "INTERCOM":
 		sourceIntercomUpdate := new(SourceIntercomUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceIntercomUpdate, "", true, true); err != nil {
@@ -2536,6 +2559,10 @@ func (u SourceTypesUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.SourceImpactRadiusUpdate != nil {
 		return utils.MarshalJSON(u.SourceImpactRadiusUpdate, "", true)
+	}
+
+	if u.SourceIncreaseUpdate != nil {
+		return utils.MarshalJSON(u.SourceIncreaseUpdate, "", true)
 	}
 
 	if u.SourceIntercomUpdate != nil {

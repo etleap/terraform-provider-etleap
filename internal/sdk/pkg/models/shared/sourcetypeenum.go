@@ -43,6 +43,7 @@ const (
 	SourceTypeEnumGoogleSheets             SourceTypeEnum = "GOOGLE_SHEETS"
 	SourceTypeEnumHubspot                  SourceTypeEnum = "HUBSPOT"
 	SourceTypeEnumImpactRadius             SourceTypeEnum = "IMPACT_RADIUS"
+	SourceTypeEnumIncrease                 SourceTypeEnum = "INCREASE"
 	SourceTypeEnumIntercom                 SourceTypeEnum = "INTERCOM"
 	SourceTypeEnumJira                     SourceTypeEnum = "JIRA"
 	SourceTypeEnumJiraAlign                SourceTypeEnum = "JIRA_ALIGN"
@@ -190,6 +191,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	case "HUBSPOT":
 		fallthrough
 	case "IMPACT_RADIUS":
+		fallthrough
+	case "INCREASE":
 		fallthrough
 	case "INTERCOM":
 		fallthrough

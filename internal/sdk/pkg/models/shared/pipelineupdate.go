@@ -1111,6 +1111,13 @@ func (o *PipelineUpdate) GetSourceImpactRadius() *SourceImpactRadiusUpdate {
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceIncrease() *SourceIncreaseUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceIncreaseUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceIntercom() *SourceIntercomUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceIntercomUpdate

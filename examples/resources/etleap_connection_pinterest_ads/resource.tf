@@ -1,6 +1,6 @@
 resource "etleap_connection_pinterest_ads" "my_connectionpinterest_ads" {
   code                        = "...my_code..."
   deletion_of_export_products = true
-  name                        = "Dewey Jerde"
+  name                        = "Kelly Haley"
   type                        = "PINTEREST_ADS"
 }

@@ -641,6 +641,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.ImpactRadius.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceImpactRadius.LatencyThreshold)
 		r.Source.ImpactRadius.Type = types.StringValue(string(resp.Source.SourceImpactRadius.Type))
 	}
+	if resp.Source.SourceIncrease != nil {
+		r.Source.Increase = &SourceIncrease{}
+		r.Source.Increase.ConnectionID = types.StringValue(resp.Source.SourceIncrease.ConnectionID)
+		r.Source.Increase.Entity = types.StringValue(resp.Source.SourceIncrease.Entity)
+		r.Source.Increase.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceIncrease.LatencyThreshold)
+		r.Source.Increase.Type = types.StringValue(string(resp.Source.SourceIncrease.Type))
+	}
 	if resp.Source.SourceIntercom != nil {
 		r.Source.Intercom = &SourceIntercom{}
 		r.Source.Intercom.ConnectionID = types.StringValue(resp.Source.SourceIntercom.ConnectionID)

@@ -1,6 +1,6 @@
 resource "etleap_connection_intercom" "my_connectionintercom" {
   code                        = "...my_code..."
-  deletion_of_export_products = true
-  name                        = "Mrs. Renee Jakubowski"
+  deletion_of_export_products = false
+  name                        = "Clarence Veum"
   type                        = "INTERCOM"
 }

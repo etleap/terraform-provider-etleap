@@ -45,6 +45,7 @@ const (
 	SourceTypesTypeGoogleSheets             SourceTypesType = "GOOGLE_SHEETS"
 	SourceTypesTypeHubspot                  SourceTypesType = "HUBSPOT"
 	SourceTypesTypeImpactRadius             SourceTypesType = "IMPACT_RADIUS"
+	SourceTypesTypeIncrease                 SourceTypesType = "INCREASE"
 	SourceTypesTypeIntercom                 SourceTypesType = "INTERCOM"
 	SourceTypesTypeJira                     SourceTypesType = "JIRA"
 	SourceTypesTypeJiraAlign                SourceTypesType = "JIRA_ALIGN"
@@ -151,6 +152,7 @@ type SourceTypes struct {
 	SourceGoogleSheets             *SourceGoogleSheets
 	SourceHubspot                  *SourceHubspot
 	SourceImpactRadius             *SourceImpactRadius
+	SourceIncrease                 *SourceIncrease
 	SourceIntercom                 *SourceIntercom
 	SourceJira                     *SourceJira
 	SourceJiraAlign                *SourceJiraAlign
@@ -618,6 +620,18 @@ func CreateSourceTypesImpactRadius(impactRadius SourceImpactRadius) SourceTypes 
 	return SourceTypes{
 		SourceImpactRadius: &impactRadius,
 		Type:               typ,
+	}
+}
+
+func CreateSourceTypesIncrease(increase SourceIncrease) SourceTypes {
+	typ := SourceTypesTypeIncrease
+
+	typStr := SourceIncreaseType(typ)
+	increase.Type = typStr
+
+	return SourceTypes{
+		SourceIncrease: &increase,
+		Type:           typ,
 	}
 }
 
@@ -1770,6 +1784,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceImpactRadius = sourceImpactRadius
 		u.Type = SourceTypesTypeImpactRadius
 		return nil
+	case "INCREASE":
+		sourceIncrease := new(SourceIncrease)
+		if err := utils.UnmarshalJSON(data, &sourceIncrease, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceIncrease = sourceIncrease
+		u.Type = SourceTypesTypeIncrease
+		return nil
 	case "INTERCOM":
 		sourceIntercom := new(SourceIntercom)
 		if err := utils.UnmarshalJSON(data, &sourceIntercom, "", true, true); err != nil {
@@ -2536,6 +2559,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceImpactRadius != nil {
 		return utils.MarshalJSON(u.SourceImpactRadius, "", true)
+	}
+
+	if u.SourceIncrease != nil {
+		return utils.MarshalJSON(u.SourceIncrease, "", true)
 	}
 
 	if u.SourceIntercom != nil {

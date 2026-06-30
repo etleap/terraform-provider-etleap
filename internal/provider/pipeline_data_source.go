@@ -1503,6 +1503,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
+					"increase": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The Increase resource. Example: Transactions`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["INCREASE"]`,
+							},
+						},
+					},
 					"intercom": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{

@@ -256,6 +256,7 @@ Optional:
 - `google_sheets` (Attributes) (see [below for nested schema](#nestedatt--source--google_sheets))
 - `hubspot` (Attributes) (see [below for nested schema](#nestedatt--source--hubspot))
 - `impact_radius` (Attributes) (see [below for nested schema](#nestedatt--source--impact_radius))
+- `increase` (Attributes) (see [below for nested schema](#nestedatt--source--increase))
 - `intercom` (Attributes) (see [below for nested schema](#nestedatt--source--intercom))
 - `jira` (Attributes) (see [below for nested schema](#nestedatt--source--jira))
 - `jira_align` (Attributes) (see [below for nested schema](#nestedatt--source--jira_align))
@@ -737,6 +738,17 @@ Optional:
 - `entity` (String) The Impact entity, spelled the same way as in the UI. Requires replacement if changed. ; Not Null
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) Not Null; must be one of ["IMPACT_RADIUS"]
+
+
+<a id="nestedatt--source--increase"></a>
+### Nested Schema for `source.increase`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The Increase resource. Example: Transactions. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["INCREASE"]
 
 
 <a id="nestedatt--source--intercom"></a>

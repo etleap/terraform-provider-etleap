@@ -36,6 +36,7 @@ type SourceTypes struct {
 	GoogleSheets             *SourceGoogleSheets             `tfsdk:"google_sheets"`
 	Hubspot                  *SourceHubspot                  `tfsdk:"hubspot"`
 	ImpactRadius             *SourceImpactRadius             `tfsdk:"impact_radius"`
+	Increase                 *SourceIncrease                 `tfsdk:"increase"`
 	Intercom                 *SourceIntercom                 `tfsdk:"intercom"`
 	Jira                     *SourceJira                     `tfsdk:"jira"`
 	JiraAlign                *SourceJiraAlign                `tfsdk:"jira_align"`
