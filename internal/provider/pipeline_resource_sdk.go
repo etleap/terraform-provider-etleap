@@ -3920,6 +3920,15 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			Action:    action,
 		}
 	}
+	var rowErrorSettings *shared.RowErrorSettings
+	if r.RowErrorSettings != nil {
+		threshold1, _ := r.RowErrorSettings.Threshold.ValueBigFloat().Float64()
+		action1 := shared.RowErrorSettingsAction(r.RowErrorSettings.Action.ValueString())
+		rowErrorSettings = &shared.RowErrorSettings{
+			Threshold: threshold1,
+			Action:    action1,
+		}
+	}
 	var shares []string = nil
 	for _, sharesItem := range r.Shares {
 		shares = append(shares, sharesItem.ValueString())
@@ -4004,6 +4013,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		Script:               script,
 		Paused:               paused,
 		ParsingErrorSettings: parsingErrorSettings,
+		RowErrorSettings:     rowErrorSettings,
 		Shares:               shares,
 		RefreshSchedule:      refreshSchedule,
 	}
@@ -4199,6 +4209,45 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 			destinations1.RetentionData.RetentionPolicy.Column = types.StringValue(destinationsItem.RetentionData.RetentionPolicy.Column)
 			destinations1.RetentionData.RetentionPolicy.Period = types.Int64Value(destinationsItem.RetentionData.RetentionPolicy.Period)
 		}
+		for rowErrorsPerDayCount, rowErrorsPerDayItem := range destinationsItem.RowErrors.RowErrorsPerDay {
+			var rowErrorsPerDay1 RowErrorPerDay
+			rowErrorsPerDay1.Day = types.StringValue(rowErrorsPerDayItem.Day.String())
+			rowErrorsPerDay1.ErrorType = types.StringValue(string(rowErrorsPerDayItem.ErrorType))
+			rowErrorsPerDay1.RowCount = types.Int64Value(rowErrorsPerDayItem.RowCount)
+			if rowErrorsPerDayCount+1 > len(destinations1.RowErrors.RowErrorsPerDay) {
+				destinations1.RowErrors.RowErrorsPerDay = append(destinations1.RowErrors.RowErrorsPerDay, rowErrorsPerDay1)
+			} else {
+				destinations1.RowErrors.RowErrorsPerDay[rowErrorsPerDayCount].Day = rowErrorsPerDay1.Day
+				destinations1.RowErrors.RowErrorsPerDay[rowErrorsPerDayCount].ErrorType = rowErrorsPerDay1.ErrorType
+				destinations1.RowErrors.RowErrorsPerDay[rowErrorsPerDayCount].RowCount = rowErrorsPerDay1.RowCount
+			}
+		}
+		for scriptErrorsByScriptStepCount, scriptErrorsByScriptStepItem := range destinationsItem.RowErrors.ScriptErrorsByScriptStep {
+			var scriptErrorsByScriptStep1 ScriptErrorsByScriptStep
+			scriptErrorsByScriptStep1.RowCount = types.Int64Value(scriptErrorsByScriptStepItem.RowCount)
+			scriptErrorsByScriptStep1.ScriptStepDescription = types.StringValue(scriptErrorsByScriptStepItem.ScriptStepDescription)
+			scriptErrorsByScriptStep1.ScriptStepIndex = types.Int64Value(scriptErrorsByScriptStepItem.ScriptStepIndex)
+			if scriptErrorsByScriptStepCount+1 > len(destinations1.RowErrors.ScriptErrorsByScriptStep) {
+				destinations1.RowErrors.ScriptErrorsByScriptStep = append(destinations1.RowErrors.ScriptErrorsByScriptStep, scriptErrorsByScriptStep1)
+			} else {
+				destinations1.RowErrors.ScriptErrorsByScriptStep[scriptErrorsByScriptStepCount].RowCount = scriptErrorsByScriptStep1.RowCount
+				destinations1.RowErrors.ScriptErrorsByScriptStep[scriptErrorsByScriptStepCount].ScriptStepDescription = scriptErrorsByScriptStep1.ScriptStepDescription
+				destinations1.RowErrors.ScriptErrorsByScriptStep[scriptErrorsByScriptStepCount].ScriptStepIndex = scriptErrorsByScriptStep1.ScriptStepIndex
+			}
+		}
+		for typeErrorsByColumnCount1, typeErrorsByColumnItem1 := range destinationsItem.RowErrors.TypeErrorsByColumn {
+			var typeErrorsByColumn3 TypeErrorsByColumn
+			typeErrorsByColumn3.ColumnName = types.StringValue(typeErrorsByColumnItem1.ColumnName)
+			typeErrorsByColumn3.RowCount = types.Int64Value(typeErrorsByColumnItem1.RowCount)
+			typeErrorsByColumn3.Type = types.StringValue(typeErrorsByColumnItem1.Type)
+			if typeErrorsByColumnCount1+1 > len(destinations1.RowErrors.TypeErrorsByColumn) {
+				destinations1.RowErrors.TypeErrorsByColumn = append(destinations1.RowErrors.TypeErrorsByColumn, typeErrorsByColumn3)
+			} else {
+				destinations1.RowErrors.TypeErrorsByColumn[typeErrorsByColumnCount1].ColumnName = typeErrorsByColumn3.ColumnName
+				destinations1.RowErrors.TypeErrorsByColumn[typeErrorsByColumnCount1].RowCount = typeErrorsByColumn3.RowCount
+				destinations1.RowErrors.TypeErrorsByColumn[typeErrorsByColumnCount1].Type = typeErrorsByColumn3.Type
+			}
+		}
 		for schemaChangeActivityCount, schemaChangeActivityItem := range destinationsItem.SchemaChangeActivity {
 			var schemaChangeActivity1 SchemaChange
 			if schemaChangeActivityItem.DateTime != nil {
@@ -4222,6 +4271,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 			r.Destinations[destinationsCount].ParsingErrors = destinations1.ParsingErrors
 			r.Destinations[destinationsCount].RefreshVersion = destinations1.RefreshVersion
 			r.Destinations[destinationsCount].RetentionData = destinations1.RetentionData
+			r.Destinations[destinationsCount].RowErrors = destinations1.RowErrors
 			r.Destinations[destinationsCount].SchemaChangeActivity = destinations1.SchemaChangeActivity
 		}
 	}
@@ -4276,6 +4326,13 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 		r.RefreshSchedule.Weekly.DayOfWeek = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeWeekly.DayOfWeek)
 		r.RefreshSchedule.Weekly.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeWeekly.HourOfDay)
 		r.RefreshSchedule.Weekly.Mode = types.StringValue(string(resp.RefreshSchedule.RefreshScheduleModeWeekly.Mode))
+	}
+	if resp.RowErrorSettings == nil {
+		r.RowErrorSettings = nil
+	} else {
+		r.RowErrorSettings = &ParsingErrorSettings{}
+		r.RowErrorSettings.Action = types.StringValue(string(resp.RowErrorSettings.Action))
+		r.RowErrorSettings.Threshold = types.NumberValue(big.NewFloat(float64(resp.RowErrorSettings.Threshold)))
 	}
 	r.Shares = nil
 	for _, v := range resp.Shares {
@@ -7906,6 +7963,15 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 			Action:    action,
 		}
 	}
+	var rowErrorSettings *shared.PipelineUpdateRowErrorSettings
+	if r.RowErrorSettings != nil {
+		threshold1, _ := r.RowErrorSettings.Threshold.ValueBigFloat().Float64()
+		action1 := shared.PipelineUpdateRowErrorSettingsAction(r.RowErrorSettings.Action.ValueString())
+		rowErrorSettings = &shared.PipelineUpdateRowErrorSettings{
+			Threshold: threshold1,
+			Action:    action1,
+		}
+	}
 	var updateSchedule *shared.PipelineUpdateUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
 		var intervalUpdateScheduleMode *shared.IntervalUpdateScheduleMode
@@ -8060,6 +8126,7 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 		Paused:               paused,
 		Shares:               shares,
 		ParsingErrorSettings: parsingErrorSettings,
+		RowErrorSettings:     rowErrorSettings,
 		UpdateSchedule:       updateSchedule,
 		RefreshSchedule:      refreshSchedule,
 	}

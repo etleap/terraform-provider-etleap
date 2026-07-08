@@ -32,15 +32,19 @@ data "etleap_pipeline" "my_pipeline" {
 - `latest_script_version` (Number) Valid script versions are whole numbers and range from 1 to this number.
 - `name` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
-- `parsing_error_settings` (Attributes) (see [below for nested schema](#nestedatt--parsing_error_settings))
+- `parsing_error_settings` (Attributes) Deprecated: replaced by row error settings in a future API version. (see [below for nested schema](#nestedatt--parsing_error_settings))
 - `paused` (Boolean) If the pipeline is paused. Defaults to `false`.
 - `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
 - `refresh_schedule` (Attributes) A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--refresh_schedule))
+- `row_error_settings` (Attributes) (see [below for nested schema](#nestedatt--row_error_settings))
 - `shares` (List of String) A list of users' emails this pipeline is shared with.
 
 A pipeline cannot be unshared, and future calls to `PATCH` can only add to this list.
 - `source` (Attributes) (see [below for nested schema](#nestedatt--source))
-- `stop_reason` (String) Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline. must be one of ["PAUSED", "PARSING_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE", "PIPELINE_SCRIPT_ERROR", "BROKEN_INGEST_ERROR"]
+- `stop_reason` (String) Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline.
+
+`PARSING_ERRORS` is deprecated and will be replaced by `ROW_ERRORS` in a future API version. Both values are listed in the spec during the migration window so clients can accept `ROW_ERRORS` ahead of the change; the server currently returns `PARSING_ERRORS`.
+must be one of ["PAUSED", "PARSING_ERRORS", "ROW_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE", "PIPELINE_SCRIPT_ERROR", "BROKEN_INGEST_ERROR"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
 <a id="nestedatt--destinations"></a>
@@ -50,9 +54,10 @@ Read-Only:
 
 - `current_version` (Number) The version of the pipeline that is currently writing to the output table.
 - `destination` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination))
-- `parsing_errors` (Attributes) Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--parsing_errors))
+- `parsing_errors` (Attributes) Deprecated: replaced by row errors in a future API version. Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--parsing_errors))
 - `refresh_version` (Number) The version of the pipeline that is currently writing to the temporary refresh table. Only specified if there's currently a refresh in progress.
 - `retention_data` (Attributes) Etleap can remove old rows from your destination. This is a summary of the data retention. If a pipeline is being refreshed, this will be the summary for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--retention_data))
+- `row_errors` (Attributes) Row errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--row_errors))
 - `schema_change_activity` (Attributes List) Array of schema change objects. If a pipeline is being refreshed, the schema change activities will be for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--schema_change_activity))
 
 <a id="nestedatt--destinations--destination"></a>
@@ -186,8 +191,8 @@ Read-Only:
 
 Read-Only:
 
-- `operation_description` (String)
-- `operation_index` (Number) Index of step in the script of this pipeline that caused this error.
+- `operation_description` (String) Deprecated: renamed to `scriptStepDescription` in a future API version.
+- `operation_index` (Number) Deprecated: renamed to `scriptStepIndex` in a future API version. Index of step in the script of this pipeline that caused this error.
 - `row_count` (Number)
 
 
@@ -197,7 +202,7 @@ Read-Only:
 Read-Only:
 
 - `day` (String) Format of the timestamp: 'yyyy-MM-dd'
-- `error_type` (String) must be one of ["TYPE", "OPERATION"]
+- `error_type` (String) `OPERATION` is deprecated and will be replaced by `SCRIPT` in a future API version. Both values are listed in the spec during the migration window so clients can accept `SCRIPT` ahead of the change; the server currently returns `OPERATION`. must be one of ["TYPE", "OPERATION", "SCRIPT"]
 - `row_count` (Number)
 
 
@@ -254,6 +259,46 @@ Read-Only:
 
 - `column` (String) Name of the column that is used to calculate the interval. Must be a `date` or a `datetime` column.
 - `period` (Number) Number of days before a row gets removed.
+
+
+
+<a id="nestedatt--destinations--row_errors"></a>
+### Nested Schema for `destinations.row_errors`
+
+Read-Only:
+
+- `row_errors_per_day` (Attributes List) (see [below for nested schema](#nestedatt--destinations--row_errors--row_errors_per_day))
+- `script_errors_by_script_step` (Attributes List) (see [below for nested schema](#nestedatt--destinations--row_errors--script_errors_by_script_step))
+- `type_errors_by_column` (Attributes List) (see [below for nested schema](#nestedatt--destinations--row_errors--type_errors_by_column))
+
+<a id="nestedatt--destinations--row_errors--row_errors_per_day"></a>
+### Nested Schema for `destinations.row_errors.row_errors_per_day`
+
+Read-Only:
+
+- `day` (String) Format of the timestamp: 'yyyy-MM-dd'
+- `error_type` (String) must be one of ["TYPE", "SCRIPT"]
+- `row_count` (Number)
+
+
+<a id="nestedatt--destinations--row_errors--script_errors_by_script_step"></a>
+### Nested Schema for `destinations.row_errors.script_errors_by_script_step`
+
+Read-Only:
+
+- `row_count` (Number)
+- `script_step_description` (String)
+- `script_step_index` (Number) Index of step in the script of this pipeline that caused this error.
+
+
+<a id="nestedatt--destinations--row_errors--type_errors_by_column"></a>
+### Nested Schema for `destinations.row_errors.type_errors_by_column`
+
+Read-Only:
+
+- `column_name` (String)
+- `row_count` (Number)
+- `type` (String)
 
 
 
@@ -342,6 +387,15 @@ Read-Only:
 - `hour_of_day` (Number) Hour of day this schedule should trigger at (in UTC).
 - `mode` (String) must be one of ["WEEKLY"]
 
+
+
+<a id="nestedatt--row_error_settings"></a>
+### Nested Schema for `row_error_settings`
+
+Read-Only:
+
+- `action` (String) Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached. must be one of ["STOP", "NOTIFY"]
+- `threshold` (Number) The row error threshold, in percentage points, for the `action` to be triggered.
 
 
 <a id="nestedatt--source"></a>

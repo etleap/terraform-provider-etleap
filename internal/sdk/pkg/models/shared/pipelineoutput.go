@@ -18,13 +18,19 @@ type PipelineOutput struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
 	PipelineMode PipelineUpdateModes `json:"pipelineMode"`
 	// If the pipeline is paused. Defaults to `false`.
-	Paused               bool                  `json:"paused"`
+	Paused bool `json:"paused"`
+	// Deprecated: replaced by row error settings in a future API version.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	ParsingErrorSettings *ParsingErrorSettings `json:"parsingErrorSettings,omitempty"`
+	RowErrorSettings     *RowErrorSettings     `json:"rowErrorSettings,omitempty"`
 	// Valid script versions are whole numbers and range from 1 to this number.
 	LatestScriptVersion int64 `json:"latestScriptVersion"`
 	// The end-to-end latency in seconds for this pipeline. Not `null` if the pipeline is running (not paused or stopped) and if the initial backfill has finished. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/latency/#end-to-end-latency">the documentation</a> for more details.
 	Latency *int64 `json:"latency,omitempty"`
 	// Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline.
+	//
+	// `PARSING_ERRORS` is deprecated and will be replaced by `ROW_ERRORS` in a future API version. Both values are listed in the spec during the migration window so clients can accept `ROW_ERRORS` ahead of the change; the server currently returns `PARSING_ERRORS`.
 	StopReason *StopReason `json:"stopReason,omitempty"`
 	// The date and time when the last refresh was started. `null` if the pipeline was never refreshed.
 	LastRefreshStartDate *time.Time `json:"lastRefreshStartDate,omitempty"`
@@ -525,6 +531,13 @@ func (o *PipelineOutput) GetParsingErrorSettings() *ParsingErrorSettings {
 		return nil
 	}
 	return o.ParsingErrorSettings
+}
+
+func (o *PipelineOutput) GetRowErrorSettings() *RowErrorSettings {
+	if o == nil {
+		return nil
+	}
+	return o.RowErrorSettings
 }
 
 func (o *PipelineOutput) GetLatestScriptVersion() int64 {

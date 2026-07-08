@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 7ebb3741-2ac6-4c7d-96db-cce06c3d2bb5
 management:
-  docChecksum: 9d0f14bd7f7922f88fdc07e29e151bed
-  docVersion: 2.9.13
+  docChecksum: 24fe5052edffe95f92b64fb8d70e62b8
+  docVersion: 2.9.14
   speakeasyVersion: internal
   generationVersion: 2.248.6
-  releaseVersion: 0.3.11
-  configChecksum: 65ef0b42fb6c4baa6b5228b6f663e20a
+  releaseVersion: 0.3.12
+  configChecksum: dcc3b9cd1aba1261e2a7d4da373a1278
 features:
   terraform:
     constsAndDefaults: 0.1.2
@@ -575,6 +575,7 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/updateschedulemodeweekly.go
   - internal/sdk/pkg/models/shared/updateschedulemodemonthly.go
   - internal/sdk/pkg/models/shared/stopreason.go
+  - internal/sdk/pkg/models/shared/rowerrorsettings.go
   - internal/sdk/pkg/models/shared/parsingerrorsettings.go
   - internal/sdk/pkg/models/shared/pipelineupdatemodes.go
   - internal/sdk/pkg/models/shared/user.go
@@ -584,9 +585,12 @@ generatedFiles:
   - internal/sdk/pkg/models/shared/retentionpolicy.go
   - internal/sdk/pkg/models/shared/retentionbyday.go
   - internal/sdk/pkg/models/shared/retentiondayrowcount.go
+  - internal/sdk/pkg/models/shared/rowerrors.go
+  - internal/sdk/pkg/models/shared/scripterrorsbyscriptstep.go
+  - internal/sdk/pkg/models/shared/typeerrorsbycolumn.go
+  - internal/sdk/pkg/models/shared/rowerrorperday.go
   - internal/sdk/pkg/models/shared/parsingerrors.go
   - internal/sdk/pkg/models/shared/operationerrorsbyoperation.go
-  - internal/sdk/pkg/models/shared/typeerrorsbycolumn.go
   - internal/sdk/pkg/models/shared/parsingerrorperday.go
   - internal/sdk/pkg/models/shared/destinationtypes.go
   - internal/sdk/pkg/models/shared/destinationredshift.go
@@ -1200,6 +1204,9 @@ generatedFiles:
   - internal/provider/type_retention_by_day.go
   - internal/provider/type_retention_policy.go
   - internal/provider/type_retention_data.go
+  - internal/provider/type_row_error_per_day.go
+  - internal/provider/type_script_errors_by_script_step.go
+  - internal/provider/type_row_errors.go
   - internal/provider/type_schema_change.go
   - internal/provider/type_destination_info_and_pipeline_versions.go
   - internal/provider/type_parsing_error_settings.go

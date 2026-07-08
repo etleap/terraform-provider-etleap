@@ -2,9 +2,17 @@
 
 package shared
 
+// OperationErrorsByOperation - Deprecated: replaced by script errors by script step in a future API version.
+//
+// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
 type OperationErrorsByOperation struct {
-	// Index of step in the script of this pipeline that caused this error.
-	OperationIndex       int64  `json:"operationIndex"`
+	// Deprecated: renamed to `scriptStepIndex` in a future API version. Index of step in the script of this pipeline that caused this error.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	OperationIndex int64 `json:"operationIndex"`
+	// Deprecated: renamed to `scriptStepDescription` in a future API version.
+	//
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	OperationDescription string `json:"operationDescription"`
 	RowCount             int64  `json:"rowCount"`
 }

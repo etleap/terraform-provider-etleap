@@ -2,10 +2,14 @@
 
 package shared
 
-// ParsingErrors - Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline.
+// ParsingErrors - Deprecated: replaced by row errors in a future API version. Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline.
+//
+// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
 type ParsingErrors struct {
-	ParsingErrorsPerDay        []ParsingErrorPerDay         `json:"parsingErrorsPerDay"`
-	TypeErrorsByColumn         []TypeErrorsByColumn         `json:"typeErrorsByColumn"`
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	ParsingErrorsPerDay []ParsingErrorPerDay `json:"parsingErrorsPerDay"`
+	TypeErrorsByColumn  []TypeErrorsByColumn `json:"typeErrorsByColumn"`
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	OperationErrorsByOperation []OperationErrorsByOperation `json:"operationErrorsByOperation"`
 }
 

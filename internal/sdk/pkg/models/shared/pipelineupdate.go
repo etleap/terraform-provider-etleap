@@ -37,6 +37,9 @@ func (e *PipelineUpdateAction) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// PipelineUpdateParsingErrorSettings - Deprecated: replaced by row error settings in a future API version.
+//
+// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
 type PipelineUpdateParsingErrorSettings struct {
 	// The parsing error threshold, in percentage points, for the `action` to be triggered.
 	Threshold float64 `json:"threshold"`
@@ -54,6 +57,55 @@ func (o *PipelineUpdateParsingErrorSettings) GetThreshold() float64 {
 func (o *PipelineUpdateParsingErrorSettings) GetAction() PipelineUpdateAction {
 	if o == nil {
 		return PipelineUpdateAction("")
+	}
+	return o.Action
+}
+
+// PipelineUpdateRowErrorSettingsAction - Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached.
+type PipelineUpdateRowErrorSettingsAction string
+
+const (
+	PipelineUpdateRowErrorSettingsActionStop   PipelineUpdateRowErrorSettingsAction = "STOP"
+	PipelineUpdateRowErrorSettingsActionNotify PipelineUpdateRowErrorSettingsAction = "NOTIFY"
+)
+
+func (e PipelineUpdateRowErrorSettingsAction) ToPointer() *PipelineUpdateRowErrorSettingsAction {
+	return &e
+}
+
+func (e *PipelineUpdateRowErrorSettingsAction) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "STOP":
+		fallthrough
+	case "NOTIFY":
+		*e = PipelineUpdateRowErrorSettingsAction(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for PipelineUpdateRowErrorSettingsAction: %v", v)
+	}
+}
+
+type PipelineUpdateRowErrorSettings struct {
+	// The row error threshold, in percentage points, for the `action` to be triggered.
+	Threshold float64 `json:"threshold"`
+	// Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached.
+	Action PipelineUpdateRowErrorSettingsAction `json:"action"`
+}
+
+func (o *PipelineUpdateRowErrorSettings) GetThreshold() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Threshold
+}
+
+func (o *PipelineUpdateRowErrorSettings) GetAction() PipelineUpdateRowErrorSettingsAction {
+	if o == nil {
+		return PipelineUpdateRowErrorSettingsAction("")
 	}
 	return o.Action
 }
@@ -858,6 +910,7 @@ type PipelineUpdate struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Shares               []string                            `json:"shares,omitempty"`
 	ParsingErrorSettings *PipelineUpdateParsingErrorSettings `json:"parsingErrorSettings,omitempty"`
+	RowErrorSettings     *PipelineUpdateRowErrorSettings     `json:"rowErrorSettings,omitempty"`
 	// Setting the `updateSchedule` to `null` will remove the Pipeline Update Schedule and revert to using the Connection Update Schedule.
 	UpdateSchedule *PipelineUpdateUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
@@ -1634,6 +1687,13 @@ func (o *PipelineUpdate) GetParsingErrorSettings() *PipelineUpdateParsingErrorSe
 		return nil
 	}
 	return o.ParsingErrorSettings
+}
+
+func (o *PipelineUpdate) GetRowErrorSettings() *PipelineUpdateRowErrorSettings {
+	if o == nil {
+		return nil
+	}
+	return o.RowErrorSettings
 }
 
 func (o *PipelineUpdate) GetUpdateSchedule() *PipelineUpdateUpdateScheduleTypes {

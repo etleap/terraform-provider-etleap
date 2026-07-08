@@ -9,11 +9,13 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
+// ErrorType - `OPERATION` is deprecated and will be replaced by `SCRIPT` in a future API version. Both values are listed in the spec during the migration window so clients can accept `SCRIPT` ahead of the change; the server currently returns `OPERATION`.
 type ErrorType string
 
 const (
 	ErrorTypeType      ErrorType = "TYPE"
 	ErrorTypeOperation ErrorType = "OPERATION"
+	ErrorTypeScript    ErrorType = "SCRIPT"
 )
 
 func (e ErrorType) ToPointer() *ErrorType {
@@ -29,6 +31,8 @@ func (e *ErrorType) UnmarshalJSON(data []byte) error {
 	case "TYPE":
 		fallthrough
 	case "OPERATION":
+		fallthrough
+	case "SCRIPT":
 		*e = ErrorType(v)
 		return nil
 	default:
@@ -36,7 +40,11 @@ func (e *ErrorType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// ParsingErrorPerDay - Deprecated: replaced by row error per day in a future API version.
+//
+// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
 type ParsingErrorPerDay struct {
+	// `OPERATION` is deprecated and will be replaced by `SCRIPT` in a future API version. Both values are listed in the spec during the migration window so clients can accept `SCRIPT` ahead of the change; the server currently returns `OPERATION`.
 	ErrorType ErrorType `json:"errorType"`
 	// Format of the timestamp: 'yyyy-MM-dd'
 	Day      types.Date `json:"day"`

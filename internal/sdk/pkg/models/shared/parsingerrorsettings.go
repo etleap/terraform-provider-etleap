@@ -35,6 +35,9 @@ func (e *Action) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// ParsingErrorSettings - Deprecated: replaced by row error settings in a future API version.
+//
+// Deprecated type: This will be removed in a future release, please migrate away from it as soon as possible.
 type ParsingErrorSettings struct {
 	// The parsing error threshold, in percentage points, for the `action` to be triggered.
 	Threshold float64 `json:"threshold"`
