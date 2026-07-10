@@ -586,10 +586,7 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 											},
 											Optional:    true,
-											Description: `The maximum page size supported by the API. Requires replacement if changed. ; Not Null`,
-											Validators: []validator.Int64{
-												speakeasy_int64validators.NotNull(),
-											},
+											Description: `The maximum page size supported by the API. Must be provided if ` + "`" + `pageSizeFieldName` + "`" + ` was set. Ignored if ` + "`" + `pageSizeFieldName` + "`" + ` is not set. Requires replacement if changed. `,
 										},
 										"page_size_field_name": schema.StringAttribute{
 											Computed: true,
@@ -598,10 +595,7 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 											},
 											Optional:    true,
-											Description: `The name of the request parameter used to specify the page size. Requires replacement if changed. ; Not Null`,
-											Validators: []validator.String{
-												speakeasy_stringvalidators.NotNull(),
-											},
+											Description: `The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter. Requires replacement if changed. `,
 										},
 										"path_to_cursor": schema.StringAttribute{
 											Computed: true,
@@ -657,10 +651,7 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 											},
 											Optional:    true,
-											Description: `The maximum page size supported by the API. Requires replacement if changed. ; Not Null`,
-											Validators: []validator.Int64{
-												speakeasy_int64validators.NotNull(),
-											},
+											Description: `The maximum page size supported by the API. Must be provided if ` + "`" + `pageSizeFieldName` + "`" + ` was set. Ignored if ` + "`" + `pageSizeFieldName` + "`" + ` is not set. Requires replacement if changed. `,
 										},
 										"offset_field_name": schema.StringAttribute{
 											Computed: true,
@@ -681,10 +672,7 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 											},
 											Optional:    true,
-											Description: `The name of the request parameter used to specify the page size. Requires replacement if changed. ; Not Null`,
-											Validators: []validator.String{
-												speakeasy_stringvalidators.NotNull(),
-											},
+											Description: `The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter. Requires replacement if changed. `,
 										},
 										"type": schema.StringAttribute{
 											Computed: true,
@@ -719,10 +707,7 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
 											},
 											Optional:    true,
-											Description: `The maximum page size supported by the API. Requires replacement if changed. ; Not Null`,
-											Validators: []validator.Int64{
-												speakeasy_int64validators.NotNull(),
-											},
+											Description: `The maximum page size supported by the API. Must be provided if ` + "`" + `pageSizeFieldName` + "`" + ` was set. Ignored if ` + "`" + `pageSizeFieldName` + "`" + ` is not set. Requires replacement if changed. `,
 										},
 										"page_number_field_name": schema.StringAttribute{
 											Computed: true,
@@ -743,10 +728,7 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 											},
 											Optional:    true,
-											Description: `The name of the request parameter used to specify the page size. Requires replacement if changed. ; Not Null`,
-											Validators: []validator.String{
-												speakeasy_stringvalidators.NotNull(),
-											},
+											Description: `The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter. Requires replacement if changed. `,
 										},
 										"type": schema.StringAttribute{
 											Computed: true,

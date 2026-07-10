@@ -35,10 +35,10 @@ func (e *PageNumberPagingStrategyPagingStrategyType) UnmarshalJSON(data []byte) 
 
 // PagePagingStrategy - Paging strategy that uses page numbers to iterate through results.
 type PagePagingStrategy struct {
-	// The name of the request parameter used to specify the page size.
-	PageSizeFieldName string `json:"pageSizeFieldName"`
-	// The maximum page size supported by the API.
-	MaxPageSize int64                                       `json:"maxPageSize"`
+	// The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.
+	PageSizeFieldName *string `json:"pageSizeFieldName,omitempty"`
+	// The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set.
+	MaxPageSize *int64                                      `json:"maxPageSize,omitempty"`
 	Type        *PageNumberPagingStrategyPagingStrategyType `default:"PAGE_NUMBER" json:"type"`
 	// The name of the request parameter used to specify the page number.
 	PageNumberFieldName string `json:"pageNumberFieldName"`
@@ -55,16 +55,16 @@ func (p *PagePagingStrategy) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PagePagingStrategy) GetPageSizeFieldName() string {
+func (o *PagePagingStrategy) GetPageSizeFieldName() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.PageSizeFieldName
 }
 
-func (o *PagePagingStrategy) GetMaxPageSize() int64 {
+func (o *PagePagingStrategy) GetMaxPageSize() *int64 {
 	if o == nil {
-		return 0
+		return nil
 	}
 	return o.MaxPageSize
 }
@@ -109,10 +109,10 @@ func (e *OffsetPagingStrategyPagingStrategyType) UnmarshalJSON(data []byte) erro
 
 // PagingStrategyOffsetPagingStrategy - Paging strategy that is based on a result set offset.
 type PagingStrategyOffsetPagingStrategy struct {
-	// The name of the request parameter used to specify the page size.
-	PageSizeFieldName string `json:"pageSizeFieldName"`
-	// The maximum page size supported by the API.
-	MaxPageSize int64                                   `json:"maxPageSize"`
+	// The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.
+	PageSizeFieldName *string `json:"pageSizeFieldName,omitempty"`
+	// The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set.
+	MaxPageSize *int64                                  `json:"maxPageSize,omitempty"`
 	Type        *OffsetPagingStrategyPagingStrategyType `default:"OFFSET" json:"type"`
 	// The name of the request parameter used to specify the offset.
 	OffsetFieldName string `json:"offsetFieldName"`
@@ -129,16 +129,16 @@ func (p *PagingStrategyOffsetPagingStrategy) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PagingStrategyOffsetPagingStrategy) GetPageSizeFieldName() string {
+func (o *PagingStrategyOffsetPagingStrategy) GetPageSizeFieldName() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.PageSizeFieldName
 }
 
-func (o *PagingStrategyOffsetPagingStrategy) GetMaxPageSize() int64 {
+func (o *PagingStrategyOffsetPagingStrategy) GetMaxPageSize() *int64 {
 	if o == nil {
-		return 0
+		return nil
 	}
 	return o.MaxPageSize
 }
@@ -183,10 +183,10 @@ func (e *PagingStrategyType) UnmarshalJSON(data []byte) error {
 
 // PagingStrategyCursorURIPagingStrategy - Paging strategy that uses a cursor to iterate through the results
 type PagingStrategyCursorURIPagingStrategy struct {
-	// The name of the request parameter used to specify the page size.
-	PageSizeFieldName string `json:"pageSizeFieldName"`
-	// The maximum page size supported by the API.
-	MaxPageSize int64               `json:"maxPageSize"`
+	// The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.
+	PageSizeFieldName *string `json:"pageSizeFieldName,omitempty"`
+	// The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set.
+	MaxPageSize *int64              `json:"maxPageSize,omitempty"`
 	Type        *PagingStrategyType `default:"CURSOR_URI" json:"type"`
 	// The path to the paging cursor inside the response body.
 	PathToCursor string `json:"pathToCursor"`
@@ -205,16 +205,16 @@ func (p *PagingStrategyCursorURIPagingStrategy) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (o *PagingStrategyCursorURIPagingStrategy) GetPageSizeFieldName() string {
+func (o *PagingStrategyCursorURIPagingStrategy) GetPageSizeFieldName() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.PageSizeFieldName
 }
 
-func (o *PagingStrategyCursorURIPagingStrategy) GetMaxPageSize() int64 {
+func (o *PagingStrategyCursorURIPagingStrategy) GetMaxPageSize() *int64 {
 	if o == nil {
-		return 0
+		return nil
 	}
 	return o.MaxPageSize
 }

@@ -266,11 +266,11 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 									Attributes: map[string]schema.Attribute{
 										"max_page_size": schema.Int64Attribute{
 											Computed:    true,
-											Description: `The maximum page size supported by the API.`,
+											Description: `The maximum page size supported by the API. Must be provided if ` + "`" + `pageSizeFieldName` + "`" + ` was set. Ignored if ` + "`" + `pageSizeFieldName` + "`" + ` is not set.`,
 										},
 										"page_size_field_name": schema.StringAttribute{
 											Computed:    true,
-											Description: `The name of the request parameter used to specify the page size.`,
+											Description: `The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.`,
 										},
 										"path_to_cursor": schema.StringAttribute{
 											Computed:    true,
@@ -292,7 +292,7 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 									Attributes: map[string]schema.Attribute{
 										"max_page_size": schema.Int64Attribute{
 											Computed:    true,
-											Description: `The maximum page size supported by the API.`,
+											Description: `The maximum page size supported by the API. Must be provided if ` + "`" + `pageSizeFieldName` + "`" + ` was set. Ignored if ` + "`" + `pageSizeFieldName` + "`" + ` is not set.`,
 										},
 										"offset_field_name": schema.StringAttribute{
 											Computed:    true,
@@ -300,7 +300,7 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 										},
 										"page_size_field_name": schema.StringAttribute{
 											Computed:    true,
-											Description: `The name of the request parameter used to specify the page size.`,
+											Description: `The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.`,
 										},
 										"type": schema.StringAttribute{
 											Computed:    true,
@@ -314,7 +314,7 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 									Attributes: map[string]schema.Attribute{
 										"max_page_size": schema.Int64Attribute{
 											Computed:    true,
-											Description: `The maximum page size supported by the API.`,
+											Description: `The maximum page size supported by the API. Must be provided if ` + "`" + `pageSizeFieldName` + "`" + ` was set. Ignored if ` + "`" + `pageSizeFieldName` + "`" + ` is not set.`,
 										},
 										"page_number_field_name": schema.StringAttribute{
 											Computed:    true,
@@ -322,7 +322,7 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 										},
 										"page_size_field_name": schema.StringAttribute{
 											Computed:    true,
-											Description: `The name of the request parameter used to specify the page size.`,
+											Description: `The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.`,
 										},
 										"type": schema.StringAttribute{
 											Computed:    true,

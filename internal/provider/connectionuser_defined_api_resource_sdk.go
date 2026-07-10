@@ -412,8 +412,18 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 		if entitiesItem.PagingStrategy != nil {
 			var cursorURIPagingStrategy *shared.CursorURIPagingStrategy
 			if entitiesItem.PagingStrategy.CursorURI != nil {
-				pageSizeFieldName := entitiesItem.PagingStrategy.CursorURI.PageSizeFieldName.ValueString()
-				maxPageSize := entitiesItem.PagingStrategy.CursorURI.MaxPageSize.ValueInt64()
+				pageSizeFieldName := new(string)
+				if !entitiesItem.PagingStrategy.CursorURI.PageSizeFieldName.IsUnknown() && !entitiesItem.PagingStrategy.CursorURI.PageSizeFieldName.IsNull() {
+					*pageSizeFieldName = entitiesItem.PagingStrategy.CursorURI.PageSizeFieldName.ValueString()
+				} else {
+					pageSizeFieldName = nil
+				}
+				maxPageSize := new(int64)
+				if !entitiesItem.PagingStrategy.CursorURI.MaxPageSize.IsUnknown() && !entitiesItem.PagingStrategy.CursorURI.MaxPageSize.IsNull() {
+					*maxPageSize = entitiesItem.PagingStrategy.CursorURI.MaxPageSize.ValueInt64()
+				} else {
+					maxPageSize = nil
+				}
 				typeVar9 := new(shared.CursorURIPagingStrategyType)
 				if !entitiesItem.PagingStrategy.CursorURI.Type.IsUnknown() && !entitiesItem.PagingStrategy.CursorURI.Type.IsNull() {
 					*typeVar9 = shared.CursorURIPagingStrategyType(entitiesItem.PagingStrategy.CursorURI.Type.ValueString())
@@ -442,8 +452,18 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 			}
 			var offsetPagingStrategy *shared.OffsetPagingStrategy
 			if entitiesItem.PagingStrategy.Offset != nil {
-				pageSizeFieldName1 := entitiesItem.PagingStrategy.Offset.PageSizeFieldName.ValueString()
-				maxPageSize1 := entitiesItem.PagingStrategy.Offset.MaxPageSize.ValueInt64()
+				pageSizeFieldName1 := new(string)
+				if !entitiesItem.PagingStrategy.Offset.PageSizeFieldName.IsUnknown() && !entitiesItem.PagingStrategy.Offset.PageSizeFieldName.IsNull() {
+					*pageSizeFieldName1 = entitiesItem.PagingStrategy.Offset.PageSizeFieldName.ValueString()
+				} else {
+					pageSizeFieldName1 = nil
+				}
+				maxPageSize1 := new(int64)
+				if !entitiesItem.PagingStrategy.Offset.MaxPageSize.IsUnknown() && !entitiesItem.PagingStrategy.Offset.MaxPageSize.IsNull() {
+					*maxPageSize1 = entitiesItem.PagingStrategy.Offset.MaxPageSize.ValueInt64()
+				} else {
+					maxPageSize1 = nil
+				}
 				typeVar10 := new(shared.OffsetPagingStrategyType)
 				if !entitiesItem.PagingStrategy.Offset.Type.IsUnknown() && !entitiesItem.PagingStrategy.Offset.Type.IsNull() {
 					*typeVar10 = shared.OffsetPagingStrategyType(entitiesItem.PagingStrategy.Offset.Type.ValueString())
@@ -465,8 +485,18 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 			}
 			var pageNumberPagingStrategy *shared.PageNumberPagingStrategy
 			if entitiesItem.PagingStrategy.PageNumber != nil {
-				pageSizeFieldName2 := entitiesItem.PagingStrategy.PageNumber.PageSizeFieldName.ValueString()
-				maxPageSize2 := entitiesItem.PagingStrategy.PageNumber.MaxPageSize.ValueInt64()
+				pageSizeFieldName2 := new(string)
+				if !entitiesItem.PagingStrategy.PageNumber.PageSizeFieldName.IsUnknown() && !entitiesItem.PagingStrategy.PageNumber.PageSizeFieldName.IsNull() {
+					*pageSizeFieldName2 = entitiesItem.PagingStrategy.PageNumber.PageSizeFieldName.ValueString()
+				} else {
+					pageSizeFieldName2 = nil
+				}
+				maxPageSize2 := new(int64)
+				if !entitiesItem.PagingStrategy.PageNumber.MaxPageSize.IsUnknown() && !entitiesItem.PagingStrategy.PageNumber.MaxPageSize.IsNull() {
+					*maxPageSize2 = entitiesItem.PagingStrategy.PageNumber.MaxPageSize.ValueInt64()
+				} else {
+					maxPageSize2 = nil
+				}
 				typeVar11 := new(shared.PageNumberPagingStrategyType)
 				if !entitiesItem.PagingStrategy.PageNumber.Type.IsUnknown() && !entitiesItem.PagingStrategy.PageNumber.Type.IsNull() {
 					*typeVar11 = shared.PageNumberPagingStrategyType(entitiesItem.PagingStrategy.PageNumber.Type.ValueString())
@@ -695,8 +725,8 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) RefreshFromSharedConnectionUserD
 			entities1.PagingStrategy = &PagingStrategy{}
 			if entitiesItem.PagingStrategy.CursorURIPagingStrategy != nil {
 				entities1.PagingStrategy.CursorURI = &CursorURIPagingStrategy{}
-				entities1.PagingStrategy.CursorURI.MaxPageSize = types.Int64Value(entitiesItem.PagingStrategy.CursorURIPagingStrategy.MaxPageSize)
-				entities1.PagingStrategy.CursorURI.PageSizeFieldName = types.StringValue(entitiesItem.PagingStrategy.CursorURIPagingStrategy.PageSizeFieldName)
+				entities1.PagingStrategy.CursorURI.MaxPageSize = types.Int64PointerValue(entitiesItem.PagingStrategy.CursorURIPagingStrategy.MaxPageSize)
+				entities1.PagingStrategy.CursorURI.PageSizeFieldName = types.StringPointerValue(entitiesItem.PagingStrategy.CursorURIPagingStrategy.PageSizeFieldName)
 				entities1.PagingStrategy.CursorURI.PathToCursor = types.StringValue(entitiesItem.PagingStrategy.CursorURIPagingStrategy.PathToCursor)
 				if entitiesItem.PagingStrategy.CursorURIPagingStrategy.Type != nil {
 					entities1.PagingStrategy.CursorURI.Type = types.StringValue(string(*entitiesItem.PagingStrategy.CursorURIPagingStrategy.Type))
@@ -707,9 +737,9 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) RefreshFromSharedConnectionUserD
 			}
 			if entitiesItem.PagingStrategy.OffsetPagingStrategy != nil {
 				entities1.PagingStrategy.Offset = &OffsetPagingStrategy{}
-				entities1.PagingStrategy.Offset.MaxPageSize = types.Int64Value(entitiesItem.PagingStrategy.OffsetPagingStrategy.MaxPageSize)
+				entities1.PagingStrategy.Offset.MaxPageSize = types.Int64PointerValue(entitiesItem.PagingStrategy.OffsetPagingStrategy.MaxPageSize)
 				entities1.PagingStrategy.Offset.OffsetFieldName = types.StringValue(entitiesItem.PagingStrategy.OffsetPagingStrategy.OffsetFieldName)
-				entities1.PagingStrategy.Offset.PageSizeFieldName = types.StringValue(entitiesItem.PagingStrategy.OffsetPagingStrategy.PageSizeFieldName)
+				entities1.PagingStrategy.Offset.PageSizeFieldName = types.StringPointerValue(entitiesItem.PagingStrategy.OffsetPagingStrategy.PageSizeFieldName)
 				if entitiesItem.PagingStrategy.OffsetPagingStrategy.Type != nil {
 					entities1.PagingStrategy.Offset.Type = types.StringValue(string(*entitiesItem.PagingStrategy.OffsetPagingStrategy.Type))
 				} else {
@@ -718,9 +748,9 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) RefreshFromSharedConnectionUserD
 			}
 			if entitiesItem.PagingStrategy.PageNumberPagingStrategy != nil {
 				entities1.PagingStrategy.PageNumber = &PageNumberPagingStrategy{}
-				entities1.PagingStrategy.PageNumber.MaxPageSize = types.Int64Value(entitiesItem.PagingStrategy.PageNumberPagingStrategy.MaxPageSize)
+				entities1.PagingStrategy.PageNumber.MaxPageSize = types.Int64PointerValue(entitiesItem.PagingStrategy.PageNumberPagingStrategy.MaxPageSize)
 				entities1.PagingStrategy.PageNumber.PageNumberFieldName = types.StringValue(entitiesItem.PagingStrategy.PageNumberPagingStrategy.PageNumberFieldName)
-				entities1.PagingStrategy.PageNumber.PageSizeFieldName = types.StringValue(entitiesItem.PagingStrategy.PageNumberPagingStrategy.PageSizeFieldName)
+				entities1.PagingStrategy.PageNumber.PageSizeFieldName = types.StringPointerValue(entitiesItem.PagingStrategy.PageNumberPagingStrategy.PageSizeFieldName)
 				if entitiesItem.PagingStrategy.PageNumberPagingStrategy.Type != nil {
 					entities1.PagingStrategy.PageNumber.Type = types.StringValue(string(*entitiesItem.PagingStrategy.PageNumberPagingStrategy.Type))
 				} else {

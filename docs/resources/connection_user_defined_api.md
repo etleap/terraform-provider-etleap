@@ -181,8 +181,8 @@ Optional:
 
 Optional:
 
-- `max_page_size` (Number) The maximum page size supported by the API. Requires replacement if changed. ; Not Null
-- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Requires replacement if changed. ; Not Null
+- `max_page_size` (Number) The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set. Requires replacement if changed.
+- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter. Requires replacement if changed.
 - `path_to_cursor` (String) The path to the paging cursor inside the response body. Requires replacement if changed. ; Not Null
 - `type` (String) Requires replacement if changed. ; must be one of ["CURSOR_URI"]; Default: "CURSOR_URI"
 - `url_prefix` (String) String prepended to the paging cursor string to turn it into a URL, e.g. because the cursor only contains the URL path. Requires replacement if changed.
@@ -193,9 +193,9 @@ Optional:
 
 Optional:
 
-- `max_page_size` (Number) The maximum page size supported by the API. Requires replacement if changed. ; Not Null
+- `max_page_size` (Number) The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set. Requires replacement if changed.
 - `offset_field_name` (String) The name of the request parameter used to specify the offset. Requires replacement if changed. ; Not Null
-- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Requires replacement if changed. ; Not Null
+- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter. Requires replacement if changed.
 - `type` (String) Requires replacement if changed. ; must be one of ["OFFSET"]; Default: "OFFSET"
 
 
@@ -204,9 +204,9 @@ Optional:
 
 Optional:
 
-- `max_page_size` (Number) The maximum page size supported by the API. Requires replacement if changed. ; Not Null
+- `max_page_size` (Number) The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set. Requires replacement if changed.
 - `page_number_field_name` (String) The name of the request parameter used to specify the page number. Requires replacement if changed. ; Not Null
-- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Requires replacement if changed. ; Not Null
+- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter. Requires replacement if changed.
 - `type` (String) Requires replacement if changed. ; must be one of ["PAGE_NUMBER"]; Default: "PAGE_NUMBER"
 
 

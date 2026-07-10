@@ -34,10 +34,10 @@ func (e *PageNumberPagingStrategyType) UnmarshalJSON(data []byte) error {
 
 // PageNumberPagingStrategy - Paging strategy that uses page numbers to iterate through results.
 type PageNumberPagingStrategy struct {
-	// The name of the request parameter used to specify the page size.
-	PageSizeFieldName string `json:"pageSizeFieldName"`
-	// The maximum page size supported by the API.
-	MaxPageSize int64                         `json:"maxPageSize"`
+	// The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.
+	PageSizeFieldName *string `json:"pageSizeFieldName,omitempty"`
+	// The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set.
+	MaxPageSize *int64                        `json:"maxPageSize,omitempty"`
 	Type        *PageNumberPagingStrategyType `default:"PAGE_NUMBER" json:"type"`
 	// The name of the request parameter used to specify the page number.
 	PageNumberFieldName string `json:"pageNumberFieldName"`
@@ -54,16 +54,16 @@ func (p *PageNumberPagingStrategy) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PageNumberPagingStrategy) GetPageSizeFieldName() string {
+func (o *PageNumberPagingStrategy) GetPageSizeFieldName() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.PageSizeFieldName
 }
 
-func (o *PageNumberPagingStrategy) GetMaxPageSize() int64 {
+func (o *PageNumberPagingStrategy) GetMaxPageSize() *int64 {
 	if o == nil {
-		return 0
+		return nil
 	}
 	return o.MaxPageSize
 }

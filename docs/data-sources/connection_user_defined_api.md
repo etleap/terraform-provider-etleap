@@ -191,8 +191,8 @@ Read-Only:
 
 Read-Only:
 
-- `max_page_size` (Number) The maximum page size supported by the API.
-- `page_size_field_name` (String) The name of the request parameter used to specify the page size.
+- `max_page_size` (Number) The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set.
+- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.
 - `path_to_cursor` (String) The path to the paging cursor inside the response body.
 - `type` (String) must be one of ["CURSOR_URI"]
 - `url_prefix` (String) String prepended to the paging cursor string to turn it into a URL, e.g. because the cursor only contains the URL path.
@@ -203,9 +203,9 @@ Read-Only:
 
 Read-Only:
 
-- `max_page_size` (Number) The maximum page size supported by the API.
+- `max_page_size` (Number) The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set.
 - `offset_field_name` (String) The name of the request parameter used to specify the offset.
-- `page_size_field_name` (String) The name of the request parameter used to specify the page size.
+- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.
 - `type` (String) must be one of ["OFFSET"]
 
 
@@ -214,9 +214,9 @@ Read-Only:
 
 Read-Only:
 
-- `max_page_size` (Number) The maximum page size supported by the API.
+- `max_page_size` (Number) The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set.
 - `page_number_field_name` (String) The name of the request parameter used to specify the page number.
-- `page_size_field_name` (String) The name of the request parameter used to specify the page size.
+- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.
 - `type` (String) must be one of ["PAGE_NUMBER"]
 
 
