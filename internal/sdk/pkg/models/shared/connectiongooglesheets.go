@@ -148,7 +148,7 @@ type ConnectionGoogleSheets struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionGoogleSheetsDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	Username              string                                        `json:"username"`
+	Username              *string                                       `json:"username,omitempty"`
 }
 
 func (c ConnectionGoogleSheets) MarshalJSON() ([]byte, error) {
@@ -253,9 +253,9 @@ func (o *ConnectionGoogleSheets) GetDefaultUpdateSchedule() []ConnectionGoogleSh
 	return o.DefaultUpdateSchedule
 }
 
-func (o *ConnectionGoogleSheets) GetUsername() string {
+func (o *ConnectionGoogleSheets) GetUsername() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Username
 }

@@ -14,7 +14,7 @@ terraform {
   required_providers {
     etleap = {
       source  = "etleap/etleap"
-      version = "0.3.13"
+      version = "0.3.14"
     }
   }
 }

@@ -94,5 +94,5 @@ func (r *ConnectionGOOGLESHEETSDataSourceModel) RefreshFromSharedConnectionGoogl
 			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
 		}
 	}
-	r.Username = types.StringValue(resp.Username)
+	r.Username = types.StringPointerValue(resp.Username)
 }
