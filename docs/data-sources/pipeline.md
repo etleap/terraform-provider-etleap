@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "ba5dbb36-23df-4612-92e3-eb440cdcfb2a"
+  id = "2ced0110-28e1-4805-b905-136028594d11"
 }
 ```
 

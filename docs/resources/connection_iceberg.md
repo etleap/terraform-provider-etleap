@@ -19,7 +19,7 @@ resource "etleap_connection_iceberg" "my_connectioniceberg" {
   deletion_of_export_products = true
   glue_region                 = "...my_glue_region..."
   iam_role                    = "...my_iam_role..."
-  name                        = "Chelsea Casper"
+  name                        = "Renee Durgan"
   type                        = "ICEBERG"
   warehouse_connection        = "...my_warehouse_connection..."
 }

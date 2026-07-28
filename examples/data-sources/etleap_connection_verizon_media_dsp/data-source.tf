@@ -1,3 +1,3 @@
 data "etleap_connection_verizon_media_dsp" "my_connectionverizon_media_dsp" {
-  id = "e08aa726-2e1d-4094-83a5-b071fb08db26"
+  id = "2e5eb925-a4ce-4bcd-bc62-4a2e4cd08981"
 }

@@ -2,24 +2,24 @@ resource "etleap_connection_postgres_sharded" "my_connectionpostgres_sharded" {
   auto_replicate              = "...my_auto_replicate..."
   cdc_address                 = "...my_cdc_address..."
   cdc_enabled                 = false
-  cdc_port                    = 8
+  cdc_port                    = 7
   deletion_of_export_products = false
-  fetch_lobs_for_updated_rows = true
-  name                        = "Ms. Anita Bins"
+  fetch_lobs_for_updated_rows = false
+  name                        = "Benny Kshlerin Jr."
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "95700 Beahan Haven"
+      address  = "1095 Abernathy Alley"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 4
+      port     = 9
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "198 Kelsi Unions"
-        port     = 5
-        username = "Patricia_Franey99"
+        address  = "34719 Boyle Mount"
+        port     = 9
+        username = "Joe77"
       }
-      username = "Kelley.Farrell91"
+      username = "Kobe.Zulauf"
     },
   ]
   type = "POSTGRES_SHARDED"

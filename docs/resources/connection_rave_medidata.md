@@ -15,11 +15,11 @@ ConnectionRAVEMEDIDATA Resource
 ```terraform
 resource "etleap_connection_rave_medidata" "my_connectionrave_medidata" {
   deletion_of_export_products = true
-  hostname                    = "complete-sum.name"
-  name                        = "Everett Price"
+  hostname                    = "extroverted-crunch.info"
+  name                        = "Lynette Luettgen"
   password                    = "...my_password..."
   type                        = "RAVE_MEDIDATA"
-  username                    = "Arjun95"
+  username                    = "Maximillian.Corwin42"
 }
 ```
 
