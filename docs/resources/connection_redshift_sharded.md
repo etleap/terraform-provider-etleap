@@ -16,12 +16,12 @@ ConnectionREDSHIFTSHARDED Resource
 resource "etleap_connection_redshift_sharded" "my_connectionredshift_sharded" {
   deletion_of_export_products   = true
   dynamic_varchar_width_enabled = true
-  name                          = "Faith Kris"
+  name                          = "Ted McKenzie"
   query_tags_enabled            = false
   schema                        = "...my_schema..."
   shards = [
     {
-      address  = "47007 Whitney Motorway"
+      address  = "7007 Whitney Motorway"
       database = "...my_database..."
       password = "...my_password..."
       port     = 7

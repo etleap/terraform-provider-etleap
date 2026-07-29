@@ -1,6 +1,6 @@
 resource "etleap_connection_quora_ads" "my_connectionquora_ads" {
   code                        = "...my_code..."
   deletion_of_export_products = false
-  name                        = "Elena Prosacco"
+  name                        = "Ruby Kunde"
   type                        = "QUORA_ADS"
 }

@@ -16,8 +16,8 @@ ConnectionIMPACTRADIUS Resource
 resource "etleap_connection_impact_radius" "my_connectionimpact_radius" {
   account_sid                 = "...my_account_sid..."
   auth_token                  = "...my_auth_token..."
-  deletion_of_export_products = true
-  name                        = "Chelsea Casper"
+  deletion_of_export_products = false
+  name                        = "Gordon Lueilwitz"
   type                        = "IMPACT_RADIUS"
 }
 ```

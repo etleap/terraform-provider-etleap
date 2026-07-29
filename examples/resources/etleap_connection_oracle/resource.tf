@@ -1,16 +1,16 @@
 resource "etleap_connection_oracle" "my_connectionoracle" {
-  address                              = "24880 Strosin Ridges"
+  address                              = "943 Zboncak Radial"
   cdc_address                          = "...my_cdc_address..."
-  cdc_enabled                          = true
-  cdc_port                             = 5
+  cdc_enabled                          = false
+  cdc_port                             = 10
   certificate                          = "...my_certificate..."
   database                             = "...my_database..."
   deletion_of_export_products          = true
-  name                                 = "Dr. Emmett Powlowski"
+  name                                 = "Lynette Nitzsche"
   password                             = "...my_password..."
-  port                                 = 0
+  port                                 = 6
   require_ssl_and_validate_certificate = true
   schema                               = "...my_schema..."
   type                                 = "ORACLE"
-  username                             = "Ludie_Schuppe"
+  username                             = "Fabian97"
 }

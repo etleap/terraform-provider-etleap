@@ -14,7 +14,7 @@ ConnectionTWITTERADS DataSource
 
 ```terraform
 data "etleap_connection_twitter_ads" "my_connectiontwitter_ads" {
-  id = "28c6b2a5-2238-4d61-aabc-7ac90d2f9ab5"
+  id = "4c4ada51-136d-4b0c-ab57-f9fd0217fcbf"
 }
 ```
 

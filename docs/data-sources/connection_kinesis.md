@@ -14,7 +14,7 @@ ConnectionKINESIS DataSource
 
 ```terraform
 data "etleap_connection_kinesis" "my_connectionkinesis" {
-  id = "fbf670e7-b5cd-46b8-a4ec-37aa6610fb19"
+  id = "af73e3aa-22dd-43c2-8c29-d5c43402a678"
 }
 ```
 

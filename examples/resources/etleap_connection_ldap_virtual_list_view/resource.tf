@@ -1,12 +1,12 @@
 resource "etleap_connection_ldap_virtual_list_view" "my_connectionldap_virtual_list_view" {
   base_dn                     = "...my_base_dn..."
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   filter                      = "...my_filter..."
-  hostname                    = "gleaming-equipment.biz"
-  name                        = "Guadalupe Collins"
+  hostname                    = "united-cheddar.name"
+  name                        = "Patricia Keeling"
   password                    = "...my_password..."
-  port                        = 1
-  scope                       = "Single-level"
+  port                        = 0
+  scope                       = "Subtree"
   sort_order                  = "...my_sort_order..."
   type                        = "LDAP_VIRTUAL_LIST_VIEW"
   user                        = "...my_user..."

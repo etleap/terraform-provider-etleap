@@ -1,6 +1,6 @@
 resource "etleap_connection_hubspot" "my_connectionhubspot" {
   code                        = "...my_code..."
-  deletion_of_export_products = true
-  name                        = "Jamie Feeney"
+  deletion_of_export_products = false
+  name                        = "Josefina Emard"
   type                        = "HUBSPOT"
 }

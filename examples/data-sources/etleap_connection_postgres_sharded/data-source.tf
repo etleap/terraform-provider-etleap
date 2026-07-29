@@ -1,3 +1,3 @@
 data "etleap_connection_postgres_sharded" "my_connectionpostgres_sharded" {
-  id = "687b2df9-3c48-40e1-975d-4af3c8533d61"
+  id = "05cd66bf-e854-4e4c-81fe-244f8a0be6d5"
 }
