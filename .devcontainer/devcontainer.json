@@ -1,0 +1,19 @@
+{
+  "name": "terraform-provider-etleap-private",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "mounts": [
+    "source=terraform-provider-etleap-private-speakeasy,target=/home/vscode/.speakeasy,type=volume"
+  ],
+  "forwardPorts": [5555],
+  "appPort": ["5555:5555"],
+  "postCreateCommand": "sudo chown vscode:vscode /home/vscode/.speakeasy",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.go"
+      ]
+    }
+  }
+}

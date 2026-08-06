@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "bridge-plugin-socket",
+      "type": "shell",
+      "command": "${workspaceFolder}/.vscode/bridge-plugin-socket.sh",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": {
+        "owner": "bridge-plugin-socket",
+        "pattern": {
+          "regexp": "^__never_matches__$",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "."
+        }
+      }
+    },
+    {
+      "label": "stop-bridge",
+      "type": "shell",
+      "command": "pkill -f 'socat TCP-LISTEN:5555' || true",
+      "presentation": { "reveal": "silent", "panel": "dedicated" }
+    }
+  ]
+}

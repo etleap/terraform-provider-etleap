@@ -5,3 +5,4 @@
 dist/
 .envrc
 preprocessor/__pycache__/
+__debug*

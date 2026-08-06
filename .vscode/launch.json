@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug Terraform Provider (Speakeasy)",
+        "type": "go",
+        "request": "launch",
+        "mode": "debug",
+        "program": "${workspaceFolder}/main.go",
+        "args": ["--debug"],
+        "env": {},
+        "cwd": "${workspaceFolder}",
+        "preLaunchTask": "bridge-plugin-socket",
+        "postDebugTask": "stop-bridge"
+      }
+    ]
+  }
