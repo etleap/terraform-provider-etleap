@@ -61,7 +61,6 @@ resource "etleap_pipeline" "my_pipeline" {
 ### Optional
 
 - `deletion_of_export_products` (Boolean) Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue. Defaults to `false`. Default: false
-- `parsing_error_settings` (Attributes) Deprecated: replaced by row error settings in a future API version. (see [below for nested schema](#nestedatt--parsing_error_settings))
 - `paused` (Boolean) If the pipeline is paused. Defaults to `false`. Default: false
 - `refresh_schedule` (Attributes) A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
 
@@ -83,10 +82,7 @@ Once shared, a pipeline cannot be unshared. Future call to `PATCH` on a pipeline
 - `latest_script_version` (Number) Valid script versions are whole numbers and range from 1 to this number.
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
 - `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
-- `stop_reason` (String) Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline.
-
-`PARSING_ERRORS` is deprecated and will be replaced by `ROW_ERRORS` in a future API version. Both values are listed in the spec during the migration window so clients can accept `ROW_ERRORS` ahead of the change; the server currently returns `PARSING_ERRORS`.
-must be one of ["PAUSED", "PARSING_ERRORS", "ROW_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE", "PIPELINE_SCRIPT_ERROR", "BROKEN_INGEST_ERROR"]
+- `stop_reason` (String) Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. must be one of ["PAUSED", "ROW_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE", "PIPELINE_SCRIPT_ERROR", "BROKEN_INGEST_ERROR"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
 <a id="nestedatt--destination"></a>
@@ -1620,15 +1616,6 @@ Optional:
 
 
 
-<a id="nestedatt--parsing_error_settings"></a>
-### Nested Schema for `parsing_error_settings`
-
-Optional:
-
-- `action` (String) Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached. Not Null; must be one of ["STOP", "NOTIFY"]
-- `threshold` (Number) The parsing error threshold, in percentage points, for the `action` to be triggered. Not Null
-
-
 <a id="nestedatt--refresh_schedule"></a>
 ### Nested Schema for `refresh_schedule`
 
@@ -1870,7 +1857,6 @@ Read-Only:
 
 - `current_version` (Number) The version of the pipeline that is currently writing to the output table.
 - `destination` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination))
-- `parsing_errors` (Attributes) Deprecated: replaced by row errors in a future API version. Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--parsing_errors))
 - `refresh_version` (Number) The version of the pipeline that is currently writing to the temporary refresh table. Only specified if there's currently a refresh in progress.
 - `retention_data` (Attributes) Etleap can remove old rows from your destination. This is a summary of the data retention. If a pipeline is being refreshed, this will be the summary for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--retention_data))
 - `row_errors` (Attributes) Row errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--row_errors))
@@ -1990,46 +1976,6 @@ Read-Only:
 - `table` (String)
 - `type` (String) must be one of ["SNOWFLAKE"]
 - `wait_for_quality_check` (Boolean) If set to `true`, a `Transformation Complete` event is published once a transformation completes, and the pipeline waits for a `Quality Check Complete` event before loading to the destination. Defaults to `false`.
-
-
-
-<a id="nestedatt--destinations--parsing_errors"></a>
-### Nested Schema for `destinations.parsing_errors`
-
-Read-Only:
-
-- `operation_errors_by_operation` (Attributes List) (see [below for nested schema](#nestedatt--destinations--parsing_errors--operation_errors_by_operation))
-- `parsing_errors_per_day` (Attributes List) (see [below for nested schema](#nestedatt--destinations--parsing_errors--parsing_errors_per_day))
-- `type_errors_by_column` (Attributes List) (see [below for nested schema](#nestedatt--destinations--parsing_errors--type_errors_by_column))
-
-<a id="nestedatt--destinations--parsing_errors--operation_errors_by_operation"></a>
-### Nested Schema for `destinations.parsing_errors.operation_errors_by_operation`
-
-Read-Only:
-
-- `operation_description` (String) Deprecated: renamed to `scriptStepDescription` in a future API version.
-- `operation_index` (Number) Deprecated: renamed to `scriptStepIndex` in a future API version. Index of step in the script of this pipeline that caused this error.
-- `row_count` (Number)
-
-
-<a id="nestedatt--destinations--parsing_errors--parsing_errors_per_day"></a>
-### Nested Schema for `destinations.parsing_errors.parsing_errors_per_day`
-
-Read-Only:
-
-- `day` (String) Format of the timestamp: 'yyyy-MM-dd'
-- `error_type` (String) `OPERATION` is deprecated and will be replaced by `SCRIPT` in a future API version. Both values are listed in the spec during the migration window so clients can accept `SCRIPT` ahead of the change; the server currently returns `OPERATION`. must be one of ["TYPE", "OPERATION", "SCRIPT"]
-- `row_count` (Number)
-
-
-<a id="nestedatt--destinations--parsing_errors--type_errors_by_column"></a>
-### Nested Schema for `destinations.parsing_errors.type_errors_by_column`
-
-Read-Only:
-
-- `column_name` (String)
-- `row_count` (Number)
-- `type` (String)
 
 
 

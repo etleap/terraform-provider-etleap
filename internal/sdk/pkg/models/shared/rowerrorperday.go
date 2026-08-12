@@ -9,18 +9,18 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
-type RowErrorPerDayErrorType string
+type ErrorType string
 
 const (
-	RowErrorPerDayErrorTypeType   RowErrorPerDayErrorType = "TYPE"
-	RowErrorPerDayErrorTypeScript RowErrorPerDayErrorType = "SCRIPT"
+	ErrorTypeType   ErrorType = "TYPE"
+	ErrorTypeScript ErrorType = "SCRIPT"
 )
 
-func (e RowErrorPerDayErrorType) ToPointer() *RowErrorPerDayErrorType {
+func (e ErrorType) ToPointer() *ErrorType {
 	return &e
 }
 
-func (e *RowErrorPerDayErrorType) UnmarshalJSON(data []byte) error {
+func (e *ErrorType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -29,15 +29,15 @@ func (e *RowErrorPerDayErrorType) UnmarshalJSON(data []byte) error {
 	case "TYPE":
 		fallthrough
 	case "SCRIPT":
-		*e = RowErrorPerDayErrorType(v)
+		*e = ErrorType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RowErrorPerDayErrorType: %v", v)
+		return fmt.Errorf("invalid value for ErrorType: %v", v)
 	}
 }
 
 type RowErrorPerDay struct {
-	ErrorType RowErrorPerDayErrorType `json:"errorType"`
+	ErrorType ErrorType `json:"errorType"`
 	// Format of the timestamp: 'yyyy-MM-dd'
 	Day      types.Date `json:"day"`
 	RowCount int64      `json:"rowCount"`
@@ -54,9 +54,9 @@ func (r *RowErrorPerDay) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *RowErrorPerDay) GetErrorType() RowErrorPerDayErrorType {
+func (o *RowErrorPerDay) GetErrorType() ErrorType {
 	if o == nil {
-		return RowErrorPerDayErrorType("")
+		return ErrorType("")
 	}
 	return o.ErrorType
 }

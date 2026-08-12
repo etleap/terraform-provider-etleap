@@ -121,45 +121,6 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 			destinations1.Destination.Snowflake.Type = types.StringValue(string(destinationsItem.Destination.DestinationSnowflake.Type))
 			destinations1.Destination.Snowflake.WaitForQualityCheck = types.BoolPointerValue(destinationsItem.Destination.DestinationSnowflake.WaitForQualityCheck)
 		}
-		for operationErrorsByOperationCount, operationErrorsByOperationItem := range destinationsItem.ParsingErrors.OperationErrorsByOperation {
-			var operationErrorsByOperation1 OperationErrorsByOperation
-			operationErrorsByOperation1.OperationDescription = types.StringValue(operationErrorsByOperationItem.OperationDescription)
-			operationErrorsByOperation1.OperationIndex = types.Int64Value(operationErrorsByOperationItem.OperationIndex)
-			operationErrorsByOperation1.RowCount = types.Int64Value(operationErrorsByOperationItem.RowCount)
-			if operationErrorsByOperationCount+1 > len(destinations1.ParsingErrors.OperationErrorsByOperation) {
-				destinations1.ParsingErrors.OperationErrorsByOperation = append(destinations1.ParsingErrors.OperationErrorsByOperation, operationErrorsByOperation1)
-			} else {
-				destinations1.ParsingErrors.OperationErrorsByOperation[operationErrorsByOperationCount].OperationDescription = operationErrorsByOperation1.OperationDescription
-				destinations1.ParsingErrors.OperationErrorsByOperation[operationErrorsByOperationCount].OperationIndex = operationErrorsByOperation1.OperationIndex
-				destinations1.ParsingErrors.OperationErrorsByOperation[operationErrorsByOperationCount].RowCount = operationErrorsByOperation1.RowCount
-			}
-		}
-		for parsingErrorsPerDayCount, parsingErrorsPerDayItem := range destinationsItem.ParsingErrors.ParsingErrorsPerDay {
-			var parsingErrorsPerDay1 ParsingErrorPerDay
-			parsingErrorsPerDay1.Day = types.StringValue(parsingErrorsPerDayItem.Day.String())
-			parsingErrorsPerDay1.ErrorType = types.StringValue(string(parsingErrorsPerDayItem.ErrorType))
-			parsingErrorsPerDay1.RowCount = types.Int64Value(parsingErrorsPerDayItem.RowCount)
-			if parsingErrorsPerDayCount+1 > len(destinations1.ParsingErrors.ParsingErrorsPerDay) {
-				destinations1.ParsingErrors.ParsingErrorsPerDay = append(destinations1.ParsingErrors.ParsingErrorsPerDay, parsingErrorsPerDay1)
-			} else {
-				destinations1.ParsingErrors.ParsingErrorsPerDay[parsingErrorsPerDayCount].Day = parsingErrorsPerDay1.Day
-				destinations1.ParsingErrors.ParsingErrorsPerDay[parsingErrorsPerDayCount].ErrorType = parsingErrorsPerDay1.ErrorType
-				destinations1.ParsingErrors.ParsingErrorsPerDay[parsingErrorsPerDayCount].RowCount = parsingErrorsPerDay1.RowCount
-			}
-		}
-		for typeErrorsByColumnCount, typeErrorsByColumnItem := range destinationsItem.ParsingErrors.TypeErrorsByColumn {
-			var typeErrorsByColumn1 TypeErrorsByColumn
-			typeErrorsByColumn1.ColumnName = types.StringValue(typeErrorsByColumnItem.ColumnName)
-			typeErrorsByColumn1.RowCount = types.Int64Value(typeErrorsByColumnItem.RowCount)
-			typeErrorsByColumn1.Type = types.StringValue(typeErrorsByColumnItem.Type)
-			if typeErrorsByColumnCount+1 > len(destinations1.ParsingErrors.TypeErrorsByColumn) {
-				destinations1.ParsingErrors.TypeErrorsByColumn = append(destinations1.ParsingErrors.TypeErrorsByColumn, typeErrorsByColumn1)
-			} else {
-				destinations1.ParsingErrors.TypeErrorsByColumn[typeErrorsByColumnCount].ColumnName = typeErrorsByColumn1.ColumnName
-				destinations1.ParsingErrors.TypeErrorsByColumn[typeErrorsByColumnCount].RowCount = typeErrorsByColumn1.RowCount
-				destinations1.ParsingErrors.TypeErrorsByColumn[typeErrorsByColumnCount].Type = typeErrorsByColumn1.Type
-			}
-		}
 		destinations1.RefreshVersion = types.Int64PointerValue(destinationsItem.RefreshVersion)
 		for rowsCurrentlyInWarehouseCount, rowsCurrentlyInWarehouseItem := range destinationsItem.RetentionData.RetentionByDay.RowsCurrentlyInWarehouse {
 			var rowsCurrentlyInWarehouse1 RetentionDayRowCount
@@ -224,17 +185,17 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 				destinations1.RowErrors.ScriptErrorsByScriptStep[scriptErrorsByScriptStepCount].ScriptStepIndex = scriptErrorsByScriptStep1.ScriptStepIndex
 			}
 		}
-		for typeErrorsByColumnCount1, typeErrorsByColumnItem1 := range destinationsItem.RowErrors.TypeErrorsByColumn {
-			var typeErrorsByColumn3 TypeErrorsByColumn
-			typeErrorsByColumn3.ColumnName = types.StringValue(typeErrorsByColumnItem1.ColumnName)
-			typeErrorsByColumn3.RowCount = types.Int64Value(typeErrorsByColumnItem1.RowCount)
-			typeErrorsByColumn3.Type = types.StringValue(typeErrorsByColumnItem1.Type)
-			if typeErrorsByColumnCount1+1 > len(destinations1.RowErrors.TypeErrorsByColumn) {
-				destinations1.RowErrors.TypeErrorsByColumn = append(destinations1.RowErrors.TypeErrorsByColumn, typeErrorsByColumn3)
+		for typeErrorsByColumnCount, typeErrorsByColumnItem := range destinationsItem.RowErrors.TypeErrorsByColumn {
+			var typeErrorsByColumn1 TypeErrorsByColumn
+			typeErrorsByColumn1.ColumnName = types.StringValue(typeErrorsByColumnItem.ColumnName)
+			typeErrorsByColumn1.RowCount = types.Int64Value(typeErrorsByColumnItem.RowCount)
+			typeErrorsByColumn1.Type = types.StringValue(typeErrorsByColumnItem.Type)
+			if typeErrorsByColumnCount+1 > len(destinations1.RowErrors.TypeErrorsByColumn) {
+				destinations1.RowErrors.TypeErrorsByColumn = append(destinations1.RowErrors.TypeErrorsByColumn, typeErrorsByColumn1)
 			} else {
-				destinations1.RowErrors.TypeErrorsByColumn[typeErrorsByColumnCount1].ColumnName = typeErrorsByColumn3.ColumnName
-				destinations1.RowErrors.TypeErrorsByColumn[typeErrorsByColumnCount1].RowCount = typeErrorsByColumn3.RowCount
-				destinations1.RowErrors.TypeErrorsByColumn[typeErrorsByColumnCount1].Type = typeErrorsByColumn3.Type
+				destinations1.RowErrors.TypeErrorsByColumn[typeErrorsByColumnCount].ColumnName = typeErrorsByColumn1.ColumnName
+				destinations1.RowErrors.TypeErrorsByColumn[typeErrorsByColumnCount].RowCount = typeErrorsByColumn1.RowCount
+				destinations1.RowErrors.TypeErrorsByColumn[typeErrorsByColumnCount].Type = typeErrorsByColumn1.Type
 			}
 		}
 		for schemaChangeActivityCount, schemaChangeActivityItem := range destinationsItem.SchemaChangeActivity {
@@ -257,7 +218,6 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		} else {
 			r.Destinations[destinationsCount].CurrentVersion = destinations1.CurrentVersion
 			r.Destinations[destinationsCount].Destination = destinations1.Destination
-			r.Destinations[destinationsCount].ParsingErrors = destinations1.ParsingErrors
 			r.Destinations[destinationsCount].RefreshVersion = destinations1.RefreshVersion
 			r.Destinations[destinationsCount].RetentionData = destinations1.RetentionData
 			r.Destinations[destinationsCount].RowErrors = destinations1.RowErrors
@@ -282,13 +242,6 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	r.Owner.FirstName = types.StringValue(resp.Owner.FirstName)
 	r.Owner.ID = types.StringValue(resp.Owner.ID)
 	r.Owner.LastName = types.StringValue(resp.Owner.LastName)
-	if resp.ParsingErrorSettings == nil {
-		r.ParsingErrorSettings = nil
-	} else {
-		r.ParsingErrorSettings = &ParsingErrorSettings{}
-		r.ParsingErrorSettings.Action = types.StringValue(string(resp.ParsingErrorSettings.Action))
-		r.ParsingErrorSettings.Threshold = types.NumberValue(big.NewFloat(float64(resp.ParsingErrorSettings.Threshold)))
-	}
 	r.Paused = types.BoolValue(resp.Paused)
 	r.PipelineMode = types.StringValue(string(resp.PipelineMode))
 	if resp.RefreshSchedule.RefreshScheduleModeDaily != nil {
@@ -319,7 +272,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	if resp.RowErrorSettings == nil {
 		r.RowErrorSettings = nil
 	} else {
-		r.RowErrorSettings = &ParsingErrorSettings{}
+		r.RowErrorSettings = &RowErrorSettings{}
 		r.RowErrorSettings.Action = types.StringValue(string(resp.RowErrorSettings.Action))
 		r.RowErrorSettings.Threshold = types.NumberValue(big.NewFloat(float64(resp.RowErrorSettings.Threshold)))
 	}

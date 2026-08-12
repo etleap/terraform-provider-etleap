@@ -7,14 +7,11 @@ import (
 	"fmt"
 )
 
-// StopReason - Describes the reason a pipeline has stopped. `null` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline.
-//
-// `PARSING_ERRORS` is deprecated and will be replaced by `ROW_ERRORS` in a future API version. Both values are listed in the spec during the migration window so clients can accept `ROW_ERRORS` ahead of the change; the server currently returns `PARSING_ERRORS`.
+// StopReason - Describes the reason a pipeline has stopped. `null` if the pipeline is currently running.
 type StopReason string
 
 const (
 	StopReasonPaused                    StopReason = "PAUSED"
-	StopReasonParsingErrors             StopReason = "PARSING_ERRORS"
 	StopReasonRowErrors                 StopReason = "ROW_ERRORS"
 	StopReasonSchemaChanges             StopReason = "SCHEMA_CHANGES"
 	StopReasonRedshiftResize            StopReason = "REDSHIFT_RESIZE"
@@ -42,8 +39,6 @@ func (e *StopReason) UnmarshalJSON(data []byte) error {
 	}
 	switch v {
 	case "PAUSED":
-		fallthrough
-	case "PARSING_ERRORS":
 		fallthrough
 	case "ROW_ERRORS":
 		fallthrough

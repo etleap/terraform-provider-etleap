@@ -7,19 +7,19 @@ import (
 	"fmt"
 )
 
-// RowErrorSettingsAction - Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached.
-type RowErrorSettingsAction string
+// Action - Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached.
+type Action string
 
 const (
-	RowErrorSettingsActionStop   RowErrorSettingsAction = "STOP"
-	RowErrorSettingsActionNotify RowErrorSettingsAction = "NOTIFY"
+	ActionStop   Action = "STOP"
+	ActionNotify Action = "NOTIFY"
 )
 
-func (e RowErrorSettingsAction) ToPointer() *RowErrorSettingsAction {
+func (e Action) ToPointer() *Action {
 	return &e
 }
 
-func (e *RowErrorSettingsAction) UnmarshalJSON(data []byte) error {
+func (e *Action) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -28,10 +28,10 @@ func (e *RowErrorSettingsAction) UnmarshalJSON(data []byte) error {
 	case "STOP":
 		fallthrough
 	case "NOTIFY":
-		*e = RowErrorSettingsAction(v)
+		*e = Action(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RowErrorSettingsAction: %v", v)
+		return fmt.Errorf("invalid value for Action: %v", v)
 	}
 }
 
@@ -39,7 +39,7 @@ type RowErrorSettings struct {
 	// The row error threshold, in percentage points, for the `action` to be triggered.
 	Threshold float64 `json:"threshold"`
 	// Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached.
-	Action RowErrorSettingsAction `json:"action"`
+	Action Action `json:"action"`
 }
 
 func (o *RowErrorSettings) GetThreshold() float64 {
@@ -49,9 +49,9 @@ func (o *RowErrorSettings) GetThreshold() float64 {
 	return o.Threshold
 }
 
-func (o *RowErrorSettings) GetAction() RowErrorSettingsAction {
+func (o *RowErrorSettings) GetAction() Action {
 	if o == nil {
-		return RowErrorSettingsAction("")
+		return Action("")
 	}
 	return o.Action
 }

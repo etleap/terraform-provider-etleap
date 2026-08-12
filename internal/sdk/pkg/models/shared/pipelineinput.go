@@ -406,12 +406,8 @@ type PipelineInput struct {
 	// Whenever a script is required, we accept and/or return two types of scripts: a Script or Legacy Script. We return a Script object if all transforms specified in that script are supported by this API. Otherwise it will return a Legacy Script. Either Script or Legacy Script can be used when adding a script to a pipeline.
 	Script *ScriptOrLegacyScriptInput `json:"script,omitempty"`
 	// If the pipeline is paused. Defaults to `false`.
-	Paused *bool `default:"false" json:"paused"`
-	// Deprecated: replaced by row error settings in a future API version.
-	//
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-	ParsingErrorSettings *ParsingErrorSettings `json:"parsingErrorSettings,omitempty"`
-	RowErrorSettings     *RowErrorSettings     `json:"rowErrorSettings,omitempty"`
+	Paused           *bool             `default:"false" json:"paused"`
+	RowErrorSettings *RowErrorSettings `json:"rowErrorSettings,omitempty"`
 	// An array of user email's to share the pipeline with.
 	//
 	// Once shared, a pipeline cannot be unshared. Future call to `PATCH` on a pipeline can only add to this list.
@@ -904,13 +900,6 @@ func (o *PipelineInput) GetPaused() *bool {
 		return nil
 	}
 	return o.Paused
-}
-
-func (o *PipelineInput) GetParsingErrorSettings() *ParsingErrorSettings {
-	if o == nil {
-		return nil
-	}
-	return o.ParsingErrorSettings
 }
 
 func (o *PipelineInput) GetRowErrorSettings() *RowErrorSettings {

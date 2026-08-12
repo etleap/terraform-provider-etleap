@@ -63,11 +63,10 @@ type PipelineResourceModel struct {
 	LatestScriptVersion      types.Int64                          `tfsdk:"latest_script_version"`
 	Name                     types.String                         `tfsdk:"name"`
 	Owner                    User                                 `tfsdk:"owner"`
-	ParsingErrorSettings     *ParsingErrorSettings                `tfsdk:"parsing_error_settings"`
 	Paused                   types.Bool                           `tfsdk:"paused"`
 	PipelineMode             types.String                         `tfsdk:"pipeline_mode"`
 	RefreshSchedule          *RefreshScheduleTypes                `tfsdk:"refresh_schedule"`
-	RowErrorSettings         *ParsingErrorSettings                `tfsdk:"row_error_settings"`
+	RowErrorSettings         *RowErrorSettings                    `tfsdk:"row_error_settings"`
 	Script                   *ScriptOrLegacyScriptInput           `tfsdk:"script"`
 	Shares                   []types.String                       `tfsdk:"shares"`
 	Source                   SourceTypes                          `tfsdk:"source"`
@@ -1139,113 +1138,6 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								validators.ExactlyOneChild(),
 							},
 						},
-						"parsing_errors": schema.SingleNestedAttribute{
-							Computed: true,
-							PlanModifiers: []planmodifier.Object{
-								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
-							},
-							Attributes: map[string]schema.Attribute{
-								"operation_errors_by_operation": schema.ListNestedAttribute{
-									Computed: true,
-									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-									},
-									NestedObject: schema.NestedAttributeObject{
-										Attributes: map[string]schema.Attribute{
-											"operation_description": schema.StringAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-												},
-												Description: `Deprecated: renamed to ` + "`" + `scriptStepDescription` + "`" + ` in a future API version.`,
-											},
-											"operation_index": schema.Int64Attribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
-												},
-												Description: `Deprecated: renamed to ` + "`" + `scriptStepIndex` + "`" + ` in a future API version. Index of step in the script of this pipeline that caused this error.`,
-											},
-											"row_count": schema.Int64Attribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
-												},
-											},
-										},
-									},
-								},
-								"parsing_errors_per_day": schema.ListNestedAttribute{
-									Computed: true,
-									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-									},
-									NestedObject: schema.NestedAttributeObject{
-										Attributes: map[string]schema.Attribute{
-											"day": schema.StringAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-												},
-												Description: `Format of the timestamp: 'yyyy-MM-dd'`,
-												Validators: []validator.String{
-													validators.IsValidDate(),
-												},
-											},
-											"error_type": schema.StringAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-												},
-												Description: `` + "`" + `OPERATION` + "`" + ` is deprecated and will be replaced by ` + "`" + `SCRIPT` + "`" + ` in a future API version. Both values are listed in the spec during the migration window so clients can accept ` + "`" + `SCRIPT` + "`" + ` ahead of the change; the server currently returns ` + "`" + `OPERATION` + "`" + `. must be one of ["TYPE", "OPERATION", "SCRIPT"]`,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"TYPE",
-														"OPERATION",
-														"SCRIPT",
-													),
-												},
-											},
-											"row_count": schema.Int64Attribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
-												},
-											},
-										},
-									},
-								},
-								"type_errors_by_column": schema.ListNestedAttribute{
-									Computed: true,
-									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-									},
-									NestedObject: schema.NestedAttributeObject{
-										Attributes: map[string]schema.Attribute{
-											"column_name": schema.StringAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-												},
-											},
-											"row_count": schema.Int64Attribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
-												},
-											},
-											"type": schema.StringAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-												},
-											},
-										},
-									},
-								},
-							},
-							Description: `Deprecated: replaced by row errors in a future API version. Parsing errors that occur during the transformation of the pipeline. If a pipeline is being refreshed, these errors will be for the refreshing pipeline.`,
-						},
 						"refresh_version": schema.Int64Attribute{
 							Computed: true,
 							PlanModifiers: []planmodifier.Int64{
@@ -1562,42 +1454,6 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						},
 					},
 				},
-			},
-			"parsing_error_settings": schema.SingleNestedAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.Object{
-					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
-				},
-				Optional: true,
-				Attributes: map[string]schema.Attribute{
-					"action": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `Whether Etleap should STOP the pipeline or NOTIFY once the ` + "`" + `threshold` + "`" + ` is reached. Not Null; must be one of ["STOP", "NOTIFY"]`,
-						Validators: []validator.String{
-							speakeasy_stringvalidators.NotNull(),
-							stringvalidator.OneOf(
-								"STOP",
-								"NOTIFY",
-							),
-						},
-					},
-					"threshold": schema.NumberAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Number{
-							speakeasy_numberplanmodifier.SuppressDiff(speakeasy_numberplanmodifier.ExplicitSuppress),
-						},
-						Optional:    true,
-						Description: `The parsing error threshold, in percentage points, for the ` + "`" + `action` + "`" + ` to be triggered. Not Null`,
-						Validators: []validator.Number{
-							speakeasy_numbervalidators.NotNull(),
-						},
-					},
-				},
-				Description: `Deprecated: replaced by row error settings in a future API version.`,
 			},
 			"paused": schema.BoolAttribute{
 				Computed: true,
@@ -9529,14 +9385,10 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				MarkdownDescription: `Describes the reason a pipeline has stopped. ` + "`" + `null` + "`" + ` if the pipeline is currently running. If a pipeline is being refreshed, the stop reason will be for the refreshing pipeline.` + "\n" +
-					`` + "\n" +
-					`` + "`" + `PARSING_ERRORS` + "`" + ` is deprecated and will be replaced by ` + "`" + `ROW_ERRORS` + "`" + ` in a future API version. Both values are listed in the spec during the migration window so clients can accept ` + "`" + `ROW_ERRORS` + "`" + ` ahead of the change; the server currently returns ` + "`" + `PARSING_ERRORS` + "`" + `.` + "\n" +
-					`must be one of ["PAUSED", "PARSING_ERRORS", "ROW_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE", "PIPELINE_SCRIPT_ERROR", "BROKEN_INGEST_ERROR"]`,
+				Description: `Describes the reason a pipeline has stopped. ` + "`" + `null` + "`" + ` if the pipeline is currently running. must be one of ["PAUSED", "ROW_ERRORS", "SCHEMA_CHANGES", "REDSHIFT_RESIZE", "REDSHIFT_MAINTENANCE", "SOURCE_CONNECTION_DOWN", "DESTINATION_CONNECTION_DOWN", "PERMANENTLY_STOPPED", "SOURCE_BROKEN", "QUOTA_REACHED", "SOURCE_INACTIVE", "DESTINATION_INACTIVE", "PIPELINE_MODE_CHANGE", "PIPELINE_SCRIPT_ERROR", "BROKEN_INGEST_ERROR"]`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"PAUSED",
-						"PARSING_ERRORS",
 						"ROW_ERRORS",
 						"SCHEMA_CHANGES",
 						"REDSHIFT_RESIZE",

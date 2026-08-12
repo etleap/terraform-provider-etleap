@@ -7,7 +7,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type DestinationInfoAndPipelineVersions struct {
 	CurrentVersion       types.Int64      `tfsdk:"current_version"`
 	Destination          DestinationTypes `tfsdk:"destination"`
-	ParsingErrors        ParsingErrors    `tfsdk:"parsing_errors"`
 	RefreshVersion       types.Int64      `tfsdk:"refresh_version"`
 	RetentionData        RetentionData    `tfsdk:"retention_data"`
 	RowErrors            RowErrors        `tfsdk:"row_errors"`

@@ -4,7 +4,7 @@ package provider
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type ParsingErrorSettings struct {
+type RowErrorSettings struct {
 	Action    types.String `tfsdk:"action"`
 	Threshold types.Number `tfsdk:"threshold"`
 }
