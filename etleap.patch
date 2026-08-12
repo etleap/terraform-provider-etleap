@@ -1,5 +1,5 @@
 diff --git a/internal/provider/pipeline_resource.go b/internal/provider/pipeline_resource.go
-index 697e50b..01bc0fa 100644
+index ed7b525..448c6c6 100644
 --- a/internal/provider/pipeline_resource.go
 +++ b/internal/provider/pipeline_resource.go
 @@ -5,6 +5,9 @@ package provider
@@ -28,7 +28,7 @@ index 697e50b..01bc0fa 100644
  )
  
  // Ensure provider defined types fully satisfy framework interfaces.
-@@ -101,25 +106,21 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -100,25 +105,21 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  				Description: `Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
  			},
  			"destination": schema.SingleNestedAttribute{
@@ -65,7 +65,7 @@ index 697e50b..01bc0fa 100644
  							},
  							"connection_id": schema.StringAttribute{
  								PlanModifiers: []planmodifier.String{
-@@ -169,17 +170,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -168,17 +169,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  								Default:     booldefault.StaticBool(false),
  								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
  							},
@@ -87,7 +87,7 @@ index 697e50b..01bc0fa 100644
  								Required:    true,
  								Description: `Requires replacement if changed. `,
  							},
-@@ -279,19 +278,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -278,19 +277,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  						Description: `Requires replacement if changed. `,
  					},
  					"redshift": schema.SingleNestedAttribute{
@@ -116,7 +116,7 @@ index 697e50b..01bc0fa 100644
  							},
  							"compress_columns": schema.BoolAttribute{
  								Computed: true,
-@@ -390,10 +387,9 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -389,10 +386,9 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  								Default:     booldefault.StaticBool(false),
  								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
  							},
@@ -129,7 +129,7 @@ index 697e50b..01bc0fa 100644
  								Optional:    true,
  								Description: `The schema in the destination that the tables will be created in. If this is not specified or set to ` + "`" + `null` + "`" + ` then the schema specified on the connection is used. Requires replacement if changed. `,
  							},
-@@ -408,10 +404,9 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -407,10 +403,9 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  									listvalidator.SizeAtLeast(1),
  								},
  							},
@@ -142,7 +142,7 @@ index 697e50b..01bc0fa 100644
  								Required:    true,
  								Description: `Requires replacement if changed. `,
  							},
-@@ -449,19 +444,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -448,19 +443,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  						Description: `Requires replacement if changed. `,
  					},
  					"s3_data_lake": schema.SingleNestedAttribute{
@@ -171,7 +171,7 @@ index 697e50b..01bc0fa 100644
  							},
  							"connection_id": schema.StringAttribute{
  								PlanModifiers: []planmodifier.String{
-@@ -537,19 +530,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -536,19 +529,17 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  						Description: `Requires replacement if changed. `,
  					},
  					"snowflake": schema.SingleNestedAttribute{
@@ -200,7 +200,7 @@ index 697e50b..01bc0fa 100644
  							},
  							"clustering_keys": schema.ListAttribute{
  								PlanModifiers: []planmodifier.List{
-@@ -594,16 +585,12 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
+@@ -593,16 +584,12 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
  								Description: `If the destination table should retain the history of the source. More information here: https://docs.etleap.com/documentation/pipeline/modes/update-with-history-retention-mode/. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
  							},
  							"schema": schema.StringAttribute{
@@ -219,7 +219,7 @@ index 697e50b..01bc0fa 100644
  								Required:    true,
  								Description: `Requires replacement if changed. `,
  							},
-@@ -9803,7 +9790,16 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
+@@ -9655,7 +9642,16 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
  	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  
@@ -237,7 +237,7 @@ index 697e50b..01bc0fa 100644
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
  
-@@ -9851,7 +9847,16 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
+@@ -9703,7 +9699,16 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
  	}
  	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
  
@@ -255,7 +255,7 @@ index 697e50b..01bc0fa 100644
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
  
-@@ -9871,6 +9876,39 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -9723,6 +9728,39 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  
  	id := data.ID.ValueString()
  	pipelineUpdate := *data.ToSharedPipelineUpdate()
@@ -295,7 +295,7 @@ index 697e50b..01bc0fa 100644
  	request := operations.UpdatePipelineRequest{
  		ID:             id,
  		PipelineUpdate: pipelineUpdate,
-@@ -9895,6 +9933,31 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -9747,6 +9785,31 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
  		return
  	}
@@ -327,7 +327,7 @@ index 697e50b..01bc0fa 100644
  	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  	id1 := data.ID.ValueString()
-@@ -9924,6 +9987,15 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -9776,6 +9839,15 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  
@@ -343,7 +343,7 @@ index 697e50b..01bc0fa 100644
  	// Save updated data into Terraform state
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
-@@ -9974,3 +10046,75 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
+@@ -9826,3 +9898,75 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
  func (r *PipelineResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
  	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
  }
@@ -420,7 +420,7 @@ index 697e50b..01bc0fa 100644
 +	}
 +}
 diff --git a/internal/provider/pipeline_resource_sdk.go b/internal/provider/pipeline_resource_sdk.go
-index d20a6d3..8eb57b3 100644
+index 4e455a5..4eb0e37 100644
 --- a/internal/provider/pipeline_resource_sdk.go
 +++ b/internal/provider/pipeline_resource_sdk.go
 @@ -8,6 +8,7 @@ import (
@@ -431,8 +431,8 @@ index d20a6d3..8eb57b3 100644
  )
  
  func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
-@@ -4302,6 +4303,9 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
- 	}
+@@ -4245,6 +4246,9 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
+ 	r.Owner.LastName = types.StringValue(resp.Owner.LastName)
  	r.Paused = types.BoolValue(resp.Paused)
  	r.PipelineMode = types.StringValue(string(resp.PipelineMode))
 +	if r.RefreshSchedule == nil {
@@ -441,7 +441,7 @@ index d20a6d3..8eb57b3 100644
  	if resp.RefreshSchedule.RefreshScheduleModeDaily != nil {
  		r.RefreshSchedule.Daily = &UpdateScheduleModeDaily{}
  		r.RefreshSchedule.Daily.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeDaily.HourOfDay)
-@@ -7944,6 +7948,12 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate
+@@ -7887,6 +7891,12 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate
  			SourceZuoraUpdate: sourceZuoraUpdate,
  		}
  	}
@@ -454,7 +454,7 @@ index d20a6d3..8eb57b3 100644
  	paused := new(bool)
  	if !r.Paused.IsUnknown() && !r.Paused.IsNull() {
  		*paused = r.Paused.ValueBool()
-@@ -8145,3 +8155,31 @@ func (r *PipelineResourceModel) ToSharedPipelineDelete() *shared.PipelineDelete
+@@ -8078,3 +8088,31 @@ func (r *PipelineResourceModel) ToSharedPipelineDelete() *shared.PipelineDelete
  	}
  	return &out
  }

@@ -53,7 +53,7 @@ jobs:
     resource_class: 2xlarge
     executor:
       name: go/default
-      tag: "1.23.4"
+      tag: "1.26.5"
     steps:
       - checkout
       - attach_workspace:
@@ -99,7 +99,7 @@ jobs:
     resource_class: medium
     executor: 
       name: go/default
-      tag: "1.23.4"
+      tag: "1.26.5"
     steps:
       - checkout
       - run:
@@ -124,13 +124,14 @@ jobs:
       - slack/notify:
           branch_pattern: main
           event: fail
+          channel: -devops
         
   
   publish:
     resource_class: large
     executor:
       name: go/default
-      tag: "1.23.4"
+      tag: "1.26.5"
     steps:
       - checkout
       - run: 
