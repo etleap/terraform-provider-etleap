@@ -56,6 +56,10 @@ release:
    - glob: 'terraform-registry-manifest.json'
      name_template: '{{ .ProjectName }}_{{ .Version }}_manifest.json'
  # If you want to manually examine the release before its live, uncomment this line:
- draft: true
+ # draft: true
 changelog:
-  disable: true
+  # `git`, not `github-native`: most commits on main are direct pushes from the
+  # `generate` CI job with no pull request, and github-native lists merged PRs only
+  # it would omit the "Regenerated provider and docs" commits that carry
+  # the actual provider changes.
+  use: git
