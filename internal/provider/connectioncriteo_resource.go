@@ -75,14 +75,11 @@ func (r *ConnectionCRITEOResource) Schema(ctx context.Context, req resource.Sche
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
-				Description: `Your Client Id can be found under 'Developer Dashboard' > 'My apps'`,
+				Description: `Under "Developer Dashboard" > "My apps".`,
 			},
 			"client_secret": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
 				Required:    true,
-				Description: `Your Client Secret can be found under 'Developer Dashboard' > 'My apps'`,
+				Description: `Under "Developer Dashboard" > "My apps".`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,
@@ -591,6 +588,32 @@ func (r *ConnectionCRITEOResource) Create(ctx context.Context, req resource.Crea
 	}
 	data.RefreshFromSharedConnectionCriteo(res.ConnectionCriteo)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	id := data.ID.ValueString()
+	request1 := operations.GetCRITEOConnectionRequest{
+		ID: id,
+	}
+	res1, err := r.client.Connection.GetCRITEOConnection(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.ConnectionCriteo == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedConnectionCriteo(res1.ConnectionCriteo)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -685,6 +708,32 @@ func (r *ConnectionCRITEOResource) Update(ctx context.Context, req resource.Upda
 		return
 	}
 	data.RefreshFromSharedConnectionCriteo(res.ConnectionCriteo)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	id1 := data.ID.ValueString()
+	request1 := operations.GetCRITEOConnectionRequest{
+		ID: id1,
+	}
+	res1, err := r.client.Connection.GetCRITEOConnection(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.ConnectionCriteo == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedConnectionCriteo(res1.ConnectionCriteo)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

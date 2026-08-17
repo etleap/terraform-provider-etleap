@@ -31,6 +31,1074 @@ func (e *SourceCriteoType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type Timezone string
+
+const (
+	TimezoneAcdt         Timezone = "ACDT"
+	TimezoneAcst         Timezone = "ACST"
+	TimezoneAct          Timezone = "ACT"
+	TimezoneAcwst        Timezone = "ACWST"
+	TimezoneAdt          Timezone = "ADT"
+	TimezoneAedt         Timezone = "AEDT"
+	TimezoneAest         Timezone = "AEST"
+	TimezoneAft          Timezone = "AFT"
+	TimezoneAkdt         Timezone = "AKDT"
+	TimezoneAkst         Timezone = "AKST"
+	TimezoneAlmt         Timezone = "ALMT"
+	TimezoneAmst         Timezone = "AMST"
+	TimezoneAmt          Timezone = "AMT"
+	TimezoneAnast        Timezone = "ANAST"
+	TimezoneAnat         Timezone = "ANAT"
+	TimezoneArt          Timezone = "ART"
+	TimezoneAst          Timezone = "AST"
+	TimezoneAwst         Timezone = "AWST"
+	TimezoneAzost        Timezone = "AZOST"
+	TimezoneAzot         Timezone = "AZOT"
+	TimezoneAzst         Timezone = "AZST"
+	TimezoneAzt          Timezone = "AZT"
+	TimezoneBnt          Timezone = "BNT"
+	TimezoneBot          Timezone = "BOT"
+	TimezoneBrst         Timezone = "BRST"
+	TimezoneBrt          Timezone = "BRT"
+	TimezoneBst          Timezone = "BST"
+	TimezoneBtt          Timezone = "BTT"
+	TimezoneCast         Timezone = "CAST"
+	TimezoneCct          Timezone = "CCT"
+	TimezoneCdt          Timezone = "CDT"
+	TimezoneCest         Timezone = "CEST"
+	TimezoneCet          Timezone = "CET"
+	TimezoneChadt        Timezone = "CHADT"
+	TimezoneChast        Timezone = "CHAST"
+	TimezoneChut         Timezone = "CHUT"
+	TimezoneCkt          Timezone = "CKT"
+	TimezoneClst         Timezone = "CLST"
+	TimezoneClt          Timezone = "CLT"
+	TimezoneCot          Timezone = "COT"
+	TimezoneCst          Timezone = "CST"
+	TimezoneCxt          Timezone = "CXT"
+	TimezoneDavt         Timezone = "DAVT"
+	TimezoneDdut         Timezone = "DDUT"
+	TimezoneEasst        Timezone = "EASST"
+	TimezoneEast         Timezone = "EAST"
+	TimezoneEat          Timezone = "EAT"
+	TimezoneEdt          Timezone = "EDT"
+	TimezoneEest         Timezone = "EEST"
+	TimezoneEet          Timezone = "EET"
+	TimezoneEgst         Timezone = "EGST"
+	TimezoneEgt          Timezone = "EGT"
+	TimezoneEst          Timezone = "EST"
+	TimezoneEtcGmt       Timezone = "ETC/GMT"
+	TimezoneEtcGmt0      Timezone = "ETC/GMT-0"
+	TimezoneEtcGmt1      Timezone = "ETC/GMT-1"
+	TimezoneEtcGmt10     Timezone = "ETC/GMT-10"
+	TimezoneEtcGmt11     Timezone = "ETC/GMT-11"
+	TimezoneEtcGmt12     Timezone = "ETC/GMT-12"
+	TimezoneEtcGmt13     Timezone = "ETC/GMT-13"
+	TimezoneEtcGmt14     Timezone = "ETC/GMT-14"
+	TimezoneEtcGmt2      Timezone = "ETC/GMT-2"
+	TimezoneEtcGmt3      Timezone = "ETC/GMT-3"
+	TimezoneEtcGmt4      Timezone = "ETC/GMT-4"
+	TimezoneEtcGmt5      Timezone = "ETC/GMT-5"
+	TimezoneEtcGmt6      Timezone = "ETC/GMT-6"
+	TimezoneEtcGmt7      Timezone = "ETC/GMT-7"
+	TimezoneEtcGmt8      Timezone = "ETC/GMT-8"
+	TimezoneEtcGmt9      Timezone = "ETC/GMT-9"
+	TimezoneEtcGmtPlus0  Timezone = "ETC/GMT+0"
+	TimezoneEtcGmtPlus1  Timezone = "ETC/GMT+1"
+	TimezoneEtcGmtPlus10 Timezone = "ETC/GMT+10"
+	TimezoneEtcGmtPlus11 Timezone = "ETC/GMT+11"
+	TimezoneEtcGmtPlus12 Timezone = "ETC/GMT+12"
+	TimezoneEtcGmtPlus2  Timezone = "ETC/GMT+2"
+	TimezoneEtcGmtPlus3  Timezone = "ETC/GMT+3"
+	TimezoneEtcGmtPlus4  Timezone = "ETC/GMT+4"
+	TimezoneEtcGmtPlus5  Timezone = "ETC/GMT+5"
+	TimezoneEtcGmtPlus6  Timezone = "ETC/GMT+6"
+	TimezoneEtcGmtPlus7  Timezone = "ETC/GMT+7"
+	TimezoneEtcGmtPlus8  Timezone = "ETC/GMT+8"
+	TimezoneEtcGmtPlus9  Timezone = "ETC/GMT+9"
+	TimezoneEtcGreenwich Timezone = "ETC/Greenwich"
+	TimezoneEtcUct       Timezone = "ETC/UCT"
+	TimezoneEtcUniversal Timezone = "ETC/Universal"
+	TimezoneEtcUtc       Timezone = "ETC/UTC"
+	TimezoneFet          Timezone = "FET"
+	TimezoneFjst         Timezone = "FJST"
+	TimezoneFjt          Timezone = "FJT"
+	TimezoneFkst         Timezone = "FKST"
+	TimezoneFkt          Timezone = "FKT"
+	TimezoneFnt          Timezone = "FNT"
+	TimezoneGalt         Timezone = "GALT"
+	TimezoneGamt         Timezone = "GAMT"
+	TimezoneGet          Timezone = "GET"
+	TimezoneGft          Timezone = "GFT"
+	TimezoneGilt         Timezone = "GILT"
+	TimezoneGmt          Timezone = "GMT"
+	TimezoneGyt          Timezone = "GYT"
+	TimezoneHkt          Timezone = "HKT"
+	TimezoneHst          Timezone = "HST"
+	TimezoneIct          Timezone = "ICT"
+	TimezoneIdt          Timezone = "IDT"
+	TimezoneIot          Timezone = "IOT"
+	TimezoneIrkst        Timezone = "IRKST"
+	TimezoneIrkt         Timezone = "IRKT"
+	TimezoneIst          Timezone = "IST"
+	TimezoneJst          Timezone = "JST"
+	TimezoneKgt          Timezone = "KGT"
+	TimezoneKost         Timezone = "KOST"
+	TimezoneKrast        Timezone = "KRAST"
+	TimezoneKrat         Timezone = "KRAT"
+	TimezoneKst          Timezone = "KST"
+	TimezoneLhdt         Timezone = "LHDT"
+	TimezoneLhst         Timezone = "LHST"
+	TimezoneLint         Timezone = "LINT"
+	TimezoneMagst        Timezone = "MAGST"
+	TimezoneMagt         Timezone = "MAGT"
+	TimezoneMart         Timezone = "MART"
+	TimezoneMawt         Timezone = "MAWT"
+	TimezoneMdt          Timezone = "MDT"
+	TimezoneMht          Timezone = "MHT"
+	TimezoneMmt          Timezone = "MMT"
+	TimezoneMsd          Timezone = "MSD"
+	TimezoneMsk          Timezone = "MSK"
+	TimezoneMst          Timezone = "MST"
+	TimezoneMut          Timezone = "MUT"
+	TimezoneMvt          Timezone = "MVT"
+	TimezoneMyt          Timezone = "MYT"
+	TimezoneNdt          Timezone = "NDT"
+	TimezoneNft          Timezone = "NFT"
+	TimezoneNovst        Timezone = "NOVST"
+	TimezoneNovt         Timezone = "NOVT"
+	TimezoneNpt          Timezone = "NPT"
+	TimezoneNst          Timezone = "NST"
+	TimezoneNut          Timezone = "NUT"
+	TimezoneNzdt         Timezone = "NZDT"
+	TimezoneNzst         Timezone = "NZST"
+	TimezoneOmsst        Timezone = "OMSST"
+	TimezoneOmst         Timezone = "OMST"
+	TimezonePdt          Timezone = "PDT"
+	TimezonePet          Timezone = "PET"
+	TimezonePetst        Timezone = "PETST"
+	TimezonePett         Timezone = "PETT"
+	TimezonePgt          Timezone = "PGT"
+	TimezonePhot         Timezone = "PHOT"
+	TimezonePht          Timezone = "PHT"
+	TimezonePkt          Timezone = "PKT"
+	TimezonePmdt         Timezone = "PMDT"
+	TimezonePmst         Timezone = "PMST"
+	TimezonePont         Timezone = "PONT"
+	TimezonePst          Timezone = "PST"
+	TimezonePwt          Timezone = "PWT"
+	TimezonePyst         Timezone = "PYST"
+	TimezonePyt          Timezone = "PYT"
+	TimezoneRet          Timezone = "RET"
+	TimezoneSast         Timezone = "SAST"
+	TimezoneSct          Timezone = "SCT"
+	TimezoneSgt          Timezone = "SGT"
+	TimezoneTaht         Timezone = "TAHT"
+	TimezoneTft          Timezone = "TFT"
+	TimezoneTjt          Timezone = "TJT"
+	TimezoneTkt          Timezone = "TKT"
+	TimezoneTmt          Timezone = "TMT"
+	TimezoneTot          Timezone = "TOT"
+	TimezoneTvt          Timezone = "TVT"
+	TimezoneUlast        Timezone = "ULAST"
+	TimezoneUlat         Timezone = "ULAT"
+	TimezoneUtc          Timezone = "UTC"
+	TimezoneUtc1         Timezone = "UTC-1"
+	TimezoneUtc10        Timezone = "UTC-10"
+	TimezoneUtc11        Timezone = "UTC-11"
+	TimezoneUtc12        Timezone = "UTC-12"
+	TimezoneUtc2         Timezone = "UTC-2"
+	TimezoneUtc230       Timezone = "UTC-2:30"
+	TimezoneUtc3         Timezone = "UTC-3"
+	TimezoneUtc330       Timezone = "UTC-3:30"
+	TimezoneUtc4         Timezone = "UTC-4"
+	TimezoneUtc5         Timezone = "UTC-5"
+	TimezoneUtc6         Timezone = "UTC-6"
+	TimezoneUtc7         Timezone = "UTC-7"
+	TimezoneUtc8         Timezone = "UTC-8"
+	TimezoneUtc9         Timezone = "UTC-9"
+	TimezoneUtc930       Timezone = "UTC-9:30"
+	TimezoneUtcPlus0     Timezone = "UTC+0"
+	TimezoneUtcPlus1     Timezone = "UTC+1"
+	TimezoneUtcPlus10    Timezone = "UTC+10"
+	TimezoneUtcPlus1030  Timezone = "UTC+10:30"
+	TimezoneUtcPlus11    Timezone = "UTC+11"
+	TimezoneUtcPlus12    Timezone = "UTC+12"
+	TimezoneUtcPlus1245  Timezone = "UTC+12:45"
+	TimezoneUtcPlus13    Timezone = "UTC+13"
+	TimezoneUtcPlus1345  Timezone = "UTC+13:45"
+	TimezoneUtcPlus14    Timezone = "UTC+14"
+	TimezoneUtcPlus2     Timezone = "UTC+2"
+	TimezoneUtcPlus3     Timezone = "UTC+3"
+	TimezoneUtcPlus330   Timezone = "UTC+3:30"
+	TimezoneUtcPlus4     Timezone = "UTC+4"
+	TimezoneUtcPlus430   Timezone = "UTC+4:30"
+	TimezoneUtcPlus5     Timezone = "UTC+5"
+	TimezoneUtcPlus530   Timezone = "UTC+5:30"
+	TimezoneUtcPlus545   Timezone = "UTC+5:45"
+	TimezoneUtcPlus6     Timezone = "UTC+6"
+	TimezoneUtcPlus630   Timezone = "UTC+6:30"
+	TimezoneUtcPlus7     Timezone = "UTC+7"
+	TimezoneUtcPlus8     Timezone = "UTC+8"
+	TimezoneUtcPlus830   Timezone = "UTC+8:30"
+	TimezoneUtcPlus845   Timezone = "UTC+8:45"
+	TimezoneUtcPlus9     Timezone = "UTC+9"
+	TimezoneUtcPlus930   Timezone = "UTC+9:30"
+	TimezoneUyst         Timezone = "UYST"
+	TimezoneUyt          Timezone = "UYT"
+	TimezoneUzt          Timezone = "UZT"
+	TimezoneVet          Timezone = "VET"
+	TimezoneVlast        Timezone = "VLAST"
+	TimezoneVlat         Timezone = "VLAT"
+	TimezoneVut          Timezone = "VUT"
+	TimezoneWakt         Timezone = "WAKT"
+	TimezoneWast         Timezone = "WAST"
+	TimezoneWat          Timezone = "WAT"
+	TimezoneWet          Timezone = "WET"
+	TimezoneWft          Timezone = "WFT"
+	TimezoneWgst         Timezone = "WGST"
+	TimezoneWgt          Timezone = "WGT"
+	TimezoneYakst        Timezone = "YAKST"
+	TimezoneYakt         Timezone = "YAKT"
+	TimezoneYapt         Timezone = "YAPT"
+	TimezoneYekst        Timezone = "YEKST"
+	TimezoneYekt         Timezone = "YEKT"
+)
+
+func (e Timezone) ToPointer() *Timezone {
+	return &e
+}
+
+func (e *Timezone) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ACDT":
+		fallthrough
+	case "ACST":
+		fallthrough
+	case "ACT":
+		fallthrough
+	case "ACWST":
+		fallthrough
+	case "ADT":
+		fallthrough
+	case "AEDT":
+		fallthrough
+	case "AEST":
+		fallthrough
+	case "AFT":
+		fallthrough
+	case "AKDT":
+		fallthrough
+	case "AKST":
+		fallthrough
+	case "ALMT":
+		fallthrough
+	case "AMST":
+		fallthrough
+	case "AMT":
+		fallthrough
+	case "ANAST":
+		fallthrough
+	case "ANAT":
+		fallthrough
+	case "ART":
+		fallthrough
+	case "AST":
+		fallthrough
+	case "AWST":
+		fallthrough
+	case "AZOST":
+		fallthrough
+	case "AZOT":
+		fallthrough
+	case "AZST":
+		fallthrough
+	case "AZT":
+		fallthrough
+	case "BNT":
+		fallthrough
+	case "BOT":
+		fallthrough
+	case "BRST":
+		fallthrough
+	case "BRT":
+		fallthrough
+	case "BST":
+		fallthrough
+	case "BTT":
+		fallthrough
+	case "CAST":
+		fallthrough
+	case "CCT":
+		fallthrough
+	case "CDT":
+		fallthrough
+	case "CEST":
+		fallthrough
+	case "CET":
+		fallthrough
+	case "CHADT":
+		fallthrough
+	case "CHAST":
+		fallthrough
+	case "CHUT":
+		fallthrough
+	case "CKT":
+		fallthrough
+	case "CLST":
+		fallthrough
+	case "CLT":
+		fallthrough
+	case "COT":
+		fallthrough
+	case "CST":
+		fallthrough
+	case "CXT":
+		fallthrough
+	case "DAVT":
+		fallthrough
+	case "DDUT":
+		fallthrough
+	case "EASST":
+		fallthrough
+	case "EAST":
+		fallthrough
+	case "EAT":
+		fallthrough
+	case "EDT":
+		fallthrough
+	case "EEST":
+		fallthrough
+	case "EET":
+		fallthrough
+	case "EGST":
+		fallthrough
+	case "EGT":
+		fallthrough
+	case "EST":
+		fallthrough
+	case "ETC/GMT":
+		fallthrough
+	case "ETC/GMT-0":
+		fallthrough
+	case "ETC/GMT-1":
+		fallthrough
+	case "ETC/GMT-10":
+		fallthrough
+	case "ETC/GMT-11":
+		fallthrough
+	case "ETC/GMT-12":
+		fallthrough
+	case "ETC/GMT-13":
+		fallthrough
+	case "ETC/GMT-14":
+		fallthrough
+	case "ETC/GMT-2":
+		fallthrough
+	case "ETC/GMT-3":
+		fallthrough
+	case "ETC/GMT-4":
+		fallthrough
+	case "ETC/GMT-5":
+		fallthrough
+	case "ETC/GMT-6":
+		fallthrough
+	case "ETC/GMT-7":
+		fallthrough
+	case "ETC/GMT-8":
+		fallthrough
+	case "ETC/GMT-9":
+		fallthrough
+	case "ETC/GMT+0":
+		fallthrough
+	case "ETC/GMT+1":
+		fallthrough
+	case "ETC/GMT+10":
+		fallthrough
+	case "ETC/GMT+11":
+		fallthrough
+	case "ETC/GMT+12":
+		fallthrough
+	case "ETC/GMT+2":
+		fallthrough
+	case "ETC/GMT+3":
+		fallthrough
+	case "ETC/GMT+4":
+		fallthrough
+	case "ETC/GMT+5":
+		fallthrough
+	case "ETC/GMT+6":
+		fallthrough
+	case "ETC/GMT+7":
+		fallthrough
+	case "ETC/GMT+8":
+		fallthrough
+	case "ETC/GMT+9":
+		fallthrough
+	case "ETC/Greenwich":
+		fallthrough
+	case "ETC/UCT":
+		fallthrough
+	case "ETC/Universal":
+		fallthrough
+	case "ETC/UTC":
+		fallthrough
+	case "FET":
+		fallthrough
+	case "FJST":
+		fallthrough
+	case "FJT":
+		fallthrough
+	case "FKST":
+		fallthrough
+	case "FKT":
+		fallthrough
+	case "FNT":
+		fallthrough
+	case "GALT":
+		fallthrough
+	case "GAMT":
+		fallthrough
+	case "GET":
+		fallthrough
+	case "GFT":
+		fallthrough
+	case "GILT":
+		fallthrough
+	case "GMT":
+		fallthrough
+	case "GYT":
+		fallthrough
+	case "HKT":
+		fallthrough
+	case "HST":
+		fallthrough
+	case "ICT":
+		fallthrough
+	case "IDT":
+		fallthrough
+	case "IOT":
+		fallthrough
+	case "IRKST":
+		fallthrough
+	case "IRKT":
+		fallthrough
+	case "IST":
+		fallthrough
+	case "JST":
+		fallthrough
+	case "KGT":
+		fallthrough
+	case "KOST":
+		fallthrough
+	case "KRAST":
+		fallthrough
+	case "KRAT":
+		fallthrough
+	case "KST":
+		fallthrough
+	case "LHDT":
+		fallthrough
+	case "LHST":
+		fallthrough
+	case "LINT":
+		fallthrough
+	case "MAGST":
+		fallthrough
+	case "MAGT":
+		fallthrough
+	case "MART":
+		fallthrough
+	case "MAWT":
+		fallthrough
+	case "MDT":
+		fallthrough
+	case "MHT":
+		fallthrough
+	case "MMT":
+		fallthrough
+	case "MSD":
+		fallthrough
+	case "MSK":
+		fallthrough
+	case "MST":
+		fallthrough
+	case "MUT":
+		fallthrough
+	case "MVT":
+		fallthrough
+	case "MYT":
+		fallthrough
+	case "NDT":
+		fallthrough
+	case "NFT":
+		fallthrough
+	case "NOVST":
+		fallthrough
+	case "NOVT":
+		fallthrough
+	case "NPT":
+		fallthrough
+	case "NST":
+		fallthrough
+	case "NUT":
+		fallthrough
+	case "NZDT":
+		fallthrough
+	case "NZST":
+		fallthrough
+	case "OMSST":
+		fallthrough
+	case "OMST":
+		fallthrough
+	case "PDT":
+		fallthrough
+	case "PET":
+		fallthrough
+	case "PETST":
+		fallthrough
+	case "PETT":
+		fallthrough
+	case "PGT":
+		fallthrough
+	case "PHOT":
+		fallthrough
+	case "PHT":
+		fallthrough
+	case "PKT":
+		fallthrough
+	case "PMDT":
+		fallthrough
+	case "PMST":
+		fallthrough
+	case "PONT":
+		fallthrough
+	case "PST":
+		fallthrough
+	case "PWT":
+		fallthrough
+	case "PYST":
+		fallthrough
+	case "PYT":
+		fallthrough
+	case "RET":
+		fallthrough
+	case "SAST":
+		fallthrough
+	case "SCT":
+		fallthrough
+	case "SGT":
+		fallthrough
+	case "TAHT":
+		fallthrough
+	case "TFT":
+		fallthrough
+	case "TJT":
+		fallthrough
+	case "TKT":
+		fallthrough
+	case "TMT":
+		fallthrough
+	case "TOT":
+		fallthrough
+	case "TVT":
+		fallthrough
+	case "ULAST":
+		fallthrough
+	case "ULAT":
+		fallthrough
+	case "UTC":
+		fallthrough
+	case "UTC-1":
+		fallthrough
+	case "UTC-10":
+		fallthrough
+	case "UTC-11":
+		fallthrough
+	case "UTC-12":
+		fallthrough
+	case "UTC-2":
+		fallthrough
+	case "UTC-2:30":
+		fallthrough
+	case "UTC-3":
+		fallthrough
+	case "UTC-3:30":
+		fallthrough
+	case "UTC-4":
+		fallthrough
+	case "UTC-5":
+		fallthrough
+	case "UTC-6":
+		fallthrough
+	case "UTC-7":
+		fallthrough
+	case "UTC-8":
+		fallthrough
+	case "UTC-9":
+		fallthrough
+	case "UTC-9:30":
+		fallthrough
+	case "UTC+0":
+		fallthrough
+	case "UTC+1":
+		fallthrough
+	case "UTC+10":
+		fallthrough
+	case "UTC+10:30":
+		fallthrough
+	case "UTC+11":
+		fallthrough
+	case "UTC+12":
+		fallthrough
+	case "UTC+12:45":
+		fallthrough
+	case "UTC+13":
+		fallthrough
+	case "UTC+13:45":
+		fallthrough
+	case "UTC+14":
+		fallthrough
+	case "UTC+2":
+		fallthrough
+	case "UTC+3":
+		fallthrough
+	case "UTC+3:30":
+		fallthrough
+	case "UTC+4":
+		fallthrough
+	case "UTC+4:30":
+		fallthrough
+	case "UTC+5":
+		fallthrough
+	case "UTC+5:30":
+		fallthrough
+	case "UTC+5:45":
+		fallthrough
+	case "UTC+6":
+		fallthrough
+	case "UTC+6:30":
+		fallthrough
+	case "UTC+7":
+		fallthrough
+	case "UTC+8":
+		fallthrough
+	case "UTC+8:30":
+		fallthrough
+	case "UTC+8:45":
+		fallthrough
+	case "UTC+9":
+		fallthrough
+	case "UTC+9:30":
+		fallthrough
+	case "UYST":
+		fallthrough
+	case "UYT":
+		fallthrough
+	case "UZT":
+		fallthrough
+	case "VET":
+		fallthrough
+	case "VLAST":
+		fallthrough
+	case "VLAT":
+		fallthrough
+	case "VUT":
+		fallthrough
+	case "WAKT":
+		fallthrough
+	case "WAST":
+		fallthrough
+	case "WAT":
+		fallthrough
+	case "WET":
+		fallthrough
+	case "WFT":
+		fallthrough
+	case "WGST":
+		fallthrough
+	case "WGT":
+		fallthrough
+	case "YAKST":
+		fallthrough
+	case "YAKT":
+		fallthrough
+	case "YAPT":
+		fallthrough
+	case "YEKST":
+		fallthrough
+	case "YEKT":
+		*e = Timezone(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Timezone: %v", v)
+	}
+}
+
+type Currency string
+
+const (
+	CurrencyUsd Currency = "USD"
+	CurrencyEur Currency = "EUR"
+	CurrencyGbp Currency = "GBP"
+	CurrencyChf Currency = "CHF"
+	CurrencyJpy Currency = "JPY"
+	CurrencyBgn Currency = "BGN"
+	CurrencyCzk Currency = "CZK"
+	CurrencyDkk Currency = "DKK"
+	CurrencyHuf Currency = "HUF"
+	CurrencyLtl Currency = "LTL"
+	CurrencyPln Currency = "PLN"
+	CurrencyRon Currency = "RON"
+	CurrencySek Currency = "SEK"
+	CurrencyNok Currency = "NOK"
+	CurrencyHrk Currency = "HRK"
+	CurrencyRub Currency = "RUB"
+	CurrencyTry Currency = "TRY"
+	CurrencyAud Currency = "AUD"
+	CurrencyBrl Currency = "BRL"
+	CurrencyCad Currency = "CAD"
+	CurrencyCny Currency = "CNY"
+	CurrencyHkd Currency = "HKD"
+	CurrencyIdr Currency = "IDR"
+	CurrencyInr Currency = "INR"
+	CurrencyKrw Currency = "KRW"
+	CurrencyMxn Currency = "MXN"
+	CurrencyMyr Currency = "MYR"
+	CurrencyNzd Currency = "NZD"
+	CurrencyPhp Currency = "PHP"
+	CurrencySgd Currency = "SGD"
+	CurrencyThb Currency = "THB"
+	CurrencyZar Currency = "ZAR"
+	CurrencyArs Currency = "ARS"
+	CurrencyCop Currency = "COP"
+	CurrencyAed Currency = "AED"
+	CurrencyKzt Currency = "KZT"
+	CurrencySar Currency = "SAR"
+	CurrencyUah Currency = "UAH"
+	CurrencyEgp Currency = "EGP"
+	CurrencyMad Currency = "MAD"
+	CurrencyIls Currency = "ILS"
+	CurrencyBhd Currency = "BHD"
+	CurrencyJod Currency = "JOD"
+	CurrencyKwd Currency = "KWD"
+	CurrencyLbp Currency = "LBP"
+	CurrencyOmr Currency = "OMR"
+	CurrencyQar Currency = "QAR"
+	CurrencyNgn Currency = "NGN"
+	CurrencyKes Currency = "KES"
+	CurrencyAll Currency = "ALL"
+	CurrencyEtb Currency = "ETB"
+	CurrencyBsd Currency = "BSD"
+	CurrencyBdt Currency = "BDT"
+	CurrencyBam Currency = "BAM"
+	CurrencyBwp Currency = "BWP"
+	CurrencyMmk Currency = "MMK"
+	CurrencyAfn Currency = "AFN"
+	CurrencyBtn Currency = "BTN"
+	CurrencyGel Currency = "GEL"
+	CurrencyGhs Currency = "GHS"
+	CurrencyGip Currency = "GIP"
+	CurrencyIsk Currency = "ISK"
+	CurrencyKhr Currency = "KHR"
+	CurrencyJmd Currency = "JMD"
+	CurrencyLak Currency = "LAK"
+	CurrencyMkd Currency = "MKD"
+	CurrencyMur Currency = "MUR"
+	CurrencyMnt Currency = "MNT"
+	CurrencyNpr Currency = "NPR"
+	CurrencyNad Currency = "NAD"
+	CurrencyPkr Currency = "PKR"
+	CurrencyRwf Currency = "RWF"
+	CurrencyLkr Currency = "LKR"
+	CurrencySzl Currency = "SZL"
+	CurrencyTzs Currency = "TZS"
+	CurrencyTtd Currency = "TTD"
+	CurrencyUgx Currency = "UGX"
+	CurrencyZmw Currency = "ZMW"
+	CurrencyBob Currency = "BOB"
+	CurrencyCrc Currency = "CRC"
+	CurrencyDop Currency = "DOP"
+	CurrencyGtq Currency = "GTQ"
+	CurrencyHnl Currency = "HNL"
+	CurrencyNio Currency = "NIO"
+	CurrencyPab Currency = "PAB"
+	CurrencyPyg Currency = "PYG"
+	CurrencyPen Currency = "PEN"
+	CurrencyUyu Currency = "UYU"
+	CurrencyVef Currency = "VEF"
+	CurrencyXaf Currency = "XAF"
+	CurrencyXof Currency = "XOF"
+	CurrencyHtg Currency = "HTG"
+	CurrencyMga Currency = "MGA"
+	CurrencyDzd Currency = "DZD"
+	CurrencyIqd Currency = "IQD"
+	CurrencyLyd Currency = "LYD"
+	CurrencyTnd Currency = "TND"
+	CurrencyYer Currency = "YER"
+	CurrencyBnd Currency = "BND"
+	CurrencyAoa Currency = "AOA"
+	CurrencyMzn Currency = "MZN"
+	CurrencyAmd Currency = "AMD"
+	CurrencyAzn Currency = "AZN"
+	CurrencyKgs Currency = "KGS"
+	CurrencyTjs Currency = "TJS"
+	CurrencyUzs Currency = "UZS"
+	CurrencyMdl Currency = "MDL"
+	CurrencyRsd Currency = "RSD"
+	CurrencyXpf Currency = "XPF"
+	CurrencyMop Currency = "MOP"
+	CurrencyVnd Currency = "VND"
+	CurrencyTwd Currency = "TWD"
+	CurrencyClp Currency = "CLP"
+)
+
+func (e Currency) ToPointer() *Currency {
+	return &e
+}
+
+func (e *Currency) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "USD":
+		fallthrough
+	case "EUR":
+		fallthrough
+	case "GBP":
+		fallthrough
+	case "CHF":
+		fallthrough
+	case "JPY":
+		fallthrough
+	case "BGN":
+		fallthrough
+	case "CZK":
+		fallthrough
+	case "DKK":
+		fallthrough
+	case "HUF":
+		fallthrough
+	case "LTL":
+		fallthrough
+	case "PLN":
+		fallthrough
+	case "RON":
+		fallthrough
+	case "SEK":
+		fallthrough
+	case "NOK":
+		fallthrough
+	case "HRK":
+		fallthrough
+	case "RUB":
+		fallthrough
+	case "TRY":
+		fallthrough
+	case "AUD":
+		fallthrough
+	case "BRL":
+		fallthrough
+	case "CAD":
+		fallthrough
+	case "CNY":
+		fallthrough
+	case "HKD":
+		fallthrough
+	case "IDR":
+		fallthrough
+	case "INR":
+		fallthrough
+	case "KRW":
+		fallthrough
+	case "MXN":
+		fallthrough
+	case "MYR":
+		fallthrough
+	case "NZD":
+		fallthrough
+	case "PHP":
+		fallthrough
+	case "SGD":
+		fallthrough
+	case "THB":
+		fallthrough
+	case "ZAR":
+		fallthrough
+	case "ARS":
+		fallthrough
+	case "COP":
+		fallthrough
+	case "AED":
+		fallthrough
+	case "KZT":
+		fallthrough
+	case "SAR":
+		fallthrough
+	case "UAH":
+		fallthrough
+	case "EGP":
+		fallthrough
+	case "MAD":
+		fallthrough
+	case "ILS":
+		fallthrough
+	case "BHD":
+		fallthrough
+	case "JOD":
+		fallthrough
+	case "KWD":
+		fallthrough
+	case "LBP":
+		fallthrough
+	case "OMR":
+		fallthrough
+	case "QAR":
+		fallthrough
+	case "NGN":
+		fallthrough
+	case "KES":
+		fallthrough
+	case "ALL":
+		fallthrough
+	case "ETB":
+		fallthrough
+	case "BSD":
+		fallthrough
+	case "BDT":
+		fallthrough
+	case "BAM":
+		fallthrough
+	case "BWP":
+		fallthrough
+	case "MMK":
+		fallthrough
+	case "AFN":
+		fallthrough
+	case "BTN":
+		fallthrough
+	case "GEL":
+		fallthrough
+	case "GHS":
+		fallthrough
+	case "GIP":
+		fallthrough
+	case "ISK":
+		fallthrough
+	case "KHR":
+		fallthrough
+	case "JMD":
+		fallthrough
+	case "LAK":
+		fallthrough
+	case "MKD":
+		fallthrough
+	case "MUR":
+		fallthrough
+	case "MNT":
+		fallthrough
+	case "NPR":
+		fallthrough
+	case "NAD":
+		fallthrough
+	case "PKR":
+		fallthrough
+	case "RWF":
+		fallthrough
+	case "LKR":
+		fallthrough
+	case "SZL":
+		fallthrough
+	case "TZS":
+		fallthrough
+	case "TTD":
+		fallthrough
+	case "UGX":
+		fallthrough
+	case "ZMW":
+		fallthrough
+	case "BOB":
+		fallthrough
+	case "CRC":
+		fallthrough
+	case "DOP":
+		fallthrough
+	case "GTQ":
+		fallthrough
+	case "HNL":
+		fallthrough
+	case "NIO":
+		fallthrough
+	case "PAB":
+		fallthrough
+	case "PYG":
+		fallthrough
+	case "PEN":
+		fallthrough
+	case "UYU":
+		fallthrough
+	case "VEF":
+		fallthrough
+	case "XAF":
+		fallthrough
+	case "XOF":
+		fallthrough
+	case "HTG":
+		fallthrough
+	case "MGA":
+		fallthrough
+	case "DZD":
+		fallthrough
+	case "IQD":
+		fallthrough
+	case "LYD":
+		fallthrough
+	case "TND":
+		fallthrough
+	case "YER":
+		fallthrough
+	case "BND":
+		fallthrough
+	case "AOA":
+		fallthrough
+	case "MZN":
+		fallthrough
+	case "AMD":
+		fallthrough
+	case "AZN":
+		fallthrough
+	case "KGS":
+		fallthrough
+	case "TJS":
+		fallthrough
+	case "UZS":
+		fallthrough
+	case "MDL":
+		fallthrough
+	case "RSD":
+		fallthrough
+	case "XPF":
+		fallthrough
+	case "MOP":
+		fallthrough
+	case "VND":
+		fallthrough
+	case "TWD":
+		fallthrough
+	case "CLP":
+		*e = Currency(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Currency: %v", v)
+	}
+}
+
 type SourceCriteo struct {
 	Type SourceCriteoType `json:"type"`
 	// The universally unique identifier for the source.
@@ -44,9 +1112,9 @@ type SourceCriteo struct {
 	// Specify the report `metric` if and only if the entity is 'report_placement' or 'report_statistics'. Example values: [clicks, displays]
 	Metrics []string `json:"metrics,omitempty"`
 	// Specify the report `timezone` if and only if the entity is 'report_placement' or 'report_transactions'. Example values: [UTC, ETC/GMT-3]
-	Timezone []string `json:"timezone,omitempty"`
+	Timezone []Timezone `json:"timezone,omitempty"`
 	// Specify the report `currency` if and only if the entity is 'report_placement', 'report_statistics' or 'report_transactions'. Example values: [USD, EUR]
-	Currency []string `json:"currency,omitempty"`
+	Currency []Currency `json:"currency,omitempty"`
 }
 
 func (o *SourceCriteo) GetType() SourceCriteoType {
@@ -91,14 +1159,14 @@ func (o *SourceCriteo) GetMetrics() []string {
 	return o.Metrics
 }
 
-func (o *SourceCriteo) GetTimezone() []string {
+func (o *SourceCriteo) GetTimezone() []Timezone {
 	if o == nil {
 		return nil
 	}
 	return o.Timezone
 }
 
-func (o *SourceCriteo) GetCurrency() []string {
+func (o *SourceCriteo) GetCurrency() []Currency {
 	if o == nil {
 		return nil
 	}

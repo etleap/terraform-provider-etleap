@@ -4124,6 +4124,19 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									listvalidator.SizeAtLeast(1),
 								},
 							},
+							"segmenting_resources": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									listplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								ElementType: types.StringType,
+								Description: `Specify the report ` + "`" + `segmenting resources` + "`" + `. Example values: [ad_group.resource_name, ad_group.ad_rotation_mode, campaign.resource_name]. Requires replacement if changed. `,
+								Validators: []validator.List{
+									listvalidator.SizeAtLeast(1),
+								},
+							},
 							"segments": schema.ListAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.List{
@@ -6548,6 +6561,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `Specify the report ` + "`" + `breakdowns` + "`" + `. Breakdowns must include DATE. A maximum of 3 fields are allowed (or 4 with country and region). Requires replacement if changed. `,
 								Validators: []validator.List{
 									listvalidator.SizeAtLeast(1),
+									listvalidator.SizeAtMost(4),
 								},
 							},
 							"connection_id": schema.StringAttribute{

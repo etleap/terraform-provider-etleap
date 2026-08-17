@@ -24,8 +24,7 @@ data "etleap_connection_criteo" "my_connectioncriteo" {
 ### Read-Only
 
 - `active` (Boolean) Whether this connection has been marked as active.
-- `client_id` (String) Your Client Id can be found under 'Developer Dashboard' > 'My apps'
-- `client_secret` (String) Your Client Secret can be found under 'Developer Dashboard' > 'My apps'
+- `client_id` (String) Under "Developer Dashboard" > "My apps".
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `id` (String) The ID of this resource.

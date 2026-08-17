@@ -800,6 +800,7 @@ Read-Only:
 - `fields` (List of String) Specify the report `fields`. Example values: [campaign.resource_name, campaign.campaign_budget, campaign.advertising_channel_type]
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `metrics` (List of String) Specify the report `metrics`. Example values: [metrics.clicks, metrics.all_conversions, metrics.average_cost]
+- `segmenting_resources` (List of String) Specify the report `segmenting resources`. Example values: [ad_group.resource_name, ad_group.ad_rotation_mode, campaign.resource_name]
 - `segments` (List of String) Specify the report `segmentation` groups. Example values: [segments.date, segments.click_type, segments.geo_target_county]
 - `type` (String) must be one of ["GOOGLE_ADS"]
 

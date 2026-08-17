@@ -43,10 +43,12 @@ type SourceGoogleAds struct {
 	Fields []string `json:"fields,omitempty"`
 	// Specify the report `segmentation` groups. Example values: [segments.date, segments.click_type, segments.geo_target_county]
 	Segments []string `json:"segments,omitempty"`
-	// Specify the report `attributed resources`. Example values: [campaign_budget.id, campaign_budget.name, bidding_strategy.type]
-	AttributedResources []string `json:"attributedResources,omitempty"`
 	// Specify the report `metrics`. Example values: [metrics.clicks, metrics.all_conversions, metrics.average_cost]
 	Metrics []string `json:"metrics,omitempty"`
+	// Specify the report `attributed resources`. Example values: [campaign_budget.id, campaign_budget.name, bidding_strategy.type]
+	AttributedResources []string `json:"attributedResources,omitempty"`
+	// Specify the report `segmenting resources`. Example values: [ad_group.resource_name, ad_group.ad_rotation_mode, campaign.resource_name]
+	SegmentingResources []string `json:"segmentingResources,omitempty"`
 }
 
 func (o *SourceGoogleAds) GetType() SourceGoogleAdsType {
@@ -91,6 +93,13 @@ func (o *SourceGoogleAds) GetSegments() []string {
 	return o.Segments
 }
 
+func (o *SourceGoogleAds) GetMetrics() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Metrics
+}
+
 func (o *SourceGoogleAds) GetAttributedResources() []string {
 	if o == nil {
 		return nil
@@ -98,9 +107,9 @@ func (o *SourceGoogleAds) GetAttributedResources() []string {
 	return o.AttributedResources
 }
 
-func (o *SourceGoogleAds) GetMetrics() []string {
+func (o *SourceGoogleAds) GetSegmentingResources() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Metrics
+	return o.SegmentingResources
 }

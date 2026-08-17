@@ -148,10 +148,8 @@ type ConnectionCriteo struct {
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionCriteoDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	// Your Client Id can be found under 'Developer Dashboard' > 'My apps'
+	// Under "Developer Dashboard" > "My apps".
 	ClientID string `json:"clientId"`
-	// Your Client Secret can be found under 'Developer Dashboard' > 'My apps'
-	ClientSecret string `json:"clientSecret"`
 }
 
 func (c ConnectionCriteo) MarshalJSON() ([]byte, error) {
@@ -263,22 +261,15 @@ func (o *ConnectionCriteo) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *ConnectionCriteo) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 type ConnectionCriteoInput struct {
 	// The unique name of this connection.
 	Name string               `json:"name"`
 	Type ConnectionCriteoType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Your Client Id can be found under 'Developer Dashboard' > 'My apps'
+	// Under "Developer Dashboard" > "My apps".
 	ClientID string `json:"clientId"`
-	// Your Client Secret can be found under 'Developer Dashboard' > 'My apps'
+	// Under "Developer Dashboard" > "My apps".
 	ClientSecret string `json:"clientSecret"`
 }
 

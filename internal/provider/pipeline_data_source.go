@@ -1356,6 +1356,11 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								ElementType: types.StringType,
 								Description: `Specify the report ` + "`" + `metrics` + "`" + `. Example values: [metrics.clicks, metrics.all_conversions, metrics.average_cost]`,
 							},
+							"segmenting_resources": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `Specify the report ` + "`" + `segmenting resources` + "`" + `. Example values: [ad_group.resource_name, ad_group.ad_rotation_mode, campaign.resource_name]`,
+							},
 							"segments": schema.ListAttribute{
 								Computed:    true,
 								ElementType: types.StringType,

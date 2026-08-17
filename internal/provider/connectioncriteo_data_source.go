@@ -30,7 +30,6 @@ type ConnectionCRITEODataSource struct {
 type ConnectionCRITEODataSourceModel struct {
 	Active                types.Bool              `tfsdk:"active"`
 	ClientID              types.String            `tfsdk:"client_id"`
-	ClientSecret          types.String            `tfsdk:"client_secret"`
 	CreateDate            types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	ID                    types.String            `tfsdk:"id"`
@@ -57,11 +56,7 @@ func (r *ConnectionCRITEODataSource) Schema(ctx context.Context, req datasource.
 			},
 			"client_id": schema.StringAttribute{
 				Computed:    true,
-				Description: `Your Client Id can be found under 'Developer Dashboard' > 'My apps'`,
-			},
-			"client_secret": schema.StringAttribute{
-				Computed:    true,
-				Description: `Your Client Secret can be found under 'Developer Dashboard' > 'My apps'`,
+				Description: `Under "Developer Dashboard" > "My apps".`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed:    true,

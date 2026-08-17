@@ -292,13 +292,13 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		for _, metricsItem := range r.Source.Criteo.Metrics {
 			metrics = append(metrics, metricsItem.ValueString())
 		}
-		var timezone []string = nil
+		var timezone []shared.Timezone = nil
 		for _, timezoneItem := range r.Source.Criteo.Timezone {
-			timezone = append(timezone, timezoneItem.ValueString())
+			timezone = append(timezone, shared.Timezone(timezoneItem.ValueString()))
 		}
-		var currency []string = nil
+		var currency []shared.Currency = nil
 		for _, currencyItem := range r.Source.Criteo.Currency {
-			currency = append(currency, currencyItem.ValueString())
+			currency = append(currency, shared.Currency(currencyItem.ValueString()))
 		}
 		sourceCriteo = &shared.SourceCriteo{
 			Type:             typeVar8,
@@ -902,13 +902,17 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		for _, segmentsItem := range r.Source.GoogleAds.Segments {
 			segments = append(segments, segmentsItem.ValueString())
 		}
+		var metrics1 []string = nil
+		for _, metricsItem1 := range r.Source.GoogleAds.Metrics {
+			metrics1 = append(metrics1, metricsItem1.ValueString())
+		}
 		var attributedResources []string = nil
 		for _, attributedResourcesItem := range r.Source.GoogleAds.AttributedResources {
 			attributedResources = append(attributedResources, attributedResourcesItem.ValueString())
 		}
-		var metrics1 []string = nil
-		for _, metricsItem1 := range r.Source.GoogleAds.Metrics {
-			metrics1 = append(metrics1, metricsItem1.ValueString())
+		var segmentingResources []string = nil
+		for _, segmentingResourcesItem := range r.Source.GoogleAds.SegmentingResources {
+			segmentingResources = append(segmentingResources, segmentingResourcesItem.ValueString())
 		}
 		sourceGoogleAds = &shared.SourceGoogleAds{
 			Type:                typeVar27,
@@ -917,8 +921,9 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			Entity:              entity21,
 			Fields:              fields2,
 			Segments:            segments,
-			AttributedResources: attributedResources,
 			Metrics:             metrics1,
+			AttributedResources: attributedResources,
+			SegmentingResources: segmentingResources,
 		}
 	}
 	if sourceGoogleAds != nil {
@@ -4366,7 +4371,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 		r.Source.Criteo.ConnectionID = types.StringValue(resp.Source.SourceCriteo.ConnectionID)
 		r.Source.Criteo.Currency = nil
 		for _, v := range resp.Source.SourceCriteo.Currency {
-			r.Source.Criteo.Currency = append(r.Source.Criteo.Currency, types.StringValue(v))
+			r.Source.Criteo.Currency = append(r.Source.Criteo.Currency, types.StringValue(string(v)))
 		}
 		r.Source.Criteo.Dimensions = nil
 		for _, v := range resp.Source.SourceCriteo.Dimensions {
@@ -4380,7 +4385,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 		}
 		r.Source.Criteo.Timezone = nil
 		for _, v := range resp.Source.SourceCriteo.Timezone {
-			r.Source.Criteo.Timezone = append(r.Source.Criteo.Timezone, types.StringValue(v))
+			r.Source.Criteo.Timezone = append(r.Source.Criteo.Timezone, types.StringValue(string(v)))
 		}
 		r.Source.Criteo.Type = types.StringValue(string(resp.Source.SourceCriteo.Type))
 	}
@@ -4580,6 +4585,10 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 		r.Source.GoogleAds.Metrics = nil
 		for _, v := range resp.Source.SourceGoogleAds.Metrics {
 			r.Source.GoogleAds.Metrics = append(r.Source.GoogleAds.Metrics, types.StringValue(v))
+		}
+		r.Source.GoogleAds.SegmentingResources = nil
+		for _, v := range resp.Source.SourceGoogleAds.SegmentingResources {
+			r.Source.GoogleAds.SegmentingResources = append(r.Source.GoogleAds.SegmentingResources, types.StringValue(v))
 		}
 		r.Source.GoogleAds.Segments = nil
 		for _, v := range resp.Source.SourceGoogleAds.Segments {

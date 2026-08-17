@@ -27,8 +27,8 @@ resource "etleap_connection_criteo" "my_connectioncriteo" {
 
 ### Required
 
-- `client_id` (String) Your Client Id can be found under 'Developer Dashboard' > 'My apps'
-- `client_secret` (String) Your Client Secret can be found under 'Developer Dashboard' > 'My apps'
+- `client_id` (String) Under "Developer Dashboard" > "My apps".
+- `client_secret` (String) Under "Developer Dashboard" > "My apps".
 - `name` (String) The unique name of this connection.
 - `type` (String) must be one of ["CRITEO"]
 
