@@ -17,6 +17,11 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	for destinationsCount, destinationsItem := range resp.Destinations {
 		var destinations1 DestinationInfoAndPipelineVersions
 		destinations1.CurrentVersion = types.Int64Value(destinationsItem.CurrentVersion)
+		if destinationsItem.DataAge != nil {
+			destinations1.DataAge = types.StringValue(destinationsItem.DataAge.Format(time.RFC3339Nano))
+		} else {
+			destinations1.DataAge = types.StringNull()
+		}
 		if destinationsItem.Destination.DestinationDeltaLake != nil {
 			destinations1.Destination.DeltaLake = &DestinationDeltaLake{}
 			destinations1.Destination.DeltaLake.AutomaticSchemaChanges = types.BoolPointerValue(destinationsItem.Destination.DestinationDeltaLake.AutomaticSchemaChanges)
@@ -217,6 +222,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 			r.Destinations = append(r.Destinations, destinations1)
 		} else {
 			r.Destinations[destinationsCount].CurrentVersion = destinations1.CurrentVersion
+			r.Destinations[destinationsCount].DataAge = destinations1.DataAge
 			r.Destinations[destinationsCount].Destination = destinations1.Destination
 			r.Destinations[destinationsCount].RefreshVersion = destinations1.RefreshVersion
 			r.Destinations[destinationsCount].RetentionData = destinations1.RetentionData

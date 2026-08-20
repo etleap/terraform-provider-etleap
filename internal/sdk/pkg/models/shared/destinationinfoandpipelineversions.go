@@ -2,6 +2,11 @@
 
 package shared
 
+import (
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
+	"time"
+)
+
 type DestinationInfoAndPipelineVersions struct {
 	Destination DestinationTypes `json:"destination"`
 	// The version of the pipeline that is currently writing to the output table.
@@ -14,6 +19,19 @@ type DestinationInfoAndPipelineVersions struct {
 	RetentionData RetentionData `json:"retentionData"`
 	// Array of schema change objects. If a pipeline is being refreshed, the schema change activities will be for the refreshing pipeline.
 	SchemaChangeActivity []SchemaChange `json:"schemaChangeActivity"`
+	// The approximate time at which the most recent data written to this destination was committed in the source. Currently only available for pipelines from CDC-enabled database sources.
+	DataAge *time.Time `json:"dataAge,omitempty"`
+}
+
+func (d DestinationInfoAndPipelineVersions) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationInfoAndPipelineVersions) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *DestinationInfoAndPipelineVersions) GetDestination() DestinationTypes {
@@ -76,4 +94,11 @@ func (o *DestinationInfoAndPipelineVersions) GetSchemaChangeActivity() []SchemaC
 		return []SchemaChange{}
 	}
 	return o.SchemaChangeActivity
+}
+
+func (o *DestinationInfoAndPipelineVersions) GetDataAge() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DataAge
 }

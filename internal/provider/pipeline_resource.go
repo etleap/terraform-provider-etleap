@@ -650,6 +650,16 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							Description: `The version of the pipeline that is currently writing to the output table.`,
 						},
+						"data_age": schema.StringAttribute{
+							Computed: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
+							Description: `The approximate time at which the most recent data written to this destination was committed in the source. Currently only available for pipelines from CDC-enabled database sources.`,
+							Validators: []validator.String{
+								validators.IsRFC3339(),
+							},
+						},
 						"destination": schema.SingleNestedAttribute{
 							Computed: true,
 							PlanModifiers: []planmodifier.Object{

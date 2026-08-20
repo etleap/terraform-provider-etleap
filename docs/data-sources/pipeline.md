@@ -49,6 +49,7 @@ A pipeline cannot be unshared, and future calls to `PATCH` can only add to this 
 Read-Only:
 
 - `current_version` (Number) The version of the pipeline that is currently writing to the output table.
+- `data_age` (String) The approximate time at which the most recent data written to this destination was committed in the source. Currently only available for pipelines from CDC-enabled database sources.
 - `destination` (Attributes) (see [below for nested schema](#nestedatt--destinations--destination))
 - `refresh_version` (Number) The version of the pipeline that is currently writing to the temporary refresh table. Only specified if there's currently a refresh in progress.
 - `retention_data` (Attributes) Etleap can remove old rows from your destination. This is a summary of the data retention. If a pipeline is being refreshed, this will be the summary for the refreshing pipeline. (see [below for nested schema](#nestedatt--destinations--retention_data))

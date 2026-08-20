@@ -70,6 +70,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							Computed:    true,
 							Description: `The version of the pipeline that is currently writing to the output table.`,
 						},
+						"data_age": schema.StringAttribute{
+							Computed:    true,
+							Description: `The approximate time at which the most recent data written to this destination was committed in the source. Currently only available for pipelines from CDC-enabled database sources.`,
+						},
 						"destination": schema.SingleNestedAttribute{
 							Computed: true,
 							Attributes: map[string]schema.Attribute{
