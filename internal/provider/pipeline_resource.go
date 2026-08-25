@@ -2243,7 +2243,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified, or, for sources that support globbing, when globPattern is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
@@ -3860,7 +3860,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified, or, for sources that support globbing, when globPattern is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
@@ -4285,7 +4285,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified, or, for sources that support globbing, when globPattern is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
@@ -6832,7 +6832,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified, or, for sources that support globbing, when globPattern is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
@@ -6954,7 +6954,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified, or, for sources that support globbing, when globPattern is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
@@ -7636,7 +7636,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified, or, for sources that support globbing, when globPattern is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
@@ -8433,7 +8433,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified, or, for sources that support globbing, when globPattern is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
 							},
 							"file_name_filter": schema.StringAttribute{
 								Computed: true,
