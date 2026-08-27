@@ -89,6 +89,7 @@ const (
 	SourceTypeEnumSeismic                  SourceTypeEnum = "SEISMIC"
 	SourceTypeEnumServiceNow               SourceTypeEnum = "SERVICE_NOW"
 	SourceTypeEnumSftp                     SourceTypeEnum = "SFTP"
+	SourceTypeEnumSharepoint               SourceTypeEnum = "SHAREPOINT"
 	SourceTypeEnumShopify                  SourceTypeEnum = "SHOPIFY"
 	SourceTypeEnumSkyward                  SourceTypeEnum = "SKYWARD"
 	SourceTypeEnumSnapchatAds              SourceTypeEnum = "SNAPCHAT_ADS"
@@ -283,6 +284,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	case "SERVICE_NOW":
 		fallthrough
 	case "SFTP":
+		fallthrough
+	case "SHAREPOINT":
 		fallthrough
 	case "SHOPIFY":
 		fallthrough

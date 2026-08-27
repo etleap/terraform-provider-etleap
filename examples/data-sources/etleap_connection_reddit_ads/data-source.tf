@@ -1,3 +1,3 @@
 data "etleap_connection_reddit_ads" "my_connectionreddit_ads" {
-  id = "ee70d629-705e-491b-9d75-0d84f3371205"
+  id = "1d750d84-f337-4120-9b1b-b10d8ac3e0d0"
 }

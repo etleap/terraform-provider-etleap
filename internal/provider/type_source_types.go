@@ -82,6 +82,7 @@ type SourceTypes struct {
 	Seismic                  *SourceSeismic                  `tfsdk:"seismic"`
 	ServiceNow               *SourceServiceNow               `tfsdk:"service_now"`
 	Sftp                     *SourceSftp                     `tfsdk:"sftp"`
+	Sharepoint               *SourceSharepoint               `tfsdk:"sharepoint"`
 	Shopify                  *SourceShopify                  `tfsdk:"shopify"`
 	Skyward                  *SourceSkyward                  `tfsdk:"skyward"`
 	SnapchatAds              *SourceSnapchatAds              `tfsdk:"snapchat_ads"`

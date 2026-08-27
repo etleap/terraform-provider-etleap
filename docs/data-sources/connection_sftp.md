@@ -14,7 +14,7 @@ ConnectionSFTP DataSource
 
 ```terraform
 data "etleap_connection_sftp" "my_connectionsftp" {
-  id = "7c7abd9f-adbd-4e2a-b7b6-8e0bc5283179"
+  id = "b7b68e0b-c528-4317-9fbc-a03f666e3fd7"
 }
 ```
 

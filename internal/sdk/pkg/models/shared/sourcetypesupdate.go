@@ -91,6 +91,7 @@ const (
 	SourceTypesUpdateTypeSeismic                  SourceTypesUpdateType = "SEISMIC"
 	SourceTypesUpdateTypeServiceNow               SourceTypesUpdateType = "SERVICE_NOW"
 	SourceTypesUpdateTypeSftp                     SourceTypesUpdateType = "SFTP"
+	SourceTypesUpdateTypeSharepoint               SourceTypesUpdateType = "SHAREPOINT"
 	SourceTypesUpdateTypeShopify                  SourceTypesUpdateType = "SHOPIFY"
 	SourceTypesUpdateTypeSkyward                  SourceTypesUpdateType = "SKYWARD"
 	SourceTypesUpdateTypeSnapchatAds              SourceTypesUpdateType = "SNAPCHAT_ADS"
@@ -198,6 +199,7 @@ type SourceTypesUpdate struct {
 	SourceSeismicUpdate                  *SourceSeismicUpdate
 	SourceServiceNowUpdate               *SourceServiceNowUpdate
 	SourceSftpUpdate                     *SourceSftpUpdate
+	SourceSharepointUpdate               *SourceSharepointUpdate
 	SourceShopifyUpdate                  *SourceShopifyUpdate
 	SourceSkywardUpdate                  *SourceSkywardUpdate
 	SourceSnapchatAdsUpdate              *SourceSnapchatAdsUpdate
@@ -1172,6 +1174,18 @@ func CreateSourceTypesUpdateSftp(sftp SourceSftpUpdate) SourceTypesUpdate {
 	return SourceTypesUpdate{
 		SourceSftpUpdate: &sftp,
 		Type:             typ,
+	}
+}
+
+func CreateSourceTypesUpdateSharepoint(sharepoint SourceSharepointUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeSharepoint
+
+	typStr := SourceSharepointUpdateType(typ)
+	sharepoint.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceSharepointUpdate: &sharepoint,
+		Type:                   typ,
 	}
 }
 
@@ -2198,6 +2212,15 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceSftpUpdate = sourceSftpUpdate
 		u.Type = SourceTypesUpdateTypeSftp
 		return nil
+	case "SHAREPOINT":
+		sourceSharepointUpdate := new(SourceSharepointUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceSharepointUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSharepointUpdate = sourceSharepointUpdate
+		u.Type = SourceTypesUpdateTypeSharepoint
+		return nil
 	case "SHOPIFY":
 		sourceShopifyUpdate := new(SourceShopifyUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceShopifyUpdate, "", true, true); err != nil {
@@ -2743,6 +2766,10 @@ func (u SourceTypesUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.SourceSftpUpdate != nil {
 		return utils.MarshalJSON(u.SourceSftpUpdate, "", true)
+	}
+
+	if u.SourceSharepointUpdate != nil {
+		return utils.MarshalJSON(u.SourceSharepointUpdate, "", true)
 	}
 
 	if u.SourceShopifyUpdate != nil {

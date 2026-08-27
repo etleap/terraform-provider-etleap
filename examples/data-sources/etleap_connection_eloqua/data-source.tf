@@ -1,3 +1,3 @@
 data "etleap_connection_eloqua" "my_connectioneloqua" {
-  id = "273f0234-5e7d-4928-8236-b3e2752b6d89"
+  id = "8236b3e2-752b-46d8-92a3-add93e7f4685"
 }

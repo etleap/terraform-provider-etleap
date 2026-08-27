@@ -1,9 +1,9 @@
 resource "etleap_connection_veeva" "my_connectionveeva" {
-  deletion_of_export_products = true
-  name                        = "Daryl McLaughlin IV"
+  deletion_of_export_products = false
+  name                        = "Lucy Friesen"
   password                    = "...my_password..."
   type                        = "VEEVA"
-  username                    = "Enid73"
+  username                    = "Lonie_Feil"
   vault_domain_name           = "...my_vault_domain_name..."
-  vault_type                  = "QUALITY"
+  vault_type                  = "PROMOMATS"
 }

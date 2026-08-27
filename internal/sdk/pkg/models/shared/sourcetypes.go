@@ -91,6 +91,7 @@ const (
 	SourceTypesTypeSeismic                  SourceTypesType = "SEISMIC"
 	SourceTypesTypeServiceNow               SourceTypesType = "SERVICE_NOW"
 	SourceTypesTypeSftp                     SourceTypesType = "SFTP"
+	SourceTypesTypeSharepoint               SourceTypesType = "SHAREPOINT"
 	SourceTypesTypeShopify                  SourceTypesType = "SHOPIFY"
 	SourceTypesTypeSkyward                  SourceTypesType = "SKYWARD"
 	SourceTypesTypeSnapchatAds              SourceTypesType = "SNAPCHAT_ADS"
@@ -198,6 +199,7 @@ type SourceTypes struct {
 	SourceSeismic                  *SourceSeismic
 	SourceServiceNow               *SourceServiceNow
 	SourceSftp                     *SourceSftp
+	SourceSharepoint               *SourceSharepoint
 	SourceShopify                  *SourceShopify
 	SourceSkyward                  *SourceSkyward
 	SourceSnapchatAds              *SourceSnapchatAds
@@ -1172,6 +1174,18 @@ func CreateSourceTypesSftp(sftp SourceSftp) SourceTypes {
 	return SourceTypes{
 		SourceSftp: &sftp,
 		Type:       typ,
+	}
+}
+
+func CreateSourceTypesSharepoint(sharepoint SourceSharepoint) SourceTypes {
+	typ := SourceTypesTypeSharepoint
+
+	typStr := SourceSharepointType(typ)
+	sharepoint.Type = typStr
+
+	return SourceTypes{
+		SourceSharepoint: &sharepoint,
+		Type:             typ,
 	}
 }
 
@@ -2198,6 +2212,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceSftp = sourceSftp
 		u.Type = SourceTypesTypeSftp
 		return nil
+	case "SHAREPOINT":
+		sourceSharepoint := new(SourceSharepoint)
+		if err := utils.UnmarshalJSON(data, &sourceSharepoint, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceSharepoint = sourceSharepoint
+		u.Type = SourceTypesTypeSharepoint
+		return nil
 	case "SHOPIFY":
 		sourceShopify := new(SourceShopify)
 		if err := utils.UnmarshalJSON(data, &sourceShopify, "", true, true); err != nil {
@@ -2743,6 +2766,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceSftp != nil {
 		return utils.MarshalJSON(u.SourceSftp, "", true)
+	}
+
+	if u.SourceSharepoint != nil {
+		return utils.MarshalJSON(u.SourceSharepoint, "", true)
 	}
 
 	if u.SourceShopify != nil {

@@ -14,7 +14,7 @@ ConnectionBIGQUERY DataSource
 
 ```terraform
 data "etleap_connection_bigquery" "my_connectionbigquery" {
-  id = "61063a76-d6e7-4aa7-bd67-425f3719b938"
+  id = "7d67425f-3719-4b93-8678-5f0be613b6b8"
 }
 ```
 

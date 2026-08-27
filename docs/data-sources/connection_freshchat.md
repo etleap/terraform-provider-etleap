@@ -14,7 +14,7 @@ ConnectionFRESHCHAT DataSource
 
 ```terraform
 data "etleap_connection_freshchat" "my_connectionfreshchat" {
-  id = "6337c2c4-cbd9-4998-8ace-51fe0f19d146"
+  id = "8ace51fe-0f19-4d14-a487-1c9462c46fc9"
 }
 ```
 

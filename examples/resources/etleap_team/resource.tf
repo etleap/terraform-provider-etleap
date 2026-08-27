@@ -1,4 +1,4 @@
 resource "etleap_team" "my_team" {
   description = "...my_description..."
-  name        = "Darlene Abernathy"
+  name        = "Kristy Smitham"
 }

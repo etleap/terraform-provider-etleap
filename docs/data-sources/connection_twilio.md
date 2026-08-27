@@ -14,7 +14,7 @@ ConnectionTWILIO DataSource
 
 ```terraform
 data "etleap_connection_twilio" "my_connectiontwilio" {
-  id = "28c6b2a5-2238-4d61-aabc-7ac90d2f9ab5"
+  id = "ab57f9fd-0217-4fcb-ba1a-dca598b5f099"
 }
 ```
 

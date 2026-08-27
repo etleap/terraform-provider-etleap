@@ -1,3 +1,3 @@
 data "etleap_connection_egnyte" "my_connectionegnyte" {
-  id = "3371396f-9ea6-43f8-a7f6-d3e204d5afe1"
+  id = "e7f6d3e2-04d5-4afe-9ad0-84b03e516169"
 }

@@ -15,7 +15,7 @@ Model Resource
 ```terraform
 resource "etleap_model" "my_model" {
   deletion_of_export_products = false
-  name                        = "Gloria Cartwright V"
+  name                        = "Frederick Franecki"
   query_and_triggers = {
     query = "...my_query..."
     triggers = [
@@ -24,7 +24,7 @@ resource "etleap_model" "my_model" {
   }
   update_schedule = {
     daily = {
-      hour_of_day = 10
+      hour_of_day = 8
       mode        = "DAILY"
     }
   }

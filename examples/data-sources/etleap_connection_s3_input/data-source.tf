@@ -1,3 +1,3 @@
 data "etleap_connection_s3_input" "my_connections3_input" {
-  id = "4b5f22c9-131e-43bf-b739-5bc9773788af"
+  id = "f7395bc9-7737-488a-bed8-31c3f77a747b"
 }

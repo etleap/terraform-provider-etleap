@@ -1110,6 +1110,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		}
 		r.Source.Sftp.Type = types.StringValue(string(resp.Source.SourceSftp.Type))
 	}
+	if resp.Source.SourceSharepoint != nil {
+		r.Source.Sharepoint = &SourceSharepoint{}
+		r.Source.Sharepoint.ConnectionID = types.StringValue(resp.Source.SourceSharepoint.ConnectionID)
+		r.Source.Sharepoint.Entity = types.StringValue(resp.Source.SourceSharepoint.Entity)
+		r.Source.Sharepoint.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSharepoint.LatencyThreshold)
+		r.Source.Sharepoint.Type = types.StringValue(string(resp.Source.SourceSharepoint.Type))
+	}
 	if resp.Source.SourceShopify != nil {
 		r.Source.Shopify = &SourceShopify{}
 		r.Source.Shopify.ConnectionID = types.StringValue(resp.Source.SourceShopify.ConnectionID)

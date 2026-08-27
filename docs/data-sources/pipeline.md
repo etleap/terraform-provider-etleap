@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "ba5dbb36-23df-4612-92e3-eb440cdcfb2a"
+  id = "299af832-a7ad-4294-8553-20d4deb57c52"
 }
 ```
 
@@ -429,6 +429,7 @@ Read-Only:
 - `seismic` (Attributes) (see [below for nested schema](#nestedatt--source--seismic))
 - `service_now` (Attributes) (see [below for nested schema](#nestedatt--source--service_now))
 - `sftp` (Attributes) (see [below for nested schema](#nestedatt--source--sftp))
+- `sharepoint` (Attributes) (see [below for nested schema](#nestedatt--source--sharepoint))
 - `shopify` (Attributes) (see [below for nested schema](#nestedatt--source--shopify))
 - `skyward` (Attributes) (see [below for nested schema](#nestedatt--source--skyward))
 - `snapchat_ads` (Attributes) (see [below for nested schema](#nestedatt--source--snapchat_ads))
@@ -1437,6 +1438,17 @@ Read-Only:
 - `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified.
 - `type` (String) must be one of ["SFTP"]
+
+
+<a id="nestedatt--source--sharepoint"></a>
+### Nested Schema for `source.sharepoint`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The path to the file, made up of the site name, the document library name, and the path of the file inside that library. Example: /Marketing/Documents/2026/leads.csv
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["SHAREPOINT"]
 
 
 <a id="nestedatt--source--shopify"></a>

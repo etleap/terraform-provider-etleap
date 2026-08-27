@@ -25,6 +25,7 @@ const (
 	Oauth2ConnectionTypeRedditAds       Oauth2ConnectionType = "REDDIT_ADS"
 	Oauth2ConnectionTypeSalesforce      Oauth2ConnectionType = "SALESFORCE"
 	Oauth2ConnectionTypeSeismic         Oauth2ConnectionType = "SEISMIC"
+	Oauth2ConnectionTypeSharepoint      Oauth2ConnectionType = "SHAREPOINT"
 	Oauth2ConnectionTypeSnapchatAds     Oauth2ConnectionType = "SNAPCHAT_ADS"
 	Oauth2ConnectionTypeSquare          Oauth2ConnectionType = "SQUARE"
 	Oauth2ConnectionTypeVerizonMediaDsp Oauth2ConnectionType = "VERIZON_MEDIA_DSP"
@@ -71,6 +72,8 @@ func (e *Oauth2ConnectionType) UnmarshalJSON(data []byte) error {
 	case "SALESFORCE":
 		fallthrough
 	case "SEISMIC":
+		fallthrough
+	case "SHAREPOINT":
 		fallthrough
 	case "SNAPCHAT_ADS":
 		fallthrough

@@ -392,6 +392,10 @@ func (o *PipelineOutput) GetSourceSftp() *SourceSftp {
 	return o.GetSource().SourceSftp
 }
 
+func (o *PipelineOutput) GetSourceSharepoint() *SourceSharepoint {
+	return o.GetSource().SourceSharepoint
+}
+
 func (o *PipelineOutput) GetSourceShopify() *SourceShopify {
 	return o.GetSource().SourceShopify
 }

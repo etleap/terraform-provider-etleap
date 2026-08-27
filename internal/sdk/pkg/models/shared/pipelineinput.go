@@ -761,6 +761,10 @@ func (o *PipelineInput) GetSourceSftp() *SourceSftp {
 	return o.GetSource().SourceSftp
 }
 
+func (o *PipelineInput) GetSourceSharepoint() *SourceSharepoint {
+	return o.GetSource().SourceSharepoint
+}
+
 func (o *PipelineInput) GetSourceShopify() *SourceShopify {
 	return o.GetSource().SourceShopify
 }

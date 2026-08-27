@@ -20,18 +20,18 @@ resource "etleap_pipeline" "my_pipeline" {
       automatic_schema_changes   = true
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
-      pre10_dot2_runtime_support = false
+      pre10_dot2_runtime_support = true
       primary_key = [
         "...",
       ]
-      retain_history         = false
+      retain_history         = true
       schema                 = "...my_schema..."
       table                  = "...my_table..."
       type                   = "DELTA_LAKE"
-      wait_for_quality_check = false
+      wait_for_quality_check = true
     }
   }
-  name   = "Sherman Gibson"
+  name   = "Joan Carroll"
   paused = false
   script = {
     legacy_script = {
@@ -42,7 +42,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 8
+      latency_threshold = 2
       type              = "ACTIVE_CAMPAIGN"
     }
   }
@@ -302,6 +302,7 @@ Optional:
 - `seismic` (Attributes) (see [below for nested schema](#nestedatt--source--seismic))
 - `service_now` (Attributes) (see [below for nested schema](#nestedatt--source--service_now))
 - `sftp` (Attributes) (see [below for nested schema](#nestedatt--source--sftp))
+- `sharepoint` (Attributes) (see [below for nested schema](#nestedatt--source--sharepoint))
 - `shopify` (Attributes) (see [below for nested schema](#nestedatt--source--shopify))
 - `skyward` (Attributes) (see [below for nested schema](#nestedatt--source--skyward))
 - `snapchat_ads` (Attributes) (see [below for nested schema](#nestedatt--source--snapchat_ads))
@@ -1310,6 +1311,17 @@ Optional:
 - `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. Requires replacement if changed. ; Not Null; must be one of ["UPDATE", "APPEND", "REPLACE"]
 - `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here. `paths` can't be used when a `globPattern` is specified. Requires replacement if changed.
 - `type` (String) Not Null; must be one of ["SFTP"]
+
+
+<a id="nestedatt--source--sharepoint"></a>
+### Nested Schema for `source.sharepoint`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The path to the file, made up of the site name, the document library name, and the path of the file inside that library. Example: /Marketing/Documents/2026/leads.csv. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["SHAREPOINT"]
 
 
 <a id="nestedatt--source--shopify"></a>

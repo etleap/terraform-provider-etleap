@@ -14,7 +14,7 @@ ConnectionSALESLOFT DataSource
 
 ```terraform
 data "etleap_connection_salesloft" "my_connectionsalesloft" {
-  id = "3853f11b-9d2c-4570-b10e-dafda5623137"
+  id = "b10edafd-a562-4313-bd10-85e785064975"
 }
 ```
 

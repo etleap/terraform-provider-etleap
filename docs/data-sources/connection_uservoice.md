@@ -14,7 +14,7 @@ ConnectionUSERVOICE DataSource
 
 ```terraform
 data "etleap_connection_uservoice" "my_connectionuservoice" {
-  id = "7728448f-fbd9-4bfb-aee3-908d0d1c55b2"
+  id = "7c624a2e-4cd0-4898-9e08-aa7262e1d094"
 }
 ```
 

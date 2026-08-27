@@ -14,7 +14,7 @@ ConnectionPOSTGRES DataSource
 
 ```terraform
 data "etleap_connection_postgres" "my_connectionpostgres" {
-  id = "687b2df9-3c48-40e1-975d-4af3c8533d61"
+  id = "175d4af3-c853-43d6-905c-d66bfe854e4c"
 }
 ```
 

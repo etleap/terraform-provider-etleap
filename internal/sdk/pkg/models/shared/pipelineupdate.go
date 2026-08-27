@@ -1433,6 +1433,13 @@ func (o *PipelineUpdate) GetSourceSftp() *SourceSftpUpdate {
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceSharepoint() *SourceSharepointUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceSharepointUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceShopify() *SourceShopifyUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceShopifyUpdate

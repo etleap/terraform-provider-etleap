@@ -14,7 +14,7 @@ ConnectionAZUREBLOBSTORAGE DataSource
 
 ```terraform
 data "etleap_connection_azure_blob_storage" "my_connectionazure_blob_storage" {
-  id = "6b6f0baa-3e2c-4f50-88df-6c7ef0f714d9"
+  id = "48df6c7e-f0f7-414d-9610-63a76d6e7aa7"
 }
 ```
 

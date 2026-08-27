@@ -1,3 +1,3 @@
 data "etleap_connection_snowflake" "my_connectionsnowflake" {
-  id = "436b9a43-f3b2-4914-9642-1624c5ce221b"
+  id = "1a7d9be0-d059-4537-8e7c-8dbec391d42c"
 }

@@ -16,23 +16,23 @@ ConnectionSQLSERVERSHARDED Resource
 resource "etleap_connection_sql_server_sharded" "my_connectionsql_server_sharded" {
   cdc_address                 = "...my_cdc_address..."
   cdc_enabled                 = false
-  cdc_port                    = 0
-  deletion_of_export_products = false
-  name                        = "Madeline Braun"
+  cdc_port                    = 3
+  deletion_of_export_products = true
+  name                        = "Gary Morar"
   schema                      = "...my_schema..."
   shards = [
     {
-      address  = "706 Monserrate Crest"
+      address  = "28390 Goodwin Grove"
       database = "...my_database..."
       password = "...my_password..."
-      port     = 2
+      port     = 6
       shard_id = "...my_shard_id..."
       ssh_config = {
-        address  = "390 Goodwin Grove"
-        port     = 6
-        username = "Annetta.Crist11"
+        address  = "17113 Concepcion Valleys"
+        port     = 5
+        username = "Stanford75"
       }
-      username = "Frederick91"
+      username = "Walter_Hammes"
     },
   ]
   type = "SQL_SERVER_SHARDED"
