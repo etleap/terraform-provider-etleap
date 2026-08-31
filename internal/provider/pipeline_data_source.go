@@ -2762,9 +2762,22 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed:    true,
 								Description: `The universally unique identifier for the source.`,
 							},
+							"entities": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `Additional file paths ingested into the same pipeline alongside 'entity'. Cannot be combined with 'fileNameFilter'.`,
+							},
 							"entity": schema.StringAttribute{
 								Computed:    true,
-								Description: `The path to the file, made up of the site name, the document library name, and the path of the file inside that library. Example: /Marketing/Documents/2026/leads.csv`,
+								Description: `The path to the file, made up of the site name, the document library name, and the path of the file inside that library. Example: /Marketing/Documents/2026/leads.csv. When 'fileNameFilter' is set, this is the folder to match files in, ending in "/". When 'entities' is set, this is the first of the selected files.`,
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed:    true,
+								Description: `The worksheet read from every matched Excel file. Requires 'fileNameFilter' to be set.`,
+							},
+							"file_name_filter": schema.StringAttribute{
+								Computed:    true,
+								Description: `A regular expression matched against file names, not paths, under the 'entity' folder, recursively. Requires 'entity' to be a folder path ending in "/". Cannot be combined with 'entities'.`,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,

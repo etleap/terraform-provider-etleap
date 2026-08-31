@@ -37,8 +37,14 @@ type SourceSharepoint struct {
 	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-	// The path to the file, made up of the site name, the document library name, and the path of the file inside that library. Example: /Marketing/Documents/2026/leads.csv
+	// The path to the file, made up of the site name, the document library name, and the path of the file inside that library. Example: /Marketing/Documents/2026/leads.csv. When 'fileNameFilter' is set, this is the folder to match files in, ending in "/". When 'entities' is set, this is the first of the selected files.
 	Entity string `json:"entity"`
+	// Additional file paths ingested into the same pipeline alongside 'entity'. Cannot be combined with 'fileNameFilter'.
+	Entities []string `json:"entities,omitempty"`
+	// A regular expression matched against file names, not paths, under the 'entity' folder, recursively. Requires 'entity' to be a folder path ending in "/". Cannot be combined with 'entities'.
+	FileNameFilter *string `json:"fileNameFilter,omitempty"`
+	// The worksheet read from every matched Excel file. Requires 'fileNameFilter' to be set.
+	ExcelSheetName *string `json:"excelSheetName,omitempty"`
 }
 
 func (o *SourceSharepoint) GetType() SourceSharepointType {
@@ -67,4 +73,25 @@ func (o *SourceSharepoint) GetEntity() string {
 		return ""
 	}
 	return o.Entity
+}
+
+func (o *SourceSharepoint) GetEntities() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Entities
+}
+
+func (o *SourceSharepoint) GetFileNameFilter() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FileNameFilter
+}
+
+func (o *SourceSharepoint) GetExcelSheetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcelSheetName
 }

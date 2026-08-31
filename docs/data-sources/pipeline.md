@@ -1446,7 +1446,10 @@ Read-Only:
 Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
-- `entity` (String) The path to the file, made up of the site name, the document library name, and the path of the file inside that library. Example: /Marketing/Documents/2026/leads.csv
+- `entities` (List of String) Additional file paths ingested into the same pipeline alongside 'entity'. Cannot be combined with 'fileNameFilter'.
+- `entity` (String) The path to the file, made up of the site name, the document library name, and the path of the file inside that library. Example: /Marketing/Documents/2026/leads.csv. When 'fileNameFilter' is set, this is the folder to match files in, ending in "/". When 'entities' is set, this is the first of the selected files.
+- `excel_sheet_name` (String) The worksheet read from every matched Excel file. Requires 'fileNameFilter' to be set.
+- `file_name_filter` (String) A regular expression matched against file names, not paths, under the 'entity' folder, recursively. Requires 'entity' to be a folder path ending in "/". Cannot be combined with 'entities'.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["SHAREPOINT"]
 

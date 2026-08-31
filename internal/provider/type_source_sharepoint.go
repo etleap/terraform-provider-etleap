@@ -5,8 +5,11 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceSharepoint struct {
-	ConnectionID     types.String `tfsdk:"connection_id"`
-	Entity           types.String `tfsdk:"entity"`
-	LatencyThreshold types.Int64  `tfsdk:"latency_threshold"`
-	Type             types.String `tfsdk:"type"`
+	ConnectionID     types.String   `tfsdk:"connection_id"`
+	Entities         []types.String `tfsdk:"entities"`
+	Entity           types.String   `tfsdk:"entity"`
+	ExcelSheetName   types.String   `tfsdk:"excel_sheet_name"`
+	FileNameFilter   types.String   `tfsdk:"file_name_filter"`
+	LatencyThreshold types.Int64    `tfsdk:"latency_threshold"`
+	Type             types.String   `tfsdk:"type"`
 }

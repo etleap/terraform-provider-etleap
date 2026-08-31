@@ -1113,7 +1113,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	if resp.Source.SourceSharepoint != nil {
 		r.Source.Sharepoint = &SourceSharepoint{}
 		r.Source.Sharepoint.ConnectionID = types.StringValue(resp.Source.SourceSharepoint.ConnectionID)
+		r.Source.Sharepoint.Entities = nil
+		for _, v := range resp.Source.SourceSharepoint.Entities {
+			r.Source.Sharepoint.Entities = append(r.Source.Sharepoint.Entities, types.StringValue(v))
+		}
 		r.Source.Sharepoint.Entity = types.StringValue(resp.Source.SourceSharepoint.Entity)
+		r.Source.Sharepoint.ExcelSheetName = types.StringPointerValue(resp.Source.SourceSharepoint.ExcelSheetName)
+		r.Source.Sharepoint.FileNameFilter = types.StringPointerValue(resp.Source.SourceSharepoint.FileNameFilter)
 		r.Source.Sharepoint.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSharepoint.LatencyThreshold)
 		r.Source.Sharepoint.Type = types.StringValue(string(resp.Source.SourceSharepoint.Type))
 	}

@@ -7741,6 +7741,19 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringvalidators.NotNull(),
 								},
 							},
+							"entities": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									listplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								ElementType: types.StringType,
+								Description: `Additional file paths ingested into the same pipeline alongside 'entity'. Cannot be combined with 'fileNameFilter'. Requires replacement if changed. `,
+								Validators: []validator.List{
+									listvalidator.SizeAtLeast(1),
+								},
+							},
 							"entity": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
@@ -7748,10 +7761,28 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `The path to the file, made up of the site name, the document library name, and the path of the file inside that library. Example: /Marketing/Documents/2026/leads.csv. Requires replacement if changed. ; Not Null`,
+								Description: `The path to the file, made up of the site name, the document library name, and the path of the file inside that library. Example: /Marketing/Documents/2026/leads.csv. When 'fileNameFilter' is set, this is the folder to match files in, ending in "/". When 'entities' is set, this is the first of the selected files. Requires replacement if changed. ; Not Null`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 								},
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The worksheet read from every matched Excel file. Requires 'fileNameFilter' to be set. Requires replacement if changed. `,
+							},
+							"file_name_filter": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `A regular expression matched against file names, not paths, under the 'entity' folder, recursively. Requires 'entity' to be a folder path ending in "/". Cannot be combined with 'entities'. Requires replacement if changed. `,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,

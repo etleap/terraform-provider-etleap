@@ -2628,11 +2628,30 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			latencyThreshold79 = nil
 		}
 		entity58 := r.Source.Sharepoint.Entity.ValueString()
+		var entities []string = nil
+		for _, entitiesItem := range r.Source.Sharepoint.Entities {
+			entities = append(entities, entitiesItem.ValueString())
+		}
+		fileNameFilter6 := new(string)
+		if !r.Source.Sharepoint.FileNameFilter.IsUnknown() && !r.Source.Sharepoint.FileNameFilter.IsNull() {
+			*fileNameFilter6 = r.Source.Sharepoint.FileNameFilter.ValueString()
+		} else {
+			fileNameFilter6 = nil
+		}
+		excelSheetName6 := new(string)
+		if !r.Source.Sharepoint.ExcelSheetName.IsUnknown() && !r.Source.Sharepoint.ExcelSheetName.IsNull() {
+			*excelSheetName6 = r.Source.Sharepoint.ExcelSheetName.ValueString()
+		} else {
+			excelSheetName6 = nil
+		}
 		sourceSharepoint = &shared.SourceSharepoint{
 			Type:             typeVar79,
 			ConnectionID:     connectionId79,
 			LatencyThreshold: latencyThreshold79,
 			Entity:           entity58,
+			Entities:         entities,
+			FileNameFilter:   fileNameFilter6,
+			ExcelSheetName:   excelSheetName6,
 		}
 	}
 	if sourceSharepoint != nil {
@@ -3003,17 +3022,17 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		} else {
 			latencyThreshold89 = nil
 		}
-		fileNameFilter6 := new(string)
+		fileNameFilter7 := new(string)
 		if !r.Source.Streaming.FileNameFilter.IsUnknown() && !r.Source.Streaming.FileNameFilter.IsNull() {
-			*fileNameFilter6 = r.Source.Streaming.FileNameFilter.ValueString()
+			*fileNameFilter7 = r.Source.Streaming.FileNameFilter.ValueString()
 		} else {
-			fileNameFilter6 = nil
+			fileNameFilter7 = nil
 		}
-		excelSheetName6 := new(string)
+		excelSheetName7 := new(string)
 		if !r.Source.Streaming.ExcelSheetName.IsUnknown() && !r.Source.Streaming.ExcelSheetName.IsNull() {
-			*excelSheetName6 = r.Source.Streaming.ExcelSheetName.ValueString()
+			*excelSheetName7 = r.Source.Streaming.ExcelSheetName.ValueString()
 		} else {
-			excelSheetName6 = nil
+			excelSheetName7 = nil
 		}
 		newFileBehavior6 := shared.SourceStreamingNewFileBehavior(r.Source.Streaming.NewFileBehavior.ValueString())
 		lowWatermark6 := new(customTypes.Date)
@@ -3030,8 +3049,8 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			Type:             typeVar89,
 			ConnectionID:     connectionId89,
 			LatencyThreshold: latencyThreshold89,
-			FileNameFilter:   fileNameFilter6,
-			ExcelSheetName:   excelSheetName6,
+			FileNameFilter:   fileNameFilter7,
+			ExcelSheetName:   excelSheetName7,
 			NewFileBehavior:  newFileBehavior6,
 			LowWatermark:     lowWatermark6,
 			Paths:            paths6,
@@ -5142,7 +5161,13 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 	if resp.Source.SourceSharepoint != nil {
 		r.Source.Sharepoint = &SourceSharepoint{}
 		r.Source.Sharepoint.ConnectionID = types.StringValue(resp.Source.SourceSharepoint.ConnectionID)
+		r.Source.Sharepoint.Entities = nil
+		for _, v := range resp.Source.SourceSharepoint.Entities {
+			r.Source.Sharepoint.Entities = append(r.Source.Sharepoint.Entities, types.StringValue(v))
+		}
 		r.Source.Sharepoint.Entity = types.StringValue(resp.Source.SourceSharepoint.Entity)
+		r.Source.Sharepoint.ExcelSheetName = types.StringPointerValue(resp.Source.SourceSharepoint.ExcelSheetName)
+		r.Source.Sharepoint.FileNameFilter = types.StringPointerValue(resp.Source.SourceSharepoint.FileNameFilter)
 		r.Source.Sharepoint.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSharepoint.LatencyThreshold)
 		r.Source.Sharepoint.Type = types.StringValue(string(resp.Source.SourceSharepoint.Type))
 	}
