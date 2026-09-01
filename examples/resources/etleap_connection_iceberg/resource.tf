@@ -6,5 +6,4 @@ resource "etleap_connection_iceberg" "my_connectioniceberg" {
   iam_role                    = "...my_iam_role..."
   name                        = "Marian Schmeler"
   type                        = "ICEBERG"
-  warehouse_connection        = "...my_warehouse_connection..."
 }

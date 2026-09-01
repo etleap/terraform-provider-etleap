@@ -35,7 +35,6 @@ data "etleap_connection_iceberg" "my_connectioniceberg" {
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]
 - `type` (String) must be one of ["ICEBERG"]
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
-- `warehouse_connection` (String)
 
 <a id="nestedatt--default_update_schedule"></a>
 ### Nested Schema for `default_update_schedule`

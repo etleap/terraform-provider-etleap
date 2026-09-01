@@ -40,7 +40,6 @@ type ConnectionICEBERGDataSourceModel struct {
 	Status                types.String            `tfsdk:"status"`
 	Type                  types.String            `tfsdk:"type"`
 	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	WarehouseConnection   types.String            `tfsdk:"warehouse_connection"`
 }
 
 // Metadata returns the data source type name.
@@ -256,9 +255,6 @@ func (r *ConnectionICEBERGDataSource) Schema(ctx context.Context, req datasource
 					},
 				},
 				Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.`,
-			},
-			"warehouse_connection": schema.StringAttribute{
-				Computed: true,
 			},
 		},
 	}

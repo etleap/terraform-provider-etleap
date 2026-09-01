@@ -90,21 +90,14 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergInput() *share
 	dataBucket := r.DataBucket.ValueString()
 	baseDirectory := r.BaseDirectory.ValueString()
 	glueRegion := r.GlueRegion.ValueString()
-	warehouseConnection := new(string)
-	if !r.WarehouseConnection.IsUnknown() && !r.WarehouseConnection.IsNull() {
-		*warehouseConnection = r.WarehouseConnection.ValueString()
-	} else {
-		warehouseConnection = nil
-	}
 	out := shared.ConnectionIcebergInput{
-		Name:                name,
-		Type:                typeVar,
-		UpdateSchedule:      updateSchedule,
-		IamRole:             iamRole,
-		DataBucket:          dataBucket,
-		BaseDirectory:       baseDirectory,
-		GlueRegion:          glueRegion,
-		WarehouseConnection: warehouseConnection,
+		Name:           name,
+		Type:           typeVar,
+		UpdateSchedule: updateSchedule,
+		IamRole:        iamRole,
+		DataBucket:     dataBucket,
+		BaseDirectory:  baseDirectory,
+		GlueRegion:     glueRegion,
 	}
 	return &out
 }
@@ -199,7 +192,6 @@ func (r *ConnectionICEBERGResourceModel) RefreshFromSharedConnectionIceberg(resp
 			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
 		}
 	}
-	r.WarehouseConnection = types.StringPointerValue(resp.WarehouseConnection)
 }
 
 func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergUpdate() *shared.ConnectionIcebergUpdate {
@@ -320,22 +312,15 @@ func (r *ConnectionICEBERGResourceModel) ToSharedConnectionIcebergUpdate() *shar
 	} else {
 		glueRegion = nil
 	}
-	warehouseConnection := new(string)
-	if !r.WarehouseConnection.IsUnknown() && !r.WarehouseConnection.IsNull() {
-		*warehouseConnection = r.WarehouseConnection.ValueString()
-	} else {
-		warehouseConnection = nil
-	}
 	out := shared.ConnectionIcebergUpdate{
-		Name:                name,
-		Type:                typeVar,
-		Active:              active,
-		UpdateSchedule:      updateSchedule,
-		IamRole:             iamRole,
-		DataBucket:          dataBucket,
-		BaseDirectory:       baseDirectory,
-		GlueRegion:          glueRegion,
-		WarehouseConnection: warehouseConnection,
+		Name:           name,
+		Type:           typeVar,
+		Active:         active,
+		UpdateSchedule: updateSchedule,
+		IamRole:        iamRole,
+		DataBucket:     dataBucket,
+		BaseDirectory:  baseDirectory,
+		GlueRegion:     glueRegion,
 	}
 	return &out
 }

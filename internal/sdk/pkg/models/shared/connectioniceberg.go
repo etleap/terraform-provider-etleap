@@ -152,7 +152,6 @@ type ConnectionIceberg struct {
 	DataBucket            string                                   `json:"dataBucket"`
 	BaseDirectory         string                                   `json:"baseDirectory"`
 	GlueRegion            string                                   `json:"glueRegion"`
-	WarehouseConnection   *string                                  `json:"warehouseConnection,omitempty"`
 }
 
 func (c ConnectionIceberg) MarshalJSON() ([]byte, error) {
@@ -285,24 +284,16 @@ func (o *ConnectionIceberg) GetGlueRegion() string {
 	return o.GlueRegion
 }
 
-func (o *ConnectionIceberg) GetWarehouseConnection() *string {
-	if o == nil {
-		return nil
-	}
-	return o.WarehouseConnection
-}
-
 type ConnectionIcebergInput struct {
 	// The unique name of this connection.
 	Name string                `json:"name"`
 	Type ConnectionIcebergType `json:"type"`
 	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule      *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	IamRole             string               `json:"iamRole"`
-	DataBucket          string               `json:"dataBucket"`
-	BaseDirectory       string               `json:"baseDirectory"`
-	GlueRegion          string               `json:"glueRegion"`
-	WarehouseConnection *string              `json:"warehouseConnection,omitempty"`
+	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	IamRole        string               `json:"iamRole"`
+	DataBucket     string               `json:"dataBucket"`
+	BaseDirectory  string               `json:"baseDirectory"`
+	GlueRegion     string               `json:"glueRegion"`
 }
 
 func (o *ConnectionIcebergInput) GetName() string {
@@ -387,11 +378,4 @@ func (o *ConnectionIcebergInput) GetGlueRegion() string {
 		return ""
 	}
 	return o.GlueRegion
-}
-
-func (o *ConnectionIcebergInput) GetWarehouseConnection() *string {
-	if o == nil {
-		return nil
-	}
-	return o.WarehouseConnection
 }

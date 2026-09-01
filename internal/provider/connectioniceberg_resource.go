@@ -54,7 +54,6 @@ type ConnectionICEBERGResourceModel struct {
 	Status                   types.String            `tfsdk:"status"`
 	Type                     types.String            `tfsdk:"type"`
 	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
-	WarehouseConnection      types.String            `tfsdk:"warehouse_connection"`
 }
 
 func (r *ConnectionICEBERGResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -538,13 +537,6 @@ func (r *ConnectionICEBERGResource) Schema(ctx context.Context, req resource.Sch
 				Validators: []validator.Object{
 					validators.ExactlyOneChild(),
 				},
-			},
-			"warehouse_connection": schema.StringAttribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
-				Optional: true,
 			},
 		},
 	}

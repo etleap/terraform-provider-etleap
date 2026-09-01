@@ -98,5 +98,4 @@ func (r *ConnectionICEBERGDataSourceModel) RefreshFromSharedConnectionIceberg(re
 			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
 		}
 	}
-	r.WarehouseConnection = types.StringPointerValue(resp.WarehouseConnection)
 }
