@@ -26,7 +26,6 @@ data "etleap_connection_hubspot" "my_connectionhubspot" {
 - `active` (Boolean) Whether this connection has been marked as active.
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
-- `hub_id` (Number)
 - `id` (String) The ID of this resource.
 - `name` (String) The unique name of this connection.
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]

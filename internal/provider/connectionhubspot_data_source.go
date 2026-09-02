@@ -31,7 +31,6 @@ type ConnectionHUBSPOTDataSourceModel struct {
 	Active                types.Bool              `tfsdk:"active"`
 	CreateDate            types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
-	HubID                 types.Int64             `tfsdk:"hub_id"`
 	ID                    types.String            `tfsdk:"id"`
 	Name                  types.String            `tfsdk:"name"`
 	Status                types.String            `tfsdk:"status"`
@@ -148,9 +147,6 @@ func (r *ConnectionHUBSPOTDataSource) Schema(ctx context.Context, req datasource
 					},
 				},
 				Description: `When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per ` + "`" + `pipelineMode` + "`" + ` and may be subject to change.`,
-			},
-			"hub_id": schema.Int64Attribute{
-				Computed: true,
 			},
 			"id": schema.StringAttribute{
 				Required: true,

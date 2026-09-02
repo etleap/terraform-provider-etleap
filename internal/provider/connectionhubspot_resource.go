@@ -46,7 +46,6 @@ type ConnectionHUBSPOTResourceModel struct {
 	CreateDate               types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
-	HubID                    types.Int64             `tfsdk:"hub_id"`
 	ID                       types.String            `tfsdk:"id"`
 	Name                     types.String            `tfsdk:"name"`
 	Status                   types.String            `tfsdk:"status"`
@@ -273,12 +272,6 @@ func (r *ConnectionHUBSPOTResource) Schema(ctx context.Context, req resource.Sch
 				Optional:    true,
 				Default:     booldefault.StaticBool(false),
 				Description: `Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to ` + "`" + `false` + "`" + `. Default: false`,
-			},
-			"hub_id": schema.Int64Attribute{
-				Computed: true,
-				PlanModifiers: []planmodifier.Int64{
-					speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
-				},
 			},
 			"id": schema.StringAttribute{
 				Computed: true,

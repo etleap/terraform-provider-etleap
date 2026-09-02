@@ -59,7 +59,6 @@ func (r *ConnectionHUBSPOTDataSourceModel) RefreshFromSharedConnectionHubspot(re
 			r.DefaultUpdateSchedule[defaultUpdateScheduleCount].UpdateSchedule = defaultUpdateSchedule1.UpdateSchedule
 		}
 	}
-	r.HubID = types.Int64Value(resp.HubID)
 	r.ID = types.StringValue(resp.ID)
 	r.Name = types.StringValue(resp.Name)
 	r.Status = types.StringValue(string(resp.Status))

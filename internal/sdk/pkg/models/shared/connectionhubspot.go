@@ -149,7 +149,6 @@ type ConnectionHubspot struct {
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionHubspotDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	Username              string                                   `json:"username"`
-	HubID                 int64                                    `json:"hubId"`
 }
 
 func (c ConnectionHubspot) MarshalJSON() ([]byte, error) {
@@ -259,13 +258,6 @@ func (o *ConnectionHubspot) GetUsername() string {
 		return ""
 	}
 	return o.Username
-}
-
-func (o *ConnectionHubspot) GetHubID() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.HubID
 }
 
 type ConnectionHubspotInput struct {
