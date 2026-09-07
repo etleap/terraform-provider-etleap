@@ -144,6 +144,10 @@ func (o *PipelineOutput) GetSourceEloqua() *SourceEloqua {
 	return o.GetSource().SourceEloqua
 }
 
+func (o *PipelineOutput) GetSourceEmail() *SourceEmail {
+	return o.GetSource().SourceEmail
+}
+
 func (o *PipelineOutput) GetSourceErpx() *SourceErpx {
 	return o.GetSource().SourceErpx
 }

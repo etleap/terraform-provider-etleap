@@ -999,6 +999,13 @@ func (o *PipelineUpdate) GetSourceEloqua() *SourceEloquaUpdate {
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceEmail() *SourceEmailUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceEmailUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceErpx() *SourceErpxUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceErpxUpdate

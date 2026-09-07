@@ -3415,6 +3415,110 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 						},
 					},
+					"email": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The universally unique identifier for the source. Requires replacement if changed. ; Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"excel_sheet_name": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified, or, for sources that support globbing, when globPattern is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet. Requires replacement if changed. `,
+							},
+							"file_name_filter": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified. Requires replacement if changed. `,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"low_watermark": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'. Requires replacement if changed. `,
+								Validators: []validator.String{
+									validators.IsValidDate(),
+								},
+							},
+							"new_file_behavior": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. Requires replacement if changed. ; Not Null; must be one of ["UPDATE", "APPEND", "REPLACE"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"UPDATE",
+										"APPEND",
+										"REPLACE",
+									),
+								},
+							},
+							"paths": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									listplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								ElementType: types.StringType,
+								Description: `File or folder paths for the files to be extracted from the source. In the case when ` + "`" + `fileNameFilter` + "`" + ` is specified exactly one folder path must be given here. Requires replacement if changed. ; Not Null`,
+								Validators: []validator.List{
+									speakeasy_listvalidators.NotNull(),
+									listvalidator.SizeAtLeast(1),
+								},
+							},
+							"type": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["EMAIL"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"EMAIL",
+									),
+								},
+							},
+						},
+					},
 					"erpx": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{

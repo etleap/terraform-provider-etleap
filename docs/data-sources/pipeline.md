@@ -367,6 +367,7 @@ Read-Only:
 - `elasticsearch` (Attributes) (see [below for nested schema](#nestedatt--source--elasticsearch))
 - `elluminate` (Attributes) (see [below for nested schema](#nestedatt--source--elluminate))
 - `eloqua` (Attributes) (see [below for nested schema](#nestedatt--source--eloqua))
+- `email` (Attributes) (see [below for nested schema](#nestedatt--source--email))
 - `erpx` (Attributes) (see [below for nested schema](#nestedatt--source--erpx))
 - `facebook_ads` (Attributes) (see [below for nested schema](#nestedatt--source--facebook_ads))
 - `fifteen_five` (Attributes) (see [below for nested schema](#nestedatt--source--fifteen_five))
@@ -671,6 +672,21 @@ Read-Only:
 - `fields` (List of String) The fields to extract. Eloqua's Export API has a limit of 250 fields per export.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `type` (String) must be one of ["ELOQUA"]
+
+
+<a id="nestedatt--source--email"></a>
+### Nested Schema for `source.email`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `excel_sheet_name` (String) The name of the Excel sheet to read from matched Excel files. Only applicable when fileNameFilter is specified, or, for sources that support globbing, when globPattern is specified. When set, all matched Excel files will be read from this sheet instead of the default first sheet.
+- `file_name_filter` (String) Regular expression matching the names of the files to be processed by this pipeline. A single value for `paths` is required when `fileNameFilter` is specified.
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `low_watermark` (String) Timestamp of the earliest modified file that should be processed by the pipeline. Only the files modified after this timestamp will be processed. Format of the timestamp: 'yyyy-MM-dd'.
+- `new_file_behavior` (String) Specifies whether new files update, add to or replace existing files. See <a target="_blank" href="https://docs.etleap.com/documentation/user-guides/create-a-file-based-pipeline/#update-method">the documentation</a> for more details. must be one of ["UPDATE", "APPEND", "REPLACE"]
+- `paths` (List of String) File or folder paths for the files to be extracted from the source. In the case when `fileNameFilter` is specified exactly one folder path must be given here.
+- `type` (String) must be one of ["EMAIL"]
 
 
 <a id="nestedatt--source--erpx"></a>

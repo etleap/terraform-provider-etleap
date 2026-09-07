@@ -513,6 +513,10 @@ func (o *PipelineInput) GetSourceEloqua() *SourceEloqua {
 	return o.GetSource().SourceEloqua
 }
 
+func (o *PipelineInput) GetSourceEmail() *SourceEmail {
+	return o.GetSource().SourceEmail
+}
+
 func (o *PipelineInput) GetSourceErpx() *SourceErpx {
 	return o.GetSource().SourceErpx
 }

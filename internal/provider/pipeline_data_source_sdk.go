@@ -475,6 +475,24 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Eloqua.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceEloqua.LatencyThreshold)
 		r.Source.Eloqua.Type = types.StringValue(string(resp.Source.SourceEloqua.Type))
 	}
+	if resp.Source.SourceEmail != nil {
+		r.Source.Email = &SourceEmail{}
+		r.Source.Email.ConnectionID = types.StringValue(resp.Source.SourceEmail.ConnectionID)
+		r.Source.Email.ExcelSheetName = types.StringPointerValue(resp.Source.SourceEmail.ExcelSheetName)
+		r.Source.Email.FileNameFilter = types.StringPointerValue(resp.Source.SourceEmail.FileNameFilter)
+		r.Source.Email.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceEmail.LatencyThreshold)
+		if resp.Source.SourceEmail.LowWatermark != nil {
+			r.Source.Email.LowWatermark = types.StringValue(resp.Source.SourceEmail.LowWatermark.String())
+		} else {
+			r.Source.Email.LowWatermark = types.StringNull()
+		}
+		r.Source.Email.NewFileBehavior = types.StringValue(string(resp.Source.SourceEmail.NewFileBehavior))
+		r.Source.Email.Paths = nil
+		for _, v := range resp.Source.SourceEmail.Paths {
+			r.Source.Email.Paths = append(r.Source.Email.Paths, types.StringValue(v))
+		}
+		r.Source.Email.Type = types.StringValue(string(resp.Source.SourceEmail.Type))
+	}
 	if resp.Source.SourceErpx != nil {
 		r.Source.Erpx = &SourceErpx{}
 		r.Source.Erpx.ConnectionID = types.StringValue(resp.Source.SourceErpx.ConnectionID)

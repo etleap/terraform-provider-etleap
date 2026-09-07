@@ -29,6 +29,7 @@ const (
 	SourceTypesTypeElasticsearch            SourceTypesType = "ELASTICSEARCH"
 	SourceTypesTypeElluminate               SourceTypesType = "ELLUMINATE"
 	SourceTypesTypeEloqua                   SourceTypesType = "ELOQUA"
+	SourceTypesTypeEmail                    SourceTypesType = "EMAIL"
 	SourceTypesTypeErpx                     SourceTypesType = "ERPX"
 	SourceTypesTypeFacebookAds              SourceTypesType = "FACEBOOK_ADS"
 	SourceTypesTypeFifteenFive              SourceTypesType = "FIFTEEN_FIVE"
@@ -137,6 +138,7 @@ type SourceTypes struct {
 	SourceElasticsearch            *SourceElasticsearch
 	SourceElluminate               *SourceElluminate
 	SourceEloqua                   *SourceEloqua
+	SourceEmail                    *SourceEmail
 	SourceErpx                     *SourceErpx
 	SourceFacebookAds              *SourceFacebookAds
 	SourceFifteenFive              *SourceFifteenFive
@@ -430,6 +432,18 @@ func CreateSourceTypesEloqua(eloqua SourceEloqua) SourceTypes {
 	return SourceTypes{
 		SourceEloqua: &eloqua,
 		Type:         typ,
+	}
+}
+
+func CreateSourceTypesEmail(email SourceEmail) SourceTypes {
+	typ := SourceTypesTypeEmail
+
+	typStr := SourceEmailType(typ)
+	email.Type = typStr
+
+	return SourceTypes{
+		SourceEmail: &email,
+		Type:        typ,
 	}
 }
 
@@ -1654,6 +1668,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceEloqua = sourceEloqua
 		u.Type = SourceTypesTypeEloqua
 		return nil
+	case "EMAIL":
+		sourceEmail := new(SourceEmail)
+		if err := utils.UnmarshalJSON(data, &sourceEmail, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceEmail = sourceEmail
+		u.Type = SourceTypesTypeEmail
+		return nil
 	case "ERPX":
 		sourceErpx := new(SourceErpx)
 		if err := utils.UnmarshalJSON(data, &sourceErpx, "", true, true); err != nil {
@@ -2518,6 +2541,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceEloqua != nil {
 		return utils.MarshalJSON(u.SourceEloqua, "", true)
+	}
+
+	if u.SourceEmail != nil {
+		return utils.MarshalJSON(u.SourceEmail, "", true)
 	}
 
 	if u.SourceErpx != nil {

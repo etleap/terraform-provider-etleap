@@ -27,6 +27,7 @@ const (
 	SourceTypeEnumElasticsearch            SourceTypeEnum = "ELASTICSEARCH"
 	SourceTypeEnumElluminate               SourceTypeEnum = "ELLUMINATE"
 	SourceTypeEnumEloqua                   SourceTypeEnum = "ELOQUA"
+	SourceTypeEnumEmail                    SourceTypeEnum = "EMAIL"
 	SourceTypeEnumErpx                     SourceTypeEnum = "ERPX"
 	SourceTypeEnumFacebookAds              SourceTypeEnum = "FACEBOOK_ADS"
 	SourceTypeEnumFifteenFive              SourceTypeEnum = "FIFTEEN_FIVE"
@@ -160,6 +161,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	case "ELLUMINATE":
 		fallthrough
 	case "ELOQUA":
+		fallthrough
+	case "EMAIL":
 		fallthrough
 	case "ERPX":
 		fallthrough

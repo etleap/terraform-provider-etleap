@@ -20,6 +20,7 @@ type SourceTypes struct {
 	Elasticsearch            *SourceElasticsearch            `tfsdk:"elasticsearch"`
 	Elluminate               *SourceElluminate               `tfsdk:"elluminate"`
 	Eloqua                   *SourceEloqua                   `tfsdk:"eloqua"`
+	Email                    *SourceEmail                    `tfsdk:"email"`
 	Erpx                     *SourceErpx                     `tfsdk:"erpx"`
 	FacebookAds              *SourceFacebookAds              `tfsdk:"facebook_ads"`
 	FifteenFive              *SourceFifteenFive              `tfsdk:"fifteen_five"`

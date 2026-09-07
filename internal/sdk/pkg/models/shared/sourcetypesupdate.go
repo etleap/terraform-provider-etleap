@@ -29,6 +29,7 @@ const (
 	SourceTypesUpdateTypeElasticsearch            SourceTypesUpdateType = "ELASTICSEARCH"
 	SourceTypesUpdateTypeElluminate               SourceTypesUpdateType = "ELLUMINATE"
 	SourceTypesUpdateTypeEloqua                   SourceTypesUpdateType = "ELOQUA"
+	SourceTypesUpdateTypeEmail                    SourceTypesUpdateType = "EMAIL"
 	SourceTypesUpdateTypeErpx                     SourceTypesUpdateType = "ERPX"
 	SourceTypesUpdateTypeFacebookAds              SourceTypesUpdateType = "FACEBOOK_ADS"
 	SourceTypesUpdateTypeFifteenFive              SourceTypesUpdateType = "FIFTEEN_FIVE"
@@ -137,6 +138,7 @@ type SourceTypesUpdate struct {
 	SourceElasticsearchUpdate            *SourceElasticsearchUpdate
 	SourceElluminateUpdate               *SourceElluminateUpdate
 	SourceEloquaUpdate                   *SourceEloquaUpdate
+	SourceEmailUpdate                    *SourceEmailUpdate
 	SourceErpxUpdate                     *SourceErpxUpdate
 	SourceFacebookAdsUpdate              *SourceFacebookAdsUpdate
 	SourceFifteenFiveUpdate              *SourceFifteenFiveUpdate
@@ -430,6 +432,18 @@ func CreateSourceTypesUpdateEloqua(eloqua SourceEloquaUpdate) SourceTypesUpdate 
 	return SourceTypesUpdate{
 		SourceEloquaUpdate: &eloqua,
 		Type:               typ,
+	}
+}
+
+func CreateSourceTypesUpdateEmail(email SourceEmailUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeEmail
+
+	typStr := SourceEmailUpdateType(typ)
+	email.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceEmailUpdate: &email,
+		Type:              typ,
 	}
 }
 
@@ -1654,6 +1668,15 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceEloquaUpdate = sourceEloquaUpdate
 		u.Type = SourceTypesUpdateTypeEloqua
 		return nil
+	case "EMAIL":
+		sourceEmailUpdate := new(SourceEmailUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceEmailUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceEmailUpdate = sourceEmailUpdate
+		u.Type = SourceTypesUpdateTypeEmail
+		return nil
 	case "ERPX":
 		sourceErpxUpdate := new(SourceErpxUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceErpxUpdate, "", true, true); err != nil {
@@ -2518,6 +2541,10 @@ func (u SourceTypesUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.SourceEloquaUpdate != nil {
 		return utils.MarshalJSON(u.SourceEloquaUpdate, "", true)
+	}
+
+	if u.SourceEmailUpdate != nil {
+		return utils.MarshalJSON(u.SourceEmailUpdate, "", true)
 	}
 
 	if u.SourceErpxUpdate != nil {
