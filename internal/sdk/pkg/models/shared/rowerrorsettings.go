@@ -36,7 +36,7 @@ func (e *Action) UnmarshalJSON(data []byte) error {
 }
 
 type RowErrorSettings struct {
-	// The row error threshold, in percentage points, for the `action` to be triggered.
+	// The row error threshold, in percentage points, for the `action` to be triggered. Ignored for pipelines with an Iceberg destination, where the `action` applies on the first row error.
 	Threshold float64 `json:"threshold"`
 	// Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached.
 	Action Action `json:"action"`

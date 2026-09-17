@@ -342,7 +342,7 @@ Read-Only:
 Read-Only:
 
 - `action` (String) Whether Etleap should STOP the pipeline or NOTIFY once the `threshold` is reached. must be one of ["STOP", "NOTIFY"]
-- `threshold` (Number) The row error threshold, in percentage points, for the `action` to be triggered.
+- `threshold` (Number) The row error threshold, in percentage points, for the `action` to be triggered. Ignored for pipelines with an Iceberg destination, where the `action` applies on the first row error.
 
 
 <a id="nestedatt--source"></a>

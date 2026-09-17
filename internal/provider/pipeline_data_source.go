@@ -581,7 +581,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 					},
 					"threshold": schema.NumberAttribute{
 						Computed:    true,
-						Description: `The row error threshold, in percentage points, for the ` + "`" + `action` + "`" + ` to be triggered.`,
+						Description: `The row error threshold, in percentage points, for the ` + "`" + `action` + "`" + ` to be triggered. Ignored for pipelines with an Iceberg destination, where the ` + "`" + `action` + "`" + ` applies on the first row error.`,
 					},
 				},
 			},

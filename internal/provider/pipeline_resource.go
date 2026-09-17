@@ -1702,7 +1702,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							speakeasy_numberplanmodifier.SuppressDiff(speakeasy_numberplanmodifier.ExplicitSuppress),
 						},
 						Optional:    true,
-						Description: `The row error threshold, in percentage points, for the ` + "`" + `action` + "`" + ` to be triggered. Not Null`,
+						Description: `The row error threshold, in percentage points, for the ` + "`" + `action` + "`" + ` to be triggered. Ignored for pipelines with an Iceberg destination, where the ` + "`" + `action` + "`" + ` applies on the first row error. Not Null`,
 						Validators: []validator.Number{
 							speakeasy_numbervalidators.NotNull(),
 						},
