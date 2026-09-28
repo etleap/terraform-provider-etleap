@@ -57,6 +57,8 @@ type ExtractedDataStrategy struct {
 	HighWatermarkQueryParameters []KeyValuePair                 `json:"highWatermarkQueryParameters"`
 	BeginTimeParameter           WatermarkDatetimeKeyValuePair  `json:"beginTimeParameter"`
 	EndTimeParameter             *WatermarkDatetimeKeyValuePair `json:"endTimeParameter,omitempty"`
+	// Splits the catch-up extraction into consecutive time windows, one request sequence per window, so paging restarts at the first page in every window. Use a query parameter that filters on a value which never changes after a record is created, such as a creation timestamp. Filtering on a last-updated value moves records between windows while the extraction runs, and those records are missed. Sources that page by offset must also return results in a total order, e.g. `order=created_at.asc,id.asc`. Delta extractions are not affected and continue to use `beginTimeParameter` and `endTimeParameter`.
+	CatchupWindowParameters *UserDefinedAPICatchupWindowParameters `json:"catchupWindowParameters,omitempty"`
 }
 
 func (o *ExtractedDataStrategy) GetType() ExtractedDataStrategyType {
@@ -92,4 +94,11 @@ func (o *ExtractedDataStrategy) GetEndTimeParameter() *WatermarkDatetimeKeyValue
 		return nil
 	}
 	return o.EndTimeParameter
+}
+
+func (o *ExtractedDataStrategy) GetCatchupWindowParameters() *UserDefinedAPICatchupWindowParameters {
+	if o == nil {
+		return nil
+	}
+	return o.CatchupWindowParameters
 }

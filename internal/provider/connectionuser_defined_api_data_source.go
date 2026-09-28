@@ -472,6 +472,32 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 																},
 															},
 														},
+														"catchup_window_parameters": schema.SingleNestedAttribute{
+															Computed: true,
+															Attributes: map[string]schema.Attribute{
+																"begin_time_value": schema.StringAttribute{
+																	Computed:    true,
+																	Description: `The value sent for the lower bound of each window. Must contain ` + "`" + `{{"{{"}}PREVIOUS_WATERMARK{{"}}"}}` + "`" + `, which is substituted for the start of the window, and must not contain ` + "`" + `{{"{{"}}CURRENT_WATERMARK{{"}}"}}` + "`" + `. Make this bound inclusive, e.g. ` + "`" + `gte.{{"{{"}}PREVIOUS_WATERMARK{{"}}"}}` + "`" + `.`,
+																},
+																"end_time_value": schema.StringAttribute{
+																	Computed:    true,
+																	Description: `The value sent for the upper bound of each window. Must contain ` + "`" + `{{"{{"}}CURRENT_WATERMARK{{"}}"}}` + "`" + `, which is substituted for the end of the window, and must not contain ` + "`" + `{{"{{"}}PREVIOUS_WATERMARK{{"}}"}}` + "`" + `. Make this bound exclusive, e.g. ` + "`" + `lt.{{"{{"}}CURRENT_WATERMARK{{"}}"}}` + "`" + `. Consecutive windows share a boundary, so an inclusive bound extracts the records on it more than once.`,
+																},
+																"format": schema.StringAttribute{
+																	Computed:    true,
+																	Description: `The datetime format used for both window bounds. must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]`,
+																},
+																"key": schema.StringAttribute{
+																	Computed:    true,
+																	Description: `The query parameter carrying each window bound. It is sent twice in every catch-up request, once with ` + "`" + `beginTimeValue` + "`" + ` and once with ` + "`" + `endTimeValue` + "`" + `. A parameter of the same name in the entity's ` + "`" + `queryParameters` + "`" + ` is not sent during the catch-up. It must not be one of the paging query parameters.`,
+																},
+																"start_date": schema.StringAttribute{
+																	Computed:    true,
+																	Description: `The date the catch-up starts, read as midnight UTC. Records with an earlier value in the column that ` + "`" + `key` + "`" + ` filters on are not extracted.`,
+																},
+															},
+															Description: `Splits the catch-up extraction into consecutive time windows, one request sequence per window, so paging restarts at the first page in every window. Use a query parameter that filters on a value which never changes after a record is created, such as a creation timestamp. Filtering on a last-updated value moves records between windows while the extraction runs, and those records are missed. Sources that page by offset must also return results in a total order, e.g. ` + "`" + `order=created_at.asc,id.asc` + "`" + `. Delta extractions are not affected and continue to use ` + "`" + `beginTimeParameter` + "`" + ` and ` + "`" + `endTimeParameter` + "`" + `.`,
+														},
 														"end_time_parameter": schema.SingleNestedAttribute{
 															Computed: true,
 															Attributes: map[string]schema.Attribute{

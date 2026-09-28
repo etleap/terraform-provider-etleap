@@ -383,12 +383,33 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 						Format: format3,
 					}
 				}
+				var catchupWindowParameters *shared.UserDefinedAPICatchupWindowParameters
+				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters != nil {
+					startDate := entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.StartDate.ValueString()
+					key6 := entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.Key.ValueString()
+					beginTimeValue := entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.BeginTimeValue.ValueString()
+					endTimeValue := entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.EndTimeValue.ValueString()
+					format4 := new(shared.UserDefinedAPICatchupWindowParametersFormat)
+					if !entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.Format.IsUnknown() && !entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.Format.IsNull() {
+						*format4 = shared.UserDefinedAPICatchupWindowParametersFormat(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.Format.ValueString())
+					} else {
+						format4 = nil
+					}
+					catchupWindowParameters = &shared.UserDefinedAPICatchupWindowParameters{
+						StartDate:      startDate,
+						Key:            key6,
+						BeginTimeValue: beginTimeValue,
+						EndTimeValue:   endTimeValue,
+						Format:         format4,
+					}
+				}
 				extractedDataStrategy = &shared.ExtractedDataStrategy{
 					Type:                         typeVar8,
 					LastUpdatedColumn:            lastUpdatedColumn,
 					HighWatermarkQueryParameters: highWatermarkQueryParameters,
 					BeginTimeParameter:           beginTimeParameter,
 					EndTimeParameter:             endTimeParameter,
+					CatchupWindowParameters:      catchupWindowParameters,
 				}
 			}
 			if extractedDataStrategy != nil {
@@ -519,19 +540,19 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 		}
 		var queryParameters []shared.QueryParameters = nil
 		for _, queryParametersItem := range entitiesItem.QueryParameters {
-			key6 := queryParametersItem.Key.ValueString()
+			key7 := queryParametersItem.Key.ValueString()
 			value6 := queryParametersItem.Value.ValueString()
 			queryParameters = append(queryParameters, shared.QueryParameters{
-				Key:   key6,
+				Key:   key7,
 				Value: value6,
 			})
 		}
 		var headerParameters []shared.HeaderParameters = nil
 		for _, headerParametersItem := range entitiesItem.HeaderParameters {
-			key7 := headerParametersItem.Key.ValueString()
+			key8 := headerParametersItem.Key.ValueString()
 			value7 := headerParametersItem.Value.ValueString()
 			headerParameters = append(headerParameters, shared.HeaderParameters{
-				Key:   key7,
+				Key:   key8,
 				Value: value7,
 			})
 		}
@@ -557,10 +578,10 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 			}
 			var bodyParameters []shared.BodyParameters = nil
 			for _, bodyParametersItem := range entitiesItem.RestMethod.PostMethod.BodyParameters {
-				key8 := bodyParametersItem.Key.ValueString()
+				key9 := bodyParametersItem.Key.ValueString()
 				value8 := bodyParametersItem.Value.ValueString()
 				bodyParameters = append(bodyParameters, shared.BodyParameters{
-					Key:   key8,
+					Key:   key9,
 					Value: value8,
 				})
 			}
@@ -837,6 +858,20 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) RefreshFromSharedConnectionUserD
 				}
 				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Key)
 				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Value = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Value)
+				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters == nil {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters = nil
+				} else {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters = &UserDefinedAPICatchupWindowParameters{}
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.BeginTimeValue = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.BeginTimeValue)
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.EndTimeValue = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.EndTimeValue)
+					if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.Format != nil {
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.Format = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.Format))
+					} else {
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.Format = types.StringNull()
+					}
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.Key)
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.StartDate = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.StartDate)
+				}
 				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter == nil {
 					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter = nil
 				} else {

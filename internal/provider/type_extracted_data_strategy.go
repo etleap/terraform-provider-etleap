@@ -5,9 +5,10 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type ExtractedDataStrategy struct {
-	BeginTimeParameter           WatermarkDatetimeKeyValuePair  `tfsdk:"begin_time_parameter"`
-	EndTimeParameter             *WatermarkDatetimeKeyValuePair `tfsdk:"end_time_parameter"`
-	HighWatermarkQueryParameters []HeaderParameters             `tfsdk:"high_watermark_query_parameters"`
-	LastUpdatedColumn            types.String                   `tfsdk:"last_updated_column"`
-	Type                         types.String                   `tfsdk:"type"`
+	BeginTimeParameter           WatermarkDatetimeKeyValuePair          `tfsdk:"begin_time_parameter"`
+	CatchupWindowParameters      *UserDefinedAPICatchupWindowParameters `tfsdk:"catchup_window_parameters"`
+	EndTimeParameter             *WatermarkDatetimeKeyValuePair         `tfsdk:"end_time_parameter"`
+	HighWatermarkQueryParameters []HeaderParameters                     `tfsdk:"high_watermark_query_parameters"`
+	LastUpdatedColumn            types.String                           `tfsdk:"last_updated_column"`
+	Type                         types.String                           `tfsdk:"type"`
 }

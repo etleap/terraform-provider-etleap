@@ -244,6 +244,20 @@ func (r *ConnectionUSERDEFINEDAPIDataSourceModel) RefreshFromSharedConnectionUse
 				}
 				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Key)
 				entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.BeginTimeParameter.Value = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.BeginTimeParameter.Value)
+				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters == nil {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters = nil
+				} else {
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters = &UserDefinedAPICatchupWindowParameters{}
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.BeginTimeValue = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.BeginTimeValue)
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.EndTimeValue = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.EndTimeValue)
+					if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.Format != nil {
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.Format = types.StringValue(string(*entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.Format))
+					} else {
+						entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.Format = types.StringNull()
+					}
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.Key = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.Key)
+					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.CatchupWindowParameters.StartDate = types.StringValue(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.CatchupWindowParameters.StartDate)
+				}
 				if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedDataStrategy.EndTimeParameter == nil {
 					entities1.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.EndTimeParameter = nil
 				} else {

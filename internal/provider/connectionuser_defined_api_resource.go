@@ -1142,6 +1142,82 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 																speakeasy_objectvalidators.NotNull(),
 															},
 														},
+														"catchup_window_parameters": schema.SingleNestedAttribute{
+															Computed: true,
+															PlanModifiers: []planmodifier.Object{
+																objectplanmodifier.RequiresReplaceIfConfigured(),
+																speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+															},
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"begin_time_value": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `The value sent for the lower bound of each window. Must contain ` + "`" + `{{"{{"}}PREVIOUS_WATERMARK{{"}}"}}` + "`" + `, which is substituted for the start of the window, and must not contain ` + "`" + `{{"{{"}}CURRENT_WATERMARK{{"}}"}}` + "`" + `. Make this bound inclusive, e.g. ` + "`" + `gte.{{"{{"}}PREVIOUS_WATERMARK{{"}}"}}` + "`" + `. Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+																"end_time_value": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `The value sent for the upper bound of each window. Must contain ` + "`" + `{{"{{"}}CURRENT_WATERMARK{{"}}"}}` + "`" + `, which is substituted for the end of the window, and must not contain ` + "`" + `{{"{{"}}PREVIOUS_WATERMARK{{"}}"}}` + "`" + `. Make this bound exclusive, e.g. ` + "`" + `lt.{{"{{"}}CURRENT_WATERMARK{{"}}"}}` + "`" + `. Consecutive windows share a boundary, so an inclusive bound extracts the records on it more than once. Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+																"format": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Default:     stringdefault.StaticString("yyyy-MM-ddTHH:mm:ssX"),
+																	Description: `The datetime format used for both window bounds. Requires replacement if changed. ; must be one of ["yyyy-MM-ddTHH:mm:ssX", "yyyy-MM-ddTHH:mm:ssZ", "yyyy-MM-dd"]; Default: "yyyy-MM-ddTHH:mm:ssX"`,
+																	Validators: []validator.String{
+																		stringvalidator.OneOf(
+																			"yyyy-MM-ddTHH:mm:ssX",
+																			"yyyy-MM-ddTHH:mm:ssZ",
+																			"yyyy-MM-dd",
+																		),
+																	},
+																},
+																"key": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `The query parameter carrying each window bound. It is sent twice in every catch-up request, once with ` + "`" + `beginTimeValue` + "`" + ` and once with ` + "`" + `endTimeValue` + "`" + `. A parameter of the same name in the entity's ` + "`" + `queryParameters` + "`" + ` is not sent during the catch-up. It must not be one of the paging query parameters. Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+																"start_date": schema.StringAttribute{
+																	Computed: true,
+																	PlanModifiers: []planmodifier.String{
+																		stringplanmodifier.RequiresReplaceIfConfigured(),
+																		speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+																	},
+																	Optional:    true,
+																	Description: `The date the catch-up starts, read as midnight UTC. Records with an earlier value in the column that ` + "`" + `key` + "`" + ` filters on are not extracted. Requires replacement if changed. ; Not Null`,
+																	Validators: []validator.String{
+																		speakeasy_stringvalidators.NotNull(),
+																	},
+																},
+															},
+															Description: `Splits the catch-up extraction into consecutive time windows, one request sequence per window, so paging restarts at the first page in every window. Use a query parameter that filters on a value which never changes after a record is created, such as a creation timestamp. Filtering on a last-updated value moves records between windows while the extraction runs, and those records are missed. Sources that page by offset must also return results in a total order, e.g. ` + "`" + `order=created_at.asc,id.asc` + "`" + `. Delta extractions are not affected and continue to use ` + "`" + `beginTimeParameter` + "`" + ` and ` + "`" + `endTimeParameter` + "`" + `. Requires replacement if changed. `,
+														},
 														"end_time_parameter": schema.SingleNestedAttribute{
 															Computed: true,
 															PlanModifiers: []planmodifier.Object{
