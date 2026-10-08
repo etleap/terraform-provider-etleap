@@ -64,6 +64,7 @@ func (r *ConnectionWORKFRONTDataSourceModel) RefreshFromSharedConnectionWorkfron
 	r.Status = types.StringValue(string(resp.Status))
 	r.Subdomain = types.StringValue(resp.Subdomain)
 	r.Type = types.StringValue(string(resp.Type))
+	r.UnifiedExperience = types.BoolPointerValue(resp.UnifiedExperience)
 	if resp.UpdateSchedule == nil {
 		r.UpdateSchedule = nil
 	} else {

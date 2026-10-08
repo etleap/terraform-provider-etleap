@@ -29,8 +29,9 @@ data "etleap_connection_workfront" "my_connectionworkfront" {
 - `id` (String) The ID of this resource.
 - `name` (String) The unique name of this connection.
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]
-- `subdomain` (String) Your Workfront subdomain (i.e. SUBDOMAIN.my.workfront.com)
+- `subdomain` (String) Your Workfront subdomain (i.e. SUBDOMAIN.my.workfront.com, or SUBDOMAIN.my.workfront.adobe.com for the Adobe Unified Experience)
 - `type` (String) must be one of ["WORKFRONT"]
+- `unified_experience` (Boolean) Check this box if your organization signs in to Workfront through experience.adobe.com.
 - `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
 
 <a id="nestedatt--default_update_schedule"></a>

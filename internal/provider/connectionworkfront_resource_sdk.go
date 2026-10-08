@@ -88,12 +88,19 @@ func (r *ConnectionWORKFRONTResourceModel) ToSharedConnectionWorkfrontInput() *s
 	}
 	subdomain := r.Subdomain.ValueString()
 	apiKey := r.APIKey.ValueString()
+	unifiedExperience := new(bool)
+	if !r.UnifiedExperience.IsUnknown() && !r.UnifiedExperience.IsNull() {
+		*unifiedExperience = r.UnifiedExperience.ValueBool()
+	} else {
+		unifiedExperience = nil
+	}
 	out := shared.ConnectionWorkfrontInput{
-		Name:           name,
-		Type:           typeVar,
-		UpdateSchedule: updateSchedule,
-		Subdomain:      subdomain,
-		APIKey:         apiKey,
+		Name:              name,
+		Type:              typeVar,
+		UpdateSchedule:    updateSchedule,
+		Subdomain:         subdomain,
+		APIKey:            apiKey,
+		UnifiedExperience: unifiedExperience,
 	}
 	return &out
 }
@@ -154,6 +161,7 @@ func (r *ConnectionWORKFRONTResourceModel) RefreshFromSharedConnectionWorkfront(
 	r.Status = types.StringValue(string(resp.Status))
 	r.Subdomain = types.StringValue(resp.Subdomain)
 	r.Type = types.StringValue(string(resp.Type))
+	r.UnifiedExperience = types.BoolPointerValue(resp.UnifiedExperience)
 	if resp.UpdateSchedule == nil {
 		r.UpdateSchedule = nil
 	} else {
@@ -293,13 +301,20 @@ func (r *ConnectionWORKFRONTResourceModel) ToSharedConnectionWorkfrontUpdate() *
 	} else {
 		apiKey = nil
 	}
+	unifiedExperience := new(bool)
+	if !r.UnifiedExperience.IsUnknown() && !r.UnifiedExperience.IsNull() {
+		*unifiedExperience = r.UnifiedExperience.ValueBool()
+	} else {
+		unifiedExperience = nil
+	}
 	out := shared.ConnectionWorkfrontUpdate{
-		Name:           name,
-		Type:           typeVar,
-		Active:         active,
-		UpdateSchedule: updateSchedule,
-		Subdomain:      subdomain,
-		APIKey:         apiKey,
+		Name:              name,
+		Type:              typeVar,
+		Active:            active,
+		UpdateSchedule:    updateSchedule,
+		Subdomain:         subdomain,
+		APIKey:            apiKey,
+		UnifiedExperience: unifiedExperience,
 	}
 	return &out
 }

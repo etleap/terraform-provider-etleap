@@ -51,6 +51,7 @@ type ConnectionWORKFRONTResourceModel struct {
 	Status                   types.String            `tfsdk:"status"`
 	Subdomain                types.String            `tfsdk:"subdomain"`
 	Type                     types.String            `tfsdk:"type"`
+	UnifiedExperience        types.Bool              `tfsdk:"unified_experience"`
 	UpdateSchedule           *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
@@ -310,7 +311,7 @@ func (r *ConnectionWORKFRONTResource) Schema(ctx context.Context, req resource.S
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
-				Description: `Your Workfront subdomain (i.e. SUBDOMAIN.my.workfront.com)`,
+				Description: `Your Workfront subdomain (i.e. SUBDOMAIN.my.workfront.com, or SUBDOMAIN.my.workfront.adobe.com for the Adobe Unified Experience)`,
 			},
 			"type": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -323,6 +324,15 @@ func (r *ConnectionWORKFRONTResource) Schema(ctx context.Context, req resource.S
 						"WORKFRONT",
 					),
 				},
+			},
+			"unified_experience": schema.BoolAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Bool{
+					speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Default:     booldefault.StaticBool(false),
+				Description: `Check this box if your organization signs in to Workfront through experience.adobe.com. Default: false`,
 			},
 			"update_schedule": schema.SingleNestedAttribute{
 				Computed: true,

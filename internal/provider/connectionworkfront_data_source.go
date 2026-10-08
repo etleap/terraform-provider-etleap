@@ -36,6 +36,7 @@ type ConnectionWORKFRONTDataSourceModel struct {
 	Status                types.String            `tfsdk:"status"`
 	Subdomain             types.String            `tfsdk:"subdomain"`
 	Type                  types.String            `tfsdk:"type"`
+	UnifiedExperience     types.Bool              `tfsdk:"unified_experience"`
 	UpdateSchedule        *UpdateScheduleTypes    `tfsdk:"update_schedule"`
 }
 
@@ -161,11 +162,15 @@ func (r *ConnectionWORKFRONTDataSource) Schema(ctx context.Context, req datasour
 			},
 			"subdomain": schema.StringAttribute{
 				Computed:    true,
-				Description: `Your Workfront subdomain (i.e. SUBDOMAIN.my.workfront.com)`,
+				Description: `Your Workfront subdomain (i.e. SUBDOMAIN.my.workfront.com, or SUBDOMAIN.my.workfront.adobe.com for the Adobe Unified Experience)`,
 			},
 			"type": schema.StringAttribute{
 				Computed:    true,
 				Description: `must be one of ["WORKFRONT"]`,
+			},
+			"unified_experience": schema.BoolAttribute{
+				Computed:    true,
+				Description: `Check this box if your organization signs in to Workfront through experience.adobe.com.`,
 			},
 			"update_schedule": schema.SingleNestedAttribute{
 				Computed: true,

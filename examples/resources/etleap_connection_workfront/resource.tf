@@ -4,4 +4,5 @@ resource "etleap_connection_workfront" "my_connectionworkfront" {
   name                        = "Jerald Hirthe"
   subdomain                   = "...my_subdomain..."
   type                        = "WORKFRONT"
+  unified_experience          = true
 }
