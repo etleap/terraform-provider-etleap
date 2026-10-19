@@ -4,7 +4,9 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
 type ConnectionBingAdsUpdateType string
@@ -31,14 +33,479 @@ func (e *ConnectionBingAdsUpdateType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode `json:"mode"`
+	DayOfMonth int64                                                                   `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode `json:"mode"`
+	DayOfWeek int64                                                                  `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionBingAdsUpdateUpdateScheduleTypesType string
+
+const (
+	ConnectionBingAdsUpdateUpdateScheduleTypesTypeInterval ConnectionBingAdsUpdateUpdateScheduleTypesType = "INTERVAL"
+	ConnectionBingAdsUpdateUpdateScheduleTypesTypeHourly   ConnectionBingAdsUpdateUpdateScheduleTypesType = "HOURLY"
+	ConnectionBingAdsUpdateUpdateScheduleTypesTypeDaily    ConnectionBingAdsUpdateUpdateScheduleTypesType = "DAILY"
+	ConnectionBingAdsUpdateUpdateScheduleTypesTypeWeekly   ConnectionBingAdsUpdateUpdateScheduleTypesType = "WEEKLY"
+	ConnectionBingAdsUpdateUpdateScheduleTypesTypeMonthly  ConnectionBingAdsUpdateUpdateScheduleTypesType = "MONTHLY"
+	ConnectionBingAdsUpdateUpdateScheduleTypesTypeCron     ConnectionBingAdsUpdateUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionBingAdsUpdateUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline.
+type ConnectionBingAdsUpdateUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode
+
+	Type ConnectionBingAdsUpdateUpdateScheduleTypesType
+}
+
+func CreateConnectionBingAdsUpdateUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode) ConnectionBingAdsUpdateUpdateScheduleTypes {
+	typ := ConnectionBingAdsUpdateUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionBingAdsUpdateUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBingAdsUpdateUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode) ConnectionBingAdsUpdateUpdateScheduleTypes {
+	typ := ConnectionBingAdsUpdateUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionBingAdsUpdateUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBingAdsUpdateUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode) ConnectionBingAdsUpdateUpdateScheduleTypes {
+	typ := ConnectionBingAdsUpdateUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionBingAdsUpdateUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBingAdsUpdateUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode) ConnectionBingAdsUpdateUpdateScheduleTypes {
+	typ := ConnectionBingAdsUpdateUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionBingAdsUpdateUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBingAdsUpdateUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode) ConnectionBingAdsUpdateUpdateScheduleTypes {
+	typ := ConnectionBingAdsUpdateUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionBingAdsUpdateUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBingAdsUpdateUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode) ConnectionBingAdsUpdateUpdateScheduleTypes {
+	typ := ConnectionBingAdsUpdateUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionBingAdsUpdateUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionBingAdsUpdateUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode
+		u.Type = ConnectionBingAdsUpdateUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode
+		u.Type = ConnectionBingAdsUpdateUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode
+		u.Type = ConnectionBingAdsUpdateUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode
+		u.Type = ConnectionBingAdsUpdateUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode
+		u.Type = ConnectionBingAdsUpdateUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode
+		u.Type = ConnectionBingAdsUpdateUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionBingAdsUpdateUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionBingAdsUpdate struct {
 	// The unique name of this connection.
 	Name *string                     `json:"name,omitempty"`
 	Type ConnectionBingAdsUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
 	Active *bool `json:"active,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline.
+	UpdateSchedule *ConnectionBingAdsUpdateUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code *string `json:"code,omitempty"`
 }
@@ -64,44 +531,51 @@ func (o *ConnectionBingAdsUpdate) GetActive() *bool {
 	return o.Active
 }
 
-func (o *ConnectionBingAdsUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionBingAdsUpdate) GetUpdateSchedule() *ConnectionBingAdsUpdateUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBingAdsUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBingAdsUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBingAdsUpdateIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBingAdsUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionBingAdsUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBingAdsUpdateHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBingAdsUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionBingAdsUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBingAdsUpdateDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBingAdsUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionBingAdsUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBingAdsUpdateWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBingAdsUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBingAdsUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBingAdsUpdateMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionBingAdsUpdate) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionBingAdsUpdateCronUpdateScheduleMode
 	}
 	return nil
 }

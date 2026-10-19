@@ -4,7 +4,9 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
 type ConnectionBigqueryUpdateType string
@@ -31,14 +33,479 @@ func (e *ConnectionBigqueryUpdateType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode `json:"mode"`
+	DayOfMonth int64                                                                    `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode `json:"mode"`
+	DayOfWeek int64                                                                   `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionBigqueryUpdateUpdateScheduleTypesType string
+
+const (
+	ConnectionBigqueryUpdateUpdateScheduleTypesTypeInterval ConnectionBigqueryUpdateUpdateScheduleTypesType = "INTERVAL"
+	ConnectionBigqueryUpdateUpdateScheduleTypesTypeHourly   ConnectionBigqueryUpdateUpdateScheduleTypesType = "HOURLY"
+	ConnectionBigqueryUpdateUpdateScheduleTypesTypeDaily    ConnectionBigqueryUpdateUpdateScheduleTypesType = "DAILY"
+	ConnectionBigqueryUpdateUpdateScheduleTypesTypeWeekly   ConnectionBigqueryUpdateUpdateScheduleTypesType = "WEEKLY"
+	ConnectionBigqueryUpdateUpdateScheduleTypesTypeMonthly  ConnectionBigqueryUpdateUpdateScheduleTypesType = "MONTHLY"
+	ConnectionBigqueryUpdateUpdateScheduleTypesTypeCron     ConnectionBigqueryUpdateUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionBigqueryUpdateUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline.
+type ConnectionBigqueryUpdateUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode
+
+	Type ConnectionBigqueryUpdateUpdateScheduleTypesType
+}
+
+func CreateConnectionBigqueryUpdateUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode) ConnectionBigqueryUpdateUpdateScheduleTypes {
+	typ := ConnectionBigqueryUpdateUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionBigqueryUpdateUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBigqueryUpdateUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode) ConnectionBigqueryUpdateUpdateScheduleTypes {
+	typ := ConnectionBigqueryUpdateUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionBigqueryUpdateUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBigqueryUpdateUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode) ConnectionBigqueryUpdateUpdateScheduleTypes {
+	typ := ConnectionBigqueryUpdateUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionBigqueryUpdateUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBigqueryUpdateUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode) ConnectionBigqueryUpdateUpdateScheduleTypes {
+	typ := ConnectionBigqueryUpdateUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionBigqueryUpdateUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBigqueryUpdateUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode) ConnectionBigqueryUpdateUpdateScheduleTypes {
+	typ := ConnectionBigqueryUpdateUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionBigqueryUpdateUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBigqueryUpdateUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode) ConnectionBigqueryUpdateUpdateScheduleTypes {
+	typ := ConnectionBigqueryUpdateUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionBigqueryUpdateUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionBigqueryUpdateUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode
+		u.Type = ConnectionBigqueryUpdateUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode
+		u.Type = ConnectionBigqueryUpdateUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode
+		u.Type = ConnectionBigqueryUpdateUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode
+		u.Type = ConnectionBigqueryUpdateUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode
+		u.Type = ConnectionBigqueryUpdateUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode
+		u.Type = ConnectionBigqueryUpdateUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionBigqueryUpdateUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionBigqueryUpdate struct {
 	// The unique name of this connection.
 	Name *string                       `json:"name,omitempty"`
 	Type *ConnectionBigqueryUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
 	Active *bool `json:"active,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline.
+	UpdateSchedule *ConnectionBigqueryUpdateUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	Dataset *string `json:"dataset,omitempty"`
 	// To generate new JSON Credentials, go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials/), make sure you are on the correct project, and create or select an existing service account. Select the service account, and under "Keys" create a new key in JSON format. Paste the JSON object into the "JSON Credentials" fields.
@@ -66,44 +533,51 @@ func (o *ConnectionBigqueryUpdate) GetActive() *bool {
 	return o.Active
 }
 
-func (o *ConnectionBigqueryUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionBigqueryUpdate) GetUpdateSchedule() *ConnectionBigqueryUpdateUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBigqueryUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBigqueryUpdateIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBigqueryUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBigqueryUpdateHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBigqueryUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBigqueryUpdateDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBigqueryUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBigqueryUpdateWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBigqueryUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBigqueryUpdateMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionBigqueryUpdate) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionBigqueryUpdateCronUpdateScheduleMode
 	}
 	return nil
 }

@@ -11,78 +11,92 @@ import (
 func (r *ConnectionOUTREACHResourceModel) ToSharedConnectionOutreachInput() *shared.ConnectionOutreachInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionOutreachType(r.Type.ValueString())
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionOutreachUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionOutreachDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionOutreachDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionOutreachDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionOutreachDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionOutreachCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionOutreachCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionOutreachCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionOutreachCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -113,6 +127,11 @@ func (r *ConnectionOUTREACHResourceModel) RefreshFromSharedConnectionOutreach(re
 			defaultUpdateSchedule1.UpdateSchedule = nil
 		} else {
 			defaultUpdateSchedule1.UpdateSchedule = &UpdateScheduleTypes{}
+			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron != nil {
+				defaultUpdateSchedule1.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+				defaultUpdateSchedule1.UpdateSchedule.Cron.CronExpression = types.StringValue(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.CronExpression)
+				defaultUpdateSchedule1.UpdateSchedule.Cron.Mode = types.StringValue(string(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.Mode))
+			}
 			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily != nil {
 				defaultUpdateSchedule1.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
 				defaultUpdateSchedule1.UpdateSchedule.Daily.HourOfDay = types.Int64Value(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
@@ -155,31 +174,36 @@ func (r *ConnectionOUTREACHResourceModel) RefreshFromSharedConnectionOutreach(re
 		r.UpdateSchedule = nil
 	} else {
 		r.UpdateSchedule = &UpdateScheduleTypes{}
-		if resp.UpdateSchedule.UpdateScheduleModeDaily != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachCronUpdateScheduleMode != nil {
+			r.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+			r.UpdateSchedule.Cron.CronExpression = types.StringValue(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachCronUpdateScheduleMode.CronExpression)
+			r.UpdateSchedule.Cron.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachCronUpdateScheduleMode.Mode))
+		}
+		if resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachDailyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
-			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
-			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDaily.Mode))
+			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachDailyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachDailyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeHourly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachHourlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
-			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourly.Mode))
+			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachHourlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeInterval != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachIntervalUpdateScheduleMode != nil {
 			r.UpdateSchedule.Interval = &UpdateScheduleModeInterval{}
-			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeInterval.IntervalMinutes)
-			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeInterval.Mode))
+			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachIntervalUpdateScheduleMode.IntervalMinutes)
+			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachIntervalUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeMonthly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
-			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.DayOfMonth)
-			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.HourOfDay)
-			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthly.Mode))
+			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode.DayOfMonth)
+			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachMonthlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeWeekly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
-			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.DayOfWeek)
-			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.HourOfDay)
-			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
+			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode.DayOfWeek)
+			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachWeeklyUpdateScheduleMode.Mode))
 		}
 	}
 	r.Username = types.StringValue(resp.Username)
@@ -199,78 +223,92 @@ func (r *ConnectionOUTREACHResourceModel) ToSharedConnectionOutreachUpdate() *sh
 	} else {
 		active = nil
 	}
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionOutreachUpdateUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachUpdateIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachUpdateIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachUpdateMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachUpdateIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachUpdateIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachUpdateIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachUpdateIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionOutreachUpdateIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachUpdateHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachUpdateHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachUpdateMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachUpdateHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachUpdateHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachUpdateHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachUpdateHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionOutreachUpdateHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionOutreachUpdateDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachUpdateDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachUpdateMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionOutreachUpdateDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachUpdateDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionOutreachUpdateDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionOutreachUpdateDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionOutreachUpdateDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachUpdateWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachUpdateWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachUpdateMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachUpdateWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachUpdateWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachUpdateWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachUpdateWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionOutreachUpdateWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachUpdateMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachUpdateMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachUpdateMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachUpdateMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachUpdateMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachUpdateMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachUpdateMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionOutreachUpdateMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionOutreachUpdateCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachUpdateCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachUpdateMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionOutreachUpdateCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachUpdateCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionOutreachUpdateCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionOutreachUpdateUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionOutreachUpdateCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionOutreachUpdateCronUpdateScheduleMode,
 			}
 		}
 	}

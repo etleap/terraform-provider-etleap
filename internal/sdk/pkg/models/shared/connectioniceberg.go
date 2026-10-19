@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionIcebergStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode `json:"mode"`
+	DayOfMonth int64                                                             `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode `json:"mode"`
+	DayOfWeek int64                                                            `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionIcebergUpdateScheduleTypesType string
+
+const (
+	ConnectionIcebergUpdateScheduleTypesTypeInterval ConnectionIcebergUpdateScheduleTypesType = "INTERVAL"
+	ConnectionIcebergUpdateScheduleTypesTypeHourly   ConnectionIcebergUpdateScheduleTypesType = "HOURLY"
+	ConnectionIcebergUpdateScheduleTypesTypeDaily    ConnectionIcebergUpdateScheduleTypesType = "DAILY"
+	ConnectionIcebergUpdateScheduleTypesTypeWeekly   ConnectionIcebergUpdateScheduleTypesType = "WEEKLY"
+	ConnectionIcebergUpdateScheduleTypesTypeMonthly  ConnectionIcebergUpdateScheduleTypesType = "MONTHLY"
+	ConnectionIcebergUpdateScheduleTypesTypeCron     ConnectionIcebergUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionIcebergUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionIcebergUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode
+
+	Type ConnectionIcebergUpdateScheduleTypesType
+}
+
+func CreateConnectionIcebergUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode) ConnectionIcebergUpdateScheduleTypes {
+	typ := ConnectionIcebergUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionIcebergUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionIcebergUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode) ConnectionIcebergUpdateScheduleTypes {
+	typ := ConnectionIcebergUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionIcebergUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionIcebergUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode) ConnectionIcebergUpdateScheduleTypes {
+	typ := ConnectionIcebergUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionIcebergUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionIcebergUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode) ConnectionIcebergUpdateScheduleTypes {
+	typ := ConnectionIcebergUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionIcebergUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionIcebergUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode) ConnectionIcebergUpdateScheduleTypes {
+	typ := ConnectionIcebergUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionIcebergUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionIcebergUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode) ConnectionIcebergUpdateScheduleTypes {
+	typ := ConnectionIcebergUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionIcebergUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionIcebergUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode
+		u.Type = ConnectionIcebergUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode
+		u.Type = ConnectionIcebergUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode
+		u.Type = ConnectionIcebergUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode
+		u.Type = ConnectionIcebergUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode
+		u.Type = ConnectionIcebergUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode
+		u.Type = ConnectionIcebergUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionIcebergUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionIcebergDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionIcebergDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upd
 	return nil
 }
 
+func (o *ConnectionIcebergDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionIceberg struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionIceberg struct {
 	Status ConnectionIcebergStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionIcebergUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionIcebergDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	IamRole               string                                   `json:"iamRole"`
@@ -207,44 +679,51 @@ func (o *ConnectionIceberg) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionIceberg) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionIceberg) GetUpdateSchedule() *ConnectionIcebergUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionIceberg) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionIceberg) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionIceberg) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionIceberg) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionIceberg) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionIceberg) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionIceberg) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionIceberg) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionIceberg) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionIceberg) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionIceberg) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -288,12 +767,12 @@ type ConnectionIcebergInput struct {
 	// The unique name of this connection.
 	Name string                `json:"name"`
 	Type ConnectionIcebergType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	IamRole        string               `json:"iamRole"`
-	DataBucket     string               `json:"dataBucket"`
-	BaseDirectory  string               `json:"baseDirectory"`
-	GlueRegion     string               `json:"glueRegion"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionIcebergUpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	IamRole        string                                `json:"iamRole"`
+	DataBucket     string                                `json:"dataBucket"`
+	BaseDirectory  string                                `json:"baseDirectory"`
+	GlueRegion     string                                `json:"glueRegion"`
 }
 
 func (o *ConnectionIcebergInput) GetName() string {
@@ -310,44 +789,51 @@ func (o *ConnectionIcebergInput) GetType() ConnectionIcebergType {
 	return o.Type
 }
 
-func (o *ConnectionIcebergInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionIcebergInput) GetUpdateSchedule() *ConnectionIcebergUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionIcebergInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionIcebergInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionIcebergIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionIcebergInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionIcebergInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionIcebergHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionIcebergInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionIcebergInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionIcebergDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionIcebergInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionIcebergInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionIcebergWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionIcebergInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionIcebergInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionIcebergMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionIcebergInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionIcebergCronUpdateScheduleMode
 	}
 	return nil
 }

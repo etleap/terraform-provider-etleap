@@ -11,78 +11,92 @@ import (
 func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtualListViewInput() *shared.ConnectionLdapVirtualListViewInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionLdapVirtualListViewType(r.Type.ValueString())
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionLdapVirtualListViewUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -130,6 +144,11 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) RefreshFromSharedConnection
 			defaultUpdateSchedule1.UpdateSchedule = nil
 		} else {
 			defaultUpdateSchedule1.UpdateSchedule = &UpdateScheduleTypes{}
+			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron != nil {
+				defaultUpdateSchedule1.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+				defaultUpdateSchedule1.UpdateSchedule.Cron.CronExpression = types.StringValue(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.CronExpression)
+				defaultUpdateSchedule1.UpdateSchedule.Cron.Mode = types.StringValue(string(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.Mode))
+			}
 			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily != nil {
 				defaultUpdateSchedule1.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
 				defaultUpdateSchedule1.UpdateSchedule.Daily.HourOfDay = types.Int64Value(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
@@ -177,31 +196,36 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) RefreshFromSharedConnection
 		r.UpdateSchedule = nil
 	} else {
 		r.UpdateSchedule = &UpdateScheduleTypes{}
-		if resp.UpdateSchedule.UpdateScheduleModeDaily != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode != nil {
+			r.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+			r.UpdateSchedule.Cron.CronExpression = types.StringValue(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode.CronExpression)
+			r.UpdateSchedule.Cron.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode.Mode))
+		}
+		if resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
-			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
-			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDaily.Mode))
+			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeHourly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
-			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourly.Mode))
+			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeInterval != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode != nil {
 			r.UpdateSchedule.Interval = &UpdateScheduleModeInterval{}
-			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeInterval.IntervalMinutes)
-			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeInterval.Mode))
+			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode.IntervalMinutes)
+			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeMonthly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
-			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.DayOfMonth)
-			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.HourOfDay)
-			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthly.Mode))
+			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode.DayOfMonth)
+			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeWeekly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
-			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.DayOfWeek)
-			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.HourOfDay)
-			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
+			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode.DayOfWeek)
+			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode.Mode))
 		}
 	}
 	r.User = types.StringValue(resp.User)
@@ -227,78 +251,92 @@ func (r *ConnectionLDAPVIRTUALLISTVIEWResourceModel) ToSharedConnectionLdapVirtu
 	} else {
 		active = nil
 	}
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionLdapVirtualListViewUpdateUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewUpdateIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewUpdateIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewUpdateIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewUpdateIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewUpdateIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewUpdateIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewUpdateIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewUpdateCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewUpdateCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewUpdateMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewUpdateCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewUpdateCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewUpdateCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionLdapVirtualListViewUpdateUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewUpdateCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewUpdateCronUpdateScheduleMode,
 			}
 		}
 	}

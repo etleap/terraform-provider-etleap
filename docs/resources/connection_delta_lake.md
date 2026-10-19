@@ -38,8 +38,9 @@ resource "etleap_connection_delta_lake" "my_connectiondelta_lake" {
 ### Optional
 
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
+- `load_throttle_schedule` (Attributes) When defined, this schedule enables load throttling windows for all pipelines that load to this connection. Load throttling synchronises the activities of all pipelines that load to this destination, such that all loads occur simultaneously. See <a href="https://docs.etleap.com/documentation/pipeline/load-throttling/">the documentation</a> for more details. (see [below for nested schema](#nestedatt--load_throttle_schedule))
 - `schema` (String) The schema to use when this connection is used as a source. When the connection is used as a destination the schema can be set to a different one for each pipeline.
-- `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
+- `update_schedule` (Attributes) The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead. (see [below for nested schema](#nestedatt--update_schedule))
 
 ### Read-Only
 
@@ -49,16 +50,94 @@ resource "etleap_connection_delta_lake" "my_connectiondelta_lake" {
 - `id` (String) The unique identifier of the connection.
 - `status` (String) The current status of the connection. must be one of ["UNKNOWN", "UP", "DOWN", "RESIZE", "MAINTENANCE", "QUOTA", "CREATING"]
 
+<a id="nestedatt--load_throttle_schedule"></a>
+### Nested Schema for `load_throttle_schedule`
+
+Optional:
+
+- `cron` (Attributes) (see [below for nested schema](#nestedatt--load_throttle_schedule--cron))
+- `daily` (Attributes) (see [below for nested schema](#nestedatt--load_throttle_schedule--daily))
+- `hourly` (Attributes) (see [below for nested schema](#nestedatt--load_throttle_schedule--hourly))
+- `interval` (Attributes) (see [below for nested schema](#nestedatt--load_throttle_schedule--interval))
+- `monthly` (Attributes) (see [below for nested schema](#nestedatt--load_throttle_schedule--monthly))
+- `weekly` (Attributes) (see [below for nested schema](#nestedatt--load_throttle_schedule--weekly))
+
+<a id="nestedatt--load_throttle_schedule--cron"></a>
+### Nested Schema for `load_throttle_schedule.cron`
+
+Optional:
+
+- `cron_expression` (String) The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC. Not Null
+- `mode` (String) Not Null; must be one of ["CRON"]
+
+
+<a id="nestedatt--load_throttle_schedule--daily"></a>
+### Nested Schema for `load_throttle_schedule.daily`
+
+Optional:
+
+- `hour_of_day` (Number) Hour of day the  pipeline update should be started at (in UTC). Not Null
+- `mode` (String) Not Null; must be one of ["DAILY"]
+
+
+<a id="nestedatt--load_throttle_schedule--hourly"></a>
+### Nested Schema for `load_throttle_schedule.hourly`
+
+Optional:
+
+- `mode` (String) Not Null; must be one of ["HOURLY"]
+
+
+<a id="nestedatt--load_throttle_schedule--interval"></a>
+### Nested Schema for `load_throttle_schedule.interval`
+
+Optional:
+
+- `interval_minutes` (Number) Time to wait before new data is pulled (in minutes). Not Null
+- `mode` (String) Not Null; must be one of ["INTERVAL"]
+
+
+<a id="nestedatt--load_throttle_schedule--monthly"></a>
+### Nested Schema for `load_throttle_schedule.monthly`
+
+Optional:
+
+- `day_of_month` (Number) Not Null
+- `hour_of_day` (Number) Hour of day the  pipeline update should be started at (in UTC). Not Null
+- `mode` (String) Not Null; must be one of ["MONTHLY"]
+
+
+<a id="nestedatt--load_throttle_schedule--weekly"></a>
+### Nested Schema for `load_throttle_schedule.weekly`
+
+Optional:
+
+- `day_of_week` (Number) Not Null
+- `hour_of_day` (Number) Hour of day the  pipeline update should be started at (in UTC). Not Null
+- `mode` (String) Not Null; must be one of ["WEEKLY"]
+
+
+
 <a id="nestedatt--update_schedule"></a>
 ### Nested Schema for `update_schedule`
 
 Optional:
 
-- `daily` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--daily))
-- `hourly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--hourly))
-- `interval` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--interval))
-- `monthly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--monthly))
-- `weekly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--weekly))
+- `cron` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--cron))
+- `daily` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--daily))
+- `hourly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--hourly))
+- `interval` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--interval))
+- `monthly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--monthly))
+- `weekly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--weekly))
+
+<a id="nestedatt--update_schedule--cron"></a>
+### Nested Schema for `update_schedule.cron`
+
+Optional:
+
+- `cron_expression` (String) The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC. Not Null
+- `mode` (String) Not Null; must be one of ["CRON"]
+
 
 <a id="nestedatt--update_schedule--daily"></a>
 ### Nested Schema for `update_schedule.daily`
@@ -113,18 +192,28 @@ Optional:
 Read-Only:
 
 - `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
-- `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
+- `update_schedule` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>
 ### Nested Schema for `default_update_schedule.update_schedule`
 
 Read-Only:
 
-- `daily` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--daily))
-- `hourly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--hourly))
-- `interval` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--interval))
-- `monthly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--monthly))
-- `weekly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--weekly))
+- `cron` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--cron))
+- `daily` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--daily))
+- `hourly` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--hourly))
+- `interval` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--interval))
+- `monthly` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--monthly))
+- `weekly` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--weekly))
+
+<a id="nestedatt--default_update_schedule--update_schedule--cron"></a>
+### Nested Schema for `default_update_schedule.update_schedule.cron`
+
+Read-Only:
+
+- `cron_expression` (String) The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+- `mode` (String) must be one of ["CRON"]
+
 
 <a id="nestedatt--default_update_schedule--update_schedule--daily"></a>
 ### Nested Schema for `default_update_schedule.update_schedule.daily`

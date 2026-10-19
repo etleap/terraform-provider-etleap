@@ -11,78 +11,92 @@ import (
 func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoInput() *shared.ConnectionMarketoInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionMarketoType(r.Type.ValueString())
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionMarketoUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionMarketoDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionMarketoDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionMarketoDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionMarketoDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionMarketoCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionMarketoCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionMarketoCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionMarketoCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -119,6 +133,11 @@ func (r *ConnectionMARKETOResourceModel) RefreshFromSharedConnectionMarketo(resp
 			defaultUpdateSchedule1.UpdateSchedule = nil
 		} else {
 			defaultUpdateSchedule1.UpdateSchedule = &UpdateScheduleTypes{}
+			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron != nil {
+				defaultUpdateSchedule1.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+				defaultUpdateSchedule1.UpdateSchedule.Cron.CronExpression = types.StringValue(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.CronExpression)
+				defaultUpdateSchedule1.UpdateSchedule.Cron.Mode = types.StringValue(string(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.Mode))
+			}
 			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily != nil {
 				defaultUpdateSchedule1.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
 				defaultUpdateSchedule1.UpdateSchedule.Daily.HourOfDay = types.Int64Value(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
@@ -164,31 +183,36 @@ func (r *ConnectionMARKETOResourceModel) RefreshFromSharedConnectionMarketo(resp
 		r.UpdateSchedule = nil
 	} else {
 		r.UpdateSchedule = &UpdateScheduleTypes{}
-		if resp.UpdateSchedule.UpdateScheduleModeDaily != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoCronUpdateScheduleMode != nil {
+			r.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+			r.UpdateSchedule.Cron.CronExpression = types.StringValue(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoCronUpdateScheduleMode.CronExpression)
+			r.UpdateSchedule.Cron.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoCronUpdateScheduleMode.Mode))
+		}
+		if resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoDailyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
-			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
-			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDaily.Mode))
+			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoDailyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoDailyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeHourly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoHourlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
-			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourly.Mode))
+			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoHourlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeInterval != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoIntervalUpdateScheduleMode != nil {
 			r.UpdateSchedule.Interval = &UpdateScheduleModeInterval{}
-			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeInterval.IntervalMinutes)
-			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeInterval.Mode))
+			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoIntervalUpdateScheduleMode.IntervalMinutes)
+			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoIntervalUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeMonthly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
-			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.DayOfMonth)
-			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.HourOfDay)
-			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthly.Mode))
+			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode.DayOfMonth)
+			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoMonthlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeWeekly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
-			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.DayOfWeek)
-			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.HourOfDay)
-			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
+			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode.DayOfWeek)
+			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoWeeklyUpdateScheduleMode.Mode))
 		}
 	}
 }
@@ -212,78 +236,92 @@ func (r *ConnectionMARKETOResourceModel) ToSharedConnectionMarketoUpdate() *shar
 	} else {
 		active = nil
 	}
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionMarketoUpdateUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoUpdateIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoUpdateIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoUpdateMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoUpdateIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoUpdateIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoUpdateIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoUpdateIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionMarketoUpdateIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoUpdateHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoUpdateHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoUpdateMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoUpdateHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoUpdateHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoUpdateHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoUpdateHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionMarketoUpdateHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionMarketoUpdateDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoUpdateDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoUpdateMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionMarketoUpdateDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoUpdateDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionMarketoUpdateDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionMarketoUpdateDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionMarketoUpdateDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoUpdateWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoUpdateWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoUpdateMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoUpdateWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoUpdateWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoUpdateWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoUpdateWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionMarketoUpdateWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoUpdateMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoUpdateMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoUpdateMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoUpdateMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoUpdateMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoUpdateMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoUpdateMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionMarketoUpdateMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionMarketoUpdateCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoUpdateCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoUpdateMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionMarketoUpdateCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoUpdateCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionMarketoUpdateCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionMarketoUpdateUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionMarketoUpdateCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionMarketoUpdateCronUpdateScheduleMode,
 			}
 		}
 	}

@@ -11,78 +11,92 @@ import (
 func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpInput() *shared.ConnectionSftpInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionSftpType(r.Type.ValueString())
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionSftpUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionSftpIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionSftpIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionSftpIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionSftpIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionSftpHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSftpHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSftpMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionSftpHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSftpHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionSftpHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSftpHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionSftpHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionSftpDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionSftpDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionSftpDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionSftpDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionSftpCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionSftpCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionSftpCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionSftpCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -134,6 +148,11 @@ func (r *ConnectionSFTPResourceModel) RefreshFromSharedConnectionSftp(resp *shar
 			defaultUpdateSchedule1.UpdateSchedule = nil
 		} else {
 			defaultUpdateSchedule1.UpdateSchedule = &UpdateScheduleTypes{}
+			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron != nil {
+				defaultUpdateSchedule1.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+				defaultUpdateSchedule1.UpdateSchedule.Cron.CronExpression = types.StringValue(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.CronExpression)
+				defaultUpdateSchedule1.UpdateSchedule.Cron.Mode = types.StringValue(string(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.Mode))
+			}
 			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily != nil {
 				defaultUpdateSchedule1.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
 				defaultUpdateSchedule1.UpdateSchedule.Daily.HourOfDay = types.Int64Value(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
@@ -178,31 +197,36 @@ func (r *ConnectionSFTPResourceModel) RefreshFromSharedConnectionSftp(resp *shar
 		r.UpdateSchedule = nil
 	} else {
 		r.UpdateSchedule = &UpdateScheduleTypes{}
-		if resp.UpdateSchedule.UpdateScheduleModeDaily != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpCronUpdateScheduleMode != nil {
+			r.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+			r.UpdateSchedule.Cron.CronExpression = types.StringValue(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpCronUpdateScheduleMode.CronExpression)
+			r.UpdateSchedule.Cron.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpCronUpdateScheduleMode.Mode))
+		}
+		if resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpDailyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
-			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
-			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDaily.Mode))
+			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpDailyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpDailyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeHourly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSftpHourlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
-			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourly.Mode))
+			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSftpHourlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeInterval != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpIntervalUpdateScheduleMode != nil {
 			r.UpdateSchedule.Interval = &UpdateScheduleModeInterval{}
-			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeInterval.IntervalMinutes)
-			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeInterval.Mode))
+			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpIntervalUpdateScheduleMode.IntervalMinutes)
+			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpIntervalUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeMonthly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
-			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.DayOfMonth)
-			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.HourOfDay)
-			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthly.Mode))
+			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode.DayOfMonth)
+			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpMonthlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeWeekly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
-			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.DayOfWeek)
-			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.HourOfDay)
-			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
+			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode.DayOfWeek)
+			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpWeeklyUpdateScheduleMode.Mode))
 		}
 	}
 	r.UsePublicKeyAuthentication = types.BoolPointerValue(resp.UsePublicKeyAuthentication)
@@ -228,78 +252,92 @@ func (r *ConnectionSFTPResourceModel) ToSharedConnectionSftpUpdate() *shared.Con
 	} else {
 		active = nil
 	}
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionSftpUpdateUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionSftpUpdateIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpUpdateIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpUpdateMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionSftpUpdateIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpUpdateIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionSftpUpdateIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSftpUpdateIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionSftpUpdateIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionSftpUpdateHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSftpUpdateHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSftpUpdateMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionSftpUpdateHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSftpUpdateHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionSftpUpdateHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSftpUpdateHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionSftpUpdateHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionSftpUpdateDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpUpdateDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpUpdateMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionSftpUpdateDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpUpdateDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionSftpUpdateDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionSftpUpdateDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionSftpUpdateDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpUpdateWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpUpdateWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpUpdateMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpUpdateWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpUpdateWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpUpdateWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpUpdateWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionSftpUpdateWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpUpdateMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpUpdateMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpUpdateMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpUpdateMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpUpdateMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpUpdateMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpUpdateMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionSftpUpdateMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionSftpUpdateCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpUpdateCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpUpdateMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionSftpUpdateCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpUpdateCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionSftpUpdateCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSftpUpdateUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionSftpUpdateCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionSftpUpdateCronUpdateScheduleMode,
 			}
 		}
 	}

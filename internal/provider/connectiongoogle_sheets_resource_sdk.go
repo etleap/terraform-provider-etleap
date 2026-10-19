@@ -11,78 +11,92 @@ import (
 func (r *ConnectionGOOGLESHEETSResourceModel) ToSharedConnectionGoogleSheetsInput() *shared.ConnectionGoogleSheetsInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionGoogleSheetsType(r.Type.ValueString())
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionGoogleSheetsUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -130,6 +144,11 @@ func (r *ConnectionGOOGLESHEETSResourceModel) RefreshFromSharedConnectionGoogleS
 			defaultUpdateSchedule1.UpdateSchedule = nil
 		} else {
 			defaultUpdateSchedule1.UpdateSchedule = &UpdateScheduleTypes{}
+			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron != nil {
+				defaultUpdateSchedule1.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+				defaultUpdateSchedule1.UpdateSchedule.Cron.CronExpression = types.StringValue(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.CronExpression)
+				defaultUpdateSchedule1.UpdateSchedule.Cron.Mode = types.StringValue(string(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.Mode))
+			}
 			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily != nil {
 				defaultUpdateSchedule1.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
 				defaultUpdateSchedule1.UpdateSchedule.Daily.HourOfDay = types.Int64Value(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
@@ -173,31 +192,36 @@ func (r *ConnectionGOOGLESHEETSResourceModel) RefreshFromSharedConnectionGoogleS
 		r.UpdateSchedule = nil
 	} else {
 		r.UpdateSchedule = &UpdateScheduleTypes{}
-		if resp.UpdateSchedule.UpdateScheduleModeDaily != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode != nil {
+			r.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+			r.UpdateSchedule.Cron.CronExpression = types.StringValue(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode.CronExpression)
+			r.UpdateSchedule.Cron.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode.Mode))
+		}
+		if resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
-			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
-			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDaily.Mode))
+			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeHourly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
-			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourly.Mode))
+			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeInterval != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode != nil {
 			r.UpdateSchedule.Interval = &UpdateScheduleModeInterval{}
-			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeInterval.IntervalMinutes)
-			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeInterval.Mode))
+			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode.IntervalMinutes)
+			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeMonthly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
-			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.DayOfMonth)
-			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.HourOfDay)
-			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthly.Mode))
+			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode.DayOfMonth)
+			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeWeekly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
-			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.DayOfWeek)
-			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.HourOfDay)
-			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
+			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode.DayOfWeek)
+			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode.Mode))
 		}
 	}
 	r.Username = types.StringPointerValue(resp.Username)
@@ -217,78 +241,92 @@ func (r *ConnectionGOOGLESHEETSResourceModel) ToSharedConnectionGoogleSheetsUpda
 	} else {
 		active = nil
 	}
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionGoogleSheetsUpdateUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsUpdateIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsUpdateIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsUpdateMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsUpdateIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsUpdateIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsUpdateIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsUpdateIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsUpdateIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsUpdateHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsUpdateHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsUpdateMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsUpdateHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsUpdateHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsUpdateHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsUpdateHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsUpdateHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsUpdateDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsUpdateDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsUpdateMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsUpdateDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsUpdateDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsUpdateDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsUpdateDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsUpdateDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsUpdateWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsUpdateWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsUpdateMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsUpdateWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsUpdateWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsUpdateWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsUpdateWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsUpdateWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsUpdateMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsUpdateMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsUpdateMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsUpdateMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsUpdateMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsUpdateMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsUpdateMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsUpdateMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsUpdateCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsUpdateCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsUpdateMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsUpdateCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsUpdateCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsUpdateCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionGoogleSheetsUpdateUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsUpdateCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsUpdateCronUpdateScheduleMode,
 			}
 		}
 	}

@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionGoogleAdsStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode `json:"mode"`
+	DayOfMonth int64                                                               `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode `json:"mode"`
+	DayOfWeek int64                                                              `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionGoogleAdsUpdateScheduleTypesType string
+
+const (
+	ConnectionGoogleAdsUpdateScheduleTypesTypeInterval ConnectionGoogleAdsUpdateScheduleTypesType = "INTERVAL"
+	ConnectionGoogleAdsUpdateScheduleTypesTypeHourly   ConnectionGoogleAdsUpdateScheduleTypesType = "HOURLY"
+	ConnectionGoogleAdsUpdateScheduleTypesTypeDaily    ConnectionGoogleAdsUpdateScheduleTypesType = "DAILY"
+	ConnectionGoogleAdsUpdateScheduleTypesTypeWeekly   ConnectionGoogleAdsUpdateScheduleTypesType = "WEEKLY"
+	ConnectionGoogleAdsUpdateScheduleTypesTypeMonthly  ConnectionGoogleAdsUpdateScheduleTypesType = "MONTHLY"
+	ConnectionGoogleAdsUpdateScheduleTypesTypeCron     ConnectionGoogleAdsUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionGoogleAdsUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionGoogleAdsUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode
+
+	Type ConnectionGoogleAdsUpdateScheduleTypesType
+}
+
+func CreateConnectionGoogleAdsUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode) ConnectionGoogleAdsUpdateScheduleTypes {
+	typ := ConnectionGoogleAdsUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionGoogleAdsUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleAdsUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode) ConnectionGoogleAdsUpdateScheduleTypes {
+	typ := ConnectionGoogleAdsUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionGoogleAdsUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleAdsUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode) ConnectionGoogleAdsUpdateScheduleTypes {
+	typ := ConnectionGoogleAdsUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionGoogleAdsUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleAdsUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode) ConnectionGoogleAdsUpdateScheduleTypes {
+	typ := ConnectionGoogleAdsUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionGoogleAdsUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleAdsUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode) ConnectionGoogleAdsUpdateScheduleTypes {
+	typ := ConnectionGoogleAdsUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionGoogleAdsUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleAdsUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode) ConnectionGoogleAdsUpdateScheduleTypes {
+	typ := ConnectionGoogleAdsUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionGoogleAdsUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionGoogleAdsUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode
+		u.Type = ConnectionGoogleAdsUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode
+		u.Type = ConnectionGoogleAdsUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode
+		u.Type = ConnectionGoogleAdsUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode
+		u.Type = ConnectionGoogleAdsUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode
+		u.Type = ConnectionGoogleAdsUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode
+		u.Type = ConnectionGoogleAdsUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionGoogleAdsUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionGoogleAdsDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionGoogleAdsDefaultUpdateSchedule) GetUpdateScheduleMonthly() *U
 	return nil
 }
 
+func (o *ConnectionGoogleAdsDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionGoogleAds struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionGoogleAds struct {
 	Status ConnectionGoogleAdsStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionGoogleAdsUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionGoogleAdsDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The ID of the customer you want to log in as. Etleap will extract the data of all customers that this login customer has access to. 10 digits without hyphens.
@@ -205,44 +677,51 @@ func (o *ConnectionGoogleAds) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionGoogleAds) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionGoogleAds) GetUpdateSchedule() *ConnectionGoogleAdsUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionGoogleAds) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionGoogleAds) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAds) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionGoogleAds) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAds) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionGoogleAds) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAds) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionGoogleAds) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionGoogleAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAds) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -265,8 +744,8 @@ type ConnectionGoogleAdsInput struct {
 	// The unique name of this connection.
 	Name string                  `json:"name"`
 	Type ConnectionGoogleAdsType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionGoogleAdsUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code string `json:"code"`
 	// The ID of the customer you want to log in as. Etleap will extract the data of all customers that this login customer has access to. 10 digits without hyphens.
@@ -287,44 +766,51 @@ func (o *ConnectionGoogleAdsInput) GetType() ConnectionGoogleAdsType {
 	return o.Type
 }
 
-func (o *ConnectionGoogleAdsInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionGoogleAdsInput) GetUpdateSchedule() *ConnectionGoogleAdsUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionGoogleAdsInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionGoogleAdsInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAdsIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAdsInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionGoogleAdsInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAdsHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAdsInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionGoogleAdsInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAdsDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAdsInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionGoogleAdsInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAdsWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionGoogleAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAdsMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAdsInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAdsCronUpdateScheduleMode
 	}
 	return nil
 }

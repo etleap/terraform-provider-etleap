@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionSkywardStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode `json:"mode"`
+	DayOfMonth int64                                                             `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode `json:"mode"`
+	DayOfWeek int64                                                            `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionSkywardUpdateScheduleTypesType string
+
+const (
+	ConnectionSkywardUpdateScheduleTypesTypeInterval ConnectionSkywardUpdateScheduleTypesType = "INTERVAL"
+	ConnectionSkywardUpdateScheduleTypesTypeHourly   ConnectionSkywardUpdateScheduleTypesType = "HOURLY"
+	ConnectionSkywardUpdateScheduleTypesTypeDaily    ConnectionSkywardUpdateScheduleTypesType = "DAILY"
+	ConnectionSkywardUpdateScheduleTypesTypeWeekly   ConnectionSkywardUpdateScheduleTypesType = "WEEKLY"
+	ConnectionSkywardUpdateScheduleTypesTypeMonthly  ConnectionSkywardUpdateScheduleTypesType = "MONTHLY"
+	ConnectionSkywardUpdateScheduleTypesTypeCron     ConnectionSkywardUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionSkywardUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionSkywardUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode
+
+	Type ConnectionSkywardUpdateScheduleTypesType
+}
+
+func CreateConnectionSkywardUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode) ConnectionSkywardUpdateScheduleTypes {
+	typ := ConnectionSkywardUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionSkywardUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSkywardUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode) ConnectionSkywardUpdateScheduleTypes {
+	typ := ConnectionSkywardUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionSkywardUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSkywardUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode) ConnectionSkywardUpdateScheduleTypes {
+	typ := ConnectionSkywardUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionSkywardUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSkywardUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode) ConnectionSkywardUpdateScheduleTypes {
+	typ := ConnectionSkywardUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionSkywardUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSkywardUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode) ConnectionSkywardUpdateScheduleTypes {
+	typ := ConnectionSkywardUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionSkywardUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSkywardUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode) ConnectionSkywardUpdateScheduleTypes {
+	typ := ConnectionSkywardUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionSkywardUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionSkywardUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode
+		u.Type = ConnectionSkywardUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode
+		u.Type = ConnectionSkywardUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode
+		u.Type = ConnectionSkywardUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode
+		u.Type = ConnectionSkywardUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode
+		u.Type = ConnectionSkywardUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode
+		u.Type = ConnectionSkywardUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionSkywardUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionSkywardDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionSkywardDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upd
 	return nil
 }
 
+func (o *ConnectionSkywardDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionSkyward struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionSkyward struct {
 	Status ConnectionSkywardStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionSkywardUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionSkywardDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	ClientID              string                                   `json:"clientId"`
@@ -204,44 +676,51 @@ func (o *ConnectionSkyward) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionSkyward) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionSkyward) GetUpdateSchedule() *ConnectionSkywardUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSkyward) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSkyward) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSkyward) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionSkyward) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSkyward) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionSkyward) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSkyward) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionSkyward) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSkyward) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSkyward) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSkyward) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -264,10 +743,10 @@ type ConnectionSkywardInput struct {
 	// The unique name of this connection.
 	Name string                `json:"name"`
 	Type ConnectionSkywardType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	ClientID       string               `json:"clientId"`
-	ClientSecret   string               `json:"clientSecret"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionSkywardUpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	ClientID       string                                `json:"clientId"`
+	ClientSecret   string                                `json:"clientSecret"`
 }
 
 func (o *ConnectionSkywardInput) GetName() string {
@@ -284,44 +763,51 @@ func (o *ConnectionSkywardInput) GetType() ConnectionSkywardType {
 	return o.Type
 }
 
-func (o *ConnectionSkywardInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionSkywardInput) GetUpdateSchedule() *ConnectionSkywardUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSkywardInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSkywardInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSkywardIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSkywardInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionSkywardInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSkywardHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSkywardInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionSkywardInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSkywardDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSkywardInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionSkywardInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSkywardWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSkywardInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSkywardInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSkywardMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSkywardInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionSkywardCronUpdateScheduleMode
 	}
 	return nil
 }

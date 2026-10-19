@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionGoogleCloudStorageStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode `json:"mode"`
+	DayOfMonth int64                                                                        `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode `json:"mode"`
+	DayOfWeek int64                                                                       `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionGoogleCloudStorageUpdateScheduleTypesType string
+
+const (
+	ConnectionGoogleCloudStorageUpdateScheduleTypesTypeInterval ConnectionGoogleCloudStorageUpdateScheduleTypesType = "INTERVAL"
+	ConnectionGoogleCloudStorageUpdateScheduleTypesTypeHourly   ConnectionGoogleCloudStorageUpdateScheduleTypesType = "HOURLY"
+	ConnectionGoogleCloudStorageUpdateScheduleTypesTypeDaily    ConnectionGoogleCloudStorageUpdateScheduleTypesType = "DAILY"
+	ConnectionGoogleCloudStorageUpdateScheduleTypesTypeWeekly   ConnectionGoogleCloudStorageUpdateScheduleTypesType = "WEEKLY"
+	ConnectionGoogleCloudStorageUpdateScheduleTypesTypeMonthly  ConnectionGoogleCloudStorageUpdateScheduleTypesType = "MONTHLY"
+	ConnectionGoogleCloudStorageUpdateScheduleTypesTypeCron     ConnectionGoogleCloudStorageUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionGoogleCloudStorageUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionGoogleCloudStorageUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode
+
+	Type ConnectionGoogleCloudStorageUpdateScheduleTypesType
+}
+
+func CreateConnectionGoogleCloudStorageUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode) ConnectionGoogleCloudStorageUpdateScheduleTypes {
+	typ := ConnectionGoogleCloudStorageUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionGoogleCloudStorageUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleCloudStorageUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode) ConnectionGoogleCloudStorageUpdateScheduleTypes {
+	typ := ConnectionGoogleCloudStorageUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionGoogleCloudStorageUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleCloudStorageUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode) ConnectionGoogleCloudStorageUpdateScheduleTypes {
+	typ := ConnectionGoogleCloudStorageUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionGoogleCloudStorageUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleCloudStorageUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode) ConnectionGoogleCloudStorageUpdateScheduleTypes {
+	typ := ConnectionGoogleCloudStorageUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionGoogleCloudStorageUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleCloudStorageUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode) ConnectionGoogleCloudStorageUpdateScheduleTypes {
+	typ := ConnectionGoogleCloudStorageUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionGoogleCloudStorageUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleCloudStorageUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode) ConnectionGoogleCloudStorageUpdateScheduleTypes {
+	typ := ConnectionGoogleCloudStorageUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionGoogleCloudStorageUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionGoogleCloudStorageUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode
+		u.Type = ConnectionGoogleCloudStorageUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode
+		u.Type = ConnectionGoogleCloudStorageUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode
+		u.Type = ConnectionGoogleCloudStorageUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode
+		u.Type = ConnectionGoogleCloudStorageUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode
+		u.Type = ConnectionGoogleCloudStorageUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode
+		u.Type = ConnectionGoogleCloudStorageUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionGoogleCloudStorageUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionGoogleCloudStorageDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionGoogleCloudStorageDefaultUpdateSchedule) GetUpdateScheduleMon
 	return nil
 }
 
+func (o *ConnectionGoogleCloudStorageDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionGoogleCloudStorage struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionGoogleCloudStorage struct {
 	Status ConnectionGoogleCloudStorageStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionGoogleCloudStorageUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionGoogleCloudStorageDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// A bucket you want to extract from. E.g. 'mybucket'
@@ -205,44 +677,51 @@ func (o *ConnectionGoogleCloudStorage) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionGoogleCloudStorage) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionGoogleCloudStorage) GetUpdateSchedule() *ConnectionGoogleCloudStorageUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleCloudStorage) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -265,8 +744,8 @@ type ConnectionGoogleCloudStorageInput struct {
 	// The unique name of this connection.
 	Name string                           `json:"name"`
 	Type ConnectionGoogleCloudStorageType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionGoogleCloudStorageUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// A bucket you want to extract from. E.g. 'mybucket'
 	Bucket string `json:"bucket"`
 	// To generate new JSON Credentials, go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials/), make sure you are on the correct project, and create or select an existing service account. Select the service account, and under "Keys" create a new key in JSON format. Paste the JSON object into the "JSON Credentials" fields.
@@ -287,44 +766,51 @@ func (o *ConnectionGoogleCloudStorageInput) GetType() ConnectionGoogleCloudStora
 	return o.Type
 }
 
-func (o *ConnectionGoogleCloudStorageInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionGoogleCloudStorageInput) GetUpdateSchedule() *ConnectionGoogleCloudStorageUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleCloudStorageIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleCloudStorageHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleCloudStorageDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleCloudStorageWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleCloudStorageMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleCloudStorageInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleCloudStorageCronUpdateScheduleMode
 	}
 	return nil
 }

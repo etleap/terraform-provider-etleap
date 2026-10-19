@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionVerizonMediaDspStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode `json:"mode"`
+	DayOfMonth int64                                                                     `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode `json:"mode"`
+	DayOfWeek int64                                                                    `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionVerizonMediaDspUpdateScheduleTypesType string
+
+const (
+	ConnectionVerizonMediaDspUpdateScheduleTypesTypeInterval ConnectionVerizonMediaDspUpdateScheduleTypesType = "INTERVAL"
+	ConnectionVerizonMediaDspUpdateScheduleTypesTypeHourly   ConnectionVerizonMediaDspUpdateScheduleTypesType = "HOURLY"
+	ConnectionVerizonMediaDspUpdateScheduleTypesTypeDaily    ConnectionVerizonMediaDspUpdateScheduleTypesType = "DAILY"
+	ConnectionVerizonMediaDspUpdateScheduleTypesTypeWeekly   ConnectionVerizonMediaDspUpdateScheduleTypesType = "WEEKLY"
+	ConnectionVerizonMediaDspUpdateScheduleTypesTypeMonthly  ConnectionVerizonMediaDspUpdateScheduleTypesType = "MONTHLY"
+	ConnectionVerizonMediaDspUpdateScheduleTypesTypeCron     ConnectionVerizonMediaDspUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionVerizonMediaDspUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionVerizonMediaDspUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode
+
+	Type ConnectionVerizonMediaDspUpdateScheduleTypesType
+}
+
+func CreateConnectionVerizonMediaDspUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode) ConnectionVerizonMediaDspUpdateScheduleTypes {
+	typ := ConnectionVerizonMediaDspUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionVerizonMediaDspUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionVerizonMediaDspUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode) ConnectionVerizonMediaDspUpdateScheduleTypes {
+	typ := ConnectionVerizonMediaDspUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionVerizonMediaDspUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionVerizonMediaDspUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode) ConnectionVerizonMediaDspUpdateScheduleTypes {
+	typ := ConnectionVerizonMediaDspUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionVerizonMediaDspUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionVerizonMediaDspUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode) ConnectionVerizonMediaDspUpdateScheduleTypes {
+	typ := ConnectionVerizonMediaDspUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionVerizonMediaDspUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionVerizonMediaDspUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode) ConnectionVerizonMediaDspUpdateScheduleTypes {
+	typ := ConnectionVerizonMediaDspUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionVerizonMediaDspUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionVerizonMediaDspUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode) ConnectionVerizonMediaDspUpdateScheduleTypes {
+	typ := ConnectionVerizonMediaDspUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionVerizonMediaDspUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionVerizonMediaDspUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode
+		u.Type = ConnectionVerizonMediaDspUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode
+		u.Type = ConnectionVerizonMediaDspUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode
+		u.Type = ConnectionVerizonMediaDspUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode
+		u.Type = ConnectionVerizonMediaDspUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode
+		u.Type = ConnectionVerizonMediaDspUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode
+		u.Type = ConnectionVerizonMediaDspUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionVerizonMediaDspUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionVerizonMediaDspDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionVerizonMediaDspDefaultUpdateSchedule) GetUpdateScheduleMonthl
 	return nil
 }
 
+func (o *ConnectionVerizonMediaDspDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionVerizonMediaDsp struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionVerizonMediaDsp struct {
 	Status ConnectionVerizonMediaDspStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionVerizonMediaDspUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionVerizonMediaDspDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	Username              string                                           `json:"username"`
@@ -204,44 +676,51 @@ func (o *ConnectionVerizonMediaDsp) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionVerizonMediaDsp) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionVerizonMediaDsp) GetUpdateSchedule() *ConnectionVerizonMediaDspUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionVerizonMediaDsp) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -264,8 +743,8 @@ type ConnectionVerizonMediaDspInput struct {
 	// The unique name of this connection.
 	Name string                        `json:"name"`
 	Type ConnectionVerizonMediaDspType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionVerizonMediaDspUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code string `json:"code"`
 }
@@ -284,44 +763,51 @@ func (o *ConnectionVerizonMediaDspInput) GetType() ConnectionVerizonMediaDspType
 	return o.Type
 }
 
-func (o *ConnectionVerizonMediaDspInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionVerizonMediaDspInput) GetUpdateSchedule() *ConnectionVerizonMediaDspUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVerizonMediaDspIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVerizonMediaDspHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionVerizonMediaDspDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVerizonMediaDspWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVerizonMediaDspMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionVerizonMediaDspInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionVerizonMediaDspCronUpdateScheduleMode
 	}
 	return nil
 }

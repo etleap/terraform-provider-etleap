@@ -2,7 +2,7 @@ resource "etleap_pipeline" "my_pipeline" {
   deletion_of_export_products = false
   destination = {
     delta_lake = {
-      automatic_schema_changes   = true
+      automatic_schema_changes   = false
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
       pre10_dot2_runtime_support = true
@@ -16,7 +16,7 @@ resource "etleap_pipeline" "my_pipeline" {
       wait_for_quality_check = true
     }
   }
-  name   = "Joan Carroll"
+  name   = "Mrs. Deborah Cartwright"
   paused = false
   script = {
     legacy_script = {

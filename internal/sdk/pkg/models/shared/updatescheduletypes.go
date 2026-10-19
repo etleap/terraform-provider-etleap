@@ -17,15 +17,16 @@ const (
 	UpdateScheduleTypesTypeDaily    UpdateScheduleTypesType = "DAILY"
 	UpdateScheduleTypesTypeWeekly   UpdateScheduleTypesType = "WEEKLY"
 	UpdateScheduleTypesTypeMonthly  UpdateScheduleTypesType = "MONTHLY"
+	UpdateScheduleTypesTypeCron     UpdateScheduleTypesType = "CRON"
 )
 
-// UpdateScheduleTypes - The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
 type UpdateScheduleTypes struct {
 	UpdateScheduleModeInterval *UpdateScheduleModeInterval
 	UpdateScheduleModeHourly   *UpdateScheduleModeHourly
 	UpdateScheduleModeDaily    *UpdateScheduleModeDaily
 	UpdateScheduleModeWeekly   *UpdateScheduleModeWeekly
 	UpdateScheduleModeMonthly  *UpdateScheduleModeMonthly
+	UpdateScheduleModeCron     *UpdateScheduleModeCron
 
 	Type UpdateScheduleTypesType
 }
@@ -90,6 +91,18 @@ func CreateUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthly) UpdateS
 	}
 }
 
+func CreateUpdateScheduleTypesCron(cron UpdateScheduleModeCron) UpdateScheduleTypes {
+	typ := UpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronMode(typ)
+	cron.Mode = typStr
+
+	return UpdateScheduleTypes{
+		UpdateScheduleModeCron: &cron,
+		Type:                   typ,
+	}
+}
+
 func (u *UpdateScheduleTypes) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
@@ -147,6 +160,15 @@ func (u *UpdateScheduleTypes) UnmarshalJSON(data []byte) error {
 		u.UpdateScheduleModeMonthly = updateScheduleModeMonthly
 		u.Type = UpdateScheduleTypesTypeMonthly
 		return nil
+	case "CRON":
+		updateScheduleModeCron := new(UpdateScheduleModeCron)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCron, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCron = updateScheduleModeCron
+		u.Type = UpdateScheduleTypesTypeCron
+		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
@@ -171,6 +193,10 @@ func (u UpdateScheduleTypes) MarshalJSON() ([]byte, error) {
 
 	if u.UpdateScheduleModeMonthly != nil {
 		return utils.MarshalJSON(u.UpdateScheduleModeMonthly, "", true)
+	}
+
+	if u.UpdateScheduleModeCron != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCron, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")

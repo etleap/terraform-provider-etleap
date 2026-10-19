@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionWorkfrontStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode `json:"mode"`
+	DayOfMonth int64                                                               `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode `json:"mode"`
+	DayOfWeek int64                                                              `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionWorkfrontUpdateScheduleTypesType string
+
+const (
+	ConnectionWorkfrontUpdateScheduleTypesTypeInterval ConnectionWorkfrontUpdateScheduleTypesType = "INTERVAL"
+	ConnectionWorkfrontUpdateScheduleTypesTypeHourly   ConnectionWorkfrontUpdateScheduleTypesType = "HOURLY"
+	ConnectionWorkfrontUpdateScheduleTypesTypeDaily    ConnectionWorkfrontUpdateScheduleTypesType = "DAILY"
+	ConnectionWorkfrontUpdateScheduleTypesTypeWeekly   ConnectionWorkfrontUpdateScheduleTypesType = "WEEKLY"
+	ConnectionWorkfrontUpdateScheduleTypesTypeMonthly  ConnectionWorkfrontUpdateScheduleTypesType = "MONTHLY"
+	ConnectionWorkfrontUpdateScheduleTypesTypeCron     ConnectionWorkfrontUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionWorkfrontUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionWorkfrontUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode
+
+	Type ConnectionWorkfrontUpdateScheduleTypesType
+}
+
+func CreateConnectionWorkfrontUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode) ConnectionWorkfrontUpdateScheduleTypes {
+	typ := ConnectionWorkfrontUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionWorkfrontUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionWorkfrontUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode) ConnectionWorkfrontUpdateScheduleTypes {
+	typ := ConnectionWorkfrontUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionWorkfrontUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionWorkfrontUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode) ConnectionWorkfrontUpdateScheduleTypes {
+	typ := ConnectionWorkfrontUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionWorkfrontUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionWorkfrontUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode) ConnectionWorkfrontUpdateScheduleTypes {
+	typ := ConnectionWorkfrontUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionWorkfrontUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionWorkfrontUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode) ConnectionWorkfrontUpdateScheduleTypes {
+	typ := ConnectionWorkfrontUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionWorkfrontUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionWorkfrontUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode) ConnectionWorkfrontUpdateScheduleTypes {
+	typ := ConnectionWorkfrontUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionWorkfrontUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionWorkfrontUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode
+		u.Type = ConnectionWorkfrontUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode
+		u.Type = ConnectionWorkfrontUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode
+		u.Type = ConnectionWorkfrontUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode
+		u.Type = ConnectionWorkfrontUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode
+		u.Type = ConnectionWorkfrontUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode
+		u.Type = ConnectionWorkfrontUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionWorkfrontUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionWorkfrontDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionWorkfrontDefaultUpdateSchedule) GetUpdateScheduleMonthly() *U
 	return nil
 }
 
+func (o *ConnectionWorkfrontDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionWorkfront struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionWorkfront struct {
 	Status ConnectionWorkfrontStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionWorkfrontUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionWorkfrontDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Your Workfront subdomain (i.e. SUBDOMAIN.my.workfront.com, or SUBDOMAIN.my.workfront.adobe.com for the Adobe Unified Experience)
@@ -207,44 +679,51 @@ func (o *ConnectionWorkfront) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionWorkfront) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionWorkfront) GetUpdateSchedule() *ConnectionWorkfrontUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionWorkfront) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionWorkfront) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkfront) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionWorkfront) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkfront) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionWorkfront) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkfront) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionWorkfront) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkfront) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionWorkfront) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionWorkfront) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -274,8 +753,8 @@ type ConnectionWorkfrontInput struct {
 	// The unique name of this connection.
 	Name string                  `json:"name"`
 	Type ConnectionWorkfrontType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionWorkfrontUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your Workfront subdomain (i.e. SUBDOMAIN.my.workfront.com, or SUBDOMAIN.my.workfront.adobe.com for the Adobe Unified Experience)
 	Subdomain string `json:"subdomain"`
 	// The client API key required to authenticate with the Workfront API. API keys can be generated by <a target="_blank" href="https://experience.workfront.com/s/article/Managing-API-Keys-for-the-Workfront-System-1973288244?ui-force-components-controllers-recordGlobalValueProvider.RecordGvp.getRecord=1&r=7"> following the documentation here</a>.
@@ -309,44 +788,51 @@ func (o *ConnectionWorkfrontInput) GetType() ConnectionWorkfrontType {
 	return o.Type
 }
 
-func (o *ConnectionWorkfrontInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionWorkfrontInput) GetUpdateSchedule() *ConnectionWorkfrontUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionWorkfrontInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionWorkfrontInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkfrontIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkfrontInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionWorkfrontInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkfrontHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkfrontInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionWorkfrontInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkfrontDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkfrontInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionWorkfrontInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkfrontWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkfrontInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionWorkfrontInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkfrontMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionWorkfrontInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkfrontCronUpdateScheduleMode
 	}
 	return nil
 }

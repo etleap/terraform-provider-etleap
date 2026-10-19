@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionLinkedInAdsStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode `json:"mode"`
+	DayOfMonth int64                                                                 `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode `json:"mode"`
+	DayOfWeek int64                                                                `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionLinkedInAdsUpdateScheduleTypesType string
+
+const (
+	ConnectionLinkedInAdsUpdateScheduleTypesTypeInterval ConnectionLinkedInAdsUpdateScheduleTypesType = "INTERVAL"
+	ConnectionLinkedInAdsUpdateScheduleTypesTypeHourly   ConnectionLinkedInAdsUpdateScheduleTypesType = "HOURLY"
+	ConnectionLinkedInAdsUpdateScheduleTypesTypeDaily    ConnectionLinkedInAdsUpdateScheduleTypesType = "DAILY"
+	ConnectionLinkedInAdsUpdateScheduleTypesTypeWeekly   ConnectionLinkedInAdsUpdateScheduleTypesType = "WEEKLY"
+	ConnectionLinkedInAdsUpdateScheduleTypesTypeMonthly  ConnectionLinkedInAdsUpdateScheduleTypesType = "MONTHLY"
+	ConnectionLinkedInAdsUpdateScheduleTypesTypeCron     ConnectionLinkedInAdsUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionLinkedInAdsUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionLinkedInAdsUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode
+
+	Type ConnectionLinkedInAdsUpdateScheduleTypesType
+}
+
+func CreateConnectionLinkedInAdsUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode) ConnectionLinkedInAdsUpdateScheduleTypes {
+	typ := ConnectionLinkedInAdsUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionLinkedInAdsUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionLinkedInAdsUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode) ConnectionLinkedInAdsUpdateScheduleTypes {
+	typ := ConnectionLinkedInAdsUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionLinkedInAdsUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionLinkedInAdsUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode) ConnectionLinkedInAdsUpdateScheduleTypes {
+	typ := ConnectionLinkedInAdsUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionLinkedInAdsUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionLinkedInAdsUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode) ConnectionLinkedInAdsUpdateScheduleTypes {
+	typ := ConnectionLinkedInAdsUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionLinkedInAdsUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionLinkedInAdsUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode) ConnectionLinkedInAdsUpdateScheduleTypes {
+	typ := ConnectionLinkedInAdsUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionLinkedInAdsUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionLinkedInAdsUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode) ConnectionLinkedInAdsUpdateScheduleTypes {
+	typ := ConnectionLinkedInAdsUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionLinkedInAdsUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionLinkedInAdsUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode
+		u.Type = ConnectionLinkedInAdsUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode
+		u.Type = ConnectionLinkedInAdsUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode
+		u.Type = ConnectionLinkedInAdsUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode
+		u.Type = ConnectionLinkedInAdsUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode
+		u.Type = ConnectionLinkedInAdsUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode
+		u.Type = ConnectionLinkedInAdsUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionLinkedInAdsUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionLinkedInAdsDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionLinkedInAdsDefaultUpdateSchedule) GetUpdateScheduleMonthly() 
 	return nil
 }
 
+func (o *ConnectionLinkedInAdsDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionLinkedInAds struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionLinkedInAds struct {
 	Status ConnectionLinkedInAdsStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionLinkedInAdsUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionLinkedInAdsDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 }
@@ -203,44 +675,51 @@ func (o *ConnectionLinkedInAds) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionLinkedInAds) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionLinkedInAds) GetUpdateSchedule() *ConnectionLinkedInAdsUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionLinkedInAds) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionLinkedInAds) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLinkedInAds) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionLinkedInAds) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLinkedInAds) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionLinkedInAds) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLinkedInAds) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionLinkedInAds) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLinkedInAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionLinkedInAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionLinkedInAds) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -256,8 +735,8 @@ type ConnectionLinkedInAdsInput struct {
 	// The unique name of this connection.
 	Name string                    `json:"name"`
 	Type ConnectionLinkedInAdsType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionLinkedInAdsUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code string `json:"code"`
 }
@@ -276,44 +755,51 @@ func (o *ConnectionLinkedInAdsInput) GetType() ConnectionLinkedInAdsType {
 	return o.Type
 }
 
-func (o *ConnectionLinkedInAdsInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionLinkedInAdsInput) GetUpdateSchedule() *ConnectionLinkedInAdsUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLinkedInAdsIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLinkedInAdsHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLinkedInAdsDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLinkedInAdsWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLinkedInAdsMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionLinkedInAdsInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionLinkedInAdsCronUpdateScheduleMode
 	}
 	return nil
 }

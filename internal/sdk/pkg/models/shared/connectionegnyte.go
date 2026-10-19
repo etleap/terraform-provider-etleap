@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionEgnyteStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode `json:"mode"`
+	DayOfMonth int64                                                            `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode `json:"mode"`
+	DayOfWeek int64                                                           `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionEgnyteUpdateScheduleTypesType string
+
+const (
+	ConnectionEgnyteUpdateScheduleTypesTypeInterval ConnectionEgnyteUpdateScheduleTypesType = "INTERVAL"
+	ConnectionEgnyteUpdateScheduleTypesTypeHourly   ConnectionEgnyteUpdateScheduleTypesType = "HOURLY"
+	ConnectionEgnyteUpdateScheduleTypesTypeDaily    ConnectionEgnyteUpdateScheduleTypesType = "DAILY"
+	ConnectionEgnyteUpdateScheduleTypesTypeWeekly   ConnectionEgnyteUpdateScheduleTypesType = "WEEKLY"
+	ConnectionEgnyteUpdateScheduleTypesTypeMonthly  ConnectionEgnyteUpdateScheduleTypesType = "MONTHLY"
+	ConnectionEgnyteUpdateScheduleTypesTypeCron     ConnectionEgnyteUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionEgnyteUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionEgnyteUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode
+
+	Type ConnectionEgnyteUpdateScheduleTypesType
+}
+
+func CreateConnectionEgnyteUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode) ConnectionEgnyteUpdateScheduleTypes {
+	typ := ConnectionEgnyteUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionEgnyteUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionEgnyteUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode) ConnectionEgnyteUpdateScheduleTypes {
+	typ := ConnectionEgnyteUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionEgnyteUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionEgnyteUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode) ConnectionEgnyteUpdateScheduleTypes {
+	typ := ConnectionEgnyteUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionEgnyteUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionEgnyteUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode) ConnectionEgnyteUpdateScheduleTypes {
+	typ := ConnectionEgnyteUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionEgnyteUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionEgnyteUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode) ConnectionEgnyteUpdateScheduleTypes {
+	typ := ConnectionEgnyteUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionEgnyteUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionEgnyteUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode) ConnectionEgnyteUpdateScheduleTypes {
+	typ := ConnectionEgnyteUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionEgnyteUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionEgnyteUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode
+		u.Type = ConnectionEgnyteUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode
+		u.Type = ConnectionEgnyteUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode
+		u.Type = ConnectionEgnyteUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode
+		u.Type = ConnectionEgnyteUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode
+		u.Type = ConnectionEgnyteUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode
+		u.Type = ConnectionEgnyteUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionEgnyteUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionEgnyteDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionEgnyteDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upda
 	return nil
 }
 
+func (o *ConnectionEgnyteDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionEgnyte struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionEgnyte struct {
 	Status ConnectionEgnyteStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionEgnyteUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionEgnyteDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The name of your Egnyte domain.
@@ -207,44 +679,51 @@ func (o *ConnectionEgnyte) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionEgnyte) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionEgnyte) GetUpdateSchedule() *ConnectionEgnyteUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionEgnyte) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionEgnyte) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEgnyte) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionEgnyte) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEgnyte) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionEgnyte) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEgnyte) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionEgnyte) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEgnyte) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionEgnyte) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionEgnyte) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -274,8 +753,8 @@ type ConnectionEgnyteInput struct {
 	// The unique name of this connection.
 	Name string               `json:"name"`
 	Type ConnectionEgnyteType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionEgnyteUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code string `json:"code"`
 	// The name of your Egnyte domain.
@@ -298,44 +777,51 @@ func (o *ConnectionEgnyteInput) GetType() ConnectionEgnyteType {
 	return o.Type
 }
 
-func (o *ConnectionEgnyteInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionEgnyteInput) GetUpdateSchedule() *ConnectionEgnyteUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionEgnyteInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionEgnyteInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEgnyteIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEgnyteInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionEgnyteInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEgnyteHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEgnyteInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionEgnyteInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionEgnyteDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEgnyteInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionEgnyteInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEgnyteWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEgnyteInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionEgnyteInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEgnyteMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionEgnyteInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionEgnyteCronUpdateScheduleMode
 	}
 	return nil
 }

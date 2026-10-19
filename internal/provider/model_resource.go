@@ -43,19 +43,19 @@ type ModelResource struct {
 
 // ModelResourceModel describes the resource data model.
 type ModelResourceModel struct {
-	CreateDate               types.String         `tfsdk:"create_date"`
-	DeletionOfExportProducts types.Bool           `tfsdk:"deletion_of_export_products"`
-	Dependencies             []ModelDependency    `tfsdk:"dependencies"`
-	ID                       types.String         `tfsdk:"id"`
-	LastUpdateDuration       types.Int64          `tfsdk:"last_update_duration"`
-	LastUpdateTime           types.String         `tfsdk:"last_update_time"`
-	Name                     types.String         `tfsdk:"name"`
-	Owner                    User                 `tfsdk:"owner"`
-	Paused                   types.Bool           `tfsdk:"paused"`
-	QueryAndTriggers         QueryAndTriggers     `tfsdk:"query_and_triggers"`
-	Shares                   []types.String       `tfsdk:"shares"`
-	UpdateSchedule           RefreshScheduleTypes `tfsdk:"update_schedule"`
-	Warehouse                WarehouseTypesInput  `tfsdk:"warehouse"`
+	CreateDate               types.String            `tfsdk:"create_date"`
+	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
+	Dependencies             []ModelDependency       `tfsdk:"dependencies"`
+	ID                       types.String            `tfsdk:"id"`
+	LastUpdateDuration       types.Int64             `tfsdk:"last_update_duration"`
+	LastUpdateTime           types.String            `tfsdk:"last_update_time"`
+	Name                     types.String            `tfsdk:"name"`
+	Owner                    User                    `tfsdk:"owner"`
+	Paused                   types.Bool              `tfsdk:"paused"`
+	QueryAndTriggers         QueryAndTriggers        `tfsdk:"query_and_triggers"`
+	Shares                   []types.String          `tfsdk:"shares"`
+	UpdateSchedule           ModelInputScheduleTypes `tfsdk:"update_schedule"`
+	Warehouse                WarehouseTypesInput     `tfsdk:"warehouse"`
 }
 
 func (r *ModelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -183,6 +183,31 @@ func (r *ModelResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 			"update_schedule": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
+					"cron": schema.SingleNestedAttribute{
+						Computed: true,
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"cron_expression": schema.StringAttribute{
+								Computed:    true,
+								Optional:    true,
+								Description: `The cron expression which defines the times at which schedule should trigger at. Expressions are evaluated in UTC. Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"mode": schema.StringAttribute{
+								Computed:    true,
+								Optional:    true,
+								Description: `Not Null; must be one of ["CRON"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"CRON",
+									),
+								},
+							},
+						},
+					},
 					"daily": schema.SingleNestedAttribute{
 						Computed: true,
 						Optional: true,

@@ -11,78 +11,92 @@ import (
 func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftInput() *shared.ConnectionRedshiftInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionRedshiftType(r.Type.ValueString())
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionRedshiftUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -118,6 +132,95 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftInput() *sha
 	} else {
 		dynamicVarcharWidthEnabled = nil
 	}
+	var loadThrottleSchedule *shared.ConnectionRedshiftLoadThrottleScheduleUpdateScheduleTypes
+	if r.LoadThrottleSchedule != nil {
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleIntervalUpdateScheduleMode
+		if r.LoadThrottleSchedule.Interval != nil {
+			mode6 := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMode(r.LoadThrottleSchedule.Interval.Mode.ValueString())
+			intervalMinutes1 := r.LoadThrottleSchedule.Interval.IntervalMinutes.ValueInt64()
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleIntervalUpdateScheduleMode{
+				Mode:            mode6,
+				IntervalMinutes: intervalMinutes1,
+			}
+		}
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleIntervalUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleHourlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Hourly != nil {
+			mode7 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMode(r.LoadThrottleSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleHourlyUpdateScheduleMode{
+				Mode: mode7,
+			}
+		}
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleHourlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleDailyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Daily != nil {
+			mode8 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMode(r.LoadThrottleSchedule.Daily.Mode.ValueString())
+			hourOfDay3 := r.LoadThrottleSchedule.Daily.HourOfDay.ValueInt64()
+			updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleDailyUpdateScheduleMode{
+				Mode:      mode8,
+				HourOfDay: hourOfDay3,
+			}
+		}
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleDailyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Weekly != nil {
+			mode9 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMode(r.LoadThrottleSchedule.Weekly.Mode.ValueString())
+			dayOfWeek1 := r.LoadThrottleSchedule.Weekly.DayOfWeek.ValueInt64()
+			hourOfDay4 := r.LoadThrottleSchedule.Weekly.HourOfDay.ValueInt64()
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode{
+				Mode:      mode9,
+				DayOfWeek: dayOfWeek1,
+				HourOfDay: hourOfDay4,
+			}
+		}
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Monthly != nil {
+			mode10 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMode(r.LoadThrottleSchedule.Monthly.Mode.ValueString())
+			dayOfMonth1 := r.LoadThrottleSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay5 := r.LoadThrottleSchedule.Monthly.HourOfDay.ValueInt64()
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode{
+				Mode:       mode10,
+				DayOfMonth: dayOfMonth1,
+				HourOfDay:  hourOfDay5,
+			}
+		}
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleCronUpdateScheduleMode
+		if r.LoadThrottleSchedule.Cron != nil {
+			mode11 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMode(r.LoadThrottleSchedule.Cron.Mode.ValueString())
+			cronExpression1 := r.LoadThrottleSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleCronUpdateScheduleMode{
+				Mode:           mode11,
+				CronExpression: cronExpression1,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleCronUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleCronUpdateScheduleMode,
+			}
+		}
+	}
 	address := r.Address.ValueString()
 	port := r.Port.ValueInt64()
 	username := r.Username.ValueString()
@@ -149,6 +252,7 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftInput() *sha
 		QueryTagsEnabled:           queryTagsEnabled,
 		DataSharingDestinations:    dataSharingDestinations,
 		DynamicVarcharWidthEnabled: dynamicVarcharWidthEnabled,
+		LoadThrottleSchedule:       loadThrottleSchedule,
 		Address:                    address,
 		Port:                       port,
 		Username:                   username,
@@ -182,6 +286,11 @@ func (r *ConnectionREDSHIFTResourceModel) RefreshFromSharedConnectionRedshift(re
 			defaultUpdateSchedule1.UpdateSchedule = nil
 		} else {
 			defaultUpdateSchedule1.UpdateSchedule = &UpdateScheduleTypes{}
+			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron != nil {
+				defaultUpdateSchedule1.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+				defaultUpdateSchedule1.UpdateSchedule.Cron.CronExpression = types.StringValue(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.CronExpression)
+				defaultUpdateSchedule1.UpdateSchedule.Cron.Mode = types.StringValue(string(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.Mode))
+			}
 			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily != nil {
 				defaultUpdateSchedule1.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
 				defaultUpdateSchedule1.UpdateSchedule.Daily.HourOfDay = types.Int64Value(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
@@ -218,6 +327,42 @@ func (r *ConnectionREDSHIFTResourceModel) RefreshFromSharedConnectionRedshift(re
 	}
 	r.DynamicVarcharWidthEnabled = types.BoolPointerValue(resp.DynamicVarcharWidthEnabled)
 	r.ID = types.StringValue(resp.ID)
+	if resp.LoadThrottleSchedule == nil {
+		r.LoadThrottleSchedule = nil
+	} else {
+		r.LoadThrottleSchedule = &UpdateScheduleTypes{}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleCronUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Cron = &UpdateScheduleModeCron{}
+			r.LoadThrottleSchedule.Cron.CronExpression = types.StringValue(resp.LoadThrottleSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleCronUpdateScheduleMode.CronExpression)
+			r.LoadThrottleSchedule.Cron.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleCronUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Daily = &UpdateScheduleModeDaily{}
+			r.LoadThrottleSchedule.Daily.HourOfDay = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleDailyUpdateScheduleMode.HourOfDay)
+			r.LoadThrottleSchedule.Daily.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleDailyUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Hourly = &UpdateScheduleModeHourly{}
+			r.LoadThrottleSchedule.Hourly.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleHourlyUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Interval = &UpdateScheduleModeInterval{}
+			r.LoadThrottleSchedule.Interval.IntervalMinutes = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleIntervalUpdateScheduleMode.IntervalMinutes)
+			r.LoadThrottleSchedule.Interval.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleIntervalUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Monthly = &UpdateScheduleModeMonthly{}
+			r.LoadThrottleSchedule.Monthly.DayOfMonth = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode.DayOfMonth)
+			r.LoadThrottleSchedule.Monthly.HourOfDay = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode.HourOfDay)
+			r.LoadThrottleSchedule.Monthly.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleMonthlyUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Weekly = &UpdateScheduleModeWeekly{}
+			r.LoadThrottleSchedule.Weekly.DayOfWeek = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode.DayOfWeek)
+			r.LoadThrottleSchedule.Weekly.HourOfDay = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode.HourOfDay)
+			r.LoadThrottleSchedule.Weekly.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftLoadThrottleScheduleWeeklyUpdateScheduleMode.Mode))
+		}
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.Port = types.Int64Value(resp.Port)
 	r.QueryTagsEnabled = types.BoolPointerValue(resp.QueryTagsEnabled)
@@ -237,31 +382,36 @@ func (r *ConnectionREDSHIFTResourceModel) RefreshFromSharedConnectionRedshift(re
 		r.UpdateSchedule = nil
 	} else {
 		r.UpdateSchedule = &UpdateScheduleTypes{}
-		if resp.UpdateSchedule.UpdateScheduleModeDaily != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftCronUpdateScheduleMode != nil {
+			r.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+			r.UpdateSchedule.Cron.CronExpression = types.StringValue(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftCronUpdateScheduleMode.CronExpression)
+			r.UpdateSchedule.Cron.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftCronUpdateScheduleMode.Mode))
+		}
+		if resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftDailyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
-			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
-			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDaily.Mode))
+			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftDailyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftDailyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeHourly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftHourlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
-			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourly.Mode))
+			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftHourlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeInterval != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftIntervalUpdateScheduleMode != nil {
 			r.UpdateSchedule.Interval = &UpdateScheduleModeInterval{}
-			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeInterval.IntervalMinutes)
-			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeInterval.Mode))
+			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftIntervalUpdateScheduleMode.IntervalMinutes)
+			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftIntervalUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeMonthly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
-			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.DayOfMonth)
-			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.HourOfDay)
-			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthly.Mode))
+			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode.DayOfMonth)
+			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftMonthlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeWeekly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
-			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.DayOfWeek)
-			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.HourOfDay)
-			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
+			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode.DayOfWeek)
+			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftWeeklyUpdateScheduleMode.Mode))
 		}
 	}
 	r.UserGroups = nil
@@ -285,78 +435,92 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftUpdate() *sh
 	} else {
 		active = nil
 	}
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionRedshiftUpdateUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionRedshiftUpdateUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -391,6 +555,95 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftUpdate() *sh
 		*dynamicVarcharWidthEnabled = r.DynamicVarcharWidthEnabled.ValueBool()
 	} else {
 		dynamicVarcharWidthEnabled = nil
+	}
+	var loadThrottleSchedule *shared.ConnectionRedshiftUpdateLoadThrottleScheduleUpdateScheduleTypes
+	if r.LoadThrottleSchedule != nil {
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleIntervalUpdateScheduleMode
+		if r.LoadThrottleSchedule.Interval != nil {
+			mode6 := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Interval.Mode.ValueString())
+			intervalMinutes1 := r.LoadThrottleSchedule.Interval.IntervalMinutes.ValueInt64()
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleIntervalUpdateScheduleMode{
+				Mode:            mode6,
+				IntervalMinutes: intervalMinutes1,
+			}
+		}
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleIntervalUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleHourlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Hourly != nil {
+			mode7 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleHourlyUpdateScheduleMode{
+				Mode: mode7,
+			}
+		}
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleHourlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleDailyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Daily != nil {
+			mode8 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Daily.Mode.ValueString())
+			hourOfDay3 := r.LoadThrottleSchedule.Daily.HourOfDay.ValueInt64()
+			updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleDailyUpdateScheduleMode{
+				Mode:      mode8,
+				HourOfDay: hourOfDay3,
+			}
+		}
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleDailyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Weekly != nil {
+			mode9 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Weekly.Mode.ValueString())
+			dayOfWeek1 := r.LoadThrottleSchedule.Weekly.DayOfWeek.ValueInt64()
+			hourOfDay4 := r.LoadThrottleSchedule.Weekly.HourOfDay.ValueInt64()
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode{
+				Mode:      mode9,
+				DayOfWeek: dayOfWeek1,
+				HourOfDay: hourOfDay4,
+			}
+		}
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Monthly != nil {
+			mode10 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Monthly.Mode.ValueString())
+			dayOfMonth1 := r.LoadThrottleSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay5 := r.LoadThrottleSchedule.Monthly.HourOfDay.ValueInt64()
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode{
+				Mode:       mode10,
+				DayOfMonth: dayOfMonth1,
+				HourOfDay:  hourOfDay5,
+			}
+		}
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleCronUpdateScheduleMode
+		if r.LoadThrottleSchedule.Cron != nil {
+			mode11 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Cron.Mode.ValueString())
+			cronExpression1 := r.LoadThrottleSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleCronUpdateScheduleMode{
+				Mode:           mode11,
+				CronExpression: cronExpression1,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleCronUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionRedshiftUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftUpdateLoadThrottleScheduleCronUpdateScheduleMode,
+			}
+		}
 	}
 	address := new(string)
 	if !r.Address.IsUnknown() && !r.Address.IsNull() {
@@ -459,6 +712,7 @@ func (r *ConnectionREDSHIFTResourceModel) ToSharedConnectionRedshiftUpdate() *sh
 		QueryTagsEnabled:           queryTagsEnabled,
 		DataSharingDestinations:    dataSharingDestinations,
 		DynamicVarcharWidthEnabled: dynamicVarcharWidthEnabled,
+		LoadThrottleSchedule:       loadThrottleSchedule,
 		Address:                    address,
 		Port:                       port,
 		Username:                   username,

@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionTheTradeDeskStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode `json:"mode"`
+	DayOfMonth int64                                                                  `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode `json:"mode"`
+	DayOfWeek int64                                                                 `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionTheTradeDeskUpdateScheduleTypesType string
+
+const (
+	ConnectionTheTradeDeskUpdateScheduleTypesTypeInterval ConnectionTheTradeDeskUpdateScheduleTypesType = "INTERVAL"
+	ConnectionTheTradeDeskUpdateScheduleTypesTypeHourly   ConnectionTheTradeDeskUpdateScheduleTypesType = "HOURLY"
+	ConnectionTheTradeDeskUpdateScheduleTypesTypeDaily    ConnectionTheTradeDeskUpdateScheduleTypesType = "DAILY"
+	ConnectionTheTradeDeskUpdateScheduleTypesTypeWeekly   ConnectionTheTradeDeskUpdateScheduleTypesType = "WEEKLY"
+	ConnectionTheTradeDeskUpdateScheduleTypesTypeMonthly  ConnectionTheTradeDeskUpdateScheduleTypesType = "MONTHLY"
+	ConnectionTheTradeDeskUpdateScheduleTypesTypeCron     ConnectionTheTradeDeskUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionTheTradeDeskUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionTheTradeDeskUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode
+
+	Type ConnectionTheTradeDeskUpdateScheduleTypesType
+}
+
+func CreateConnectionTheTradeDeskUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode) ConnectionTheTradeDeskUpdateScheduleTypes {
+	typ := ConnectionTheTradeDeskUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionTheTradeDeskUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTheTradeDeskUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode) ConnectionTheTradeDeskUpdateScheduleTypes {
+	typ := ConnectionTheTradeDeskUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionTheTradeDeskUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTheTradeDeskUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode) ConnectionTheTradeDeskUpdateScheduleTypes {
+	typ := ConnectionTheTradeDeskUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionTheTradeDeskUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTheTradeDeskUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode) ConnectionTheTradeDeskUpdateScheduleTypes {
+	typ := ConnectionTheTradeDeskUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionTheTradeDeskUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTheTradeDeskUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode) ConnectionTheTradeDeskUpdateScheduleTypes {
+	typ := ConnectionTheTradeDeskUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionTheTradeDeskUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTheTradeDeskUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode) ConnectionTheTradeDeskUpdateScheduleTypes {
+	typ := ConnectionTheTradeDeskUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionTheTradeDeskUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionTheTradeDeskUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode
+		u.Type = ConnectionTheTradeDeskUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode
+		u.Type = ConnectionTheTradeDeskUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode
+		u.Type = ConnectionTheTradeDeskUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode
+		u.Type = ConnectionTheTradeDeskUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode
+		u.Type = ConnectionTheTradeDeskUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode
+		u.Type = ConnectionTheTradeDeskUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionTheTradeDeskUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionTheTradeDeskDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionTheTradeDeskDefaultUpdateSchedule) GetUpdateScheduleMonthly()
 	return nil
 }
 
+func (o *ConnectionTheTradeDeskDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionTheTradeDesk struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionTheTradeDesk struct {
 	Status ConnectionTheTradeDeskStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionTheTradeDeskUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionTheTradeDeskDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Typically an email address.
@@ -209,44 +681,51 @@ func (o *ConnectionTheTradeDesk) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionTheTradeDesk) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionTheTradeDesk) GetUpdateSchedule() *ConnectionTheTradeDeskUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTheTradeDesk) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionTheTradeDesk) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTheTradeDesk) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionTheTradeDesk) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTheTradeDesk) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionTheTradeDesk) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTheTradeDesk) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionTheTradeDesk) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTheTradeDesk) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionTheTradeDesk) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionTheTradeDesk) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -283,8 +762,8 @@ type ConnectionTheTradeDeskInput struct {
 	// The unique name of this connection.
 	Name string                     `json:"name"`
 	Type ConnectionTheTradeDeskType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionTheTradeDeskUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Typically an email address.
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -308,44 +787,51 @@ func (o *ConnectionTheTradeDeskInput) GetType() ConnectionTheTradeDeskType {
 	return o.Type
 }
 
-func (o *ConnectionTheTradeDeskInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionTheTradeDeskInput) GetUpdateSchedule() *ConnectionTheTradeDeskUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTheTradeDeskIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTheTradeDeskHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTheTradeDeskDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTheTradeDeskWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTheTradeDeskMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionTheTradeDeskInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionTheTradeDeskCronUpdateScheduleMode
 	}
 	return nil
 }

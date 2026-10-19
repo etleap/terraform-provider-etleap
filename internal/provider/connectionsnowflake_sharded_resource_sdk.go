@@ -11,78 +11,92 @@ import (
 func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeShardedInput() *shared.ConnectionSnowflakeShardedInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionSnowflakeShardedType(r.Type.ValueString())
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionSnowflakeShardedUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -107,6 +121,95 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 		*storageIntegration = r.StorageIntegration.ValueString()
 	} else {
 		storageIntegration = nil
+	}
+	var loadThrottleSchedule *shared.ConnectionSnowflakeShardedLoadThrottleScheduleUpdateScheduleTypes
+	if r.LoadThrottleSchedule != nil {
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleIntervalUpdateScheduleMode
+		if r.LoadThrottleSchedule.Interval != nil {
+			mode6 := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMode(r.LoadThrottleSchedule.Interval.Mode.ValueString())
+			intervalMinutes1 := r.LoadThrottleSchedule.Interval.IntervalMinutes.ValueInt64()
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleIntervalUpdateScheduleMode{
+				Mode:            mode6,
+				IntervalMinutes: intervalMinutes1,
+			}
+		}
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleIntervalUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleHourlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Hourly != nil {
+			mode7 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMode(r.LoadThrottleSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleHourlyUpdateScheduleMode{
+				Mode: mode7,
+			}
+		}
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleHourlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleDailyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Daily != nil {
+			mode8 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMode(r.LoadThrottleSchedule.Daily.Mode.ValueString())
+			hourOfDay3 := r.LoadThrottleSchedule.Daily.HourOfDay.ValueInt64()
+			updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleDailyUpdateScheduleMode{
+				Mode:      mode8,
+				HourOfDay: hourOfDay3,
+			}
+		}
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleDailyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Weekly != nil {
+			mode9 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMode(r.LoadThrottleSchedule.Weekly.Mode.ValueString())
+			dayOfWeek1 := r.LoadThrottleSchedule.Weekly.DayOfWeek.ValueInt64()
+			hourOfDay4 := r.LoadThrottleSchedule.Weekly.HourOfDay.ValueInt64()
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode{
+				Mode:      mode9,
+				DayOfWeek: dayOfWeek1,
+				HourOfDay: hourOfDay4,
+			}
+		}
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Monthly != nil {
+			mode10 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMode(r.LoadThrottleSchedule.Monthly.Mode.ValueString())
+			dayOfMonth1 := r.LoadThrottleSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay5 := r.LoadThrottleSchedule.Monthly.HourOfDay.ValueInt64()
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode{
+				Mode:       mode10,
+				DayOfMonth: dayOfMonth1,
+				HourOfDay:  hourOfDay5,
+			}
+		}
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleCronUpdateScheduleMode
+		if r.LoadThrottleSchedule.Cron != nil {
+			mode11 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMode(r.LoadThrottleSchedule.Cron.Mode.ValueString())
+			cronExpression1 := r.LoadThrottleSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleCronUpdateScheduleMode{
+				Mode:           mode11,
+				CronExpression: cronExpression1,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleCronUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleCronUpdateScheduleMode,
+			}
+		}
 	}
 	var shards []shared.SnowflakeShard = nil
 	for _, shardsItem := range r.Shards {
@@ -177,14 +280,15 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 		})
 	}
 	out := shared.ConnectionSnowflakeShardedInput{
-		Name:               name,
-		Type:               typeVar,
-		UpdateSchedule:     updateSchedule,
-		Schema:             schema,
-		Roles:              roles,
-		SourceOnly:         sourceOnly,
-		StorageIntegration: storageIntegration,
-		Shards:             shards,
+		Name:                 name,
+		Type:                 typeVar,
+		UpdateSchedule:       updateSchedule,
+		Schema:               schema,
+		Roles:                roles,
+		SourceOnly:           sourceOnly,
+		StorageIntegration:   storageIntegration,
+		LoadThrottleSchedule: loadThrottleSchedule,
+		Shards:               shards,
 	}
 	return &out
 }
@@ -206,6 +310,11 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) RefreshFromSharedConnectionSno
 			defaultUpdateSchedule1.UpdateSchedule = nil
 		} else {
 			defaultUpdateSchedule1.UpdateSchedule = &UpdateScheduleTypes{}
+			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron != nil {
+				defaultUpdateSchedule1.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+				defaultUpdateSchedule1.UpdateSchedule.Cron.CronExpression = types.StringValue(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.CronExpression)
+				defaultUpdateSchedule1.UpdateSchedule.Cron.Mode = types.StringValue(string(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.Mode))
+			}
 			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily != nil {
 				defaultUpdateSchedule1.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
 				defaultUpdateSchedule1.UpdateSchedule.Daily.HourOfDay = types.Int64Value(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
@@ -241,6 +350,42 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) RefreshFromSharedConnectionSno
 		}
 	}
 	r.ID = types.StringValue(resp.ID)
+	if resp.LoadThrottleSchedule == nil {
+		r.LoadThrottleSchedule = nil
+	} else {
+		r.LoadThrottleSchedule = &UpdateScheduleTypes{}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleCronUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Cron = &UpdateScheduleModeCron{}
+			r.LoadThrottleSchedule.Cron.CronExpression = types.StringValue(resp.LoadThrottleSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleCronUpdateScheduleMode.CronExpression)
+			r.LoadThrottleSchedule.Cron.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleCronUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Daily = &UpdateScheduleModeDaily{}
+			r.LoadThrottleSchedule.Daily.HourOfDay = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleDailyUpdateScheduleMode.HourOfDay)
+			r.LoadThrottleSchedule.Daily.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleDailyUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Hourly = &UpdateScheduleModeHourly{}
+			r.LoadThrottleSchedule.Hourly.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleHourlyUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Interval = &UpdateScheduleModeInterval{}
+			r.LoadThrottleSchedule.Interval.IntervalMinutes = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleIntervalUpdateScheduleMode.IntervalMinutes)
+			r.LoadThrottleSchedule.Interval.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleIntervalUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Monthly = &UpdateScheduleModeMonthly{}
+			r.LoadThrottleSchedule.Monthly.DayOfMonth = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode.DayOfMonth)
+			r.LoadThrottleSchedule.Monthly.HourOfDay = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode.HourOfDay)
+			r.LoadThrottleSchedule.Monthly.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleMonthlyUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Weekly = &UpdateScheduleModeWeekly{}
+			r.LoadThrottleSchedule.Weekly.DayOfWeek = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode.DayOfWeek)
+			r.LoadThrottleSchedule.Weekly.HourOfDay = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode.HourOfDay)
+			r.LoadThrottleSchedule.Weekly.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedLoadThrottleScheduleWeeklyUpdateScheduleMode.Mode))
+		}
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.Roles = nil
 	for _, v := range resp.Roles {
@@ -292,31 +437,36 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) RefreshFromSharedConnectionSno
 		r.UpdateSchedule = nil
 	} else {
 		r.UpdateSchedule = &UpdateScheduleTypes{}
-		if resp.UpdateSchedule.UpdateScheduleModeDaily != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedCronUpdateScheduleMode != nil {
+			r.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+			r.UpdateSchedule.Cron.CronExpression = types.StringValue(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedCronUpdateScheduleMode.CronExpression)
+			r.UpdateSchedule.Cron.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedCronUpdateScheduleMode.Mode))
+		}
+		if resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedDailyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
-			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
-			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDaily.Mode))
+			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedDailyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedDailyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeHourly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedHourlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
-			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourly.Mode))
+			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedHourlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeInterval != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedIntervalUpdateScheduleMode != nil {
 			r.UpdateSchedule.Interval = &UpdateScheduleModeInterval{}
-			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeInterval.IntervalMinutes)
-			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeInterval.Mode))
+			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedIntervalUpdateScheduleMode.IntervalMinutes)
+			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedIntervalUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeMonthly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
-			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.DayOfMonth)
-			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.HourOfDay)
-			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthly.Mode))
+			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode.DayOfMonth)
+			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedMonthlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeWeekly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
-			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.DayOfWeek)
-			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.HourOfDay)
-			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
+			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode.DayOfWeek)
+			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedWeeklyUpdateScheduleMode.Mode))
 		}
 	}
 }
@@ -335,78 +485,92 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 	} else {
 		active = nil
 	}
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionSnowflakeShardedUpdateUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionSnowflakeShardedUpdateUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -431,6 +595,95 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 		*storageIntegration = r.StorageIntegration.ValueString()
 	} else {
 		storageIntegration = nil
+	}
+	var loadThrottleSchedule *shared.ConnectionSnowflakeShardedUpdateLoadThrottleScheduleUpdateScheduleTypes
+	if r.LoadThrottleSchedule != nil {
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleIntervalUpdateScheduleMode
+		if r.LoadThrottleSchedule.Interval != nil {
+			mode6 := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Interval.Mode.ValueString())
+			intervalMinutes1 := r.LoadThrottleSchedule.Interval.IntervalMinutes.ValueInt64()
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleIntervalUpdateScheduleMode{
+				Mode:            mode6,
+				IntervalMinutes: intervalMinutes1,
+			}
+		}
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleIntervalUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleHourlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Hourly != nil {
+			mode7 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleHourlyUpdateScheduleMode{
+				Mode: mode7,
+			}
+		}
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleHourlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleDailyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Daily != nil {
+			mode8 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Daily.Mode.ValueString())
+			hourOfDay3 := r.LoadThrottleSchedule.Daily.HourOfDay.ValueInt64()
+			updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleDailyUpdateScheduleMode{
+				Mode:      mode8,
+				HourOfDay: hourOfDay3,
+			}
+		}
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleDailyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Weekly != nil {
+			mode9 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Weekly.Mode.ValueString())
+			dayOfWeek1 := r.LoadThrottleSchedule.Weekly.DayOfWeek.ValueInt64()
+			hourOfDay4 := r.LoadThrottleSchedule.Weekly.HourOfDay.ValueInt64()
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode{
+				Mode:      mode9,
+				DayOfWeek: dayOfWeek1,
+				HourOfDay: hourOfDay4,
+			}
+		}
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Monthly != nil {
+			mode10 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Monthly.Mode.ValueString())
+			dayOfMonth1 := r.LoadThrottleSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay5 := r.LoadThrottleSchedule.Monthly.HourOfDay.ValueInt64()
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode{
+				Mode:       mode10,
+				DayOfMonth: dayOfMonth1,
+				HourOfDay:  hourOfDay5,
+			}
+		}
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleCronUpdateScheduleMode
+		if r.LoadThrottleSchedule.Cron != nil {
+			mode11 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Cron.Mode.ValueString())
+			cronExpression1 := r.LoadThrottleSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleCronUpdateScheduleMode{
+				Mode:           mode11,
+				CronExpression: cronExpression1,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleCronUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionSnowflakeShardedUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeShardedUpdateLoadThrottleScheduleCronUpdateScheduleMode,
+			}
+		}
 	}
 	var shards []shared.SnowflakeShard = nil
 	for _, shardsItem := range r.Shards {
@@ -501,15 +754,16 @@ func (r *ConnectionSNOWFLAKESHARDEDResourceModel) ToSharedConnectionSnowflakeSha
 		})
 	}
 	out := shared.ConnectionSnowflakeShardedUpdate{
-		Name:               name,
-		Type:               typeVar,
-		Active:             active,
-		UpdateSchedule:     updateSchedule,
-		Schema:             schema,
-		Roles:              roles,
-		SourceOnly:         sourceOnly,
-		StorageIntegration: storageIntegration,
-		Shards:             shards,
+		Name:                 name,
+		Type:                 typeVar,
+		Active:               active,
+		UpdateSchedule:       updateSchedule,
+		Schema:               schema,
+		Roles:                roles,
+		SourceOnly:           sourceOnly,
+		StorageIntegration:   storageIntegration,
+		LoadThrottleSchedule: loadThrottleSchedule,
+		Shards:               shards,
 	}
 	return &out
 }

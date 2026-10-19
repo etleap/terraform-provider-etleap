@@ -50,6 +50,7 @@ type ConnectionREDSHIFTSHARDEDResourceModel struct {
 	DeletionOfExportProducts   types.Bool              `tfsdk:"deletion_of_export_products"`
 	DynamicVarcharWidthEnabled types.Bool              `tfsdk:"dynamic_varchar_width_enabled"`
 	ID                         types.String            `tfsdk:"id"`
+	LoadThrottleSchedule       *UpdateScheduleTypes    `tfsdk:"load_throttle_schedule"`
 	Name                       types.String            `tfsdk:"name"`
 	QueryTagsEnabled           types.Bool              `tfsdk:"query_tags_enabled"`
 	Schema                     types.String            `tfsdk:"schema"`
@@ -124,6 +125,33 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 							},
 							Attributes: map[string]schema.Attribute{
+								"cron": schema.SingleNestedAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
+									Attributes: map[string]schema.Attribute{
+										"cron_expression": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Description: `The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.`,
+										},
+										"mode": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Description: `must be one of ["CRON"]`,
+											Validators: []validator.String{
+												stringvalidator.OneOf(
+													"CRON",
+												),
+											},
+										},
+									},
+								},
 								"daily": schema.SingleNestedAttribute{
 									Computed: true,
 									PlanModifiers: []planmodifier.Object{
@@ -150,7 +178,6 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 											},
 										},
 									},
-									Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 								},
 								"hourly": schema.SingleNestedAttribute{
 									Computed: true,
@@ -171,7 +198,6 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 											},
 										},
 									},
-									Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 								},
 								"interval": schema.SingleNestedAttribute{
 									Computed: true,
@@ -199,7 +225,6 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 											},
 										},
 									},
-									Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 								},
 								"monthly": schema.SingleNestedAttribute{
 									Computed: true,
@@ -233,7 +258,6 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 											},
 										},
 									},
-									Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 								},
 								"weekly": schema.SingleNestedAttribute{
 									Computed: true,
@@ -267,10 +291,8 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 											},
 										},
 									},
-									Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 								},
 							},
-							Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.`,
 							Validators: []validator.Object{
 								validators.ExactlyOneChild(),
 							},
@@ -300,6 +322,234 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Description: `The unique identifier of the connection.`,
+			},
+			"load_throttle_schedule": schema.SingleNestedAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
+				Optional: true,
+				Attributes: map[string]schema.Attribute{
+					"cron": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"cron_expression": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC. Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"mode": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["CRON"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"CRON",
+									),
+								},
+							},
+						},
+					},
+					"daily": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"hour_of_day": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
+								Validators: []validator.Int64{
+									speakeasy_int64validators.NotNull(),
+								},
+							},
+							"mode": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["DAILY"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"DAILY",
+									),
+								},
+							},
+						},
+					},
+					"hourly": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"mode": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["HOURLY"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"HOURLY",
+									),
+								},
+							},
+						},
+					},
+					"interval": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"interval_minutes": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Time to wait before new data is pulled (in minutes). Not Null`,
+								Validators: []validator.Int64{
+									speakeasy_int64validators.NotNull(),
+								},
+							},
+							"mode": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["INTERVAL"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"INTERVAL",
+									),
+								},
+							},
+						},
+					},
+					"monthly": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"day_of_month": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null`,
+								Validators: []validator.Int64{
+									speakeasy_int64validators.NotNull(),
+								},
+							},
+							"hour_of_day": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
+								Validators: []validator.Int64{
+									speakeasy_int64validators.NotNull(),
+								},
+							},
+							"mode": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["MONTHLY"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"MONTHLY",
+									),
+								},
+							},
+						},
+					},
+					"weekly": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"day_of_week": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null`,
+								Validators: []validator.Int64{
+									speakeasy_int64validators.NotNull(),
+								},
+							},
+							"hour_of_day": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Hour of day the  pipeline update should be started at (in UTC). Not Null`,
+								Validators: []validator.Int64{
+									speakeasy_int64validators.NotNull(),
+								},
+							},
+							"mode": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["WEEKLY"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"WEEKLY",
+									),
+								},
+							},
+						},
+					},
+				},
+				Description: `When defined, this schedule enables load throttling windows for all pipelines that load to this connection. Load throttling synchronises the activities of all pipelines that load to this destination, such that all loads occur simultaneously. See <a href="https://docs.etleap.com/documentation/pipeline/load-throttling/">the documentation</a> for more details.`,
+				Validators: []validator.Object{
+					validators.ExactlyOneChild(),
+				},
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -490,6 +740,40 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
+					"cron": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"cron_expression": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC. Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"mode": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["CRON"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"CRON",
+									),
+								},
+							},
+						},
+					},
 					"daily": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
@@ -523,7 +807,6 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"hourly": schema.SingleNestedAttribute{
 						Computed: true,
@@ -547,7 +830,6 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"interval": schema.SingleNestedAttribute{
 						Computed: true,
@@ -582,7 +864,6 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"monthly": schema.SingleNestedAttribute{
 						Computed: true,
@@ -628,7 +909,6 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"weekly": schema.SingleNestedAttribute{
 						Computed: true,
@@ -674,10 +954,9 @@ func (r *ConnectionREDSHIFTSHARDEDResource) Schema(ctx context.Context, req reso
 								},
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 				},
-				Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.`,
+				Description: `The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the ` + "`" + `defaultUpdateSchedule` + "`" + ` is used instead.`,
 				Validators: []validator.Object{
 					validators.ExactlyOneChild(),
 				},

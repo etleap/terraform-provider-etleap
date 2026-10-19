@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionUserDefinedAPIStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode `json:"mode"`
+	DayOfMonth int64                                                                    `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode `json:"mode"`
+	DayOfWeek int64                                                                   `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionUserDefinedAPIUpdateScheduleTypesType string
+
+const (
+	ConnectionUserDefinedAPIUpdateScheduleTypesTypeInterval ConnectionUserDefinedAPIUpdateScheduleTypesType = "INTERVAL"
+	ConnectionUserDefinedAPIUpdateScheduleTypesTypeHourly   ConnectionUserDefinedAPIUpdateScheduleTypesType = "HOURLY"
+	ConnectionUserDefinedAPIUpdateScheduleTypesTypeDaily    ConnectionUserDefinedAPIUpdateScheduleTypesType = "DAILY"
+	ConnectionUserDefinedAPIUpdateScheduleTypesTypeWeekly   ConnectionUserDefinedAPIUpdateScheduleTypesType = "WEEKLY"
+	ConnectionUserDefinedAPIUpdateScheduleTypesTypeMonthly  ConnectionUserDefinedAPIUpdateScheduleTypesType = "MONTHLY"
+	ConnectionUserDefinedAPIUpdateScheduleTypesTypeCron     ConnectionUserDefinedAPIUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionUserDefinedAPIUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionUserDefinedAPIUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode
+
+	Type ConnectionUserDefinedAPIUpdateScheduleTypesType
+}
+
+func CreateConnectionUserDefinedAPIUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode) ConnectionUserDefinedAPIUpdateScheduleTypes {
+	typ := ConnectionUserDefinedAPIUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionUserDefinedAPIUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionUserDefinedAPIUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode) ConnectionUserDefinedAPIUpdateScheduleTypes {
+	typ := ConnectionUserDefinedAPIUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionUserDefinedAPIUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionUserDefinedAPIUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode) ConnectionUserDefinedAPIUpdateScheduleTypes {
+	typ := ConnectionUserDefinedAPIUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionUserDefinedAPIUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionUserDefinedAPIUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode) ConnectionUserDefinedAPIUpdateScheduleTypes {
+	typ := ConnectionUserDefinedAPIUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionUserDefinedAPIUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionUserDefinedAPIUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode) ConnectionUserDefinedAPIUpdateScheduleTypes {
+	typ := ConnectionUserDefinedAPIUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionUserDefinedAPIUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionUserDefinedAPIUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode) ConnectionUserDefinedAPIUpdateScheduleTypes {
+	typ := ConnectionUserDefinedAPIUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPIMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionUserDefinedAPIUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionUserDefinedAPIUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode
+		u.Type = ConnectionUserDefinedAPIUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode
+		u.Type = ConnectionUserDefinedAPIUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode
+		u.Type = ConnectionUserDefinedAPIUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode
+		u.Type = ConnectionUserDefinedAPIUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode
+		u.Type = ConnectionUserDefinedAPIUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode
+		u.Type = ConnectionUserDefinedAPIUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionUserDefinedAPIUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionUserDefinedAPIDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionUserDefinedAPIDefaultUpdateSchedule) GetUpdateScheduleMonthly
 	return nil
 }
 
+func (o *ConnectionUserDefinedAPIDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionUserDefinedAPI struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionUserDefinedAPI struct {
 	Status ConnectionUserDefinedAPIStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionUserDefinedAPIUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionUserDefinedAPIDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	Authentication        Authentication                                  `json:"authentication"`
@@ -206,44 +678,51 @@ func (o *ConnectionUserDefinedAPI) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionUserDefinedAPI) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionUserDefinedAPI) GetUpdateSchedule() *ConnectionUserDefinedAPIUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionUserDefinedAPI) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionUserDefinedAPI) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPI) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionUserDefinedAPI) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPI) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionUserDefinedAPI) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPI) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionUserDefinedAPI) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPI) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionUserDefinedAPI) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionUserDefinedAPI) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode
 	}
 	return nil
 }
@@ -289,9 +768,9 @@ type ConnectionUserDefinedAPIInput struct {
 	// The unique name of this connection.
 	Name string                       `json:"name"`
 	Type ConnectionUserDefinedAPIType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Authentication Authentication       `json:"authentication"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionUserDefinedAPIUpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	Authentication Authentication                               `json:"authentication"`
 	// The list of entities.
 	Entities []UserDefinedAPIEntityInput `json:"entities"`
 }
@@ -310,44 +789,51 @@ func (o *ConnectionUserDefinedAPIInput) GetType() ConnectionUserDefinedAPIType {
 	return o.Type
 }
 
-func (o *ConnectionUserDefinedAPIInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionUserDefinedAPIInput) GetUpdateSchedule() *ConnectionUserDefinedAPIUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionUserDefinedAPIIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionUserDefinedAPIHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionUserDefinedAPIDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionUserDefinedAPIWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionUserDefinedAPIMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionUserDefinedAPIInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionUserDefinedAPICronUpdateScheduleMode
 	}
 	return nil
 }

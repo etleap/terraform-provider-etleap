@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionHubspotStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode `json:"mode"`
+	DayOfMonth int64                                                             `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode `json:"mode"`
+	DayOfWeek int64                                                            `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionHubspotUpdateScheduleTypesType string
+
+const (
+	ConnectionHubspotUpdateScheduleTypesTypeInterval ConnectionHubspotUpdateScheduleTypesType = "INTERVAL"
+	ConnectionHubspotUpdateScheduleTypesTypeHourly   ConnectionHubspotUpdateScheduleTypesType = "HOURLY"
+	ConnectionHubspotUpdateScheduleTypesTypeDaily    ConnectionHubspotUpdateScheduleTypesType = "DAILY"
+	ConnectionHubspotUpdateScheduleTypesTypeWeekly   ConnectionHubspotUpdateScheduleTypesType = "WEEKLY"
+	ConnectionHubspotUpdateScheduleTypesTypeMonthly  ConnectionHubspotUpdateScheduleTypesType = "MONTHLY"
+	ConnectionHubspotUpdateScheduleTypesTypeCron     ConnectionHubspotUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionHubspotUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionHubspotUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode
+
+	Type ConnectionHubspotUpdateScheduleTypesType
+}
+
+func CreateConnectionHubspotUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode) ConnectionHubspotUpdateScheduleTypes {
+	typ := ConnectionHubspotUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionHubspotUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionHubspotUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode) ConnectionHubspotUpdateScheduleTypes {
+	typ := ConnectionHubspotUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionHubspotUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionHubspotUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode) ConnectionHubspotUpdateScheduleTypes {
+	typ := ConnectionHubspotUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionHubspotUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionHubspotUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode) ConnectionHubspotUpdateScheduleTypes {
+	typ := ConnectionHubspotUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionHubspotUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionHubspotUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode) ConnectionHubspotUpdateScheduleTypes {
+	typ := ConnectionHubspotUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionHubspotUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionHubspotUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode) ConnectionHubspotUpdateScheduleTypes {
+	typ := ConnectionHubspotUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionHubspotUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionHubspotUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode
+		u.Type = ConnectionHubspotUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode
+		u.Type = ConnectionHubspotUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode
+		u.Type = ConnectionHubspotUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode
+		u.Type = ConnectionHubspotUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode
+		u.Type = ConnectionHubspotUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode
+		u.Type = ConnectionHubspotUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionHubspotUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionHubspotDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionHubspotDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upd
 	return nil
 }
 
+func (o *ConnectionHubspotDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionHubspot struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionHubspot struct {
 	Status ConnectionHubspotStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionHubspotUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionHubspotDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	Username              string                                   `json:"username"`
@@ -204,44 +676,51 @@ func (o *ConnectionHubspot) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionHubspot) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionHubspot) GetUpdateSchedule() *ConnectionHubspotUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionHubspot) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionHubspot) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionHubspot) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionHubspot) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionHubspot) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionHubspot) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionHubspot) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionHubspot) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionHubspot) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionHubspot) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionHubspot) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -264,8 +743,8 @@ type ConnectionHubspotInput struct {
 	// The unique name of this connection.
 	Name string                `json:"name"`
 	Type ConnectionHubspotType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionHubspotUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code string `json:"code"`
 }
@@ -284,44 +763,51 @@ func (o *ConnectionHubspotInput) GetType() ConnectionHubspotType {
 	return o.Type
 }
 
-func (o *ConnectionHubspotInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionHubspotInput) GetUpdateSchedule() *ConnectionHubspotUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionHubspotInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionHubspotInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionHubspotIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionHubspotInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionHubspotInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionHubspotHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionHubspotInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionHubspotInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionHubspotDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionHubspotInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionHubspotInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionHubspotWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionHubspotInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionHubspotInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionHubspotMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionHubspotInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionHubspotCronUpdateScheduleMode
 	}
 	return nil
 }

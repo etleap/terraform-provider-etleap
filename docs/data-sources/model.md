@@ -85,11 +85,21 @@ SELECT col1, col2 FROM {{abcd1234}};
 
 Read-Only:
 
+- `cron` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--cron))
 - `daily` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--daily))
 - `hourly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--hourly))
 - `monthly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--monthly))
 - `never` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--never))
 - `weekly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--weekly))
+
+<a id="nestedatt--update_schedule--cron"></a>
+### Nested Schema for `update_schedule.cron`
+
+Read-Only:
+
+- `cron_expression` (String) The cron expression which defines the times at which schedule should trigger at. Expressions are evaluated in UTC.
+- `mode` (String) must be one of ["CRON"]
+
 
 <a id="nestedatt--update_schedule--daily"></a>
 ### Nested Schema for `update_schedule.daily`

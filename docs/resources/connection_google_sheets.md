@@ -35,7 +35,7 @@ resource "etleap_connection_google_sheets" "my_connectiongoogle_sheets" {
 - `authentication_method` (String) How Etleap authenticates with Google Sheets. With `SERVICE_ACCOUNT`, Etleap provisions a dedicated Google service account for this connection and returns its address as `serviceAccountEmail`. Share the spreadsheets you want to create a pipeline from with that address as a Viewer. `OAUTH` is a legacy method that requires the `code` to be present. Defaults to `OAUTH` when omitted, and cannot be changed after the connection has been created. Requires replacement if changed. ; must be one of ["OAUTH", "SERVICE_ACCOUNT"]; Default: "OAUTH"
 - `code` (String) Code retrieved from `/connections/oauth2-initiation`. Required when `authenticationMethod` is `OAUTH` or omitted, and must be omitted when it is `SERVICE_ACCOUNT`. **Note:** The code is short-lived, therefore the connection creation should be done as soon as code is returned.
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
-- `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--update_schedule))
+- `update_schedule` (Attributes) The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead. (see [below for nested schema](#nestedatt--update_schedule))
 
 ### Read-Only
 
@@ -52,11 +52,21 @@ resource "etleap_connection_google_sheets" "my_connectiongoogle_sheets" {
 
 Optional:
 
-- `daily` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--daily))
-- `hourly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--hourly))
-- `interval` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--interval))
-- `monthly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--monthly))
-- `weekly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--weekly))
+- `cron` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--cron))
+- `daily` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--daily))
+- `hourly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--hourly))
+- `interval` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--interval))
+- `monthly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--monthly))
+- `weekly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--weekly))
+
+<a id="nestedatt--update_schedule--cron"></a>
+### Nested Schema for `update_schedule.cron`
+
+Optional:
+
+- `cron_expression` (String) The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC. Not Null
+- `mode` (String) Not Null; must be one of ["CRON"]
+
 
 <a id="nestedatt--update_schedule--daily"></a>
 ### Nested Schema for `update_schedule.daily`
@@ -111,18 +121,28 @@ Optional:
 Read-Only:
 
 - `pipeline_mode` (String) The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details. must be one of ["APPEND", "REPLACE", "UPDATE", "QUERY"]
-- `update_schedule` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
+- `update_schedule` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule))
 
 <a id="nestedatt--default_update_schedule--update_schedule"></a>
 ### Nested Schema for `default_update_schedule.update_schedule`
 
 Read-Only:
 
-- `daily` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--daily))
-- `hourly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--hourly))
-- `interval` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--interval))
-- `monthly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--monthly))
-- `weekly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--weekly))
+- `cron` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--cron))
+- `daily` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--daily))
+- `hourly` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--hourly))
+- `interval` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--interval))
+- `monthly` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--monthly))
+- `weekly` (Attributes) (see [below for nested schema](#nestedatt--default_update_schedule--update_schedule--weekly))
+
+<a id="nestedatt--default_update_schedule--update_schedule--cron"></a>
+### Nested Schema for `default_update_schedule.update_schedule.cron`
+
+Read-Only:
+
+- `cron_expression` (String) The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+- `mode` (String) must be one of ["CRON"]
+
 
 <a id="nestedatt--default_update_schedule--update_schedule--daily"></a>
 ### Nested Schema for `default_update_schedule.update_schedule.daily`

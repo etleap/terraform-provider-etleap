@@ -9,6 +9,50 @@ import (
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
+type RefreshScheduleModeCronScheduleTypesPipelineInputMode string
+
+const (
+	RefreshScheduleModeCronScheduleTypesPipelineInputModeCron RefreshScheduleModeCronScheduleTypesPipelineInputMode = "CRON"
+)
+
+func (e RefreshScheduleModeCronScheduleTypesPipelineInputMode) ToPointer() *RefreshScheduleModeCronScheduleTypesPipelineInputMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeCronScheduleTypesPipelineInputMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = RefreshScheduleModeCronScheduleTypesPipelineInputMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeCronScheduleTypesPipelineInputMode: %v", v)
+	}
+}
+
+type RefreshScheduleModeCronScheduleTypesCronScheduleMode struct {
+	Mode RefreshScheduleModeCronScheduleTypesPipelineInputMode `json:"mode"`
+	// The cron expression which defines the times at which schedule should trigger at. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *RefreshScheduleModeCronScheduleTypesCronScheduleMode) GetMode() RefreshScheduleModeCronScheduleTypesPipelineInputMode {
+	if o == nil {
+		return RefreshScheduleModeCronScheduleTypesPipelineInputMode("")
+	}
+	return o.Mode
+}
+
+func (o *RefreshScheduleModeCronScheduleTypesCronScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
 type RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode string
 
 const (
@@ -33,7 +77,7 @@ func (e *RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode) UnmarshalJSON
 	}
 }
 
-type ScheduleTypesMonthlyScheduleMode struct {
+type RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode struct {
 	Mode RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode `json:"mode"`
 	// Day of the month this schedule should trigger at (in UTC).
 	DayOfMonth int64 `json:"dayOfMonth"`
@@ -41,21 +85,21 @@ type ScheduleTypesMonthlyScheduleMode struct {
 	HourOfDay int64 `json:"hourOfDay"`
 }
 
-func (o *ScheduleTypesMonthlyScheduleMode) GetMode() RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode {
+func (o *RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode) GetMode() RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode {
 	if o == nil {
 		return RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode("")
 	}
 	return o.Mode
 }
 
-func (o *ScheduleTypesMonthlyScheduleMode) GetDayOfMonth() int64 {
+func (o *RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode) GetDayOfMonth() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.DayOfMonth
 }
 
-func (o *ScheduleTypesMonthlyScheduleMode) GetHourOfDay() int64 {
+func (o *RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode) GetHourOfDay() int64 {
 	if o == nil {
 		return 0
 	}
@@ -86,7 +130,7 @@ func (e *RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode) UnmarshalJSON(
 	}
 }
 
-type ScheduleTypesWeeklyScheduleMode struct {
+type RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode struct {
 	Mode RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode `json:"mode"`
 	// The day of the week this schedule should trigger at (in UTC).
 	DayOfWeek int64 `json:"dayOfWeek"`
@@ -94,21 +138,21 @@ type ScheduleTypesWeeklyScheduleMode struct {
 	HourOfDay int64 `json:"hourOfDay"`
 }
 
-func (o *ScheduleTypesWeeklyScheduleMode) GetMode() RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode {
+func (o *RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode) GetMode() RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode {
 	if o == nil {
 		return RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode("")
 	}
 	return o.Mode
 }
 
-func (o *ScheduleTypesWeeklyScheduleMode) GetDayOfWeek() int64 {
+func (o *RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode) GetDayOfWeek() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.DayOfWeek
 }
 
-func (o *ScheduleTypesWeeklyScheduleMode) GetHourOfDay() int64 {
+func (o *RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode) GetHourOfDay() int64 {
 	if o == nil {
 		return 0
 	}
@@ -139,20 +183,20 @@ func (e *RefreshScheduleModeDailyScheduleTypesPipelineInputMode) UnmarshalJSON(d
 	}
 }
 
-type ScheduleTypesDailyScheduleMode struct {
+type RefreshScheduleModeDailyScheduleTypesDailyScheduleMode struct {
 	Mode RefreshScheduleModeDailyScheduleTypesPipelineInputMode `json:"mode"`
 	// Hour of day this schedule should trigger at (in UTC).
 	HourOfDay int64 `json:"hourOfDay"`
 }
 
-func (o *ScheduleTypesDailyScheduleMode) GetMode() RefreshScheduleModeDailyScheduleTypesPipelineInputMode {
+func (o *RefreshScheduleModeDailyScheduleTypesDailyScheduleMode) GetMode() RefreshScheduleModeDailyScheduleTypesPipelineInputMode {
 	if o == nil {
 		return RefreshScheduleModeDailyScheduleTypesPipelineInputMode("")
 	}
 	return o.Mode
 }
 
-func (o *ScheduleTypesDailyScheduleMode) GetHourOfDay() int64 {
+func (o *RefreshScheduleModeDailyScheduleTypesDailyScheduleMode) GetHourOfDay() int64 {
 	if o == nil {
 		return 0
 	}
@@ -183,48 +227,48 @@ func (e *RefreshScheduleModeHourlyScheduleTypesPipelineInputMode) UnmarshalJSON(
 	}
 }
 
-type ScheduleTypesHourlyScheduleMode struct {
+type RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode struct {
 	Mode RefreshScheduleModeHourlyScheduleTypesPipelineInputMode `json:"mode"`
 }
 
-func (o *ScheduleTypesHourlyScheduleMode) GetMode() RefreshScheduleModeHourlyScheduleTypesPipelineInputMode {
+func (o *RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode) GetMode() RefreshScheduleModeHourlyScheduleTypesPipelineInputMode {
 	if o == nil {
 		return RefreshScheduleModeHourlyScheduleTypesPipelineInputMode("")
 	}
 	return o.Mode
 }
 
-type RefreshScheduleModeNeverScheduleTypesMode string
+type RefreshScheduleModeNeverScheduleTypesPipelineInputMode string
 
 const (
-	RefreshScheduleModeNeverScheduleTypesModeNever RefreshScheduleModeNeverScheduleTypesMode = "NEVER"
+	RefreshScheduleModeNeverScheduleTypesPipelineInputModeNever RefreshScheduleModeNeverScheduleTypesPipelineInputMode = "NEVER"
 )
 
-func (e RefreshScheduleModeNeverScheduleTypesMode) ToPointer() *RefreshScheduleModeNeverScheduleTypesMode {
+func (e RefreshScheduleModeNeverScheduleTypesPipelineInputMode) ToPointer() *RefreshScheduleModeNeverScheduleTypesPipelineInputMode {
 	return &e
 }
 
-func (e *RefreshScheduleModeNeverScheduleTypesMode) UnmarshalJSON(data []byte) error {
+func (e *RefreshScheduleModeNeverScheduleTypesPipelineInputMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NEVER":
-		*e = RefreshScheduleModeNeverScheduleTypesMode(v)
+		*e = RefreshScheduleModeNeverScheduleTypesPipelineInputMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for RefreshScheduleModeNeverScheduleTypesMode: %v", v)
+		return fmt.Errorf("invalid value for RefreshScheduleModeNeverScheduleTypesPipelineInputMode: %v", v)
 	}
 }
 
-type ScheduleTypesNeverScheduleMode struct {
-	Mode RefreshScheduleModeNeverScheduleTypesMode `json:"mode"`
+type RefreshScheduleModeNeverScheduleTypesNeverScheduleMode struct {
+	Mode RefreshScheduleModeNeverScheduleTypesPipelineInputMode `json:"mode"`
 }
 
-func (o *ScheduleTypesNeverScheduleMode) GetMode() RefreshScheduleModeNeverScheduleTypesMode {
+func (o *RefreshScheduleModeNeverScheduleTypesNeverScheduleMode) GetMode() RefreshScheduleModeNeverScheduleTypesPipelineInputMode {
 	if o == nil {
-		return RefreshScheduleModeNeverScheduleTypesMode("")
+		return RefreshScheduleModeNeverScheduleTypesPipelineInputMode("")
 	}
 	return o.Mode
 }
@@ -237,78 +281,92 @@ const (
 	PipelineInputScheduleTypesTypeDaily   PipelineInputScheduleTypesType = "DAILY"
 	PipelineInputScheduleTypesTypeWeekly  PipelineInputScheduleTypesType = "WEEKLY"
 	PipelineInputScheduleTypesTypeMonthly PipelineInputScheduleTypesType = "MONTHLY"
+	PipelineInputScheduleTypesTypeCron    PipelineInputScheduleTypesType = "CRON"
 )
 
 // PipelineInputScheduleTypes - A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
 //
 // Setting this to `null` is equivalent to setting the Refresh Schedule to `NEVER`.
 type PipelineInputScheduleTypes struct {
-	ScheduleTypesNeverScheduleMode   *ScheduleTypesNeverScheduleMode
-	ScheduleTypesHourlyScheduleMode  *ScheduleTypesHourlyScheduleMode
-	ScheduleTypesDailyScheduleMode   *ScheduleTypesDailyScheduleMode
-	ScheduleTypesWeeklyScheduleMode  *ScheduleTypesWeeklyScheduleMode
-	ScheduleTypesMonthlyScheduleMode *ScheduleTypesMonthlyScheduleMode
+	RefreshScheduleModeNeverScheduleTypesNeverScheduleMode     *RefreshScheduleModeNeverScheduleTypesNeverScheduleMode
+	RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode   *RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode
+	RefreshScheduleModeDailyScheduleTypesDailyScheduleMode     *RefreshScheduleModeDailyScheduleTypesDailyScheduleMode
+	RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode   *RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode
+	RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode *RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode
+	RefreshScheduleModeCronScheduleTypesCronScheduleMode       *RefreshScheduleModeCronScheduleTypesCronScheduleMode
 
 	Type PipelineInputScheduleTypesType
 }
 
-func CreatePipelineInputScheduleTypesNever(never ScheduleTypesNeverScheduleMode) PipelineInputScheduleTypes {
+func CreatePipelineInputScheduleTypesNever(never RefreshScheduleModeNeverScheduleTypesNeverScheduleMode) PipelineInputScheduleTypes {
 	typ := PipelineInputScheduleTypesTypeNever
 
-	typStr := RefreshScheduleModeNeverScheduleTypesMode(typ)
+	typStr := RefreshScheduleModeNeverScheduleTypesPipelineInputMode(typ)
 	never.Mode = typStr
 
 	return PipelineInputScheduleTypes{
-		ScheduleTypesNeverScheduleMode: &never,
-		Type:                           typ,
+		RefreshScheduleModeNeverScheduleTypesNeverScheduleMode: &never,
+		Type: typ,
 	}
 }
 
-func CreatePipelineInputScheduleTypesHourly(hourly ScheduleTypesHourlyScheduleMode) PipelineInputScheduleTypes {
+func CreatePipelineInputScheduleTypesHourly(hourly RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode) PipelineInputScheduleTypes {
 	typ := PipelineInputScheduleTypesTypeHourly
 
 	typStr := RefreshScheduleModeHourlyScheduleTypesPipelineInputMode(typ)
 	hourly.Mode = typStr
 
 	return PipelineInputScheduleTypes{
-		ScheduleTypesHourlyScheduleMode: &hourly,
-		Type:                            typ,
+		RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode: &hourly,
+		Type: typ,
 	}
 }
 
-func CreatePipelineInputScheduleTypesDaily(daily ScheduleTypesDailyScheduleMode) PipelineInputScheduleTypes {
+func CreatePipelineInputScheduleTypesDaily(daily RefreshScheduleModeDailyScheduleTypesDailyScheduleMode) PipelineInputScheduleTypes {
 	typ := PipelineInputScheduleTypesTypeDaily
 
 	typStr := RefreshScheduleModeDailyScheduleTypesPipelineInputMode(typ)
 	daily.Mode = typStr
 
 	return PipelineInputScheduleTypes{
-		ScheduleTypesDailyScheduleMode: &daily,
-		Type:                           typ,
+		RefreshScheduleModeDailyScheduleTypesDailyScheduleMode: &daily,
+		Type: typ,
 	}
 }
 
-func CreatePipelineInputScheduleTypesWeekly(weekly ScheduleTypesWeeklyScheduleMode) PipelineInputScheduleTypes {
+func CreatePipelineInputScheduleTypesWeekly(weekly RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode) PipelineInputScheduleTypes {
 	typ := PipelineInputScheduleTypesTypeWeekly
 
 	typStr := RefreshScheduleModeWeeklyScheduleTypesPipelineInputMode(typ)
 	weekly.Mode = typStr
 
 	return PipelineInputScheduleTypes{
-		ScheduleTypesWeeklyScheduleMode: &weekly,
-		Type:                            typ,
+		RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode: &weekly,
+		Type: typ,
 	}
 }
 
-func CreatePipelineInputScheduleTypesMonthly(monthly ScheduleTypesMonthlyScheduleMode) PipelineInputScheduleTypes {
+func CreatePipelineInputScheduleTypesMonthly(monthly RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode) PipelineInputScheduleTypes {
 	typ := PipelineInputScheduleTypesTypeMonthly
 
 	typStr := RefreshScheduleModeMonthlyScheduleTypesPipelineInputMode(typ)
 	monthly.Mode = typStr
 
 	return PipelineInputScheduleTypes{
-		ScheduleTypesMonthlyScheduleMode: &monthly,
-		Type:                             typ,
+		RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreatePipelineInputScheduleTypesCron(cron RefreshScheduleModeCronScheduleTypesCronScheduleMode) PipelineInputScheduleTypes {
+	typ := PipelineInputScheduleTypesTypeCron
+
+	typStr := RefreshScheduleModeCronScheduleTypesPipelineInputMode(typ)
+	cron.Mode = typStr
+
+	return PipelineInputScheduleTypes{
+		RefreshScheduleModeCronScheduleTypesCronScheduleMode: &cron,
+		Type: typ,
 	}
 }
 
@@ -325,49 +383,58 @@ func (u *PipelineInputScheduleTypes) UnmarshalJSON(data []byte) error {
 
 	switch dis.Mode {
 	case "NEVER":
-		scheduleTypesNeverScheduleMode := new(ScheduleTypesNeverScheduleMode)
-		if err := utils.UnmarshalJSON(data, &scheduleTypesNeverScheduleMode, "", true, true); err != nil {
+		refreshScheduleModeNeverScheduleTypesNeverScheduleMode := new(RefreshScheduleModeNeverScheduleTypesNeverScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeNeverScheduleTypesNeverScheduleMode, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.ScheduleTypesNeverScheduleMode = scheduleTypesNeverScheduleMode
+		u.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode = refreshScheduleModeNeverScheduleTypesNeverScheduleMode
 		u.Type = PipelineInputScheduleTypesTypeNever
 		return nil
 	case "HOURLY":
-		scheduleTypesHourlyScheduleMode := new(ScheduleTypesHourlyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &scheduleTypesHourlyScheduleMode, "", true, true); err != nil {
+		refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode := new(RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.ScheduleTypesHourlyScheduleMode = scheduleTypesHourlyScheduleMode
+		u.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode = refreshScheduleModeHourlyScheduleTypesHourlyScheduleMode
 		u.Type = PipelineInputScheduleTypesTypeHourly
 		return nil
 	case "DAILY":
-		scheduleTypesDailyScheduleMode := new(ScheduleTypesDailyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &scheduleTypesDailyScheduleMode, "", true, true); err != nil {
+		refreshScheduleModeDailyScheduleTypesDailyScheduleMode := new(RefreshScheduleModeDailyScheduleTypesDailyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeDailyScheduleTypesDailyScheduleMode, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.ScheduleTypesDailyScheduleMode = scheduleTypesDailyScheduleMode
+		u.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode = refreshScheduleModeDailyScheduleTypesDailyScheduleMode
 		u.Type = PipelineInputScheduleTypesTypeDaily
 		return nil
 	case "WEEKLY":
-		scheduleTypesWeeklyScheduleMode := new(ScheduleTypesWeeklyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &scheduleTypesWeeklyScheduleMode, "", true, true); err != nil {
+		refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode := new(RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.ScheduleTypesWeeklyScheduleMode = scheduleTypesWeeklyScheduleMode
+		u.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode = refreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode
 		u.Type = PipelineInputScheduleTypesTypeWeekly
 		return nil
 	case "MONTHLY":
-		scheduleTypesMonthlyScheduleMode := new(ScheduleTypesMonthlyScheduleMode)
-		if err := utils.UnmarshalJSON(data, &scheduleTypesMonthlyScheduleMode, "", true, true); err != nil {
+		refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode := new(RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
-		u.ScheduleTypesMonthlyScheduleMode = scheduleTypesMonthlyScheduleMode
+		u.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode = refreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode
 		u.Type = PipelineInputScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		refreshScheduleModeCronScheduleTypesCronScheduleMode := new(RefreshScheduleModeCronScheduleTypesCronScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeCronScheduleTypesCronScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.RefreshScheduleModeCronScheduleTypesCronScheduleMode = refreshScheduleModeCronScheduleTypesCronScheduleMode
+		u.Type = PipelineInputScheduleTypesTypeCron
 		return nil
 	}
 
@@ -375,24 +442,28 @@ func (u *PipelineInputScheduleTypes) UnmarshalJSON(data []byte) error {
 }
 
 func (u PipelineInputScheduleTypes) MarshalJSON() ([]byte, error) {
-	if u.ScheduleTypesNeverScheduleMode != nil {
-		return utils.MarshalJSON(u.ScheduleTypesNeverScheduleMode, "", true)
+	if u.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode, "", true)
 	}
 
-	if u.ScheduleTypesHourlyScheduleMode != nil {
-		return utils.MarshalJSON(u.ScheduleTypesHourlyScheduleMode, "", true)
+	if u.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode, "", true)
 	}
 
-	if u.ScheduleTypesDailyScheduleMode != nil {
-		return utils.MarshalJSON(u.ScheduleTypesDailyScheduleMode, "", true)
+	if u.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode, "", true)
 	}
 
-	if u.ScheduleTypesWeeklyScheduleMode != nil {
-		return utils.MarshalJSON(u.ScheduleTypesWeeklyScheduleMode, "", true)
+	if u.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode, "", true)
 	}
 
-	if u.ScheduleTypesMonthlyScheduleMode != nil {
-		return utils.MarshalJSON(u.ScheduleTypesMonthlyScheduleMode, "", true)
+	if u.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode, "", true)
+	}
+
+	if u.RefreshScheduleModeCronScheduleTypesCronScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeCronScheduleTypesCronScheduleMode, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -931,37 +1002,44 @@ func (o *PipelineInput) GetRefreshSchedule() *PipelineInputScheduleTypes {
 	return o.RefreshSchedule
 }
 
-func (o *PipelineInput) GetRefreshScheduleNever() *ScheduleTypesNeverScheduleMode {
+func (o *PipelineInput) GetRefreshScheduleNever() *RefreshScheduleModeNeverScheduleTypesNeverScheduleMode {
 	if v := o.GetRefreshSchedule(); v != nil {
-		return v.ScheduleTypesNeverScheduleMode
+		return v.RefreshScheduleModeNeverScheduleTypesNeverScheduleMode
 	}
 	return nil
 }
 
-func (o *PipelineInput) GetRefreshScheduleHourly() *ScheduleTypesHourlyScheduleMode {
+func (o *PipelineInput) GetRefreshScheduleHourly() *RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode {
 	if v := o.GetRefreshSchedule(); v != nil {
-		return v.ScheduleTypesHourlyScheduleMode
+		return v.RefreshScheduleModeHourlyScheduleTypesHourlyScheduleMode
 	}
 	return nil
 }
 
-func (o *PipelineInput) GetRefreshScheduleDaily() *ScheduleTypesDailyScheduleMode {
+func (o *PipelineInput) GetRefreshScheduleDaily() *RefreshScheduleModeDailyScheduleTypesDailyScheduleMode {
 	if v := o.GetRefreshSchedule(); v != nil {
-		return v.ScheduleTypesDailyScheduleMode
+		return v.RefreshScheduleModeDailyScheduleTypesDailyScheduleMode
 	}
 	return nil
 }
 
-func (o *PipelineInput) GetRefreshScheduleWeekly() *ScheduleTypesWeeklyScheduleMode {
+func (o *PipelineInput) GetRefreshScheduleWeekly() *RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode {
 	if v := o.GetRefreshSchedule(); v != nil {
-		return v.ScheduleTypesWeeklyScheduleMode
+		return v.RefreshScheduleModeWeeklyScheduleTypesWeeklyScheduleMode
 	}
 	return nil
 }
 
-func (o *PipelineInput) GetRefreshScheduleMonthly() *ScheduleTypesMonthlyScheduleMode {
+func (o *PipelineInput) GetRefreshScheduleMonthly() *RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode {
 	if v := o.GetRefreshSchedule(); v != nil {
-		return v.ScheduleTypesMonthlyScheduleMode
+		return v.RefreshScheduleModeMonthlyScheduleTypesMonthlyScheduleMode
+	}
+	return nil
+}
+
+func (o *PipelineInput) GetRefreshScheduleCron() *RefreshScheduleModeCronScheduleTypesCronScheduleMode {
+	if v := o.GetRefreshSchedule(); v != nil {
+		return v.RefreshScheduleModeCronScheduleTypesCronScheduleMode
 	}
 	return nil
 }

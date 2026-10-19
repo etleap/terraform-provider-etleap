@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionTwitterAdsStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode `json:"mode"`
+	DayOfMonth int64                                                                `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode `json:"mode"`
+	DayOfWeek int64                                                               `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionTwitterAdsUpdateScheduleTypesType string
+
+const (
+	ConnectionTwitterAdsUpdateScheduleTypesTypeInterval ConnectionTwitterAdsUpdateScheduleTypesType = "INTERVAL"
+	ConnectionTwitterAdsUpdateScheduleTypesTypeHourly   ConnectionTwitterAdsUpdateScheduleTypesType = "HOURLY"
+	ConnectionTwitterAdsUpdateScheduleTypesTypeDaily    ConnectionTwitterAdsUpdateScheduleTypesType = "DAILY"
+	ConnectionTwitterAdsUpdateScheduleTypesTypeWeekly   ConnectionTwitterAdsUpdateScheduleTypesType = "WEEKLY"
+	ConnectionTwitterAdsUpdateScheduleTypesTypeMonthly  ConnectionTwitterAdsUpdateScheduleTypesType = "MONTHLY"
+	ConnectionTwitterAdsUpdateScheduleTypesTypeCron     ConnectionTwitterAdsUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionTwitterAdsUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionTwitterAdsUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode
+
+	Type ConnectionTwitterAdsUpdateScheduleTypesType
+}
+
+func CreateConnectionTwitterAdsUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode) ConnectionTwitterAdsUpdateScheduleTypes {
+	typ := ConnectionTwitterAdsUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionTwitterAdsUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTwitterAdsUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode) ConnectionTwitterAdsUpdateScheduleTypes {
+	typ := ConnectionTwitterAdsUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionTwitterAdsUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTwitterAdsUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode) ConnectionTwitterAdsUpdateScheduleTypes {
+	typ := ConnectionTwitterAdsUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionTwitterAdsUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTwitterAdsUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode) ConnectionTwitterAdsUpdateScheduleTypes {
+	typ := ConnectionTwitterAdsUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionTwitterAdsUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTwitterAdsUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode) ConnectionTwitterAdsUpdateScheduleTypes {
+	typ := ConnectionTwitterAdsUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionTwitterAdsUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTwitterAdsUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode) ConnectionTwitterAdsUpdateScheduleTypes {
+	typ := ConnectionTwitterAdsUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionTwitterAdsUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionTwitterAdsUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode
+		u.Type = ConnectionTwitterAdsUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode
+		u.Type = ConnectionTwitterAdsUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode
+		u.Type = ConnectionTwitterAdsUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode
+		u.Type = ConnectionTwitterAdsUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode
+		u.Type = ConnectionTwitterAdsUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode
+		u.Type = ConnectionTwitterAdsUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionTwitterAdsUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionTwitterAdsDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionTwitterAdsDefaultUpdateSchedule) GetUpdateScheduleMonthly() *
 	return nil
 }
 
+func (o *ConnectionTwitterAdsDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionTwitterAds struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionTwitterAds struct {
 	Status ConnectionTwitterAdsStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionTwitterAdsUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionTwitterAdsDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// This represents your X developer app when making API requests. Generated under 'Consumer API keys'.
@@ -207,44 +679,51 @@ func (o *ConnectionTwitterAds) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionTwitterAds) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionTwitterAds) GetUpdateSchedule() *ConnectionTwitterAdsUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTwitterAds) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionTwitterAds) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwitterAds) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionTwitterAds) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwitterAds) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionTwitterAds) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwitterAds) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionTwitterAds) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwitterAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionTwitterAds) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionTwitterAds) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -274,8 +753,8 @@ type ConnectionTwitterAdsInput struct {
 	// The unique name of this connection.
 	Name string                   `json:"name"`
 	Type ConnectionTwitterAdsType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionTwitterAdsUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// This represents your X developer app when making API requests. Generated under 'Consumer API keys'.
 	AppKey string `json:"appKey"`
 	// This authenticates your X developer app when making API requests. Generated under 'Consumer API keys'.
@@ -302,44 +781,51 @@ func (o *ConnectionTwitterAdsInput) GetType() ConnectionTwitterAdsType {
 	return o.Type
 }
 
-func (o *ConnectionTwitterAdsInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionTwitterAdsInput) GetUpdateSchedule() *ConnectionTwitterAdsUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTwitterAdsInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionTwitterAdsInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwitterAdsIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwitterAdsInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionTwitterAdsInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwitterAdsHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwitterAdsInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionTwitterAdsInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwitterAdsDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwitterAdsInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionTwitterAdsInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwitterAdsWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwitterAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionTwitterAdsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwitterAdsMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionTwitterAdsInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionTwitterAdsCronUpdateScheduleMode
 	}
 	return nil
 }

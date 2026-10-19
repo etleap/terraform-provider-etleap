@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionAzureBlobStorageStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode `json:"mode"`
+	DayOfMonth int64                                                                      `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode `json:"mode"`
+	DayOfWeek int64                                                                     `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionAzureBlobStorageUpdateScheduleTypesType string
+
+const (
+	ConnectionAzureBlobStorageUpdateScheduleTypesTypeInterval ConnectionAzureBlobStorageUpdateScheduleTypesType = "INTERVAL"
+	ConnectionAzureBlobStorageUpdateScheduleTypesTypeHourly   ConnectionAzureBlobStorageUpdateScheduleTypesType = "HOURLY"
+	ConnectionAzureBlobStorageUpdateScheduleTypesTypeDaily    ConnectionAzureBlobStorageUpdateScheduleTypesType = "DAILY"
+	ConnectionAzureBlobStorageUpdateScheduleTypesTypeWeekly   ConnectionAzureBlobStorageUpdateScheduleTypesType = "WEEKLY"
+	ConnectionAzureBlobStorageUpdateScheduleTypesTypeMonthly  ConnectionAzureBlobStorageUpdateScheduleTypesType = "MONTHLY"
+	ConnectionAzureBlobStorageUpdateScheduleTypesTypeCron     ConnectionAzureBlobStorageUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionAzureBlobStorageUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionAzureBlobStorageUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode
+
+	Type ConnectionAzureBlobStorageUpdateScheduleTypesType
+}
+
+func CreateConnectionAzureBlobStorageUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode) ConnectionAzureBlobStorageUpdateScheduleTypes {
+	typ := ConnectionAzureBlobStorageUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionAzureBlobStorageUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionAzureBlobStorageUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode) ConnectionAzureBlobStorageUpdateScheduleTypes {
+	typ := ConnectionAzureBlobStorageUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionAzureBlobStorageUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionAzureBlobStorageUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode) ConnectionAzureBlobStorageUpdateScheduleTypes {
+	typ := ConnectionAzureBlobStorageUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionAzureBlobStorageUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionAzureBlobStorageUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode) ConnectionAzureBlobStorageUpdateScheduleTypes {
+	typ := ConnectionAzureBlobStorageUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionAzureBlobStorageUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionAzureBlobStorageUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode) ConnectionAzureBlobStorageUpdateScheduleTypes {
+	typ := ConnectionAzureBlobStorageUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionAzureBlobStorageUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionAzureBlobStorageUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode) ConnectionAzureBlobStorageUpdateScheduleTypes {
+	typ := ConnectionAzureBlobStorageUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionAzureBlobStorageUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionAzureBlobStorageUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode
+		u.Type = ConnectionAzureBlobStorageUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode
+		u.Type = ConnectionAzureBlobStorageUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode
+		u.Type = ConnectionAzureBlobStorageUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode
+		u.Type = ConnectionAzureBlobStorageUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode
+		u.Type = ConnectionAzureBlobStorageUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode
+		u.Type = ConnectionAzureBlobStorageUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionAzureBlobStorageUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionAzureBlobStorageDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionAzureBlobStorageDefaultUpdateSchedule) GetUpdateScheduleMonth
 	return nil
 }
 
+func (o *ConnectionAzureBlobStorageDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionAzureBlobStorage struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionAzureBlobStorage struct {
 	Status ConnectionAzureBlobStorageStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionAzureBlobStorageUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionAzureBlobStorageDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The Application (client) ID from your Azure AD app registration.
@@ -213,44 +685,51 @@ func (o *ConnectionAzureBlobStorage) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionAzureBlobStorage) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionAzureBlobStorage) GetUpdateSchedule() *ConnectionAzureBlobStorageUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionAzureBlobStorage) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionAzureBlobStorage) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionAzureBlobStorage) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionAzureBlobStorage) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionAzureBlobStorage) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionAzureBlobStorage) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionAzureBlobStorage) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionAzureBlobStorage) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionAzureBlobStorage) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionAzureBlobStorage) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionAzureBlobStorage) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -301,8 +780,8 @@ type ConnectionAzureBlobStorageInput struct {
 	// The unique name of this connection.
 	Name string                         `json:"name"`
 	Type ConnectionAzureBlobStorageType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionAzureBlobStorageUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The Application (client) ID from your Azure AD app registration.
 	ClientID string `json:"clientId"`
 	// The Directory (tenant) ID from your Azure AD app registration.
@@ -329,44 +808,51 @@ func (o *ConnectionAzureBlobStorageInput) GetType() ConnectionAzureBlobStorageTy
 	return o.Type
 }
 
-func (o *ConnectionAzureBlobStorageInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionAzureBlobStorageInput) GetUpdateSchedule() *ConnectionAzureBlobStorageUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionAzureBlobStorageIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionAzureBlobStorageHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionAzureBlobStorageDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionAzureBlobStorageWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionAzureBlobStorageMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionAzureBlobStorageInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionAzureBlobStorageCronUpdateScheduleMode
 	}
 	return nil
 }

@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionSQLServerShardedStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode `json:"mode"`
+	DayOfMonth int64                                                                      `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode `json:"mode"`
+	DayOfWeek int64                                                                     `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionSQLServerShardedUpdateScheduleTypesType string
+
+const (
+	ConnectionSQLServerShardedUpdateScheduleTypesTypeInterval ConnectionSQLServerShardedUpdateScheduleTypesType = "INTERVAL"
+	ConnectionSQLServerShardedUpdateScheduleTypesTypeHourly   ConnectionSQLServerShardedUpdateScheduleTypesType = "HOURLY"
+	ConnectionSQLServerShardedUpdateScheduleTypesTypeDaily    ConnectionSQLServerShardedUpdateScheduleTypesType = "DAILY"
+	ConnectionSQLServerShardedUpdateScheduleTypesTypeWeekly   ConnectionSQLServerShardedUpdateScheduleTypesType = "WEEKLY"
+	ConnectionSQLServerShardedUpdateScheduleTypesTypeMonthly  ConnectionSQLServerShardedUpdateScheduleTypesType = "MONTHLY"
+	ConnectionSQLServerShardedUpdateScheduleTypesTypeCron     ConnectionSQLServerShardedUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionSQLServerShardedUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionSQLServerShardedUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode
+
+	Type ConnectionSQLServerShardedUpdateScheduleTypesType
+}
+
+func CreateConnectionSQLServerShardedUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode) ConnectionSQLServerShardedUpdateScheduleTypes {
+	typ := ConnectionSQLServerShardedUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionSQLServerShardedUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSQLServerShardedUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode) ConnectionSQLServerShardedUpdateScheduleTypes {
+	typ := ConnectionSQLServerShardedUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionSQLServerShardedUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSQLServerShardedUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode) ConnectionSQLServerShardedUpdateScheduleTypes {
+	typ := ConnectionSQLServerShardedUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionSQLServerShardedUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSQLServerShardedUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode) ConnectionSQLServerShardedUpdateScheduleTypes {
+	typ := ConnectionSQLServerShardedUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionSQLServerShardedUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSQLServerShardedUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode) ConnectionSQLServerShardedUpdateScheduleTypes {
+	typ := ConnectionSQLServerShardedUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionSQLServerShardedUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSQLServerShardedUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode) ConnectionSQLServerShardedUpdateScheduleTypes {
+	typ := ConnectionSQLServerShardedUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionSQLServerShardedUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionSQLServerShardedUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode
+		u.Type = ConnectionSQLServerShardedUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode
+		u.Type = ConnectionSQLServerShardedUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode
+		u.Type = ConnectionSQLServerShardedUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode
+		u.Type = ConnectionSQLServerShardedUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode
+		u.Type = ConnectionSQLServerShardedUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode
+		u.Type = ConnectionSQLServerShardedUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionSQLServerShardedUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionSQLServerShardedDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionSQLServerShardedDefaultUpdateSchedule) GetUpdateScheduleMonth
 	return nil
 }
 
+func (o *ConnectionSQLServerShardedDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionSQLServerSharded struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionSQLServerSharded struct {
 	Status ConnectionSQLServerShardedStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionSQLServerShardedUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionSQLServerShardedDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
@@ -214,44 +686,51 @@ func (o *ConnectionSQLServerSharded) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionSQLServerSharded) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionSQLServerSharded) GetUpdateSchedule() *ConnectionSQLServerShardedUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSQLServerSharded) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSQLServerSharded) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSQLServerSharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionSQLServerSharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSQLServerSharded) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionSQLServerSharded) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSQLServerSharded) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionSQLServerSharded) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSQLServerSharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSQLServerSharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSQLServerSharded) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -302,8 +781,8 @@ type ConnectionSQLServerShardedInput struct {
 	// The unique name of this connection.
 	Name string                         `json:"name"`
 	Type ConnectionSQLServerShardedType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionSQLServerShardedUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -342,44 +821,51 @@ func (o *ConnectionSQLServerShardedInput) GetType() ConnectionSQLServerShardedTy
 	return o.Type
 }
 
-func (o *ConnectionSQLServerShardedInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionSQLServerShardedInput) GetUpdateSchedule() *ConnectionSQLServerShardedUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSQLServerShardedIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSQLServerShardedHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSQLServerShardedDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSQLServerShardedWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSQLServerShardedMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSQLServerShardedInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionSQLServerShardedCronUpdateScheduleMode
 	}
 	return nil
 }

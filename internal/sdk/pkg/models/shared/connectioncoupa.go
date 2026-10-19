@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionCoupaStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode `json:"mode"`
+	DayOfMonth int64                                                           `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode `json:"mode"`
+	DayOfWeek int64                                                          `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionCoupaUpdateScheduleTypesType string
+
+const (
+	ConnectionCoupaUpdateScheduleTypesTypeInterval ConnectionCoupaUpdateScheduleTypesType = "INTERVAL"
+	ConnectionCoupaUpdateScheduleTypesTypeHourly   ConnectionCoupaUpdateScheduleTypesType = "HOURLY"
+	ConnectionCoupaUpdateScheduleTypesTypeDaily    ConnectionCoupaUpdateScheduleTypesType = "DAILY"
+	ConnectionCoupaUpdateScheduleTypesTypeWeekly   ConnectionCoupaUpdateScheduleTypesType = "WEEKLY"
+	ConnectionCoupaUpdateScheduleTypesTypeMonthly  ConnectionCoupaUpdateScheduleTypesType = "MONTHLY"
+	ConnectionCoupaUpdateScheduleTypesTypeCron     ConnectionCoupaUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionCoupaUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionCoupaUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode
+
+	Type ConnectionCoupaUpdateScheduleTypesType
+}
+
+func CreateConnectionCoupaUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode) ConnectionCoupaUpdateScheduleTypes {
+	typ := ConnectionCoupaUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionCoupaUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionCoupaUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode) ConnectionCoupaUpdateScheduleTypes {
+	typ := ConnectionCoupaUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionCoupaUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionCoupaUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode) ConnectionCoupaUpdateScheduleTypes {
+	typ := ConnectionCoupaUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionCoupaUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionCoupaUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode) ConnectionCoupaUpdateScheduleTypes {
+	typ := ConnectionCoupaUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionCoupaUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionCoupaUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode) ConnectionCoupaUpdateScheduleTypes {
+	typ := ConnectionCoupaUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionCoupaUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionCoupaUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode) ConnectionCoupaUpdateScheduleTypes {
+	typ := ConnectionCoupaUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionCoupaUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionCoupaUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode
+		u.Type = ConnectionCoupaUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode
+		u.Type = ConnectionCoupaUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode
+		u.Type = ConnectionCoupaUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode
+		u.Type = ConnectionCoupaUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode
+		u.Type = ConnectionCoupaUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode
+		u.Type = ConnectionCoupaUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionCoupaUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionCoupaDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionCoupaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Updat
 	return nil
 }
 
+func (o *ConnectionCoupaDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionCoupa struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionCoupa struct {
 	Status ConnectionCoupaStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionCoupaUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionCoupaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Your Coupa client id.
@@ -207,44 +679,51 @@ func (o *ConnectionCoupa) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionCoupa) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionCoupa) GetUpdateSchedule() *ConnectionCoupaUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionCoupa) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionCoupa) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionCoupa) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionCoupa) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionCoupa) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionCoupa) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionCoupa) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionCoupa) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionCoupa) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionCoupa) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionCoupa) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -274,8 +753,8 @@ type ConnectionCoupaInput struct {
 	// The unique name of this connection.
 	Name string              `json:"name"`
 	Type ConnectionCoupaType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionCoupaUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your Coupa client id.
 	ClientID string `json:"clientId"`
 	// Your Coupa client secret.
@@ -298,44 +777,51 @@ func (o *ConnectionCoupaInput) GetType() ConnectionCoupaType {
 	return o.Type
 }
 
-func (o *ConnectionCoupaInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionCoupaInput) GetUpdateSchedule() *ConnectionCoupaUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionCoupaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionCoupaInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionCoupaIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionCoupaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionCoupaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionCoupaHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionCoupaInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionCoupaInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionCoupaDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionCoupaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionCoupaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionCoupaWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionCoupaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionCoupaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionCoupaMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionCoupaInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionCoupaCronUpdateScheduleMode
 	}
 	return nil
 }

@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionConfluentCloudStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode `json:"mode"`
+	DayOfMonth int64                                                                    `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode `json:"mode"`
+	DayOfWeek int64                                                                   `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionConfluentCloudUpdateScheduleTypesType string
+
+const (
+	ConnectionConfluentCloudUpdateScheduleTypesTypeInterval ConnectionConfluentCloudUpdateScheduleTypesType = "INTERVAL"
+	ConnectionConfluentCloudUpdateScheduleTypesTypeHourly   ConnectionConfluentCloudUpdateScheduleTypesType = "HOURLY"
+	ConnectionConfluentCloudUpdateScheduleTypesTypeDaily    ConnectionConfluentCloudUpdateScheduleTypesType = "DAILY"
+	ConnectionConfluentCloudUpdateScheduleTypesTypeWeekly   ConnectionConfluentCloudUpdateScheduleTypesType = "WEEKLY"
+	ConnectionConfluentCloudUpdateScheduleTypesTypeMonthly  ConnectionConfluentCloudUpdateScheduleTypesType = "MONTHLY"
+	ConnectionConfluentCloudUpdateScheduleTypesTypeCron     ConnectionConfluentCloudUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionConfluentCloudUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionConfluentCloudUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode
+
+	Type ConnectionConfluentCloudUpdateScheduleTypesType
+}
+
+func CreateConnectionConfluentCloudUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode) ConnectionConfluentCloudUpdateScheduleTypes {
+	typ := ConnectionConfluentCloudUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionConfluentCloudUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionConfluentCloudUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode) ConnectionConfluentCloudUpdateScheduleTypes {
+	typ := ConnectionConfluentCloudUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionConfluentCloudUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionConfluentCloudUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode) ConnectionConfluentCloudUpdateScheduleTypes {
+	typ := ConnectionConfluentCloudUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionConfluentCloudUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionConfluentCloudUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode) ConnectionConfluentCloudUpdateScheduleTypes {
+	typ := ConnectionConfluentCloudUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionConfluentCloudUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionConfluentCloudUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode) ConnectionConfluentCloudUpdateScheduleTypes {
+	typ := ConnectionConfluentCloudUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionConfluentCloudUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionConfluentCloudUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode) ConnectionConfluentCloudUpdateScheduleTypes {
+	typ := ConnectionConfluentCloudUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionConfluentCloudUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionConfluentCloudUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode
+		u.Type = ConnectionConfluentCloudUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode
+		u.Type = ConnectionConfluentCloudUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode
+		u.Type = ConnectionConfluentCloudUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode
+		u.Type = ConnectionConfluentCloudUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode
+		u.Type = ConnectionConfluentCloudUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode
+		u.Type = ConnectionConfluentCloudUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionConfluentCloudUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionConfluentCloudDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionConfluentCloudDefaultUpdateSchedule) GetUpdateScheduleMonthly
 	return nil
 }
 
+func (o *ConnectionConfluentCloudDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionConfluentCloud struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionConfluentCloud struct {
 	Status ConnectionConfluentCloudStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionConfluentCloudUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionConfluentCloudDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The Confluent Cloud bootstrap server
@@ -211,44 +683,51 @@ func (o *ConnectionConfluentCloud) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionConfluentCloud) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionConfluentCloud) GetUpdateSchedule() *ConnectionConfluentCloudUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionConfluentCloud) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionConfluentCloud) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionConfluentCloud) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionConfluentCloud) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionConfluentCloud) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionConfluentCloud) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionConfluentCloud) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionConfluentCloud) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionConfluentCloud) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionConfluentCloud) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionConfluentCloud) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -292,8 +771,8 @@ type ConnectionConfluentCloudInput struct {
 	// The unique name of this connection in the form host:port
 	Name string                       `json:"name"`
 	Type ConnectionConfluentCloudType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionConfluentCloudUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The Confluent Cloud bootstrap server
 	ServerURL string `json:"serverUrl"`
 	// The API Key
@@ -322,44 +801,51 @@ func (o *ConnectionConfluentCloudInput) GetType() ConnectionConfluentCloudType {
 	return o.Type
 }
 
-func (o *ConnectionConfluentCloudInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionConfluentCloudInput) GetUpdateSchedule() *ConnectionConfluentCloudUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionConfluentCloudInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionConfluentCloudInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionConfluentCloudIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionConfluentCloudInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionConfluentCloudInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionConfluentCloudHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionConfluentCloudInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionConfluentCloudInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionConfluentCloudDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionConfluentCloudInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionConfluentCloudInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionConfluentCloudWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionConfluentCloudInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionConfluentCloudInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionConfluentCloudMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionConfluentCloudInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionConfluentCloudCronUpdateScheduleMode
 	}
 	return nil
 }

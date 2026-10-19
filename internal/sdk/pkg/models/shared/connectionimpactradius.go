@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionImpactRadiusStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode `json:"mode"`
+	DayOfMonth int64                                                                  `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode `json:"mode"`
+	DayOfWeek int64                                                                 `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionImpactRadiusUpdateScheduleTypesType string
+
+const (
+	ConnectionImpactRadiusUpdateScheduleTypesTypeInterval ConnectionImpactRadiusUpdateScheduleTypesType = "INTERVAL"
+	ConnectionImpactRadiusUpdateScheduleTypesTypeHourly   ConnectionImpactRadiusUpdateScheduleTypesType = "HOURLY"
+	ConnectionImpactRadiusUpdateScheduleTypesTypeDaily    ConnectionImpactRadiusUpdateScheduleTypesType = "DAILY"
+	ConnectionImpactRadiusUpdateScheduleTypesTypeWeekly   ConnectionImpactRadiusUpdateScheduleTypesType = "WEEKLY"
+	ConnectionImpactRadiusUpdateScheduleTypesTypeMonthly  ConnectionImpactRadiusUpdateScheduleTypesType = "MONTHLY"
+	ConnectionImpactRadiusUpdateScheduleTypesTypeCron     ConnectionImpactRadiusUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionImpactRadiusUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionImpactRadiusUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode
+
+	Type ConnectionImpactRadiusUpdateScheduleTypesType
+}
+
+func CreateConnectionImpactRadiusUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode) ConnectionImpactRadiusUpdateScheduleTypes {
+	typ := ConnectionImpactRadiusUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionImpactRadiusUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionImpactRadiusUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode) ConnectionImpactRadiusUpdateScheduleTypes {
+	typ := ConnectionImpactRadiusUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionImpactRadiusUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionImpactRadiusUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode) ConnectionImpactRadiusUpdateScheduleTypes {
+	typ := ConnectionImpactRadiusUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionImpactRadiusUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionImpactRadiusUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode) ConnectionImpactRadiusUpdateScheduleTypes {
+	typ := ConnectionImpactRadiusUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionImpactRadiusUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionImpactRadiusUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode) ConnectionImpactRadiusUpdateScheduleTypes {
+	typ := ConnectionImpactRadiusUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionImpactRadiusUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionImpactRadiusUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode) ConnectionImpactRadiusUpdateScheduleTypes {
+	typ := ConnectionImpactRadiusUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionImpactRadiusUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionImpactRadiusUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode
+		u.Type = ConnectionImpactRadiusUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode
+		u.Type = ConnectionImpactRadiusUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode
+		u.Type = ConnectionImpactRadiusUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode
+		u.Type = ConnectionImpactRadiusUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode
+		u.Type = ConnectionImpactRadiusUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode
+		u.Type = ConnectionImpactRadiusUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionImpactRadiusUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionImpactRadiusDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionImpactRadiusDefaultUpdateSchedule) GetUpdateScheduleMonthly()
 	return nil
 }
 
+func (o *ConnectionImpactRadiusDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionImpactRadius struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionImpactRadius struct {
 	Status ConnectionImpactRadiusStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionImpactRadiusUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionImpactRadiusDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// To find the Account SID to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
@@ -205,44 +677,51 @@ func (o *ConnectionImpactRadius) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionImpactRadius) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionImpactRadius) GetUpdateSchedule() *ConnectionImpactRadiusUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionImpactRadius) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionImpactRadius) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionImpactRadius) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionImpactRadius) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionImpactRadius) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionImpactRadius) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionImpactRadius) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionImpactRadius) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionImpactRadius) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionImpactRadius) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionImpactRadius) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -265,8 +744,8 @@ type ConnectionImpactRadiusInput struct {
 	// The unique name of this connection.
 	Name string                     `json:"name"`
 	Type ConnectionImpactRadiusType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionImpactRadiusUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// To find the Account SID to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
 	AccountSid string `json:"accountSid"`
 	// To find the Auth Token to Impact, click on the Cloud Icon in the bottom left > Click API > Find Rest API information
@@ -287,44 +766,51 @@ func (o *ConnectionImpactRadiusInput) GetType() ConnectionImpactRadiusType {
 	return o.Type
 }
 
-func (o *ConnectionImpactRadiusInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionImpactRadiusInput) GetUpdateSchedule() *ConnectionImpactRadiusUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionImpactRadiusInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionImpactRadiusInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionImpactRadiusIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionImpactRadiusInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionImpactRadiusInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionImpactRadiusHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionImpactRadiusInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionImpactRadiusInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionImpactRadiusDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionImpactRadiusInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionImpactRadiusInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionImpactRadiusWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionImpactRadiusInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionImpactRadiusInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionImpactRadiusMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionImpactRadiusInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionImpactRadiusCronUpdateScheduleMode
 	}
 	return nil
 }

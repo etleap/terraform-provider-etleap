@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionMysqlShardedStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode `json:"mode"`
+	DayOfMonth int64                                                                  `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode `json:"mode"`
+	DayOfWeek int64                                                                 `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionMysqlShardedUpdateScheduleTypesType string
+
+const (
+	ConnectionMysqlShardedUpdateScheduleTypesTypeInterval ConnectionMysqlShardedUpdateScheduleTypesType = "INTERVAL"
+	ConnectionMysqlShardedUpdateScheduleTypesTypeHourly   ConnectionMysqlShardedUpdateScheduleTypesType = "HOURLY"
+	ConnectionMysqlShardedUpdateScheduleTypesTypeDaily    ConnectionMysqlShardedUpdateScheduleTypesType = "DAILY"
+	ConnectionMysqlShardedUpdateScheduleTypesTypeWeekly   ConnectionMysqlShardedUpdateScheduleTypesType = "WEEKLY"
+	ConnectionMysqlShardedUpdateScheduleTypesTypeMonthly  ConnectionMysqlShardedUpdateScheduleTypesType = "MONTHLY"
+	ConnectionMysqlShardedUpdateScheduleTypesTypeCron     ConnectionMysqlShardedUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionMysqlShardedUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionMysqlShardedUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode
+
+	Type ConnectionMysqlShardedUpdateScheduleTypesType
+}
+
+func CreateConnectionMysqlShardedUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode) ConnectionMysqlShardedUpdateScheduleTypes {
+	typ := ConnectionMysqlShardedUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionMysqlShardedUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionMysqlShardedUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode) ConnectionMysqlShardedUpdateScheduleTypes {
+	typ := ConnectionMysqlShardedUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionMysqlShardedUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionMysqlShardedUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode) ConnectionMysqlShardedUpdateScheduleTypes {
+	typ := ConnectionMysqlShardedUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionMysqlShardedUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionMysqlShardedUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode) ConnectionMysqlShardedUpdateScheduleTypes {
+	typ := ConnectionMysqlShardedUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionMysqlShardedUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionMysqlShardedUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode) ConnectionMysqlShardedUpdateScheduleTypes {
+	typ := ConnectionMysqlShardedUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionMysqlShardedUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionMysqlShardedUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode) ConnectionMysqlShardedUpdateScheduleTypes {
+	typ := ConnectionMysqlShardedUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionMysqlShardedUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionMysqlShardedUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode
+		u.Type = ConnectionMysqlShardedUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode
+		u.Type = ConnectionMysqlShardedUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode
+		u.Type = ConnectionMysqlShardedUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode
+		u.Type = ConnectionMysqlShardedUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode
+		u.Type = ConnectionMysqlShardedUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode
+		u.Type = ConnectionMysqlShardedUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionMysqlShardedUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionMysqlShardedDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionMysqlShardedDefaultUpdateSchedule) GetUpdateScheduleMonthly()
 	return nil
 }
 
+func (o *ConnectionMysqlShardedDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 // ConnectionMysqlSharded - The properties available shared among both sharded and unsharded versions. Cannot be used directly; use the inheriting classes.
 type ConnectionMysqlSharded struct {
 	// The unique identifier of the connection.
@@ -145,8 +617,8 @@ type ConnectionMysqlSharded struct {
 	Status ConnectionMysqlShardedStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionMysqlShardedUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule            []ConnectionMysqlShardedDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	RequireSslAndValidateCertificate *bool                                         `default:"true" json:"requireSslAndValidateCertificate"`
@@ -221,44 +693,51 @@ func (o *ConnectionMysqlSharded) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionMysqlSharded) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionMysqlSharded) GetUpdateSchedule() *ConnectionMysqlShardedUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMysqlSharded) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionMysqlSharded) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMysqlSharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionMysqlSharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMysqlSharded) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionMysqlSharded) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMysqlSharded) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionMysqlSharded) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMysqlSharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionMysqlSharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionMysqlSharded) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -338,9 +817,9 @@ type ConnectionMysqlShardedInput struct {
 	// The unique name of this connection.
 	Name string                     `json:"name"`
 	Type ConnectionMysqlShardedType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule                   *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	RequireSslAndValidateCertificate *bool                `default:"true" json:"requireSslAndValidateCertificate"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule                   *ConnectionMysqlShardedUpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	RequireSslAndValidateCertificate *bool                                      `default:"true" json:"requireSslAndValidateCertificate"`
 	// The TLS certificate used to verify the server's identity and encrypt data in transit. If not specified, the AWS RDS global certificate bundle will be used. Should only be specified if `requireSslAndValidateCertificate` is set to `true`.
 	Certificate *string `json:"certificate,omitempty"`
 	// Should Etleap use MySQL binlogs to capture changes from this database? This setting cannot be changed later.
@@ -384,44 +863,51 @@ func (o *ConnectionMysqlShardedInput) GetType() ConnectionMysqlShardedType {
 	return o.Type
 }
 
-func (o *ConnectionMysqlShardedInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionMysqlShardedInput) GetUpdateSchedule() *ConnectionMysqlShardedUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMysqlShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionMysqlShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMysqlShardedIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMysqlShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionMysqlShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMysqlShardedHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMysqlShardedInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionMysqlShardedInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMysqlShardedDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMysqlShardedInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionMysqlShardedInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMysqlShardedWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMysqlShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionMysqlShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMysqlShardedMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionMysqlShardedInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionMysqlShardedCronUpdateScheduleMode
 	}
 	return nil
 }

@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionGoogleSheetsStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode `json:"mode"`
+	DayOfMonth int64                                                                  `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode `json:"mode"`
+	DayOfWeek int64                                                                 `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionGoogleSheetsUpdateScheduleTypesType string
+
+const (
+	ConnectionGoogleSheetsUpdateScheduleTypesTypeInterval ConnectionGoogleSheetsUpdateScheduleTypesType = "INTERVAL"
+	ConnectionGoogleSheetsUpdateScheduleTypesTypeHourly   ConnectionGoogleSheetsUpdateScheduleTypesType = "HOURLY"
+	ConnectionGoogleSheetsUpdateScheduleTypesTypeDaily    ConnectionGoogleSheetsUpdateScheduleTypesType = "DAILY"
+	ConnectionGoogleSheetsUpdateScheduleTypesTypeWeekly   ConnectionGoogleSheetsUpdateScheduleTypesType = "WEEKLY"
+	ConnectionGoogleSheetsUpdateScheduleTypesTypeMonthly  ConnectionGoogleSheetsUpdateScheduleTypesType = "MONTHLY"
+	ConnectionGoogleSheetsUpdateScheduleTypesTypeCron     ConnectionGoogleSheetsUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionGoogleSheetsUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionGoogleSheetsUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode
+
+	Type ConnectionGoogleSheetsUpdateScheduleTypesType
+}
+
+func CreateConnectionGoogleSheetsUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode) ConnectionGoogleSheetsUpdateScheduleTypes {
+	typ := ConnectionGoogleSheetsUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionGoogleSheetsUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleSheetsUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode) ConnectionGoogleSheetsUpdateScheduleTypes {
+	typ := ConnectionGoogleSheetsUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionGoogleSheetsUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleSheetsUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode) ConnectionGoogleSheetsUpdateScheduleTypes {
+	typ := ConnectionGoogleSheetsUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionGoogleSheetsUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleSheetsUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode) ConnectionGoogleSheetsUpdateScheduleTypes {
+	typ := ConnectionGoogleSheetsUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionGoogleSheetsUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleSheetsUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode) ConnectionGoogleSheetsUpdateScheduleTypes {
+	typ := ConnectionGoogleSheetsUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionGoogleSheetsUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleSheetsUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode) ConnectionGoogleSheetsUpdateScheduleTypes {
+	typ := ConnectionGoogleSheetsUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionGoogleSheetsUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionGoogleSheetsUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode
+		u.Type = ConnectionGoogleSheetsUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode
+		u.Type = ConnectionGoogleSheetsUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode
+		u.Type = ConnectionGoogleSheetsUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode
+		u.Type = ConnectionGoogleSheetsUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode
+		u.Type = ConnectionGoogleSheetsUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode
+		u.Type = ConnectionGoogleSheetsUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionGoogleSheetsUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionGoogleSheetsDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionGoogleSheetsDefaultUpdateSchedule) GetUpdateScheduleMonthly()
 	return nil
 }
 
+func (o *ConnectionGoogleSheetsDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 // AuthenticationMethod - How Etleap authenticates with Google Sheets. With `SERVICE_ACCOUNT`, Etleap provisions a dedicated Google service account for this connection and returns its address as `serviceAccountEmail`. Share the spreadsheets you want to create a pipeline from with that address as a Viewer. `OAUTH` is a legacy method that requires the `code` to be present. Defaults to `OAUTH` when omitted, and cannot be changed after the connection has been created.
 type AuthenticationMethod string
 
@@ -172,8 +644,8 @@ type ConnectionGoogleSheets struct {
 	Status ConnectionGoogleSheetsStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionGoogleSheetsUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionGoogleSheetsDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// How Etleap authenticates with Google Sheets. With `SERVICE_ACCOUNT`, Etleap provisions a dedicated Google service account for this connection and returns its address as `serviceAccountEmail`. Share the spreadsheets you want to create a pipeline from with that address as a Viewer. `OAUTH` is a legacy method that requires the `code` to be present. Defaults to `OAUTH` when omitted, and cannot be changed after the connection has been created.
@@ -236,44 +708,51 @@ func (o *ConnectionGoogleSheets) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionGoogleSheets) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionGoogleSheets) GetUpdateSchedule() *ConnectionGoogleSheetsUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionGoogleSheets) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionGoogleSheets) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleSheets) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionGoogleSheets) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleSheets) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionGoogleSheets) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleSheets) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionGoogleSheets) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleSheets) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionGoogleSheets) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleSheets) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -310,8 +789,8 @@ type ConnectionGoogleSheetsInput struct {
 	// The unique name of this connection.
 	Name string                     `json:"name"`
 	Type ConnectionGoogleSheetsType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionGoogleSheetsUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// How Etleap authenticates with Google Sheets. With `SERVICE_ACCOUNT`, Etleap provisions a dedicated Google service account for this connection and returns its address as `serviceAccountEmail`. Share the spreadsheets you want to create a pipeline from with that address as a Viewer. `OAUTH` is a legacy method that requires the `code` to be present. Defaults to `OAUTH` when omitted, and cannot be changed after the connection has been created.
 	AuthenticationMethod *AuthenticationMethod `default:"OAUTH" json:"authenticationMethod"`
 	// Code retrieved from `/connections/oauth2-initiation`. Required when `authenticationMethod` is `OAUTH` or omitted, and must be omitted when it is `SERVICE_ACCOUNT`. **Note:** The code is short-lived, therefore the connection creation should be done as soon as code is returned.
@@ -343,44 +822,51 @@ func (o *ConnectionGoogleSheetsInput) GetType() ConnectionGoogleSheetsType {
 	return o.Type
 }
 
-func (o *ConnectionGoogleSheetsInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionGoogleSheetsInput) GetUpdateSchedule() *ConnectionGoogleSheetsUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleSheetsIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleSheetsHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleSheetsDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleSheetsWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleSheetsMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleSheetsInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleSheetsCronUpdateScheduleMode
 	}
 	return nil
 }

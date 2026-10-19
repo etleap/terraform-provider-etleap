@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionEloquaStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode `json:"mode"`
+	DayOfMonth int64                                                            `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode `json:"mode"`
+	DayOfWeek int64                                                           `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionEloquaUpdateScheduleTypesType string
+
+const (
+	ConnectionEloquaUpdateScheduleTypesTypeInterval ConnectionEloquaUpdateScheduleTypesType = "INTERVAL"
+	ConnectionEloquaUpdateScheduleTypesTypeHourly   ConnectionEloquaUpdateScheduleTypesType = "HOURLY"
+	ConnectionEloquaUpdateScheduleTypesTypeDaily    ConnectionEloquaUpdateScheduleTypesType = "DAILY"
+	ConnectionEloquaUpdateScheduleTypesTypeWeekly   ConnectionEloquaUpdateScheduleTypesType = "WEEKLY"
+	ConnectionEloquaUpdateScheduleTypesTypeMonthly  ConnectionEloquaUpdateScheduleTypesType = "MONTHLY"
+	ConnectionEloquaUpdateScheduleTypesTypeCron     ConnectionEloquaUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionEloquaUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionEloquaUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode
+
+	Type ConnectionEloquaUpdateScheduleTypesType
+}
+
+func CreateConnectionEloquaUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode) ConnectionEloquaUpdateScheduleTypes {
+	typ := ConnectionEloquaUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionEloquaUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionEloquaUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode) ConnectionEloquaUpdateScheduleTypes {
+	typ := ConnectionEloquaUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionEloquaUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionEloquaUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode) ConnectionEloquaUpdateScheduleTypes {
+	typ := ConnectionEloquaUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionEloquaUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionEloquaUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode) ConnectionEloquaUpdateScheduleTypes {
+	typ := ConnectionEloquaUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionEloquaUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionEloquaUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode) ConnectionEloquaUpdateScheduleTypes {
+	typ := ConnectionEloquaUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionEloquaUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionEloquaUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode) ConnectionEloquaUpdateScheduleTypes {
+	typ := ConnectionEloquaUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionEloquaUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionEloquaUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode
+		u.Type = ConnectionEloquaUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode
+		u.Type = ConnectionEloquaUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode
+		u.Type = ConnectionEloquaUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode
+		u.Type = ConnectionEloquaUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode
+		u.Type = ConnectionEloquaUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode
+		u.Type = ConnectionEloquaUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionEloquaUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionEloquaDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionEloquaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upda
 	return nil
 }
 
+func (o *ConnectionEloquaDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionEloqua struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionEloqua struct {
 	Status ConnectionEloquaStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionEloquaUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionEloquaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	Company               string                                  `json:"company"`
@@ -205,44 +677,51 @@ func (o *ConnectionEloqua) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionEloqua) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionEloqua) GetUpdateSchedule() *ConnectionEloquaUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionEloqua) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionEloqua) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEloqua) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionEloqua) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEloqua) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionEloqua) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEloqua) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionEloqua) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEloqua) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionEloqua) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionEloqua) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -272,11 +751,11 @@ type ConnectionEloquaInput struct {
 	// The unique name of this connection.
 	Name string               `json:"name"`
 	Type ConnectionEloquaType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	Company        string               `json:"company"`
-	Username       string               `json:"username"`
-	Password       string               `json:"password"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionEloquaUpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	Company        string                               `json:"company"`
+	Username       string                               `json:"username"`
+	Password       string                               `json:"password"`
 }
 
 func (o *ConnectionEloquaInput) GetName() string {
@@ -293,44 +772,51 @@ func (o *ConnectionEloquaInput) GetType() ConnectionEloquaType {
 	return o.Type
 }
 
-func (o *ConnectionEloquaInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionEloquaInput) GetUpdateSchedule() *ConnectionEloquaUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionEloquaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionEloquaInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionEloquaIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEloquaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionEloquaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionEloquaHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEloquaInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionEloquaInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionEloquaDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEloquaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionEloquaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionEloquaWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionEloquaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionEloquaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionEloquaMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionEloquaInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionEloquaCronUpdateScheduleMode
 	}
 	return nil
 }

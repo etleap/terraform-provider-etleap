@@ -28,18 +28,18 @@ type ModelDataSource struct {
 
 // ModelDataSourceModel describes the data model.
 type ModelDataSourceModel struct {
-	CreateDate         types.String         `tfsdk:"create_date"`
-	Dependencies       []ModelDependency    `tfsdk:"dependencies"`
-	ID                 types.String         `tfsdk:"id"`
-	LastUpdateDuration types.Int64          `tfsdk:"last_update_duration"`
-	LastUpdateTime     types.String         `tfsdk:"last_update_time"`
-	Name               types.String         `tfsdk:"name"`
-	Owner              User                 `tfsdk:"owner"`
-	Paused             types.Bool           `tfsdk:"paused"`
-	QueryAndTriggers   QueryAndTriggers     `tfsdk:"query_and_triggers"`
-	Shares             []types.String       `tfsdk:"shares"`
-	UpdateSchedule     RefreshScheduleTypes `tfsdk:"update_schedule"`
-	Warehouse          WarehouseTypesInput  `tfsdk:"warehouse"`
+	CreateDate         types.String            `tfsdk:"create_date"`
+	Dependencies       []ModelDependency       `tfsdk:"dependencies"`
+	ID                 types.String            `tfsdk:"id"`
+	LastUpdateDuration types.Int64             `tfsdk:"last_update_duration"`
+	LastUpdateTime     types.String            `tfsdk:"last_update_time"`
+	Name               types.String            `tfsdk:"name"`
+	Owner              User                    `tfsdk:"owner"`
+	Paused             types.Bool              `tfsdk:"paused"`
+	QueryAndTriggers   QueryAndTriggers        `tfsdk:"query_and_triggers"`
+	Shares             []types.String          `tfsdk:"shares"`
+	UpdateSchedule     ModelInputScheduleTypes `tfsdk:"update_schedule"`
+	Warehouse          WarehouseTypesInput     `tfsdk:"warehouse"`
 }
 
 // Metadata returns the data source type name.
@@ -146,6 +146,19 @@ func (r *ModelDataSource) Schema(ctx context.Context, req datasource.SchemaReque
 			"update_schedule": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
+					"cron": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"cron_expression": schema.StringAttribute{
+								Computed:    true,
+								Description: `The cron expression which defines the times at which schedule should trigger at. Expressions are evaluated in UTC.`,
+							},
+							"mode": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["CRON"]`,
+							},
+						},
+					},
 					"daily": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{

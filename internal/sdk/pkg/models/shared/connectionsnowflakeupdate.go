@@ -4,7 +4,9 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
 type ConnectionSnowflakeUpdateType string
@@ -31,14 +33,944 @@ func (e *ConnectionSnowflakeUpdateType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode `json:"mode"`
+	DayOfMonth int64                                                                     `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode `json:"mode"`
+	DayOfWeek int64                                                                    `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionSnowflakeUpdateUpdateScheduleTypesType string
+
+const (
+	ConnectionSnowflakeUpdateUpdateScheduleTypesTypeInterval ConnectionSnowflakeUpdateUpdateScheduleTypesType = "INTERVAL"
+	ConnectionSnowflakeUpdateUpdateScheduleTypesTypeHourly   ConnectionSnowflakeUpdateUpdateScheduleTypesType = "HOURLY"
+	ConnectionSnowflakeUpdateUpdateScheduleTypesTypeDaily    ConnectionSnowflakeUpdateUpdateScheduleTypesType = "DAILY"
+	ConnectionSnowflakeUpdateUpdateScheduleTypesTypeWeekly   ConnectionSnowflakeUpdateUpdateScheduleTypesType = "WEEKLY"
+	ConnectionSnowflakeUpdateUpdateScheduleTypesTypeMonthly  ConnectionSnowflakeUpdateUpdateScheduleTypesType = "MONTHLY"
+	ConnectionSnowflakeUpdateUpdateScheduleTypesTypeCron     ConnectionSnowflakeUpdateUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionSnowflakeUpdateUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline.
+type ConnectionSnowflakeUpdateUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode
+
+	Type ConnectionSnowflakeUpdateUpdateScheduleTypesType
+}
+
+func CreateConnectionSnowflakeUpdateUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode) ConnectionSnowflakeUpdateUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionSnowflakeUpdateUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSnowflakeUpdateUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode) ConnectionSnowflakeUpdateUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionSnowflakeUpdateUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSnowflakeUpdateUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode) ConnectionSnowflakeUpdateUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionSnowflakeUpdateUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSnowflakeUpdateUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode) ConnectionSnowflakeUpdateUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionSnowflakeUpdateUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSnowflakeUpdateUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode) ConnectionSnowflakeUpdateUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionSnowflakeUpdateUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSnowflakeUpdateUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode) ConnectionSnowflakeUpdateUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionSnowflakeUpdateUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionSnowflakeUpdateUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionSnowflakeUpdateUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode `json:"mode"`
+	DayOfMonth int64                                                                                         `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode `json:"mode"`
+	DayOfWeek int64                                                                                        `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesType string
+
+const (
+	ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeInterval ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesType = "INTERVAL"
+	ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeHourly   ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesType = "HOURLY"
+	ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeDaily    ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesType = "DAILY"
+	ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeWeekly   ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesType = "WEEKLY"
+	ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeMonthly  ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesType = "MONTHLY"
+	ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeCron     ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes - When defined, this schedule enables load throttling windows for all pipelines that load to this connection. Load throttling synchronises the activities of all pipelines that load to this destination, such that all loads occur simultaneously. See <a href="https://docs.etleap.com/documentation/pipeline/load-throttling/">the documentation</a> for more details.
+type ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode
+
+	Type ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesType
+}
+
+func CreateConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode) ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode) ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode) ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode) ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode) ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode) ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode
+		u.Type = ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionSnowflakeUpdate struct {
 	// The unique name of this connection.
 	Name *string                       `json:"name,omitempty"`
 	Type ConnectionSnowflakeUpdateType `json:"type"`
 	// Whether this connection should be marked as active.
 	Active *bool `json:"active,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline.
+	UpdateSchedule *ConnectionSnowflakeUpdateUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Take into account that the schema is case sensitive
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -49,8 +981,10 @@ type ConnectionSnowflakeUpdate struct {
 	SourceOnly *bool `json:"sourceOnly,omitempty"`
 	// The name of the [Snowflake Storage Integration](https://docs.snowflake.com/en/user-guide/data-load-s3-config-storage-integration) object to use when Etleap creates temporary Snowflake Stages for loading data. When specified, Etleap uses the Storage Integration instead of passing in temporary AWS credentials for authentication. The Storage Integration must be pre-configured in your Snowflake account with appropriate permissions to access the Etleap S3 intermediate bucket.
 	StorageIntegration *string `json:"storageIntegration,omitempty"`
-	Address            *string `json:"address,omitempty"`
-	Database           *string `json:"database,omitempty"`
+	// When defined, this schedule enables load throttling windows for all pipelines that load to this connection. Load throttling synchronises the activities of all pipelines that load to this destination, such that all loads occur simultaneously. See <a href="https://docs.etleap.com/documentation/pipeline/load-throttling/">the documentation</a> for more details.
+	LoadThrottleSchedule *ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes `json:"loadThrottleSchedule,omitempty"`
+	Address              *string                                                           `json:"address,omitempty"`
+	Database             *string                                                           `json:"database,omitempty"`
 	// The virtual warehouse to use once connected.
 	Warehouse *string `json:"warehouse,omitempty"`
 	Username  *string `json:"username,omitempty"`
@@ -82,44 +1016,51 @@ func (o *ConnectionSnowflakeUpdate) GetActive() *bool {
 	return o.Active
 }
 
-func (o *ConnectionSnowflakeUpdate) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionSnowflakeUpdate) GetUpdateSchedule() *ConnectionSnowflakeUpdateUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSnowflakeUpdate) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -150,6 +1091,55 @@ func (o *ConnectionSnowflakeUpdate) GetStorageIntegration() *string {
 		return nil
 	}
 	return o.StorageIntegration
+}
+
+func (o *ConnectionSnowflakeUpdate) GetLoadThrottleSchedule() *ConnectionSnowflakeUpdateLoadThrottleScheduleUpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.LoadThrottleSchedule
+}
+
+func (o *ConnectionSnowflakeUpdate) GetLoadThrottleScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSnowflakeUpdate) GetLoadThrottleScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSnowflakeUpdate) GetLoadThrottleScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSnowflakeUpdate) GetLoadThrottleScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSnowflakeUpdate) GetLoadThrottleScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSnowflakeUpdate) GetLoadThrottleScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionSnowflakeUpdateLoadThrottleScheduleCronUpdateScheduleMode
+	}
+	return nil
 }
 
 func (o *ConnectionSnowflakeUpdate) GetAddress() *string {

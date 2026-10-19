@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionTwilioStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode `json:"mode"`
+	DayOfMonth int64                                                            `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode `json:"mode"`
+	DayOfWeek int64                                                           `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionTwilioUpdateScheduleTypesType string
+
+const (
+	ConnectionTwilioUpdateScheduleTypesTypeInterval ConnectionTwilioUpdateScheduleTypesType = "INTERVAL"
+	ConnectionTwilioUpdateScheduleTypesTypeHourly   ConnectionTwilioUpdateScheduleTypesType = "HOURLY"
+	ConnectionTwilioUpdateScheduleTypesTypeDaily    ConnectionTwilioUpdateScheduleTypesType = "DAILY"
+	ConnectionTwilioUpdateScheduleTypesTypeWeekly   ConnectionTwilioUpdateScheduleTypesType = "WEEKLY"
+	ConnectionTwilioUpdateScheduleTypesTypeMonthly  ConnectionTwilioUpdateScheduleTypesType = "MONTHLY"
+	ConnectionTwilioUpdateScheduleTypesTypeCron     ConnectionTwilioUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionTwilioUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionTwilioUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode
+
+	Type ConnectionTwilioUpdateScheduleTypesType
+}
+
+func CreateConnectionTwilioUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode) ConnectionTwilioUpdateScheduleTypes {
+	typ := ConnectionTwilioUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionTwilioUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTwilioUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode) ConnectionTwilioUpdateScheduleTypes {
+	typ := ConnectionTwilioUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionTwilioUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTwilioUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode) ConnectionTwilioUpdateScheduleTypes {
+	typ := ConnectionTwilioUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionTwilioUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTwilioUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode) ConnectionTwilioUpdateScheduleTypes {
+	typ := ConnectionTwilioUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionTwilioUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTwilioUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode) ConnectionTwilioUpdateScheduleTypes {
+	typ := ConnectionTwilioUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionTwilioUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionTwilioUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode) ConnectionTwilioUpdateScheduleTypes {
+	typ := ConnectionTwilioUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionTwilioUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionTwilioUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode
+		u.Type = ConnectionTwilioUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode
+		u.Type = ConnectionTwilioUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode
+		u.Type = ConnectionTwilioUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode
+		u.Type = ConnectionTwilioUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode
+		u.Type = ConnectionTwilioUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode
+		u.Type = ConnectionTwilioUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionTwilioUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionTwilioDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionTwilioDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upda
 	return nil
 }
 
+func (o *ConnectionTwilioDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionTwilio struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionTwilio struct {
 	Status ConnectionTwilioStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionTwilioUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionTwilioDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// You can find your Account SID in your <a target="_blank" href="https://twilio.com/console">Account Dashboard</a>.
@@ -207,44 +679,51 @@ func (o *ConnectionTwilio) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionTwilio) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionTwilio) GetUpdateSchedule() *ConnectionTwilioUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTwilio) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionTwilio) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwilio) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionTwilio) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwilio) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionTwilio) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwilio) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionTwilio) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwilio) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionTwilio) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionTwilio) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -274,8 +753,8 @@ type ConnectionTwilioInput struct {
 	// The unique name of this connection.
 	Name string               `json:"name"`
 	Type ConnectionTwilioType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionTwilioUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// You can find your Account SID in your <a target="_blank" href="https://twilio.com/console">Account Dashboard</a>.
 	AccountSid string `json:"accountSid"`
 	// You can find your API keys, or generate a new one, in the <a target="_blank" href="https://www.twilio.com/console/runtime/api-keys">Twilio Console</a>.
@@ -298,44 +777,51 @@ func (o *ConnectionTwilioInput) GetType() ConnectionTwilioType {
 	return o.Type
 }
 
-func (o *ConnectionTwilioInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionTwilioInput) GetUpdateSchedule() *ConnectionTwilioUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionTwilioInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionTwilioInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionTwilioIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwilioInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionTwilioInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionTwilioHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwilioInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionTwilioInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionTwilioDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwilioInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionTwilioInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionTwilioWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionTwilioInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionTwilioInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionTwilioMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionTwilioInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionTwilioCronUpdateScheduleMode
 	}
 	return nil
 }

@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionRedshiftShardedStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode `json:"mode"`
+	DayOfMonth int64                                                                     `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode `json:"mode"`
+	DayOfWeek int64                                                                    `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionRedshiftShardedUpdateScheduleTypesType string
+
+const (
+	ConnectionRedshiftShardedUpdateScheduleTypesTypeInterval ConnectionRedshiftShardedUpdateScheduleTypesType = "INTERVAL"
+	ConnectionRedshiftShardedUpdateScheduleTypesTypeHourly   ConnectionRedshiftShardedUpdateScheduleTypesType = "HOURLY"
+	ConnectionRedshiftShardedUpdateScheduleTypesTypeDaily    ConnectionRedshiftShardedUpdateScheduleTypesType = "DAILY"
+	ConnectionRedshiftShardedUpdateScheduleTypesTypeWeekly   ConnectionRedshiftShardedUpdateScheduleTypesType = "WEEKLY"
+	ConnectionRedshiftShardedUpdateScheduleTypesTypeMonthly  ConnectionRedshiftShardedUpdateScheduleTypesType = "MONTHLY"
+	ConnectionRedshiftShardedUpdateScheduleTypesTypeCron     ConnectionRedshiftShardedUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionRedshiftShardedUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionRedshiftShardedUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode
+
+	Type ConnectionRedshiftShardedUpdateScheduleTypesType
+}
+
+func CreateConnectionRedshiftShardedUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode) ConnectionRedshiftShardedUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionRedshiftShardedUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionRedshiftShardedUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode) ConnectionRedshiftShardedUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionRedshiftShardedUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionRedshiftShardedUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode) ConnectionRedshiftShardedUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionRedshiftShardedUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionRedshiftShardedUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode) ConnectionRedshiftShardedUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionRedshiftShardedUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionRedshiftShardedUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode) ConnectionRedshiftShardedUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionRedshiftShardedUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionRedshiftShardedUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode) ConnectionRedshiftShardedUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionRedshiftShardedUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionRedshiftShardedUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionRedshiftShardedUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionRedshiftShardedDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,478 @@ func (o *ConnectionRedshiftShardedDefaultUpdateSchedule) GetUpdateScheduleMonthl
 	return nil
 }
 
+func (o *ConnectionRedshiftShardedDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode `json:"mode"`
+	DayOfMonth int64                                                                                         `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode `json:"mode"`
+	DayOfWeek int64                                                                                        `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesType string
+
+const (
+	ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeInterval ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesType = "INTERVAL"
+	ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeHourly   ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesType = "HOURLY"
+	ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeDaily    ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesType = "DAILY"
+	ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeWeekly   ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesType = "WEEKLY"
+	ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeMonthly  ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesType = "MONTHLY"
+	ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeCron     ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes - When defined, this schedule enables load throttling windows for all pipelines that load to this connection. Load throttling synchronises the activities of all pipelines that load to this destination, such that all loads occur simultaneously. See <a href="https://docs.etleap.com/documentation/pipeline/load-throttling/">the documentation</a> for more details.
+type ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode
+
+	Type ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesType
+}
+
+func CreateConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode) ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode) ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode) ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode) ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode) ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode) ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes {
+	typ := ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode
+		u.Type = ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionRedshiftSharded struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +1081,8 @@ type ConnectionRedshiftSharded struct {
 	Status ConnectionRedshiftShardedStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionRedshiftShardedUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionRedshiftShardedDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
@@ -161,8 +1098,10 @@ type ConnectionRedshiftSharded struct {
 	// The id of another Etleap Redshift connection. If specified, Etleap will make the data loaded available to the other cluster via Redshift Data Sharing.
 	DataSharingDestinations []string `json:"dataSharingDestinations,omitempty"`
 	// Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`.
-	DynamicVarcharWidthEnabled *bool                 `default:"false" json:"dynamicVarcharWidthEnabled"`
-	Shards                     []DatabaseShardOutput `json:"shards"`
+	DynamicVarcharWidthEnabled *bool `default:"false" json:"dynamicVarcharWidthEnabled"`
+	// When defined, this schedule enables load throttling windows for all pipelines that load to this connection. Load throttling synchronises the activities of all pipelines that load to this destination, such that all loads occur simultaneously. See <a href="https://docs.etleap.com/documentation/pipeline/load-throttling/">the documentation</a> for more details.
+	LoadThrottleSchedule *ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes `json:"loadThrottleSchedule,omitempty"`
+	Shards               []DatabaseShardOutput                                             `json:"shards"`
 }
 
 func (c ConnectionRedshiftSharded) MarshalJSON() ([]byte, error) {
@@ -218,44 +1157,51 @@ func (o *ConnectionRedshiftSharded) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionRedshiftSharded) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionRedshiftSharded) GetUpdateSchedule() *ConnectionRedshiftShardedUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionRedshiftSharded) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionRedshiftSharded) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionRedshiftSharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionRedshiftSharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionRedshiftSharded) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionRedshiftSharded) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionRedshiftSharded) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionRedshiftSharded) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionRedshiftSharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionRedshiftSharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftSharded) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -309,6 +1255,55 @@ func (o *ConnectionRedshiftSharded) GetDynamicVarcharWidthEnabled() *bool {
 	return o.DynamicVarcharWidthEnabled
 }
 
+func (o *ConnectionRedshiftSharded) GetLoadThrottleSchedule() *ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.LoadThrottleSchedule
+}
+
+func (o *ConnectionRedshiftSharded) GetLoadThrottleScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftSharded) GetLoadThrottleScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftSharded) GetLoadThrottleScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftSharded) GetLoadThrottleScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftSharded) GetLoadThrottleScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftSharded) GetLoadThrottleScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode
+	}
+	return nil
+}
+
 func (o *ConnectionRedshiftSharded) GetShards() []DatabaseShardOutput {
 	if o == nil {
 		return []DatabaseShardOutput{}
@@ -320,8 +1315,8 @@ type ConnectionRedshiftShardedInput struct {
 	// The unique name of this connection.
 	Name string                        `json:"name"`
 	Type ConnectionRedshiftShardedType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionRedshiftShardedUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -335,8 +1330,10 @@ type ConnectionRedshiftShardedInput struct {
 	// The id of another Etleap Redshift connection. If specified, Etleap will make the data loaded available to the other cluster via Redshift Data Sharing.
 	DataSharingDestinations []string `json:"dataSharingDestinations,omitempty"`
 	// Etleap will create VARCHAR columns with the minimal required width based on the data it's loading, and expand the column width as required. This can improve performance but there are <a target="_blank" href="https://docs.etleap.com/documentation/destinations/redshift/redshift-optional-connection-settings/#enable-dynamic-varchar-widths">some limitations</a>. Note: if set to `true`, it can't later be updated to `false`.
-	DynamicVarcharWidthEnabled *bool           `default:"false" json:"dynamicVarcharWidthEnabled"`
-	Shards                     []DatabaseShard `json:"shards"`
+	DynamicVarcharWidthEnabled *bool `default:"false" json:"dynamicVarcharWidthEnabled"`
+	// When defined, this schedule enables load throttling windows for all pipelines that load to this connection. Load throttling synchronises the activities of all pipelines that load to this destination, such that all loads occur simultaneously. See <a href="https://docs.etleap.com/documentation/pipeline/load-throttling/">the documentation</a> for more details.
+	LoadThrottleSchedule *ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes `json:"loadThrottleSchedule,omitempty"`
+	Shards               []DatabaseShard                                                   `json:"shards"`
 }
 
 func (c ConnectionRedshiftShardedInput) MarshalJSON() ([]byte, error) {
@@ -364,44 +1361,51 @@ func (o *ConnectionRedshiftShardedInput) GetType() ConnectionRedshiftShardedType
 	return o.Type
 }
 
-func (o *ConnectionRedshiftShardedInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionRedshiftShardedInput) GetUpdateSchedule() *ConnectionRedshiftShardedUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftShardedInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -446,6 +1450,55 @@ func (o *ConnectionRedshiftShardedInput) GetDynamicVarcharWidthEnabled() *bool {
 		return nil
 	}
 	return o.DynamicVarcharWidthEnabled
+}
+
+func (o *ConnectionRedshiftShardedInput) GetLoadThrottleSchedule() *ConnectionRedshiftShardedLoadThrottleScheduleUpdateScheduleTypes {
+	if o == nil {
+		return nil
+	}
+	return o.LoadThrottleSchedule
+}
+
+func (o *ConnectionRedshiftShardedInput) GetLoadThrottleScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleIntervalUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftShardedInput) GetLoadThrottleScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleHourlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftShardedInput) GetLoadThrottleScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleDailyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftShardedInput) GetLoadThrottleScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleWeeklyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftShardedInput) GetLoadThrottleScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionRedshiftShardedInput) GetLoadThrottleScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode {
+	if v := o.GetLoadThrottleSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionRedshiftShardedLoadThrottleScheduleCronUpdateScheduleMode
+	}
+	return nil
 }
 
 func (o *ConnectionRedshiftShardedInput) GetShards() []DatabaseShard {

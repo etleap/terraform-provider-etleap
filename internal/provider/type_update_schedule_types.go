@@ -3,6 +3,7 @@
 package provider
 
 type UpdateScheduleTypes struct {
+	Cron     *UpdateScheduleModeCron     `tfsdk:"cron"`
 	Daily    *UpdateScheduleModeDaily    `tfsdk:"daily"`
 	Hourly   *UpdateScheduleModeHourly   `tfsdk:"hourly"`
 	Interval *UpdateScheduleModeInterval `tfsdk:"interval"`

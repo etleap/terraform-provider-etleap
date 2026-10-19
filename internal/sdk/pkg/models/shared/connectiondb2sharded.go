@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionDb2ShardedStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode `json:"mode"`
+	DayOfMonth int64                                                                `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode `json:"mode"`
+	DayOfWeek int64                                                               `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionDb2ShardedUpdateScheduleTypesType string
+
+const (
+	ConnectionDb2ShardedUpdateScheduleTypesTypeInterval ConnectionDb2ShardedUpdateScheduleTypesType = "INTERVAL"
+	ConnectionDb2ShardedUpdateScheduleTypesTypeHourly   ConnectionDb2ShardedUpdateScheduleTypesType = "HOURLY"
+	ConnectionDb2ShardedUpdateScheduleTypesTypeDaily    ConnectionDb2ShardedUpdateScheduleTypesType = "DAILY"
+	ConnectionDb2ShardedUpdateScheduleTypesTypeWeekly   ConnectionDb2ShardedUpdateScheduleTypesType = "WEEKLY"
+	ConnectionDb2ShardedUpdateScheduleTypesTypeMonthly  ConnectionDb2ShardedUpdateScheduleTypesType = "MONTHLY"
+	ConnectionDb2ShardedUpdateScheduleTypesTypeCron     ConnectionDb2ShardedUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionDb2ShardedUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionDb2ShardedUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode
+
+	Type ConnectionDb2ShardedUpdateScheduleTypesType
+}
+
+func CreateConnectionDb2ShardedUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode) ConnectionDb2ShardedUpdateScheduleTypes {
+	typ := ConnectionDb2ShardedUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionDb2ShardedUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionDb2ShardedUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode) ConnectionDb2ShardedUpdateScheduleTypes {
+	typ := ConnectionDb2ShardedUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionDb2ShardedUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionDb2ShardedUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode) ConnectionDb2ShardedUpdateScheduleTypes {
+	typ := ConnectionDb2ShardedUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionDb2ShardedUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionDb2ShardedUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode) ConnectionDb2ShardedUpdateScheduleTypes {
+	typ := ConnectionDb2ShardedUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionDb2ShardedUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionDb2ShardedUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode) ConnectionDb2ShardedUpdateScheduleTypes {
+	typ := ConnectionDb2ShardedUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionDb2ShardedUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionDb2ShardedUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode) ConnectionDb2ShardedUpdateScheduleTypes {
+	typ := ConnectionDb2ShardedUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionDb2ShardedUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionDb2ShardedUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode
+		u.Type = ConnectionDb2ShardedUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode
+		u.Type = ConnectionDb2ShardedUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode
+		u.Type = ConnectionDb2ShardedUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode
+		u.Type = ConnectionDb2ShardedUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode
+		u.Type = ConnectionDb2ShardedUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode
+		u.Type = ConnectionDb2ShardedUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionDb2ShardedUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionDb2ShardedDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionDb2ShardedDefaultUpdateSchedule) GetUpdateScheduleMonthly() *
 	return nil
 }
 
+func (o *ConnectionDb2ShardedDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionDb2Sharded struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionDb2Sharded struct {
 	Status ConnectionDb2ShardedStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionDb2ShardedUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionDb2ShardedDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// If not specified, the default schema will be used.
@@ -210,44 +682,51 @@ func (o *ConnectionDb2Sharded) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionDb2Sharded) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionDb2Sharded) GetUpdateSchedule() *ConnectionDb2ShardedUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionDb2Sharded) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionDb2Sharded) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionDb2Sharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionDb2Sharded) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionDb2Sharded) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionDb2Sharded) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionDb2Sharded) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionDb2Sharded) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionDb2Sharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionDb2Sharded) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionDb2Sharded) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -284,8 +763,8 @@ type ConnectionDb2ShardedInput struct {
 	// The unique name of this connection.
 	Name string                   `json:"name"`
 	Type ConnectionDb2ShardedType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionDb2ShardedUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// If not specified, the default schema will be used.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -309,44 +788,51 @@ func (o *ConnectionDb2ShardedInput) GetType() ConnectionDb2ShardedType {
 	return o.Type
 }
 
-func (o *ConnectionDb2ShardedInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionDb2ShardedInput) GetUpdateSchedule() *ConnectionDb2ShardedUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionDb2ShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionDb2ShardedInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDb2ShardedIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionDb2ShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionDb2ShardedInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDb2ShardedHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionDb2ShardedInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionDb2ShardedInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDb2ShardedDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionDb2ShardedInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionDb2ShardedInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDb2ShardedWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionDb2ShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionDb2ShardedInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDb2ShardedMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionDb2ShardedInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionDb2ShardedCronUpdateScheduleMode
 	}
 	return nil
 }

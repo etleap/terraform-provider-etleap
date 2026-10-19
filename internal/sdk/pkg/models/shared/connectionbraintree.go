@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionBraintreeStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode `json:"mode"`
+	DayOfMonth int64                                                               `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode `json:"mode"`
+	DayOfWeek int64                                                              `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionBraintreeUpdateScheduleTypesType string
+
+const (
+	ConnectionBraintreeUpdateScheduleTypesTypeInterval ConnectionBraintreeUpdateScheduleTypesType = "INTERVAL"
+	ConnectionBraintreeUpdateScheduleTypesTypeHourly   ConnectionBraintreeUpdateScheduleTypesType = "HOURLY"
+	ConnectionBraintreeUpdateScheduleTypesTypeDaily    ConnectionBraintreeUpdateScheduleTypesType = "DAILY"
+	ConnectionBraintreeUpdateScheduleTypesTypeWeekly   ConnectionBraintreeUpdateScheduleTypesType = "WEEKLY"
+	ConnectionBraintreeUpdateScheduleTypesTypeMonthly  ConnectionBraintreeUpdateScheduleTypesType = "MONTHLY"
+	ConnectionBraintreeUpdateScheduleTypesTypeCron     ConnectionBraintreeUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionBraintreeUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionBraintreeUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode
+
+	Type ConnectionBraintreeUpdateScheduleTypesType
+}
+
+func CreateConnectionBraintreeUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode) ConnectionBraintreeUpdateScheduleTypes {
+	typ := ConnectionBraintreeUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionBraintreeUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBraintreeUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode) ConnectionBraintreeUpdateScheduleTypes {
+	typ := ConnectionBraintreeUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionBraintreeUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBraintreeUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode) ConnectionBraintreeUpdateScheduleTypes {
+	typ := ConnectionBraintreeUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionBraintreeUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBraintreeUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode) ConnectionBraintreeUpdateScheduleTypes {
+	typ := ConnectionBraintreeUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionBraintreeUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBraintreeUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode) ConnectionBraintreeUpdateScheduleTypes {
+	typ := ConnectionBraintreeUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionBraintreeUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBraintreeUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode) ConnectionBraintreeUpdateScheduleTypes {
+	typ := ConnectionBraintreeUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionBraintreeUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionBraintreeUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode
+		u.Type = ConnectionBraintreeUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode
+		u.Type = ConnectionBraintreeUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode
+		u.Type = ConnectionBraintreeUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode
+		u.Type = ConnectionBraintreeUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode
+		u.Type = ConnectionBraintreeUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode
+		u.Type = ConnectionBraintreeUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionBraintreeUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionBraintreeDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionBraintreeDefaultUpdateSchedule) GetUpdateScheduleMonthly() *U
 	return nil
 }
 
+func (o *ConnectionBraintreeDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionBraintree struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionBraintree struct {
 	Status ConnectionBraintreeStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionBraintreeUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionBraintreeDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Your Braintree tenant Merchant ID.
@@ -209,44 +681,51 @@ func (o *ConnectionBraintree) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionBraintree) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionBraintree) GetUpdateSchedule() *ConnectionBraintreeUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBraintree) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBraintree) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBraintree) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionBraintree) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBraintree) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionBraintree) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBraintree) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionBraintree) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBraintree) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBraintree) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionBraintree) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -283,8 +762,8 @@ type ConnectionBraintreeInput struct {
 	// The unique name of this connection.
 	Name string                  `json:"name"`
 	Type ConnectionBraintreeType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionBraintreeUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your Braintree tenant Merchant ID.
 	MerchantID string `json:"merchantId"`
 	// The public API key.
@@ -309,44 +788,51 @@ func (o *ConnectionBraintreeInput) GetType() ConnectionBraintreeType {
 	return o.Type
 }
 
-func (o *ConnectionBraintreeInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionBraintreeInput) GetUpdateSchedule() *ConnectionBraintreeUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBraintreeInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBraintreeInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBraintreeIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBraintreeInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionBraintreeInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBraintreeHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBraintreeInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionBraintreeInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBraintreeDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBraintreeInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionBraintreeInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBraintreeWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBraintreeInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBraintreeInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBraintreeMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionBraintreeInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionBraintreeCronUpdateScheduleMode
 	}
 	return nil
 }

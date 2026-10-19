@@ -156,6 +156,33 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 							},
 							Attributes: map[string]schema.Attribute{
+								"cron": schema.SingleNestedAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
+									Attributes: map[string]schema.Attribute{
+										"cron_expression": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Description: `The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.`,
+										},
+										"mode": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Description: `must be one of ["CRON"]`,
+											Validators: []validator.String{
+												stringvalidator.OneOf(
+													"CRON",
+												),
+											},
+										},
+									},
+								},
 								"daily": schema.SingleNestedAttribute{
 									Computed: true,
 									PlanModifiers: []planmodifier.Object{
@@ -182,7 +209,6 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 											},
 										},
 									},
-									Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 								},
 								"hourly": schema.SingleNestedAttribute{
 									Computed: true,
@@ -203,7 +229,6 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 											},
 										},
 									},
-									Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 								},
 								"interval": schema.SingleNestedAttribute{
 									Computed: true,
@@ -231,7 +256,6 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 											},
 										},
 									},
-									Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 								},
 								"monthly": schema.SingleNestedAttribute{
 									Computed: true,
@@ -265,7 +289,6 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 											},
 										},
 									},
-									Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 								},
 								"weekly": schema.SingleNestedAttribute{
 									Computed: true,
@@ -299,10 +322,8 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 											},
 										},
 									},
-									Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 								},
 							},
-							Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.`,
 							Validators: []validator.Object{
 								validators.ExactlyOneChild(),
 							},
@@ -425,6 +446,40 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
+					"cron": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"cron_expression": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC. Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"mode": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["CRON"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"CRON",
+									),
+								},
+							},
+						},
+					},
 					"daily": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
@@ -458,7 +513,6 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 								},
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"hourly": schema.SingleNestedAttribute{
 						Computed: true,
@@ -482,7 +536,6 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 								},
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"interval": schema.SingleNestedAttribute{
 						Computed: true,
@@ -517,7 +570,6 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 								},
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"monthly": schema.SingleNestedAttribute{
 						Computed: true,
@@ -563,7 +615,6 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 								},
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"weekly": schema.SingleNestedAttribute{
 						Computed: true,
@@ -609,10 +660,9 @@ func (r *ConnectionSQLSERVERResource) Schema(ctx context.Context, req resource.S
 								},
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 				},
-				Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.`,
+				Description: `The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the ` + "`" + `defaultUpdateSchedule` + "`" + ` is used instead.`,
 				Validators: []validator.Object{
 					validators.ExactlyOneChild(),
 				},

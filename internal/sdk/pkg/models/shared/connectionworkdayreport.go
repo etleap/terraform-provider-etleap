@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionWorkdayReportStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode `json:"mode"`
+	DayOfMonth int64                                                                   `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode `json:"mode"`
+	DayOfWeek int64                                                                  `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionWorkdayReportUpdateScheduleTypesType string
+
+const (
+	ConnectionWorkdayReportUpdateScheduleTypesTypeInterval ConnectionWorkdayReportUpdateScheduleTypesType = "INTERVAL"
+	ConnectionWorkdayReportUpdateScheduleTypesTypeHourly   ConnectionWorkdayReportUpdateScheduleTypesType = "HOURLY"
+	ConnectionWorkdayReportUpdateScheduleTypesTypeDaily    ConnectionWorkdayReportUpdateScheduleTypesType = "DAILY"
+	ConnectionWorkdayReportUpdateScheduleTypesTypeWeekly   ConnectionWorkdayReportUpdateScheduleTypesType = "WEEKLY"
+	ConnectionWorkdayReportUpdateScheduleTypesTypeMonthly  ConnectionWorkdayReportUpdateScheduleTypesType = "MONTHLY"
+	ConnectionWorkdayReportUpdateScheduleTypesTypeCron     ConnectionWorkdayReportUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionWorkdayReportUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionWorkdayReportUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode
+
+	Type ConnectionWorkdayReportUpdateScheduleTypesType
+}
+
+func CreateConnectionWorkdayReportUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode) ConnectionWorkdayReportUpdateScheduleTypes {
+	typ := ConnectionWorkdayReportUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionWorkdayReportUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionWorkdayReportUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode) ConnectionWorkdayReportUpdateScheduleTypes {
+	typ := ConnectionWorkdayReportUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionWorkdayReportUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionWorkdayReportUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode) ConnectionWorkdayReportUpdateScheduleTypes {
+	typ := ConnectionWorkdayReportUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionWorkdayReportUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionWorkdayReportUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode) ConnectionWorkdayReportUpdateScheduleTypes {
+	typ := ConnectionWorkdayReportUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionWorkdayReportUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionWorkdayReportUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode) ConnectionWorkdayReportUpdateScheduleTypes {
+	typ := ConnectionWorkdayReportUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionWorkdayReportUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionWorkdayReportUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode) ConnectionWorkdayReportUpdateScheduleTypes {
+	typ := ConnectionWorkdayReportUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionWorkdayReportUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionWorkdayReportUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode
+		u.Type = ConnectionWorkdayReportUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode
+		u.Type = ConnectionWorkdayReportUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode
+		u.Type = ConnectionWorkdayReportUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode
+		u.Type = ConnectionWorkdayReportUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode
+		u.Type = ConnectionWorkdayReportUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode
+		u.Type = ConnectionWorkdayReportUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionWorkdayReportUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionWorkdayReportDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionWorkdayReportDefaultUpdateSchedule) GetUpdateScheduleMonthly(
 	return nil
 }
 
+func (o *ConnectionWorkdayReportDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionWorkdayReport struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionWorkdayReport struct {
 	Status ConnectionWorkdayReportStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionWorkdayReportUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionWorkdayReportDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	ReportURL             string                                         `json:"reportUrl"`
@@ -205,44 +677,51 @@ func (o *ConnectionWorkdayReport) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionWorkdayReport) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionWorkdayReport) GetUpdateSchedule() *ConnectionWorkdayReportUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionWorkdayReport) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionWorkdayReport) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkdayReport) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionWorkdayReport) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkdayReport) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionWorkdayReport) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkdayReport) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionWorkdayReport) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkdayReport) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionWorkdayReport) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionWorkdayReport) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -272,11 +751,11 @@ type ConnectionWorkdayReportInput struct {
 	// The unique name of this connection.
 	Name string                      `json:"name"`
 	Type ConnectionWorkdayReportType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	ReportURL      string               `json:"reportUrl"`
-	Username       string               `json:"username"`
-	Password       string               `json:"password"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionWorkdayReportUpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	ReportURL      string                                      `json:"reportUrl"`
+	Username       string                                      `json:"username"`
+	Password       string                                      `json:"password"`
 }
 
 func (o *ConnectionWorkdayReportInput) GetName() string {
@@ -293,44 +772,51 @@ func (o *ConnectionWorkdayReportInput) GetType() ConnectionWorkdayReportType {
 	return o.Type
 }
 
-func (o *ConnectionWorkdayReportInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionWorkdayReportInput) GetUpdateSchedule() *ConnectionWorkdayReportUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionWorkdayReportInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionWorkdayReportInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionWorkdayReportIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkdayReportInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionWorkdayReportInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionWorkdayReportHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkdayReportInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionWorkdayReportInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionWorkdayReportDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkdayReportInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionWorkdayReportInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionWorkdayReportWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionWorkdayReportInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionWorkdayReportInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionWorkdayReportMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionWorkdayReportInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionWorkdayReportCronUpdateScheduleMode
 	}
 	return nil
 }

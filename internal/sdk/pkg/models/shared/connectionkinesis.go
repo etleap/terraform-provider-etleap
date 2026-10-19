@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionKinesisStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode `json:"mode"`
+	DayOfMonth int64                                                             `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode `json:"mode"`
+	DayOfWeek int64                                                            `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionKinesisUpdateScheduleTypesType string
+
+const (
+	ConnectionKinesisUpdateScheduleTypesTypeInterval ConnectionKinesisUpdateScheduleTypesType = "INTERVAL"
+	ConnectionKinesisUpdateScheduleTypesTypeHourly   ConnectionKinesisUpdateScheduleTypesType = "HOURLY"
+	ConnectionKinesisUpdateScheduleTypesTypeDaily    ConnectionKinesisUpdateScheduleTypesType = "DAILY"
+	ConnectionKinesisUpdateScheduleTypesTypeWeekly   ConnectionKinesisUpdateScheduleTypesType = "WEEKLY"
+	ConnectionKinesisUpdateScheduleTypesTypeMonthly  ConnectionKinesisUpdateScheduleTypesType = "MONTHLY"
+	ConnectionKinesisUpdateScheduleTypesTypeCron     ConnectionKinesisUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionKinesisUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionKinesisUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode
+
+	Type ConnectionKinesisUpdateScheduleTypesType
+}
+
+func CreateConnectionKinesisUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode) ConnectionKinesisUpdateScheduleTypes {
+	typ := ConnectionKinesisUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionKinesisUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionKinesisUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode) ConnectionKinesisUpdateScheduleTypes {
+	typ := ConnectionKinesisUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionKinesisUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionKinesisUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode) ConnectionKinesisUpdateScheduleTypes {
+	typ := ConnectionKinesisUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionKinesisUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionKinesisUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode) ConnectionKinesisUpdateScheduleTypes {
+	typ := ConnectionKinesisUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionKinesisUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionKinesisUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode) ConnectionKinesisUpdateScheduleTypes {
+	typ := ConnectionKinesisUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionKinesisUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionKinesisUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode) ConnectionKinesisUpdateScheduleTypes {
+	typ := ConnectionKinesisUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionKinesisUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionKinesisUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode
+		u.Type = ConnectionKinesisUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode
+		u.Type = ConnectionKinesisUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode
+		u.Type = ConnectionKinesisUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode
+		u.Type = ConnectionKinesisUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode
+		u.Type = ConnectionKinesisUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode
+		u.Type = ConnectionKinesisUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionKinesisUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionKinesisDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionKinesisDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upd
 	return nil
 }
 
+func (o *ConnectionKinesisDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionKinesis struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionKinesis struct {
 	Status ConnectionKinesisStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionKinesisUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionKinesisDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Format: <code>arn:aws:iam::&lt;account-id&gt;:role/&lt;role-name&gt;</code> Etleap will assume this role to read your Kinesis streams. Only streams in the same AWS account as the role will be available to select.
@@ -207,44 +679,51 @@ func (o *ConnectionKinesis) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionKinesis) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionKinesis) GetUpdateSchedule() *ConnectionKinesisUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionKinesis) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionKinesis) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKinesis) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionKinesis) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKinesis) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionKinesis) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKinesis) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionKinesis) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKinesis) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionKinesis) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionKinesis) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -274,8 +753,8 @@ type ConnectionKinesisInput struct {
 	// The unique name of this connection.
 	Name string                `json:"name"`
 	Type ConnectionKinesisType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionKinesisUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Format: <code>arn:aws:iam::&lt;account-id&gt;:role/&lt;role-name&gt;</code> Etleap will assume this role to read your Kinesis streams. Only streams in the same AWS account as the role will be available to select.
 	IamRoleArn string `json:"iamRoleArn"`
 	// Select the region where your Kinesis streams are located. Only streams in this region will be available to select. To access streams in other regions, create a separate Kinesis connection.
@@ -296,44 +775,51 @@ func (o *ConnectionKinesisInput) GetType() ConnectionKinesisType {
 	return o.Type
 }
 
-func (o *ConnectionKinesisInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionKinesisInput) GetUpdateSchedule() *ConnectionKinesisUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionKinesisInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionKinesisInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKinesisIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKinesisInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionKinesisInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKinesisHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKinesisInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionKinesisInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionKinesisDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKinesisInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionKinesisInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKinesisWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKinesisInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionKinesisInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKinesisMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionKinesisInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionKinesisCronUpdateScheduleMode
 	}
 	return nil
 }

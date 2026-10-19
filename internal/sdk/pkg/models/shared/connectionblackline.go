@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionBlacklineStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode `json:"mode"`
+	DayOfMonth int64                                                               `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode `json:"mode"`
+	DayOfWeek int64                                                              `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionBlacklineUpdateScheduleTypesType string
+
+const (
+	ConnectionBlacklineUpdateScheduleTypesTypeInterval ConnectionBlacklineUpdateScheduleTypesType = "INTERVAL"
+	ConnectionBlacklineUpdateScheduleTypesTypeHourly   ConnectionBlacklineUpdateScheduleTypesType = "HOURLY"
+	ConnectionBlacklineUpdateScheduleTypesTypeDaily    ConnectionBlacklineUpdateScheduleTypesType = "DAILY"
+	ConnectionBlacklineUpdateScheduleTypesTypeWeekly   ConnectionBlacklineUpdateScheduleTypesType = "WEEKLY"
+	ConnectionBlacklineUpdateScheduleTypesTypeMonthly  ConnectionBlacklineUpdateScheduleTypesType = "MONTHLY"
+	ConnectionBlacklineUpdateScheduleTypesTypeCron     ConnectionBlacklineUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionBlacklineUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionBlacklineUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode
+
+	Type ConnectionBlacklineUpdateScheduleTypesType
+}
+
+func CreateConnectionBlacklineUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode) ConnectionBlacklineUpdateScheduleTypes {
+	typ := ConnectionBlacklineUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionBlacklineUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBlacklineUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode) ConnectionBlacklineUpdateScheduleTypes {
+	typ := ConnectionBlacklineUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionBlacklineUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBlacklineUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode) ConnectionBlacklineUpdateScheduleTypes {
+	typ := ConnectionBlacklineUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionBlacklineUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBlacklineUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode) ConnectionBlacklineUpdateScheduleTypes {
+	typ := ConnectionBlacklineUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionBlacklineUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBlacklineUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode) ConnectionBlacklineUpdateScheduleTypes {
+	typ := ConnectionBlacklineUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionBlacklineUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionBlacklineUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode) ConnectionBlacklineUpdateScheduleTypes {
+	typ := ConnectionBlacklineUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionBlacklineUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionBlacklineUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode
+		u.Type = ConnectionBlacklineUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode
+		u.Type = ConnectionBlacklineUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode
+		u.Type = ConnectionBlacklineUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode
+		u.Type = ConnectionBlacklineUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode
+		u.Type = ConnectionBlacklineUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode
+		u.Type = ConnectionBlacklineUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionBlacklineUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionBlacklineDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionBlacklineDefaultUpdateSchedule) GetUpdateScheduleMonthly() *U
 	return nil
 }
 
+func (o *ConnectionBlacklineDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionBlackline struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionBlackline struct {
 	Status ConnectionBlacklineStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionBlacklineUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionBlacklineDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Your Blackline instance Client ID.
@@ -211,44 +683,51 @@ func (o *ConnectionBlackline) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionBlackline) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionBlackline) GetUpdateSchedule() *ConnectionBlacklineUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBlackline) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBlackline) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBlackline) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionBlackline) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBlackline) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionBlackline) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBlackline) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionBlackline) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBlackline) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBlackline) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionBlackline) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -292,8 +771,8 @@ type ConnectionBlacklineInput struct {
 	// The unique name of this connection.
 	Name string                  `json:"name"`
 	Type ConnectionBlacklineType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionBlacklineUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Your Blackline instance Client ID.
 	ClientID string `json:"client_id"`
 	// Your Blackline instance Client Secret.
@@ -322,44 +801,51 @@ func (o *ConnectionBlacklineInput) GetType() ConnectionBlacklineType {
 	return o.Type
 }
 
-func (o *ConnectionBlacklineInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionBlacklineInput) GetUpdateSchedule() *ConnectionBlacklineUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionBlacklineInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionBlacklineInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionBlacklineIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBlacklineInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionBlacklineInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionBlacklineHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBlacklineInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionBlacklineInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionBlacklineDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBlacklineInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionBlacklineInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionBlacklineWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionBlacklineInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionBlacklineInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionBlacklineMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionBlacklineInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionBlacklineCronUpdateScheduleMode
 	}
 	return nil
 }

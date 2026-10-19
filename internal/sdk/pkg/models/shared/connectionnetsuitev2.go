@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionNetsuiteV2Status) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2ModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2ModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode `json:"mode"`
+	DayOfMonth int64                                                                `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2ModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode `json:"mode"`
+	DayOfWeek int64                                                               `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2ModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2ModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2ModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionNetsuiteV2UpdateScheduleTypesType string
+
+const (
+	ConnectionNetsuiteV2UpdateScheduleTypesTypeInterval ConnectionNetsuiteV2UpdateScheduleTypesType = "INTERVAL"
+	ConnectionNetsuiteV2UpdateScheduleTypesTypeHourly   ConnectionNetsuiteV2UpdateScheduleTypesType = "HOURLY"
+	ConnectionNetsuiteV2UpdateScheduleTypesTypeDaily    ConnectionNetsuiteV2UpdateScheduleTypesType = "DAILY"
+	ConnectionNetsuiteV2UpdateScheduleTypesTypeWeekly   ConnectionNetsuiteV2UpdateScheduleTypesType = "WEEKLY"
+	ConnectionNetsuiteV2UpdateScheduleTypesTypeMonthly  ConnectionNetsuiteV2UpdateScheduleTypesType = "MONTHLY"
+	ConnectionNetsuiteV2UpdateScheduleTypesTypeCron     ConnectionNetsuiteV2UpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionNetsuiteV2UpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionNetsuiteV2UpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode
+
+	Type ConnectionNetsuiteV2UpdateScheduleTypesType
+}
+
+func CreateConnectionNetsuiteV2UpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode) ConnectionNetsuiteV2UpdateScheduleTypes {
+	typ := ConnectionNetsuiteV2UpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2Mode(typ)
+	interval.Mode = typStr
+
+	return ConnectionNetsuiteV2UpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionNetsuiteV2UpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode) ConnectionNetsuiteV2UpdateScheduleTypes {
+	typ := ConnectionNetsuiteV2UpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2Mode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionNetsuiteV2UpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionNetsuiteV2UpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode) ConnectionNetsuiteV2UpdateScheduleTypes {
+	typ := ConnectionNetsuiteV2UpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2Mode(typ)
+	daily.Mode = typStr
+
+	return ConnectionNetsuiteV2UpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionNetsuiteV2UpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode) ConnectionNetsuiteV2UpdateScheduleTypes {
+	typ := ConnectionNetsuiteV2UpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2Mode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionNetsuiteV2UpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionNetsuiteV2UpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode) ConnectionNetsuiteV2UpdateScheduleTypes {
+	typ := ConnectionNetsuiteV2UpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2Mode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionNetsuiteV2UpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionNetsuiteV2UpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode) ConnectionNetsuiteV2UpdateScheduleTypes {
+	typ := ConnectionNetsuiteV2UpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2Mode(typ)
+	cron.Mode = typStr
+
+	return ConnectionNetsuiteV2UpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionNetsuiteV2UpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode
+		u.Type = ConnectionNetsuiteV2UpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode
+		u.Type = ConnectionNetsuiteV2UpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode
+		u.Type = ConnectionNetsuiteV2UpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode
+		u.Type = ConnectionNetsuiteV2UpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode
+		u.Type = ConnectionNetsuiteV2UpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode
+		u.Type = ConnectionNetsuiteV2UpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionNetsuiteV2UpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionNetsuiteV2DefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionNetsuiteV2DefaultUpdateSchedule) GetUpdateScheduleMonthly() *
 	return nil
 }
 
+func (o *ConnectionNetsuiteV2DefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionNetsuiteV2 struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionNetsuiteV2 struct {
 	Status ConnectionNetsuiteV2Status `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionNetsuiteV2UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionNetsuiteV2DefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// Under Setup > Company > Company Information
@@ -209,44 +681,51 @@ func (o *ConnectionNetsuiteV2) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionNetsuiteV2) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionNetsuiteV2) GetUpdateSchedule() *ConnectionNetsuiteV2UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionNetsuiteV2) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionNetsuiteV2) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionNetsuiteV2) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionNetsuiteV2) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionNetsuiteV2) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionNetsuiteV2) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionNetsuiteV2) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode
 	}
 	return nil
 }
@@ -283,8 +762,8 @@ type ConnectionNetsuiteV2Input struct {
 	// The unique name of this connection.
 	Name string                   `json:"name"`
 	Type ConnectionNetsuiteV2Type `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionNetsuiteV2UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Under Setup > Company > Company Information
 	AccountID string `json:"accountId"`
 	// Consumer Key value displayed after creating a new integration.
@@ -311,44 +790,51 @@ func (o *ConnectionNetsuiteV2Input) GetType() ConnectionNetsuiteV2Type {
 	return o.Type
 }
 
-func (o *ConnectionNetsuiteV2Input) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionNetsuiteV2Input) GetUpdateSchedule() *ConnectionNetsuiteV2UpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionNetsuiteV2IntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionNetsuiteV2HourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionNetsuiteV2DailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionNetsuiteV2WeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionNetsuiteV2MonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionNetsuiteV2Input) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionNetsuiteV2CronUpdateScheduleMode
 	}
 	return nil
 }

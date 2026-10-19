@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionJiraCloudStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode `json:"mode"`
+	DayOfMonth int64                                                               `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode `json:"mode"`
+	DayOfWeek int64                                                              `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionJiraCloudUpdateScheduleTypesType string
+
+const (
+	ConnectionJiraCloudUpdateScheduleTypesTypeInterval ConnectionJiraCloudUpdateScheduleTypesType = "INTERVAL"
+	ConnectionJiraCloudUpdateScheduleTypesTypeHourly   ConnectionJiraCloudUpdateScheduleTypesType = "HOURLY"
+	ConnectionJiraCloudUpdateScheduleTypesTypeDaily    ConnectionJiraCloudUpdateScheduleTypesType = "DAILY"
+	ConnectionJiraCloudUpdateScheduleTypesTypeWeekly   ConnectionJiraCloudUpdateScheduleTypesType = "WEEKLY"
+	ConnectionJiraCloudUpdateScheduleTypesTypeMonthly  ConnectionJiraCloudUpdateScheduleTypesType = "MONTHLY"
+	ConnectionJiraCloudUpdateScheduleTypesTypeCron     ConnectionJiraCloudUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionJiraCloudUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionJiraCloudUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode
+
+	Type ConnectionJiraCloudUpdateScheduleTypesType
+}
+
+func CreateConnectionJiraCloudUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode) ConnectionJiraCloudUpdateScheduleTypes {
+	typ := ConnectionJiraCloudUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionJiraCloudUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionJiraCloudUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode) ConnectionJiraCloudUpdateScheduleTypes {
+	typ := ConnectionJiraCloudUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionJiraCloudUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionJiraCloudUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode) ConnectionJiraCloudUpdateScheduleTypes {
+	typ := ConnectionJiraCloudUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionJiraCloudUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionJiraCloudUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode) ConnectionJiraCloudUpdateScheduleTypes {
+	typ := ConnectionJiraCloudUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionJiraCloudUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionJiraCloudUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode) ConnectionJiraCloudUpdateScheduleTypes {
+	typ := ConnectionJiraCloudUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionJiraCloudUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionJiraCloudUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode) ConnectionJiraCloudUpdateScheduleTypes {
+	typ := ConnectionJiraCloudUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionJiraCloudUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionJiraCloudUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode
+		u.Type = ConnectionJiraCloudUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode
+		u.Type = ConnectionJiraCloudUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode
+		u.Type = ConnectionJiraCloudUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode
+		u.Type = ConnectionJiraCloudUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode
+		u.Type = ConnectionJiraCloudUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode
+		u.Type = ConnectionJiraCloudUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionJiraCloudUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionJiraCloudDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionJiraCloudDefaultUpdateSchedule) GetUpdateScheduleMonthly() *U
 	return nil
 }
 
+func (o *ConnectionJiraCloudDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionJiraCloud struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionJiraCloud struct {
 	Status ConnectionJiraCloudStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionJiraCloudUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionJiraCloudDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 }
@@ -203,44 +675,51 @@ func (o *ConnectionJiraCloud) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionJiraCloud) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionJiraCloud) GetUpdateSchedule() *ConnectionJiraCloudUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionJiraCloud) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionJiraCloud) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionJiraCloud) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionJiraCloud) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionJiraCloud) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionJiraCloud) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionJiraCloud) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionJiraCloud) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionJiraCloud) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionJiraCloud) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionJiraCloud) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -256,8 +735,8 @@ type ConnectionJiraCloudInput struct {
 	// The unique name of this connection.
 	Name string                  `json:"name"`
 	Type ConnectionJiraCloudType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionJiraCloudUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code string `json:"code"`
 }
@@ -276,44 +755,51 @@ func (o *ConnectionJiraCloudInput) GetType() ConnectionJiraCloudType {
 	return o.Type
 }
 
-func (o *ConnectionJiraCloudInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionJiraCloudInput) GetUpdateSchedule() *ConnectionJiraCloudUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionJiraCloudInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionJiraCloudInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionJiraCloudIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionJiraCloudInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionJiraCloudInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionJiraCloudHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionJiraCloudInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionJiraCloudInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionJiraCloudDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionJiraCloudInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionJiraCloudInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionJiraCloudWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionJiraCloudInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionJiraCloudInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionJiraCloudMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionJiraCloudInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionJiraCloudCronUpdateScheduleMode
 	}
 	return nil
 }

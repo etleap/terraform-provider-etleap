@@ -39,7 +39,7 @@ type PipelineDataSourceModel struct {
 	Owner                 User                                 `tfsdk:"owner"`
 	Paused                types.Bool                           `tfsdk:"paused"`
 	PipelineMode          types.String                         `tfsdk:"pipeline_mode"`
-	RefreshSchedule       RefreshScheduleTypes                 `tfsdk:"refresh_schedule"`
+	RefreshSchedule       ModelInputScheduleTypes              `tfsdk:"refresh_schedule"`
 	RowErrorSettings      *RowErrorSettings                    `tfsdk:"row_error_settings"`
 	Shares                []types.String                       `tfsdk:"shares"`
 	Source                SourceTypes                          `tfsdk:"source"`
@@ -504,6 +504,19 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 			"refresh_schedule": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
+					"cron": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"cron_expression": schema.StringAttribute{
+								Computed:    true,
+								Description: `The cron expression which defines the times at which schedule should trigger at. Expressions are evaluated in UTC.`,
+							},
+							"mode": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["CRON"]`,
+							},
+						},
+					},
 					"daily": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -1149,7 +1162,7 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"breakdowns": schema.ListAttribute{
 								Computed:    true,
 								ElementType: types.StringType,
-								Description: `The breakdown fields. The first one must be ` + "`" + `date_start` + "`" + `. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v22.0#insights-api-breakdowns)`,
+								Description: `The breakdown fields. Specify ` + "`" + `breakdowns` + "`" + ` if and only if the entity is an Insights entity, in which case the first one must be ` + "`" + `date_start` + "`" + `. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v22.0#insights-api-breakdowns)`,
 							},
 							"connection_id": schema.StringAttribute{
 								Computed:    true,
@@ -3484,6 +3497,19 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 			"update_schedule": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
+					"cron": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"cron_expression": schema.StringAttribute{
+								Computed:    true,
+								Description: `The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.`,
+							},
+							"mode": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["CRON"]`,
+							},
+						},
+					},
 					"daily": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -3496,7 +3522,6 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Description: `must be one of ["DAILY"]`,
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"hourly": schema.SingleNestedAttribute{
 						Computed: true,
@@ -3506,7 +3531,6 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Description: `must be one of ["HOURLY"]`,
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"interval": schema.SingleNestedAttribute{
 						Computed: true,
@@ -3520,7 +3544,6 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Description: `must be one of ["INTERVAL"]`,
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"monthly": schema.SingleNestedAttribute{
 						Computed: true,
@@ -3537,7 +3560,6 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Description: `must be one of ["MONTHLY"]`,
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 					"weekly": schema.SingleNestedAttribute{
 						Computed: true,
@@ -3554,7 +3576,6 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Description: `must be one of ["WEEKLY"]`,
 							},
 						},
-						Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.`,
 					},
 				},
 				Description: `The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.`,

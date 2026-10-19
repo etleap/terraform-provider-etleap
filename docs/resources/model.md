@@ -23,16 +23,16 @@ resource "etleap_model" "my_model" {
     ]
   }
   update_schedule = {
-    daily = {
-      hour_of_day = 8
-      mode        = "DAILY"
+    cron = {
+      cron_expression = "0 3 * * 1"
+      mode            = "CRON"
     }
   }
   warehouse = {
     redshift = {
       connection_id = "...my_connection_id..."
       distribution_style = {
-        one = "ALL"
+        one = "EVEN"
       }
       materialized_view     = false
       pending_renamed_table = "...my_pending_renamed_table..."
@@ -101,11 +101,21 @@ SELECT col1, col2 FROM {{abcd1234}};
 
 Optional:
 
+- `cron` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--cron))
 - `daily` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--daily))
 - `hourly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--hourly))
 - `monthly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--monthly))
 - `never` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--never))
 - `weekly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--weekly))
+
+<a id="nestedatt--update_schedule--cron"></a>
+### Nested Schema for `update_schedule.cron`
+
+Optional:
+
+- `cron_expression` (String) The cron expression which defines the times at which schedule should trigger at. Expressions are evaluated in UTC. Not Null
+- `mode` (String) Not Null; must be one of ["CRON"]
+
 
 <a id="nestedatt--update_schedule--daily"></a>
 ### Nested Schema for `update_schedule.daily`

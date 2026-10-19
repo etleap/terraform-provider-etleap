@@ -8,16 +8,16 @@ resource "etleap_model" "my_model" {
     ]
   }
   update_schedule = {
-    daily = {
-      hour_of_day = 8
-      mode        = "DAILY"
+    cron = {
+      cron_expression = "0 3 * * 1"
+      mode            = "CRON"
     }
   }
   warehouse = {
     redshift = {
       connection_id = "...my_connection_id..."
       distribution_style = {
-        one = "ALL"
+        one = "EVEN"
       }
       materialized_view     = false
       pending_renamed_table = "...my_pending_renamed_table..."

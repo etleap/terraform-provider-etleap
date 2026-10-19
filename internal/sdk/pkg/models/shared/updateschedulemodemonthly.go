@@ -31,7 +31,6 @@ func (e *UpdateScheduleModeMonthlyMode) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// UpdateScheduleModeMonthly - The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
 type UpdateScheduleModeMonthly struct {
 	Mode       UpdateScheduleModeMonthlyMode `json:"mode"`
 	DayOfMonth int64                         `json:"dayOfMonth"`

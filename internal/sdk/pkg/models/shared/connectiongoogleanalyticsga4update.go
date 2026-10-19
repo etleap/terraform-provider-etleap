@@ -4,7 +4,9 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 )
 
 type ConnectionGoogleAnalyticsGa4UpdateType string
@@ -31,14 +33,479 @@ func (e *ConnectionGoogleAnalyticsGa4UpdateType) UnmarshalJSON(data []byte) erro
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode `json:"mode"`
+	DayOfMonth int64                                                                              `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode `json:"mode"`
+	DayOfWeek int64                                                                             `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesType string
+
+const (
+	ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeInterval ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesType = "INTERVAL"
+	ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeHourly   ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesType = "HOURLY"
+	ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeDaily    ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesType = "DAILY"
+	ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeWeekly   ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesType = "WEEKLY"
+	ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeMonthly  ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesType = "MONTHLY"
+	ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeCron     ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline.
+type ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode
+
+	Type ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesType
+}
+
+func CreateConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode) ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes {
+	typ := ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode) ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes {
+	typ := ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode) ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes {
+	typ := ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode) ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes {
+	typ := ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode) ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes {
+	typ := ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode) ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes {
+	typ := ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode
+		u.Type = ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode
+		u.Type = ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode
+		u.Type = ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode
+		u.Type = ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode
+		u.Type = ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode
+		u.Type = ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionGoogleAnalyticsGa4Update struct {
 	// The unique name of this connection.
 	Name *string                                `json:"name,omitempty"`
 	Type ConnectionGoogleAnalyticsGa4UpdateType `json:"type"`
 	// Whether this connection should be marked as active.
 	Active *bool `json:"active,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline.
+	UpdateSchedule *ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 	Code *string `json:"code,omitempty"`
 }
@@ -64,44 +531,51 @@ func (o *ConnectionGoogleAnalyticsGa4Update) GetActive() *bool {
 	return o.Active
 }
 
-func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateSchedule() *ConnectionGoogleAnalyticsGa4UpdateUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionGoogleAnalyticsGa4Update) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionGoogleAnalyticsGa4UpdateCronUpdateScheduleMode
 	}
 	return nil
 }

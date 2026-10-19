@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionLdapVirtualListViewStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode `json:"mode"`
+	DayOfMonth int64                                                                         `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode `json:"mode"`
+	DayOfWeek int64                                                                        `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionLdapVirtualListViewUpdateScheduleTypesType string
+
+const (
+	ConnectionLdapVirtualListViewUpdateScheduleTypesTypeInterval ConnectionLdapVirtualListViewUpdateScheduleTypesType = "INTERVAL"
+	ConnectionLdapVirtualListViewUpdateScheduleTypesTypeHourly   ConnectionLdapVirtualListViewUpdateScheduleTypesType = "HOURLY"
+	ConnectionLdapVirtualListViewUpdateScheduleTypesTypeDaily    ConnectionLdapVirtualListViewUpdateScheduleTypesType = "DAILY"
+	ConnectionLdapVirtualListViewUpdateScheduleTypesTypeWeekly   ConnectionLdapVirtualListViewUpdateScheduleTypesType = "WEEKLY"
+	ConnectionLdapVirtualListViewUpdateScheduleTypesTypeMonthly  ConnectionLdapVirtualListViewUpdateScheduleTypesType = "MONTHLY"
+	ConnectionLdapVirtualListViewUpdateScheduleTypesTypeCron     ConnectionLdapVirtualListViewUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionLdapVirtualListViewUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionLdapVirtualListViewUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode
+
+	Type ConnectionLdapVirtualListViewUpdateScheduleTypesType
+}
+
+func CreateConnectionLdapVirtualListViewUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode) ConnectionLdapVirtualListViewUpdateScheduleTypes {
+	typ := ConnectionLdapVirtualListViewUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionLdapVirtualListViewUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionLdapVirtualListViewUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode) ConnectionLdapVirtualListViewUpdateScheduleTypes {
+	typ := ConnectionLdapVirtualListViewUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionLdapVirtualListViewUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionLdapVirtualListViewUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode) ConnectionLdapVirtualListViewUpdateScheduleTypes {
+	typ := ConnectionLdapVirtualListViewUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionLdapVirtualListViewUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionLdapVirtualListViewUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode) ConnectionLdapVirtualListViewUpdateScheduleTypes {
+	typ := ConnectionLdapVirtualListViewUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionLdapVirtualListViewUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionLdapVirtualListViewUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode) ConnectionLdapVirtualListViewUpdateScheduleTypes {
+	typ := ConnectionLdapVirtualListViewUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionLdapVirtualListViewUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionLdapVirtualListViewUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode) ConnectionLdapVirtualListViewUpdateScheduleTypes {
+	typ := ConnectionLdapVirtualListViewUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionLdapVirtualListViewUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionLdapVirtualListViewUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode
+		u.Type = ConnectionLdapVirtualListViewUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode
+		u.Type = ConnectionLdapVirtualListViewUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode
+		u.Type = ConnectionLdapVirtualListViewUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode
+		u.Type = ConnectionLdapVirtualListViewUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode
+		u.Type = ConnectionLdapVirtualListViewUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode
+		u.Type = ConnectionLdapVirtualListViewUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionLdapVirtualListViewUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionLdapVirtualListViewDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionLdapVirtualListViewDefaultUpdateSchedule) GetUpdateScheduleMo
 	return nil
 }
 
+func (o *ConnectionLdapVirtualListViewDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 // ConnectionLdapVirtualListViewScope - Indicates the set of entries that may be considered potential matches for the search.
 type ConnectionLdapVirtualListViewScope string
 
@@ -175,8 +647,8 @@ type ConnectionLdapVirtualListView struct {
 	Status ConnectionLdapVirtualListViewStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionLdapVirtualListViewUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionLdapVirtualListViewDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// LDAP server name or ip address.
@@ -249,44 +721,51 @@ func (o *ConnectionLdapVirtualListView) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionLdapVirtualListView) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionLdapVirtualListView) GetUpdateSchedule() *ConnectionLdapVirtualListViewUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionLdapVirtualListView) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionLdapVirtualListView) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListView) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionLdapVirtualListView) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListView) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionLdapVirtualListView) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListView) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionLdapVirtualListView) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListView) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionLdapVirtualListView) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionLdapVirtualListView) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -358,8 +837,8 @@ type ConnectionLdapVirtualListViewInput struct {
 	// The unique name of this connection.
 	Name string                            `json:"name"`
 	Type ConnectionLdapVirtualListViewType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionLdapVirtualListViewUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// LDAP server name or ip address.
 	Hostname string `json:"hostname"`
 	Port     int64  `json:"port"`
@@ -392,44 +871,51 @@ func (o *ConnectionLdapVirtualListViewInput) GetType() ConnectionLdapVirtualList
 	return o.Type
 }
 
-func (o *ConnectionLdapVirtualListViewInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionLdapVirtualListViewInput) GetUpdateSchedule() *ConnectionLdapVirtualListViewUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionLdapVirtualListViewIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionLdapVirtualListViewHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionLdapVirtualListViewDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionLdapVirtualListViewWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionLdapVirtualListViewMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionLdapVirtualListViewInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionLdapVirtualListViewCronUpdateScheduleMode
 	}
 	return nil
 }

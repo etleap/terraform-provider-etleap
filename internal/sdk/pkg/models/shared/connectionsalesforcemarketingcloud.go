@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionSalesforceMarketingCloudStatus) UnmarshalJSON(data []byte) er
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode `json:"mode"`
+	DayOfMonth int64                                                                              `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode `json:"mode"`
+	DayOfWeek int64                                                                             `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionSalesforceMarketingCloudUpdateScheduleTypesType string
+
+const (
+	ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeInterval ConnectionSalesforceMarketingCloudUpdateScheduleTypesType = "INTERVAL"
+	ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeHourly   ConnectionSalesforceMarketingCloudUpdateScheduleTypesType = "HOURLY"
+	ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeDaily    ConnectionSalesforceMarketingCloudUpdateScheduleTypesType = "DAILY"
+	ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeWeekly   ConnectionSalesforceMarketingCloudUpdateScheduleTypesType = "WEEKLY"
+	ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeMonthly  ConnectionSalesforceMarketingCloudUpdateScheduleTypesType = "MONTHLY"
+	ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeCron     ConnectionSalesforceMarketingCloudUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionSalesforceMarketingCloudUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionSalesforceMarketingCloudUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode
+
+	Type ConnectionSalesforceMarketingCloudUpdateScheduleTypesType
+}
+
+func CreateConnectionSalesforceMarketingCloudUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode) ConnectionSalesforceMarketingCloudUpdateScheduleTypes {
+	typ := ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionSalesforceMarketingCloudUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSalesforceMarketingCloudUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode) ConnectionSalesforceMarketingCloudUpdateScheduleTypes {
+	typ := ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionSalesforceMarketingCloudUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSalesforceMarketingCloudUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode) ConnectionSalesforceMarketingCloudUpdateScheduleTypes {
+	typ := ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionSalesforceMarketingCloudUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSalesforceMarketingCloudUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode) ConnectionSalesforceMarketingCloudUpdateScheduleTypes {
+	typ := ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionSalesforceMarketingCloudUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSalesforceMarketingCloudUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode) ConnectionSalesforceMarketingCloudUpdateScheduleTypes {
+	typ := ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionSalesforceMarketingCloudUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionSalesforceMarketingCloudUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode) ConnectionSalesforceMarketingCloudUpdateScheduleTypes {
+	typ := ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionSalesforceMarketingCloudUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionSalesforceMarketingCloudUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode
+		u.Type = ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode
+		u.Type = ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode
+		u.Type = ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode
+		u.Type = ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode
+		u.Type = ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode
+		u.Type = ConnectionSalesforceMarketingCloudUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionSalesforceMarketingCloudUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionSalesforceMarketingCloudDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionSalesforceMarketingCloudDefaultUpdateSchedule) GetUpdateSched
 	return nil
 }
 
+func (o *ConnectionSalesforceMarketingCloudDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionSalesforceMarketingCloud struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionSalesforceMarketingCloud struct {
 	Status ConnectionSalesforceMarketingCloudStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionSalesforceMarketingCloudUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionSalesforceMarketingCloudDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// You can find your Account Subdomain with the following <a target="_blank" href="https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/your-subdomain-tenant-specific-endpoints.html#locate-your-subdomain-and-endpoints">guide</a>.
@@ -207,44 +679,51 @@ func (o *ConnectionSalesforceMarketingCloud) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionSalesforceMarketingCloud) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionSalesforceMarketingCloud) GetUpdateSchedule() *ConnectionSalesforceMarketingCloudUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSalesforceMarketingCloud) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -274,8 +753,8 @@ type ConnectionSalesforceMarketingCloudInput struct {
 	// The unique name of this connection.
 	Name string                                 `json:"name"`
 	Type ConnectionSalesforceMarketingCloudType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionSalesforceMarketingCloudUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// You can find your Account Subdomain with the following <a target="_blank" href="https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/your-subdomain-tenant-specific-endpoints.html#locate-your-subdomain-and-endpoints">guide</a>.
 	Subdomain string `json:"subdomain"`
 	// You can retrieve your credentials, by creating an <a target="_blank" href="https://developer.salesforce.com/docs/marketing/marketing-cloud/guide/create-integration-enhanced.html#related-items">integration</a>.
@@ -298,44 +777,51 @@ func (o *ConnectionSalesforceMarketingCloudInput) GetType() ConnectionSalesforce
 	return o.Type
 }
 
-func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateSchedule() *ConnectionSalesforceMarketingCloudUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionSalesforceMarketingCloudIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionSalesforceMarketingCloudHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionSalesforceMarketingCloudDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionSalesforceMarketingCloudWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionSalesforceMarketingCloudMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionSalesforceMarketingCloudInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionSalesforceMarketingCloudCronUpdateScheduleMode
 	}
 	return nil
 }

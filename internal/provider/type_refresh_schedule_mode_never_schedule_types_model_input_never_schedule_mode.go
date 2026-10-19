@@ -4,6 +4,6 @@ package provider
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type RefreshScheduleModeNever struct {
+type RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode struct {
 	Mode types.String `tfsdk:"mode"`
 }

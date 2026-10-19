@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionZuoraStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode `json:"mode"`
+	DayOfMonth int64                                                           `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode `json:"mode"`
+	DayOfWeek int64                                                          `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionZuoraUpdateScheduleTypesType string
+
+const (
+	ConnectionZuoraUpdateScheduleTypesTypeInterval ConnectionZuoraUpdateScheduleTypesType = "INTERVAL"
+	ConnectionZuoraUpdateScheduleTypesTypeHourly   ConnectionZuoraUpdateScheduleTypesType = "HOURLY"
+	ConnectionZuoraUpdateScheduleTypesTypeDaily    ConnectionZuoraUpdateScheduleTypesType = "DAILY"
+	ConnectionZuoraUpdateScheduleTypesTypeWeekly   ConnectionZuoraUpdateScheduleTypesType = "WEEKLY"
+	ConnectionZuoraUpdateScheduleTypesTypeMonthly  ConnectionZuoraUpdateScheduleTypesType = "MONTHLY"
+	ConnectionZuoraUpdateScheduleTypesTypeCron     ConnectionZuoraUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionZuoraUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionZuoraUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode
+
+	Type ConnectionZuoraUpdateScheduleTypesType
+}
+
+func CreateConnectionZuoraUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode) ConnectionZuoraUpdateScheduleTypes {
+	typ := ConnectionZuoraUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionZuoraUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionZuoraUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode) ConnectionZuoraUpdateScheduleTypes {
+	typ := ConnectionZuoraUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionZuoraUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionZuoraUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode) ConnectionZuoraUpdateScheduleTypes {
+	typ := ConnectionZuoraUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionZuoraUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionZuoraUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode) ConnectionZuoraUpdateScheduleTypes {
+	typ := ConnectionZuoraUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionZuoraUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionZuoraUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode) ConnectionZuoraUpdateScheduleTypes {
+	typ := ConnectionZuoraUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionZuoraUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionZuoraUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode) ConnectionZuoraUpdateScheduleTypes {
+	typ := ConnectionZuoraUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionZuoraUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionZuoraUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode
+		u.Type = ConnectionZuoraUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode
+		u.Type = ConnectionZuoraUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode
+		u.Type = ConnectionZuoraUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode
+		u.Type = ConnectionZuoraUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode
+		u.Type = ConnectionZuoraUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode
+		u.Type = ConnectionZuoraUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionZuoraUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionZuoraDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionZuoraDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Updat
 	return nil
 }
 
+func (o *ConnectionZuoraDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionZuora struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionZuora struct {
 	Status ConnectionZuoraStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionZuoraUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionZuoraDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The Client ID displayed when you created the OAuth client. If you need help to create an OAuth Client, <a target="_blank" href="https://knowledgecenter.zuora.com/CF_Users_and_Administrators/A_Administrator_Settings/Manage_Users#Create_an_OAuth_Client_for_a_User">follow this article</a>.
@@ -211,44 +683,51 @@ func (o *ConnectionZuora) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionZuora) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionZuora) GetUpdateSchedule() *ConnectionZuoraUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionZuora) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionZuora) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionZuora) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionZuora) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionZuora) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionZuora) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionZuora) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionZuora) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionZuora) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionZuora) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionZuora) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -292,8 +771,8 @@ type ConnectionZuoraInput struct {
 	// The unique name of this connection.
 	Name string              `json:"name"`
 	Type ConnectionZuoraType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionZuoraUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The Client ID displayed when you created the OAuth client. If you need help to create an OAuth Client, <a target="_blank" href="https://knowledgecenter.zuora.com/CF_Users_and_Administrators/A_Administrator_Settings/Manage_Users#Create_an_OAuth_Client_for_a_User">follow this article</a>.
 	ClientID     string `json:"clientId"`
 	ClientSecret string `json:"clientSecret"`
@@ -319,44 +798,51 @@ func (o *ConnectionZuoraInput) GetType() ConnectionZuoraType {
 	return o.Type
 }
 
-func (o *ConnectionZuoraInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionZuoraInput) GetUpdateSchedule() *ConnectionZuoraUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionZuoraInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionZuoraInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionZuoraIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionZuoraInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionZuoraInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionZuoraHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionZuoraInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionZuoraInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionZuoraDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionZuoraInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionZuoraInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZuoraWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionZuoraInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionZuoraInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionZuoraMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionZuoraInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionZuoraCronUpdateScheduleMode
 	}
 	return nil
 }

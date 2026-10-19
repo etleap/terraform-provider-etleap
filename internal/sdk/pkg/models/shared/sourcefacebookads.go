@@ -39,8 +39,8 @@ type SourceFacebookAds struct {
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The aggregation level of the Facebook report. Example values: [Insights by Ad, Insights by Adset, Insights by Campaign, Insights by Account]
 	Entity string `json:"entity"`
-	// The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v22.0#insights-api-breakdowns)
-	Breakdowns []string `json:"breakdowns"`
+	// The breakdown fields. Specify `breakdowns` if and only if the entity is an Insights entity, in which case the first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v22.0#insights-api-breakdowns)
+	Breakdowns []string `json:"breakdowns,omitempty"`
 }
 
 func (o *SourceFacebookAds) GetType() SourceFacebookAdsType {
@@ -73,7 +73,7 @@ func (o *SourceFacebookAds) GetEntity() string {
 
 func (o *SourceFacebookAds) GetBreakdowns() []string {
 	if o == nil {
-		return []string{}
+		return nil
 	}
 	return o.Breakdowns
 }

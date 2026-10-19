@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionMongodbStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode `json:"mode"`
+	DayOfMonth int64                                                             `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode `json:"mode"`
+	DayOfWeek int64                                                            `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionMongodbUpdateScheduleTypesType string
+
+const (
+	ConnectionMongodbUpdateScheduleTypesTypeInterval ConnectionMongodbUpdateScheduleTypesType = "INTERVAL"
+	ConnectionMongodbUpdateScheduleTypesTypeHourly   ConnectionMongodbUpdateScheduleTypesType = "HOURLY"
+	ConnectionMongodbUpdateScheduleTypesTypeDaily    ConnectionMongodbUpdateScheduleTypesType = "DAILY"
+	ConnectionMongodbUpdateScheduleTypesTypeWeekly   ConnectionMongodbUpdateScheduleTypesType = "WEEKLY"
+	ConnectionMongodbUpdateScheduleTypesTypeMonthly  ConnectionMongodbUpdateScheduleTypesType = "MONTHLY"
+	ConnectionMongodbUpdateScheduleTypesTypeCron     ConnectionMongodbUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionMongodbUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionMongodbUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode
+
+	Type ConnectionMongodbUpdateScheduleTypesType
+}
+
+func CreateConnectionMongodbUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode) ConnectionMongodbUpdateScheduleTypes {
+	typ := ConnectionMongodbUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionMongodbUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionMongodbUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode) ConnectionMongodbUpdateScheduleTypes {
+	typ := ConnectionMongodbUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionMongodbUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionMongodbUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode) ConnectionMongodbUpdateScheduleTypes {
+	typ := ConnectionMongodbUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionMongodbUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionMongodbUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode) ConnectionMongodbUpdateScheduleTypes {
+	typ := ConnectionMongodbUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionMongodbUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionMongodbUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode) ConnectionMongodbUpdateScheduleTypes {
+	typ := ConnectionMongodbUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionMongodbUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionMongodbUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode) ConnectionMongodbUpdateScheduleTypes {
+	typ := ConnectionMongodbUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionMongodbUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionMongodbUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode
+		u.Type = ConnectionMongodbUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode
+		u.Type = ConnectionMongodbUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode
+		u.Type = ConnectionMongodbUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode
+		u.Type = ConnectionMongodbUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode
+		u.Type = ConnectionMongodbUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode
+		u.Type = ConnectionMongodbUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionMongodbUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionMongodbDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionMongodbDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upd
 	return nil
 }
 
+func (o *ConnectionMongodbDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionMongodbReplicaSet struct {
 	Address string `json:"address"`
 	Port    int64  `json:"port"`
@@ -163,8 +635,8 @@ type ConnectionMongodb struct {
 	Status ConnectionMongodbStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionMongodbUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionMongodbDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	SSHConfig             *SSHConfig                               `json:"sshConfig,omitempty"`
@@ -231,44 +703,51 @@ func (o *ConnectionMongodb) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionMongodb) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionMongodb) GetUpdateSchedule() *ConnectionMongodbUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMongodb) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionMongodb) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMongodb) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionMongodb) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMongodb) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionMongodb) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMongodb) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionMongodb) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMongodb) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionMongodb) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionMongodb) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -326,10 +805,10 @@ type ConnectionMongodbInput struct {
 	// The unique name of this connection.
 	Name string                `json:"name"`
 	Type ConnectionMongodbType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes          `json:"updateSchedule,omitempty"`
-	SSHConfig      *SSHConfig                    `json:"sshConfig,omitempty"`
-	ReplicaSet     []ConnectionMongodbReplicaSet `json:"replicaSet"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionMongodbUpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	SSHConfig      *SSHConfig                            `json:"sshConfig,omitempty"`
+	ReplicaSet     []ConnectionMongodbReplicaSet         `json:"replicaSet"`
 	// The name of the database, e.g. 'etleap'
 	DatabaseName string `json:"databaseName"`
 	// Whether Etleap should connect over SSL.
@@ -365,44 +844,51 @@ func (o *ConnectionMongodbInput) GetType() ConnectionMongodbType {
 	return o.Type
 }
 
-func (o *ConnectionMongodbInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionMongodbInput) GetUpdateSchedule() *ConnectionMongodbUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionMongodbInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionMongodbInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionMongodbIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMongodbInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionMongodbInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionMongodbHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMongodbInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionMongodbInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionMongodbDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMongodbInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionMongodbInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionMongodbWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionMongodbInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionMongodbInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionMongodbMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionMongodbInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionMongodbCronUpdateScheduleMode
 	}
 	return nil
 }

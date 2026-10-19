@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionShopifyStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode `json:"mode"`
+	DayOfMonth int64                                                             `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode `json:"mode"`
+	DayOfWeek int64                                                            `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionShopifyUpdateScheduleTypesType string
+
+const (
+	ConnectionShopifyUpdateScheduleTypesTypeInterval ConnectionShopifyUpdateScheduleTypesType = "INTERVAL"
+	ConnectionShopifyUpdateScheduleTypesTypeHourly   ConnectionShopifyUpdateScheduleTypesType = "HOURLY"
+	ConnectionShopifyUpdateScheduleTypesTypeDaily    ConnectionShopifyUpdateScheduleTypesType = "DAILY"
+	ConnectionShopifyUpdateScheduleTypesTypeWeekly   ConnectionShopifyUpdateScheduleTypesType = "WEEKLY"
+	ConnectionShopifyUpdateScheduleTypesTypeMonthly  ConnectionShopifyUpdateScheduleTypesType = "MONTHLY"
+	ConnectionShopifyUpdateScheduleTypesTypeCron     ConnectionShopifyUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionShopifyUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionShopifyUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode
+
+	Type ConnectionShopifyUpdateScheduleTypesType
+}
+
+func CreateConnectionShopifyUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode) ConnectionShopifyUpdateScheduleTypes {
+	typ := ConnectionShopifyUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionShopifyUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionShopifyUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode) ConnectionShopifyUpdateScheduleTypes {
+	typ := ConnectionShopifyUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionShopifyUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionShopifyUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode) ConnectionShopifyUpdateScheduleTypes {
+	typ := ConnectionShopifyUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionShopifyUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionShopifyUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode) ConnectionShopifyUpdateScheduleTypes {
+	typ := ConnectionShopifyUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionShopifyUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionShopifyUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode) ConnectionShopifyUpdateScheduleTypes {
+	typ := ConnectionShopifyUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionShopifyUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionShopifyUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode) ConnectionShopifyUpdateScheduleTypes {
+	typ := ConnectionShopifyUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionShopifyUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionShopifyUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode
+		u.Type = ConnectionShopifyUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode
+		u.Type = ConnectionShopifyUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode
+		u.Type = ConnectionShopifyUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode
+		u.Type = ConnectionShopifyUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode
+		u.Type = ConnectionShopifyUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode
+		u.Type = ConnectionShopifyUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionShopifyUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionShopifyDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionShopifyDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Upd
 	return nil
 }
 
+func (o *ConnectionShopifyDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionShopify struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionShopify struct {
 	Status ConnectionShopifyStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionShopifyUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionShopifyDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// To find your API keys, or generate a new one, follow these instructions: <a target="_blank" href="https://shopify.dev/apps/auth/basic-http#2-generate-api-credentials">Generate Api Credentials</a>.
@@ -207,44 +679,51 @@ func (o *ConnectionShopify) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionShopify) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionShopify) GetUpdateSchedule() *ConnectionShopifyUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionShopify) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionShopify) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionShopify) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionShopify) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionShopify) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionShopify) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionShopify) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionShopify) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionShopify) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionShopify) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionShopify) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -274,8 +753,8 @@ type ConnectionShopifyInput struct {
 	// The unique name of this connection.
 	Name string                `json:"name"`
 	Type ConnectionShopifyType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionShopifyUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// To find your API keys, or generate a new one, follow these instructions: <a target="_blank" href="https://shopify.dev/apps/auth/basic-http#2-generate-api-credentials">Generate Api Credentials</a>.
 	APIKey string `json:"apiKey"`
 	// To find your API keys, or generate a new one, follow these instructions: <a target="_blank" href="https://shopify.dev/apps/auth/basic-http#2-generate-api-credentials">Generate Api Credentials</a>.
@@ -298,44 +777,51 @@ func (o *ConnectionShopifyInput) GetType() ConnectionShopifyType {
 	return o.Type
 }
 
-func (o *ConnectionShopifyInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionShopifyInput) GetUpdateSchedule() *ConnectionShopifyUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionShopifyInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionShopifyInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionShopifyIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionShopifyInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionShopifyInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionShopifyHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionShopifyInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionShopifyInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionShopifyDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionShopifyInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionShopifyInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionShopifyWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionShopifyInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionShopifyInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionShopifyMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionShopifyInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionShopifyCronUpdateScheduleMode
 	}
 	return nil
 }

@@ -17,7 +17,7 @@ resource "etleap_pipeline" "my_pipeline" {
   deletion_of_export_products = false
   destination = {
     delta_lake = {
-      automatic_schema_changes   = true
+      automatic_schema_changes   = false
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
       pre10_dot2_runtime_support = true
@@ -31,7 +31,7 @@ resource "etleap_pipeline" "my_pipeline" {
       wait_for_quality_check = true
     }
   }
-  name   = "Joan Carroll"
+  name   = "Mrs. Deborah Cartwright"
   paused = false
   script = {
     legacy_script = {
@@ -578,7 +578,7 @@ Optional:
 
 Optional:
 
-- `breakdowns` (List of String) The breakdown fields. The first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v22.0#insights-api-breakdowns). Requires replacement if changed. ; Not Null
+- `breakdowns` (List of String) The breakdown fields. Specify `breakdowns` if and only if the entity is an Insights entity, in which case the first one must be `date_start`. See the [Facebook Documentation on Breakdowns.](https://developers.facebook.com/docs/marketing-api/insights/breakdowns/v22.0#insights-api-breakdowns). Requires replacement if changed.
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The aggregation level of the Facebook report. Example values: [Insights by Ad, Insights by Adset, Insights by Campaign, Insights by Account]. Requires replacement if changed. ; Not Null
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
@@ -1653,11 +1653,21 @@ Optional:
 
 Optional:
 
+- `cron` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--cron))
 - `daily` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--daily))
 - `hourly` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--hourly))
 - `monthly` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--monthly))
 - `never` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--never))
 - `weekly` (Attributes) (see [below for nested schema](#nestedatt--refresh_schedule--weekly))
+
+<a id="nestedatt--refresh_schedule--cron"></a>
+### Nested Schema for `refresh_schedule.cron`
+
+Optional:
+
+- `cron_expression` (String) The cron expression which defines the times at which schedule should trigger at. Expressions are evaluated in UTC. Not Null
+- `mode` (String) Not Null; must be one of ["CRON"]
+
 
 <a id="nestedatt--refresh_schedule--daily"></a>
 ### Nested Schema for `refresh_schedule.daily`
@@ -2123,11 +2133,21 @@ Read-Only:
 
 Read-Only:
 
-- `daily` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--daily))
-- `hourly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--hourly))
-- `interval` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--interval))
-- `monthly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--monthly))
-- `weekly` (Attributes) The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. (see [below for nested schema](#nestedatt--update_schedule--weekly))
+- `cron` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--cron))
+- `daily` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--daily))
+- `hourly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--hourly))
+- `interval` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--interval))
+- `monthly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--monthly))
+- `weekly` (Attributes) (see [below for nested schema](#nestedatt--update_schedule--weekly))
+
+<a id="nestedatt--update_schedule--cron"></a>
+### Nested Schema for `update_schedule.cron`
+
+Read-Only:
+
+- `cron_expression` (String) The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+- `mode` (String) must be one of ["CRON"]
+
 
 <a id="nestedatt--update_schedule--daily"></a>
 ### Nested Schema for `update_schedule.daily`

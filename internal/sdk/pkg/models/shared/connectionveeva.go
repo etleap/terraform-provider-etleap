@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionVeevaStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode `json:"mode"`
+	DayOfMonth int64                                                           `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode `json:"mode"`
+	DayOfWeek int64                                                          `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionVeevaUpdateScheduleTypesType string
+
+const (
+	ConnectionVeevaUpdateScheduleTypesTypeInterval ConnectionVeevaUpdateScheduleTypesType = "INTERVAL"
+	ConnectionVeevaUpdateScheduleTypesTypeHourly   ConnectionVeevaUpdateScheduleTypesType = "HOURLY"
+	ConnectionVeevaUpdateScheduleTypesTypeDaily    ConnectionVeevaUpdateScheduleTypesType = "DAILY"
+	ConnectionVeevaUpdateScheduleTypesTypeWeekly   ConnectionVeevaUpdateScheduleTypesType = "WEEKLY"
+	ConnectionVeevaUpdateScheduleTypesTypeMonthly  ConnectionVeevaUpdateScheduleTypesType = "MONTHLY"
+	ConnectionVeevaUpdateScheduleTypesTypeCron     ConnectionVeevaUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionVeevaUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionVeevaUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode
+
+	Type ConnectionVeevaUpdateScheduleTypesType
+}
+
+func CreateConnectionVeevaUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode) ConnectionVeevaUpdateScheduleTypes {
+	typ := ConnectionVeevaUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionVeevaUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionVeevaUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode) ConnectionVeevaUpdateScheduleTypes {
+	typ := ConnectionVeevaUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionVeevaUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionVeevaUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode) ConnectionVeevaUpdateScheduleTypes {
+	typ := ConnectionVeevaUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionVeevaUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionVeevaUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode) ConnectionVeevaUpdateScheduleTypes {
+	typ := ConnectionVeevaUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionVeevaUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionVeevaUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode) ConnectionVeevaUpdateScheduleTypes {
+	typ := ConnectionVeevaUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionVeevaUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionVeevaUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode) ConnectionVeevaUpdateScheduleTypes {
+	typ := ConnectionVeevaUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionVeevaUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionVeevaUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode
+		u.Type = ConnectionVeevaUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode
+		u.Type = ConnectionVeevaUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode
+		u.Type = ConnectionVeevaUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode
+		u.Type = ConnectionVeevaUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode
+		u.Type = ConnectionVeevaUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode
+		u.Type = ConnectionVeevaUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionVeevaUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionVeevaDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Updat
 	return nil
 }
 
+func (o *ConnectionVeevaDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 // ConnectionVeevaVaultType - Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
 type ConnectionVeevaVaultType string
 
@@ -178,8 +650,8 @@ type ConnectionVeeva struct {
 	Status ConnectionVeevaStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionVeevaUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionVeevaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The vault domain name is part of the URL that you use to access your Veeva Vault. You can follow the<a target="_blank" href="https://developer.veevavault.com/docs/#authentication">'Structuring the Endpoint'</a> instructions to find the URL.
@@ -242,44 +714,51 @@ func (o *ConnectionVeeva) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionVeeva) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionVeeva) GetUpdateSchedule() *ConnectionVeevaUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionVeeva) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionVeeva) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVeeva) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionVeeva) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVeeva) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionVeeva) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVeeva) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionVeeva) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVeeva) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionVeeva) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionVeeva) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -316,8 +795,8 @@ type ConnectionVeevaInput struct {
 	// The unique name of this connection.
 	Name string              `json:"name"`
 	Type ConnectionVeevaType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionVeevaUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The vault domain name is part of the URL that you use to access your Veeva Vault. You can follow the<a target="_blank" href="https://developer.veevavault.com/docs/#authentication">'Structuring the Endpoint'</a> instructions to find the URL.
 	VaultDomainName string `json:"vaultDomainName"`
 	// Your Veeva Vault type. Currently supported types are: QUALITY, CTMS, and RIM. If a value is not provided it will fallback to the default QUALITY
@@ -351,44 +830,51 @@ func (o *ConnectionVeevaInput) GetType() ConnectionVeevaType {
 	return o.Type
 }
 
-func (o *ConnectionVeevaInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionVeevaInput) GetUpdateSchedule() *ConnectionVeevaUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionVeevaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionVeevaInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionVeevaIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVeevaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionVeevaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionVeevaHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVeevaInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionVeevaInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionVeevaDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVeevaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionVeevaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionVeevaWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionVeevaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionVeevaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionVeevaMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionVeevaInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionVeevaCronUpdateScheduleMode
 	}
 	return nil
 }

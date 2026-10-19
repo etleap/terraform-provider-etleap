@@ -11,78 +11,92 @@ import (
 func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeInput() *shared.ConnectionDeltaLakeInput {
 	name := r.Name.ValueString()
 	typeVar := shared.ConnectionDeltaLakeType(r.Type.ValueString())
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionDeltaLakeUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -95,14 +109,104 @@ func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeInput() *s
 	} else {
 		schema = nil
 	}
+	var loadThrottleSchedule *shared.ConnectionDeltaLakeLoadThrottleScheduleUpdateScheduleTypes
+	if r.LoadThrottleSchedule != nil {
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleIntervalUpdateScheduleMode
+		if r.LoadThrottleSchedule.Interval != nil {
+			mode6 := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMode(r.LoadThrottleSchedule.Interval.Mode.ValueString())
+			intervalMinutes1 := r.LoadThrottleSchedule.Interval.IntervalMinutes.ValueInt64()
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleIntervalUpdateScheduleMode{
+				Mode:            mode6,
+				IntervalMinutes: intervalMinutes1,
+			}
+		}
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleIntervalUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleHourlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Hourly != nil {
+			mode7 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMode(r.LoadThrottleSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleHourlyUpdateScheduleMode{
+				Mode: mode7,
+			}
+		}
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleHourlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleDailyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Daily != nil {
+			mode8 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMode(r.LoadThrottleSchedule.Daily.Mode.ValueString())
+			hourOfDay3 := r.LoadThrottleSchedule.Daily.HourOfDay.ValueInt64()
+			updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleDailyUpdateScheduleMode{
+				Mode:      mode8,
+				HourOfDay: hourOfDay3,
+			}
+		}
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleDailyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Weekly != nil {
+			mode9 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMode(r.LoadThrottleSchedule.Weekly.Mode.ValueString())
+			dayOfWeek1 := r.LoadThrottleSchedule.Weekly.DayOfWeek.ValueInt64()
+			hourOfDay4 := r.LoadThrottleSchedule.Weekly.HourOfDay.ValueInt64()
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode{
+				Mode:      mode9,
+				DayOfWeek: dayOfWeek1,
+				HourOfDay: hourOfDay4,
+			}
+		}
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Monthly != nil {
+			mode10 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMode(r.LoadThrottleSchedule.Monthly.Mode.ValueString())
+			dayOfMonth1 := r.LoadThrottleSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay5 := r.LoadThrottleSchedule.Monthly.HourOfDay.ValueInt64()
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode{
+				Mode:       mode10,
+				DayOfMonth: dayOfMonth1,
+				HourOfDay:  hourOfDay5,
+			}
+		}
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleCronUpdateScheduleMode
+		if r.LoadThrottleSchedule.Cron != nil {
+			mode11 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMode(r.LoadThrottleSchedule.Cron.Mode.ValueString())
+			cronExpression1 := r.LoadThrottleSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleCronUpdateScheduleMode{
+				Mode:           mode11,
+				CronExpression: cronExpression1,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleCronUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleCronUpdateScheduleMode,
+			}
+		}
+	}
 	out := shared.ConnectionDeltaLakeInput{
-		Name:                name,
-		Type:                typeVar,
-		UpdateSchedule:      updateSchedule,
-		Hostname:            hostname,
-		HTTPPath:            httpPath,
-		PersonalAccessToken: personalAccessToken,
-		Schema:              schema,
+		Name:                 name,
+		Type:                 typeVar,
+		UpdateSchedule:       updateSchedule,
+		Hostname:             hostname,
+		HTTPPath:             httpPath,
+		PersonalAccessToken:  personalAccessToken,
+		Schema:               schema,
+		LoadThrottleSchedule: loadThrottleSchedule,
 	}
 	return &out
 }
@@ -124,6 +228,11 @@ func (r *ConnectionDELTALAKEResourceModel) RefreshFromSharedConnectionDeltaLake(
 			defaultUpdateSchedule1.UpdateSchedule = nil
 		} else {
 			defaultUpdateSchedule1.UpdateSchedule = &UpdateScheduleTypes{}
+			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron != nil {
+				defaultUpdateSchedule1.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+				defaultUpdateSchedule1.UpdateSchedule.Cron.CronExpression = types.StringValue(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.CronExpression)
+				defaultUpdateSchedule1.UpdateSchedule.Cron.Mode = types.StringValue(string(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeCron.Mode))
+			}
 			if defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily != nil {
 				defaultUpdateSchedule1.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
 				defaultUpdateSchedule1.UpdateSchedule.Daily.HourOfDay = types.Int64Value(defaultUpdateScheduleItem.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
@@ -161,6 +270,42 @@ func (r *ConnectionDELTALAKEResourceModel) RefreshFromSharedConnectionDeltaLake(
 	r.Hostname = types.StringValue(resp.Hostname)
 	r.HTTPPath = types.StringValue(resp.HTTPPath)
 	r.ID = types.StringValue(resp.ID)
+	if resp.LoadThrottleSchedule == nil {
+		r.LoadThrottleSchedule = nil
+	} else {
+		r.LoadThrottleSchedule = &UpdateScheduleTypes{}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleCronUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Cron = &UpdateScheduleModeCron{}
+			r.LoadThrottleSchedule.Cron.CronExpression = types.StringValue(resp.LoadThrottleSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleCronUpdateScheduleMode.CronExpression)
+			r.LoadThrottleSchedule.Cron.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleCronUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Daily = &UpdateScheduleModeDaily{}
+			r.LoadThrottleSchedule.Daily.HourOfDay = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleDailyUpdateScheduleMode.HourOfDay)
+			r.LoadThrottleSchedule.Daily.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleDailyUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Hourly = &UpdateScheduleModeHourly{}
+			r.LoadThrottleSchedule.Hourly.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleHourlyUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Interval = &UpdateScheduleModeInterval{}
+			r.LoadThrottleSchedule.Interval.IntervalMinutes = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleIntervalUpdateScheduleMode.IntervalMinutes)
+			r.LoadThrottleSchedule.Interval.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleIntervalUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Monthly = &UpdateScheduleModeMonthly{}
+			r.LoadThrottleSchedule.Monthly.DayOfMonth = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode.DayOfMonth)
+			r.LoadThrottleSchedule.Monthly.HourOfDay = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode.HourOfDay)
+			r.LoadThrottleSchedule.Monthly.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleMonthlyUpdateScheduleMode.Mode))
+		}
+		if resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+			r.LoadThrottleSchedule.Weekly = &UpdateScheduleModeWeekly{}
+			r.LoadThrottleSchedule.Weekly.DayOfWeek = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode.DayOfWeek)
+			r.LoadThrottleSchedule.Weekly.HourOfDay = types.Int64Value(resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode.HourOfDay)
+			r.LoadThrottleSchedule.Weekly.Mode = types.StringValue(string(resp.LoadThrottleSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeLoadThrottleScheduleWeeklyUpdateScheduleMode.Mode))
+		}
+	}
 	r.Name = types.StringValue(resp.Name)
 	r.Schema = types.StringPointerValue(resp.Schema)
 	r.Status = types.StringValue(string(resp.Status))
@@ -169,31 +314,36 @@ func (r *ConnectionDELTALAKEResourceModel) RefreshFromSharedConnectionDeltaLake(
 		r.UpdateSchedule = nil
 	} else {
 		r.UpdateSchedule = &UpdateScheduleTypes{}
-		if resp.UpdateSchedule.UpdateScheduleModeDaily != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeCronUpdateScheduleMode != nil {
+			r.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+			r.UpdateSchedule.Cron.CronExpression = types.StringValue(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeCronUpdateScheduleMode.CronExpression)
+			r.UpdateSchedule.Cron.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeCronUpdateScheduleMode.Mode))
+		}
+		if resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeDailyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
-			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDaily.HourOfDay)
-			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDaily.Mode))
+			r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeDailyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeDailyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeHourly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeHourlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
-			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourly.Mode))
+			r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeHourlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeInterval != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeIntervalUpdateScheduleMode != nil {
 			r.UpdateSchedule.Interval = &UpdateScheduleModeInterval{}
-			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeInterval.IntervalMinutes)
-			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeInterval.Mode))
+			r.UpdateSchedule.Interval.IntervalMinutes = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeIntervalUpdateScheduleMode.IntervalMinutes)
+			r.UpdateSchedule.Interval.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeIntervalUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeMonthly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
-			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.DayOfMonth)
-			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthly.HourOfDay)
-			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthly.Mode))
+			r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode.DayOfMonth)
+			r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeMonthlyUpdateScheduleMode.Mode))
 		}
-		if resp.UpdateSchedule.UpdateScheduleModeWeekly != nil {
+		if resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode != nil {
 			r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
-			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.DayOfWeek)
-			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeekly.HourOfDay)
-			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeekly.Mode))
+			r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode.DayOfWeek)
+			r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode.HourOfDay)
+			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeWeeklyUpdateScheduleMode.Mode))
 		}
 	}
 }
@@ -217,78 +367,92 @@ func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeUpdate() *
 	} else {
 		active = nil
 	}
-	var updateSchedule *shared.UpdateScheduleTypes
+	var updateSchedule *shared.ConnectionDeltaLakeUpdateUpdateScheduleTypes
 	if r.UpdateSchedule != nil {
-		var updateScheduleModeInterval *shared.UpdateScheduleModeInterval
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateIntervalUpdateScheduleMode
 		if r.UpdateSchedule.Interval != nil {
-			mode := shared.Mode(r.UpdateSchedule.Interval.Mode.ValueString())
+			mode := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateMode(r.UpdateSchedule.Interval.Mode.ValueString())
 			intervalMinutes := r.UpdateSchedule.Interval.IntervalMinutes.ValueInt64()
-			updateScheduleModeInterval = &shared.UpdateScheduleModeInterval{
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateIntervalUpdateScheduleMode{
 				Mode:            mode,
 				IntervalMinutes: intervalMinutes,
 			}
 		}
-		if updateScheduleModeInterval != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeInterval: updateScheduleModeInterval,
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateIntervalUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateIntervalUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeHourly *shared.UpdateScheduleModeHourly
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateHourlyUpdateScheduleMode
 		if r.UpdateSchedule.Hourly != nil {
-			mode1 := shared.UpdateScheduleModeHourlyMode(r.UpdateSchedule.Hourly.Mode.ValueString())
-			updateScheduleModeHourly = &shared.UpdateScheduleModeHourly{
+			mode1 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateMode(r.UpdateSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateHourlyUpdateScheduleMode{
 				Mode: mode1,
 			}
 		}
-		if updateScheduleModeHourly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeHourly: updateScheduleModeHourly,
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateHourlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateHourlyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeDaily *shared.UpdateScheduleModeDaily
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateDailyUpdateScheduleMode
 		if r.UpdateSchedule.Daily != nil {
-			mode2 := shared.UpdateScheduleModeDailyMode(r.UpdateSchedule.Daily.Mode.ValueString())
+			mode2 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateMode(r.UpdateSchedule.Daily.Mode.ValueString())
 			hourOfDay := r.UpdateSchedule.Daily.HourOfDay.ValueInt64()
-			updateScheduleModeDaily = &shared.UpdateScheduleModeDaily{
+			updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateDailyUpdateScheduleMode{
 				Mode:      mode2,
 				HourOfDay: hourOfDay,
 			}
 		}
-		if updateScheduleModeDaily != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeDaily: updateScheduleModeDaily,
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateDailyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateDailyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeWeekly *shared.UpdateScheduleModeWeekly
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateWeeklyUpdateScheduleMode
 		if r.UpdateSchedule.Weekly != nil {
-			mode3 := shared.UpdateScheduleModeWeeklyMode(r.UpdateSchedule.Weekly.Mode.ValueString())
+			mode3 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateMode(r.UpdateSchedule.Weekly.Mode.ValueString())
 			dayOfWeek := r.UpdateSchedule.Weekly.DayOfWeek.ValueInt64()
 			hourOfDay1 := r.UpdateSchedule.Weekly.HourOfDay.ValueInt64()
-			updateScheduleModeWeekly = &shared.UpdateScheduleModeWeekly{
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateWeeklyUpdateScheduleMode{
 				Mode:      mode3,
 				DayOfWeek: dayOfWeek,
 				HourOfDay: hourOfDay1,
 			}
 		}
-		if updateScheduleModeWeekly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeWeekly: updateScheduleModeWeekly,
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateWeeklyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateWeeklyUpdateScheduleMode,
 			}
 		}
-		var updateScheduleModeMonthly *shared.UpdateScheduleModeMonthly
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateMonthlyUpdateScheduleMode
 		if r.UpdateSchedule.Monthly != nil {
-			mode4 := shared.UpdateScheduleModeMonthlyMode(r.UpdateSchedule.Monthly.Mode.ValueString())
+			mode4 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateMode(r.UpdateSchedule.Monthly.Mode.ValueString())
 			dayOfMonth := r.UpdateSchedule.Monthly.DayOfMonth.ValueInt64()
 			hourOfDay2 := r.UpdateSchedule.Monthly.HourOfDay.ValueInt64()
-			updateScheduleModeMonthly = &shared.UpdateScheduleModeMonthly{
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateMonthlyUpdateScheduleMode{
 				Mode:       mode4,
 				DayOfMonth: dayOfMonth,
 				HourOfDay:  hourOfDay2,
 			}
 		}
-		if updateScheduleModeMonthly != nil {
-			updateSchedule = &shared.UpdateScheduleTypes{
-				UpdateScheduleModeMonthly: updateScheduleModeMonthly,
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateMonthlyUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateCronUpdateScheduleMode
+		if r.UpdateSchedule.Cron != nil {
+			mode5 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateMode(r.UpdateSchedule.Cron.Mode.ValueString())
+			cronExpression := r.UpdateSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateCronUpdateScheduleMode{
+				Mode:           mode5,
+				CronExpression: cronExpression,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateCronUpdateScheduleMode != nil {
+			updateSchedule = &shared.ConnectionDeltaLakeUpdateUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateCronUpdateScheduleMode,
 			}
 		}
 	}
@@ -316,15 +480,105 @@ func (r *ConnectionDELTALAKEResourceModel) ToSharedConnectionDeltaLakeUpdate() *
 	} else {
 		schema = nil
 	}
+	var loadThrottleSchedule *shared.ConnectionDeltaLakeUpdateLoadThrottleScheduleUpdateScheduleTypes
+	if r.LoadThrottleSchedule != nil {
+		var updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode *shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode
+		if r.LoadThrottleSchedule.Interval != nil {
+			mode6 := shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Interval.Mode.ValueString())
+			intervalMinutes1 := r.LoadThrottleSchedule.Interval.IntervalMinutes.ValueInt64()
+			updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode = &shared.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode{
+				Mode:            mode6,
+				IntervalMinutes: intervalMinutes1,
+			}
+		}
+		if updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode: updateScheduleModeIntervalUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleIntervalUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode *shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Hourly != nil {
+			mode7 := shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Hourly.Mode.ValueString())
+			updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode = &shared.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode{
+				Mode: mode7,
+			}
+		}
+		if updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode: updateScheduleModeHourlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleHourlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode *shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Daily != nil {
+			mode8 := shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Daily.Mode.ValueString())
+			hourOfDay3 := r.LoadThrottleSchedule.Daily.HourOfDay.ValueInt64()
+			updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode = &shared.UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode{
+				Mode:      mode8,
+				HourOfDay: hourOfDay3,
+			}
+		}
+		if updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode: updateScheduleModeDailyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleDailyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode *shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Weekly != nil {
+			mode9 := shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Weekly.Mode.ValueString())
+			dayOfWeek1 := r.LoadThrottleSchedule.Weekly.DayOfWeek.ValueInt64()
+			hourOfDay4 := r.LoadThrottleSchedule.Weekly.HourOfDay.ValueInt64()
+			updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode = &shared.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode{
+				Mode:      mode9,
+				DayOfWeek: dayOfWeek1,
+				HourOfDay: hourOfDay4,
+			}
+		}
+		if updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode: updateScheduleModeWeeklyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleWeeklyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode *shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode
+		if r.LoadThrottleSchedule.Monthly != nil {
+			mode10 := shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Monthly.Mode.ValueString())
+			dayOfMonth1 := r.LoadThrottleSchedule.Monthly.DayOfMonth.ValueInt64()
+			hourOfDay5 := r.LoadThrottleSchedule.Monthly.HourOfDay.ValueInt64()
+			updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode = &shared.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode{
+				Mode:       mode10,
+				DayOfMonth: dayOfMonth1,
+				HourOfDay:  hourOfDay5,
+			}
+		}
+		if updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode: updateScheduleModeMonthlyUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMonthlyUpdateScheduleMode,
+			}
+		}
+		var updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleCronUpdateScheduleMode *shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleCronUpdateScheduleMode
+		if r.LoadThrottleSchedule.Cron != nil {
+			mode11 := shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleMode(r.LoadThrottleSchedule.Cron.Mode.ValueString())
+			cronExpression1 := r.LoadThrottleSchedule.Cron.CronExpression.ValueString()
+			updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleCronUpdateScheduleMode = &shared.UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleCronUpdateScheduleMode{
+				Mode:           mode11,
+				CronExpression: cronExpression1,
+			}
+		}
+		if updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleCronUpdateScheduleMode != nil {
+			loadThrottleSchedule = &shared.ConnectionDeltaLakeUpdateLoadThrottleScheduleUpdateScheduleTypes{
+				UpdateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleCronUpdateScheduleMode: updateScheduleModeCronUpdateScheduleTypesConnectionDeltaLakeUpdateLoadThrottleScheduleCronUpdateScheduleMode,
+			}
+		}
+	}
 	out := shared.ConnectionDeltaLakeUpdate{
-		Name:                name,
-		Type:                typeVar,
-		Active:              active,
-		UpdateSchedule:      updateSchedule,
-		Hostname:            hostname,
-		HTTPPath:            httpPath,
-		PersonalAccessToken: personalAccessToken,
-		Schema:              schema,
+		Name:                 name,
+		Type:                 typeVar,
+		Active:               active,
+		UpdateSchedule:       updateSchedule,
+		Hostname:             hostname,
+		HTTPPath:             httpPath,
+		PersonalAccessToken:  personalAccessToken,
+		Schema:               schema,
+		LoadThrottleSchedule: loadThrottleSchedule,
 	}
 	return &out
 }

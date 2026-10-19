@@ -52,30 +52,35 @@ func (r *ModelDataSourceModel) RefreshFromSharedModelOutput(resp *shared.ModelOu
 	for _, v := range resp.Shares {
 		r.Shares = append(r.Shares, types.StringValue(v))
 	}
-	if resp.UpdateSchedule.RefreshScheduleModeDaily != nil {
+	if resp.UpdateSchedule.RefreshScheduleModeCronScheduleTypesModelOutputCronScheduleMode != nil {
+		r.UpdateSchedule.Cron = &UpdateScheduleModeCron{}
+		r.UpdateSchedule.Cron.CronExpression = types.StringValue(resp.UpdateSchedule.RefreshScheduleModeCronScheduleTypesModelOutputCronScheduleMode.CronExpression)
+		r.UpdateSchedule.Cron.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeCronScheduleTypesModelOutputCronScheduleMode.Mode))
+	}
+	if resp.UpdateSchedule.RefreshScheduleModeDailyScheduleTypesModelOutputDailyScheduleMode != nil {
 		r.UpdateSchedule.Daily = &UpdateScheduleModeDaily{}
-		r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeDaily.HourOfDay)
-		r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeDaily.Mode))
+		r.UpdateSchedule.Daily.HourOfDay = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeDailyScheduleTypesModelOutputDailyScheduleMode.HourOfDay)
+		r.UpdateSchedule.Daily.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeDailyScheduleTypesModelOutputDailyScheduleMode.Mode))
 	}
-	if resp.UpdateSchedule.RefreshScheduleModeHourly != nil {
+	if resp.UpdateSchedule.RefreshScheduleModeHourlyScheduleTypesModelOutputHourlyScheduleMode != nil {
 		r.UpdateSchedule.Hourly = &UpdateScheduleModeHourly{}
-		r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeHourly.Mode))
+		r.UpdateSchedule.Hourly.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeHourlyScheduleTypesModelOutputHourlyScheduleMode.Mode))
 	}
-	if resp.UpdateSchedule.RefreshScheduleModeMonthly != nil {
+	if resp.UpdateSchedule.RefreshScheduleModeMonthlyScheduleTypesModelOutputMonthlyScheduleMode != nil {
 		r.UpdateSchedule.Monthly = &UpdateScheduleModeMonthly{}
-		r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeMonthly.DayOfMonth)
-		r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeMonthly.HourOfDay)
-		r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeMonthly.Mode))
+		r.UpdateSchedule.Monthly.DayOfMonth = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeMonthlyScheduleTypesModelOutputMonthlyScheduleMode.DayOfMonth)
+		r.UpdateSchedule.Monthly.HourOfDay = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeMonthlyScheduleTypesModelOutputMonthlyScheduleMode.HourOfDay)
+		r.UpdateSchedule.Monthly.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeMonthlyScheduleTypesModelOutputMonthlyScheduleMode.Mode))
 	}
-	if resp.UpdateSchedule.RefreshScheduleModeNever != nil {
-		r.UpdateSchedule.Never = &RefreshScheduleModeNever{}
-		r.UpdateSchedule.Never.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeNever.Mode))
+	if resp.UpdateSchedule.RefreshScheduleModeNeverScheduleTypesModelOutputNeverScheduleMode != nil {
+		r.UpdateSchedule.Never = &RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode{}
+		r.UpdateSchedule.Never.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeNeverScheduleTypesModelOutputNeverScheduleMode.Mode))
 	}
-	if resp.UpdateSchedule.RefreshScheduleModeWeekly != nil {
+	if resp.UpdateSchedule.RefreshScheduleModeWeeklyScheduleTypesModelOutputWeeklyScheduleMode != nil {
 		r.UpdateSchedule.Weekly = &UpdateScheduleModeWeekly{}
-		r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeWeekly.DayOfWeek)
-		r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeWeekly.HourOfDay)
-		r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeWeekly.Mode))
+		r.UpdateSchedule.Weekly.DayOfWeek = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeWeeklyScheduleTypesModelOutputWeeklyScheduleMode.DayOfWeek)
+		r.UpdateSchedule.Weekly.HourOfDay = types.Int64Value(resp.UpdateSchedule.RefreshScheduleModeWeeklyScheduleTypesModelOutputWeeklyScheduleMode.HourOfDay)
+		r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.RefreshScheduleModeWeeklyScheduleTypesModelOutputWeeklyScheduleMode.Mode))
 	}
 	if resp.Warehouse.WarehouseRedshift != nil {
 		r.Warehouse.Redshift = &WarehouseRedshift{}

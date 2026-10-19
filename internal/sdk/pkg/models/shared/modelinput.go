@@ -2,12 +2,477 @@
 
 package shared
 
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
+)
+
+type RefreshScheduleModeCronScheduleTypesModelInputMode string
+
+const (
+	RefreshScheduleModeCronScheduleTypesModelInputModeCron RefreshScheduleModeCronScheduleTypesModelInputMode = "CRON"
+)
+
+func (e RefreshScheduleModeCronScheduleTypesModelInputMode) ToPointer() *RefreshScheduleModeCronScheduleTypesModelInputMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeCronScheduleTypesModelInputMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = RefreshScheduleModeCronScheduleTypesModelInputMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeCronScheduleTypesModelInputMode: %v", v)
+	}
+}
+
+type RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode struct {
+	Mode RefreshScheduleModeCronScheduleTypesModelInputMode `json:"mode"`
+	// The cron expression which defines the times at which schedule should trigger at. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode) GetMode() RefreshScheduleModeCronScheduleTypesModelInputMode {
+	if o == nil {
+		return RefreshScheduleModeCronScheduleTypesModelInputMode("")
+	}
+	return o.Mode
+}
+
+func (o *RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type RefreshScheduleModeMonthlyScheduleTypesModelInputMode string
+
+const (
+	RefreshScheduleModeMonthlyScheduleTypesModelInputModeMonthly RefreshScheduleModeMonthlyScheduleTypesModelInputMode = "MONTHLY"
+)
+
+func (e RefreshScheduleModeMonthlyScheduleTypesModelInputMode) ToPointer() *RefreshScheduleModeMonthlyScheduleTypesModelInputMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeMonthlyScheduleTypesModelInputMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = RefreshScheduleModeMonthlyScheduleTypesModelInputMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeMonthlyScheduleTypesModelInputMode: %v", v)
+	}
+}
+
+type RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode struct {
+	Mode RefreshScheduleModeMonthlyScheduleTypesModelInputMode `json:"mode"`
+	// Day of the month this schedule should trigger at (in UTC).
+	DayOfMonth int64 `json:"dayOfMonth"`
+	// Hour of day this schedule should trigger at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode) GetMode() RefreshScheduleModeMonthlyScheduleTypesModelInputMode {
+	if o == nil {
+		return RefreshScheduleModeMonthlyScheduleTypesModelInputMode("")
+	}
+	return o.Mode
+}
+
+func (o *RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type RefreshScheduleModeWeeklyScheduleTypesModelInputMode string
+
+const (
+	RefreshScheduleModeWeeklyScheduleTypesModelInputModeWeekly RefreshScheduleModeWeeklyScheduleTypesModelInputMode = "WEEKLY"
+)
+
+func (e RefreshScheduleModeWeeklyScheduleTypesModelInputMode) ToPointer() *RefreshScheduleModeWeeklyScheduleTypesModelInputMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeWeeklyScheduleTypesModelInputMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = RefreshScheduleModeWeeklyScheduleTypesModelInputMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeWeeklyScheduleTypesModelInputMode: %v", v)
+	}
+}
+
+type RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode struct {
+	Mode RefreshScheduleModeWeeklyScheduleTypesModelInputMode `json:"mode"`
+	// The day of the week this schedule should trigger at (in UTC).
+	DayOfWeek int64 `json:"dayOfWeek"`
+	// Hour of day this schedule should trigger at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode) GetMode() RefreshScheduleModeWeeklyScheduleTypesModelInputMode {
+	if o == nil {
+		return RefreshScheduleModeWeeklyScheduleTypesModelInputMode("")
+	}
+	return o.Mode
+}
+
+func (o *RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type RefreshScheduleModeDailyScheduleTypesModelInputMode string
+
+const (
+	RefreshScheduleModeDailyScheduleTypesModelInputModeDaily RefreshScheduleModeDailyScheduleTypesModelInputMode = "DAILY"
+)
+
+func (e RefreshScheduleModeDailyScheduleTypesModelInputMode) ToPointer() *RefreshScheduleModeDailyScheduleTypesModelInputMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeDailyScheduleTypesModelInputMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = RefreshScheduleModeDailyScheduleTypesModelInputMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeDailyScheduleTypesModelInputMode: %v", v)
+	}
+}
+
+type RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode struct {
+	Mode RefreshScheduleModeDailyScheduleTypesModelInputMode `json:"mode"`
+	// Hour of day this schedule should trigger at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode) GetMode() RefreshScheduleModeDailyScheduleTypesModelInputMode {
+	if o == nil {
+		return RefreshScheduleModeDailyScheduleTypesModelInputMode("")
+	}
+	return o.Mode
+}
+
+func (o *RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type RefreshScheduleModeHourlyScheduleTypesModelInputMode string
+
+const (
+	RefreshScheduleModeHourlyScheduleTypesModelInputModeHourly RefreshScheduleModeHourlyScheduleTypesModelInputMode = "HOURLY"
+)
+
+func (e RefreshScheduleModeHourlyScheduleTypesModelInputMode) ToPointer() *RefreshScheduleModeHourlyScheduleTypesModelInputMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeHourlyScheduleTypesModelInputMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = RefreshScheduleModeHourlyScheduleTypesModelInputMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeHourlyScheduleTypesModelInputMode: %v", v)
+	}
+}
+
+type RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode struct {
+	Mode RefreshScheduleModeHourlyScheduleTypesModelInputMode `json:"mode"`
+}
+
+func (o *RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode) GetMode() RefreshScheduleModeHourlyScheduleTypesModelInputMode {
+	if o == nil {
+		return RefreshScheduleModeHourlyScheduleTypesModelInputMode("")
+	}
+	return o.Mode
+}
+
+type RefreshScheduleModeNeverScheduleTypesModelInputMode string
+
+const (
+	RefreshScheduleModeNeverScheduleTypesModelInputModeNever RefreshScheduleModeNeverScheduleTypesModelInputMode = "NEVER"
+)
+
+func (e RefreshScheduleModeNeverScheduleTypesModelInputMode) ToPointer() *RefreshScheduleModeNeverScheduleTypesModelInputMode {
+	return &e
+}
+
+func (e *RefreshScheduleModeNeverScheduleTypesModelInputMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "NEVER":
+		*e = RefreshScheduleModeNeverScheduleTypesModelInputMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for RefreshScheduleModeNeverScheduleTypesModelInputMode: %v", v)
+	}
+}
+
+type RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode struct {
+	Mode RefreshScheduleModeNeverScheduleTypesModelInputMode `json:"mode"`
+}
+
+func (o *RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode) GetMode() RefreshScheduleModeNeverScheduleTypesModelInputMode {
+	if o == nil {
+		return RefreshScheduleModeNeverScheduleTypesModelInputMode("")
+	}
+	return o.Mode
+}
+
+type ModelInputScheduleTypesType string
+
+const (
+	ModelInputScheduleTypesTypeNever   ModelInputScheduleTypesType = "NEVER"
+	ModelInputScheduleTypesTypeHourly  ModelInputScheduleTypesType = "HOURLY"
+	ModelInputScheduleTypesTypeDaily   ModelInputScheduleTypesType = "DAILY"
+	ModelInputScheduleTypesTypeWeekly  ModelInputScheduleTypesType = "WEEKLY"
+	ModelInputScheduleTypesTypeMonthly ModelInputScheduleTypesType = "MONTHLY"
+	ModelInputScheduleTypesTypeCron    ModelInputScheduleTypesType = "CRON"
+)
+
+// ModelInputScheduleTypes - How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-updates) for more information.
+type ModelInputScheduleTypes struct {
+	RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode     *RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode
+	RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode   *RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode
+	RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode     *RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode
+	RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode   *RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode
+	RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode *RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode
+	RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode       *RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode
+
+	Type ModelInputScheduleTypesType
+}
+
+func CreateModelInputScheduleTypesNever(never RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode) ModelInputScheduleTypes {
+	typ := ModelInputScheduleTypesTypeNever
+
+	typStr := RefreshScheduleModeNeverScheduleTypesModelInputMode(typ)
+	never.Mode = typStr
+
+	return ModelInputScheduleTypes{
+		RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode: &never,
+		Type: typ,
+	}
+}
+
+func CreateModelInputScheduleTypesHourly(hourly RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode) ModelInputScheduleTypes {
+	typ := ModelInputScheduleTypesTypeHourly
+
+	typStr := RefreshScheduleModeHourlyScheduleTypesModelInputMode(typ)
+	hourly.Mode = typStr
+
+	return ModelInputScheduleTypes{
+		RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateModelInputScheduleTypesDaily(daily RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode) ModelInputScheduleTypes {
+	typ := ModelInputScheduleTypesTypeDaily
+
+	typStr := RefreshScheduleModeDailyScheduleTypesModelInputMode(typ)
+	daily.Mode = typStr
+
+	return ModelInputScheduleTypes{
+		RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateModelInputScheduleTypesWeekly(weekly RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode) ModelInputScheduleTypes {
+	typ := ModelInputScheduleTypesTypeWeekly
+
+	typStr := RefreshScheduleModeWeeklyScheduleTypesModelInputMode(typ)
+	weekly.Mode = typStr
+
+	return ModelInputScheduleTypes{
+		RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateModelInputScheduleTypesMonthly(monthly RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode) ModelInputScheduleTypes {
+	typ := ModelInputScheduleTypesTypeMonthly
+
+	typStr := RefreshScheduleModeMonthlyScheduleTypesModelInputMode(typ)
+	monthly.Mode = typStr
+
+	return ModelInputScheduleTypes{
+		RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateModelInputScheduleTypesCron(cron RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode) ModelInputScheduleTypes {
+	typ := ModelInputScheduleTypesTypeCron
+
+	typStr := RefreshScheduleModeCronScheduleTypesModelInputMode(typ)
+	cron.Mode = typStr
+
+	return ModelInputScheduleTypes{
+		RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ModelInputScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "NEVER":
+		refreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode := new(RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode = refreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode
+		u.Type = ModelInputScheduleTypesTypeNever
+		return nil
+	case "HOURLY":
+		refreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode := new(RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode = refreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode
+		u.Type = ModelInputScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		refreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode := new(RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode = refreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode
+		u.Type = ModelInputScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		refreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode := new(RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode = refreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode
+		u.Type = ModelInputScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		refreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode := new(RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode = refreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode
+		u.Type = ModelInputScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		refreshScheduleModeCronScheduleTypesModelInputCronScheduleMode := new(RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode)
+		if err := utils.UnmarshalJSON(data, &refreshScheduleModeCronScheduleTypesModelInputCronScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode = refreshScheduleModeCronScheduleTypesModelInputCronScheduleMode
+		u.Type = ModelInputScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ModelInputScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode, "", true)
+	}
+
+	if u.RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode, "", true)
+	}
+
+	if u.RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode, "", true)
+	}
+
+	if u.RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode, "", true)
+	}
+
+	if u.RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode, "", true)
+	}
+
+	if u.RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode != nil {
+		return utils.MarshalJSON(u.RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ModelInput struct {
 	Name             string              `json:"name"`
 	Warehouse        WarehouseTypesInput `json:"warehouse"`
 	QueryAndTriggers QueryAndTriggers    `json:"queryAndTriggers"`
 	// How often this model should update. Etleap will periodically update the model table in your warehouse according to this schedule. See [the Model Updates documentation](https://docs.etleap.com/documentation/reference/legacy-features/#model-updates) for more information.
-	UpdateSchedule RefreshScheduleTypes `json:"updateSchedule"`
+	UpdateSchedule ModelInputScheduleTypes `json:"updateSchedule"`
 	// An array of users' emails to share the model with. Once shared, a model cannot be unshared, and future calls to `PATCH` can only add to this list.
 	//
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -43,31 +508,35 @@ func (o *ModelInput) GetQueryAndTriggers() QueryAndTriggers {
 	return o.QueryAndTriggers
 }
 
-func (o *ModelInput) GetUpdateSchedule() RefreshScheduleTypes {
+func (o *ModelInput) GetUpdateSchedule() ModelInputScheduleTypes {
 	if o == nil {
-		return RefreshScheduleTypes{}
+		return ModelInputScheduleTypes{}
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ModelInput) GetUpdateScheduleNever() *RefreshScheduleModeNever {
-	return o.GetUpdateSchedule().RefreshScheduleModeNever
+func (o *ModelInput) GetUpdateScheduleNever() *RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode {
+	return o.GetUpdateSchedule().RefreshScheduleModeNeverScheduleTypesModelInputNeverScheduleMode
 }
 
-func (o *ModelInput) GetUpdateScheduleHourly() *RefreshScheduleModeHourly {
-	return o.GetUpdateSchedule().RefreshScheduleModeHourly
+func (o *ModelInput) GetUpdateScheduleHourly() *RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode {
+	return o.GetUpdateSchedule().RefreshScheduleModeHourlyScheduleTypesModelInputHourlyScheduleMode
 }
 
-func (o *ModelInput) GetUpdateScheduleDaily() *RefreshScheduleModeDaily {
-	return o.GetUpdateSchedule().RefreshScheduleModeDaily
+func (o *ModelInput) GetUpdateScheduleDaily() *RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode {
+	return o.GetUpdateSchedule().RefreshScheduleModeDailyScheduleTypesModelInputDailyScheduleMode
 }
 
-func (o *ModelInput) GetUpdateScheduleWeekly() *RefreshScheduleModeWeekly {
-	return o.GetUpdateSchedule().RefreshScheduleModeWeekly
+func (o *ModelInput) GetUpdateScheduleWeekly() *RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode {
+	return o.GetUpdateSchedule().RefreshScheduleModeWeeklyScheduleTypesModelInputWeeklyScheduleMode
 }
 
-func (o *ModelInput) GetUpdateScheduleMonthly() *RefreshScheduleModeMonthly {
-	return o.GetUpdateSchedule().RefreshScheduleModeMonthly
+func (o *ModelInput) GetUpdateScheduleMonthly() *RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode {
+	return o.GetUpdateSchedule().RefreshScheduleModeMonthlyScheduleTypesModelInputMonthlyScheduleMode
+}
+
+func (o *ModelInput) GetUpdateScheduleCron() *RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode {
+	return o.GetUpdateSchedule().RefreshScheduleModeCronScheduleTypesModelInputCronScheduleMode
 }
 
 func (o *ModelInput) GetShares() []string {

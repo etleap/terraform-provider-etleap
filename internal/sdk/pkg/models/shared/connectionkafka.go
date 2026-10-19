@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionKafkaStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode `json:"mode"`
+	DayOfMonth int64                                                           `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode `json:"mode"`
+	DayOfWeek int64                                                          `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionKafkaUpdateScheduleTypesType string
+
+const (
+	ConnectionKafkaUpdateScheduleTypesTypeInterval ConnectionKafkaUpdateScheduleTypesType = "INTERVAL"
+	ConnectionKafkaUpdateScheduleTypesTypeHourly   ConnectionKafkaUpdateScheduleTypesType = "HOURLY"
+	ConnectionKafkaUpdateScheduleTypesTypeDaily    ConnectionKafkaUpdateScheduleTypesType = "DAILY"
+	ConnectionKafkaUpdateScheduleTypesTypeWeekly   ConnectionKafkaUpdateScheduleTypesType = "WEEKLY"
+	ConnectionKafkaUpdateScheduleTypesTypeMonthly  ConnectionKafkaUpdateScheduleTypesType = "MONTHLY"
+	ConnectionKafkaUpdateScheduleTypesTypeCron     ConnectionKafkaUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionKafkaUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionKafkaUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode
+
+	Type ConnectionKafkaUpdateScheduleTypesType
+}
+
+func CreateConnectionKafkaUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode) ConnectionKafkaUpdateScheduleTypes {
+	typ := ConnectionKafkaUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionKafkaUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionKafkaUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode) ConnectionKafkaUpdateScheduleTypes {
+	typ := ConnectionKafkaUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionKafkaUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionKafkaUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode) ConnectionKafkaUpdateScheduleTypes {
+	typ := ConnectionKafkaUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionKafkaUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionKafkaUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode) ConnectionKafkaUpdateScheduleTypes {
+	typ := ConnectionKafkaUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionKafkaUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionKafkaUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode) ConnectionKafkaUpdateScheduleTypes {
+	typ := ConnectionKafkaUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionKafkaUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionKafkaUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode) ConnectionKafkaUpdateScheduleTypes {
+	typ := ConnectionKafkaUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionKafkaUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionKafkaUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode
+		u.Type = ConnectionKafkaUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode
+		u.Type = ConnectionKafkaUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode
+		u.Type = ConnectionKafkaUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode
+		u.Type = ConnectionKafkaUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode
+		u.Type = ConnectionKafkaUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode
+		u.Type = ConnectionKafkaUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionKafkaUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionKafkaDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionKafkaDefaultUpdateSchedule) GetUpdateScheduleMonthly() *Updat
 	return nil
 }
 
+func (o *ConnectionKafkaDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 // ConnectionKafkaAuthMechanism - Kafka SASL authentication mechanism.
 type ConnectionKafkaAuthMechanism string
 
@@ -175,8 +647,8 @@ type ConnectionKafka struct {
 	Status ConnectionKafkaStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionKafkaUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionKafkaDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The Kafka server list. The list should be in the form host1:port1,host2:port2,...
@@ -243,44 +715,51 @@ func (o *ConnectionKafka) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionKafka) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionKafka) GetUpdateSchedule() *ConnectionKafkaUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionKafka) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionKafka) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKafka) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionKafka) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKafka) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionKafka) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKafka) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionKafka) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKafka) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionKafka) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionKafka) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -338,8 +817,8 @@ type ConnectionKafkaInput struct {
 	// The unique name of this connection.
 	Name string              `json:"name"`
 	Type ConnectionKafkaType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionKafkaUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The Kafka server list. The list should be in the form host1:port1,host2:port2,...
 	ServerList string `json:"serverList"`
 	User       string `json:"user"`
@@ -378,44 +857,51 @@ func (o *ConnectionKafkaInput) GetType() ConnectionKafkaType {
 	return o.Type
 }
 
-func (o *ConnectionKafkaInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionKafkaInput) GetUpdateSchedule() *ConnectionKafkaUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionKafkaInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionKafkaInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionKafkaIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKafkaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionKafkaInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionKafkaHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKafkaInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionKafkaInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionKafkaDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKafkaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionKafkaInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionKafkaWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionKafkaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionKafkaInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionKafkaMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionKafkaInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionKafkaCronUpdateScheduleMode
 	}
 	return nil
 }

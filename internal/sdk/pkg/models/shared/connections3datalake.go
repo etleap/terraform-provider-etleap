@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionS3DataLakeStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode `json:"mode"`
+	DayOfMonth int64                                                                `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode `json:"mode"`
+	DayOfWeek int64                                                               `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionS3DataLakeUpdateScheduleTypesType string
+
+const (
+	ConnectionS3DataLakeUpdateScheduleTypesTypeInterval ConnectionS3DataLakeUpdateScheduleTypesType = "INTERVAL"
+	ConnectionS3DataLakeUpdateScheduleTypesTypeHourly   ConnectionS3DataLakeUpdateScheduleTypesType = "HOURLY"
+	ConnectionS3DataLakeUpdateScheduleTypesTypeDaily    ConnectionS3DataLakeUpdateScheduleTypesType = "DAILY"
+	ConnectionS3DataLakeUpdateScheduleTypesTypeWeekly   ConnectionS3DataLakeUpdateScheduleTypesType = "WEEKLY"
+	ConnectionS3DataLakeUpdateScheduleTypesTypeMonthly  ConnectionS3DataLakeUpdateScheduleTypesType = "MONTHLY"
+	ConnectionS3DataLakeUpdateScheduleTypesTypeCron     ConnectionS3DataLakeUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionS3DataLakeUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionS3DataLakeUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode
+
+	Type ConnectionS3DataLakeUpdateScheduleTypesType
+}
+
+func CreateConnectionS3DataLakeUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode) ConnectionS3DataLakeUpdateScheduleTypes {
+	typ := ConnectionS3DataLakeUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionS3DataLakeUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionS3DataLakeUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode) ConnectionS3DataLakeUpdateScheduleTypes {
+	typ := ConnectionS3DataLakeUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionS3DataLakeUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionS3DataLakeUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode) ConnectionS3DataLakeUpdateScheduleTypes {
+	typ := ConnectionS3DataLakeUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionS3DataLakeUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionS3DataLakeUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode) ConnectionS3DataLakeUpdateScheduleTypes {
+	typ := ConnectionS3DataLakeUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionS3DataLakeUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionS3DataLakeUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode) ConnectionS3DataLakeUpdateScheduleTypes {
+	typ := ConnectionS3DataLakeUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionS3DataLakeUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionS3DataLakeUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode) ConnectionS3DataLakeUpdateScheduleTypes {
+	typ := ConnectionS3DataLakeUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionS3DataLakeUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionS3DataLakeUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode
+		u.Type = ConnectionS3DataLakeUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode
+		u.Type = ConnectionS3DataLakeUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode
+		u.Type = ConnectionS3DataLakeUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode
+		u.Type = ConnectionS3DataLakeUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode
+		u.Type = ConnectionS3DataLakeUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode
+		u.Type = ConnectionS3DataLakeUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionS3DataLakeUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type ConnectionS3DataLakeDefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *ConnectionS3DataLakeDefaultUpdateSchedule) GetUpdateScheduleMonthly() *
 	return nil
 }
 
+func (o *ConnectionS3DataLakeDefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionS3DataLake struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionS3DataLake struct {
 	Status ConnectionS3DataLakeStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionS3DataLakeUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionS3DataLakeDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// An IAM Role ARN looks like 'arn:aws:iam::account_id:role/role-name'. Etleap will assume this role to access this bucket.
@@ -215,44 +687,51 @@ func (o *ConnectionS3DataLake) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionS3DataLake) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionS3DataLake) GetUpdateSchedule() *ConnectionS3DataLakeUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionS3DataLake) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionS3DataLake) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionS3DataLake) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionS3DataLake) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionS3DataLake) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionS3DataLake) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionS3DataLake) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionS3DataLake) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionS3DataLake) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionS3DataLake) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionS3DataLake) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -317,8 +796,8 @@ type ConnectionS3DataLakeInput struct {
 	// The unique name of this connection.
 	Name string                   `json:"name"`
 	Type ConnectionS3DataLakeType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionS3DataLakeUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// An IAM Role ARN looks like 'arn:aws:iam::account_id:role/role-name'. Etleap will assume this role to access this bucket.
 	IamRole string `json:"iamRole"`
 	// The S3 bucket where your data will be stored.
@@ -347,44 +826,51 @@ func (o *ConnectionS3DataLakeInput) GetType() ConnectionS3DataLakeType {
 	return o.Type
 }
 
-func (o *ConnectionS3DataLakeInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionS3DataLakeInput) GetUpdateSchedule() *ConnectionS3DataLakeUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionS3DataLakeInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionS3DataLakeInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionS3DataLakeIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionS3DataLakeInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionS3DataLakeInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionS3DataLakeHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionS3DataLakeInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionS3DataLakeInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionS3DataLakeDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionS3DataLakeInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionS3DataLakeInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionS3DataLakeWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionS3DataLakeInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionS3DataLakeInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionS3DataLakeMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionS3DataLakeInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionS3DataLakeCronUpdateScheduleMode
 	}
 	return nil
 }

@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/etleap/terraform-provider-etleap/internal/sdk/pkg/utils"
 	"time"
@@ -76,10 +77,474 @@ func (e *ConnectionActiveCampaignStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode string
+
+const (
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignModeCron UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode = "CRON"
+)
+
+func (e UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode) ToPointer() *UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CRON":
+		*e = UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode struct {
+	Mode UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode `json:"mode"`
+	// The cron expression which defines the times at which pipeline updates should be started. Expressions are evaluated in UTC.
+	CronExpression string `json:"cronExpression"`
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode) GetMode() UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode {
+	if o == nil {
+		return UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode) GetCronExpression() string {
+	if o == nil {
+		return ""
+	}
+	return o.CronExpression
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode string
+
+const (
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignModeMonthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode = "MONTHLY"
+)
+
+func (e UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode) ToPointer() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "MONTHLY":
+		*e = UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode struct {
+	Mode       UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode `json:"mode"`
+	DayOfMonth int64                                                                    `json:"dayOfMonth"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode) GetMode() UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode {
+	if o == nil {
+		return UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode) GetDayOfMonth() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfMonth
+}
+
+func (o *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode string
+
+const (
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignModeWeekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode = "WEEKLY"
+)
+
+func (e UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode) ToPointer() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "WEEKLY":
+		*e = UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode struct {
+	Mode      UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode `json:"mode"`
+	DayOfWeek int64                                                                   `json:"dayOfWeek"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode) GetMode() UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode {
+	if o == nil {
+		return UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode) GetDayOfWeek() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DayOfWeek
+}
+
+func (o *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode string
+
+const (
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignModeDaily UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode = "DAILY"
+)
+
+func (e UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode) ToPointer() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAILY":
+		*e = UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode `json:"mode"`
+	// Hour of day the  pipeline update should be started at (in UTC).
+	HourOfDay int64 `json:"hourOfDay"`
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode) GetMode() UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode {
+	if o == nil {
+		return UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode) GetHourOfDay() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.HourOfDay
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode string
+
+const (
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignModeHourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode = "HOURLY"
+)
+
+func (e UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode) ToPointer() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "HOURLY":
+		*e = UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode struct {
+	Mode UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode `json:"mode"`
+}
+
+func (o *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode) GetMode() UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode {
+	if o == nil {
+		return UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode("")
+	}
+	return o.Mode
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode string
+
+const (
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignModeInterval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode = "INTERVAL"
+)
+
+func (e UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode) ToPointer() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode {
+	return &e
+}
+
+func (e *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INTERVAL":
+		*e = UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode: %v", v)
+	}
+}
+
+type UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode struct {
+	Mode UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode `json:"mode"`
+	// Time to wait before new data is pulled (in minutes).
+	IntervalMinutes int64 `json:"intervalMinutes"`
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode) GetMode() UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode {
+	if o == nil {
+		return UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode("")
+	}
+	return o.Mode
+}
+
+func (o *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode) GetIntervalMinutes() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.IntervalMinutes
+}
+
+type ConnectionActiveCampaignUpdateScheduleTypesType string
+
+const (
+	ConnectionActiveCampaignUpdateScheduleTypesTypeInterval ConnectionActiveCampaignUpdateScheduleTypesType = "INTERVAL"
+	ConnectionActiveCampaignUpdateScheduleTypesTypeHourly   ConnectionActiveCampaignUpdateScheduleTypesType = "HOURLY"
+	ConnectionActiveCampaignUpdateScheduleTypesTypeDaily    ConnectionActiveCampaignUpdateScheduleTypesType = "DAILY"
+	ConnectionActiveCampaignUpdateScheduleTypesTypeWeekly   ConnectionActiveCampaignUpdateScheduleTypesType = "WEEKLY"
+	ConnectionActiveCampaignUpdateScheduleTypesTypeMonthly  ConnectionActiveCampaignUpdateScheduleTypesType = "MONTHLY"
+	ConnectionActiveCampaignUpdateScheduleTypesTypeCron     ConnectionActiveCampaignUpdateScheduleTypesType = "CRON"
+)
+
+// ConnectionActiveCampaignUpdateScheduleTypes - The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+type ConnectionActiveCampaignUpdateScheduleTypes struct {
+	UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode
+	UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode     *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode
+	UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode       *UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode
+	UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode     *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode
+	UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode   *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode
+	UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode         *UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode
+
+	Type ConnectionActiveCampaignUpdateScheduleTypesType
+}
+
+func CreateConnectionActiveCampaignUpdateScheduleTypesInterval(interval UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode) ConnectionActiveCampaignUpdateScheduleTypes {
+	typ := ConnectionActiveCampaignUpdateScheduleTypesTypeInterval
+
+	typStr := UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignMode(typ)
+	interval.Mode = typStr
+
+	return ConnectionActiveCampaignUpdateScheduleTypes{
+		UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode: &interval,
+		Type: typ,
+	}
+}
+
+func CreateConnectionActiveCampaignUpdateScheduleTypesHourly(hourly UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode) ConnectionActiveCampaignUpdateScheduleTypes {
+	typ := ConnectionActiveCampaignUpdateScheduleTypesTypeHourly
+
+	typStr := UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignMode(typ)
+	hourly.Mode = typStr
+
+	return ConnectionActiveCampaignUpdateScheduleTypes{
+		UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode: &hourly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionActiveCampaignUpdateScheduleTypesDaily(daily UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode) ConnectionActiveCampaignUpdateScheduleTypes {
+	typ := ConnectionActiveCampaignUpdateScheduleTypesTypeDaily
+
+	typStr := UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignMode(typ)
+	daily.Mode = typStr
+
+	return ConnectionActiveCampaignUpdateScheduleTypes{
+		UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode: &daily,
+		Type: typ,
+	}
+}
+
+func CreateConnectionActiveCampaignUpdateScheduleTypesWeekly(weekly UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode) ConnectionActiveCampaignUpdateScheduleTypes {
+	typ := ConnectionActiveCampaignUpdateScheduleTypesTypeWeekly
+
+	typStr := UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignMode(typ)
+	weekly.Mode = typStr
+
+	return ConnectionActiveCampaignUpdateScheduleTypes{
+		UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode: &weekly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionActiveCampaignUpdateScheduleTypesMonthly(monthly UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode) ConnectionActiveCampaignUpdateScheduleTypes {
+	typ := ConnectionActiveCampaignUpdateScheduleTypesTypeMonthly
+
+	typStr := UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMode(typ)
+	monthly.Mode = typStr
+
+	return ConnectionActiveCampaignUpdateScheduleTypes{
+		UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode: &monthly,
+		Type: typ,
+	}
+}
+
+func CreateConnectionActiveCampaignUpdateScheduleTypesCron(cron UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode) ConnectionActiveCampaignUpdateScheduleTypes {
+	typ := ConnectionActiveCampaignUpdateScheduleTypesTypeCron
+
+	typStr := UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignMode(typ)
+	cron.Mode = typStr
+
+	return ConnectionActiveCampaignUpdateScheduleTypes{
+		UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode: &cron,
+		Type: typ,
+	}
+}
+
+func (u *ConnectionActiveCampaignUpdateScheduleTypes) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Mode string
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Mode {
+	case "INTERVAL":
+		updateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode := new(UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode = updateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode
+		u.Type = ConnectionActiveCampaignUpdateScheduleTypesTypeInterval
+		return nil
+	case "HOURLY":
+		updateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode := new(UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode = updateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode
+		u.Type = ConnectionActiveCampaignUpdateScheduleTypesTypeHourly
+		return nil
+	case "DAILY":
+		updateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode := new(UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode = updateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode
+		u.Type = ConnectionActiveCampaignUpdateScheduleTypesTypeDaily
+		return nil
+	case "WEEKLY":
+		updateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode := new(UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode = updateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode
+		u.Type = ConnectionActiveCampaignUpdateScheduleTypesTypeWeekly
+		return nil
+	case "MONTHLY":
+		updateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode := new(UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode = updateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode
+		u.Type = ConnectionActiveCampaignUpdateScheduleTypesTypeMonthly
+		return nil
+	case "CRON":
+		updateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode := new(UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode)
+		if err := utils.UnmarshalJSON(data, &updateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode = updateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode
+		u.Type = ConnectionActiveCampaignUpdateScheduleTypesTypeCron
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u ConnectionActiveCampaignUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
+	if u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode, "", true)
+	}
+
+	if u.UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode != nil {
+		return utils.MarshalJSON(u.UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type DefaultUpdateSchedule struct {
 	// The pipeline mode refers to how the pipeline fetches data changes from the source and how those changes are applied to the destination table. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/modes/introduction/">the documentation</a> for more details.
-	PipelineMode *PipelineUpdateModes `json:"pipelineMode,omitempty"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
+	PipelineMode   *PipelineUpdateModes `json:"pipelineMode,omitempty"`
 	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
 }
 
@@ -132,6 +597,13 @@ func (o *DefaultUpdateSchedule) GetUpdateScheduleMonthly() *UpdateScheduleModeMo
 	return nil
 }
 
+func (o *DefaultUpdateSchedule) GetUpdateScheduleCron() *UpdateScheduleModeCron {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCron
+	}
+	return nil
+}
+
 type ConnectionActiveCampaign struct {
 	// The unique identifier of the connection.
 	ID string `json:"id"`
@@ -144,8 +616,8 @@ type ConnectionActiveCampaign struct {
 	Status ConnectionActiveCampaignStatus `json:"status"`
 	// The date and time when then the connection was created.
 	CreateDate time.Time `json:"createDate"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionActiveCampaignUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []DefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The base URL is specific to your account. Your API URL can be found in your account on the My Settings page under the "Developer" tab.
@@ -205,44 +677,51 @@ func (o *ConnectionActiveCampaign) GetCreateDate() time.Time {
 	return o.CreateDate
 }
 
-func (o *ConnectionActiveCampaign) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionActiveCampaign) GetUpdateSchedule() *ConnectionActiveCampaignUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionActiveCampaign) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionActiveCampaign) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionActiveCampaign) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionActiveCampaign) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionActiveCampaign) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionActiveCampaign) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionActiveCampaign) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionActiveCampaign) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionActiveCampaign) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionActiveCampaign) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaign) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode
 	}
 	return nil
 }
@@ -265,8 +744,8 @@ type ConnectionActiveCampaignInput struct {
 	// The unique name of this connection.
 	Name string                       `json:"name"`
 	Type ConnectionActiveCampaignType `json:"type"`
-	// The update schedule defines when Etleap should automatically check the source for new data. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information. When undefined, the pipeline will default to the schedule set on the source connection.
-	UpdateSchedule *UpdateScheduleTypes `json:"updateSchedule,omitempty"`
+	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
+	UpdateSchedule *ConnectionActiveCampaignUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// The base URL is specific to your account. Your API URL can be found in your account on the My Settings page under the "Developer" tab.
 	BaseURL string `json:"baseUrl"`
 	// Your API key can be found in your account on the Settings page under the "Developer" tab. Each user in your ActiveCampaign account has their own unique API key.
@@ -287,44 +766,51 @@ func (o *ConnectionActiveCampaignInput) GetType() ConnectionActiveCampaignType {
 	return o.Type
 }
 
-func (o *ConnectionActiveCampaignInput) GetUpdateSchedule() *UpdateScheduleTypes {
+func (o *ConnectionActiveCampaignInput) GetUpdateSchedule() *ConnectionActiveCampaignUpdateScheduleTypes {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateSchedule
 }
 
-func (o *ConnectionActiveCampaignInput) GetUpdateScheduleInterval() *UpdateScheduleModeInterval {
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleInterval() *UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeInterval
+		return v.UpdateScheduleModeIntervalUpdateScheduleTypesConnectionActiveCampaignIntervalUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionActiveCampaignInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourly {
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleHourly() *UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeHourly
+		return v.UpdateScheduleModeHourlyUpdateScheduleTypesConnectionActiveCampaignHourlyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionActiveCampaignInput) GetUpdateScheduleDaily() *UpdateScheduleModeDaily {
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleDaily() *UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeDaily
+		return v.UpdateScheduleModeDailyUpdateScheduleTypesConnectionActiveCampaignDailyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionActiveCampaignInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeekly {
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleWeekly() *UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeWeekly
+		return v.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionActiveCampaignWeeklyUpdateScheduleMode
 	}
 	return nil
 }
 
-func (o *ConnectionActiveCampaignInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthly {
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleMonthly() *UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode {
 	if v := o.GetUpdateSchedule(); v != nil {
-		return v.UpdateScheduleModeMonthly
+		return v.UpdateScheduleModeMonthlyUpdateScheduleTypesConnectionActiveCampaignMonthlyUpdateScheduleMode
+	}
+	return nil
+}
+
+func (o *ConnectionActiveCampaignInput) GetUpdateScheduleCron() *UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode {
+	if v := o.GetUpdateSchedule(); v != nil {
+		return v.UpdateScheduleModeCronUpdateScheduleTypesConnectionActiveCampaignCronUpdateScheduleMode
 	}
 	return nil
 }
