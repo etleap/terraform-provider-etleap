@@ -11,42 +11,38 @@ import (
 
 func (r *ConnectionUSERDEFINEDAPIDataSourceModel) RefreshFromSharedConnectionUserDefinedAPI(resp *shared.ConnectionUserDefinedAPI) {
 	r.Active = types.BoolValue(resp.Active)
-	if resp.Authentication.BasicAuthentication != nil {
-		r.Authentication.Basic = &BasicAuthentication{}
-		r.Authentication.Basic.Password = types.StringValue(resp.Authentication.BasicAuthentication.Password)
-		if resp.Authentication.BasicAuthentication.Type != nil {
-			r.Authentication.Basic.Type = types.StringValue(string(*resp.Authentication.BasicAuthentication.Type))
+	if resp.Authentication.BasicAuthenticationOutput != nil {
+		r.Authentication.Basic = &BasicAuthenticationOutput{}
+		if resp.Authentication.BasicAuthenticationOutput.Type != nil {
+			r.Authentication.Basic.Type = types.StringValue(string(*resp.Authentication.BasicAuthenticationOutput.Type))
 		} else {
 			r.Authentication.Basic.Type = types.StringNull()
 		}
-		r.Authentication.Basic.Username = types.StringValue(resp.Authentication.BasicAuthentication.Username)
+		r.Authentication.Basic.Username = types.StringValue(resp.Authentication.BasicAuthenticationOutput.Username)
 	}
-	if resp.Authentication.BearerAuthentication != nil {
-		r.Authentication.Bearer = &BearerAuthentication{}
-		r.Authentication.Bearer.Token = types.StringValue(resp.Authentication.BearerAuthentication.Token)
-		if resp.Authentication.BearerAuthentication.Type != nil {
-			r.Authentication.Bearer.Type = types.StringValue(string(*resp.Authentication.BearerAuthentication.Type))
+	if resp.Authentication.BearerAuthenticationOutput != nil {
+		r.Authentication.Bearer = &BearerAuthenticationOutput{}
+		if resp.Authentication.BearerAuthenticationOutput.Type != nil {
+			r.Authentication.Bearer.Type = types.StringValue(string(*resp.Authentication.BearerAuthenticationOutput.Type))
 		} else {
 			r.Authentication.Bearer.Type = types.StringNull()
 		}
 	}
-	if resp.Authentication.HeaderAuthentication != nil {
-		r.Authentication.Header = &HeaderAuthentication{}
-		r.Authentication.Header.Key = types.StringValue(resp.Authentication.HeaderAuthentication.Key)
-		if resp.Authentication.HeaderAuthentication.Type != nil {
-			r.Authentication.Header.Type = types.StringValue(string(*resp.Authentication.HeaderAuthentication.Type))
+	if resp.Authentication.HeaderAuthenticationOutput != nil {
+		r.Authentication.Header = &HeaderAuthenticationOutput{}
+		r.Authentication.Header.Key = types.StringValue(resp.Authentication.HeaderAuthenticationOutput.Key)
+		if resp.Authentication.HeaderAuthenticationOutput.Type != nil {
+			r.Authentication.Header.Type = types.StringValue(string(*resp.Authentication.HeaderAuthenticationOutput.Type))
 		} else {
 			r.Authentication.Header.Type = types.StringNull()
 		}
-		r.Authentication.Header.Value = types.StringValue(resp.Authentication.HeaderAuthentication.Value)
 	}
-	if resp.Authentication.Oauth2ClientCredentialsAuthentication != nil {
-		r.Authentication.Oauth = &Oauth2ClientCredentialsAuthentication{}
-		r.Authentication.Oauth.ClientID = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthentication.ClientID)
-		r.Authentication.Oauth.ClientSecret = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthentication.ClientSecret)
-		r.Authentication.Oauth.TokenURL = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthentication.TokenURL)
-		if resp.Authentication.Oauth2ClientCredentialsAuthentication.Type != nil {
-			r.Authentication.Oauth.Type = types.StringValue(string(*resp.Authentication.Oauth2ClientCredentialsAuthentication.Type))
+	if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput != nil {
+		r.Authentication.Oauth = &Oauth2ClientCredentialsAuthenticationOutput{}
+		r.Authentication.Oauth.ClientID = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientID)
+		r.Authentication.Oauth.TokenURL = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.TokenURL)
+		if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.Type != nil {
+			r.Authentication.Oauth.Type = types.StringValue(string(*resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.Type))
 		} else {
 			r.Authentication.Oauth.Type = types.StringNull()
 		}

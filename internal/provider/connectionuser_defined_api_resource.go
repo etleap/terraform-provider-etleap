@@ -2015,6 +2015,32 @@ func (r *ConnectionUSERDEFINEDAPIResource) Create(ctx context.Context, req resou
 	}
 	data.RefreshFromSharedConnectionUserDefinedAPI(res.ConnectionUserDefinedAPI)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	id := data.ID.ValueString()
+	request1 := operations.GetUSERDEFINEDAPIConnectionRequest{
+		ID: id,
+	}
+	res1, err := r.client.Connection.GetUSERDEFINEDAPIConnection(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.ConnectionUserDefinedAPI == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedConnectionUserDefinedAPI(res1.ConnectionUserDefinedAPI)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -2109,6 +2135,32 @@ func (r *ConnectionUSERDEFINEDAPIResource) Update(ctx context.Context, req resou
 		return
 	}
 	data.RefreshFromSharedConnectionUserDefinedAPI(res.ConnectionUserDefinedAPI)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	id1 := data.ID.ValueString()
+	request1 := operations.GetUSERDEFINEDAPIConnectionRequest{
+		ID: id1,
+	}
+	res1, err := r.client.Connection.GetUSERDEFINEDAPIConnection(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.ConnectionUserDefinedAPI == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedConnectionUserDefinedAPI(res1.ConnectionUserDefinedAPI)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

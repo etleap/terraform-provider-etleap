@@ -32,6 +32,37 @@ func (e *HeaderAuthenticationType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// HeaderAuthenticationOutput - Authentication method that uses a header.
+type HeaderAuthenticationOutput struct {
+	Key  string                    `json:"key"`
+	Type *HeaderAuthenticationType `default:"HEADER" json:"type"`
+}
+
+func (h HeaderAuthenticationOutput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(h, "", false)
+}
+
+func (h *HeaderAuthenticationOutput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &h, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *HeaderAuthenticationOutput) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
+}
+
+func (o *HeaderAuthenticationOutput) GetType() *HeaderAuthenticationType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
 // HeaderAuthentication - Authentication method that uses a header.
 type HeaderAuthentication struct {
 	Key   string                    `json:"key"`

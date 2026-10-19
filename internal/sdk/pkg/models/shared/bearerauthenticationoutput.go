@@ -32,6 +32,29 @@ func (e *BearerAuthenticationType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// BearerAuthenticationOutput - Authentication method that uses a Bearer token.
+type BearerAuthenticationOutput struct {
+	Type *BearerAuthenticationType `default:"BEARER" json:"type"`
+}
+
+func (b BearerAuthenticationOutput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BearerAuthenticationOutput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *BearerAuthenticationOutput) GetType() *BearerAuthenticationType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
 // BearerAuthentication - Authentication method that uses a Bearer token.
 type BearerAuthentication struct {
 	Type *BearerAuthenticationType `default:"BEARER" json:"type"`

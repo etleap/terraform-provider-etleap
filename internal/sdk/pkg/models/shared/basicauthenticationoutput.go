@@ -32,6 +32,37 @@ func (e *BasicAuthenticationType) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// BasicAuthenticationOutput - Authentication method that uses a username/password pair.
+type BasicAuthenticationOutput struct {
+	Type     *BasicAuthenticationType `default:"BASIC" json:"type"`
+	Username string                   `json:"username"`
+}
+
+func (b BasicAuthenticationOutput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BasicAuthenticationOutput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *BasicAuthenticationOutput) GetType() *BasicAuthenticationType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *BasicAuthenticationOutput) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
 // BasicAuthentication - Authentication method that uses a username/password pair.
 type BasicAuthentication struct {
 	Type     *BasicAuthenticationType `default:"BASIC" json:"type"`

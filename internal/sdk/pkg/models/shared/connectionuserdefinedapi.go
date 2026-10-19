@@ -620,7 +620,7 @@ type ConnectionUserDefinedAPI struct {
 	UpdateSchedule *ConnectionUserDefinedAPIUpdateScheduleTypes `json:"updateSchedule,omitempty"`
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionUserDefinedAPIDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
-	Authentication        Authentication                                  `json:"authentication"`
+	Authentication        AuthenticationOutput                            `json:"authentication"`
 	// The list of entities.
 	Entities []UserDefinedAPIEntity `json:"entities"`
 }
@@ -734,27 +734,27 @@ func (o *ConnectionUserDefinedAPI) GetDefaultUpdateSchedule() []ConnectionUserDe
 	return o.DefaultUpdateSchedule
 }
 
-func (o *ConnectionUserDefinedAPI) GetAuthentication() Authentication {
+func (o *ConnectionUserDefinedAPI) GetAuthentication() AuthenticationOutput {
 	if o == nil {
-		return Authentication{}
+		return AuthenticationOutput{}
 	}
 	return o.Authentication
 }
 
-func (o *ConnectionUserDefinedAPI) GetAuthenticationBasic() *BasicAuthentication {
-	return o.GetAuthentication().BasicAuthentication
+func (o *ConnectionUserDefinedAPI) GetAuthenticationBasic() *BasicAuthenticationOutput {
+	return o.GetAuthentication().BasicAuthenticationOutput
 }
 
-func (o *ConnectionUserDefinedAPI) GetAuthenticationBearer() *BearerAuthentication {
-	return o.GetAuthentication().BearerAuthentication
+func (o *ConnectionUserDefinedAPI) GetAuthenticationBearer() *BearerAuthenticationOutput {
+	return o.GetAuthentication().BearerAuthenticationOutput
 }
 
-func (o *ConnectionUserDefinedAPI) GetAuthenticationHeader() *HeaderAuthentication {
-	return o.GetAuthentication().HeaderAuthentication
+func (o *ConnectionUserDefinedAPI) GetAuthenticationHeader() *HeaderAuthenticationOutput {
+	return o.GetAuthentication().HeaderAuthenticationOutput
 }
 
-func (o *ConnectionUserDefinedAPI) GetAuthenticationOauth() *Oauth2ClientCredentialsAuthentication {
-	return o.GetAuthentication().Oauth2ClientCredentialsAuthentication
+func (o *ConnectionUserDefinedAPI) GetAuthenticationOauth() *Oauth2ClientCredentialsAuthenticationOutput {
+	return o.GetAuthentication().Oauth2ClientCredentialsAuthenticationOutput
 }
 
 func (o *ConnectionUserDefinedAPI) GetEntities() []UserDefinedAPIEntity {

@@ -32,6 +32,47 @@ func (e *Oauth2ClientCredentialsAuthenticationType) UnmarshalJSON(data []byte) e
 	}
 }
 
+// Oauth2ClientCredentialsAuthenticationOutput - Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint.
+type Oauth2ClientCredentialsAuthenticationOutput struct {
+	Type *Oauth2ClientCredentialsAuthenticationType `default:"OAUTH" json:"type"`
+	// The OAuth 2.0 token endpoint URL where Etleap will exchange client credentials for an access token.
+	TokenURL string `json:"tokenUrl"`
+	// The OAuth 2.0 client identifier.
+	ClientID string `json:"clientId"`
+}
+
+func (o Oauth2ClientCredentialsAuthenticationOutput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(o, "", false)
+}
+
+func (o *Oauth2ClientCredentialsAuthenticationOutput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &o, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Oauth2ClientCredentialsAuthenticationOutput) GetType() *Oauth2ClientCredentialsAuthenticationType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
+func (o *Oauth2ClientCredentialsAuthenticationOutput) GetTokenURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenURL
+}
+
+func (o *Oauth2ClientCredentialsAuthenticationOutput) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
 // Oauth2ClientCredentialsAuthentication - Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint.
 type Oauth2ClientCredentialsAuthentication struct {
 	Type *Oauth2ClientCredentialsAuthenticationType `default:"OAUTH" json:"type"`

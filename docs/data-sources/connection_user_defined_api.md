@@ -49,7 +49,6 @@ Read-Only:
 
 Read-Only:
 
-- `password` (String) The Basic password. This property is stored as a secret in Etleap.
 - `type` (String) must be one of ["BASIC"]
 - `username` (String)
 
@@ -59,7 +58,6 @@ Read-Only:
 
 Read-Only:
 
-- `token` (String) The Bearer token used for authentication. This property is stored as a secret in Etleap.
 - `type` (String) must be one of ["BEARER"]
 
 
@@ -70,7 +68,6 @@ Read-Only:
 
 - `key` (String)
 - `type` (String) must be one of ["HEADER"]
-- `value` (String)
 
 
 <a id="nestedatt--authentication--oauth"></a>
@@ -79,7 +76,6 @@ Read-Only:
 Read-Only:
 
 - `client_id` (String) The OAuth 2.0 client identifier.
-- `client_secret` (String) The OAuth 2.0 client secret. This property is stored as a secret in Etleap.
 - `token_url` (String) The OAuth 2.0 token endpoint URL where Etleap will exchange client credentials for an access token.
 - `type` (String) must be one of ["OAUTH"]
 

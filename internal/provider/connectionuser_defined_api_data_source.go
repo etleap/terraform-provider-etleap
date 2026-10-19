@@ -29,7 +29,7 @@ type ConnectionUSERDEFINEDAPIDataSource struct {
 // ConnectionUSERDEFINEDAPIDataSourceModel describes the data model.
 type ConnectionUSERDEFINEDAPIDataSourceModel struct {
 	Active                types.Bool              `tfsdk:"active"`
-	Authentication        Authentication          `tfsdk:"authentication"`
+	Authentication        AuthenticationOutput    `tfsdk:"authentication"`
 	CreateDate            types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	Entities              []UserDefinedAPIEntity  `tfsdk:"entities"`
@@ -61,10 +61,6 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 					"basic": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
-							"password": schema.StringAttribute{
-								Computed:    true,
-								Description: `The Basic password. This property is stored as a secret in Etleap.`,
-							},
 							"type": schema.StringAttribute{
 								Computed:    true,
 								Description: `must be one of ["BASIC"]`,
@@ -78,10 +74,6 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 					"bearer": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
-							"token": schema.StringAttribute{
-								Computed:    true,
-								Description: `The Bearer token used for authentication. This property is stored as a secret in Etleap.`,
-							},
 							"type": schema.StringAttribute{
 								Computed:    true,
 								Description: `must be one of ["BEARER"]`,
@@ -99,9 +91,6 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 								Computed:    true,
 								Description: `must be one of ["HEADER"]`,
 							},
-							"value": schema.StringAttribute{
-								Computed: true,
-							},
 						},
 						Description: `Authentication method that uses a header.`,
 					},
@@ -111,10 +100,6 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 							"client_id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The OAuth 2.0 client identifier.`,
-							},
-							"client_secret": schema.StringAttribute{
-								Computed:    true,
-								Description: `The OAuth 2.0 client secret. This property is stored as a secret in Etleap.`,
 							},
 							"token_url": schema.StringAttribute{
 								Computed:    true,
