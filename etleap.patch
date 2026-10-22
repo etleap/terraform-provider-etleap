@@ -1,5 +1,5 @@
 diff --git a/internal/provider/pipeline_resource.go b/internal/provider/pipeline_resource.go
-index ed7b525..448c6c6 100644
+index 9b65bc0..b16d0ee 100644
 --- a/internal/provider/pipeline_resource.go
 +++ b/internal/provider/pipeline_resource.go
 @@ -5,6 +5,9 @@ package provider
@@ -219,7 +219,7 @@ index ed7b525..448c6c6 100644
  								Required:    true,
  								Description: `Requires replacement if changed. `,
  							},
-@@ -9655,7 +9642,16 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
+@@ -9924,7 +9911,16 @@ func (r *PipelineResource) Create(ctx context.Context, req resource.CreateReques
  	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  
@@ -237,7 +237,7 @@ index ed7b525..448c6c6 100644
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
  
-@@ -9703,7 +9699,16 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
+@@ -9972,7 +9968,16 @@ func (r *PipelineResource) Read(ctx context.Context, req resource.ReadRequest, r
  	}
  	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
  
@@ -255,7 +255,7 @@ index ed7b525..448c6c6 100644
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
  
-@@ -9723,6 +9728,39 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -9992,6 +9997,39 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  
  	id := data.ID.ValueString()
  	pipelineUpdate := *data.ToSharedPipelineUpdate()
@@ -295,7 +295,7 @@ index ed7b525..448c6c6 100644
  	request := operations.UpdatePipelineRequest{
  		ID:             id,
  		PipelineUpdate: pipelineUpdate,
-@@ -9747,6 +9785,31 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -10016,6 +10054,31 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
  		return
  	}
@@ -327,7 +327,7 @@ index ed7b525..448c6c6 100644
  	data.RefreshFromSharedPipelineOutput(res.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  	id1 := data.ID.ValueString()
-@@ -9776,6 +9839,15 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
+@@ -10045,6 +10108,15 @@ func (r *PipelineResource) Update(ctx context.Context, req resource.UpdateReques
  	data.RefreshFromSharedPipelineOutput(res1.PipelineOutput)
  	refreshPlan(ctx, plan, &data, resp.Diagnostics)
  
@@ -343,7 +343,7 @@ index ed7b525..448c6c6 100644
  	// Save updated data into Terraform state
  	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
  }
-@@ -9826,3 +9898,75 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
+@@ -10095,3 +10167,75 @@ func (r *PipelineResource) Delete(ctx context.Context, req resource.DeleteReques
  func (r *PipelineResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
  	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), req.ID)...)
  }
@@ -420,7 +420,7 @@ index ed7b525..448c6c6 100644
 +	}
 +}
 diff --git a/internal/provider/pipeline_resource_sdk.go b/internal/provider/pipeline_resource_sdk.go
-index 4e455a5..4eb0e37 100644
+index 104f511..46fd85e 100644
 --- a/internal/provider/pipeline_resource_sdk.go
 +++ b/internal/provider/pipeline_resource_sdk.go
 @@ -8,6 +8,7 @@ import (
@@ -431,17 +431,17 @@ index 4e455a5..4eb0e37 100644
  )
  
  func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
-@@ -4245,6 +4246,9 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
+@@ -4361,6 +4362,9 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
  	r.Owner.LastName = types.StringValue(resp.Owner.LastName)
  	r.Paused = types.BoolValue(resp.Paused)
  	r.PipelineMode = types.StringValue(string(resp.PipelineMode))
 +	if r.RefreshSchedule == nil {
-+		r.RefreshSchedule = &RefreshScheduleTypes{}
++		r.RefreshSchedule = &ModelInputScheduleTypes{}
 +	}
- 	if resp.RefreshSchedule.RefreshScheduleModeDaily != nil {
- 		r.RefreshSchedule.Daily = &UpdateScheduleModeDaily{}
- 		r.RefreshSchedule.Daily.HourOfDay = types.Int64Value(resp.RefreshSchedule.RefreshScheduleModeDaily.HourOfDay)
-@@ -7887,6 +7891,12 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate
+ 	if resp.RefreshSchedule.CronScheduleMode != nil {
+ 		r.RefreshSchedule.Cron = &UpdateScheduleModeCron{}
+ 		r.RefreshSchedule.Cron.CronExpression = types.StringValue(resp.RefreshSchedule.CronScheduleMode.CronExpression)
+@@ -8096,6 +8100,12 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate
  			SourceZuoraUpdate: sourceZuoraUpdate,
  		}
  	}
@@ -454,7 +454,7 @@ index 4e455a5..4eb0e37 100644
  	paused := new(bool)
  	if !r.Paused.IsUnknown() && !r.Paused.IsNull() {
  		*paused = r.Paused.ValueBool()
-@@ -8078,3 +8088,31 @@ func (r *PipelineResourceModel) ToSharedPipelineDelete() *shared.PipelineDelete
+@@ -8315,3 +8325,31 @@ func (r *PipelineResourceModel) ToSharedPipelineDelete() *shared.PipelineDelete
  	}
  	return &out
  }
@@ -488,7 +488,7 @@ index 4e455a5..4eb0e37 100644
 +}
 \ No newline at end of file
 diff --git a/internal/provider/provider.go b/internal/provider/provider.go
-index 585b747..3129ac4 100644
+index 6ecccd1..4e6c4a3 100644
 --- a/internal/provider/provider.go
 +++ b/internal/provider/provider.go
 @@ -4,6 +4,9 @@ package provider

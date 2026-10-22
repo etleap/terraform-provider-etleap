@@ -14,7 +14,7 @@ import (
 type PipelineConfig struct {
 	Name                   string
 	AutomaticSchemaChanges bool
-	RefreshSchedule        *shared.RefreshScheduleTypes
+	RefreshSchedule        *shared.ScheduleTypes
 	LatencyThreshold       int
 	testutils.TestConstants
 }
@@ -50,18 +50,18 @@ resource "etleap_pipeline" "test_mysql_pipeline" {
 	}
 
     refresh_schedule = {
-        {{- if .RefreshSchedule.RefreshScheduleModeDaily }}
+        {{- if .RefreshSchedule.DailyScheduleMode }}
         daily = {
             mode        = "DAILY"
-            hour_of_day = {{.RefreshSchedule.RefreshScheduleModeDaily.HourOfDay}}
+            hour_of_day = {{.RefreshSchedule.DailyScheduleMode.HourOfDay}}
         }
         {{- end }}
 
-        {{- if .RefreshSchedule.RefreshScheduleModeWeekly }}
+        {{- if .RefreshSchedule.WeeklyScheduleMode }}
         weekly = {
             mode        = "WEEKLY"
-            day_of_week = {{.RefreshSchedule.RefreshScheduleModeWeekly.DayOfWeek}}
-            hour_of_day = {{.RefreshSchedule.RefreshScheduleModeWeekly.HourOfDay}}
+            day_of_week = {{.RefreshSchedule.WeeklyScheduleMode.DayOfWeek}}
+            hour_of_day = {{.RefreshSchedule.WeeklyScheduleMode.HourOfDay}}
         }
         {{- end }}
     }
@@ -79,8 +79,8 @@ func TestAccMysqlToRedshiftPipeline(t *testing.T) {
 				Config: GetProviderDefinition() + getPipelineConfig(&PipelineConfig{
 					pipelineName,
 					false,
-					&shared.RefreshScheduleTypes{
-						RefreshScheduleModeDaily: &shared.RefreshScheduleModeDaily{
+					&shared.ScheduleTypes{
+						DailyScheduleMode: &shared.DailyScheduleMode{
 							Mode:      "DAILY",
 							HourOfDay: 5,
 						},
@@ -107,8 +107,8 @@ func TestAccMysqlToRedshiftPipeline(t *testing.T) {
 				Config: GetProviderDefinition() + getPipelineConfig(&PipelineConfig{
 					pipelineName + " 2",
 					true,
-					&shared.RefreshScheduleTypes{
-						RefreshScheduleModeWeekly: &shared.RefreshScheduleModeWeekly{
+					&shared.ScheduleTypes{
+						WeeklyScheduleMode: &shared.WeeklyScheduleMode{
 							Mode:      "WEEKLY",
 							DayOfWeek: 1,
 							HourOfDay: 5,
