@@ -57,6 +57,7 @@ type PipelineResourceModel struct {
 	Destination              DestinationTypes                     `tfsdk:"destination"`
 	Destinations             []DestinationInfoAndPipelineVersions `tfsdk:"destinations"`
 	ID                       types.String                         `tfsdk:"id"`
+	Label                    types.String                         `tfsdk:"label"`
 	LastRefreshFinishDate    types.String                         `tfsdk:"last_refresh_finish_date"`
 	LastRefreshStartDate     types.String                         `tfsdk:"last_refresh_start_date"`
 	Latency                  types.Int64                          `tfsdk:"latency"`
@@ -1392,6 +1393,14 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Description: `The unique identifier of the pipeline.`,
+			},
+			"label": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `The label of the pipeline. A pipeline can have one label.`,
 			},
 			"last_refresh_finish_date": schema.StringAttribute{
 				Computed: true,

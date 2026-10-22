@@ -935,8 +935,10 @@ func (u ScheduleTypes) MarshalJSON() ([]byte, error) {
 
 type PipelineOutput struct {
 	// The unique identifier of the pipeline.
-	ID     string      `json:"id"`
-	Name   string      `json:"name"`
+	ID   string `json:"id"`
+	Name string `json:"name"`
+	// The label of the pipeline. This field is not in the response if the pipeline has no label.
+	Label  *string     `json:"label,omitempty"`
 	Source SourceTypes `json:"source"`
 	// A pipeline may have multiple destinations if it is in the process of being migrated from one to another.
 	Destinations []DestinationInfoAndPipelineVersions `json:"destinations"`
@@ -993,6 +995,13 @@ func (o *PipelineOutput) GetName() string {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *PipelineOutput) GetLabel() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Label
 }
 
 func (o *PipelineOutput) GetSource() SourceTypes {

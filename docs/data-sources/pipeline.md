@@ -26,6 +26,7 @@ data "etleap_pipeline" "my_pipeline" {
 - `create_date` (String) The date and time when then the pipeline was created.
 - `destinations` (Attributes List) A pipeline may have multiple destinations if it is in the process of being migrated from one to another. (see [below for nested schema](#nestedatt--destinations))
 - `id` (String) The ID of this resource.
+- `label` (String) The label of the pipeline. This field is not in the response if the pipeline has no label.
 - `last_refresh_finish_date` (String) The date and time when the last refresh finished. `null` if the pipeline was never refreshed.
 - `last_refresh_start_date` (String) The date and time when the last refresh was started. `null` if the pipeline was never refreshed.
 - `latency` (Number) The end-to-end latency in seconds for this pipeline. Not `null` if the pipeline is running (not paused or stopped) and if the initial backfill has finished. See <a target="_blank" href="https://docs.etleap.com/documentation/pipeline/latency/#end-to-end-latency">the documentation</a> for more details.

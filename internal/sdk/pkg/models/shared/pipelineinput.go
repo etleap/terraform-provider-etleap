@@ -471,7 +471,9 @@ func (u PipelineInputScheduleTypes) MarshalJSON() ([]byte, error) {
 
 // PipelineInput - The script returned by `GET /pipelines/{id}/scripts/{version}` can be used as the `script` input. If `script` is not specified, the default script is used.
 type PipelineInput struct {
-	Name        string           `json:"name"`
+	Name string `json:"name"`
+	// The label of the pipeline. A pipeline can have one label.
+	Label       *string          `json:"label,omitempty"`
 	Source      SourceTypes      `json:"source"`
 	Destination DestinationTypes `json:"destination"`
 	// Whenever a script is required, we accept and/or return two types of scripts: a Script or Legacy Script. We return a Script object if all transforms specified in that script are supported by this API. Otherwise it will return a Legacy Script. Either Script or Legacy Script can be used when adding a script to a pipeline.
@@ -507,6 +509,13 @@ func (o *PipelineInput) GetName() string {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *PipelineInput) GetLabel() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Label
 }
 
 func (o *PipelineInput) GetSource() SourceTypes {

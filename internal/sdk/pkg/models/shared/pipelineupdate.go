@@ -984,7 +984,9 @@ func (u PipelineUpdateScheduleTypes) MarshalJSON() ([]byte, error) {
 }
 
 type PipelineUpdate struct {
-	Name              *string             `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
+	// The label of the pipeline. Set to `null` to remove the label. If you do not include this field, the label does not change.
+	Label             *string             `json:"label,omitempty"`
 	Source            *SourceTypesUpdate  `json:"source,omitempty"`
 	DestinationUpdate []DestinationUpdate `json:"destination,omitempty"`
 	Paused            *bool               `json:"paused,omitempty"`
@@ -1008,6 +1010,13 @@ func (o *PipelineUpdate) GetName() *string {
 		return nil
 	}
 	return o.Name
+}
+
+func (o *PipelineUpdate) GetLabel() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Label
 }
 
 func (o *PipelineUpdate) GetSource() *SourceTypesUpdate {

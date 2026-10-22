@@ -31,6 +31,7 @@ type PipelineDataSourceModel struct {
 	CreateDate            types.String                         `tfsdk:"create_date"`
 	Destinations          []DestinationInfoAndPipelineVersions `tfsdk:"destinations"`
 	ID                    types.String                         `tfsdk:"id"`
+	Label                 types.String                         `tfsdk:"label"`
 	LastRefreshFinishDate types.String                         `tfsdk:"last_refresh_finish_date"`
 	LastRefreshStartDate  types.String                         `tfsdk:"last_refresh_start_date"`
 	Latency               types.Int64                          `tfsdk:"latency"`
@@ -456,6 +457,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 			},
 			"id": schema.StringAttribute{
 				Required: true,
+			},
+			"label": schema.StringAttribute{
+				Computed:    true,
+				Description: `The label of the pipeline. This field is not in the response if the pipeline has no label.`,
 			},
 			"last_refresh_finish_date": schema.StringAttribute{
 				Computed:    true,

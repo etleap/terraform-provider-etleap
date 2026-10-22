@@ -231,6 +231,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		}
 	}
 	r.ID = types.StringValue(resp.ID)
+	r.Label = types.StringPointerValue(resp.Label)
 	if resp.LastRefreshFinishDate != nil {
 		r.LastRefreshFinishDate = types.StringValue(resp.LastRefreshFinishDate.Format(time.RFC3339Nano))
 	} else {

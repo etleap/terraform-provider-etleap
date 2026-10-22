@@ -12,6 +12,12 @@ import (
 
 func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	name := r.Name.ValueString()
+	label := new(string)
+	if !r.Label.IsUnknown() && !r.Label.IsNull() {
+		*label = r.Label.ValueString()
+	} else {
+		label = nil
+	}
 	var source shared.SourceTypes
 	var sourceActiveCampaign *shared.SourceActiveCampaign
 	if r.Source.ActiveCampaign != nil {
@@ -4109,6 +4115,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 	}
 	out := shared.PipelineInput{
 		Name:             name,
+		Label:            label,
 		Source:           source,
 		Destination:      destination,
 		Script:           script,
@@ -4342,6 +4349,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 		}
 	}
 	r.ID = types.StringValue(resp.ID)
+	r.Label = types.StringPointerValue(resp.Label)
 	if resp.LastRefreshFinishDate != nil {
 		r.LastRefreshFinishDate = types.StringValue(resp.LastRefreshFinishDate.Format(time.RFC3339Nano))
 	} else {
@@ -5550,6 +5558,12 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 		*name = r.Name.ValueString()
 	} else {
 		name = nil
+	}
+	label := new(string)
+	if !r.Label.IsUnknown() && !r.Label.IsNull() {
+		*label = r.Label.ValueString()
+	} else {
+		label = nil
 	}
 	var source *shared.SourceTypesUpdate
 	var sourceActiveCampaignUpdate *shared.SourceActiveCampaignUpdate
@@ -8293,6 +8307,7 @@ func (r *PipelineResourceModel) ToSharedPipelineUpdate() *shared.PipelineUpdate 
 	}
 	out := shared.PipelineUpdate{
 		Name:             name,
+		Label:            label,
 		Source:           source,
 		Paused:           paused,
 		Shares:           shares,

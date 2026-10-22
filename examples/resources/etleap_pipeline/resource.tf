@@ -16,6 +16,7 @@ resource "etleap_pipeline" "my_pipeline" {
       wait_for_quality_check = true
     }
   }
+  label  = "...my_label..."
   name   = "Mrs. Deborah Cartwright"
   paused = false
   script = {

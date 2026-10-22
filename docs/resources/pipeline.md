@@ -31,6 +31,7 @@ resource "etleap_pipeline" "my_pipeline" {
       wait_for_quality_check = true
     }
   }
+  label  = "...my_label..."
   name   = "Mrs. Deborah Cartwright"
   paused = false
   script = {
@@ -61,6 +62,7 @@ resource "etleap_pipeline" "my_pipeline" {
 ### Optional
 
 - `deletion_of_export_products` (Boolean) Specifies whether any remaining export products in the destination created by this pipeline should be deleted. For REDSHIFT and SNOWFLAKE destinations this means tables, and for S3 DATA LAKE destinations this means data output to S3 as well as any tables created in Glue. Defaults to `false`. Default: false
+- `label` (String) The label of the pipeline. A pipeline can have one label.
 - `paused` (Boolean) If the pipeline is paused. Defaults to `false`. Default: false
 - `refresh_schedule` (Attributes) A pipeline refresh processes all data in your source from the beginning to re-establish consistency with your destination. The pipeline refresh schedule defines when Etleap should automatically refresh the pipeline. See <a href= "https://support.etleap.com/hc/en-us/articles/360019768853-What-is-the-difference-between-a-Refresh-and-an-Update-" target="_blank" rel="noopener">Updates &amp; Refreshes</a> for more information.
 
