@@ -29,6 +29,7 @@ type ConnectionZENDESKDataSource struct {
 // ConnectionZENDESKDataSourceModel describes the data model.
 type ConnectionZENDESKDataSourceModel struct {
 	Active                types.Bool              `tfsdk:"active"`
+	ClientID              types.String            `tfsdk:"client_id"`
 	CreateDate            types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	ID                    types.String            `tfsdk:"id"`
@@ -54,6 +55,10 @@ func (r *ConnectionZENDESKDataSource) Schema(ctx context.Context, req datasource
 			"active": schema.BoolAttribute{
 				Computed:    true,
 				Description: `Whether this connection has been marked as active.`,
+			},
+			"client_id": schema.StringAttribute{
+				Computed:    true,
+				Description: `Identifier of a Confidential OAuth client owned by an administrator in this Zendesk account. Required for new connections. Omit on update to preserve the saved value.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed:    true,

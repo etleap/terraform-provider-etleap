@@ -10,6 +10,7 @@ import (
 
 func (r *ConnectionZENDESKDataSourceModel) RefreshFromSharedConnectionZendesk(resp *shared.ConnectionZendesk) {
 	r.Active = types.BoolValue(resp.Active)
+	r.ClientID = types.StringPointerValue(resp.ClientID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
@@ -105,5 +106,5 @@ func (r *ConnectionZENDESKDataSourceModel) RefreshFromSharedConnectionZendesk(re
 			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZendeskWeeklyUpdateScheduleMode.Mode))
 		}
 	}
-	r.Username = types.StringValue(resp.Username)
+	r.Username = types.StringPointerValue(resp.Username)
 }

@@ -24,6 +24,7 @@ data "etleap_connection_zendesk" "my_connectionzendesk" {
 ### Read-Only
 
 - `active` (Boolean) Whether this connection has been marked as active.
+- `client_id` (String) Identifier of a Confidential OAuth client owned by an administrator in this Zendesk account. Required for new connections. Omit on update to preserve the saved value.
 - `create_date` (String) The date and time when then the connection was created.
 - `default_update_schedule` (Attributes List) When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change. (see [below for nested schema](#nestedatt--default_update_schedule))
 - `id` (String) The ID of this resource.

@@ -621,8 +621,10 @@ type ConnectionZendesk struct {
 	// When an update schedule is not defined for a connection, the default schedule is used. The default defined individually per `pipelineMode` and may be subject to change.
 	DefaultUpdateSchedule []ConnectionZendeskDefaultUpdateSchedule `json:"defaultUpdateSchedule"`
 	// The name of the subdomain. This is in the URL when you use zendesk: [subdomain].zendesk.com
-	Subdomain string `json:"subdomain"`
-	Username  string `json:"username"`
+	Subdomain string  `json:"subdomain"`
+	Username  *string `json:"username,omitempty"`
+	// Identifier of a Confidential OAuth client owned by an administrator in this Zendesk account. Required for new connections. Omit on update to preserve the saved value.
+	ClientID *string `json:"clientId,omitempty"`
 }
 
 func (c ConnectionZendesk) MarshalJSON() ([]byte, error) {
@@ -741,11 +743,18 @@ func (o *ConnectionZendesk) GetSubdomain() string {
 	return o.Subdomain
 }
 
-func (o *ConnectionZendesk) GetUsername() string {
+func (o *ConnectionZendesk) GetUsername() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Username
+}
+
+func (o *ConnectionZendesk) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
 }
 
 type ConnectionZendeskInput struct {
@@ -754,10 +763,12 @@ type ConnectionZendeskInput struct {
 	Type ConnectionZendeskType `json:"type"`
 	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead.
 	UpdateSchedule *ConnectionZendeskUpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
-	Code string `json:"code"`
 	// The name of the subdomain. This is in the URL when you use zendesk: [subdomain].zendesk.com
 	Subdomain string `json:"subdomain"`
+	// Identifier of a Confidential OAuth client owned by an administrator in this Zendesk account. Required for new connections. Omit on update to preserve the saved value.
+	ClientID *string `json:"clientId,omitempty"`
+	// Secret of the Confidential OAuth client. Required for new connections. Omit on update to preserve the saved secret.
+	ClientSecret *string `json:"clientSecret,omitempty"`
 }
 
 func (o *ConnectionZendeskInput) GetName() string {
@@ -823,16 +834,23 @@ func (o *ConnectionZendeskInput) GetUpdateScheduleCron() *UpdateScheduleModeCron
 	return nil
 }
 
-func (o *ConnectionZendeskInput) GetCode() string {
-	if o == nil {
-		return ""
-	}
-	return o.Code
-}
-
 func (o *ConnectionZendeskInput) GetSubdomain() string {
 	if o == nil {
 		return ""
 	}
 	return o.Subdomain
+}
+
+func (o *ConnectionZendeskInput) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *ConnectionZendeskInput) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
 }

@@ -42,7 +42,8 @@ type ConnectionZENDESKResource struct {
 // ConnectionZENDESKResourceModel describes the resource data model.
 type ConnectionZENDESKResourceModel struct {
 	Active                   types.Bool              `tfsdk:"active"`
-	Code                     types.String            `tfsdk:"code"`
+	ClientID                 types.String            `tfsdk:"client_id"`
+	ClientSecret             types.String            `tfsdk:"client_secret"`
 	CreateDate               types.String            `tfsdk:"create_date"`
 	DefaultUpdateSchedule    []DefaultUpdateSchedule `tfsdk:"default_update_schedule"`
 	DeletionOfExportProducts types.Bool              `tfsdk:"deletion_of_export_products"`
@@ -71,9 +72,17 @@ func (r *ConnectionZENDESKResource) Schema(ctx context.Context, req resource.Sch
 				},
 				Description: `Whether this connection has been marked as active.`,
 			},
-			"code": schema.StringAttribute{
-				Required:    true,
-				Description: `Code retrieved from ` + "`" + `/connections/oauth2-initiation` + "`" + `. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.`,
+			"client_id": schema.StringAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+				},
+				Optional:    true,
+				Description: `Identifier of a Confidential OAuth client owned by an administrator in this Zendesk account. Required for new connections. Omit on update to preserve the saved value.`,
+			},
+			"client_secret": schema.StringAttribute{
+				Optional:    true,
+				Description: `Secret of the Confidential OAuth client. Required for new connections. Omit on update to preserve the saved secret.`,
 			},
 			"create_date": schema.StringAttribute{
 				Computed: true,

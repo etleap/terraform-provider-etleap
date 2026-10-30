@@ -14,7 +14,8 @@ ConnectionZENDESK Resource
 
 ```terraform
 resource "etleap_connection_zendesk" "my_connectionzendesk" {
-  code                        = "...my_code..."
+  client_id                   = "...my_client_id..."
+  client_secret               = "...my_client_secret..."
   deletion_of_export_products = true
   name                        = "Rosalie Braun"
   subdomain                   = "...my_subdomain..."
@@ -27,13 +28,14 @@ resource "etleap_connection_zendesk" "my_connectionzendesk" {
 
 ### Required
 
-- `code` (String) Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
 - `name` (String) The unique name of this connection.
 - `subdomain` (String) The name of the subdomain. This is in the URL when you use zendesk: [subdomain].zendesk.com
 - `type` (String) must be one of ["ZENDESK"]
 
 ### Optional
 
+- `client_id` (String) Identifier of a Confidential OAuth client owned by an administrator in this Zendesk account. Required for new connections. Omit on update to preserve the saved value.
+- `client_secret` (String) Secret of the Confidential OAuth client. Required for new connections. Omit on update to preserve the saved secret.
 - `deletion_of_export_products` (Boolean) Applicable for REDSHIFT and SNOWFLAKE connections only in the case when there are pipelines that use this connection as a destination, and these pipelines have been migrated to use a different destination. Specifies whether any tables created by these pipelines in this destination should be deleted. Defaults to `false`. Default: false
 - `update_schedule` (Attributes) The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline. If undefined, the `defaultUpdateSchedule` is used instead. (see [below for nested schema](#nestedatt--update_schedule))
 

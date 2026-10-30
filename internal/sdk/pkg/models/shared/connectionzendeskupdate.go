@@ -506,10 +506,12 @@ type ConnectionZendeskUpdate struct {
 	Active *bool `json:"active,omitempty"`
 	// The update schedule defined at the connection level is used as the default for all pipelines ingesting from this source connection, unless overriden for a pipeline.
 	UpdateSchedule *ConnectionZendeskUpdateUpdateScheduleTypes `json:"updateSchedule,omitempty"`
-	// Code retrieved from `/connections/oauth2-initiation`. **Note:** it is short-lived, therefore the connection creation should be done as soon as code is returned.
-	Code *string `json:"code,omitempty"`
 	// The name of the subdomain. This is in the URL when you use zendesk: [subdomain].zendesk.com
 	Subdomain *string `json:"subdomain,omitempty"`
+	// Identifier of a Confidential OAuth client owned by an administrator in this Zendesk account. Required for new connections. Omit on update to preserve the saved value.
+	ClientID *string `json:"clientId,omitempty"`
+	// Secret of the Confidential OAuth client. Required for new connections. Omit on update to preserve the saved secret.
+	ClientSecret *string `json:"clientSecret,omitempty"`
 }
 
 func (o *ConnectionZendeskUpdate) GetName() *string {
@@ -582,16 +584,23 @@ func (o *ConnectionZendeskUpdate) GetUpdateScheduleCron() *UpdateScheduleModeCro
 	return nil
 }
 
-func (o *ConnectionZendeskUpdate) GetCode() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Code
-}
-
 func (o *ConnectionZendeskUpdate) GetSubdomain() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Subdomain
+}
+
+func (o *ConnectionZendeskUpdate) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *ConnectionZendeskUpdate) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
 }

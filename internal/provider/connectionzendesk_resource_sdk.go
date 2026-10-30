@@ -100,20 +100,33 @@ func (r *ConnectionZENDESKResourceModel) ToSharedConnectionZendeskInput() *share
 			}
 		}
 	}
-	code := r.Code.ValueString()
 	subdomain := r.Subdomain.ValueString()
+	clientID := new(string)
+	if !r.ClientID.IsUnknown() && !r.ClientID.IsNull() {
+		*clientID = r.ClientID.ValueString()
+	} else {
+		clientID = nil
+	}
+	clientSecret := new(string)
+	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
+		*clientSecret = r.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
 	out := shared.ConnectionZendeskInput{
 		Name:           name,
 		Type:           typeVar,
 		UpdateSchedule: updateSchedule,
-		Code:           code,
 		Subdomain:      subdomain,
+		ClientID:       clientID,
+		ClientSecret:   clientSecret,
 	}
 	return &out
 }
 
 func (r *ConnectionZENDESKResourceModel) RefreshFromSharedConnectionZendesk(resp *shared.ConnectionZendesk) {
 	r.Active = types.BoolValue(resp.Active)
+	r.ClientID = types.StringPointerValue(resp.ClientID)
 	r.CreateDate = types.StringValue(resp.CreateDate.Format(time.RFC3339Nano))
 	if len(r.DefaultUpdateSchedule) > len(resp.DefaultUpdateSchedule) {
 		r.DefaultUpdateSchedule = r.DefaultUpdateSchedule[:len(resp.DefaultUpdateSchedule)]
@@ -209,7 +222,7 @@ func (r *ConnectionZENDESKResourceModel) RefreshFromSharedConnectionZendesk(resp
 			r.UpdateSchedule.Weekly.Mode = types.StringValue(string(resp.UpdateSchedule.UpdateScheduleModeWeeklyUpdateScheduleTypesConnectionZendeskWeeklyUpdateScheduleMode.Mode))
 		}
 	}
-	r.Username = types.StringValue(resp.Username)
+	r.Username = types.StringPointerValue(resp.Username)
 }
 
 func (r *ConnectionZENDESKResourceModel) ToSharedConnectionZendeskUpdate() *shared.ConnectionZendeskUpdate {
@@ -315,25 +328,32 @@ func (r *ConnectionZENDESKResourceModel) ToSharedConnectionZendeskUpdate() *shar
 			}
 		}
 	}
-	code := new(string)
-	if !r.Code.IsUnknown() && !r.Code.IsNull() {
-		*code = r.Code.ValueString()
-	} else {
-		code = nil
-	}
 	subdomain := new(string)
 	if !r.Subdomain.IsUnknown() && !r.Subdomain.IsNull() {
 		*subdomain = r.Subdomain.ValueString()
 	} else {
 		subdomain = nil
 	}
+	clientID := new(string)
+	if !r.ClientID.IsUnknown() && !r.ClientID.IsNull() {
+		*clientID = r.ClientID.ValueString()
+	} else {
+		clientID = nil
+	}
+	clientSecret := new(string)
+	if !r.ClientSecret.IsUnknown() && !r.ClientSecret.IsNull() {
+		*clientSecret = r.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
 	out := shared.ConnectionZendeskUpdate{
 		Name:           name,
 		Type:           typeVar,
 		Active:         active,
 		UpdateSchedule: updateSchedule,
-		Code:           code,
 		Subdomain:      subdomain,
+		ClientID:       clientID,
+		ClientSecret:   clientSecret,
 	}
 	return &out
 }
