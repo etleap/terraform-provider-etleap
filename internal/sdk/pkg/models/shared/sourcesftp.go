@@ -82,6 +82,8 @@ type SourceSftp struct {
 	Paths []string `json:"paths,omitempty"`
 	// A glob pattern to be used as a path. Either `globPattern` or `paths` must be specified, but not both.
 	GlobPattern *string `json:"globPattern,omitempty"`
+	// Etleap can check whether files that were already processed have changed. If the file has changed, then Etleap fetches the new file and removes the old file's data in the destination and adds the changed data. <br> This can only be enabled when `newFileBehavior` is set to `APPEND`. Defaults to `false`.
+	FilesCanChange *bool `default:"false" json:"filesCanChange"`
 }
 
 func (s SourceSftp) MarshalJSON() ([]byte, error) {
@@ -156,4 +158,11 @@ func (o *SourceSftp) GetGlobPattern() *string {
 		return nil
 	}
 	return o.GlobPattern
+}
+
+func (o *SourceSftp) GetFilesCanChange() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FilesCanChange
 }

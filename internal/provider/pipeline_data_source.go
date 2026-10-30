@@ -2784,6 +2784,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 								Computed:    true,
 								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified.`,
 							},
+							"files_can_change": schema.BoolAttribute{
+								Computed:    true,
+								Description: `Etleap can check whether files that were already processed have changed. If the file has changed, then Etleap fetches the new file and removes the old file's data in the destination and adds the changed data. <br> This can only be enabled when ` + "`" + `newFileBehavior` + "`" + ` is set to ` + "`" + `APPEND` + "`" + `. Defaults to ` + "`" + `false` + "`" + `.`,
+							},
 							"glob_pattern": schema.StringAttribute{
 								Computed:    true,
 								Description: `A glob pattern to be used as a path. Either ` + "`" + `globPattern` + "`" + ` or ` + "`" + `paths` + "`" + ` must be specified, but not both.`,

@@ -7793,6 +7793,16 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Optional:    true,
 								Description: `Regular expression matching the names of the files to be processed by this pipeline. A single value for ` + "`" + `paths` + "`" + ` is required when ` + "`" + `fileNameFilter` + "`" + ` is specified. Requires replacement if changed. `,
 							},
+							"files_can_change": schema.BoolAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Bool{
+									boolplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Default:     booldefault.StaticBool(false),
+								Description: `Etleap can check whether files that were already processed have changed. If the file has changed, then Etleap fetches the new file and removes the old file's data in the destination and adds the changed data. <br> This can only be enabled when ` + "`" + `newFileBehavior` + "`" + ` is set to ` + "`" + `APPEND` + "`" + `. Defaults to ` + "`" + `false` + "`" + `. Requires replacement if changed. ; Default: false`,
+							},
 							"glob_pattern": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{

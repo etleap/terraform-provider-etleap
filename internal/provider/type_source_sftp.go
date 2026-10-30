@@ -8,6 +8,7 @@ type SourceSftp struct {
 	ConnectionID     types.String   `tfsdk:"connection_id"`
 	ExcelSheetName   types.String   `tfsdk:"excel_sheet_name"`
 	FileNameFilter   types.String   `tfsdk:"file_name_filter"`
+	FilesCanChange   types.Bool     `tfsdk:"files_can_change"`
 	GlobPattern      types.String   `tfsdk:"glob_pattern"`
 	LatencyThreshold types.Int64    `tfsdk:"latency_threshold"`
 	LowWatermark     types.String   `tfsdk:"low_watermark"`

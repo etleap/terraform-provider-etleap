@@ -1120,6 +1120,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.Sftp.ConnectionID = types.StringValue(resp.Source.SourceSftp.ConnectionID)
 		r.Source.Sftp.ExcelSheetName = types.StringPointerValue(resp.Source.SourceSftp.ExcelSheetName)
 		r.Source.Sftp.FileNameFilter = types.StringPointerValue(resp.Source.SourceSftp.FileNameFilter)
+		r.Source.Sftp.FilesCanChange = types.BoolPointerValue(resp.Source.SourceSftp.FilesCanChange)
 		r.Source.Sftp.GlobPattern = types.StringPointerValue(resp.Source.SourceSftp.GlobPattern)
 		r.Source.Sftp.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSftp.LatencyThreshold)
 		if resp.Source.SourceSftp.LowWatermark != nil {

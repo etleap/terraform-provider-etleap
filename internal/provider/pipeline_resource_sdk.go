@@ -2655,6 +2655,12 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 		} else {
 			globPattern3 = nil
 		}
+		filesCanChange2 := new(bool)
+		if !r.Source.Sftp.FilesCanChange.IsUnknown() && !r.Source.Sftp.FilesCanChange.IsNull() {
+			*filesCanChange2 = r.Source.Sftp.FilesCanChange.ValueBool()
+		} else {
+			filesCanChange2 = nil
+		}
 		sourceSftp = &shared.SourceSftp{
 			Type:             typeVar79,
 			ConnectionID:     connectionId79,
@@ -2665,6 +2671,7 @@ func (r *PipelineResourceModel) ToSharedPipelineInput() *shared.PipelineInput {
 			LowWatermark:     lowWatermark6,
 			Paths:            paths6,
 			GlobPattern:      globPattern3,
+			FilesCanChange:   filesCanChange2,
 		}
 	}
 	if sourceSftp != nil {
@@ -5238,6 +5245,7 @@ func (r *PipelineResourceModel) RefreshFromSharedPipelineOutput(resp *shared.Pip
 		r.Source.Sftp.ConnectionID = types.StringValue(resp.Source.SourceSftp.ConnectionID)
 		r.Source.Sftp.ExcelSheetName = types.StringPointerValue(resp.Source.SourceSftp.ExcelSheetName)
 		r.Source.Sftp.FileNameFilter = types.StringPointerValue(resp.Source.SourceSftp.FileNameFilter)
+		r.Source.Sftp.FilesCanChange = types.BoolPointerValue(resp.Source.SourceSftp.FilesCanChange)
 		r.Source.Sftp.GlobPattern = types.StringPointerValue(resp.Source.SourceSftp.GlobPattern)
 		r.Source.Sftp.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceSftp.LatencyThreshold)
 		if resp.Source.SourceSftp.LowWatermark != nil {
