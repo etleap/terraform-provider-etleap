@@ -14,7 +14,7 @@ ConnectionBRAINTREE DataSource
 
 ```terraform
 data "etleap_connection_braintree" "my_connectionbraintree" {
-  id = "574fcbeb-f589-4458-9a59-48e1c8a39c4c"
+  id = "bebf5894-581a-4594-8e1c-8a39c4c5cef6"
 }
 ```
 

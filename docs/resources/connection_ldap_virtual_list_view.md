@@ -17,11 +17,11 @@ resource "etleap_connection_ldap_virtual_list_view" "my_connectionldap_virtual_l
   base_dn                     = "...my_base_dn..."
   deletion_of_export_products = true
   filter                      = "...my_filter..."
-  hostname                    = "united-cheddar.name"
-  name                        = "Patricia Keeling"
+  hostname                    = "incredible-thunderhead.biz"
+  name                        = "Fannie Sipes"
   password                    = "...my_password..."
-  port                        = 0
-  scope                       = "Subtree"
+  port                        = 3
+  scope                       = "Single-level"
   sort_order                  = "...my_sort_order..."
   type                        = "LDAP_VIRTUAL_LIST_VIEW"
   user                        = "...my_user..."

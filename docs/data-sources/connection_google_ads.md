@@ -14,7 +14,7 @@ ConnectionGOOGLEADS DataSource
 
 ```terraform
 data "etleap_connection_google_ads" "my_connectiongoogle_ads" {
-  id = "7e4d22d9-4d77-473f-847b-a88311bb86e8"
+  id = "9b5fe340-9a36-4cc6-a25c-7a3d4a0e5ce4"
 }
 ```
 

@@ -14,8 +14,8 @@ Model Resource
 
 ```terraform
 resource "etleap_model" "my_model" {
-  deletion_of_export_products = false
-  name                        = "Frederick Franecki"
+  deletion_of_export_products = true
+  name                        = "Darlene Abernathy"
   query_and_triggers = {
     query = "...my_query..."
     triggers = [
@@ -32,9 +32,9 @@ resource "etleap_model" "my_model" {
     redshift = {
       connection_id = "...my_connection_id..."
       distribution_style = {
-        one = "EVEN"
+        one = "ALL"
       }
-      materialized_view     = false
+      materialized_view     = true
       pending_renamed_table = "...my_pending_renamed_table..."
       schema                = "...my_schema..."
       sort_columns = [
@@ -42,7 +42,7 @@ resource "etleap_model" "my_model" {
       ]
       table                       = "...my_table..."
       type                        = "REDSHIFT"
-      wait_for_update_preparation = false
+      wait_for_update_preparation = true
     }
   }
 }

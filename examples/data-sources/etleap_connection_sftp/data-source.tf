@@ -1,3 +1,3 @@
 data "etleap_connection_sftp" "my_connectionsftp" {
-  id = "b7b68e0b-c528-4317-9fbc-a03f666e3fd7"
+  id = "fc28a540-1709-43c6-a21f-d255abc37c47"
 }

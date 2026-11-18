@@ -14,7 +14,7 @@ ConnectionVERIZONMEDIADSP DataSource
 
 ```terraform
 data "etleap_connection_verizon_media_dsp" "my_connectionverizon_media_dsp" {
-  id = "30b7753a-6155-4da3-9bbb-441af5769cf8"
+  id = "70d94f51-8b41-45fd-b7bd-6aeb5f72e117"
 }
 ```
 

@@ -1,3 +1,3 @@
 data "etleap_connection_sap_hana" "my_connectionsap_hana" {
-  id = "1ec7a013-daba-45c2-b752-eec0b9049fac"
+  id = "a8bdd21a-d42f-4415-a2f4-a0314c6b6a61"
 }

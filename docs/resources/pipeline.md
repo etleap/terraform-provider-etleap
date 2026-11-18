@@ -14,13 +14,13 @@ Pipeline Resource
 
 ```terraform
 resource "etleap_pipeline" "my_pipeline" {
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   destination = {
     delta_lake = {
-      automatic_schema_changes   = false
+      automatic_schema_changes   = true
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
-      pre10_dot2_runtime_support = true
+      pre10_dot2_runtime_support = false
       primary_key = [
         "...",
       ]
@@ -32,8 +32,8 @@ resource "etleap_pipeline" "my_pipeline" {
     }
   }
   label  = "...my_label..."
-  name   = "Mrs. Deborah Cartwright"
-  paused = false
+  name   = "Bradley Dietrich"
+  paused = true
   script = {
     legacy_script = {
       legacy_script = "...my_legacy_script..."
@@ -43,7 +43,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 2
+      latency_threshold = 4
       type              = "ACTIVE_CAMPAIGN"
     }
   }
@@ -251,6 +251,7 @@ Optional:
 - `freshdesk` (Attributes) (see [below for nested schema](#nestedatt--source--freshdesk))
 - `freshsales` (Attributes) (see [below for nested schema](#nestedatt--source--freshsales))
 - `ftp` (Attributes) (see [below for nested schema](#nestedatt--source--ftp))
+- `github` (Attributes) (see [below for nested schema](#nestedatt--source--github))
 - `gitlab` (Attributes) (see [below for nested schema](#nestedatt--source--gitlab))
 - `gong` (Attributes) (see [below for nested schema](#nestedatt--source--gong))
 - `google_ads` (Attributes) (see [below for nested schema](#nestedatt--source--google_ads))
@@ -380,10 +381,12 @@ Optional:
 
 Optional:
 
+- `attributes` (List of String) The attributes. Optional for report types when `fields` is not set. Etleap adds the fields the report type requires. Requires replacement if changed.
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
-- `entity` (String) The report type. Requires replacement if changed. ; Not Null
-- `fields` (List of String) The field names. Requires replacement if changed. ; Not Null
+- `entity` (String) The entity name. Example values: [Account Performance Report, Campaign Performance Report, Accounts, Campaigns, Ad Groups, Ads]. Requires replacement if changed. ; Not Null
+- `fields` (List of String) The field names, including at least one performance statistic. Required for report types unless `performanceStatistics` is set. Cannot be combined with `performanceStatistics` or `attributes`. Requires replacement if changed.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `performance_statistics` (List of String) The performance statistics. Required for report types unless `fields` is set. Etleap adds the fields the report type requires. Requires replacement if changed.
 - `type` (String) Not Null; must be one of ["BING_ADS"]
 
 
@@ -660,6 +663,17 @@ Optional:
 - `type` (String) Not Null; must be one of ["FTP"]
 
 
+<a id="nestedatt--source--github"></a>
+### Nested Schema for `source.github`
+
+Optional:
+
+- `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
+- `entity` (String) The GitHub resource. Example: Pull Requests. Requires replacement if changed. ; Not Null
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) Not Null; must be one of ["GITHUB"]
+
+
 <a id="nestedatt--source--gitlab"></a>
 ### Nested Schema for `source.gitlab`
 
@@ -877,6 +891,7 @@ Optional:
 
 - `connection_id` (String) The universally unique identifier for the source. Requires replacement if changed. ; Not Null
 - `entity` (String) The LinkedIn resource. Example values: [ACCOUNTS, ACCOUNT_USERS, AD_ANALYTICS, CAMPAIGNS, CAMPAIGN_GROUPS, CONVERSIONS, INSIGHT_TAG_DOMAINS]. Requires replacement if changed. ; Not Null
+- `facet` (String) The report `facet`. Required for the 'AD_ANALYTICS' entity. Example values: [campaigns, accounts]. Requires replacement if changed.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `metrics` (List of String) Specify the report `metrics` if and only if the entity is 'AD_ANALYTICS'. Example values: [dateRange, pivotValues, clicks]. Requires replacement if changed.
 - `pivots` (List of String) Specify the report `pivots` groups if and only if the entity is 'AD_ANALYTICS'. Example values: [ACCOUNT, CAMPAIGN, COMPANY]. Requires replacement if changed.

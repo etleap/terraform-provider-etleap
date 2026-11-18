@@ -13,6 +13,7 @@ type PagingStrategyUnionType string
 
 const (
 	PagingStrategyUnionTypeCursorURI  PagingStrategyUnionType = "CURSOR_URI"
+	PagingStrategyUnionTypeLinkHeader PagingStrategyUnionType = "LINK_HEADER"
 	PagingStrategyUnionTypeOffset     PagingStrategyUnionType = "OFFSET"
 	PagingStrategyUnionTypePageNumber PagingStrategyUnionType = "PAGE_NUMBER"
 )
@@ -20,6 +21,7 @@ const (
 // PagingStrategy - The paging strategy.
 type PagingStrategy struct {
 	CursorURIPagingStrategy  *CursorURIPagingStrategy
+	LinkHeaderPagingStrategy *LinkHeaderPagingStrategy
 	OffsetPagingStrategy     *OffsetPagingStrategy
 	PageNumberPagingStrategy *PageNumberPagingStrategy
 
@@ -35,6 +37,18 @@ func CreatePagingStrategyCursorURI(cursorURI CursorURIPagingStrategy) PagingStra
 	return PagingStrategy{
 		CursorURIPagingStrategy: &cursorURI,
 		Type:                    typ,
+	}
+}
+
+func CreatePagingStrategyLinkHeader(linkHeader LinkHeaderPagingStrategy) PagingStrategy {
+	typ := PagingStrategyUnionTypeLinkHeader
+
+	typStr := LinkHeaderPagingStrategyType(typ)
+	linkHeader.Type = &typStr
+
+	return PagingStrategy{
+		LinkHeaderPagingStrategy: &linkHeader,
+		Type:                     typ,
 	}
 }
 
@@ -83,6 +97,15 @@ func (u *PagingStrategy) UnmarshalJSON(data []byte) error {
 		u.CursorURIPagingStrategy = cursorURIPagingStrategy
 		u.Type = PagingStrategyUnionTypeCursorURI
 		return nil
+	case "LINK_HEADER":
+		linkHeaderPagingStrategy := new(LinkHeaderPagingStrategy)
+		if err := utils.UnmarshalJSON(data, &linkHeaderPagingStrategy, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.LinkHeaderPagingStrategy = linkHeaderPagingStrategy
+		u.Type = PagingStrategyUnionTypeLinkHeader
+		return nil
 	case "OFFSET":
 		offsetPagingStrategy := new(OffsetPagingStrategy)
 		if err := utils.UnmarshalJSON(data, &offsetPagingStrategy, "", true, true); err != nil {
@@ -109,6 +132,10 @@ func (u *PagingStrategy) UnmarshalJSON(data []byte) error {
 func (u PagingStrategy) MarshalJSON() ([]byte, error) {
 	if u.CursorURIPagingStrategy != nil {
 		return utils.MarshalJSON(u.CursorURIPagingStrategy, "", true)
+	}
+
+	if u.LinkHeaderPagingStrategy != nil {
+		return utils.MarshalJSON(u.LinkHeaderPagingStrategy, "", true)
 	}
 
 	if u.OffsetPagingStrategy != nil {

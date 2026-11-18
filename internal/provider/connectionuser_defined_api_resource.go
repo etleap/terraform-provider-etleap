@@ -219,6 +219,98 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"client_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+								},
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"client_secret": schema.SingleNestedAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+										},
+										Optional: true,
+										Attributes: map[string]schema.Attribute{
+											"client_secret": schema.StringAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+												},
+												Optional:    true,
+												Description: `The OAuth 2.0 client secret. This property is stored as a secret in Etleap. Not Null`,
+												Validators: []validator.String{
+													speakeasy_stringvalidators.NotNull(),
+												},
+											},
+											"type": schema.StringAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+												},
+												Optional:    true,
+												Default:     stringdefault.StaticString("CLIENT_SECRET"),
+												Description: `must be one of ["CLIENT_SECRET"]; Default: "CLIENT_SECRET"`,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"CLIENT_SECRET",
+													),
+												},
+											},
+										},
+										Description: `Client authentication with a client secret, using the ` + "`" + `client_secret_basic` + "`" + ` method (RFC 6749). Each token request sends the client ID and secret in an HTTP Basic ` + "`" + `Authorization` + "`" + ` header.`,
+									},
+									"private_key_jwt": schema.SingleNestedAttribute{
+										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+										},
+										Optional: true,
+										Attributes: map[string]schema.Attribute{
+											"key_id": schema.StringAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+												},
+												Optional:    true,
+												Description: `The ` + "`" + `kid` + "`" + ` of the private key, needed when the client has several keys registered. Defaults to the ` + "`" + `kid` + "`" + ` of a JWK.`,
+											},
+											"private_key": schema.StringAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+												},
+												Optional:    true,
+												Description: `The RSA private key that signs the client assertion, as a PKCS#8 PEM (` + "`" + `-----BEGIN PRIVATE KEY-----` + "`" + `), a PKCS#1 PEM (` + "`" + `-----BEGIN RSA PRIVATE KEY-----` + "`" + `) or a private JWK. This property is stored as a secret in Etleap. Not Null`,
+												Validators: []validator.String{
+													speakeasy_stringvalidators.NotNull(),
+												},
+											},
+											"type": schema.StringAttribute{
+												Computed: true,
+												PlanModifiers: []planmodifier.String{
+													speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+												},
+												Optional:    true,
+												Default:     stringdefault.StaticString("PRIVATE_KEY_JWT"),
+												Description: `must be one of ["PRIVATE_KEY_JWT"]; Default: "PRIVATE_KEY_JWT"`,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"PRIVATE_KEY_JWT",
+													),
+												},
+											},
+										},
+										Description: `Client authentication with a private key, using the ` + "`" + `private_key_jwt` + "`" + ` method (RFC 7523). Each token request carries a new RS256 assertion signed with the key, with ` + "`" + `iss` + "`" + ` and ` + "`" + `sub` + "`" + ` set to the client ID and ` + "`" + `aud` + "`" + ` set to the token URL.`,
+									},
+								},
+								Description: `Not Null`,
+								Validators: []validator.Object{
+									speakeasy_objectvalidators.NotNull(),
+									validators.ExactlyOneChild(),
+								},
+							},
 							"client_id": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
@@ -230,16 +322,14 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 									speakeasy_stringvalidators.NotNull(),
 								},
 							},
-							"client_secret": schema.StringAttribute{
+							"scopes": schema.ListAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								PlanModifiers: []planmodifier.List{
+									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `The OAuth 2.0 client secret. This property is stored as a secret in Etleap. Not Null`,
-								Validators: []validator.String{
-									speakeasy_stringvalidators.NotNull(),
-								},
+								ElementType: types.StringType,
+								Description: `The scopes sent with every token request, joined with spaces.`,
 							},
 							"token_url": schema.StringAttribute{
 								Computed: true,
@@ -267,7 +357,7 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 								},
 							},
 						},
-						Description: `Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint.`,
+						Description: `Authentication method using the OAuth 2.0 client credentials flow. Exchanges the client credentials for an access token via the token endpoint. The ` + "`" + `clientAuthentication` + "`" + ` property sets how the client authenticates to the token endpoint.`,
 					},
 				},
 				Validators: []validator.Object{
@@ -656,6 +746,50 @@ func (r *ConnectionUSERDEFINEDAPIResource) Schema(ctx context.Context, req resou
 										},
 									},
 									Description: `Paging strategy that uses a cursor to iterate through the results. Requires replacement if changed. `,
+								},
+								"link_header": schema.SingleNestedAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										objectplanmodifier.RequiresReplaceIfConfigured(),
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
+									Optional: true,
+									Attributes: map[string]schema.Attribute{
+										"max_page_size": schema.Int64Attribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.Int64{
+												int64planmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Description: `The maximum page size supported by the API. Must be provided if ` + "`" + `pageSizeFieldName` + "`" + ` was set. Ignored if ` + "`" + `pageSizeFieldName` + "`" + ` is not set. Requires replacement if changed. `,
+										},
+										"page_size_field_name": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												stringplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Description: `The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter. Requires replacement if changed. `,
+										},
+										"type": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												stringplanmodifier.RequiresReplaceIfConfigured(),
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+											Optional:    true,
+											Default:     stringdefault.StaticString("LINK_HEADER"),
+											Description: `Requires replacement if changed. ; must be one of ["LINK_HEADER"]; Default: "LINK_HEADER"`,
+											Validators: []validator.String{
+												stringvalidator.OneOf(
+													"LINK_HEADER",
+												),
+											},
+										},
+									},
+									Description: `Paging strategy that follows the next page URL in the Link response header (RFC 8288, rel="next"). When a page has no records, its next link is requested again after the poll interval to get new records. Every response must include a next link, even a response with no records. A missing next link stops the pipeline. Currently only supported for streaming into Iceberg destinations. The entity must use a GET request, update mode on extracted data, a primary key, and no end time or catch-up window parameters. The page-size parameter, if set, is sent on the first request only. The initial history is what the API returns for the first request. To load from a specific time, add a fixed begin value to the entity's query parameters. Requires replacement if changed. `,
 								},
 								"offset": schema.SingleNestedAttribute{
 									Computed: true,

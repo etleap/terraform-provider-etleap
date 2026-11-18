@@ -2480,6 +2480,16 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"attributes": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									listplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								ElementType: types.StringType,
+								Description: `The attributes. Optional for report types when ` + "`" + `fields` + "`" + ` is not set. Etleap adds the fields the report type requires. Requires replacement if changed. `,
+							},
 							"connection_id": schema.StringAttribute{
 								Computed: true,
 								PlanModifiers: []planmodifier.String{
@@ -2499,7 +2509,7 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 								},
 								Optional:    true,
-								Description: `The report type. Requires replacement if changed. ; Not Null`,
+								Description: `The entity name. Example values: [Account Performance Report, Campaign Performance Report, Accounts, Campaigns, Ad Groups, Ads]. Requires replacement if changed. ; Not Null`,
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 								},
@@ -2512,9 +2522,8 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 								Optional:    true,
 								ElementType: types.StringType,
-								Description: `The field names. Requires replacement if changed. ; Not Null`,
+								Description: `The field names, including at least one performance statistic. Required for report types unless ` + "`" + `performanceStatistics` + "`" + ` is set. Cannot be combined with ` + "`" + `performanceStatistics` + "`" + ` or ` + "`" + `attributes` + "`" + `. Requires replacement if changed. `,
 								Validators: []validator.List{
-									speakeasy_listvalidators.NotNull(),
 									listvalidator.SizeAtLeast(1),
 								},
 							},
@@ -2525,6 +2534,19 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 								Optional:    true,
 								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"performance_statistics": schema.ListAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.List{
+									listplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								ElementType: types.StringType,
+								Description: `The performance statistics. Required for report types unless ` + "`" + `fields` + "`" + ` is set. Etleap adds the fields the report type requires. Requires replacement if changed. `,
+								Validators: []validator.List{
+									listvalidator.SizeAtLeast(1),
+								},
 							},
 							"type": schema.StringAttribute{
 								Computed: true,
@@ -4092,6 +4114,61 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 						},
 					},
+					"github": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The universally unique identifier for the source. Requires replacement if changed. ; Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"entity": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The GitHub resource. Example: Pull Requests. Requires replacement if changed. ; Not Null`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+								},
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.Int64{
+									speakeasy_int64planmodifier.SuppressDiff(speakeasy_int64planmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `Not Null; must be one of ["GITHUB"]`,
+								Validators: []validator.String{
+									speakeasy_stringvalidators.NotNull(),
+									stringvalidator.OneOf(
+										"GITHUB",
+									),
+								},
+							},
+						},
+					},
 					"gitlab": schema.SingleNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.Object{
@@ -5262,6 +5339,15 @@ func (r *PipelineResource) Schema(ctx context.Context, req resource.SchemaReques
 								Validators: []validator.String{
 									speakeasy_stringvalidators.NotNull(),
 								},
+							},
+							"facet": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									stringplanmodifier.RequiresReplaceIfConfigured(),
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+								Optional:    true,
+								Description: `The report ` + "`" + `facet` + "`" + `. Required for the 'AD_ANALYTICS' entity. Example values: [campaigns, accounts]. Requires replacement if changed. `,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed: true,

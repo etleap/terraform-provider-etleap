@@ -1,3 +1,3 @@
 data "etleap_connection_s3_data_lake" "my_connections3_data_lake" {
-  id = "013e0cd3-3c77-4143-94b5-f22c9131e3bf"
+  id = "bc977378-8afe-4d83-9c3f-77a747b09a5d"
 }

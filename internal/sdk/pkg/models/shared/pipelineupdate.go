@@ -1208,6 +1208,13 @@ func (o *PipelineUpdate) GetSourceFtp() *SourceFtpUpdate {
 	return nil
 }
 
+func (o *PipelineUpdate) GetSourceGithub() *SourceGithubUpdate {
+	if v := o.GetSource(); v != nil {
+		return v.SourceGithubUpdate
+	}
+	return nil
+}
+
 func (o *PipelineUpdate) GetSourceGitlab() *SourceGitlabUpdate {
 	if v := o.GetSource(); v != nil {
 		return v.SourceGitlabUpdate

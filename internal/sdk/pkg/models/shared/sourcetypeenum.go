@@ -36,6 +36,7 @@ const (
 	SourceTypeEnumFreshdesk                SourceTypeEnum = "FRESHDESK"
 	SourceTypeEnumFreshsales               SourceTypeEnum = "FRESHSALES"
 	SourceTypeEnumFtp                      SourceTypeEnum = "FTP"
+	SourceTypeEnumGithub                   SourceTypeEnum = "GITHUB"
 	SourceTypeEnumGitlab                   SourceTypeEnum = "GITLAB"
 	SourceTypeEnumGong                     SourceTypeEnum = "GONG"
 	SourceTypeEnumGoogleAds                SourceTypeEnum = "GOOGLE_ADS"
@@ -179,6 +180,8 @@ func (e *SourceTypeEnum) UnmarshalJSON(data []byte) error {
 	case "FRESHSALES":
 		fallthrough
 	case "FTP":
+		fallthrough
+	case "GITHUB":
 		fallthrough
 	case "GITLAB":
 		fallthrough

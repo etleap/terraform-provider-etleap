@@ -1,14 +1,14 @@
 resource "etleap_connection_redshift" "my_connectionredshift" {
-  address                       = "8577 Dallin Center"
+  address                       = "06310 Bartell Key"
   database                      = "...my_database..."
-  deletion_of_export_products   = true
-  dynamic_varchar_width_enabled = false
-  name                          = "Ms. Nancy McDermott"
+  deletion_of_export_products   = false
+  dynamic_varchar_width_enabled = true
+  name                          = "Joseph Fisher"
   password                      = "...my_password..."
-  port                          = 9
-  query_tags_enabled            = false
+  port                          = 4
+  query_tags_enabled            = true
   schema                        = "...my_schema..."
-  source_only                   = false
+  source_only                   = true
   type                          = "REDSHIFT"
-  username                      = "Dayana.Fadel"
+  username                      = "Virginia_Kris"
 }

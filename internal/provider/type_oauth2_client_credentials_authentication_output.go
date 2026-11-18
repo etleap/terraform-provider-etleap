@@ -5,7 +5,9 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type Oauth2ClientCredentialsAuthenticationOutput struct {
-	ClientID types.String `tfsdk:"client_id"`
-	TokenURL types.String `tfsdk:"token_url"`
-	Type     types.String `tfsdk:"type"`
+	ClientAuthentication Oauth2ClientAuthenticationOutput `tfsdk:"client_authentication"`
+	ClientID             types.String                     `tfsdk:"client_id"`
+	Scopes               []types.String                   `tfsdk:"scopes"`
+	TokenURL             types.String                     `tfsdk:"token_url"`
+	Type                 types.String                     `tfsdk:"type"`
 }

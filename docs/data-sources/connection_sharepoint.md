@@ -14,7 +14,7 @@ ConnectionSHAREPOINT DataSource
 
 ```terraform
 data "etleap_connection_sharepoint" "my_connectionsharepoint" {
-  id = "ba260fc2-8a54-4017-893c-6a21fd255abc"
+  id = "de46d082-7798-4532-915e-fe7840722781"
 }
 ```
 

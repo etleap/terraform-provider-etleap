@@ -97,9 +97,43 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 					"oauth": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
+							"client_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"client_secret": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"type": schema.StringAttribute{
+												Computed:    true,
+												Description: `must be one of ["CLIENT_SECRET"]`,
+											},
+										},
+										Description: `Client authentication with a client secret, using the ` + "`" + `client_secret_basic` + "`" + ` method (RFC 6749). Each token request sends the client ID and secret in an HTTP Basic ` + "`" + `Authorization` + "`" + ` header.`,
+									},
+									"private_key_jwt": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"key_id": schema.StringAttribute{
+												Computed:    true,
+												Description: `The ` + "`" + `kid` + "`" + ` of the private key, needed when the client has several keys registered. Defaults to the ` + "`" + `kid` + "`" + ` of a JWK.`,
+											},
+											"type": schema.StringAttribute{
+												Computed:    true,
+												Description: `must be one of ["PRIVATE_KEY_JWT"]`,
+											},
+										},
+										Description: `Client authentication with a private key, using the ` + "`" + `private_key_jwt` + "`" + ` method (RFC 7523). Each token request carries a new RS256 assertion signed with the key, with ` + "`" + `iss` + "`" + ` and ` + "`" + `sub` + "`" + ` set to the client ID and ` + "`" + `aud` + "`" + ` set to the token URL.`,
+									},
+								},
+							},
 							"client_id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The OAuth 2.0 client identifier.`,
+							},
+							"scopes": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `The scopes sent with every token request, joined with spaces.`,
 							},
 							"token_url": schema.StringAttribute{
 								Computed:    true,
@@ -110,7 +144,7 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 								Description: `must be one of ["OAUTH"]`,
 							},
 						},
-						Description: `Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint.`,
+						Description: `Authentication method using the OAuth 2.0 client credentials flow. Exchanges the client credentials for an access token via the token endpoint. The ` + "`" + `clientAuthentication` + "`" + ` property sets how the client authenticates to the token endpoint.`,
 					},
 				},
 			},
@@ -278,6 +312,24 @@ func (r *ConnectionUSERDEFINEDAPIDataSource) Schema(ctx context.Context, req dat
 										},
 									},
 									Description: `Paging strategy that uses a cursor to iterate through the results`,
+								},
+								"link_header": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"max_page_size": schema.Int64Attribute{
+											Computed:    true,
+											Description: `The maximum page size supported by the API. Must be provided if ` + "`" + `pageSizeFieldName` + "`" + ` was set. Ignored if ` + "`" + `pageSizeFieldName` + "`" + ` is not set.`,
+										},
+										"page_size_field_name": schema.StringAttribute{
+											Computed:    true,
+											Description: `The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.`,
+										},
+										"type": schema.StringAttribute{
+											Computed:    true,
+											Description: `must be one of ["LINK_HEADER"]`,
+										},
+									},
+									Description: `Paging strategy that follows the next page URL in the Link response header (RFC 8288, rel="next"). When a page has no records, its next link is requested again after the poll interval to get new records. Every response must include a next link, even a response with no records. A missing next link stops the pipeline. Currently only supported for streaming into Iceberg destinations. The entity must use a GET request, update mode on extracted data, a primary key, and no end time or catch-up window parameters. The page-size parameter, if set, is sent on the first request only. The initial history is what the API returns for the first request. To load from a specific time, add a fixed begin value to the entity's query parameters.`,
 								},
 								"offset": schema.SingleNestedAttribute{
 									Computed: true,

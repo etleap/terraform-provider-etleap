@@ -335,6 +335,10 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 	}
 	if resp.Source.SourceBingAds != nil {
 		r.Source.BingAds = &SourceBingAds{}
+		r.Source.BingAds.Attributes = nil
+		for _, v := range resp.Source.SourceBingAds.Attributes {
+			r.Source.BingAds.Attributes = append(r.Source.BingAds.Attributes, types.StringValue(v))
+		}
 		r.Source.BingAds.ConnectionID = types.StringValue(resp.Source.SourceBingAds.ConnectionID)
 		r.Source.BingAds.Entity = types.StringValue(resp.Source.SourceBingAds.Entity)
 		r.Source.BingAds.Fields = nil
@@ -342,6 +346,10 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 			r.Source.BingAds.Fields = append(r.Source.BingAds.Fields, types.StringValue(v))
 		}
 		r.Source.BingAds.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceBingAds.LatencyThreshold)
+		r.Source.BingAds.PerformanceStatistics = nil
+		for _, v := range resp.Source.SourceBingAds.PerformanceStatistics {
+			r.Source.BingAds.PerformanceStatistics = append(r.Source.BingAds.PerformanceStatistics, types.StringValue(v))
+		}
 		r.Source.BingAds.Type = types.StringValue(string(resp.Source.SourceBingAds.Type))
 	}
 	if resp.Source.SourceBlackline != nil {
@@ -579,6 +587,13 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		}
 		r.Source.Ftp.Type = types.StringValue(string(resp.Source.SourceFtp.Type))
 	}
+	if resp.Source.SourceGithub != nil {
+		r.Source.Github = &SourceGithub{}
+		r.Source.Github.ConnectionID = types.StringValue(resp.Source.SourceGithub.ConnectionID)
+		r.Source.Github.Entity = types.StringValue(resp.Source.SourceGithub.Entity)
+		r.Source.Github.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceGithub.LatencyThreshold)
+		r.Source.Github.Type = types.StringValue(string(resp.Source.SourceGithub.Type))
+	}
 	if resp.Source.SourceGitlab != nil {
 		r.Source.Gitlab = &SourceGitlab{}
 		r.Source.Gitlab.ConnectionID = types.StringValue(resp.Source.SourceGitlab.ConnectionID)
@@ -749,6 +764,7 @@ func (r *PipelineDataSourceModel) RefreshFromSharedPipelineOutput(resp *shared.P
 		r.Source.LinkedInAds = &SourceLinkedInAds{}
 		r.Source.LinkedInAds.ConnectionID = types.StringValue(resp.Source.SourceLinkedInAds.ConnectionID)
 		r.Source.LinkedInAds.Entity = types.StringValue(resp.Source.SourceLinkedInAds.Entity)
+		r.Source.LinkedInAds.Facet = types.StringPointerValue(resp.Source.SourceLinkedInAds.Facet)
 		r.Source.LinkedInAds.LatencyThreshold = types.Int64PointerValue(resp.Source.SourceLinkedInAds.LatencyThreshold)
 		r.Source.LinkedInAds.Metrics = nil
 		for _, v := range resp.Source.SourceLinkedInAds.Metrics {

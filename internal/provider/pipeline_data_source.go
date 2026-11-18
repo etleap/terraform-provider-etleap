@@ -721,22 +721,32 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 					"bing_ads": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
+							"attributes": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `The attributes. Optional for report types when ` + "`" + `fields` + "`" + ` is not set. Etleap adds the fields the report type requires.`,
+							},
 							"connection_id": schema.StringAttribute{
 								Computed:    true,
 								Description: `The universally unique identifier for the source.`,
 							},
 							"entity": schema.StringAttribute{
 								Computed:    true,
-								Description: `The report type.`,
+								Description: `The entity name. Example values: [Account Performance Report, Campaign Performance Report, Accounts, Campaigns, Ad Groups, Ads]`,
 							},
 							"fields": schema.ListAttribute{
 								Computed:    true,
 								ElementType: types.StringType,
-								Description: `The field names.`,
+								Description: `The field names, including at least one performance statistic. Required for report types unless ` + "`" + `performanceStatistics` + "`" + ` is set. Cannot be combined with ` + "`" + `performanceStatistics` + "`" + ` or ` + "`" + `attributes` + "`" + `.`,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,
 								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"performance_statistics": schema.ListAttribute{
+								Computed:    true,
+								ElementType: types.StringType,
+								Description: `The performance statistics. Required for report types unless ` + "`" + `fields` + "`" + ` is set. Etleap adds the fields the report type requires.`,
 							},
 							"type": schema.StringAttribute{
 								Computed:    true,
@@ -1344,6 +1354,27 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							},
 						},
 					},
+					"github": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"connection_id": schema.StringAttribute{
+								Computed:    true,
+								Description: `The universally unique identifier for the source.`,
+							},
+							"entity": schema.StringAttribute{
+								Computed:    true,
+								Description: `The GitHub resource. Example: Pull Requests`,
+							},
+							"latency_threshold": schema.Int64Attribute{
+								Computed:    true,
+								Description: `Notify if we can't extract for ` + "`" + `x` + "`" + ` hours. Setting it to ` + "`" + `null` + "`" + ` disables the notification. Defaults to ` + "`" + `null` + "`" + `.`,
+							},
+							"type": schema.StringAttribute{
+								Computed:    true,
+								Description: `must be one of ["GITHUB"]`,
+							},
+						},
+					},
 					"gitlab": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
@@ -1786,6 +1817,10 @@ func (r *PipelineDataSource) Schema(ctx context.Context, req datasource.SchemaRe
 							"entity": schema.StringAttribute{
 								Computed:    true,
 								Description: `The LinkedIn resource. Example values: [ACCOUNTS, ACCOUNT_USERS, AD_ANALYTICS, CAMPAIGNS, CAMPAIGN_GROUPS, CONVERSIONS, INSIGHT_TAG_DOMAINS]`,
+							},
+							"facet": schema.StringAttribute{
+								Computed:    true,
+								Description: `The report ` + "`" + `facet` + "`" + `. Required for the 'AD_ANALYTICS' entity. Example values: [campaigns, accounts]`,
 							},
 							"latency_threshold": schema.Int64Attribute{
 								Computed:    true,

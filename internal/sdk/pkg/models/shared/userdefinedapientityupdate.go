@@ -157,6 +157,71 @@ func (o *PagingStrategyOffsetPagingStrategy) GetOffsetFieldName() string {
 	return o.OffsetFieldName
 }
 
+type LinkHeaderPagingStrategyPagingStrategyType string
+
+const (
+	LinkHeaderPagingStrategyPagingStrategyTypeLinkHeader LinkHeaderPagingStrategyPagingStrategyType = "LINK_HEADER"
+)
+
+func (e LinkHeaderPagingStrategyPagingStrategyType) ToPointer() *LinkHeaderPagingStrategyPagingStrategyType {
+	return &e
+}
+
+func (e *LinkHeaderPagingStrategyPagingStrategyType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "LINK_HEADER":
+		*e = LinkHeaderPagingStrategyPagingStrategyType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for LinkHeaderPagingStrategyPagingStrategyType: %v", v)
+	}
+}
+
+// PagingStrategyLinkHeaderPagingStrategy - Paging strategy that follows the next page URL in the Link response header (RFC 8288, rel="next"). When a page has no records, its next link is requested again after the poll interval to get new records. Every response must include a next link, even a response with no records. A missing next link stops the pipeline. Currently only supported for streaming into Iceberg destinations. The entity must use a GET request, update mode on extracted data, a primary key, and no end time or catch-up window parameters. The page-size parameter, if set, is sent on the first request only. The initial history is what the API returns for the first request. To load from a specific time, add a fixed begin value to the entity's query parameters.
+type PagingStrategyLinkHeaderPagingStrategy struct {
+	// The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter.
+	PageSizeFieldName *string `json:"pageSizeFieldName,omitempty"`
+	// The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set.
+	MaxPageSize *int64                                      `json:"maxPageSize,omitempty"`
+	Type        *LinkHeaderPagingStrategyPagingStrategyType `default:"LINK_HEADER" json:"type"`
+}
+
+func (p PagingStrategyLinkHeaderPagingStrategy) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *PagingStrategyLinkHeaderPagingStrategy) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *PagingStrategyLinkHeaderPagingStrategy) GetPageSizeFieldName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageSizeFieldName
+}
+
+func (o *PagingStrategyLinkHeaderPagingStrategy) GetMaxPageSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxPageSize
+}
+
+func (o *PagingStrategyLinkHeaderPagingStrategy) GetType() *LinkHeaderPagingStrategyPagingStrategyType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
 type PagingStrategyType string
 
 const (
@@ -244,15 +309,17 @@ type UserDefinedAPIEntityUpdatePagingStrategyType string
 
 const (
 	UserDefinedAPIEntityUpdatePagingStrategyTypeCursorURI  UserDefinedAPIEntityUpdatePagingStrategyType = "CURSOR_URI"
+	UserDefinedAPIEntityUpdatePagingStrategyTypeLinkHeader UserDefinedAPIEntityUpdatePagingStrategyType = "LINK_HEADER"
 	UserDefinedAPIEntityUpdatePagingStrategyTypeOffset     UserDefinedAPIEntityUpdatePagingStrategyType = "OFFSET"
 	UserDefinedAPIEntityUpdatePagingStrategyTypePageNumber UserDefinedAPIEntityUpdatePagingStrategyType = "PAGE_NUMBER"
 )
 
 // UserDefinedAPIEntityUpdatePagingStrategy - The paging strategy.
 type UserDefinedAPIEntityUpdatePagingStrategy struct {
-	PagingStrategyCursorURIPagingStrategy *PagingStrategyCursorURIPagingStrategy
-	PagingStrategyOffsetPagingStrategy    *PagingStrategyOffsetPagingStrategy
-	PagePagingStrategy                    *PagePagingStrategy
+	PagingStrategyCursorURIPagingStrategy  *PagingStrategyCursorURIPagingStrategy
+	PagingStrategyLinkHeaderPagingStrategy *PagingStrategyLinkHeaderPagingStrategy
+	PagingStrategyOffsetPagingStrategy     *PagingStrategyOffsetPagingStrategy
+	PagePagingStrategy                     *PagePagingStrategy
 
 	Type UserDefinedAPIEntityUpdatePagingStrategyType
 }
@@ -266,6 +333,18 @@ func CreateUserDefinedAPIEntityUpdatePagingStrategyCursorURI(cursorURI PagingStr
 	return UserDefinedAPIEntityUpdatePagingStrategy{
 		PagingStrategyCursorURIPagingStrategy: &cursorURI,
 		Type:                                  typ,
+	}
+}
+
+func CreateUserDefinedAPIEntityUpdatePagingStrategyLinkHeader(linkHeader PagingStrategyLinkHeaderPagingStrategy) UserDefinedAPIEntityUpdatePagingStrategy {
+	typ := UserDefinedAPIEntityUpdatePagingStrategyTypeLinkHeader
+
+	typStr := LinkHeaderPagingStrategyPagingStrategyType(typ)
+	linkHeader.Type = &typStr
+
+	return UserDefinedAPIEntityUpdatePagingStrategy{
+		PagingStrategyLinkHeaderPagingStrategy: &linkHeader,
+		Type:                                   typ,
 	}
 }
 
@@ -314,6 +393,15 @@ func (u *UserDefinedAPIEntityUpdatePagingStrategy) UnmarshalJSON(data []byte) er
 		u.PagingStrategyCursorURIPagingStrategy = pagingStrategyCursorURIPagingStrategy
 		u.Type = UserDefinedAPIEntityUpdatePagingStrategyTypeCursorURI
 		return nil
+	case "LINK_HEADER":
+		pagingStrategyLinkHeaderPagingStrategy := new(PagingStrategyLinkHeaderPagingStrategy)
+		if err := utils.UnmarshalJSON(data, &pagingStrategyLinkHeaderPagingStrategy, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.PagingStrategyLinkHeaderPagingStrategy = pagingStrategyLinkHeaderPagingStrategy
+		u.Type = UserDefinedAPIEntityUpdatePagingStrategyTypeLinkHeader
+		return nil
 	case "OFFSET":
 		pagingStrategyOffsetPagingStrategy := new(PagingStrategyOffsetPagingStrategy)
 		if err := utils.UnmarshalJSON(data, &pagingStrategyOffsetPagingStrategy, "", true, true); err != nil {
@@ -340,6 +428,10 @@ func (u *UserDefinedAPIEntityUpdatePagingStrategy) UnmarshalJSON(data []byte) er
 func (u UserDefinedAPIEntityUpdatePagingStrategy) MarshalJSON() ([]byte, error) {
 	if u.PagingStrategyCursorURIPagingStrategy != nil {
 		return utils.MarshalJSON(u.PagingStrategyCursorURIPagingStrategy, "", true)
+	}
+
+	if u.PagingStrategyLinkHeaderPagingStrategy != nil {
+		return utils.MarshalJSON(u.PagingStrategyLinkHeaderPagingStrategy, "", true)
 	}
 
 	if u.PagingStrategyOffsetPagingStrategy != nil {
@@ -383,6 +475,13 @@ func (o *UserDefinedAPIEntityUpdate) GetPagingStrategy() *UserDefinedAPIEntityUp
 func (o *UserDefinedAPIEntityUpdate) GetPagingStrategyCursorURI() *PagingStrategyCursorURIPagingStrategy {
 	if v := o.GetPagingStrategy(); v != nil {
 		return v.PagingStrategyCursorURIPagingStrategy
+	}
+	return nil
+}
+
+func (o *UserDefinedAPIEntityUpdate) GetPagingStrategyLinkHeader() *PagingStrategyLinkHeaderPagingStrategy {
+	if v := o.GetPagingStrategy(); v != nil {
+		return v.PagingStrategyLinkHeaderPagingStrategy
 	}
 	return nil
 }

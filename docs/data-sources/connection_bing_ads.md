@@ -14,7 +14,7 @@ ConnectionBINGADS DataSource
 
 ```terraform
 data "etleap_connection_bing_ads" "my_connectionbing_ads" {
-  id = "b9509980-b3b3-46ed-a74e-ccd4d3dc96cf"
+  id = "980b3b36-ede7-44ec-8d4d-3dc96cf985c8"
 }
 ```
 

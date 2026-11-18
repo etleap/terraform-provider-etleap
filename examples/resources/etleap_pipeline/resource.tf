@@ -1,11 +1,11 @@
 resource "etleap_pipeline" "my_pipeline" {
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   destination = {
     delta_lake = {
-      automatic_schema_changes   = false
+      automatic_schema_changes   = true
       connection_id              = "...my_connection_id..."
       last_updated_column        = "...my_last_updated_column..."
-      pre10_dot2_runtime_support = true
+      pre10_dot2_runtime_support = false
       primary_key = [
         "...",
       ]
@@ -17,8 +17,8 @@ resource "etleap_pipeline" "my_pipeline" {
     }
   }
   label  = "...my_label..."
-  name   = "Mrs. Deborah Cartwright"
-  paused = false
+  name   = "Bradley Dietrich"
+  paused = true
   script = {
     legacy_script = {
       legacy_script = "...my_legacy_script..."
@@ -28,7 +28,7 @@ resource "etleap_pipeline" "my_pipeline" {
     active_campaign = {
       connection_id     = "...my_connection_id..."
       entity            = "Contact"
-      latency_threshold = 2
+      latency_threshold = 4
       type              = "ACTIVE_CAMPAIGN"
     }
   }

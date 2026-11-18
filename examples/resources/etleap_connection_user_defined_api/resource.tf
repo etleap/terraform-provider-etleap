@@ -3,7 +3,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
     basic = {
       password = "...my_password..."
       type     = "BASIC"
-      username = "Halle89"
+      username = "Enid90"
     }
   }
   deletion_of_export_products = false
@@ -20,7 +20,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      id = "f570e314-0589-4e44-b81c-e6ef6435f4c6"
+      id = "140589e4-4781-4ce6-af64-35f4c67e8951"
       paging_strategy = {
         cursor_uri = {
           max_page_size        = 5
@@ -45,6 +45,6 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
       }
     },
   ]
-  name = "Daryl McLaughlin IV"
+  name = "Lora Greenholt Jr."
   type = "USER_DEFINED_API"
 }

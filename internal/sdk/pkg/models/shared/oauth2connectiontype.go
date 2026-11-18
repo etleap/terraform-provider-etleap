@@ -12,6 +12,7 @@ type Oauth2ConnectionType string
 const (
 	Oauth2ConnectionTypeBingAds         Oauth2ConnectionType = "BING_ADS"
 	Oauth2ConnectionTypeFacebookAds     Oauth2ConnectionType = "FACEBOOK_ADS"
+	Oauth2ConnectionTypeGithub          Oauth2ConnectionType = "GITHUB"
 	Oauth2ConnectionTypeGong            Oauth2ConnectionType = "GONG"
 	Oauth2ConnectionTypeGoogleAds       Oauth2ConnectionType = "GOOGLE_ADS"
 	Oauth2ConnectionTypeGoogleSheets    Oauth2ConnectionType = "GOOGLE_SHEETS"
@@ -46,6 +47,8 @@ func (e *Oauth2ConnectionType) UnmarshalJSON(data []byte) error {
 	case "BING_ADS":
 		fallthrough
 	case "FACEBOOK_ADS":
+		fallthrough
+	case "GITHUB":
 		fallthrough
 	case "GONG":
 		fallthrough

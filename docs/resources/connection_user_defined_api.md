@@ -18,7 +18,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
     basic = {
       password = "...my_password..."
       type     = "BASIC"
-      username = "Halle89"
+      username = "Enid90"
     }
   }
   deletion_of_export_products = false
@@ -35,7 +35,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
           value = "...my_value..."
         },
       ]
-      id = "f570e314-0589-4e44-b81c-e6ef6435f4c6"
+      id = "140589e4-4781-4ce6-af64-35f4c67e8951"
       paging_strategy = {
         cursor_uri = {
           max_page_size        = 5
@@ -60,7 +60,7 @@ resource "etleap_connection_user_defined_api" "my_connectionuser_defined_api" {
       }
     },
   ]
-  name = "Daryl McLaughlin IV"
+  name = "Lora Greenholt Jr."
   type = "USER_DEFINED_API"
 }
 ```
@@ -96,7 +96,7 @@ Optional:
 - `basic` (Attributes) Authentication method that uses a username/password pair. (see [below for nested schema](#nestedatt--authentication--basic))
 - `bearer` (Attributes) Authentication method that uses a Bearer token. (see [below for nested schema](#nestedatt--authentication--bearer))
 - `header` (Attributes) Authentication method that uses a header. (see [below for nested schema](#nestedatt--authentication--header))
-- `oauth` (Attributes) Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint. (see [below for nested schema](#nestedatt--authentication--oauth))
+- `oauth` (Attributes) Authentication method using the OAuth 2.0 client credentials flow. Exchanges the client credentials for an access token via the token endpoint. The `clientAuthentication` property sets how the client authenticates to the token endpoint. (see [below for nested schema](#nestedatt--authentication--oauth))
 
 <a id="nestedatt--authentication--basic"></a>
 ### Nested Schema for `authentication.basic`
@@ -132,10 +132,39 @@ Optional:
 
 Optional:
 
+- `client_authentication` (Attributes) Not Null (see [below for nested schema](#nestedatt--authentication--oauth--client_authentication))
 - `client_id` (String) The OAuth 2.0 client identifier. Not Null
-- `client_secret` (String) The OAuth 2.0 client secret. This property is stored as a secret in Etleap. Not Null
+- `scopes` (List of String) The scopes sent with every token request, joined with spaces.
 - `token_url` (String) The OAuth 2.0 token endpoint URL where Etleap will exchange client credentials for an access token. Not Null
 - `type` (String) must be one of ["OAUTH"]; Default: "OAUTH"
+
+<a id="nestedatt--authentication--oauth--client_authentication"></a>
+### Nested Schema for `authentication.oauth.client_authentication`
+
+Optional:
+
+- `client_secret` (Attributes) Client authentication with a client secret, using the `client_secret_basic` method (RFC 6749). Each token request sends the client ID and secret in an HTTP Basic `Authorization` header. (see [below for nested schema](#nestedatt--authentication--oauth--client_authentication--client_secret))
+- `private_key_jwt` (Attributes) Client authentication with a private key, using the `private_key_jwt` method (RFC 7523). Each token request carries a new RS256 assertion signed with the key, with `iss` and `sub` set to the client ID and `aud` set to the token URL. (see [below for nested schema](#nestedatt--authentication--oauth--client_authentication--private_key_jwt))
+
+<a id="nestedatt--authentication--oauth--client_authentication--client_secret"></a>
+### Nested Schema for `authentication.oauth.client_authentication.private_key_jwt`
+
+Optional:
+
+- `client_secret` (String) The OAuth 2.0 client secret. This property is stored as a secret in Etleap. Not Null
+- `type` (String) must be one of ["CLIENT_SECRET"]; Default: "CLIENT_SECRET"
+
+
+<a id="nestedatt--authentication--oauth--client_authentication--private_key_jwt"></a>
+### Nested Schema for `authentication.oauth.client_authentication.private_key_jwt`
+
+Optional:
+
+- `key_id` (String) The `kid` of the private key, needed when the client has several keys registered. Defaults to the `kid` of a JWK.
+- `private_key` (String) The RSA private key that signs the client assertion, as a PKCS#8 PEM (`-----BEGIN PRIVATE KEY-----`), a PKCS#1 PEM (`-----BEGIN RSA PRIVATE KEY-----`) or a private JWK. This property is stored as a secret in Etleap. Not Null
+- `type` (String) must be one of ["PRIVATE_KEY_JWT"]; Default: "PRIVATE_KEY_JWT"
+
+
 
 
 
@@ -173,6 +202,7 @@ Optional:
 Optional:
 
 - `cursor_uri` (Attributes) Paging strategy that uses a cursor to iterate through the results. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--paging_strategy--cursor_uri))
+- `link_header` (Attributes) Paging strategy that follows the next page URL in the Link response header (RFC 8288, rel="next"). When a page has no records, its next link is requested again after the poll interval to get new records. Every response must include a next link, even a response with no records. A missing next link stops the pipeline. Currently only supported for streaming into Iceberg destinations. The entity must use a GET request, update mode on extracted data, a primary key, and no end time or catch-up window parameters. The page-size parameter, if set, is sent on the first request only. The initial history is what the API returns for the first request. To load from a specific time, add a fixed begin value to the entity's query parameters. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--paging_strategy--link_header))
 - `offset` (Attributes) Paging strategy that is based on a result set offset. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--paging_strategy--offset))
 - `page_number` (Attributes) Paging strategy that uses page numbers to iterate through results. Requires replacement if changed. (see [below for nested schema](#nestedatt--entities--paging_strategy--page_number))
 
@@ -186,6 +216,16 @@ Optional:
 - `path_to_cursor` (String) The path to the paging cursor inside the response body. Requires replacement if changed. ; Not Null
 - `type` (String) Requires replacement if changed. ; must be one of ["CURSOR_URI"]; Default: "CURSOR_URI"
 - `url_prefix` (String) String prepended to the paging cursor string to turn it into a URL, e.g. because the cursor only contains the URL path. Requires replacement if changed.
+
+
+<a id="nestedatt--entities--paging_strategy--link_header"></a>
+### Nested Schema for `entities.paging_strategy.link_header`
+
+Optional:
+
+- `max_page_size` (Number) The maximum page size supported by the API. Must be provided if `pageSizeFieldName` was set. Ignored if `pageSizeFieldName` is not set. Requires replacement if changed.
+- `page_size_field_name` (String) The name of the request parameter used to specify the page size. Leave empty if the API does not offer a page size parameter. Requires replacement if changed.
+- `type` (String) Requires replacement if changed. ; must be one of ["LINK_HEADER"]; Default: "LINK_HEADER"
 
 
 <a id="nestedatt--entities--paging_strategy--offset"></a>

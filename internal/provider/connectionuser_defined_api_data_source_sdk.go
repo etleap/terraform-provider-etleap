@@ -39,7 +39,28 @@ func (r *ConnectionUSERDEFINEDAPIDataSourceModel) RefreshFromSharedConnectionUse
 	}
 	if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput != nil {
 		r.Authentication.Oauth = &Oauth2ClientCredentialsAuthenticationOutput{}
+		if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2ClientSecretOutput != nil {
+			r.Authentication.Oauth.ClientAuthentication.ClientSecret = &Oauth2ClientSecretOutput{}
+			if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2ClientSecretOutput.Type != nil {
+				r.Authentication.Oauth.ClientAuthentication.ClientSecret.Type = types.StringValue(string(*resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2ClientSecretOutput.Type))
+			} else {
+				r.Authentication.Oauth.ClientAuthentication.ClientSecret.Type = types.StringNull()
+			}
+		}
+		if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2PrivateKeyJwtOutput != nil {
+			r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt = &Oauth2PrivateKeyJwtOutput{}
+			r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.KeyID = types.StringPointerValue(resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2PrivateKeyJwtOutput.KeyID)
+			if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2PrivateKeyJwtOutput.Type != nil {
+				r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.Type = types.StringValue(string(*resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2PrivateKeyJwtOutput.Type))
+			} else {
+				r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.Type = types.StringNull()
+			}
+		}
 		r.Authentication.Oauth.ClientID = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientID)
+		r.Authentication.Oauth.Scopes = nil
+		for _, v := range resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.Scopes {
+			r.Authentication.Oauth.Scopes = append(r.Authentication.Oauth.Scopes, types.StringValue(v))
+		}
 		r.Authentication.Oauth.TokenURL = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.TokenURL)
 		if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.Type != nil {
 			r.Authentication.Oauth.Type = types.StringValue(string(*resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.Type))
@@ -142,6 +163,16 @@ func (r *ConnectionUSERDEFINEDAPIDataSourceModel) RefreshFromSharedConnectionUse
 					entities1.PagingStrategy.CursorURI.Type = types.StringNull()
 				}
 				entities1.PagingStrategy.CursorURI.URLPrefix = types.StringPointerValue(entitiesItem.PagingStrategy.CursorURIPagingStrategy.URLPrefix)
+			}
+			if entitiesItem.PagingStrategy.LinkHeaderPagingStrategy != nil {
+				entities1.PagingStrategy.LinkHeader = &LinkHeaderPagingStrategy{}
+				entities1.PagingStrategy.LinkHeader.MaxPageSize = types.Int64PointerValue(entitiesItem.PagingStrategy.LinkHeaderPagingStrategy.MaxPageSize)
+				entities1.PagingStrategy.LinkHeader.PageSizeFieldName = types.StringPointerValue(entitiesItem.PagingStrategy.LinkHeaderPagingStrategy.PageSizeFieldName)
+				if entitiesItem.PagingStrategy.LinkHeaderPagingStrategy.Type != nil {
+					entities1.PagingStrategy.LinkHeader.Type = types.StringValue(string(*entitiesItem.PagingStrategy.LinkHeaderPagingStrategy.Type))
+				} else {
+					entities1.PagingStrategy.LinkHeader.Type = types.StringNull()
+				}
 			}
 			if entitiesItem.PagingStrategy.OffsetPagingStrategy != nil {
 				entities1.PagingStrategy.Offset = &OffsetPagingStrategy{}

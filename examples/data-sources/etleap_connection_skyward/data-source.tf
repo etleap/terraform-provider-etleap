@@ -1,3 +1,3 @@
 data "etleap_connection_skyward" "my_connectionskyward" {
-  id = "227818ef-aa31-4bc1-8436-b9a43f3b2914"
+  id = "624c5ce2-21b6-4953-a511-b1f060b1a7d9"
 }

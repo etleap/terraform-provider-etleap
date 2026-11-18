@@ -15,8 +15,8 @@ ConnectionGONG Resource
 ```terraform
 resource "etleap_connection_gong" "my_connectiongong" {
   code                        = "...my_code..."
-  deletion_of_export_products = false
-  name                        = "Wilfred Stiedemann"
+  deletion_of_export_products = true
+  name                        = "Miss Tricia Borer"
   type                        = "GONG"
 }
 ```

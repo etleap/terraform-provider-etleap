@@ -14,7 +14,7 @@ ConnectionQUORAADS DataSource
 
 ```terraform
 data "etleap_connection_quora_ads" "my_connectionquora_ads" {
-  id = "d28eaba3-8381-4989-bd48-72841337b16d"
+  id = "fac97692-965c-4a06-bf78-202f5539e424"
 }
 ```
 

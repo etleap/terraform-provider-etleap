@@ -4,6 +4,7 @@ package provider
 
 type PagingStrategy struct {
 	CursorURI  *CursorURIPagingStrategy  `tfsdk:"cursor_uri"`
+	LinkHeader *LinkHeaderPagingStrategy `tfsdk:"link_header"`
 	Offset     *OffsetPagingStrategy     `tfsdk:"offset"`
 	PageNumber *PageNumberPagingStrategy `tfsdk:"page_number"`
 }

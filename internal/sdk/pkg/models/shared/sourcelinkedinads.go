@@ -39,6 +39,8 @@ type SourceLinkedInAds struct {
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
 	// The LinkedIn resource. Example values: [ACCOUNTS, ACCOUNT_USERS, AD_ANALYTICS, CAMPAIGNS, CAMPAIGN_GROUPS, CONVERSIONS, INSIGHT_TAG_DOMAINS]
 	Entity string `json:"entity"`
+	// The report `facet`. Required for the 'AD_ANALYTICS' entity. Example values: [campaigns, accounts]
+	Facet *string `json:"facet,omitempty"`
 	// Specify the report `metrics` if and only if the entity is 'AD_ANALYTICS'. Example values: [dateRange, pivotValues, clicks]
 	Metrics []string `json:"metrics,omitempty"`
 	// Specify the report `pivots` groups if and only if the entity is 'AD_ANALYTICS'. Example values: [ACCOUNT, CAMPAIGN, COMPANY]
@@ -71,6 +73,13 @@ func (o *SourceLinkedInAds) GetEntity() string {
 		return ""
 	}
 	return o.Entity
+}
+
+func (o *SourceLinkedInAds) GetFacet() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Facet
 }
 
 func (o *SourceLinkedInAds) GetMetrics() []string {

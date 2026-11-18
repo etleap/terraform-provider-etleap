@@ -1115,6 +1115,10 @@ func (o *PipelineOutput) GetSourceFtp() *SourceFtp {
 	return o.GetSource().SourceFtp
 }
 
+func (o *PipelineOutput) GetSourceGithub() *SourceGithub {
+	return o.GetSource().SourceGithub
+}
+
 func (o *PipelineOutput) GetSourceGitlab() *SourceGitlab {
 	return o.GetSource().SourceGitlab
 }

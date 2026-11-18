@@ -29,6 +29,7 @@ type SourceTypes struct {
 	Freshdesk                *SourceFreshdesk                `tfsdk:"freshdesk"`
 	Freshsales               *SourceFreshsales               `tfsdk:"freshsales"`
 	Ftp                      *SourceFtp                      `tfsdk:"ftp"`
+	Github                   *SourceGithub                   `tfsdk:"github"`
 	Gitlab                   *SourceGitlab                   `tfsdk:"gitlab"`
 	Gong                     *SourceGong                     `tfsdk:"gong"`
 	GoogleAds                *SourceGoogleAds                `tfsdk:"google_ads"`

@@ -16,10 +16,10 @@ ConnectionWORKFRONT Resource
 resource "etleap_connection_workfront" "my_connectionworkfront" {
   api_key                     = "...my_api_key..."
   deletion_of_export_products = false
-  name                        = "Jerald Hirthe"
+  name                        = "Roxanne Kuphal V"
   subdomain                   = "...my_subdomain..."
   type                        = "WORKFRONT"
-  unified_experience          = true
+  unified_experience          = false
 }
 ```
 

@@ -629,6 +629,10 @@ func (o *PipelineInput) GetSourceFtp() *SourceFtp {
 	return o.GetSource().SourceFtp
 }
 
+func (o *PipelineInput) GetSourceGithub() *SourceGithub {
+	return o.GetSource().SourceGithub
+}
+
 func (o *PipelineInput) GetSourceGitlab() *SourceGitlab {
 	return o.GetSource().SourceGitlab
 }

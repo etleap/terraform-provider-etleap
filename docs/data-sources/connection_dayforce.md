@@ -14,7 +14,7 @@ ConnectionDAYFORCE DataSource
 
 ```terraform
 data "etleap_connection_dayforce" "my_connectiondayforce" {
-  id = "d88fc9db-a6b9-4881-a6b5-2c1c934d2503"
+  id = "9dba6b98-81a6-4b52-81c9-34d25038b640"
 }
 ```
 

@@ -38,6 +38,7 @@ const (
 	SourceTypesUpdateTypeFreshdesk                SourceTypesUpdateType = "FRESHDESK"
 	SourceTypesUpdateTypeFreshsales               SourceTypesUpdateType = "FRESHSALES"
 	SourceTypesUpdateTypeFtp                      SourceTypesUpdateType = "FTP"
+	SourceTypesUpdateTypeGithub                   SourceTypesUpdateType = "GITHUB"
 	SourceTypesUpdateTypeGitlab                   SourceTypesUpdateType = "GITLAB"
 	SourceTypesUpdateTypeGong                     SourceTypesUpdateType = "GONG"
 	SourceTypesUpdateTypeGoogleAds                SourceTypesUpdateType = "GOOGLE_ADS"
@@ -147,6 +148,7 @@ type SourceTypesUpdate struct {
 	SourceFreshdeskUpdate                *SourceFreshdeskUpdate
 	SourceFreshsalesUpdate               *SourceFreshsalesUpdate
 	SourceFtpUpdate                      *SourceFtpUpdate
+	SourceGithubUpdate                   *SourceGithubUpdate
 	SourceGitlabUpdate                   *SourceGitlabUpdate
 	SourceGongUpdate                     *SourceGongUpdate
 	SourceGoogleAdsUpdate                *SourceGoogleAdsUpdate
@@ -540,6 +542,18 @@ func CreateSourceTypesUpdateFtp(ftp SourceFtpUpdate) SourceTypesUpdate {
 	return SourceTypesUpdate{
 		SourceFtpUpdate: &ftp,
 		Type:            typ,
+	}
+}
+
+func CreateSourceTypesUpdateGithub(github SourceGithubUpdate) SourceTypesUpdate {
+	typ := SourceTypesUpdateTypeGithub
+
+	typStr := SourceGithubUpdateType(typ)
+	github.Type = &typStr
+
+	return SourceTypesUpdate{
+		SourceGithubUpdate: &github,
+		Type:               typ,
 	}
 }
 
@@ -1749,6 +1763,15 @@ func (u *SourceTypesUpdate) UnmarshalJSON(data []byte) error {
 		u.SourceFtpUpdate = sourceFtpUpdate
 		u.Type = SourceTypesUpdateTypeFtp
 		return nil
+	case "GITHUB":
+		sourceGithubUpdate := new(SourceGithubUpdate)
+		if err := utils.UnmarshalJSON(data, &sourceGithubUpdate, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceGithubUpdate = sourceGithubUpdate
+		u.Type = SourceTypesUpdateTypeGithub
+		return nil
 	case "GITLAB":
 		sourceGitlabUpdate := new(SourceGitlabUpdate)
 		if err := utils.UnmarshalJSON(data, &sourceGitlabUpdate, "", true, true); err != nil {
@@ -2577,6 +2600,10 @@ func (u SourceTypesUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.SourceFtpUpdate != nil {
 		return utils.MarshalJSON(u.SourceFtpUpdate, "", true)
+	}
+
+	if u.SourceGithubUpdate != nil {
+		return utils.MarshalJSON(u.SourceGithubUpdate, "", true)
 	}
 
 	if u.SourceGitlabUpdate != nil {

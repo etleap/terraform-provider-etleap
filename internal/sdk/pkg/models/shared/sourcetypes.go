@@ -38,6 +38,7 @@ const (
 	SourceTypesTypeFreshdesk                SourceTypesType = "FRESHDESK"
 	SourceTypesTypeFreshsales               SourceTypesType = "FRESHSALES"
 	SourceTypesTypeFtp                      SourceTypesType = "FTP"
+	SourceTypesTypeGithub                   SourceTypesType = "GITHUB"
 	SourceTypesTypeGitlab                   SourceTypesType = "GITLAB"
 	SourceTypesTypeGong                     SourceTypesType = "GONG"
 	SourceTypesTypeGoogleAds                SourceTypesType = "GOOGLE_ADS"
@@ -147,6 +148,7 @@ type SourceTypes struct {
 	SourceFreshdesk                *SourceFreshdesk
 	SourceFreshsales               *SourceFreshsales
 	SourceFtp                      *SourceFtp
+	SourceGithub                   *SourceGithub
 	SourceGitlab                   *SourceGitlab
 	SourceGong                     *SourceGong
 	SourceGoogleAds                *SourceGoogleAds
@@ -540,6 +542,18 @@ func CreateSourceTypesFtp(ftp SourceFtp) SourceTypes {
 	return SourceTypes{
 		SourceFtp: &ftp,
 		Type:      typ,
+	}
+}
+
+func CreateSourceTypesGithub(github SourceGithub) SourceTypes {
+	typ := SourceTypesTypeGithub
+
+	typStr := SourceGithubType(typ)
+	github.Type = typStr
+
+	return SourceTypes{
+		SourceGithub: &github,
+		Type:         typ,
 	}
 }
 
@@ -1749,6 +1763,15 @@ func (u *SourceTypes) UnmarshalJSON(data []byte) error {
 		u.SourceFtp = sourceFtp
 		u.Type = SourceTypesTypeFtp
 		return nil
+	case "GITHUB":
+		sourceGithub := new(SourceGithub)
+		if err := utils.UnmarshalJSON(data, &sourceGithub, "", true, true); err != nil {
+			return fmt.Errorf("could not unmarshal expected type: %w", err)
+		}
+
+		u.SourceGithub = sourceGithub
+		u.Type = SourceTypesTypeGithub
+		return nil
 	case "GITLAB":
 		sourceGitlab := new(SourceGitlab)
 		if err := utils.UnmarshalJSON(data, &sourceGitlab, "", true, true); err != nil {
@@ -2577,6 +2600,10 @@ func (u SourceTypes) MarshalJSON() ([]byte, error) {
 
 	if u.SourceFtp != nil {
 		return utils.MarshalJSON(u.SourceFtp, "", true)
+	}
+
+	if u.SourceGithub != nil {
+		return utils.MarshalJSON(u.SourceGithub, "", true)
 	}
 
 	if u.SourceGitlab != nil {

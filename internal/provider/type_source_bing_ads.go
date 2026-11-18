@@ -5,9 +5,11 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceBingAds struct {
-	ConnectionID     types.String   `tfsdk:"connection_id"`
-	Entity           types.String   `tfsdk:"entity"`
-	Fields           []types.String `tfsdk:"fields"`
-	LatencyThreshold types.Int64    `tfsdk:"latency_threshold"`
-	Type             types.String   `tfsdk:"type"`
+	Attributes            []types.String `tfsdk:"attributes"`
+	ConnectionID          types.String   `tfsdk:"connection_id"`
+	Entity                types.String   `tfsdk:"entity"`
+	Fields                []types.String `tfsdk:"fields"`
+	LatencyThreshold      types.Int64    `tfsdk:"latency_threshold"`
+	PerformanceStatistics []types.String `tfsdk:"performance_statistics"`
+	Type                  types.String   `tfsdk:"type"`
 }

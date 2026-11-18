@@ -32,13 +32,16 @@ func (e *Oauth2ClientCredentialsAuthenticationType) UnmarshalJSON(data []byte) e
 	}
 }
 
-// Oauth2ClientCredentialsAuthenticationOutput - Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint.
+// Oauth2ClientCredentialsAuthenticationOutput - Authentication method using the OAuth 2.0 client credentials flow. Exchanges the client credentials for an access token via the token endpoint. The `clientAuthentication` property sets how the client authenticates to the token endpoint.
 type Oauth2ClientCredentialsAuthenticationOutput struct {
 	Type *Oauth2ClientCredentialsAuthenticationType `default:"OAUTH" json:"type"`
 	// The OAuth 2.0 token endpoint URL where Etleap will exchange client credentials for an access token.
 	TokenURL string `json:"tokenUrl"`
 	// The OAuth 2.0 client identifier.
-	ClientID string `json:"clientId"`
+	ClientID             string                           `json:"clientId"`
+	ClientAuthentication Oauth2ClientAuthenticationOutput `json:"clientAuthentication"`
+	// The scopes sent with every token request, joined with spaces.
+	Scopes []string `json:"scopes,omitempty"`
 }
 
 func (o Oauth2ClientCredentialsAuthenticationOutput) MarshalJSON() ([]byte, error) {
@@ -73,15 +76,38 @@ func (o *Oauth2ClientCredentialsAuthenticationOutput) GetClientID() string {
 	return o.ClientID
 }
 
-// Oauth2ClientCredentialsAuthentication - Authentication method using OAuth 2.0 client credentials flow. Exchanges client_id and client_secret for an access token via the token endpoint.
+func (o *Oauth2ClientCredentialsAuthenticationOutput) GetClientAuthentication() Oauth2ClientAuthenticationOutput {
+	if o == nil {
+		return Oauth2ClientAuthenticationOutput{}
+	}
+	return o.ClientAuthentication
+}
+
+func (o *Oauth2ClientCredentialsAuthenticationOutput) GetClientAuthenticationClientSecret() *Oauth2ClientSecretOutput {
+	return o.GetClientAuthentication().Oauth2ClientSecretOutput
+}
+
+func (o *Oauth2ClientCredentialsAuthenticationOutput) GetClientAuthenticationPrivateKeyJwt() *Oauth2PrivateKeyJwtOutput {
+	return o.GetClientAuthentication().Oauth2PrivateKeyJwtOutput
+}
+
+func (o *Oauth2ClientCredentialsAuthenticationOutput) GetScopes() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Scopes
+}
+
+// Oauth2ClientCredentialsAuthentication - Authentication method using the OAuth 2.0 client credentials flow. Exchanges the client credentials for an access token via the token endpoint. The `clientAuthentication` property sets how the client authenticates to the token endpoint.
 type Oauth2ClientCredentialsAuthentication struct {
 	Type *Oauth2ClientCredentialsAuthenticationType `default:"OAUTH" json:"type"`
 	// The OAuth 2.0 token endpoint URL where Etleap will exchange client credentials for an access token.
 	TokenURL string `json:"tokenUrl"`
 	// The OAuth 2.0 client identifier.
-	ClientID string `json:"clientId"`
-	// The OAuth 2.0 client secret. This property is stored as a secret in Etleap.
-	ClientSecret string `json:"clientSecret"`
+	ClientID             string                     `json:"clientId"`
+	ClientAuthentication Oauth2ClientAuthentication `json:"clientAuthentication"`
+	// The scopes sent with every token request, joined with spaces.
+	Scopes []string `json:"scopes,omitempty"`
 }
 
 func (o Oauth2ClientCredentialsAuthentication) MarshalJSON() ([]byte, error) {
@@ -116,9 +142,24 @@ func (o *Oauth2ClientCredentialsAuthentication) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *Oauth2ClientCredentialsAuthentication) GetClientSecret() string {
+func (o *Oauth2ClientCredentialsAuthentication) GetClientAuthentication() Oauth2ClientAuthentication {
 	if o == nil {
-		return ""
+		return Oauth2ClientAuthentication{}
 	}
-	return o.ClientSecret
+	return o.ClientAuthentication
+}
+
+func (o *Oauth2ClientCredentialsAuthentication) GetClientAuthenticationClientSecret() *Oauth2ClientSecret {
+	return o.GetClientAuthentication().Oauth2ClientSecret
+}
+
+func (o *Oauth2ClientCredentialsAuthentication) GetClientAuthenticationPrivateKeyJwt() *Oauth2PrivateKeyJwt {
+	return o.GetClientAuthentication().Oauth2PrivateKeyJwt
+}
+
+func (o *Oauth2ClientCredentialsAuthentication) GetScopes() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Scopes
 }

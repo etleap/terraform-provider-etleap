@@ -1,3 +1,3 @@
 data "etleap_connection_uservoice" "my_connectionuservoice" {
-  id = "7c624a2e-4cd0-4898-9e08-aa7262e1d094"
+  id = "071fb08d-b26a-4bdf-8cf9-985482c30b77"
 }

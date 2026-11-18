@@ -14,7 +14,7 @@ ConnectionICEBERG DataSource
 
 ```terraform
 data "etleap_connection_iceberg" "my_connectioniceberg" {
-  id = "b9d71858-f2e8-4e13-bc78-88e6058ef8ad"
+  id = "2ed57699-395f-4387-9796-57628f32518d"
 }
 ```
 

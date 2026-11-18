@@ -14,7 +14,7 @@ ConnectionFRESHDESK DataSource
 
 ```terraform
 data "etleap_connection_freshdesk" "my_connectionfreshdesk" {
-  id = "0b6e9f80-3e49-4f3c-be34-3ad889ee09ea"
+  id = "f803e49f-3cbe-4343-ad88-9ee09ea50981"
 }
 ```
 

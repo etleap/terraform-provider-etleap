@@ -37,10 +37,14 @@ type SourceBingAds struct {
 	ConnectionID string `json:"connectionId"`
 	// Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 	LatencyThreshold *int64 `json:"latencyThreshold,omitempty"`
-	// The report type.
+	// The entity name. Example values: [Account Performance Report, Campaign Performance Report, Accounts, Campaigns, Ad Groups, Ads]
 	Entity string `json:"entity"`
-	// The field names.
-	Fields []string `json:"fields"`
+	// The field names, including at least one performance statistic. Required for report types unless `performanceStatistics` is set. Cannot be combined with `performanceStatistics` or `attributes`.
+	Fields []string `json:"fields,omitempty"`
+	// The performance statistics. Required for report types unless `fields` is set. Etleap adds the fields the report type requires.
+	PerformanceStatistics []string `json:"performanceStatistics,omitempty"`
+	// The attributes. Optional for report types when `fields` is not set. Etleap adds the fields the report type requires.
+	Attributes []string `json:"attributes,omitempty"`
 }
 
 func (o *SourceBingAds) GetType() SourceBingAdsType {
@@ -73,7 +77,21 @@ func (o *SourceBingAds) GetEntity() string {
 
 func (o *SourceBingAds) GetFields() []string {
 	if o == nil {
-		return []string{}
+		return nil
 	}
 	return o.Fields
+}
+
+func (o *SourceBingAds) GetPerformanceStatistics() []string {
+	if o == nil {
+		return nil
+	}
+	return o.PerformanceStatistics
+}
+
+func (o *SourceBingAds) GetAttributes() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Attributes
 }

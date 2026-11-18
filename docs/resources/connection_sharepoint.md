@@ -15,8 +15,8 @@ ConnectionSHAREPOINT Resource
 ```terraform
 resource "etleap_connection_sharepoint" "my_connectionsharepoint" {
   code                        = "...my_code..."
-  deletion_of_export_products = true
-  name                        = "Owen Beier"
+  deletion_of_export_products = false
+  name                        = "Kelly Wiegand"
   type                        = "SHAREPOINT"
 }
 ```

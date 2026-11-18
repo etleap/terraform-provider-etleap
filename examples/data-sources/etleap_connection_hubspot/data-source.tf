@@ -1,3 +1,3 @@
 data "etleap_connection_hubspot" "my_connectionhubspot" {
-  id = "67ad0b19-ac25-4244-a8f6-c80503daf018"
+  id = "858f2e8e-13bc-4788-8e60-58ef8adf1a55"
 }

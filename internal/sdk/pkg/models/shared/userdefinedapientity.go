@@ -75,6 +75,13 @@ func (o *UserDefinedAPIEntity) GetPagingStrategyCursorURI() *CursorURIPagingStra
 	return nil
 }
 
+func (o *UserDefinedAPIEntity) GetPagingStrategyLinkHeader() *LinkHeaderPagingStrategy {
+	if v := o.GetPagingStrategy(); v != nil {
+		return v.LinkHeaderPagingStrategy
+	}
+	return nil
+}
+
 func (o *UserDefinedAPIEntity) GetPagingStrategyOffset() *OffsetPagingStrategy {
 	if v := o.GetPagingStrategy(); v != nil {
 		return v.OffsetPagingStrategy

@@ -14,7 +14,7 @@ Pipeline DataSource
 
 ```terraform
 data "etleap_pipeline" "my_pipeline" {
-  id = "299af832-a7ad-4294-8553-20d4deb57c52"
+  id = "6a64d791-7704-4fb1-aaf7-79238e43ff91"
 }
 ```
 
@@ -387,6 +387,7 @@ Read-Only:
 - `freshdesk` (Attributes) (see [below for nested schema](#nestedatt--source--freshdesk))
 - `freshsales` (Attributes) (see [below for nested schema](#nestedatt--source--freshsales))
 - `ftp` (Attributes) (see [below for nested schema](#nestedatt--source--ftp))
+- `github` (Attributes) (see [below for nested schema](#nestedatt--source--github))
 - `gitlab` (Attributes) (see [below for nested schema](#nestedatt--source--gitlab))
 - `gong` (Attributes) (see [below for nested schema](#nestedatt--source--gong))
 - `google_ads` (Attributes) (see [below for nested schema](#nestedatt--source--google_ads))
@@ -516,10 +517,12 @@ Read-Only:
 
 Read-Only:
 
+- `attributes` (List of String) The attributes. Optional for report types when `fields` is not set. Etleap adds the fields the report type requires.
 - `connection_id` (String) The universally unique identifier for the source.
-- `entity` (String) The report type.
-- `fields` (List of String) The field names.
+- `entity` (String) The entity name. Example values: [Account Performance Report, Campaign Performance Report, Accounts, Campaigns, Ad Groups, Ads]
+- `fields` (List of String) The field names, including at least one performance statistic. Required for report types unless `performanceStatistics` is set. Cannot be combined with `performanceStatistics` or `attributes`.
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `performance_statistics` (List of String) The performance statistics. Required for report types unless `fields` is set. Etleap adds the fields the report type requires.
 - `type` (String) must be one of ["BING_ADS"]
 
 
@@ -796,6 +799,17 @@ Read-Only:
 - `type` (String) must be one of ["FTP"]
 
 
+<a id="nestedatt--source--github"></a>
+### Nested Schema for `source.github`
+
+Read-Only:
+
+- `connection_id` (String) The universally unique identifier for the source.
+- `entity` (String) The GitHub resource. Example: Pull Requests
+- `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
+- `type` (String) must be one of ["GITHUB"]
+
+
 <a id="nestedatt--source--gitlab"></a>
 ### Nested Schema for `source.gitlab`
 
@@ -1013,6 +1027,7 @@ Read-Only:
 
 - `connection_id` (String) The universally unique identifier for the source.
 - `entity` (String) The LinkedIn resource. Example values: [ACCOUNTS, ACCOUNT_USERS, AD_ANALYTICS, CAMPAIGNS, CAMPAIGN_GROUPS, CONVERSIONS, INSIGHT_TAG_DOMAINS]
+- `facet` (String) The report `facet`. Required for the 'AD_ANALYTICS' entity. Example values: [campaigns, accounts]
 - `latency_threshold` (Number) Notify if we can't extract for `x` hours. Setting it to `null` disables the notification. Defaults to `null`.
 - `metrics` (List of String) Specify the report `metrics` if and only if the entity is 'AD_ANALYTICS'. Example values: [dateRange, pivotValues, clicks]
 - `pivots` (List of String) Specify the report `pivots` groups if and only if the entity is 'AD_ANALYTICS'. Example values: [ACCOUNT, CAMPAIGN, COMPANY]

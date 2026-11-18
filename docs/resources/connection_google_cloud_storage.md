@@ -17,7 +17,7 @@ resource "etleap_connection_google_cloud_storage" "my_connectiongoogle_cloud_sto
   bucket                      = "...my_bucket..."
   deletion_of_export_products = true
   json_credentials            = "...my_json_credentials..."
-  name                        = "Jaime Spencer"
+  name                        = "Jamie Feeney"
   type                        = "GOOGLE_CLOUD_STORAGE"
 }
 ```

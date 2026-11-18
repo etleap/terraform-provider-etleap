@@ -14,7 +14,7 @@ ConnectionKAFKA DataSource
 
 ```terraform
 data "etleap_connection_kafka" "my_connectionkafka" {
-  id = "24ec37aa-6610-4fb1-9af7-3e3aa22dd3c2"
+  id = "5c43402a-6786-4c1b-8e55-b0d42cf201e2"
 }
 ```
 

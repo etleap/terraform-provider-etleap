@@ -173,12 +173,62 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 		}
 		tokenURL := r.Authentication.Oauth.TokenURL.ValueString()
 		clientID := r.Authentication.Oauth.ClientID.ValueString()
-		clientSecret := r.Authentication.Oauth.ClientSecret.ValueString()
+		var clientAuthentication shared.Oauth2ClientAuthentication
+		var oauth2ClientSecret *shared.Oauth2ClientSecret
+		if r.Authentication.Oauth.ClientAuthentication.ClientSecret != nil {
+			typeVar5 := new(shared.Oauth2ClientSecretType)
+			if !r.Authentication.Oauth.ClientAuthentication.ClientSecret.Type.IsUnknown() && !r.Authentication.Oauth.ClientAuthentication.ClientSecret.Type.IsNull() {
+				*typeVar5 = shared.Oauth2ClientSecretType(r.Authentication.Oauth.ClientAuthentication.ClientSecret.Type.ValueString())
+			} else {
+				typeVar5 = nil
+			}
+			clientSecret := r.Authentication.Oauth.ClientAuthentication.ClientSecret.ClientSecret.ValueString()
+			oauth2ClientSecret = &shared.Oauth2ClientSecret{
+				Type:         typeVar5,
+				ClientSecret: clientSecret,
+			}
+		}
+		if oauth2ClientSecret != nil {
+			clientAuthentication = shared.Oauth2ClientAuthentication{
+				Oauth2ClientSecret: oauth2ClientSecret,
+			}
+		}
+		var oauth2PrivateKeyJwt *shared.Oauth2PrivateKeyJwt
+		if r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt != nil {
+			typeVar6 := new(shared.Oauth2PrivateKeyJwtType)
+			if !r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.Type.IsUnknown() && !r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.Type.IsNull() {
+				*typeVar6 = shared.Oauth2PrivateKeyJwtType(r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.Type.ValueString())
+			} else {
+				typeVar6 = nil
+			}
+			privateKey := r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.PrivateKey.ValueString()
+			keyID := new(string)
+			if !r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.KeyID.IsUnknown() && !r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.KeyID.IsNull() {
+				*keyID = r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.KeyID.ValueString()
+			} else {
+				keyID = nil
+			}
+			oauth2PrivateKeyJwt = &shared.Oauth2PrivateKeyJwt{
+				Type:       typeVar6,
+				PrivateKey: privateKey,
+				KeyID:      keyID,
+			}
+		}
+		if oauth2PrivateKeyJwt != nil {
+			clientAuthentication = shared.Oauth2ClientAuthentication{
+				Oauth2PrivateKeyJwt: oauth2PrivateKeyJwt,
+			}
+		}
+		var scopes []string = nil
+		for _, scopesItem := range r.Authentication.Oauth.Scopes {
+			scopes = append(scopes, scopesItem.ValueString())
+		}
 		oauth2ClientCredentialsAuthentication = &shared.Oauth2ClientCredentialsAuthentication{
-			Type:         typeVar4,
-			TokenURL:     tokenURL,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
+			Type:                 typeVar4,
+			TokenURL:             tokenURL,
+			ClientID:             clientID,
+			ClientAuthentication: clientAuthentication,
+			Scopes:               scopes,
 		}
 	}
 	if oauth2ClientCredentialsAuthentication != nil {
@@ -205,11 +255,11 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 		}
 		var userDefinedAPIReplaceMode *shared.UserDefinedAPIReplaceMode
 		if entitiesItem.PipelineMode.UserDefinedAPIReplaceMode != nil {
-			typeVar5 := new(shared.UserDefinedAPIReplaceModeType)
+			typeVar7 := new(shared.UserDefinedAPIReplaceModeType)
 			if !entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.Type.IsUnknown() && !entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.Type.IsNull() {
-				*typeVar5 = shared.UserDefinedAPIReplaceModeType(entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.Type.ValueString())
+				*typeVar7 = shared.UserDefinedAPIReplaceModeType(entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.Type.ValueString())
 			} else {
-				typeVar5 = nil
+				typeVar7 = nil
 			}
 			var primaryKeyColumns []string = nil
 			for _, primaryKeyColumnsItem := range entitiesItem.PipelineMode.UserDefinedAPIReplaceMode.PrimaryKeyColumns {
@@ -248,7 +298,7 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 				}
 			}
 			userDefinedAPIReplaceMode = &shared.UserDefinedAPIReplaceMode{
-				Type:              typeVar5,
+				Type:              typeVar7,
 				PrimaryKeyColumns: primaryKeyColumns,
 				ForeignKeyColumns: foreignKeyColumns,
 			}
@@ -260,11 +310,11 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 		}
 		var userDefinedAPIUpdateMode *shared.UserDefinedAPIUpdateMode
 		if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode != nil {
-			typeVar6 := new(shared.UserDefinedAPIUpdateModeType)
+			typeVar8 := new(shared.UserDefinedAPIUpdateModeType)
 			if !entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Type.IsUnknown() && !entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Type.IsNull() {
-				*typeVar6 = shared.UserDefinedAPIUpdateModeType(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Type.ValueString())
+				*typeVar8 = shared.UserDefinedAPIUpdateModeType(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Type.ValueString())
 			} else {
-				typeVar6 = nil
+				typeVar8 = nil
 			}
 			var primaryKeyColumns1 []string = nil
 			for _, primaryKeyColumnsItem1 := range entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.PrimaryKeyColumns {
@@ -305,7 +355,7 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 			var strategy shared.UpdateModeStrategyTypes
 			var wallClockStrategy *shared.WallClockStrategy
 			if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock != nil {
-				typeVar7 := shared.WallClockStrategyType(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.Type.ValueString())
+				typeVar9 := shared.WallClockStrategyType(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.Type.ValueString())
 				key1 := entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.BeginDateParameter.Key.ValueString()
 				value1 := entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.BeginDateParameter.Value.ValueString()
 				format := new(shared.Format)
@@ -344,7 +394,7 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 				}
 				lookbackWindow := entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.WallClock.LookbackWindow.ValueInt64()
 				wallClockStrategy = &shared.WallClockStrategy{
-					Type:               typeVar7,
+					Type:               typeVar9,
 					BeginDateParameter: beginDateParameter,
 					EndDateParameter:   endDateParameter,
 					LookbackWindow:     lookbackWindow,
@@ -357,7 +407,7 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 			}
 			var extractedDataStrategy *shared.ExtractedDataStrategy
 			if entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData != nil {
-				typeVar8 := shared.ExtractedDataStrategyType(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.Type.ValueString())
+				typeVar10 := shared.ExtractedDataStrategyType(entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.Type.ValueString())
 				lastUpdatedColumn := entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.LastUpdatedColumn.ValueString()
 				var highWatermarkQueryParameters []shared.KeyValuePair = nil
 				for _, highWatermarkQueryParametersItem := range entitiesItem.PipelineMode.UserDefinedAPIUpdateMode.Strategy.ExtractedData.HighWatermarkQueryParameters {
@@ -418,7 +468,7 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 					}
 				}
 				extractedDataStrategy = &shared.ExtractedDataStrategy{
-					Type:                         typeVar8,
+					Type:                         typeVar10,
 					LastUpdatedColumn:            lastUpdatedColumn,
 					HighWatermarkQueryParameters: highWatermarkQueryParameters,
 					BeginTimeParameter:           beginTimeParameter,
@@ -432,7 +482,7 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 				}
 			}
 			userDefinedAPIUpdateMode = &shared.UserDefinedAPIUpdateMode{
-				Type:              typeVar6,
+				Type:              typeVar8,
 				PrimaryKeyColumns: primaryKeyColumns1,
 				ForeignKeyColumns: foreignKeyColumns1,
 				Strategy:          strategy,
@@ -459,11 +509,11 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 				} else {
 					maxPageSize = nil
 				}
-				typeVar9 := new(shared.CursorURIPagingStrategyType)
+				typeVar11 := new(shared.CursorURIPagingStrategyType)
 				if !entitiesItem.PagingStrategy.CursorURI.Type.IsUnknown() && !entitiesItem.PagingStrategy.CursorURI.Type.IsNull() {
-					*typeVar9 = shared.CursorURIPagingStrategyType(entitiesItem.PagingStrategy.CursorURI.Type.ValueString())
+					*typeVar11 = shared.CursorURIPagingStrategyType(entitiesItem.PagingStrategy.CursorURI.Type.ValueString())
 				} else {
-					typeVar9 = nil
+					typeVar11 = nil
 				}
 				pathToCursor := entitiesItem.PagingStrategy.CursorURI.PathToCursor.ValueString()
 				urlPrefix := new(string)
@@ -475,7 +525,7 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 				cursorURIPagingStrategy = &shared.CursorURIPagingStrategy{
 					PageSizeFieldName: pageSizeFieldName,
 					MaxPageSize:       maxPageSize,
-					Type:              typeVar9,
+					Type:              typeVar11,
 					PathToCursor:      pathToCursor,
 					URLPrefix:         urlPrefix,
 				}
@@ -485,31 +535,62 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 					CursorURIPagingStrategy: cursorURIPagingStrategy,
 				}
 			}
-			var offsetPagingStrategy *shared.OffsetPagingStrategy
-			if entitiesItem.PagingStrategy.Offset != nil {
+			var linkHeaderPagingStrategy *shared.LinkHeaderPagingStrategy
+			if entitiesItem.PagingStrategy.LinkHeader != nil {
 				pageSizeFieldName1 := new(string)
-				if !entitiesItem.PagingStrategy.Offset.PageSizeFieldName.IsUnknown() && !entitiesItem.PagingStrategy.Offset.PageSizeFieldName.IsNull() {
-					*pageSizeFieldName1 = entitiesItem.PagingStrategy.Offset.PageSizeFieldName.ValueString()
+				if !entitiesItem.PagingStrategy.LinkHeader.PageSizeFieldName.IsUnknown() && !entitiesItem.PagingStrategy.LinkHeader.PageSizeFieldName.IsNull() {
+					*pageSizeFieldName1 = entitiesItem.PagingStrategy.LinkHeader.PageSizeFieldName.ValueString()
 				} else {
 					pageSizeFieldName1 = nil
 				}
 				maxPageSize1 := new(int64)
-				if !entitiesItem.PagingStrategy.Offset.MaxPageSize.IsUnknown() && !entitiesItem.PagingStrategy.Offset.MaxPageSize.IsNull() {
-					*maxPageSize1 = entitiesItem.PagingStrategy.Offset.MaxPageSize.ValueInt64()
+				if !entitiesItem.PagingStrategy.LinkHeader.MaxPageSize.IsUnknown() && !entitiesItem.PagingStrategy.LinkHeader.MaxPageSize.IsNull() {
+					*maxPageSize1 = entitiesItem.PagingStrategy.LinkHeader.MaxPageSize.ValueInt64()
 				} else {
 					maxPageSize1 = nil
 				}
-				typeVar10 := new(shared.OffsetPagingStrategyType)
-				if !entitiesItem.PagingStrategy.Offset.Type.IsUnknown() && !entitiesItem.PagingStrategy.Offset.Type.IsNull() {
-					*typeVar10 = shared.OffsetPagingStrategyType(entitiesItem.PagingStrategy.Offset.Type.ValueString())
+				typeVar12 := new(shared.LinkHeaderPagingStrategyType)
+				if !entitiesItem.PagingStrategy.LinkHeader.Type.IsUnknown() && !entitiesItem.PagingStrategy.LinkHeader.Type.IsNull() {
+					*typeVar12 = shared.LinkHeaderPagingStrategyType(entitiesItem.PagingStrategy.LinkHeader.Type.ValueString())
 				} else {
-					typeVar10 = nil
+					typeVar12 = nil
+				}
+				linkHeaderPagingStrategy = &shared.LinkHeaderPagingStrategy{
+					PageSizeFieldName: pageSizeFieldName1,
+					MaxPageSize:       maxPageSize1,
+					Type:              typeVar12,
+				}
+			}
+			if linkHeaderPagingStrategy != nil {
+				pagingStrategy = &shared.PagingStrategy{
+					LinkHeaderPagingStrategy: linkHeaderPagingStrategy,
+				}
+			}
+			var offsetPagingStrategy *shared.OffsetPagingStrategy
+			if entitiesItem.PagingStrategy.Offset != nil {
+				pageSizeFieldName2 := new(string)
+				if !entitiesItem.PagingStrategy.Offset.PageSizeFieldName.IsUnknown() && !entitiesItem.PagingStrategy.Offset.PageSizeFieldName.IsNull() {
+					*pageSizeFieldName2 = entitiesItem.PagingStrategy.Offset.PageSizeFieldName.ValueString()
+				} else {
+					pageSizeFieldName2 = nil
+				}
+				maxPageSize2 := new(int64)
+				if !entitiesItem.PagingStrategy.Offset.MaxPageSize.IsUnknown() && !entitiesItem.PagingStrategy.Offset.MaxPageSize.IsNull() {
+					*maxPageSize2 = entitiesItem.PagingStrategy.Offset.MaxPageSize.ValueInt64()
+				} else {
+					maxPageSize2 = nil
+				}
+				typeVar13 := new(shared.OffsetPagingStrategyType)
+				if !entitiesItem.PagingStrategy.Offset.Type.IsUnknown() && !entitiesItem.PagingStrategy.Offset.Type.IsNull() {
+					*typeVar13 = shared.OffsetPagingStrategyType(entitiesItem.PagingStrategy.Offset.Type.ValueString())
+				} else {
+					typeVar13 = nil
 				}
 				offsetFieldName := entitiesItem.PagingStrategy.Offset.OffsetFieldName.ValueString()
 				offsetPagingStrategy = &shared.OffsetPagingStrategy{
-					PageSizeFieldName: pageSizeFieldName1,
-					MaxPageSize:       maxPageSize1,
-					Type:              typeVar10,
+					PageSizeFieldName: pageSizeFieldName2,
+					MaxPageSize:       maxPageSize2,
+					Type:              typeVar13,
 					OffsetFieldName:   offsetFieldName,
 				}
 			}
@@ -520,29 +601,29 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 			}
 			var pageNumberPagingStrategy *shared.PageNumberPagingStrategy
 			if entitiesItem.PagingStrategy.PageNumber != nil {
-				pageSizeFieldName2 := new(string)
+				pageSizeFieldName3 := new(string)
 				if !entitiesItem.PagingStrategy.PageNumber.PageSizeFieldName.IsUnknown() && !entitiesItem.PagingStrategy.PageNumber.PageSizeFieldName.IsNull() {
-					*pageSizeFieldName2 = entitiesItem.PagingStrategy.PageNumber.PageSizeFieldName.ValueString()
+					*pageSizeFieldName3 = entitiesItem.PagingStrategy.PageNumber.PageSizeFieldName.ValueString()
 				} else {
-					pageSizeFieldName2 = nil
+					pageSizeFieldName3 = nil
 				}
-				maxPageSize2 := new(int64)
+				maxPageSize3 := new(int64)
 				if !entitiesItem.PagingStrategy.PageNumber.MaxPageSize.IsUnknown() && !entitiesItem.PagingStrategy.PageNumber.MaxPageSize.IsNull() {
-					*maxPageSize2 = entitiesItem.PagingStrategy.PageNumber.MaxPageSize.ValueInt64()
+					*maxPageSize3 = entitiesItem.PagingStrategy.PageNumber.MaxPageSize.ValueInt64()
 				} else {
-					maxPageSize2 = nil
+					maxPageSize3 = nil
 				}
-				typeVar11 := new(shared.PageNumberPagingStrategyType)
+				typeVar14 := new(shared.PageNumberPagingStrategyType)
 				if !entitiesItem.PagingStrategy.PageNumber.Type.IsUnknown() && !entitiesItem.PagingStrategy.PageNumber.Type.IsNull() {
-					*typeVar11 = shared.PageNumberPagingStrategyType(entitiesItem.PagingStrategy.PageNumber.Type.ValueString())
+					*typeVar14 = shared.PageNumberPagingStrategyType(entitiesItem.PagingStrategy.PageNumber.Type.ValueString())
 				} else {
-					typeVar11 = nil
+					typeVar14 = nil
 				}
 				pageNumberFieldName := entitiesItem.PagingStrategy.PageNumber.PageNumberFieldName.ValueString()
 				pageNumberPagingStrategy = &shared.PageNumberPagingStrategy{
-					PageSizeFieldName:   pageSizeFieldName2,
-					MaxPageSize:         maxPageSize2,
-					Type:                typeVar11,
+					PageSizeFieldName:   pageSizeFieldName3,
+					MaxPageSize:         maxPageSize3,
+					Type:                typeVar14,
 					PageNumberFieldName: pageNumberFieldName,
 				}
 			}
@@ -584,11 +665,11 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 		}
 		var postMethod *shared.PostMethod
 		if entitiesItem.RestMethod.PostMethod != nil {
-			typeVar12 := new(shared.PostMethodType)
+			typeVar15 := new(shared.PostMethodType)
 			if !entitiesItem.RestMethod.PostMethod.Type.IsUnknown() && !entitiesItem.RestMethod.PostMethod.Type.IsNull() {
-				*typeVar12 = shared.PostMethodType(entitiesItem.RestMethod.PostMethod.Type.ValueString())
+				*typeVar15 = shared.PostMethodType(entitiesItem.RestMethod.PostMethod.Type.ValueString())
 			} else {
-				typeVar12 = nil
+				typeVar15 = nil
 			}
 			var bodyParameters []shared.BodyParameters = nil
 			for _, bodyParametersItem := range entitiesItem.RestMethod.PostMethod.BodyParameters {
@@ -600,7 +681,7 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 				})
 			}
 			postMethod = &shared.PostMethod{
-				Type:           typeVar12,
+				Type:           typeVar15,
 				BodyParameters: bodyParameters,
 			}
 		}
@@ -667,7 +748,28 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) RefreshFromSharedConnectionUserD
 	}
 	if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput != nil {
 		r.Authentication.Oauth = &Oauth2ClientCredentialsAuthentication{}
+		if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2ClientSecretOutput != nil {
+			r.Authentication.Oauth.ClientAuthentication.ClientSecret = &Oauth2ClientSecret{}
+			if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2ClientSecretOutput.Type != nil {
+				r.Authentication.Oauth.ClientAuthentication.ClientSecret.Type = types.StringValue(string(*resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2ClientSecretOutput.Type))
+			} else {
+				r.Authentication.Oauth.ClientAuthentication.ClientSecret.Type = types.StringNull()
+			}
+		}
+		if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2PrivateKeyJwtOutput != nil {
+			r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt = &Oauth2PrivateKeyJwt{}
+			r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.KeyID = types.StringPointerValue(resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2PrivateKeyJwtOutput.KeyID)
+			if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2PrivateKeyJwtOutput.Type != nil {
+				r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.Type = types.StringValue(string(*resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientAuthentication.Oauth2PrivateKeyJwtOutput.Type))
+			} else {
+				r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.Type = types.StringNull()
+			}
+		}
 		r.Authentication.Oauth.ClientID = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.ClientID)
+		r.Authentication.Oauth.Scopes = nil
+		for _, v := range resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.Scopes {
+			r.Authentication.Oauth.Scopes = append(r.Authentication.Oauth.Scopes, types.StringValue(v))
+		}
 		r.Authentication.Oauth.TokenURL = types.StringValue(resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.TokenURL)
 		if resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.Type != nil {
 			r.Authentication.Oauth.Type = types.StringValue(string(*resp.Authentication.Oauth2ClientCredentialsAuthenticationOutput.Type))
@@ -770,6 +872,16 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) RefreshFromSharedConnectionUserD
 					entities1.PagingStrategy.CursorURI.Type = types.StringNull()
 				}
 				entities1.PagingStrategy.CursorURI.URLPrefix = types.StringPointerValue(entitiesItem.PagingStrategy.CursorURIPagingStrategy.URLPrefix)
+			}
+			if entitiesItem.PagingStrategy.LinkHeaderPagingStrategy != nil {
+				entities1.PagingStrategy.LinkHeader = &LinkHeaderPagingStrategy{}
+				entities1.PagingStrategy.LinkHeader.MaxPageSize = types.Int64PointerValue(entitiesItem.PagingStrategy.LinkHeaderPagingStrategy.MaxPageSize)
+				entities1.PagingStrategy.LinkHeader.PageSizeFieldName = types.StringPointerValue(entitiesItem.PagingStrategy.LinkHeaderPagingStrategy.PageSizeFieldName)
+				if entitiesItem.PagingStrategy.LinkHeaderPagingStrategy.Type != nil {
+					entities1.PagingStrategy.LinkHeader.Type = types.StringValue(string(*entitiesItem.PagingStrategy.LinkHeaderPagingStrategy.Type))
+				} else {
+					entities1.PagingStrategy.LinkHeader.Type = types.StringNull()
+				}
 			}
 			if entitiesItem.PagingStrategy.OffsetPagingStrategy != nil {
 				entities1.PagingStrategy.Offset = &OffsetPagingStrategy{}
@@ -1213,12 +1325,62 @@ func (r *ConnectionUSERDEFINEDAPIResourceModel) ToSharedConnectionUserDefinedAPI
 		}
 		tokenURL := r.Authentication.Oauth.TokenURL.ValueString()
 		clientID := r.Authentication.Oauth.ClientID.ValueString()
-		clientSecret := r.Authentication.Oauth.ClientSecret.ValueString()
+		var clientAuthentication shared.Oauth2ClientAuthentication
+		var oauth2ClientSecret *shared.Oauth2ClientSecret
+		if r.Authentication.Oauth.ClientAuthentication.ClientSecret != nil {
+			typeVar5 := new(shared.Oauth2ClientSecretType)
+			if !r.Authentication.Oauth.ClientAuthentication.ClientSecret.Type.IsUnknown() && !r.Authentication.Oauth.ClientAuthentication.ClientSecret.Type.IsNull() {
+				*typeVar5 = shared.Oauth2ClientSecretType(r.Authentication.Oauth.ClientAuthentication.ClientSecret.Type.ValueString())
+			} else {
+				typeVar5 = nil
+			}
+			clientSecret := r.Authentication.Oauth.ClientAuthentication.ClientSecret.ClientSecret.ValueString()
+			oauth2ClientSecret = &shared.Oauth2ClientSecret{
+				Type:         typeVar5,
+				ClientSecret: clientSecret,
+			}
+		}
+		if oauth2ClientSecret != nil {
+			clientAuthentication = shared.Oauth2ClientAuthentication{
+				Oauth2ClientSecret: oauth2ClientSecret,
+			}
+		}
+		var oauth2PrivateKeyJwt *shared.Oauth2PrivateKeyJwt
+		if r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt != nil {
+			typeVar6 := new(shared.Oauth2PrivateKeyJwtType)
+			if !r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.Type.IsUnknown() && !r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.Type.IsNull() {
+				*typeVar6 = shared.Oauth2PrivateKeyJwtType(r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.Type.ValueString())
+			} else {
+				typeVar6 = nil
+			}
+			privateKey := r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.PrivateKey.ValueString()
+			keyID := new(string)
+			if !r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.KeyID.IsUnknown() && !r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.KeyID.IsNull() {
+				*keyID = r.Authentication.Oauth.ClientAuthentication.PrivateKeyJwt.KeyID.ValueString()
+			} else {
+				keyID = nil
+			}
+			oauth2PrivateKeyJwt = &shared.Oauth2PrivateKeyJwt{
+				Type:       typeVar6,
+				PrivateKey: privateKey,
+				KeyID:      keyID,
+			}
+		}
+		if oauth2PrivateKeyJwt != nil {
+			clientAuthentication = shared.Oauth2ClientAuthentication{
+				Oauth2PrivateKeyJwt: oauth2PrivateKeyJwt,
+			}
+		}
+		var scopes []string = nil
+		for _, scopesItem := range r.Authentication.Oauth.Scopes {
+			scopes = append(scopes, scopesItem.ValueString())
+		}
 		oauth2ClientCredentialsAuthentication = &shared.Oauth2ClientCredentialsAuthentication{
-			Type:         typeVar4,
-			TokenURL:     tokenURL,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
+			Type:                 typeVar4,
+			TokenURL:             tokenURL,
+			ClientID:             clientID,
+			ClientAuthentication: clientAuthentication,
+			Scopes:               scopes,
 		}
 	}
 	if oauth2ClientCredentialsAuthentication != nil {

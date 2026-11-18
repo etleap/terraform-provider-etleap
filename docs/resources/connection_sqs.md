@@ -14,9 +14,9 @@ ConnectionSQS Resource
 
 ```terraform
 resource "etleap_connection_sqs" "my_connectionsqs" {
-  deletion_of_export_products = false
+  deletion_of_export_products = true
   iam_role_arn                = "...my_iam_role_arn..."
-  name                        = "Ms. Dexter Runte"
+  name                        = "Krystal Prosacco PhD"
   region                      = "...my_region..."
   type                        = "SQS"
 }
