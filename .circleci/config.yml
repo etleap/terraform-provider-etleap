@@ -11,6 +11,12 @@ parameters:
   publish-provider:
     type: boolean
     default: true
+  health-check:
+    type: boolean
+    default: false
+  heartbeat:
+    type: boolean
+    default: false
 
 commands:
   update-go-dependencies:
@@ -48,6 +54,9 @@ jobs:
             - schema
       - store_artifacts:
           path: /tmp/workspace/schema
+      - slack/notify:
+          event: fail
+          channel: -devops
 
   generate:
     resource_class: 2xlarge
@@ -82,6 +91,13 @@ jobs:
               circleci-agent step halt
             fi
       - run:
+          name: Check that Etleap's patch applies
+          command: |
+            if ! git apply --check etleap.patch; then
+              echo "etleap.patch does not apply to the regenerated provider. Update it with 'make generate-patch'."
+              exit 1
+            fi
+      - run:
           name: Generate docs
           command: go generate
       - run:
@@ -113,6 +129,9 @@ jobs:
           command: go get ./...
       - update-go-dependencies
       - run:
+          name: Delete resources left behind by earlier test runs
+          command: go test ./internal/provider -sweep=all
+      - run:
           name: Run tests
           command: TF_ACC=1 gotestsum --junitfile /tmp/test-results/unit-tests.xml --format testdox
       - save_cache:
@@ -137,7 +156,9 @@ jobs:
       - run: 
           name: Install GPG
           command: |
-            sudo apt update && sudo apt install gnupg
+            if ! command -v gpg > /dev/null; then
+              timeout 5m sudo apt update && timeout 5m sudo apt install -y gnupg
+            fi
       - run: 
           name: Import GPG key
           command: |
@@ -159,7 +180,7 @@ jobs:
               echo "No tag found at HEAD; trying to tag and release"
               NEW_TAG=v$(yq .terraform.version .speakeasy/gen.yaml)
               if [ $(git tag -l "$NEW_TAG") ]; then
-                echo "Tag already exists; skipping."
+                echo "Tag $NEW_TAG already exists on an earlier commit; skipping. The changes at HEAD are not released until the version in .speakeasy/gen.yaml changes."
                 circleci-agent step halt
               else
                 git tag v$(yq .terraform.version .speakeasy/gen.yaml)
@@ -175,6 +196,50 @@ jobs:
       - slack/notify:
           channel: -devops
 
+  health-check:
+    resource_class: small
+    executor:
+      name: python/default
+      tag: "3.11"
+    steps:
+      - checkout
+      - run:
+          name: Check provider health
+          command: python scripts/health_check.py
+      - slack/notify:
+          event: fail
+          channel: -devops
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Terraform provider health check failed*\n${HEALTH_SUMMARY}\n<${CIRCLE_BUILD_URL}|View job>"
+                  }
+                }
+              ]
+            }
+      - when:
+          condition: << pipeline.parameters.heartbeat >>
+          steps:
+            - slack/notify:
+                event: pass
+                channel: -devops
+                custom: |
+                  {
+                    "blocks": [
+                      {
+                        "type": "section",
+                        "text": {
+                          "type": "mrkdwn",
+                          "text": "*Terraform provider is healthy*\n${HEALTH_SUMMARY}"
+                        }
+                      }
+                    ]
+                  }
+
 workflows:
   version: 2
   regenerate:
@@ -182,7 +247,9 @@ workflows:
       and:
         - equal: [ true, <<pipeline.parameters.generate-provider>>]
     jobs:
-      - download-and-process
+      - download-and-process:
+          context:
+            - CircleCI context
       - generate:
           context: 
             - Speakeasy
@@ -194,10 +261,12 @@ workflows:
     when:
       and:
         - equal: [ true, <<pipeline.parameters.publish-provider>> ]
+        - not: << pipeline.parameters.health-check >>
     jobs:
       - test:
           context: 
             - Terraform Provider Testing
+            - CircleCI context
       - publish:
           context: 
             - Speakeasy
@@ -208,3 +277,12 @@ workflows:
             branches:
               only: main
           
+
+  health-check:
+    when:
+      and:
+        - equal: [ true, << pipeline.parameters.health-check >> ]
+    jobs:
+      - health-check:
+          context:
+            - CircleCI context

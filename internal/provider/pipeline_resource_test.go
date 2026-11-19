@@ -71,7 +71,7 @@ resource "etleap_pipeline" "test_mysql_pipeline" {
 var pipelineConfigTemplate, _ = template.New("PipelineConfig").Parse(PIPELINE_CONFIG_TEMPLATE_STRING)
 
 func TestAccMysqlToRedshiftPipeline(t *testing.T) {
-	var pipelineName = acctest.RandomWithPrefix("Mysql Test")
+	var pipelineName = acctest.RandomWithPrefix("tf-acc-test-pipeline")
 	resource.ParallelTest(t, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
